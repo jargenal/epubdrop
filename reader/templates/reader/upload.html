@@ -1,0 +1,238 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EPUBDrop • Subir EPUB</title>
+
+  <!-- Tailwind CDN (dev) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-slate-50 text-slate-900">
+  <div class="mx-auto max-w-5xl px-4 py-10">
+    <!-- Header -->
+    <div class="mb-8 flex items-start gap-4">
+      <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm">
+        <!-- icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6v12m6-6H6" />
+        </svg>
+      </div>
+      <div class="flex-1">
+        <h1 class="text-2xl font-semibold tracking-tight">EPUBDrop</h1>
+        <p class="mt-1 text-sm text-slate-600">
+          Sube un EPUB y ábrelo en el lector con traducción lado a lado (LibreTranslate local).
+        </p>
+      </div>
+      <div class="text-xs text-slate-500 mt-2">
+        EPUBs de confianza • uso personal
+      </div>
+    </div>
+
+    <!-- Card -->
+    <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      {% if error %}
+        <div class="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {{ error }}
+        </div>
+      {% endif %}
+
+      <form id="uploadForm" method="POST" enctype="multipart/form-data" class="space-y-5">
+        {% csrf_token %}
+
+        <!-- Dropzone -->
+        <div id="dropzone"
+             class="group relative flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 px-6 py-10 text-center transition
+                    hover:border-slate-300 hover:bg-slate-100">
+          <input id="fileInput" name="epub_file" type="file" accept=".epub" class="hidden" />
+
+          <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white ring-1 ring-slate-200 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 0115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+            </svg>
+          </div>
+
+          <p class="mt-3 text-sm font-semibold text-slate-800">
+            Arrastra y suelta tu archivo <span class="font-bold">.epub</span> aquí
+          </p>
+          <p class="mt-1 text-xs text-slate-500">
+            o haz clic para seleccionar
+          </p>
+
+          <div id="fileMeta" class="mt-4 hidden rounded-xl bg-white px-4 py-2 text-xs text-slate-600 ring-1 ring-slate-200">
+            <span id="fileName"></span>
+            <span class="mx-2 text-slate-300">•</span>
+            <span id="fileSize"></span>
+          </div>
+
+          <div class="pointer-events-none absolute inset-0 rounded-2xl ring-0 ring-slate-900/10 transition group-hover:ring-2"></div>
+        </div>
+
+        <!-- Buttons row -->
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="submit"
+                  class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-800">
+            Subir y Analizar
+          </button>
+
+          <!-- Limpiar (modal trigger) -->
+          {% if last_book_id %}
+            <button type="button" id="clearBtn"
+                    class="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 ring-1 ring-inset ring-slate-200 hover:bg-slate-50">
+              Limpiar
+            </button>
+          {% else %}
+            <span class="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 ring-1 ring-inset ring-slate-200 opacity-50 cursor-not-allowed">
+              Limpiar
+            </span>
+          {% endif %}
+
+          <!-- Leer -->
+          {% if last_book_id %}
+            <a href="{% url 'read_book' book_id=last_book_id %}"
+               class="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 ring-1 ring-inset ring-slate-200 hover:bg-slate-50">
+              Leer
+            </a>
+          {% else %}
+            <span class="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 ring-1 ring-inset ring-slate-200 opacity-50 cursor-not-allowed">
+              Leer
+            </span>
+          {% endif %}
+
+          <div class="ml-auto text-xs text-slate-500">
+            Tamaño máximo depende de tu configuración de Django/servidor
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Clear Modal -->
+  <div id="clearModal"
+       class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+    <div class="w-full max-w-md rounded-2xl bg-white p-5 shadow-lg ring-1 ring-slate-200">
+      <div class="flex items-start gap-3">
+        <div class="mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-red-50 text-red-700 ring-1 ring-red-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m3-3h4a1 1 0 011 1v2H9V5a1 1 0 011-1z"/>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-base font-semibold text-slate-900">¿Limpiar libro cargado?</h3>
+          <p class="mt-1 text-sm text-slate-600">
+            Esto borrará de disco el EPUB, assets extraídos y el estado guardado.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-5 flex items-center justify-end gap-3">
+        <button type="button" id="cancelClear"
+                class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-700 ring-1 ring-inset ring-slate-200 hover:bg-slate-50">
+          Cancelar
+        </button>
+
+        {% if last_book_id %}
+          <form method="POST" action="{% url 'clear_book' book_id=last_book_id %}">
+            {% csrf_token %}
+            <button type="submit"
+                    class="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
+              Sí, limpiar
+            </button>
+          </form>
+        {% else %}
+          <button type="button"
+                  class="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white opacity-50 cursor-not-allowed">
+            Sí, limpiar
+          </button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Dropzone ----------
+    const dz = document.getElementById("dropzone");
+    const fileInput = document.getElementById("fileInput");
+    const fileMeta = document.getElementById("fileMeta");
+    const fileName = document.getElementById("fileName");
+    const fileSize = document.getElementById("fileSize");
+
+    function formatBytes(bytes) {
+      if (!bytes && bytes !== 0) return "";
+      const sizes = ["B", "KB", "MB", "GB"];
+      const i = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), sizes.length - 1);
+      const val = bytes / Math.pow(1024, i);
+      return `${val.toFixed(val >= 10 || i === 0 ? 0 : 1)} ${sizes[i]}`;
+    }
+
+    function setFile(f) {
+      if (!f) return;
+      fileName.textContent = f.name || "archivo.epub";
+      fileSize.textContent = formatBytes(f.size);
+      fileMeta.classList.remove("hidden");
+    }
+
+    dz.addEventListener("click", () => fileInput.click());
+
+    dz.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dz.classList.add("border-slate-400");
+    });
+
+    dz.addEventListener("dragleave", () => {
+      dz.classList.remove("border-slate-400");
+    });
+
+    dz.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dz.classList.remove("border-slate-400");
+      const files = e.dataTransfer.files;
+      if (files && files.length) {
+        fileInput.files = files;
+        setFile(files[0]);
+      }
+    });
+
+    fileInput.addEventListener("change", (e) => {
+      const f = e.target.files && e.target.files[0];
+      setFile(f);
+    });
+
+    // ---------- Clear Modal ----------
+    const clearBtn = document.getElementById("clearBtn");
+    const clearModal = document.getElementById("clearModal");
+    const cancelClear = document.getElementById("cancelClear");
+
+    function openModal() {
+      clearModal.classList.remove("hidden");
+      clearModal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal() {
+      clearModal.classList.add("hidden");
+      clearModal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", openModal);
+    }
+    if (cancelClear) {
+      cancelClear.addEventListener("click", closeModal);
+    }
+    if (clearModal) {
+      clearModal.addEventListener("click", (e) => {
+        if (e.target === clearModal) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+    }
+  </script>
+</body>
+</html>

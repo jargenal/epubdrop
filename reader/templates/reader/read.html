@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ title }} • Reader</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* HTML del EPUB: neutral */
+    .epub-content { font-size: inherit; line-height: 1.65; color:#0f172a; }
+    .epub-content b, .epub-content strong { font-weight:700; }
+    .epub-content i, .epub-content em { font-style:italic; }
+    .epub-content p { margin:.6em 0; }
+    .epub-content h1 { font-size:1.5em; font-weight:700; margin:.8em 0 .4em; }
+    .epub-content h2 { font-size:1.25em; font-weight:700; margin:.8em 0 .4em; }
+    .epub-content h3 { font-size:1.1em; font-weight:700; margin:.8em 0 .4em; }
+    .epub-content ul, .epub-content ol { padding-left:1.25rem; margin:.6em 0; }
+    .epub-content li { margin:.25em 0; }
+    .epub-content img { max-width:100%; height:auto; display:inline-block; }
+    .epub-content table { width:100%; border-collapse:collapse; margin:.8em 0; }
+    .epub-content th, .epub-content td { border:1px solid rgba(148,163,184,.6); padding:.35rem .5rem; vertical-align:top; }
+    .epub-content blockquote { border-left:3px solid rgba(148,163,184,.7); padding-left:.75rem; margin:.75em 0; color:#334155; }
+    .epub-content pre { overflow-x:auto; }
+    .epub-content pre, .epub-content code { white-space:pre-wrap; word-break:break-word; }
+
+    /* Rendimiento */
+    .row { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
+
+    /* Lectura limpia: quita redondeos (por si quedan de Tailwind) */
+    .no-radius, .no-radius * { border-radius: 0 !important; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-50 text-slate-900">
+
+  <!-- Top bar -->
+  <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <div class="mx-auto max-w-[1700px] px-4">
+      <div class="flex h-16 items-center gap-3">
+        <a href="{% url 'upload_epub' %}"
+           class="inline-flex items-center gap-2 bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Volver
+        </a>
+
+        <div class="min-w-0 flex-1">
+          <div class="truncate text-base font-semibold tracking-tight">{{ title }}</div>
+          <div class="mt-0.5 flex items-center gap-2 text-xs text-slate-500">
+            <span id="progressText">0%</span>
+            <span class="text-slate-300">•</span>
+            <span>Traducido (izq) / Original (der)</span>
+          </div>
+        </div>
+
+        <button id="openConfig"
+                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+          ⚙️ <span class="ml-2 hidden sm:inline">Configuración</span>
+        </button>
+
+        <form method="POST" action="{% url 'clear_book' book_id=book_id %}">
+          {% csrf_token %}
+          <button type="submit"
+                  class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+            Limpiar
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <!-- Reader -->
+  <main class="mx-auto max-w-[1700px] px-4 py-4">
+    <!-- Contenedor principal: sin redondeo -->
+    <div id="readerScroll" class="no-radius h-[calc(100vh-6.25rem)] overflow-y-auto bg-white ring-1 ring-slate-200">
+      <div class="px-4 py-5">
+
+        {% for sec in sections %}
+          <!-- Sección: SIN número visible; solo separador sutil entre secciones -->
+          <section class="no-radius">
+            <!-- GRID: cada bloque es una fila (2 celdas), altura alineada automáticamente -->
+            <div class="space-y-4">
+              {% for blk in sec.blocks %}
+                <div class="row grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch"
+                     data-s="{{ forloop.parentloop.counter0 }}"
+                     data-b="{{ forloop.counter0 }}"
+                     data-idx="{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}">
+
+                  <!-- IZQUIERDA: traducido (sin línea entre párrafos) -->
+                  <div class="epub-content no-radius bg-white"
+                       data-side="L"
+                       data-s="{{ forloop.parentloop.counter0 }}"
+                       data-b="{{ forloop.counter0 }}">
+                    <div class="text-slate-400 italic">Traduciendo...</div>
+                  </div>
+
+                  <!-- DERECHA: original (sin línea entre párrafos) -->
+                  <div class="epub-content no-radius bg-white"
+                       data-side="R"
+                       data-s="{{ forloop.parentloop.counter0 }}"
+                       data-b="{{ forloop.counter0 }}">
+                    {{ blk|safe }}
+                  </div>
+
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- Separador sutil SOLO entre secciones (no al final) -->
+            {% if not forloop.last %}
+              <div class="my-8 border-t border-slate-200"></div>
+            {% endif %}
+          </section>
+        {% endfor %}
+
+        <div class="h-10"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Config -->
+  <div id="configOverlay" class="fixed inset-0 z-50 hidden bg-black/40 p-4">
+    <div class="ml-auto h-full w-full max-w-md bg-white shadow-xl ring-1 ring-slate-200 flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-200 p-4">
+        <div>
+          <div class="text-sm font-semibold">Configuración</div>
+          <div class="text-xs text-slate-500">Tipografía y tamaño (modo claro)</div>
+        </div>
+        <button id="closeConfig"
+                class="bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+          Cerrar
+        </button>
+      </div>
+
+      <div class="p-4 space-y-6 overflow-y-auto">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-2">Tamaño de texto</label>
+          <input id="fontSize" type="range" min="14" max="22" value="16" class="w-full">
+          <div class="mt-2 text-xs text-slate-500">Actual: <span id="fontSizeVal">16</span>px</div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-2">Tipo de letra</label>
+          <select id="fontFamily" class="w-full border border-slate-200 bg-white px-3 py-2 text-sm">
+            <option value="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">Sans (UI)</option>
+            <option value="ui-serif, Georgia, Cambria, Times New Roman, Times">Serif</option>
+            <option value="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New">Monospace</option>
+          </select>
+        </div>
+
+        <div class="bg-slate-50 ring-1 ring-slate-200 p-4 text-xs text-slate-600">
+          <div class="font-semibold text-slate-700 mb-1">Notas</div>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Lectura limpia: sin tarjetas, sin redondeos, sin líneas entre párrafos.</li>
+            <li>Separador sutil solo entre secciones.</li>
+            <li>Alineación por párrafo gracias al grid (sin cálculos de altura).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BOOK_ID = "{{ book_id|escapejs }}";
+    const readerScroll = document.getElementById("readerScroll");
+    const progressText = document.getElementById("progressText");
+
+    function q(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+
+    // Config
+    const overlay = document.getElementById("configOverlay");
+    const openConfig = document.getElementById("openConfig");
+    const closeConfig = document.getElementById("closeConfig");
+    const fontSize = document.getElementById("fontSize");
+    const fontSizeVal = document.getElementById("fontSizeVal");
+    const fontFamily = document.getElementById("fontFamily");
+
+    function openDrawer(){ overlay.classList.remove("hidden"); document.body.style.overflow="hidden"; }
+    function closeDrawer(){ overlay.classList.add("hidden"); document.body.style.overflow=""; }
+    openConfig.addEventListener("click", openDrawer);
+    closeConfig.addEventListener("click", closeDrawer);
+    overlay.addEventListener("click", (e)=>{ if(e.target===overlay) closeDrawer(); });
+
+    function applyTypography() {
+      const size = parseInt(fontSize.value, 10);
+      const family = fontFamily.value;
+      fontSizeVal.textContent = String(size);
+      readerScroll.style.fontSize = `${size}px`;
+      readerScroll.style.fontFamily = family;
+    }
+    fontSize.addEventListener("input", applyTypography);
+    fontFamily.addEventListener("change", applyTypography);
+
+    // Progreso
+    function updateProgress() {
+      const max = readerScroll.scrollHeight - readerScroll.clientHeight;
+      const pct = max > 0 ? Math.min(100, Math.max(0, Math.round((readerScroll.scrollTop / max) * 100))) : 0;
+      progressText.textContent = `${pct}%`;
+    }
+    readerScroll.addEventListener("scroll", updateProgress);
+
+    // Imágenes
+    function optimizeImgs(root=document) {
+      q("img", root).forEach(img => { img.loading = "lazy"; img.decoding = "async"; });
+    }
+
+    // Traducción lazy secuencial
+    const done = new Set();
+    const htmlCache = new Map();
+    const queue = [];
+    let running = 0;
+    const MAX_CONCURRENCY = 2;
+    const LOOKAHEAD = 10;
+
+    const rows = q(".row");
+    const keyOfRow = (row) => `${row.dataset.s}:${row.dataset.b}`;
+    let nextPointer = 0;
+
+    function translateUrl(s, b) {
+      return `/api/books/${BOOK_ID}/translate-block/${s}/${b}/`;
+    }
+
+    async function translateOneKey(key) {
+      if (done.has(key)) return;
+      const [sStr, bStr] = key.split(":");
+      const s = parseInt(sStr, 10);
+      const b = parseInt(bStr, 10);
+
+      const left = document.querySelector(`[data-side="L"][data-s="${s}"][data-b="${b}"]`);
+      const right = document.querySelector(`[data-side="R"][data-s="${s}"][data-b="${b}"]`);
+      if (!left || !right) { done.add(key); return; }
+
+      if (htmlCache.has(key)) {
+        left.innerHTML = htmlCache.get(key);
+        done.add(key);
+        optimizeImgs(left);
+        return;
+      }
+
+      left.innerHTML = `<div class="text-slate-400 italic">Traduciendo...</div>`;
+
+      try {
+        const res = await fetch(translateUrl(s, b), { method: "GET", headers: { "Accept": "application/json" } });
+        if (!res.ok) {
+          left.innerHTML = right.innerHTML;
+          htmlCache.set(key, left.innerHTML);
+          done.add(key);
+          optimizeImgs(left);
+          return;
+        }
+
+        const data = await res.json();
+        const html = (data && data.translated_html && data.translated_html.trim())
+          ? data.translated_html
+          : right.innerHTML;
+
+        left.innerHTML = html;
+        htmlCache.set(key, html);
+        done.add(key);
+        optimizeImgs(left);
+      } catch (e) {
+        left.innerHTML = right.innerHTML;
+        htmlCache.set(key, left.innerHTML);
+        done.add(key);
+        optimizeImgs(left);
+      }
+    }
+
+    function pumpQueue() {
+      while (running < MAX_CONCURRENCY && queue.length > 0) {
+        const key = queue.shift();
+        if (done.has(key)) continue;
+        running++;
+        translateOneKey(key).finally(() => {
+          running--;
+          pumpQueue();
+        });
+      }
+    }
+
+    function enqueueSequentialUntil(targetIndexInclusive) {
+      while (nextPointer <= targetIndexInclusive && nextPointer < rows.length) {
+        const key = keyOfRow(rows[nextPointer]);
+        if (!done.has(key)) queue.push(key);
+        nextPointer++;
+      }
+      pumpQueue();
+    }
+
+    function setupObserver() {
+      const io = new IntersectionObserver((entries) => {
+        let maxVisible = -1;
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const idx = rows.indexOf(e.target);
+          if (idx > maxVisible) maxVisible = idx;
+        }
+        if (maxVisible >= 0) {
+          const target = Math.min(rows.length - 1, maxVisible + LOOKAHEAD);
+          enqueueSequentialUntil(target);
+        }
+      }, {
+        root: readerScroll,
+        rootMargin: "600px 0px 600px 0px",
+        threshold: 0.01
+      });
+
+      rows.forEach(r => io.observe(r));
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      applyTypography();
+      updateProgress();
+      optimizeImgs(document);
+
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch {}
+      }
+
+      setupObserver();
+      enqueueSequentialUntil(Math.min(rows.length - 1, LOOKAHEAD));
+    });
+  </script>
+</body>
+</html>
