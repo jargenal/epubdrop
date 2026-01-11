@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EPUBDrop • Iniciar sesión</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Work+Sans:wght@400;500;600;700&display=swap');
+    body { font-family: 'Work Sans', sans-serif; }
+    .brand { font-family: 'Literata', serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#f7f2ea] text-[#3b2f22]">
+  <div class="mx-auto flex min-h-screen max-w-md items-center px-6">
+    <div class="w-full rounded-3xl border border-[#eadfce] bg-white/80 p-6 shadow-sm">
+      <h1 class="brand text-2xl font-semibold">EPUBDrop</h1>
+      <p class="mt-2 text-sm text-[#7b6656]">Inicia sesión para continuar tu lectura.</p>
+
+      {% if form.errors %}
+        <div class="mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          Usuario o contraseña inválidos.
+        </div>
+      {% endif %}
+
+      <form method="post" class="mt-6 space-y-4">
+        {% csrf_token %}
+        <div>
+          <label class="block text-xs font-semibold text-[#7b6656]">Correo electrónico</label>
+          <input type="text" name="username" autofocus required
+                 class="mt-2 w-full rounded-xl border border-[#e4d6c4] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#d1bfa8]" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-[#7b6656]">Contraseña</label>
+          <input type="password" name="password" required
+                 class="mt-2 w-full rounded-xl border border-[#e4d6c4] bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#d1bfa8]" />
+        </div>
+        <button type="submit" class="w-full rounded-xl bg-[#1f2937] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#111827]">
+          Entrar
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

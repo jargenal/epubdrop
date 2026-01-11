@@ -39,7 +39,7 @@
   <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
     <div class="mx-auto max-w-[1700px] px-4">
       <div class="flex h-16 items-center gap-3">
-        <a href="{% url 'upload_epub' %}"
+        <a id="backLink" href="{% url 'upload_epub' %}"
            class="inline-flex items-center gap-2 bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -50,6 +50,8 @@
         <div class="min-w-0 flex-1">
           <div class="truncate text-base font-semibold tracking-tight">{{ title }}</div>
           <div class="mt-0.5 flex items-center gap-2 text-xs text-slate-500">
+            <span id="chapterText">Sección</span>
+            <span class="text-slate-300">•</span>
             <span id="progressText">0%</span>
             <span class="text-slate-300">•</span>
             <span>Traducido (izq) / Original (der)</span>
@@ -74,35 +76,30 @@
 
   <!-- Reader -->
   <main class="mx-auto max-w-[1700px] px-4 py-4">
+    <form class="hidden">{% csrf_token %}</form>
     <!-- Contenedor principal: sin redondeo -->
     <div id="readerScroll" class="no-radius h-[calc(100vh-6.25rem)] overflow-y-auto bg-white ring-1 ring-slate-200">
       <div class="px-4 py-5">
 
         {% for sec in sections %}
           <!-- Sección: SIN número visible; solo separador sutil entre secciones -->
-          <section class="no-radius">
+          <section class="no-radius" data-section-index="{{ forloop.counter0 }}" data-section-title="{{ sec.title|escape }}">
             <!-- GRID: cada bloque es una fila (2 celdas), altura alineada automáticamente -->
             <div class="space-y-4">
               {% for blk in sec.blocks %}
                 <div class="row grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch"
                      data-s="{{ forloop.parentloop.counter0 }}"
                      data-b="{{ forloop.counter0 }}"
-                     data-idx="{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}">
+                     data-block-id="{{ blk.id }}">
 
                   <!-- IZQUIERDA: traducido (sin línea entre párrafos) -->
-                  <div class="epub-content no-radius bg-white"
-                       data-side="L"
-                       data-s="{{ forloop.parentloop.counter0 }}"
-                       data-b="{{ forloop.counter0 }}">
-                    <div class="text-slate-400 italic">Traduciendo...</div>
+                  <div class="epub-content no-radius bg-white">
+                    {{ blk.translated_html|safe }}
                   </div>
 
                   <!-- DERECHA: original (sin línea entre párrafos) -->
-                  <div class="epub-content no-radius bg-white"
-                       data-side="R"
-                       data-s="{{ forloop.parentloop.counter0 }}"
-                       data-b="{{ forloop.counter0 }}">
-                    {{ blk|safe }}
+                  <div class="epub-content no-radius bg-white">
+                    {{ blk.original_html|safe }}
                   </div>
 
                 </div>
@@ -165,8 +162,13 @@
 
   <script>
     const BOOK_ID = "{{ book_id|escapejs }}";
+    const SAVED_SECTION = {{ saved_progress.section_index|default:0 }};
+    const SAVED_BLOCK = {{ saved_progress.block_index|default:0 }};
+    const SAVED_OFFSET = {{ saved_progress.block_offset_percent|default:0 }};
+    const SAVED_BLOCK_ID = {{ saved_progress.block_id|default:0 }};
     const readerScroll = document.getElementById("readerScroll");
     const progressText = document.getElementById("progressText");
+    const chapterText = document.getElementById("chapterText");
 
     function q(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
 
@@ -200,128 +202,172 @@
       const pct = max > 0 ? Math.min(100, Math.max(0, Math.round((readerScroll.scrollTop / max) * 100))) : 0;
       progressText.textContent = `${pct}%`;
     }
-    readerScroll.addEventListener("scroll", updateProgress);
+    function getCookie(name) {
+      const cookieValue = document.cookie
+        .split(";")
+        .map(c => c.trim())
+        .find(c => c.startsWith(`${name}=`));
+      return cookieValue ? decodeURIComponent(cookieValue.split("=")[1]) : "";
+    }
+
+    function getCsrfToken() {
+      const tokenFromCookie = getCookie("csrftoken");
+      if (tokenFromCookie) return tokenFromCookie;
+      const tokenInput = document.querySelector("input[name=csrfmiddlewaretoken]");
+      return tokenInput ? tokenInput.value : "";
+    }
+
+    const rows = q(".row");
+    const POS_EPSILON = 1;
+    const sections = q("section[data-section-index]");
+    let observedRow = null;
+    let lastSavedKey = "";
+    let saveTimer = null;
+
+    function getTopRow() {
+      if (!rows.length) return null;
+      if (observedRow) return observedRow;
+      const top = readerScroll.scrollTop + POS_EPSILON;
+      for (const row of rows) {
+        const rowTop = row.offsetTop;
+        const rowBottom = rowTop + row.offsetHeight;
+        if (rowTop <= top && rowBottom > top) return row;
+      }
+      for (const row of rows) {
+        if (row.offsetTop > top) return row;
+      }
+      return rows[rows.length - 1];
+    }
+
+    function updateChapter() {
+      const containerTop = readerScroll.getBoundingClientRect().top;
+      let active = sections[0];
+      for (const section of sections) {
+        const top = section.getBoundingClientRect().top - containerTop;
+        if (top <= 40) active = section;
+        else break;
+      }
+      if (active) {
+        const title = active.getAttribute("data-section-title") || "Sección";
+        chapterText.textContent = title;
+      }
+    }
+
+    function buildProgressPayload() {
+      const row = getTopRow();
+      if (!row) return null;
+      const s = row.dataset.s || "0";
+      const b = row.dataset.b || "0";
+      const blockId = row.dataset.blockId || "0";
+      const max = readerScroll.scrollHeight - readerScroll.clientHeight;
+      const pct = max > 0 ? Math.min(100, Math.max(0, Math.round((readerScroll.scrollTop / max) * 100))) : 0;
+      const rowTop = row.offsetTop;
+      const rowHeight = Math.max(1, row.offsetHeight);
+      const offsetPct = Math.min(1, Math.max(0, (readerScroll.scrollTop - rowTop) / rowHeight));
+      return { s, b, pct, offsetPct, blockId };
+    }
+
+    function saveProgress(useBeacon = false) {
+      const payload = buildProgressPayload();
+      if (!payload) return;
+      const { s, b, pct, offsetPct, blockId } = payload;
+      const key = `${blockId}:${pct}:${offsetPct.toFixed(3)}`;
+      if (key === lastSavedKey) return;
+      lastSavedKey = key;
+
+      const body = new URLSearchParams({
+        csrfmiddlewaretoken: getCsrfToken(),
+        section_idx: s,
+        block_idx: b,
+        progress_percent: String(pct),
+        block_offset_percent: String(offsetPct),
+        block_id: String(blockId),
+      });
+
+      const url = `/api/books/${BOOK_ID}/progress/`;
+      if (useBeacon && navigator.sendBeacon) {
+        navigator.sendBeacon(url, body);
+        return;
+      }
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRFToken": getCsrfToken(),
+        },
+        body: body.toString(),
+      });
+    }
+
+    function scheduleSave() {
+      if (saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveProgress, 1200);
+    }
 
     // Imágenes
     function optimizeImgs(root=document) {
       q("img", root).forEach(img => { img.loading = "lazy"; img.decoding = "async"; });
     }
 
-    // Traducción lazy secuencial
-    const done = new Set();
-    const htmlCache = new Map();
-    const queue = [];
-    let running = 0;
-    const MAX_CONCURRENCY = 2;
-    const LOOKAHEAD = 10;
-
-    const rows = q(".row");
-    const keyOfRow = (row) => `${row.dataset.s}:${row.dataset.b}`;
-    let nextPointer = 0;
-
-    function translateUrl(s, b) {
-      return `/api/books/${BOOK_ID}/translate-block/${s}/${b}/`;
-    }
-
-    async function translateOneKey(key) {
-      if (done.has(key)) return;
-      const [sStr, bStr] = key.split(":");
-      const s = parseInt(sStr, 10);
-      const b = parseInt(bStr, 10);
-
-      const left = document.querySelector(`[data-side="L"][data-s="${s}"][data-b="${b}"]`);
-      const right = document.querySelector(`[data-side="R"][data-s="${s}"][data-b="${b}"]`);
-      if (!left || !right) { done.add(key); return; }
-
-      if (htmlCache.has(key)) {
-        left.innerHTML = htmlCache.get(key);
-        done.add(key);
-        optimizeImgs(left);
-        return;
-      }
-
-      left.innerHTML = `<div class="text-slate-400 italic">Traduciendo...</div>`;
-
-      try {
-        const res = await fetch(translateUrl(s, b), { method: "GET", headers: { "Accept": "application/json" } });
-        if (!res.ok) {
-          left.innerHTML = right.innerHTML;
-          htmlCache.set(key, left.innerHTML);
-          done.add(key);
-          optimizeImgs(left);
-          return;
-        }
-
-        const data = await res.json();
-        const html = (data && data.translated_html && data.translated_html.trim())
-          ? data.translated_html
-          : right.innerHTML;
-
-        left.innerHTML = html;
-        htmlCache.set(key, html);
-        done.add(key);
-        optimizeImgs(left);
-      } catch (e) {
-        left.innerHTML = right.innerHTML;
-        htmlCache.set(key, left.innerHTML);
-        done.add(key);
-        optimizeImgs(left);
-      }
-    }
-
-    function pumpQueue() {
-      while (running < MAX_CONCURRENCY && queue.length > 0) {
-        const key = queue.shift();
-        if (done.has(key)) continue;
-        running++;
-        translateOneKey(key).finally(() => {
-          running--;
-          pumpQueue();
-        });
-      }
-    }
-
-    function enqueueSequentialUntil(targetIndexInclusive) {
-      while (nextPointer <= targetIndexInclusive && nextPointer < rows.length) {
-        const key = keyOfRow(rows[nextPointer]);
-        if (!done.has(key)) queue.push(key);
-        nextPointer++;
-      }
-      pumpQueue();
-    }
-
-    function setupObserver() {
-      const io = new IntersectionObserver((entries) => {
-        let maxVisible = -1;
-        for (const e of entries) {
-          if (!e.isIntersecting) continue;
-          const idx = rows.indexOf(e.target);
-          if (idx > maxVisible) maxVisible = idx;
-        }
-        if (maxVisible >= 0) {
-          const target = Math.min(rows.length - 1, maxVisible + LOOKAHEAD);
-          enqueueSequentialUntil(target);
-        }
-      }, {
-        root: readerScroll,
-        rootMargin: "600px 0px 600px 0px",
-        threshold: 0.01
-      });
-
-      rows.forEach(r => io.observe(r));
-    }
-
     document.addEventListener("DOMContentLoaded", async () => {
       applyTypography();
       updateProgress();
       optimizeImgs(document);
+      updateChapter();
 
       if (document.fonts && document.fonts.ready) {
         try { await document.fonts.ready; } catch {}
       }
 
-      setupObserver();
-      enqueueSequentialUntil(Math.min(rows.length - 1, LOOKAHEAD));
+      if (rows.length) {
+        const target = SAVED_BLOCK_ID
+          ? rows.find(r => r.dataset.blockId == String(SAVED_BLOCK_ID))
+          : rows.find(r => r.dataset.s == String(SAVED_SECTION) && r.dataset.b == String(SAVED_BLOCK));
+        if (target) {
+          const targetOffset = Math.max(0, Math.min(1, SAVED_OFFSET || 0));
+          const scrollTo = target.offsetTop + (target.offsetHeight * targetOffset);
+          readerScroll.scrollTop = Math.max(0, scrollTo);
+        }
+      }
+      updateProgress();
+      updateChapter();
+    });
+
+    if (rows.length) {
+      const observer = new IntersectionObserver((entries) => {
+        let best = null;
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          if (!best || entry.intersectionRatio > best.intersectionRatio) {
+            best = entry;
+          }
+        }
+        if (best) observedRow = best.target;
+      }, {
+        root: readerScroll,
+        threshold: [0.25, 0.5, 0.75, 1.0],
+      });
+      rows.forEach(r => observer.observe(r));
+    }
+
+    readerScroll.addEventListener("scroll", () => {
+      updateProgress();
+      updateChapter();
+      scheduleSave();
+    });
+
+    const backLink = document.getElementById("backLink");
+    if (backLink) {
+      backLink.addEventListener("click", () => {
+        saveProgress(true);
+      });
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        saveProgress(true);
+      }
     });
   </script>
 </body>

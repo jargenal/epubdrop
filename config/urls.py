@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("reader.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
 
 # Servir MEDIA en desarrollo

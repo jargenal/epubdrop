@@ -1,3 +1,4 @@
+import html
 import json
 import os
 import re
@@ -536,7 +537,7 @@ def split_section_html_into_blocks(section_html: str) -> List[str]:
         # Texto directo del contenedor -> párrafo
         text = (node.text or "").strip()
         if text:
-            out.append(f"<p>{lxml_html.escape(text)}</p>")
+            out.append(f"<p>{html.escape(text)}</p>")
 
         for child in list(node):
             tag = (child.tag or "").lower()
@@ -560,7 +561,7 @@ def split_section_html_into_blocks(section_html: str) -> List[str]:
             # Tail del hijo -> también puede tener texto
             tail = (child.tail or "").strip()
             if tail:
-                out.append(f"<p>{lxml_html.escape(tail)}</p>")
+                out.append(f"<p>{html.escape(tail)}</p>")
 
         return out
 
