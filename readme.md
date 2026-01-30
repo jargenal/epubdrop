@@ -1,6 +1,6 @@
 # EPUBDrop (Django) — Biblioteca bilingue con traduccion persistente
 
-Proyecto en Django 4.2.27 para **subir EPUBs**, **extraer contenido enriquecido**, y **leerlos en un lector bilingue** con **traduccion local gratuita** usando **LibreTranslate**.  
+Proyecto en Django 4.2.27 para **subir EPUBs**, **extraer contenido enriquecido**, y **leerlos en un lector bilingue** con **traduccion local gratuita** usando **Ollama**.  
 El lector muestra **Original (derecha)** y **Traduccion (izquierda)**, alineado **por bloque/parrafo** (grid 2 columnas).
 
 ---
@@ -48,7 +48,7 @@ El lector muestra **Original (derecha)** y **Traduccion (izquierda)**, alineado 
 - **EPUB parsing**: ebooklib
 - **HTML parsing / normalizacion**: lxml + bleach
 - **Frontend**: Tailwind CDN
-- **Traduccion local**: LibreTranslate (endpoint local)
+- **Traduccion local**: Ollama (endpoint local)
 - **Assets**: `MEDIA_ROOT` + `MEDIA_URL`
 
 ---
@@ -75,7 +75,8 @@ pip install -r requirements.txt
 ```
 
 2) Variables de entorno (ejemplo en `.env.example`):
-- `LIBRETRANSLATE_URL`
+- `OLLAMA_URL`
+- `OLLAMA_MODEL`
 - `EMAIL_*` para SMTP
 
 3) Migraciones:
@@ -103,13 +104,19 @@ python3 manage.py runserver
 
 ---
 
-## 6) LibreTranslate (local)
+## 6) Ollama (local)
 
-Ejemplo con Docker:
+Instalacion (macOS):
 ```
-docker run -d -p 5050:5000 libretranslate/libretranslate
+brew install ollama
+```
+Inicia el servicio y descarga un modelo:
+```
+ollama serve
+ollama pull llama3.1
 ```
 Luego en `.env`:
 ```
-LIBRETRANSLATE_URL=http://127.0.0.1:5050/translate
+OLLAMA_URL=http://127.0.0.1:11434/api/generate
+OLLAMA_MODEL=llama3.1
 ```

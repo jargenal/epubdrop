@@ -16,6 +16,7 @@ urlpatterns = [
         views.save_progress,
         name="save_progress",
     ),
+    path("api/progress/", views.translation_progress, name="translation_progress"),
 
     # Limpiar (borra en disco) - POST
     path("clear/<str:book_id>/", views.clear_book, name="clear_book"),

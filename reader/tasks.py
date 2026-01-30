@@ -7,7 +7,7 @@ from django.db.models import F
 from django.utils import timezone
 
 from .models import Book, Section, Block
-from .utils import translate_html_with_libretranslate
+from .utils import translate_html_with_ollama
 
 
 def start_book_translation_async(book_id: str) -> None:
@@ -47,7 +47,7 @@ def _translate_book(book_id: str) -> None:
 
                 translated_html = ""
                 try:
-                    translated_html = translate_html_with_libretranslate(block.original_html)
+                    translated_html = translate_html_with_ollama(block.original_html)
                     if not translated_html.strip():
                         translated_html = block.original_html
                 except Exception:
@@ -91,7 +91,7 @@ def _send_completion_email(
         subject = f"No se pudo completar la traducción: {book.title}"
         message = (
             f"La traducción no pudo completarse para '{book.title}'.\n"
-            "Revisa la configuración de LibreTranslate o intenta nuevamente."
+            "Revisa la configuración de Ollama o intenta nuevamente."
         )
     else:
         subject = f"Tu libro está listo: {book.title}"

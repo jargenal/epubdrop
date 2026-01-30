@@ -677,29 +677,48 @@ def build_reader_sections_with_blocks_from_spine(
 
 
 # ============================================================
-# LibreTranslate integration (HTML format)
+# Ollama integration (HTML format)
 # ============================================================
 
-def translate_html_with_libretranslate(html: str) -> str:
+def translate_html_with_ollama(html: str) -> str:
     """
-    Translate HTML using a local LibreTranslate endpoint.
-    Endpoint default: http://127.0.0.1:5050/translate
+    Translate HTML using a local Ollama endpoint.
+    Endpoint default: http://127.0.0.1:11434/api/generate
     """
-    endpoint = os.getenv("LIBRETRANSLATE_URL", "http://127.0.0.1:5050/translate")
+    endpoint = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
+    model = os.getenv("OLLAMA_MODEL", "llama3.1")
+
+    prompt = (
+        "Traduce al espanol el siguiente HTML manteniendo etiquetas, estructura y recursos. "
+        "No elimines ni modifiques atributos src/href/data ni elimines <img>, <figure>, <figcaption> o enlaces. "
+        "Devuelve SOLO el HTML traducido, sin explicaciones ni comillas:\n\n"
+        f"{html}"
+    )
 
     r = requests.post(
         endpoint,
-        data={
-            "q": html,
-            "source": "en",
-            "target": "es",
-            "format": "html",
+        json={
+            "model": model,
+            "prompt": prompt,
+            "stream": False,
+            "options": {
+                "temperature": 0,
+            },
         },
-        timeout=60,
+        timeout=120,
     )
     r.raise_for_status()
     data = r.json()
-    return data.get("translatedText", "") or ""
+    translated = (data.get("response", "") or "").strip()
+    if not translated:
+        return ""
+
+    # If the model dropped media tags, keep original block to avoid missing resources.
+    if "<img" in html.lower() and "<img" not in translated.lower():
+        return html
+    if "<figure" in html.lower() and "<figure" not in translated.lower():
+        return html
+    return translated
 
 
 # ============================================================

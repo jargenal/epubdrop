@@ -21,7 +21,7 @@ from .utils import (
     validate_epub_file,
     extract_epub_info_from_path,
     build_reader_sections_with_blocks_from_spine,
-    translate_html_with_libretranslate,
+    translate_html_with_ollama,
 )
 
 
@@ -41,6 +41,24 @@ def _library_context(query: str = "", error: Optional[str] = None, info: Optiona
         "ready_books": ready_books,
         "in_progress_books": in_progress_books,
     }
+
+
+@require_GET
+def translation_progress(request):
+    books = Book.objects.all().order_by("-created_at")
+    in_progress_books = books.exclude(status=Book.Status.READY)
+    payload = []
+    for book in in_progress_books:
+        payload.append({
+            "id": str(book.id),
+            "title": book.title,
+            "authors": book.authors or "Autor desconocido",
+            "status": book.status,
+            "progress_percent": book.progress_percent,
+            "translated_blocks": book.translated_blocks,
+            "total_blocks": book.total_blocks,
+        })
+    return JsonResponse({"in_progress": payload})
 
 
 def _extract_section_title(blocks: list, fallback: str) -> str:
@@ -231,7 +249,7 @@ def translate_block(request, book_id: str, section_idx: int, block_idx: int):
     """
     Traducción lazy por bloque.
     Nunca rompe la lectura:
-      - Si índices fuera de rango o falla LibreTranslate -> retorna HTML original.
+      - Si índices fuera de rango o falla Ollama -> retorna HTML original.
     """
     book = Book.objects.filter(pk=book_id).first()
     if not book:
@@ -250,7 +268,7 @@ def translate_block(request, book_id: str, section_idx: int, block_idx: int):
         return JsonResponse({"ok": True, "translated_html": block.translated_html}, status=200)
 
     try:
-        translated = translate_html_with_libretranslate(original_html)
+        translated = translate_html_with_ollama(original_html)
         if not translated or not translated.strip():
             translated = original_html
         block.translated_html = translated

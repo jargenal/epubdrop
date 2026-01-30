@@ -6,10 +6,52 @@
   <title>{{ title }} • Reader</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Sans:wght@400;500;700&family=IBM+Plex+Serif:wght@400;500;700&family=Lora:wght@400;500;700&family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --border-strong: #cbd5f5;
+      --epub-text: #0f172a;
+      --epub-muted: #334155;
+      --accent: #0f172a;
+    }
+    .theme-dark {
+      color-scheme: dark;
+      --bg: #0b1120;
+      --surface: #111827;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: #1f2937;
+      --border-strong: #334155;
+      --epub-text: #e2e8f0;
+      --epub-muted: #cbd5f5;
+      --accent: #f8fafc;
+    }
+    body { background: var(--bg); color: var(--text); }
+    .theme-dark .bg-white { background-color: var(--surface) !important; }
+    .theme-dark .bg-slate-50 { background-color: #0f172a !important; }
+    .theme-dark .text-slate-900,
+    .theme-dark .text-slate-700,
+    .theme-dark .text-slate-600 { color: var(--text) !important; }
+    .theme-dark .text-slate-500,
+    .theme-dark .text-slate-300 { color: var(--muted) !important; }
+    .theme-dark .border-slate-200,
+    .theme-dark .ring-slate-200 { border-color: var(--border) !important; }
+    .theme-dark .border-slate-200 { border-color: var(--border) !important; }
+    .theme-dark .ring-1 { box-shadow: 0 0 0 1px var(--border) !important; }
+    .theme-dark .hover\:bg-slate-50:hover { background-color: #0b1220 !important; }
+    .theme-dark .bg-black\/40 { background-color: rgba(15, 23, 42, 0.6) !important; }
+
     /* HTML del EPUB: neutral */
-    .epub-content { font-size: inherit; line-height: 1.65; color:#0f172a; }
+    .epub-content { font-size: inherit; line-height: 1.65; color: var(--epub-text); }
     .epub-content b, .epub-content strong { font-weight:700; }
     .epub-content i, .epub-content em { font-style:italic; }
     .epub-content p { margin:.6em 0; }
@@ -21,7 +63,7 @@
     .epub-content img { max-width:100%; height:auto; display:inline-block; }
     .epub-content table { width:100%; border-collapse:collapse; margin:.8em 0; }
     .epub-content th, .epub-content td { border:1px solid rgba(148,163,184,.6); padding:.35rem .5rem; vertical-align:top; }
-    .epub-content blockquote { border-left:3px solid rgba(148,163,184,.7); padding-left:.75rem; margin:.75em 0; color:#334155; }
+    .epub-content blockquote { border-left:3px solid rgba(148,163,184,.7); padding-left:.75rem; margin:.75em 0; color: var(--epub-muted); }
     .epub-content pre { overflow-x:auto; }
     .epub-content pre, .epub-content code { white-space:pre-wrap; word-break:break-word; }
 
@@ -33,7 +75,7 @@
   </style>
 </head>
 
-<body class="min-h-screen bg-slate-50 text-slate-900">
+<body class="min-h-screen bg-slate-50 text-slate-900 theme-light">
 
   <!-- Top bar -->
   <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
@@ -124,7 +166,7 @@
       <div class="flex items-center justify-between border-b border-slate-200 p-4">
         <div>
           <div class="text-sm font-semibold">Configuración</div>
-          <div class="text-xs text-slate-500">Tipografía y tamaño (modo claro)</div>
+          <div class="text-xs text-slate-500">Tipografía, tamaño y tema</div>
         </div>
         <button id="closeConfig"
                 class="bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
@@ -143,9 +185,26 @@
           <label class="block text-xs font-semibold text-slate-600 mb-2">Tipo de letra</label>
           <select id="fontFamily" class="w-full border border-slate-200 bg-white px-3 py-2 text-sm">
             <option value="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">Sans (UI)</option>
+            <option value="'Source Sans 3', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">Source Sans 3</option>
+            <option value="'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">IBM Plex Sans</option>
+            <option value="'Atkinson Hyperlegible', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">Atkinson Hyperlegible</option>
             <option value="ui-serif, Georgia, Cambria, Times New Roman, Times">Serif</option>
+            <option value="'Merriweather', ui-serif, Georgia, Cambria, Times New Roman, Times">Merriweather</option>
+            <option value="'Lora', ui-serif, Georgia, Cambria, Times New Roman, Times">Lora</option>
+            <option value="'Alegreya', ui-serif, Georgia, Cambria, Times New Roman, Times">Alegreya</option>
+            <option value="'IBM Plex Serif', ui-serif, Georgia, Cambria, Times New Roman, Times">IBM Plex Serif</option>
             <option value="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New">Monospace</option>
           </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-2">Tema</label>
+          <select id="themeMode" class="w-full border border-slate-200 bg-white px-3 py-2 text-sm">
+            <option value="light">Claro</option>
+            <option value="dark">Oscuro</option>
+            <option value="system">Sistema</option>
+          </select>
+          <div class="mt-2 text-xs text-slate-500">Actual: <span id="themeModeVal">Claro</span></div>
         </div>
 
         <div class="bg-slate-50 ring-1 ring-slate-200 p-4 text-xs text-slate-600">
@@ -179,6 +238,14 @@
     const fontSize = document.getElementById("fontSize");
     const fontSizeVal = document.getElementById("fontSizeVal");
     const fontFamily = document.getElementById("fontFamily");
+    const themeMode = document.getElementById("themeMode");
+    const themeModeVal = document.getElementById("themeModeVal");
+    const themeMedia = window.matchMedia("(prefers-color-scheme: dark)");
+    const STORAGE_KEYS = {
+      size: "readerFontSize",
+      family: "readerFontFamily",
+      theme: "readerThemeMode",
+    };
 
     function openDrawer(){ overlay.classList.remove("hidden"); document.body.style.overflow="hidden"; }
     function closeDrawer(){ overlay.classList.add("hidden"); document.body.style.overflow=""; }
@@ -192,9 +259,47 @@
       fontSizeVal.textContent = String(size);
       readerScroll.style.fontSize = `${size}px`;
       readerScroll.style.fontFamily = family;
+      saveSettings();
     }
     fontSize.addEventListener("input", applyTypography);
     fontFamily.addEventListener("change", applyTypography);
+
+    function resolveThemeMode(mode) {
+      if (mode === "dark") return "dark";
+      if (mode === "light") return "light";
+      return themeMedia.matches ? "dark" : "light";
+    }
+
+    function applyTheme() {
+      const mode = themeMode.value;
+      const resolved = resolveThemeMode(mode);
+      document.body.classList.toggle("theme-dark", resolved === "dark");
+      document.body.classList.toggle("theme-light", resolved === "light");
+      themeModeVal.textContent = resolved === "dark" ? "Oscuro" : "Claro";
+    }
+
+    function saveSettings() {
+      localStorage.setItem(STORAGE_KEYS.size, fontSize.value);
+      localStorage.setItem(STORAGE_KEYS.family, fontFamily.value);
+      localStorage.setItem(STORAGE_KEYS.theme, themeMode.value);
+    }
+
+    function loadSettings() {
+      const savedSize = localStorage.getItem(STORAGE_KEYS.size);
+      const savedFamily = localStorage.getItem(STORAGE_KEYS.family);
+      const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
+      if (savedSize) fontSize.value = savedSize;
+      if (savedFamily) fontFamily.value = savedFamily;
+      if (savedTheme) themeMode.value = savedTheme;
+    }
+
+    themeMode.addEventListener("change", () => {
+      applyTheme();
+      saveSettings();
+    });
+    themeMedia.addEventListener("change", () => {
+      if (themeMode.value === "system") applyTheme();
+    });
 
     // Progreso
     function updateProgress() {
@@ -311,7 +416,10 @@
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
+      loadSettings();
       applyTypography();
+      applyTheme();
+      saveSettings();
       updateProgress();
       optimizeImgs(document);
       updateChapter();
