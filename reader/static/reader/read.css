@@ -45,6 +45,15 @@ h4 {
   background-color: var(--surface) !important;
 }
 
+.theme-dark .bg-white\/90,
+.theme-dark .bg-white\/80,
+.theme-dark .bg-white\/70,
+[data-theme="dark"] .bg-white\/90,
+[data-theme="dark"] .bg-white\/80,
+[data-theme="dark"] .bg-white\/70 {
+  background-color: rgba(11, 18, 32, 0.92) !important;
+}
+
 .theme-dark .bg-slate-50,
 [data-theme="dark"] .bg-slate-50 {
   background-color: #0b1220 !important;

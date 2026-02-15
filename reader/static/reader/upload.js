@@ -175,7 +175,11 @@ if (!hasProgressItems) {
 const libraryList = document.getElementById("libraryList");
 const viewButtons = Array.from(document.querySelectorAll(".view-btn"));
 const LIBRARY_VIEW_KEY = "epubdropLibraryView";
-const allowedViews = new Set(["mosaico", "detalle", "columna", "galeria"]);
+const allowedViews = new Set(["mosaico", "galeria"]);
+const sectionButtons = Array.from(document.querySelectorAll("[data-home-section]"));
+const sectionPanels = Array.from(document.querySelectorAll("[data-home-panel]"));
+const HOME_SECTION_KEY = "epubdropHomeSection";
+const allowedSections = new Set(["biblioteca", "carga-metricas"]);
 
 function setLibraryView(view) {
   if (!libraryList || !allowedViews.has(view)) return;
@@ -191,6 +195,25 @@ if (libraryList && viewButtons.length) {
   setLibraryView(allowedViews.has(initial) ? initial : "mosaico");
   viewButtons.forEach((btn) => {
     btn.addEventListener("click", () => setLibraryView(btn.dataset.view || "mosaico"));
+  });
+}
+
+function setHomeSection(section) {
+  if (!allowedSections.has(section)) return;
+  sectionButtons.forEach((btn) => {
+    btn.dataset.active = btn.dataset.homeSection === section ? "1" : "0";
+  });
+  sectionPanels.forEach((panel) => {
+    panel.classList.toggle("hidden", panel.dataset.homePanel !== section);
+  });
+  localStorage.setItem(HOME_SECTION_KEY, section);
+}
+
+if (sectionButtons.length && sectionPanels.length) {
+  const initialSection = localStorage.getItem(HOME_SECTION_KEY) || "biblioteca";
+  setHomeSection(allowedSections.has(initialSection) ? initialSection : "biblioteca");
+  sectionButtons.forEach((btn) => {
+    btn.addEventListener("click", () => setHomeSection(btn.dataset.homeSection || "biblioteca"));
   });
 }
 

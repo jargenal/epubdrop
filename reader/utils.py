@@ -318,11 +318,21 @@ def _find_cover_id_from_opf_meta(book: epub.EpubBook) -> Optional[str]:
     try:
         metas = book.get_metadata("OPF", "meta")
         for meta in metas:
-            # meta is tuple like (attrs_dict, value)
-            attrs = meta[0] if meta else {}
-            if isinstance(attrs, dict):
-                if attrs.get("name") == "cover" and attrs.get("content"):
-                    return attrs["content"]
+            attrs: Dict[str, Any] = {}
+            if isinstance(meta, tuple):
+                for part in meta:
+                    if isinstance(part, dict):
+                        attrs = part
+                        break
+            elif isinstance(meta, dict):
+                attrs = meta
+
+            if not attrs:
+                continue
+
+            name = (attrs.get("name") or "").strip().lower()
+            if name == "cover" and attrs.get("content"):
+                return str(attrs["content"]).strip()
     except Exception:
         pass
     return None
@@ -332,27 +342,52 @@ def _pick_cover_item(book: epub.EpubBook):
     """
     Try multiple strategies to locate cover item.
     """
-    # 1) ebooklib cover type
-    try:
-        for it in book.get_items_of_type(ITEM_IMAGE):
-            # some ebooks mark cover in id/name
-            name = (it.get_name() or "").lower()
-            if "cover" in name:
-                return it
-    except Exception:
-        pass
-
-    # 2) meta cover id
+    # 1) OPF meta cover id
     cover_id = _find_cover_id_from_opf_meta(book)
     if cover_id:
         try:
             it = book.get_item_with_id(cover_id)
-            if it:
+            if it and _item_media_type(it).lower().startswith("image/"):
                 return it
         except Exception:
             pass
 
-    # 3) book.get_cover() sometimes works
+    # 2) image-like candidates by id/name hints.
+    # ebooklib may expose cover as ITEM_COVER (type 10), not ITEM_IMAGE.
+    candidates: List[Tuple[int, Any]] = []
+    try:
+        for it in book.get_items():
+            mt = _item_media_type(it).lower()
+            if not mt.startswith("image/"):
+                continue
+
+            item_id = str(getattr(it, "id", "") or "").lower()
+            name = (it.get_name() or "").lower()
+            score = 0
+
+            if "cover" in item_id or "cover" in name:
+                score += 100
+            if "front" in item_id or "front" in name:
+                score += 80
+            if "titlepage" in name:
+                score += 20
+
+            # Prefer true cover type when available (ebooklib ITEM_COVER == 10)
+            try:
+                if int(it.get_type()) == 10:
+                    score += 60
+            except Exception:
+                pass
+
+            candidates.append((score, it))
+    except Exception:
+        pass
+
+    if candidates:
+        candidates.sort(key=lambda row: row[0], reverse=True)
+        return candidates[0][1]
+
+    # 3) book.get_cover() when available
     try:
         # returns (file_name, content)
         cov = book.get_cover()
@@ -872,7 +907,7 @@ def translate_html_with_ollama(html: str, *, force_refresh: bool = False) -> str
         return original_html
 
     endpoint = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
-    model = os.getenv("OLLAMA_MODEL", "llama3.1")
+    model = os.getenv("OLLAMA_MODEL", "translategemma:4b")
     timeout_seconds = int(os.getenv("OLLAMA_TIMEOUT_SECONDS", "120"))
     max_retries = max(1, int(os.getenv("OLLAMA_MAX_RETRIES", "3")))
     retry_base_seconds = max(0.1, float(os.getenv("OLLAMA_RETRY_BASE_SECONDS", "0.6")))

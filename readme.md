@@ -5,8 +5,15 @@ EPUBDrop es una aplicación Django para cargar EPUBs, traducirlos con Ollama y l
 ## Características del proyecto
 
 - Biblioteca personal con autenticación por usuario.
+- Biblioteca rediseñada con dos secciones principales:
+  - `Tu Biblioteca` (sección con énfasis visual para exploración/lectura)
+  - `Carga y Métricas` (sección compacta con carga, métricas y trabajos en traducción)
 - Carga de EPUB con validación (extensión, MIME, ZIP/mimetype interno).
 - Extracción de assets (imágenes, estilos, fuentes) a `media/epub_assets/<book_id>/`.
+- Detección robusta de portada EPUB:
+  - soporta metadata OPF en distintos formatos (`meta name=cover`)
+  - considera ítems tipo cover y no solo tipo image
+  - fallback por heurísticas en `id/name` (`cover`, `front`, `titlepage`)
 - Persistencia por bloques:
   - `Book`, `Section`, `Block`
   - traducción HTML por bloque
@@ -48,6 +55,17 @@ El pipeline de traducción incluye controles para evitar respuestas “descripti
 - Frontend con templates Django + Tailwind CDN + JS/CSS estáticos
 - Ollama local (`/api/generate`)
 
+## Biblioteca (UI)
+
+- Vista `Tu Biblioteca` enfocada en catálogo:
+  - tarjetas alineadas en `Mosaico` y `Galería`
+  - contenido por tarjeta: portada, título y acciones
+  - se removieron vistas `Detalle` y `Columna`
+- Vista `Carga y Métricas` compacta:
+  - formulario de carga
+  - métricas operativas
+  - lista `En traducción`
+
 ## Estructura relevante
 
 - `config/`: settings y rutas globales.
@@ -71,7 +89,7 @@ pip install -r requirements.txt
 
 ```env
 OLLAMA_URL=http://127.0.0.1:11434/api/generate
-OLLAMA_MODEL=llama3.1:8b
+OLLAMA_MODEL=translategemma:4b
 OLLAMA_TIMEOUT_SECONDS=120
 OLLAMA_MAX_RETRIES=3
 OLLAMA_RETRY_BASE_SECONDS=0.6
@@ -89,7 +107,7 @@ python manage.py runserver
 ```bash
 brew install ollama
 ollama serve
-ollama pull llama3.1:8b
+ollama pull translategemma:4b
 ```
 
 ## Auditoría de traducciones
