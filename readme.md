@@ -1,122 +1,130 @@
-# EPUBDrop (Django) — Biblioteca bilingue con traduccion persistente
+# EPUBDrop
 
-Proyecto en Django 4.2.27 para **subir EPUBs**, **extraer contenido enriquecido**, y **leerlos en un lector bilingue** con **traduccion local gratuita** usando **Ollama**.  
-El lector muestra **Original (derecha)** y **Traduccion (izquierda)**, alineado **por bloque/parrafo** (grid 2 columnas).
+EPUBDrop es una aplicación Django para cargar EPUBs, traducirlos con Ollama y leerlos en formato bilingüe con persistencia de progreso.
 
----
+## Características del proyecto
 
-## 1) Funcionalidades actuales
+- Biblioteca personal con autenticación por usuario.
+- Carga de EPUB con validación (extensión, MIME, ZIP/mimetype interno).
+- Extracción de assets (imágenes, estilos, fuentes) a `media/epub_assets/<book_id>/`.
+- Persistencia por bloques:
+  - `Book`, `Section`, `Block`
+  - traducción HTML por bloque
+  - progreso de lectura por usuario (`ReadingProgress`)
+  - bookmarks por bloque
+- Lector bilingüe en dos columnas:
+  - izquierda traducido, derecha original
+  - preservación de estructura HTML (títulos, listas, tablas, imágenes, enlaces)
+  - scroll, TOC, búsqueda y bookmarks
+- Tema visual claro/oscuro y selector persistente.
+- Guardado de progreso robusto:
+  - guardado remoto en backend
+  - respaldo local por libro si falla red
+  - indicador visual de estado de guardado
+- Traducción async por libro (hilo de background).
+- Caché de traducción (`TranslationCache`) para evitar retraducciones innecesarias.
 
-### ✅ Implementado
-- **Biblioteca estilo Kindle** (pagina de inicio):
-  - lista de libros listos
-  - seccion de carga integrada
-  - buscador por titulo o autor
-  - estado y progreso de traduccion
-- **Upload de EPUB** (drag & drop) + validacion:
-  - extension `.epub`
-  - validacion basica de MIME y cabecera ZIP
-- **Guardado en disco** del EPUB y assets extraidos
-- **Persistencia en base de datos**:
-  - libros, metadata, secciones y bloques
-  - traducciones por bloque
-  - progreso de lectura por usuario
-- **Traduccion async** por bloques (background thread)
-- **Notificacion por email** al finalizar traduccion (o fallo)
-- **Lector bilingue (read.html)**:
-  - 2 columnas: traduccion / original
-  - alineacion por bloque/parrafo con CSS Grid
-  - tipografia configurable (familia y tamanio)
-  - lectura limpia (sin tarjetas, sin redondeos)
-- **Progreso de lectura persistente**:
-  - guarda el bloque actual y offset dentro del parrafo
-  - restaura el punto exacto al volver
-- **Boton Limpiar** (borra disco + DB del libro)
+## Calidad de traducción y prevención de fallos
 
-### 🔜 Pendiente / futuro
-- Navegacion por TOC
-- Busqueda dentro del libro (original/traduccion)
-- Bookmarks y notas
-- Batch translation con cola (Celery/RQ)
+El pipeline de traducción incluye controles para evitar respuestas “descriptivas” del modelo (por ejemplo: “No hay contenido HTML para traducir…”):
 
----
+- Validación estructural de salida traducida:
+  - rechaza salida vacía
+  - rechaza texto meta/descriptivo/refusal
+  - exige conservación de etiquetas estructurales
+  - valida preservación de `img[src]` y `a[href]`
+- Reintentos inteligentes con prompt reforzado cuando una salida es inválida.
+- Si todos los reintentos fallan, usa fallback seguro al HTML original del bloque.
+- Validación del caché:
+  - si una entrada cacheada resulta inválida, se descarta y se regenera.
+- Sanitización/auditoría post-traducción para reparar bloques inválidos sin borrar trabajo correcto.
 
-## 2) Stack tecnico
+## Stack técnico
 
-- **Python**: 3.9.x
-- **Django**: 4.2.27
-- **EPUB parsing**: ebooklib
-- **HTML parsing / normalizacion**: lxml + bleach
-- **Frontend**: Tailwind CDN
-- **Traduccion local**: Ollama (endpoint local)
-- **Assets**: `MEDIA_ROOT` + `MEDIA_URL`
+- Python 3.9+
+- Django 4.2.x
+- SQLite (default)
+- ebooklib + lxml + bleach
+- Frontend con templates Django + Tailwind CDN + JS/CSS estáticos
+- Ollama local (`/api/generate`)
 
----
+## Estructura relevante
 
-## 3) Estructura de proyecto (referencial)
+- `config/`: settings y rutas globales.
+- `reader/models.py`: entidades principales.
+- `reader/views.py`: biblioteca, lectura, APIs de progreso/bookmarks/métricas.
+- `reader/tasks.py`: traducción async por libro y sanitización post-proceso.
+- `reader/utils.py`: parsing EPUB, traducción con Ollama, validación/sanitización.
+- `reader/management/commands/audit_translations.py`: auditoría manual de traducciones.
 
-- `config/` -> settings principales
-- `reader/` -> app principal
-  - `models.py` -> Book, Section, Block, ReadingProgress, CustomUser
-  - `views.py` -> upload, lectura, progreso, limpieza
-  - `tasks.py` -> traduccion async + email
-  - `templates/reader/` -> biblioteca y lector
-- `media/` -> EPUBs y assets extraidos
+## Configuración rápida
 
----
+1. Crear entorno e instalar dependencias
 
-## 4) Configuracion rapida
-
-1) Crear entorno virtual e instalar dependencias:
-```
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-2) Variables de entorno (ejemplo en `.env.example`):
-- `OLLAMA_URL`
-- `OLLAMA_MODEL`
-- `EMAIL_*` para SMTP
+2. Variables de entorno (`.env`)
 
-3) Migraciones:
-```
-python3 manage.py migrate
-```
-
-4) Crear superusuario:
-```
-python3 manage.py createsuperuser
-```
-
-5) Ejecutar servidor:
-```
-python3 manage.py runserver
-```
-
----
-
-## 5) Notas importantes
-
-- Autenticacion por **email** (CustomUser) como `USERNAME_FIELD`.
-- Progreso de lectura se guarda por usuario (no por session).
-- Si cambias el user model en un proyecto ya existente, se recomienda partir de una DB limpia.
-
----
-
-## 6) Ollama (local)
-
-Instalacion (macOS):
-```
-brew install ollama
-```
-Inicia el servicio y descarga un modelo:
-```
-ollama serve
-ollama pull llama3.1
-```
-Luego en `.env`:
-```
+```env
 OLLAMA_URL=http://127.0.0.1:11434/api/generate
-OLLAMA_MODEL=llama3.1
+OLLAMA_MODEL=llama3.1:8b
+OLLAMA_TIMEOUT_SECONDS=120
+OLLAMA_MAX_RETRIES=3
+OLLAMA_RETRY_BASE_SECONDS=0.6
 ```
+
+3. Migraciones y arranque
+
+```bash
+python manage.py migrate
+python manage.py runserver
+```
+
+## Ollama
+
+```bash
+brew install ollama
+ollama serve
+ollama pull llama3.1:8b
+```
+
+## Auditoría de traducciones
+
+La auditoría repara bloques inválidos sin eliminar traducciones válidas.
+
+### 1) Auditar un libro específico
+
+```bash
+.venv/bin/python manage.py audit_translations --book-id <BOOK_UUID>
+```
+
+Salida esperada (ejemplo):
+
+```text
+[<BOOK_UUID>] scanned=5074 valid=5039 repaired=35 fallback_original=0
+TOTAL books=1 scanned=5074 valid=5039 repaired=35 fallback_original=0
+```
+
+### 2) Auditar todos los libros listos
+
+```bash
+.venv/bin/python manage.py audit_translations --all-ready
+```
+
+### 3) Flujo recomendado de auditoría
+
+1. Ejecuta auditoría por libro si detectas inconsistencias puntuales.
+2. Ejecuta auditoría global (`--all-ready`) después de cambios de prompt/modelo.
+3. Revisa campos `repaired` y `fallback_original` en la salida:
+   - `repaired > 0`: se corrigieron bloques inválidos.
+   - `fallback_original > 0`: hubo bloques que no se pudieron retraducir y se dejó original para evitar basura.
+
+## Notas operativas
+
+- Cerrar el navegador no detiene traducciones si el proceso Django sigue vivo.
+- Si se detiene el proceso Django durante traducción, el hilo async se corta.
+- Para operaciones de reparación masiva, mantén Ollama activo antes de ejecutar auditorías.

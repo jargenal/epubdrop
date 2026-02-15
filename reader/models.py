@@ -66,6 +66,13 @@ class Book(models.Model):
         FAILED = "failed", "Failed"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="books",
+        null=True,
+        blank=True,
+    )
     title = models.CharField(max_length=255, default="Libro")
     authors = models.CharField(max_length=512, blank=True)
     description_html = models.TextField(blank=True)
@@ -135,3 +142,44 @@ class ReadingProgress(models.Model):
 
     def __str__(self) -> str:
         return f"{self.book_id}:{self.user_id}"
+
+
+class TranslationCache(models.Model):
+    content_hash = models.CharField(max_length=64, db_index=True)
+    model_name = models.CharField(max_length=120, db_index=True)
+    translated_html = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["content_hash", "model_name"],
+                name="uniq_translation_cache_hash_model",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.model_name}:{self.content_hash[:12]}"
+
+
+class Bookmark(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="bookmarks")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="bookmarks")
+    block = models.ForeignKey(Block, on_delete=models.CASCADE, related_name="bookmarks")
+    section_index = models.PositiveIntegerField(default=0)
+    block_index = models.PositiveIntegerField(default=0)
+    label = models.CharField(max_length=200, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["book", "user", "block"],
+                name="uniq_bookmark_per_user_block",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.book_id}:{self.user_id}:{self.block_id}"

@@ -1,9 +1,13 @@
 import html
+import hashlib
 import json
+import logging
 import os
+import random
 import re
 import requests
 import shutil
+import time
 import zipfile
 import xml.etree.ElementTree as ET
 
@@ -13,6 +17,11 @@ from lxml import html as lxml_html
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urljoin, urlparse
+
+from .logging_utils import log_event
+from .models import TranslationCache
+
+logger = logging.getLogger(__name__)
 
 # ============================================================
 # HTML sanitization (trusted EPUBs) + optional CSS sanitization
@@ -680,21 +689,159 @@ def build_reader_sections_with_blocks_from_spine(
 # Ollama integration (HTML format)
 # ============================================================
 
-def translate_html_with_ollama(html: str) -> str:
-    """
-    Translate HTML using a local Ollama endpoint.
-    Endpoint default: http://127.0.0.1:11434/api/generate
-    """
-    endpoint = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
-    model = os.getenv("OLLAMA_MODEL", "llama3.1")
+TRANSLATION_FAILURE_MARKERS = [
+    "no puedo traducir",
+    "no se puede traducir",
+    "no puedo proporcionar",
+    "no puedo ayudar",
+    "i can't translate",
+    "cannot translate",
+    "as an ai",
+    "lo siento",
+    "no hay contenido html para traducir",
+    "el fragmento proporcionado",
+    "si deseas que traduzca",
+    "por favor proporciona",
+    "no content to translate",
+    "please provide the full text",
+    "if you want me to translate",
+    "cannot process the provided html",
+]
 
-    prompt = (
-        "Traduce al espanol el siguiente HTML manteniendo etiquetas, estructura y recursos. "
-        "No elimines ni modifiques atributos src/href/data ni elimines <img>, <figure>, <figcaption> o enlaces. "
-        "Devuelve SOLO el HTML traducido, sin explicaciones ni comillas:\n\n"
-        f"{html}"
+STRUCTURAL_TAGS = [
+    "h1", "h2", "h3", "h4", "h5", "h6",
+    "blockquote", "pre", "code",
+    "ul", "ol", "li",
+    "table", "thead", "tbody", "tfoot", "tr", "th", "td",
+    "figure", "figcaption", "img",
+]
+
+
+def _normalize_for_hash(html_fragment: str) -> str:
+    return re.sub(r"\s+", " ", (html_fragment or "").strip())
+
+
+def _content_hash(html_fragment: str) -> str:
+    normalized = _normalize_for_hash(html_fragment)
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def _strip_code_fences(text: str) -> str:
+    out = (text or "").strip()
+    if out.startswith("```"):
+        out = re.sub(r"^```[a-zA-Z0-9_-]*\n?", "", out)
+        out = re.sub(r"\n?```$", "", out)
+    return out.strip()
+
+
+def _inner_html(node) -> str:
+    parts: List[str] = []
+    if node.text:
+        parts.append(node.text)
+    for child in list(node):
+        parts.append(lxml_html.tostring(child, encoding="unicode", with_tail=True))
+    return "".join(parts).strip()
+
+
+def _extract_wrapped_translation(response_text: str) -> str:
+    wrapped = _strip_code_fences(response_text)
+    try:
+        fragment = lxml_html.fragment_fromstring(wrapped, create_parent=True)
+        root = fragment.get_element_by_id("__epubdrop_root__")
+        return _inner_html(root)
+    except Exception:
+        return wrapped
+
+
+def _has_translatable_text(html_fragment: str) -> bool:
+    if not html_fragment or not html_fragment.strip():
+        return False
+    try:
+        fragment = lxml_html.fragment_fromstring(html_fragment, create_parent=True)
+        text = " ".join(t.strip() for t in fragment.itertext() if t and t.strip())
+    except Exception:
+        text = re.sub(r"<[^>]+>", " ", html_fragment)
+        text = re.sub(r"\s+", " ", text).strip()
+    return bool(re.search(r"[A-Za-zÀ-ÿ]", text or ""))
+
+
+def _tag_counts(html_fragment: str, tags: List[str]) -> Dict[str, int]:
+    out = {tag: 0 for tag in tags}
+    try:
+        fragment = lxml_html.fragment_fromstring(html_fragment, create_parent=True)
+    except Exception:
+        return out
+    for tag in tags:
+        out[tag] = len(fragment.xpath(f".//{tag}"))
+    return out
+
+
+def _attr_values(html_fragment: str, tag: str, attr: str) -> set[str]:
+    try:
+        fragment = lxml_html.fragment_fromstring(html_fragment, create_parent=True)
+    except Exception:
+        return set()
+    values = fragment.xpath(f".//{tag}/@{attr}")
+    return {v.strip() for v in values if isinstance(v, str) and v.strip()}
+
+
+def _build_translation_prompt(original_html: str, attempt: int, invalid_reason: str = "") -> str:
+    extra = ""
+    if attempt > 1:
+        reason_line = f"Razón de invalidez anterior: {invalid_reason}.\n" if invalid_reason else ""
+        extra = (
+            "\nCORRECCIÓN ESTRICTA (reintento):\n"
+            f"{reason_line}"
+            "- Si no puedes traducir un nodo, devuelve ESE nodo exacto sin explicación.\n"
+            "- Nunca escribas metacomentarios del tipo 'No hay contenido HTML'.\n"
+            "- Si hay solo un título (h1-h6), traduce únicamente su texto y conserva la etiqueta.\n"
+            "- Si hay enlaces o imágenes, conserva src/href/atributos intactos.\n"
+        )
+
+    return (
+        "Traduce al espanol el contenido HTML conservando la estructura visual y semantica.\n"
+        "REGLAS OBLIGATORIAS:\n"
+        "1) Devuelve SOLO HTML valido, sin markdown, sin comillas y sin explicaciones.\n"
+        "2) Conserva TODAS las etiquetas y su jerarquia (h1-h6, p, ul/ol/li, table, blockquote, pre, code, figure, figcaption, img, a).\n"
+        "3) No elimines ni cambies atributos de recursos: src, href, width, height, class, id, style.\n"
+        "4) No inventes mensajes tipo 'no puedo traducir' ni des instrucciones al usuario.\n"
+        "5) No elimines imagenes ni enlaces."
+        f"{extra}\n\n"
+        "HTML de entrada (mantener el contenedor con id):\n"
+        f"<div id=\"__epubdrop_root__\">{original_html}</div>"
     )
 
+
+def _translation_is_valid(original_html: str, translated_html: str) -> Tuple[bool, str]:
+    translated = (translated_html or "").strip()
+    if not translated:
+        return False, "empty_translation"
+
+    low = translated.lower()
+    if any(marker in low for marker in TRANSLATION_FAILURE_MARKERS):
+        return False, "descriptive_or_refusal_text"
+
+    original_counts = _tag_counts(original_html, STRUCTURAL_TAGS)
+    translated_counts = _tag_counts(translated, STRUCTURAL_TAGS)
+
+    for tag in STRUCTURAL_TAGS:
+        if original_counts[tag] > 0 and translated_counts[tag] < original_counts[tag]:
+            return False, f"missing_structural_tag:{tag}"
+
+    original_img_srcs = _attr_values(original_html, "img", "src")
+    translated_img_srcs = _attr_values(translated, "img", "src")
+    if original_img_srcs and not original_img_srcs.issubset(translated_img_srcs):
+        return False, "missing_image_sources"
+
+    original_hrefs = _attr_values(original_html, "a", "href")
+    translated_hrefs = _attr_values(translated, "a", "href")
+    if original_hrefs and not original_hrefs.issubset(translated_hrefs):
+        return False, "missing_link_hrefs"
+
+    return True, ""
+
+
+def _post_ollama(endpoint: str, model: str, prompt: str, timeout_seconds: int) -> str:
     r = requests.post(
         endpoint,
         json={
@@ -705,20 +852,122 @@ def translate_html_with_ollama(html: str) -> str:
                 "temperature": 0,
             },
         },
-        timeout=120,
+        timeout=timeout_seconds,
     )
     r.raise_for_status()
     data = r.json()
-    translated = (data.get("response", "") or "").strip()
-    if not translated:
+    return (data.get("response", "") or "").strip()
+
+
+def translate_html_with_ollama(html: str, *, force_refresh: bool = False) -> str:
+    """
+    Translate HTML using a local Ollama endpoint.
+    Endpoint default: http://127.0.0.1:11434/api/generate
+    """
+    original_html = (html or "").strip()
+    if not original_html:
         return ""
 
-    # If the model dropped media tags, keep original block to avoid missing resources.
-    if "<img" in html.lower() and "<img" not in translated.lower():
-        return html
-    if "<figure" in html.lower() and "<figure" not in translated.lower():
-        return html
-    return translated
+    if not _has_translatable_text(original_html):
+        return original_html
+
+    endpoint = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
+    model = os.getenv("OLLAMA_MODEL", "llama3.1")
+    timeout_seconds = int(os.getenv("OLLAMA_TIMEOUT_SECONDS", "120"))
+    max_retries = max(1, int(os.getenv("OLLAMA_MAX_RETRIES", "3")))
+    retry_base_seconds = max(0.1, float(os.getenv("OLLAMA_RETRY_BASE_SECONDS", "0.6")))
+
+    cache_hash = _content_hash(original_html)
+    cached = TranslationCache.objects.filter(content_hash=cache_hash, model_name=model).first()
+    if cached and cached.translated_html.strip() and not force_refresh:
+        ok_cached, _ = _translation_is_valid(original_html, cached.translated_html)
+        if ok_cached:
+            return cached.translated_html
+        cached.delete()
+
+    last_error: Optional[Exception] = None
+    last_invalid_reason = ""
+    for attempt in range(1, max_retries + 1):
+        try:
+            prompt = _build_translation_prompt(original_html, attempt=attempt, invalid_reason=last_invalid_reason)
+            raw_response = _post_ollama(endpoint, model, prompt, timeout_seconds=timeout_seconds)
+            translated_candidate = _extract_wrapped_translation(raw_response)
+
+            is_valid, invalid_reason = _translation_is_valid(original_html, translated_candidate)
+            if is_valid:
+                TranslationCache.objects.update_or_create(
+                    content_hash=cache_hash,
+                    model_name=model,
+                    defaults={"translated_html": translated_candidate},
+                )
+                return translated_candidate
+
+            last_invalid_reason = invalid_reason
+            raise ValueError("invalid_translation_shape")
+        except (requests.RequestException, ValueError) as exc:
+            last_error = exc
+            if attempt >= max_retries:
+                break
+            delay = retry_base_seconds * (2 ** (attempt - 1))
+            delay += random.uniform(0, retry_base_seconds / 3.0)
+            time.sleep(delay)
+
+    log_event(
+        logger,
+        logging.WARNING,
+        "translation.request.fallback",
+        model=model,
+        endpoint=endpoint,
+        retries=max_retries,
+        error=str(last_error) if last_error else "",
+    )
+    return original_html
+
+
+def sanitize_book_translations(book_id: str, *, force_refresh: bool = True) -> Dict[str, int]:
+    """
+    Revisa traducciones de un libro y corrige bloques inválidos sin borrar trabajo válido.
+    """
+    from .models import Block
+
+    stats = {
+        "scanned": 0,
+        "valid": 0,
+        "repaired": 0,
+        "fallback_original": 0,
+    }
+
+    blocks = (
+        Block.objects
+        .filter(section__book_id=book_id)
+        .select_related("section")
+        .order_by("section__index", "index")
+    )
+    for block in blocks:
+        stats["scanned"] += 1
+        original_html = (block.original_html or "").strip()
+        translated_html = (block.translated_html or "").strip()
+
+        is_valid, _ = _translation_is_valid(original_html, translated_html)
+        if is_valid:
+            stats["valid"] += 1
+            continue
+
+        repaired = translate_html_with_ollama(original_html, force_refresh=force_refresh).strip()
+        repaired_ok, _ = _translation_is_valid(original_html, repaired)
+        if repaired_ok:
+            if repaired != translated_html:
+                block.translated_html = repaired
+                block.save(update_fields=["translated_html"])
+            stats["repaired"] += 1
+            continue
+
+        if translated_html != original_html:
+            block.translated_html = original_html
+            block.save(update_fields=["translated_html"])
+        stats["fallback_original"] += 1
+
+    return stats
 
 
 # ============================================================

@@ -1,5 +1,7 @@
 import shutil
 import uuid
+import logging
+from datetime import timedelta
 from pathlib import Path
 from typing import Optional
 
@@ -7,15 +9,17 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Avg, Q, Sum
 from django.http import Http404, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+from django.utils import timezone
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 from lxml import html as lxml_html
 
-from .models import Book, Section, Block, ReadingProgress
+from .models import Block, Book, Bookmark, ReadingProgress, Section
+from .logging_utils import log_event
 from .tasks import start_book_translation_async
 from .utils import (
     validate_epub_file,
@@ -24,9 +28,11 @@ from .utils import (
     translate_html_with_ollama,
 )
 
+logger = logging.getLogger(__name__)
 
-def _library_context(query: str = "", error: Optional[str] = None, info: Optional[str] = None) -> dict:
-    books = Book.objects.all().order_by("-created_at")
+
+def _library_context(user, query: str = "", error: Optional[str] = None, info: Optional[str] = None) -> dict:
+    books = Book.objects.filter(owner=user).order_by("-created_at")
     if query:
         books = books.filter(
             Q(title__icontains=query)
@@ -44,8 +50,9 @@ def _library_context(query: str = "", error: Optional[str] = None, info: Optiona
 
 
 @require_GET
+@login_required
 def translation_progress(request):
-    books = Book.objects.all().order_by("-created_at")
+    books = Book.objects.filter(owner=request.user).order_by("-created_at")
     in_progress_books = books.exclude(status=Book.Status.READY)
     payload = []
     for book in in_progress_books:
@@ -58,7 +65,71 @@ def translation_progress(request):
             "translated_blocks": book.translated_blocks,
             "total_blocks": book.total_blocks,
         })
+    log_event(
+        logger,
+        logging.INFO,
+        "library.translation_progress",
+        user_id=request.user.id,
+        in_progress=len(payload),
+    )
     return JsonResponse({"in_progress": payload})
+
+
+@require_GET
+@login_required
+def metrics_summary(request):
+    books = Book.objects.filter(owner=request.user)
+    now = timezone.now()
+    last_7_days = now - timedelta(days=7)
+
+    total_books = books.count()
+    ready_books = books.filter(status=Book.Status.READY).count()
+    translating_books = books.filter(status=Book.Status.TRANSLATING).count()
+    failed_books = books.filter(status=Book.Status.FAILED).count()
+
+    agg_blocks = books.aggregate(
+        total_blocks=Sum("total_blocks"),
+        translated_blocks=Sum("translated_blocks"),
+    )
+    total_blocks = int(agg_blocks.get("total_blocks") or 0)
+    translated_blocks = int(agg_blocks.get("translated_blocks") or 0)
+    translated_percent = int((translated_blocks / total_blocks) * 100) if total_blocks > 0 else 0
+
+    avg_progress = (
+        ReadingProgress.objects.filter(user=request.user, book__owner=request.user)
+        .aggregate(avg=Avg("progress_percent"))
+        .get("avg")
+    )
+    avg_progress = float(avg_progress or 0.0)
+
+    bookmarks_count = Bookmark.objects.filter(user=request.user, book__owner=request.user).count()
+    uploads_last_7_days = books.filter(created_at__gte=last_7_days).count()
+    completed_last_7_days = books.filter(
+        status=Book.Status.READY,
+        updated_at__gte=last_7_days,
+    ).count()
+
+    payload = {
+        "total_books": total_books,
+        "ready_books": ready_books,
+        "translating_books": translating_books,
+        "failed_books": failed_books,
+        "total_blocks": total_blocks,
+        "translated_blocks": translated_blocks,
+        "translated_percent": translated_percent,
+        "avg_reading_progress_percent": round(avg_progress, 1),
+        "bookmarks_count": bookmarks_count,
+        "uploads_last_7_days": uploads_last_7_days,
+        "completed_last_7_days": completed_last_7_days,
+    }
+    log_event(
+        logger,
+        logging.INFO,
+        "library.metrics.summary",
+        user_id=request.user.id,
+        payload=payload,
+    )
+    return JsonResponse({"ok": True, "metrics": payload}, status=200)
 
 
 def _extract_section_title(blocks: list, fallback: str) -> str:
@@ -79,6 +150,7 @@ def _extract_section_title(blocks: list, fallback: str) -> str:
 
 
 @require_http_methods(["GET", "POST"])
+@login_required
 def upload_epub(request):
     """
     GET:
@@ -93,17 +165,25 @@ def upload_epub(request):
     """
     if request.method == "GET":
         query = (request.GET.get("q") or "").strip()
-        return render(request, "reader/upload.html", _library_context(query=query))
+        return render(request, "reader/upload.html", _library_context(request.user, query=query))
 
     # POST
     uploaded = request.FILES.get("epub_file")
     notify_email = (request.POST.get("notify_email") or "").strip()
+    log_event(
+        logger,
+        logging.INFO,
+        "book.upload.requested",
+        user_id=request.user.id,
+        has_file=bool(uploaded),
+        notify_email=bool(notify_email),
+    )
 
     if not uploaded:
         return render(
             request,
             "reader/upload.html",
-            _library_context(error="No se recibió ningún archivo. Selecciona un .epub."),
+            _library_context(request.user, error="No se recibió ningún archivo. Selecciona un .epub."),
         )
 
     result = validate_epub_file(uploaded)
@@ -111,7 +191,7 @@ def upload_epub(request):
         return render(
             request,
             "reader/upload.html",
-            _library_context(error="Validación falló (sin detalle)."),
+            _library_context(request.user, error="Validación falló (sin detalle)."),
         )
 
     ok, err = result
@@ -119,7 +199,7 @@ def upload_epub(request):
         return render(
             request,
             "reader/upload.html",
-            _library_context(error=err or "El archivo no es un EPUB válido."),
+            _library_context(request.user, error=err or "El archivo no es un EPUB válido."),
         )
 
     if notify_email:
@@ -129,7 +209,7 @@ def upload_epub(request):
             return render(
                 request,
                 "reader/upload.html",
-                _library_context(error="El correo electrónico no es válido."),
+                _library_context(request.user, error="El correo electrónico no es válido."),
             )
 
     # Carpeta del libro (estado + epub)
@@ -163,6 +243,7 @@ def upload_epub(request):
     with transaction.atomic():
         book = Book.objects.create(
             id=tmp_uuid,
+            owner=request.user,
             title=title,
             authors=authors,
             description_html=description_html,
@@ -190,6 +271,14 @@ def upload_epub(request):
                 Block.objects.bulk_create(blocks, batch_size=500)
 
     start_book_translation_async(str(book.id))
+    log_event(
+        logger,
+        logging.INFO,
+        "book.upload.accepted",
+        user_id=request.user.id,
+        book_id=str(book.id),
+        total_blocks=total_blocks,
+    )
     return redirect("upload_epub")
 
 
@@ -199,13 +288,25 @@ def read_book(request, book_id: str):
     """
     Vista principal del lector.
     """
-    book = Book.objects.filter(pk=book_id).first()
+    book = Book.objects.filter(pk=book_id, owner=request.user).first()
     if not book:
         raise Http404("Libro no encontrado. Vuelve a subir el EPUB.")
     if book.status != Book.Status.READY:
         raise Http404("El libro aún está en traducción. Vuelve más tarde.")
+    log_event(
+        logger,
+        logging.INFO,
+        "book.read.open",
+        user_id=request.user.id,
+        book_id=book_id,
+    )
 
     progress = ReadingProgress.objects.filter(book=book, user=request.user).first()
+    bookmarks = (
+        Bookmark.objects.filter(book=book, user=request.user)
+        .select_related("block")
+        .order_by("-created_at")
+    )
 
     sections_out = []
     sections = (
@@ -229,11 +330,30 @@ def read_book(request, book_id: str):
             "title": _extract_section_title([b.original_html for b in blocks_list], fallback=fallback_title),
         })
 
+    toc_entries = [
+        {
+            "section_index": idx,
+            "title": sec.get("title") or f"Sección {idx + 1}",
+        }
+        for idx, sec in enumerate(sections_out)
+    ]
+
     return render(request, "reader/read.html", {
         "book_id": book_id,
         "title": book.title,
         "info": book.info or {},
         "sections": sections_out,
+        "toc_entries": toc_entries,
+        "bookmarks": [
+            {
+                "id": bm.id,
+                "block_id": bm.block_id,
+                "section_index": bm.section_index,
+                "block_index": bm.block_index,
+                "label": bm.label or f"Sección {bm.section_index + 1}, bloque {bm.block_index + 1}",
+            }
+            for bm in bookmarks
+        ],
         "translation_enabled": True,
         "saved_progress": {
             "section_index": progress.section_index if progress else 0,
@@ -245,13 +365,14 @@ def read_book(request, book_id: str):
 
 
 @require_GET
+@login_required
 def translate_block(request, book_id: str, section_idx: int, block_idx: int):
     """
     Traducción lazy por bloque.
     Nunca rompe la lectura:
       - Si índices fuera de rango o falla Ollama -> retorna HTML original.
     """
-    book = Book.objects.filter(pk=book_id).first()
+    book = Book.objects.filter(pk=book_id, owner=request.user).first()
     if not book:
         return JsonResponse({"ok": True, "translated_html": "<p></p>", "fallback": "missing_book"}, status=200)
 
@@ -265,6 +386,15 @@ def translate_block(request, book_id: str, section_idx: int, block_idx: int):
 
     original_html = block.original_html or "<p></p>"
     if block.translated_html:
+        log_event(
+            logger,
+            logging.INFO,
+            "book.block.translate.cache_hit",
+            user_id=request.user.id,
+            book_id=book_id,
+            section_idx=section_idx,
+            block_idx=block_idx,
+        )
         return JsonResponse({"ok": True, "translated_html": block.translated_html}, status=200)
 
     try:
@@ -273,15 +403,33 @@ def translate_block(request, book_id: str, section_idx: int, block_idx: int):
             translated = original_html
         block.translated_html = translated
         block.save(update_fields=["translated_html"])
+        log_event(
+            logger,
+            logging.INFO,
+            "book.block.translate.generated",
+            user_id=request.user.id,
+            book_id=book_id,
+            section_idx=section_idx,
+            block_idx=block_idx,
+        )
         return JsonResponse({"ok": True, "translated_html": translated}, status=200)
     except Exception:
+        log_event(
+            logger,
+            logging.WARNING,
+            "book.block.translate.fallback",
+            user_id=request.user.id,
+            book_id=book_id,
+            section_idx=section_idx,
+            block_idx=block_idx,
+        )
         return JsonResponse({"ok": True, "translated_html": original_html, "fallback": "translate_failed"}, status=200)
 
 
 @login_required
 @require_POST
 def save_progress(request, book_id: str):
-    book = Book.objects.filter(pk=book_id).first()
+    book = Book.objects.filter(pk=book_id, owner=request.user).first()
     if not book:
         return JsonResponse({"ok": False, "error": "missing_book"}, status=404)
 
@@ -312,10 +460,21 @@ def save_progress(request, book_id: str):
             "progress_percent": max(0, min(100, progress_percent)),
         },
     )
+    log_event(
+        logger,
+        logging.INFO,
+        "book.progress.saved",
+        user_id=request.user.id,
+        book_id=book_id,
+        section_idx=section_idx,
+        block_idx=block_idx,
+        progress_percent=progress_percent,
+    )
     return JsonResponse({"ok": True}, status=200)
 
 
 @require_POST
+@login_required
 def clear_book(request, book_id: str):
     """
     Borra en disco:
@@ -323,6 +482,10 @@ def clear_book(request, book_id: str):
       - media/epub_assets/<book_id>/
     y elimina registros en base de datos.
     """
+    book = Book.objects.filter(pk=book_id, owner=request.user).first()
+    if not book:
+        raise Http404("Libro no encontrado.")
+
     book_dir = Path(settings.MEDIA_ROOT) / "epub_books" / book_id
     assets_dir = Path(settings.MEDIA_ROOT) / "epub_assets" / book_id
 
@@ -331,6 +494,96 @@ def clear_book(request, book_id: str):
     if assets_dir.exists():
         shutil.rmtree(assets_dir, ignore_errors=True)
 
-    Book.objects.filter(pk=book_id).delete()
+    book.delete()
+    log_event(
+        logger,
+        logging.INFO,
+        "book.cleared",
+        user_id=request.user.id,
+        book_id=book_id,
+    )
 
     return redirect("upload_epub")
+
+
+@require_GET
+@login_required
+def list_bookmarks(request, book_id: str):
+    book = Book.objects.filter(pk=book_id, owner=request.user).first()
+    if not book:
+        return JsonResponse({"ok": False, "error": "missing_book"}, status=404)
+
+    bookmarks = Bookmark.objects.filter(book=book, user=request.user).order_by("-created_at")
+    payload = [
+        {
+            "id": bm.id,
+            "block_id": bm.block_id,
+            "section_index": bm.section_index,
+            "block_index": bm.block_index,
+            "label": bm.label or f"Sección {bm.section_index + 1}, bloque {bm.block_index + 1}",
+            "created_at": bm.created_at.isoformat(),
+        }
+        for bm in bookmarks
+    ]
+    return JsonResponse({"ok": True, "bookmarks": payload}, status=200)
+
+
+@require_POST
+@login_required
+def create_bookmark(request, book_id: str):
+    book = Book.objects.filter(pk=book_id, owner=request.user).first()
+    if not book:
+        return JsonResponse({"ok": False, "error": "missing_book"}, status=404)
+
+    try:
+        block_id = int(request.POST.get("block_id", "0"))
+    except ValueError:
+        return JsonResponse({"ok": False, "error": "invalid_payload"}, status=400)
+
+    block = Block.objects.filter(pk=block_id, section__book=book).select_related("section").first()
+    if not block:
+        return JsonResponse({"ok": False, "error": "missing_block"}, status=404)
+
+    label = (request.POST.get("label") or "").strip()[:200]
+    bm, _created = Bookmark.objects.get_or_create(
+        book=book,
+        user=request.user,
+        block=block,
+        defaults={
+            "section_index": block.section.index,
+            "block_index": block.index,
+            "label": label,
+        },
+    )
+    if label and bm.label != label:
+        bm.label = label
+        bm.save(update_fields=["label"])
+
+    return JsonResponse({
+        "ok": True,
+        "bookmark": {
+            "id": bm.id,
+            "block_id": bm.block_id,
+            "section_index": bm.section_index,
+            "block_index": bm.block_index,
+            "label": bm.label or f"Sección {bm.section_index + 1}, bloque {bm.block_index + 1}",
+        },
+    }, status=200)
+
+
+@require_POST
+@login_required
+def delete_bookmark(request, book_id: str, bookmark_id: int):
+    book = Book.objects.filter(pk=book_id, owner=request.user).first()
+    if not book:
+        return JsonResponse({"ok": False, "error": "missing_book"}, status=404)
+
+    deleted, _ = Bookmark.objects.filter(
+        pk=bookmark_id,
+        book=book,
+        user=request.user,
+    ).delete()
+    if not deleted:
+        return JsonResponse({"ok": False, "error": "missing_bookmark"}, status=404)
+
+    return JsonResponse({"ok": True}, status=200)

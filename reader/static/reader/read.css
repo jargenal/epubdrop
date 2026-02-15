@@ -1,0 +1,329 @@
+:root {
+  color-scheme: light;
+  --font-ui: 'Source Sans 3', sans-serif;
+  --font-reading: 'Newsreader', serif;
+  --bg: #f7faff;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: #4b5563;
+  --border: #cbd5e1;
+  --border-strong: #94a3b8;
+  --epub-text: #111827;
+  --epub-muted: #4b5563;
+  --accent: #1e3a8a;
+}
+
+.theme-dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #030712;
+  --surface: #0b1220;
+  --text: #e5e7eb;
+  --muted: #cbd5e1;
+  --border: #374151;
+  --border-strong: #4b5563;
+  --epub-text: #e5e7eb;
+  --epub-muted: #cbd5e1;
+  --accent: #3b82f6;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-reading);
+}
+
+.theme-dark .bg-white,
+[data-theme="dark"] .bg-white {
+  background-color: var(--surface) !important;
+}
+
+.theme-dark .bg-slate-50,
+[data-theme="dark"] .bg-slate-50 {
+  background-color: #0b1220 !important;
+}
+
+.theme-dark .text-slate-900,
+.theme-dark .text-slate-700,
+.theme-dark .text-slate-600,
+[data-theme="dark"] .text-slate-900,
+[data-theme="dark"] .text-slate-700,
+[data-theme="dark"] .text-slate-600 {
+  color: var(--text) !important;
+}
+
+.theme-dark .text-slate-500,
+.theme-dark .text-slate-300,
+[data-theme="dark"] .text-slate-500,
+[data-theme="dark"] .text-slate-300 {
+  color: var(--muted) !important;
+}
+
+.theme-dark .text-slate-400,
+[data-theme="dark"] .text-slate-400 {
+  color: #d1d5db !important;
+}
+
+.theme-dark .border-slate-200,
+.theme-dark .ring-slate-200,
+[data-theme="dark"] .border-slate-200,
+[data-theme="dark"] .ring-slate-200 {
+  border-color: var(--border) !important;
+}
+
+.theme-dark .ring-1,
+[data-theme="dark"] .ring-1 {
+  box-shadow: 0 0 0 1px var(--border) !important;
+}
+
+.theme-dark .hover\:bg-slate-50:hover,
+[data-theme="dark"] .hover\:bg-slate-50:hover {
+  background-color: #1e293b !important;
+}
+
+.theme-dark .bg-black\/40,
+[data-theme="dark"] .bg-black\/40 {
+  background-color: rgba(3, 10, 12, 0.65) !important;
+}
+
+.epub-content {
+  font-size: inherit;
+  line-height: 1.65;
+  color: var(--epub-text);
+}
+
+.epub-content b,
+.epub-content strong {
+  font-weight: 700;
+}
+
+.epub-content i,
+.epub-content em {
+  font-style: italic;
+}
+
+.epub-content p {
+  margin: 0.6em 0;
+}
+
+.epub-content h1 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0.8em 0 0.4em;
+}
+
+.epub-content h2 {
+  font-size: 1.25em;
+  font-weight: 700;
+  margin: 0.8em 0 0.4em;
+}
+
+.epub-content h3 {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin: 0.8em 0 0.4em;
+}
+
+.epub-content ul,
+.epub-content ol {
+  padding-left: 1.25rem;
+  margin: 0.6em 0;
+}
+
+.epub-content li {
+  margin: 0.25em 0;
+}
+
+.epub-content img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+.epub-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8em 0;
+}
+
+.epub-content th,
+.epub-content td {
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  padding: 0.35rem 0.5rem;
+  vertical-align: top;
+}
+
+.epub-content blockquote {
+  border-left: 3px solid rgba(148, 163, 184, 0.7);
+  padding-left: 0.75rem;
+  margin: 0.75em 0;
+  color: var(--epub-muted);
+}
+
+.epub-content pre {
+  overflow-x: auto;
+}
+
+.epub-content pre,
+.epub-content code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.row {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+.no-radius,
+.no-radius * {
+  border-radius: 0 !important;
+}
+
+.toc-item[data-active="1"] {
+  background: #e2e8f0;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.theme-dark .toc-item[data-active="1"],
+[data-theme="dark"] .toc-item[data-active="1"] {
+  background: #1e3a8a;
+  color: #e5e7eb;
+}
+
+.theme-dark .toc-item,
+[data-theme="dark"] .toc-item {
+  color: #d1d5db !important;
+}
+
+.toc-panel-open {
+  overflow: hidden;
+}
+
+#readerScroll {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+.theme-dark .theme-toggle .icon-moon,
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+.theme-dark .theme-toggle .icon-sun,
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: inline-block;
+}
+
+.theme-dark .text-xs,
+.theme-dark [class*="text-[11px]"],
+[data-theme="dark"] .text-xs,
+[data-theme="dark"] [class*="text-[11px]"] {
+  color: var(--muted) !important;
+}
+
+.search-hit {
+  outline: 2px solid var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.bookmark-active {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: var(--accent) !important;
+}
+
+.section-virtual-placeholder {
+  display: block;
+  width: 100%;
+}
+
+.section-collapsed .section-body {
+  display: none;
+}
+
+.save-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  padding: 0;
+}
+
+.save-icon {
+  display: none;
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.save-status-badge[data-state="saving"] .save-icon--saving,
+.save-status-badge[data-state="saved"] .save-icon--saved,
+.save-status-badge[data-state="error"] .save-icon--local {
+  display: block;
+}
+
+.save-status-badge[data-state="idle"] {
+  color: var(--muted);
+  background: transparent;
+}
+
+.save-status-badge[data-state="saving"] {
+  color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.14);
+  border-color: rgba(59, 130, 246, 0.45);
+}
+
+.save-status-badge[data-state="saving"] .save-icon--saving {
+  animation: save-spin 0.85s linear infinite;
+}
+
+.save-status-badge[data-state="saved"] {
+  color: #065f46;
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.45);
+}
+
+.save-status-badge[data-state="saved"] .save-icon--saved {
+  animation: save-pop 0.5s ease;
+}
+
+.save-status-badge[data-state="error"] {
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+.save-status-badge[data-state="error"] .save-icon--local {
+  animation: save-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes save-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes save-pop {
+  0% { transform: scale(0.7); opacity: 0.4; }
+  65% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes save-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.12); opacity: 1; }
+}

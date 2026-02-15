@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="es">
 <head>
@@ -6,76 +7,33 @@
   <title>{{ title }} • Reader</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    (function () {
+      try {
+        var mode = localStorage.getItem("appThemeMode") || "system";
+        var resolved = mode === "dark" || (mode === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+          ? "dark"
+          : "light";
+        document.documentElement.classList.add("theme-" + resolved);
+        document.documentElement.setAttribute("data-theme", resolved);
+      } catch (_) {}
+    })();
+  </script>
+  <script src="{% static 'reader/theme.js' %}?v=20260212b" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Sans:wght@400;500;700&family=IBM+Plex+Serif:wght@400;500;700&family=Lora:wght@400;500;700&family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;700&family=IBM+Plex+Serif:wght@400;500;700&family=Lora:wght@400;500;700&family=Merriweather:wght@400;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --border-strong: #cbd5f5;
-      --epub-text: #0f172a;
-      --epub-muted: #334155;
-      --accent: #0f172a;
-    }
-    .theme-dark {
-      color-scheme: dark;
-      --bg: #0b1120;
-      --surface: #111827;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --border: #1f2937;
-      --border-strong: #334155;
-      --epub-text: #e2e8f0;
-      --epub-muted: #cbd5f5;
-      --accent: #f8fafc;
-    }
-    body { background: var(--bg); color: var(--text); }
-    .theme-dark .bg-white { background-color: var(--surface) !important; }
-    .theme-dark .bg-slate-50 { background-color: #0f172a !important; }
-    .theme-dark .text-slate-900,
-    .theme-dark .text-slate-700,
-    .theme-dark .text-slate-600 { color: var(--text) !important; }
-    .theme-dark .text-slate-500,
-    .theme-dark .text-slate-300 { color: var(--muted) !important; }
-    .theme-dark .border-slate-200,
-    .theme-dark .ring-slate-200 { border-color: var(--border) !important; }
-    .theme-dark .border-slate-200 { border-color: var(--border) !important; }
-    .theme-dark .ring-1 { box-shadow: 0 0 0 1px var(--border) !important; }
-    .theme-dark .hover\:bg-slate-50:hover { background-color: #0b1220 !important; }
-    .theme-dark .bg-black\/40 { background-color: rgba(15, 23, 42, 0.6) !important; }
-
-    /* HTML del EPUB: neutral */
-    .epub-content { font-size: inherit; line-height: 1.65; color: var(--epub-text); }
-    .epub-content b, .epub-content strong { font-weight:700; }
-    .epub-content i, .epub-content em { font-style:italic; }
-    .epub-content p { margin:.6em 0; }
-    .epub-content h1 { font-size:1.5em; font-weight:700; margin:.8em 0 .4em; }
-    .epub-content h2 { font-size:1.25em; font-weight:700; margin:.8em 0 .4em; }
-    .epub-content h3 { font-size:1.1em; font-weight:700; margin:.8em 0 .4em; }
-    .epub-content ul, .epub-content ol { padding-left:1.25rem; margin:.6em 0; }
-    .epub-content li { margin:.25em 0; }
-    .epub-content img { max-width:100%; height:auto; display:inline-block; }
-    .epub-content table { width:100%; border-collapse:collapse; margin:.8em 0; }
-    .epub-content th, .epub-content td { border:1px solid rgba(148,163,184,.6); padding:.35rem .5rem; vertical-align:top; }
-    .epub-content blockquote { border-left:3px solid rgba(148,163,184,.7); padding-left:.75rem; margin:.75em 0; color: var(--epub-muted); }
-    .epub-content pre { overflow-x:auto; }
-    .epub-content pre, .epub-content code { white-space:pre-wrap; word-break:break-word; }
-
-    /* Rendimiento */
-    .row { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
-
-    /* Lectura limpia: quita redondeos (por si quedan de Tailwind) */
-    .no-radius, .no-radius * { border-radius: 0 !important; }
-  </style>
+  <link rel="stylesheet" href="{% static 'reader/read.css' %}?v=20260212e">
 </head>
 
-<body class="min-h-screen bg-slate-50 text-slate-900 theme-light">
+<body
+  class="min-h-screen bg-slate-50 text-slate-900 theme-light"
+  data-book-id="{{ book_id|escapejs }}"
+  data-saved-section="{{ saved_progress.section_index|default:0 }}"
+  data-saved-block="{{ saved_progress.block_index|default:0 }}"
+  data-saved-offset="{{ saved_progress.block_offset_percent|default:0 }}"
+  data-saved-block-id="{{ saved_progress.block_id|default:0 }}">
 
   <!-- Top bar -->
   <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
@@ -96,6 +54,19 @@
             <span class="text-slate-300">•</span>
             <span id="progressText">0%</span>
             <span class="text-slate-300">•</span>
+            <span id="saveStatus" class="save-status-badge" data-state="idle" aria-label="Sin guardar" title="Sin guardar">
+              <svg class="save-icon save-icon--saving" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" opacity="0.28"></circle>
+                <path d="M21 12a9 9 0 0 1-9 9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
+              </svg>
+              <svg class="save-icon save-icon--saved" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 7 10 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <svg class="save-icon save-icon--local" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v10m0 0 4-4m-4 4-4-4M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span class="text-slate-300">•</span>
             <span>Traducido (izq) / Original (der)</span>
           </div>
         </div>
@@ -103,6 +74,33 @@
         <button id="openConfig"
                 class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
           ⚙️ <span class="ml-2 hidden sm:inline">Configuración</span>
+        </button>
+        <button id="themeToggle"
+                class="theme-toggle inline-flex items-center justify-center gap-2 bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                title="Cambiar tema">
+          <svg class="icon-moon h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.8A9 9 0 1111.2 3a7 7 0 109.8 9.8z"/>
+          </svg>
+          <svg class="icon-sun h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05 5.636 5.636m12.728 0-1.414 1.414M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+          </svg>
+          <span class="hidden sm:inline">Tema</span>
+        </button>
+        <button id="openToc"
+                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+          Índice
+        </button>
+        <button id="toggleSearch"
+                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+          Buscar
+        </button>
+        <button id="toggleBookmark"
+                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+          Marcar
+        </button>
+        <button id="openBookmarks"
+                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+          Guardados
         </button>
 
         <form method="POST" action="{% url 'clear_book' book_id=book_id %}">
@@ -119,6 +117,16 @@
   <!-- Reader -->
   <main class="mx-auto max-w-[1700px] px-4 py-4">
     <form class="hidden">{% csrf_token %}</form>
+    <div id="searchPanel" class="mb-3 hidden rounded-xl border border-slate-200 bg-white p-3 ring-1 ring-slate-200">
+      <div class="flex flex-wrap items-center gap-2">
+        <input id="searchInput" type="text" placeholder="Buscar en contenido traducido y original..."
+               class="min-w-[220px] flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300" />
+        <button id="searchPrev" type="button" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Anterior</button>
+        <button id="searchNext" type="button" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Siguiente</button>
+        <button id="searchClear" type="button" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Limpiar</button>
+        <span id="searchCount" class="text-xs text-slate-500">0 resultados</span>
+      </div>
+    </div>
     <!-- Contenedor principal: sin redondeo -->
     <div id="readerScroll" class="no-radius h-[calc(100vh-6.25rem)] overflow-y-auto bg-white ring-1 ring-slate-200">
       <div class="px-4 py-5">
@@ -159,6 +167,51 @@
       </div>
     </div>
   </main>
+
+  <!-- TOC -->
+  <div id="tocOverlay" class="fixed inset-0 z-50 hidden bg-black/30 p-4">
+    <aside class="h-full w-full max-w-sm bg-white shadow-xl ring-1 ring-slate-200 flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-200 p-4">
+        <div>
+          <div class="text-sm font-semibold">Índice</div>
+          <div class="text-xs text-slate-500">Navega por sección</div>
+        </div>
+        <button id="closeToc"
+                class="bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+          Cerrar
+        </button>
+      </div>
+      <div class="p-3 overflow-y-auto space-y-1">
+        {% for entry in toc_entries %}
+          <button
+            type="button"
+            class="toc-item w-full text-left rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-100"
+            data-toc-jump="{{ entry.section_index }}"
+            data-active="{% if forloop.first %}1{% else %}0{% endif %}">
+            <span class="mr-2 text-xs text-slate-400">{{ forloop.counter }}.</span>
+            <span>{{ entry.title }}</span>
+          </button>
+        {% endfor %}
+      </div>
+    </aside>
+  </div>
+
+  <!-- Bookmarks -->
+  <div id="bookmarksOverlay" class="fixed inset-0 z-50 hidden bg-black/30 p-4">
+    <aside class="h-full w-full max-w-sm bg-white shadow-xl ring-1 ring-slate-200 flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-200 p-4">
+        <div>
+          <div class="text-sm font-semibold">Bookmarks</div>
+          <div class="text-xs text-slate-500">Posiciones guardadas</div>
+        </div>
+        <button id="closeBookmarks"
+                class="bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+          Cerrar
+        </button>
+      </div>
+      <div id="bookmarksList" class="p-3 overflow-y-auto space-y-2"></div>
+    </aside>
+  </div>
 
   <!-- Config -->
   <div id="configOverlay" class="fixed inset-0 z-50 hidden bg-black/40 p-4">
@@ -218,265 +271,8 @@
       </div>
     </div>
   </div>
+  {{ bookmarks|json_script:"initial-bookmarks" }}
 
-  <script>
-    const BOOK_ID = "{{ book_id|escapejs }}";
-    const SAVED_SECTION = {{ saved_progress.section_index|default:0 }};
-    const SAVED_BLOCK = {{ saved_progress.block_index|default:0 }};
-    const SAVED_OFFSET = {{ saved_progress.block_offset_percent|default:0 }};
-    const SAVED_BLOCK_ID = {{ saved_progress.block_id|default:0 }};
-    const readerScroll = document.getElementById("readerScroll");
-    const progressText = document.getElementById("progressText");
-    const chapterText = document.getElementById("chapterText");
-
-    function q(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
-
-    // Config
-    const overlay = document.getElementById("configOverlay");
-    const openConfig = document.getElementById("openConfig");
-    const closeConfig = document.getElementById("closeConfig");
-    const fontSize = document.getElementById("fontSize");
-    const fontSizeVal = document.getElementById("fontSizeVal");
-    const fontFamily = document.getElementById("fontFamily");
-    const themeMode = document.getElementById("themeMode");
-    const themeModeVal = document.getElementById("themeModeVal");
-    const themeMedia = window.matchMedia("(prefers-color-scheme: dark)");
-    const STORAGE_KEYS = {
-      size: "readerFontSize",
-      family: "readerFontFamily",
-      theme: "readerThemeMode",
-    };
-
-    function openDrawer(){ overlay.classList.remove("hidden"); document.body.style.overflow="hidden"; }
-    function closeDrawer(){ overlay.classList.add("hidden"); document.body.style.overflow=""; }
-    openConfig.addEventListener("click", openDrawer);
-    closeConfig.addEventListener("click", closeDrawer);
-    overlay.addEventListener("click", (e)=>{ if(e.target===overlay) closeDrawer(); });
-
-    function applyTypography() {
-      const size = parseInt(fontSize.value, 10);
-      const family = fontFamily.value;
-      fontSizeVal.textContent = String(size);
-      readerScroll.style.fontSize = `${size}px`;
-      readerScroll.style.fontFamily = family;
-      saveSettings();
-    }
-    fontSize.addEventListener("input", applyTypography);
-    fontFamily.addEventListener("change", applyTypography);
-
-    function resolveThemeMode(mode) {
-      if (mode === "dark") return "dark";
-      if (mode === "light") return "light";
-      return themeMedia.matches ? "dark" : "light";
-    }
-
-    function applyTheme() {
-      const mode = themeMode.value;
-      const resolved = resolveThemeMode(mode);
-      document.body.classList.toggle("theme-dark", resolved === "dark");
-      document.body.classList.toggle("theme-light", resolved === "light");
-      themeModeVal.textContent = resolved === "dark" ? "Oscuro" : "Claro";
-    }
-
-    function saveSettings() {
-      localStorage.setItem(STORAGE_KEYS.size, fontSize.value);
-      localStorage.setItem(STORAGE_KEYS.family, fontFamily.value);
-      localStorage.setItem(STORAGE_KEYS.theme, themeMode.value);
-    }
-
-    function loadSettings() {
-      const savedSize = localStorage.getItem(STORAGE_KEYS.size);
-      const savedFamily = localStorage.getItem(STORAGE_KEYS.family);
-      const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
-      if (savedSize) fontSize.value = savedSize;
-      if (savedFamily) fontFamily.value = savedFamily;
-      if (savedTheme) themeMode.value = savedTheme;
-    }
-
-    themeMode.addEventListener("change", () => {
-      applyTheme();
-      saveSettings();
-    });
-    themeMedia.addEventListener("change", () => {
-      if (themeMode.value === "system") applyTheme();
-    });
-
-    // Progreso
-    function updateProgress() {
-      const max = readerScroll.scrollHeight - readerScroll.clientHeight;
-      const pct = max > 0 ? Math.min(100, Math.max(0, Math.round((readerScroll.scrollTop / max) * 100))) : 0;
-      progressText.textContent = `${pct}%`;
-    }
-    function getCookie(name) {
-      const cookieValue = document.cookie
-        .split(";")
-        .map(c => c.trim())
-        .find(c => c.startsWith(`${name}=`));
-      return cookieValue ? decodeURIComponent(cookieValue.split("=")[1]) : "";
-    }
-
-    function getCsrfToken() {
-      const tokenFromCookie = getCookie("csrftoken");
-      if (tokenFromCookie) return tokenFromCookie;
-      const tokenInput = document.querySelector("input[name=csrfmiddlewaretoken]");
-      return tokenInput ? tokenInput.value : "";
-    }
-
-    const rows = q(".row");
-    const POS_EPSILON = 1;
-    const sections = q("section[data-section-index]");
-    let observedRow = null;
-    let lastSavedKey = "";
-    let saveTimer = null;
-
-    function getTopRow() {
-      if (!rows.length) return null;
-      if (observedRow) return observedRow;
-      const top = readerScroll.scrollTop + POS_EPSILON;
-      for (const row of rows) {
-        const rowTop = row.offsetTop;
-        const rowBottom = rowTop + row.offsetHeight;
-        if (rowTop <= top && rowBottom > top) return row;
-      }
-      for (const row of rows) {
-        if (row.offsetTop > top) return row;
-      }
-      return rows[rows.length - 1];
-    }
-
-    function updateChapter() {
-      const containerTop = readerScroll.getBoundingClientRect().top;
-      let active = sections[0];
-      for (const section of sections) {
-        const top = section.getBoundingClientRect().top - containerTop;
-        if (top <= 40) active = section;
-        else break;
-      }
-      if (active) {
-        const title = active.getAttribute("data-section-title") || "Sección";
-        chapterText.textContent = title;
-      }
-    }
-
-    function buildProgressPayload() {
-      const row = getTopRow();
-      if (!row) return null;
-      const s = row.dataset.s || "0";
-      const b = row.dataset.b || "0";
-      const blockId = row.dataset.blockId || "0";
-      const max = readerScroll.scrollHeight - readerScroll.clientHeight;
-      const pct = max > 0 ? Math.min(100, Math.max(0, Math.round((readerScroll.scrollTop / max) * 100))) : 0;
-      const rowTop = row.offsetTop;
-      const rowHeight = Math.max(1, row.offsetHeight);
-      const offsetPct = Math.min(1, Math.max(0, (readerScroll.scrollTop - rowTop) / rowHeight));
-      return { s, b, pct, offsetPct, blockId };
-    }
-
-    function saveProgress(useBeacon = false) {
-      const payload = buildProgressPayload();
-      if (!payload) return;
-      const { s, b, pct, offsetPct, blockId } = payload;
-      const key = `${blockId}:${pct}:${offsetPct.toFixed(3)}`;
-      if (key === lastSavedKey) return;
-      lastSavedKey = key;
-
-      const body = new URLSearchParams({
-        csrfmiddlewaretoken: getCsrfToken(),
-        section_idx: s,
-        block_idx: b,
-        progress_percent: String(pct),
-        block_offset_percent: String(offsetPct),
-        block_id: String(blockId),
-      });
-
-      const url = `/api/books/${BOOK_ID}/progress/`;
-      if (useBeacon && navigator.sendBeacon) {
-        navigator.sendBeacon(url, body);
-        return;
-      }
-
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "X-CSRFToken": getCsrfToken(),
-        },
-        body: body.toString(),
-      });
-    }
-
-    function scheduleSave() {
-      if (saveTimer) clearTimeout(saveTimer);
-      saveTimer = setTimeout(saveProgress, 1200);
-    }
-
-    // Imágenes
-    function optimizeImgs(root=document) {
-      q("img", root).forEach(img => { img.loading = "lazy"; img.decoding = "async"; });
-    }
-
-    document.addEventListener("DOMContentLoaded", async () => {
-      loadSettings();
-      applyTypography();
-      applyTheme();
-      saveSettings();
-      updateProgress();
-      optimizeImgs(document);
-      updateChapter();
-
-      if (document.fonts && document.fonts.ready) {
-        try { await document.fonts.ready; } catch {}
-      }
-
-      if (rows.length) {
-        const target = SAVED_BLOCK_ID
-          ? rows.find(r => r.dataset.blockId == String(SAVED_BLOCK_ID))
-          : rows.find(r => r.dataset.s == String(SAVED_SECTION) && r.dataset.b == String(SAVED_BLOCK));
-        if (target) {
-          const targetOffset = Math.max(0, Math.min(1, SAVED_OFFSET || 0));
-          const scrollTo = target.offsetTop + (target.offsetHeight * targetOffset);
-          readerScroll.scrollTop = Math.max(0, scrollTo);
-        }
-      }
-      updateProgress();
-      updateChapter();
-    });
-
-    if (rows.length) {
-      const observer = new IntersectionObserver((entries) => {
-        let best = null;
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          if (!best || entry.intersectionRatio > best.intersectionRatio) {
-            best = entry;
-          }
-        }
-        if (best) observedRow = best.target;
-      }, {
-        root: readerScroll,
-        threshold: [0.25, 0.5, 0.75, 1.0],
-      });
-      rows.forEach(r => observer.observe(r));
-    }
-
-    readerScroll.addEventListener("scroll", () => {
-      updateProgress();
-      updateChapter();
-      scheduleSave();
-    });
-
-    const backLink = document.getElementById("backLink");
-    if (backLink) {
-      backLink.addEventListener("click", () => {
-        saveProgress(true);
-      });
-    }
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") {
-        saveProgress(true);
-      }
-    });
-  </script>
+  <script src="{% static 'reader/read.js' %}?v=20260212e" defer></script>
 </body>
 </html>
