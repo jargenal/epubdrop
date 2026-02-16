@@ -9,6 +9,8 @@ const SAVED_SECTION = Number(pageData.savedSection || 0);
 const SAVED_BLOCK = Number(pageData.savedBlock || 0);
 const SAVED_OFFSET = Number(pageData.savedOffset || 0);
 const SAVED_BLOCK_ID = Number(pageData.savedBlockId || 0);
+const SAVED_ANCHOR_TEXT = pageData.savedAnchorText || "";
+const SAVED_ANCHOR_CHAR = Number(pageData.savedAnchorChar || 0);
 const readerScroll = document.getElementById("readerScroll");
 const progressText = document.getElementById("progressText");
 const chapterText = document.getElementById("chapterText");
@@ -187,6 +189,8 @@ function saveLocalProgress(payload) {
       block_index: Number(payload.b || 0),
       block_offset_percent: Number(payload.offsetPct || 0),
       block_id: Number(payload.blockId || 0),
+      anchor_text: String(payload.anchorText || ""),
+      anchor_char_index: Number(payload.anchorChar || 0),
       progress_percent: Number(payload.pct || 0),
       saved_at: Date.now(),
     }));
@@ -299,7 +303,9 @@ function updateBookmarkButtonState() {
   const blockId = Number(row.dataset.blockId || 0);
   const exists = bookmarks.some((b) => Number(b.block_id) === blockId);
   toggleBookmarkBtn.classList.toggle("bookmark-active", exists);
-  toggleBookmarkBtn.textContent = exists ? "Marcado" : "Marcar";
+  const label = exists ? "Posición marcada. Clic para desmarcar" : "Marcar o desmarcar posición actual";
+  toggleBookmarkBtn.setAttribute("title", label);
+  toggleBookmarkBtn.setAttribute("aria-label", label);
 }
 
 function jumpToRow(row, smooth = true) {
@@ -464,6 +470,132 @@ function updateChapter() {
   }
 }
 
+function _normalizeText(value) {
+  return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function _anchorSearchToken(anchorText) {
+  const normalized = _normalizeText(anchorText).toLowerCase();
+  if (!normalized) return "";
+  return normalized.slice(0, 72);
+}
+
+function extractAnchorFromRow(row) {
+  if (!row) return { text: "", charIndex: 0 };
+  const textNodes = [];
+  const walker = document.createTreeWalker(row, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!_normalizeText(node.nodeValue || "")) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+  if (!textNodes.length) return { text: "", charIndex: 0 };
+
+  const viewportTop = useContainerScroll
+    ? readerScroll.getBoundingClientRect().top + 24
+    : getHeaderOffset() + 20;
+
+  let selected = textNodes[0];
+  let selectedRect = null;
+  let bestDistance = Number.POSITIVE_INFINITY;
+
+  for (const node of textNodes) {
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    const rect = range.getBoundingClientRect();
+    const distance = Math.abs(rect.top - viewportTop);
+    if (rect.bottom >= viewportTop && rect.top <= viewportTop) {
+      selected = node;
+      selectedRect = rect;
+      break;
+    }
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      selected = node;
+      selectedRect = rect;
+    }
+  }
+
+  const normalizedNodeText = _normalizeText(selected.nodeValue || "");
+  const anchorText = normalizedNodeText.slice(0, 180);
+  if (!anchorText) return { text: "", charIndex: 0 };
+
+  let charIndex = 0;
+  try {
+    const rowText = _normalizeText(row.textContent || "");
+    const idx = rowText.toLowerCase().indexOf(anchorText.toLowerCase());
+    charIndex = idx >= 0 ? idx : 0;
+  } catch (_) {
+    charIndex = 0;
+  }
+
+  if (!selectedRect) {
+    const range = document.createRange();
+    range.selectNodeContents(selected);
+    selectedRect = range.getBoundingClientRect();
+  }
+  return { text: anchorText, charIndex };
+}
+
+function restorePreciseAnchor(row, anchorText) {
+  const token = _anchorSearchToken(anchorText);
+  if (!row || !token) return false;
+
+  const walker = document.createTreeWalker(row, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!_normalizeText(node.nodeValue || "")) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+
+  let targetNode = null;
+  while (walker.nextNode()) {
+    const text = _normalizeText(walker.currentNode.nodeValue || "").toLowerCase();
+    if (text.includes(token)) {
+      targetNode = walker.currentNode;
+      break;
+    }
+  }
+  if (!targetNode) return false;
+
+  const range = document.createRange();
+  range.selectNodeContents(targetNode);
+  const rect = range.getBoundingClientRect();
+  if (!rect || rect.height === 0) return false;
+
+  if (useContainerScroll) {
+    const containerTop = readerScroll.getBoundingClientRect().top;
+    const scrollTo = readerScroll.scrollTop + (rect.top - containerTop) - 24;
+    readerScroll.scrollTop = Math.max(0, scrollTo);
+  } else {
+    const scrollTo = window.scrollY + rect.top - getHeaderOffset() - 12;
+    window.scrollTo({ top: Math.max(0, scrollTo), behavior: "auto" });
+  }
+  return true;
+}
+
+function schedulePreciseRestore(row, source) {
+  if (!row || !source) return;
+  const anchorText = String(source.anchor_text || "");
+  if (!_normalizeText(anchorText)) return;
+
+  const attempts = [0, 350, 1000];
+  attempts.forEach((delay) => {
+    window.setTimeout(() => {
+      ensureSectionExpanded(Number(row.dataset.s || 0));
+      restorePreciseAnchor(row, anchorText);
+    }, delay);
+  });
+
+  const imgs = q("img", row).filter((img) => !img.complete);
+  imgs.slice(0, 6).forEach((img) => {
+    img.addEventListener("load", () => {
+      restorePreciseAnchor(row, anchorText);
+    }, { once: true });
+  });
+}
+
 function buildProgressPayload() {
   const row = getTopRow();
   if (!row) return null;
@@ -479,7 +611,16 @@ function buildProgressPayload() {
   const rowHeight = Math.max(1, row.offsetHeight);
   const viewTop = useContainerScroll ? readerScroll.scrollTop : window.scrollY + getHeaderOffset();
   const offsetPct = Math.min(1, Math.max(0, (viewTop - rowTop) / rowHeight));
-  return { s, b, pct, offsetPct, blockId };
+  const anchor = extractAnchorFromRow(row);
+  return {
+    s,
+    b,
+    pct,
+    offsetPct,
+    blockId,
+    anchorText: anchor.text || "",
+    anchorChar: Number(anchor.charIndex || 0),
+  };
 }
 
 function saveProgress(useBeacon = false) {
@@ -489,10 +630,10 @@ function saveProgress(useBeacon = false) {
   }
   const payload = buildProgressPayload();
   if (!payload) return;
-  const { s, b, pct, offsetPct, blockId } = payload;
+  const { s, b, pct, offsetPct, blockId, anchorText, anchorChar } = payload;
   saveLocalProgress(payload);
   setSaveStatus("saving", "Guardando...");
-  const key = `${blockId}:${pct}:${offsetPct.toFixed(3)}`;
+  const key = `${blockId}:${pct}:${offsetPct.toFixed(3)}:${String(anchorText || "").slice(0, 32)}`;
   if (key === lastSavedKey) {
     setSaveStatus("saved", "Guardado");
     return;
@@ -508,6 +649,8 @@ function saveProgress(useBeacon = false) {
     beaconBody.append("progress_percent", String(pct));
     beaconBody.append("block_offset_percent", String(offsetPct));
     beaconBody.append("block_id", String(blockId));
+    beaconBody.append("anchor_text", String(anchorText || ""));
+    beaconBody.append("anchor_char_index", String(anchorChar || 0));
     navigator.sendBeacon(url, beaconBody);
     setSaveStatus("saved", "Guardado");
     return;
@@ -520,6 +663,8 @@ function saveProgress(useBeacon = false) {
     progress_percent: String(pct),
     block_offset_percent: String(offsetPct),
     block_id: String(blockId),
+    anchor_text: String(anchorText || ""),
+    anchor_char_index: String(anchorChar || 0),
   });
 
   fetch(url, {
@@ -613,6 +758,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       section_index: SAVED_SECTION,
       block_index: SAVED_BLOCK,
       block_offset_percent: SAVED_OFFSET,
+      anchor_text: SAVED_ANCHOR_TEXT,
+      anchor_char_index: SAVED_ANCHOR_CHAR,
     } : (hasLocalProgress ? localProgress : null);
 
     const target = source && Number(source.block_id || 0) > 0
@@ -631,6 +778,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           const scrollTo = docTop + (target.offsetHeight * targetOffset) - getHeaderOffset();
           window.scrollTo({ top: Math.max(0, scrollTo), behavior: "auto" });
         }
+        schedulePreciseRestore(target, source);
       }
     }
   updateProgress();

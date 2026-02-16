@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;700&family=IBM+Plex+Serif:wght@400;500;700&family=Lora:wght@400;500;700&family=Merriweather:wght@400;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="{% static 'reader/read.css' %}?v=20260215a">
+  <link rel="stylesheet" href="{% static 'reader/read.css' %}?v=20260215b">
 </head>
 
 <body
@@ -33,18 +33,21 @@
   data-saved-section="{{ saved_progress.section_index|default:0 }}"
   data-saved-block="{{ saved_progress.block_index|default:0 }}"
   data-saved-offset="{{ saved_progress.block_offset_percent|default:0 }}"
-  data-saved-block-id="{{ saved_progress.block_id|default:0 }}">
+  data-saved-block-id="{{ saved_progress.block_id|default:0 }}"
+  data-saved-anchor-text="{{ saved_progress.anchor_text|default:''|escapejs }}"
+  data-saved-anchor-char="{{ saved_progress.anchor_char_index|default:0 }}">
 
   <!-- Top bar -->
   <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
     <div class="mx-auto max-w-[1700px] px-4">
       <div class="flex h-16 items-center gap-3">
         <a id="backLink" href="{% url 'upload_epub' %}"
-           class="inline-flex items-center gap-2 bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
+           class="top-icon-btn inline-flex items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+           title="Volver a la biblioteca"
+           aria-label="Volver a la biblioteca">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
-          Volver
         </a>
 
         <div class="min-w-0 flex-1">
@@ -66,48 +69,72 @@
                 <path d="M12 3v10m0 0 4-4m-4 4-4-4M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
             </span>
-            <span class="text-slate-300">•</span>
-            <span>Traducido (izq) / Original (der)</span>
           </div>
         </div>
 
         <button id="openConfig"
-                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
-          ⚙️ <span class="ml-2 hidden sm:inline">Configuración</span>
+                class="top-icon-btn inline-flex items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                title="Abrir configuración"
+                aria-label="Abrir configuración">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="3" y="7" width="18" height="10" rx="2" stroke-width="2"></rect>
+            <circle cx="8" cy="12" r="2" stroke-width="2"></circle>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 12h7M16 7V4m2 3V4m-2 16v-3m2 3v-3"/>
+          </svg>
         </button>
         <button id="themeToggle"
-                class="theme-toggle inline-flex items-center justify-center gap-2 bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
-                title="Cambiar tema">
+                class="theme-toggle top-icon-btn inline-flex items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                title="Cambiar tema"
+                aria-label="Cambiar tema">
           <svg class="icon-moon h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.8A9 9 0 1111.2 3a7 7 0 109.8 9.8z"/>
           </svg>
           <svg class="icon-sun h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364 6.364l-1.414-1.414M7.05 7.05 5.636 5.636m12.728 0-1.414 1.414M7.05 16.95l-1.414 1.414M12 8a4 4 0 100 8 4 4 0 000-8z"/>
           </svg>
-          <span class="hidden sm:inline">Tema</span>
         </button>
         <button id="openToc"
-                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
-          Índice
+                class="top-icon-btn inline-flex items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                title="Abrir índice"
+                aria-label="Abrir índice">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>
+          </svg>
         </button>
         <button id="toggleSearch"
-                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
-          Buscar
+                class="top-icon-btn inline-flex items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                title="Buscar en el libro"
+                aria-label="Buscar en el libro">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.6-4.4a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
         </button>
         <button id="toggleBookmark"
-                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
-          Marcar
+                class="top-icon-btn inline-flex items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                title="Marcar o desmarcar posición actual"
+                aria-label="Marcar o desmarcar posición actual">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v17l-7-4-7 4V5z"/>
+          </svg>
         </button>
         <button id="openBookmarks"
-                class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
-          Guardados
+                class="top-icon-btn inline-flex items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                title="Ver posiciones guardadas"
+                aria-label="Ver posiciones guardadas">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m-5-9h10m-9 7h8a2 2 0 002-2V6a2 2 0 00-2-2H8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+          </svg>
         </button>
 
         <form method="POST" action="{% url 'clear_book' book_id=book_id %}">
           {% csrf_token %}
           <button type="submit"
-                  class="inline-flex items-center justify-center bg-white px-3 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50">
-            Limpiar
+                  class="top-icon-btn inline-flex items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                  title="Eliminar libro y archivos"
+                  aria-label="Eliminar libro y archivos">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16"/>
+            </svg>
           </button>
         </form>
       </div>
@@ -273,6 +300,6 @@
   </div>
   {{ bookmarks|json_script:"initial-bookmarks" }}
 
-  <script src="{% static 'reader/read.js' %}?v=20260212e" defer></script>
+  <script src="{% static 'reader/read.js' %}?v=20260215b" defer></script>
 </body>
 </html>

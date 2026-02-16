@@ -132,6 +132,8 @@ class ReadingProgress(models.Model):
     section_index = models.PositiveIntegerField(default=0)
     block_index = models.PositiveIntegerField(default=0)
     block_offset_percent = models.FloatField(default=0.0)
+    anchor_text = models.CharField(max_length=240, blank=True)
+    anchor_char_index = models.PositiveIntegerField(default=0)
     progress_percent = models.PositiveIntegerField(default=0)
     updated_at = models.DateTimeField(auto_now=True)
 

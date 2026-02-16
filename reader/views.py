@@ -360,6 +360,8 @@ def read_book(request, book_id: str):
             "block_index": progress.block_index if progress else 0,
             "block_offset_percent": progress.block_offset_percent if progress else 0,
             "block_id": progress.block_id if progress else 0,
+            "anchor_text": progress.anchor_text if progress else "",
+            "anchor_char_index": progress.anchor_char_index if progress else 0,
         },
     })
 
@@ -439,8 +441,10 @@ def save_progress(request, book_id: str):
         progress_percent = int(request.POST.get("progress_percent", "0"))
         block_offset_percent = float(request.POST.get("block_offset_percent", "0"))
         block_id = int(request.POST.get("block_id", "0"))
+        anchor_char_index = int(request.POST.get("anchor_char_index", "0"))
     except ValueError:
         return JsonResponse({"ok": False, "error": "invalid_payload"}, status=400)
+    anchor_text = (request.POST.get("anchor_text") or "").strip()[:240]
 
     block_obj = None
     if block_id > 0:
@@ -457,6 +461,8 @@ def save_progress(request, book_id: str):
             "section_index": max(0, section_idx),
             "block_index": max(0, block_idx),
             "block_offset_percent": max(0.0, min(1.0, block_offset_percent)),
+            "anchor_text": anchor_text,
+            "anchor_char_index": max(0, anchor_char_index),
             "progress_percent": max(0, min(100, progress_percent)),
         },
     )
