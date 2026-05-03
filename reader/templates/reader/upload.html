@@ -20,7 +20,7 @@
     })();
   </script>
   <script src="{% static 'reader/theme.js' %}?v=20260212b" defer></script>
-  <link rel="stylesheet" href="{% static 'reader/upload.css' %}?v=20260215e">
+  <link rel="stylesheet" href="{% static 'reader/upload.css' %}?v=20260503-sort">
 </head>
 
 <body class="min-h-screen theme-light">
@@ -92,9 +92,16 @@
 
     <div class="mt-10 space-y-6">
       <section class="space-y-8" data-home-panel="biblioteca">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-wrap items-center justify-between gap-3">
           <h2 class="brand text-2xl font-semibold text-[#0f172a]">Tu biblioteca</h2>
-          <div class="flex items-center gap-2">
+          <div class="flex flex-wrap items-center justify-end gap-2">
+            <label for="librarySort" class="sr-only">Ordenar biblioteca</label>
+            <select id="librarySort" class="library-sort-select rounded-xl border border-[#cbd5e1] bg-white/70 px-3 py-2 text-xs font-semibold text-[#475569]">
+              <option value="added-desc">Fecha de agregado</option>
+              <option value="title-asc">Alfabético (A-Z)</option>
+              <option value="title-desc">Alfabético (Z-A)</option>
+              <option value="recent-read">Recién leído</option>
+            </select>
             <div class="flex flex-wrap items-center gap-1 rounded-xl border border-[#cbd5e1] bg-white/70 p-1" id="libraryViewSwitcher">
               <button type="button" class="view-btn rounded-lg border border-transparent px-2 py-1 text-[11px] font-semibold text-[#64748b]" data-view="mosaico">Mosaico</button>
               <button type="button" class="view-btn rounded-lg border border-transparent px-2 py-1 text-[11px] font-semibold text-[#64748b]" data-view="galeria">Galería</button>
@@ -109,7 +116,11 @@
           {% if library_books %}
             <div id="libraryList" class="library-list" data-view="mosaico">
               {% for book in library_books %}
-                <article class="book-card rounded-2xl bg-white/80 p-4 shadow-sm">
+                {% with progress=book.progress_entries.first %}
+                <article class="book-card rounded-2xl bg-white/80 p-4 shadow-sm"
+                         data-sort-title="{{ book.title }}"
+                         data-added-at="{{ book.created_at|date:'c' }}"
+                         data-read-at="{% if progress %}{{ progress.updated_at|date:'c' }}{% endif %}">
                   <div class="book-body">
                     <div class="book-cover overflow-hidden rounded-xl border border-[#cbd5e1] bg-[#e0e7ff]">
                       {% if book.cover_url %}
@@ -140,6 +151,7 @@
                     </div>
                   </div>
                 </article>
+                {% endwith %}
               {% endfor %}
             </div>
           {% else %}
@@ -292,6 +304,6 @@
     </div>
   </div>
 
-  <script src="{% static 'reader/upload.js' %}?v=20260503-actions" defer></script>
+  <script src="{% static 'reader/upload.js' %}?v=20260503-sort" defer></script>
 </body>
 </html>

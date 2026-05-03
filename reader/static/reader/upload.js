@@ -184,12 +184,66 @@ if (!hasProgressItems) {
 
 const libraryList = document.getElementById("libraryList");
 const viewButtons = Array.from(document.querySelectorAll(".view-btn"));
+const librarySort = document.getElementById("librarySort");
 const LIBRARY_VIEW_KEY = "epubdropLibraryView";
+const LIBRARY_SORT_KEY = "epubdropLibrarySort";
 const allowedViews = new Set(["mosaico", "galeria"]);
+const allowedSorts = new Set(["added-desc", "title-asc", "title-desc", "recent-read"]);
 const sectionButtons = Array.from(document.querySelectorAll("[data-home-section]"));
 const sectionPanels = Array.from(document.querySelectorAll("[data-home-panel]"));
 const HOME_SECTION_KEY = "epubdropHomeSection";
 const allowedSections = new Set(["biblioteca", "carga-metricas"]);
+
+const titleCollator = typeof Intl !== "undefined" && Intl.Collator
+  ? new Intl.Collator("es", { sensitivity: "base", numeric: true })
+  : null;
+
+function compareTitles(a, b) {
+  const first = a.dataset.sortTitle || "";
+  const second = b.dataset.sortTitle || "";
+  if (titleCollator) {
+    return titleCollator.compare(first, second);
+  }
+  return first.toLowerCase().localeCompare(second.toLowerCase());
+}
+
+function timeValue(value) {
+  if (!value) return 0;
+  const parsed = Date.parse(value);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
+function originalIndex(card) {
+  return Number(card.dataset.originalIndex || 0);
+}
+
+function sortLibrary(sort) {
+  if (!libraryList || !allowedSorts.has(sort)) return;
+  const cards = Array.from(libraryList.querySelectorAll(".book-card"));
+  cards.forEach((card, index) => {
+    if (!card.dataset.originalIndex) {
+      card.dataset.originalIndex = String(index);
+    }
+  });
+  cards.sort((a, b) => {
+    let result = 0;
+    if (sort === "title-asc") {
+      result = compareTitles(a, b);
+    } else if (sort === "title-desc") {
+      result = compareTitles(b, a);
+    } else if (sort === "recent-read") {
+      result = timeValue(b.dataset.readAt) - timeValue(a.dataset.readAt);
+    } else {
+      result = timeValue(b.dataset.addedAt) - timeValue(a.dataset.addedAt);
+    }
+    return result || originalIndex(a) - originalIndex(b);
+  });
+  cards.forEach((card) => libraryList.appendChild(card));
+  if (librarySort) {
+    librarySort.value = sort;
+  }
+  localStorage.setItem(LIBRARY_SORT_KEY, sort);
+}
 
 function setLibraryView(view) {
   if (!libraryList || !allowedViews.has(view)) return;
@@ -205,6 +259,14 @@ if (libraryList && viewButtons.length) {
   setLibraryView(allowedViews.has(initial) ? initial : "mosaico");
   viewButtons.forEach((btn) => {
     btn.addEventListener("click", () => setLibraryView(btn.dataset.view || "mosaico"));
+  });
+}
+
+if (libraryList && librarySort) {
+  const initialSort = localStorage.getItem(LIBRARY_SORT_KEY) || "added-desc";
+  sortLibrary(allowedSorts.has(initialSort) ? initialSort : "added-desc");
+  librarySort.addEventListener("change", () => {
+    sortLibrary(librarySort.value || "added-desc");
   });
 }
 

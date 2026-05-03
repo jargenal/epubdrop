@@ -51,6 +51,24 @@ class ReaderSecurityTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertIn("/accounts/login/", response.url)
 
+    def test_library_cards_include_client_sort_metadata(self):
+        book = self._make_ready_book(owner=self.user_a, title="Árbol de prueba")
+        ReadingProgress.objects.create(book=book, user=self.user_a, progress_percent=12)
+
+        self.client.force_login(self.user_a)
+        response = self.client.get(reverse("upload_epub"))
+
+        self.assertEqual(response.status_code, 200)
+        body = response.content.decode("utf-8")
+        self.assertIn('id="librarySort"', body)
+        self.assertIn('value="title-asc">Alfabético (A-Z)</option>', body)
+        self.assertIn('value="title-desc">Alfabético (Z-A)</option>', body)
+        self.assertIn('value="recent-read">Recién leído</option>', body)
+        self.assertIn('value="added-desc">Fecha de agregado</option>', body)
+        self.assertIn('data-sort-title="Árbol de prueba"', body)
+        self.assertRegex(body, r'data-added-at="[^"]+"')
+        self.assertRegex(body, r'data-read-at="[^"]+"')
+
     def test_translation_progress_returns_only_own_books(self):
         own_book = Book.objects.create(
             owner=self.user_a,
