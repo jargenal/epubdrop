@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from typing import Optional
 
 from dotenv import load_dotenv
 
@@ -30,9 +31,65 @@ def _env_list(name: str, default: str = "") -> list[str]:
     raw = os.environ.get(name, default)
     return [item.strip() for item in raw.split(",") if item.strip()]
 
-LIBRETRANSLATE_URL = os.environ.get("LIBRETRANSLATE_URL", "http://127.0.0.1:5050")
-LIBRETRANSLATE_TARGET_LANG = os.environ.get("LIBRETRANSLATE_TARGET_LANG", "es")  # izquierda
-LIBRETRANSLATE_TIMEOUT = int(os.environ.get("LIBRETRANSLATE_TIMEOUT", "30"))
+
+def _env_int(name: str, default: int, minimum: Optional[int] = None) -> int:
+    raw = os.environ.get(name)
+    try:
+        value = int(raw) if raw is not None else int(default)
+    except (TypeError, ValueError):
+        value = int(default)
+    if minimum is not None:
+        value = max(minimum, value)
+    return value
+
+
+def _env_float(name: str, default: float, minimum: Optional[float] = None) -> float:
+    raw = os.environ.get(name)
+    try:
+        value = float(raw) if raw is not None else float(default)
+    except (TypeError, ValueError):
+        value = float(default)
+    if minimum is not None:
+        value = max(minimum, value)
+    return value
+
+# Ollama translation engine
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "translategemma:4b")
+OLLAMA_TIMEOUT_SECONDS = _env_int("OLLAMA_TIMEOUT_SECONDS", 120, minimum=1)
+OLLAMA_MAX_RETRIES = _env_int("OLLAMA_MAX_RETRIES", 3, minimum=1)
+OLLAMA_RETRY_BASE_SECONDS = _env_float("OLLAMA_RETRY_BASE_SECONDS", 0.6, minimum=0.1)
+
+TRANSLATION_PERFORMANCE_PROFILE = os.environ.get("TRANSLATION_PERFORMANCE_PROFILE", "balanced").strip().lower()
+if TRANSLATION_PERFORMANCE_PROFILE not in {"eco", "balanced", "max"}:
+    TRANSLATION_PERFORMANCE_PROFILE = "balanced"
+
+_TRANSLATION_PROFILE_DEFAULTS = {
+    "eco": {
+        "max_concurrent_requests": 1,
+        "request_cooldown_ms": 350,
+    },
+    "balanced": {
+        "max_concurrent_requests": 1,
+        "request_cooldown_ms": 0,
+    },
+    "max": {
+        "max_concurrent_requests": 2,
+        "request_cooldown_ms": 0,
+    },
+}
+_translation_profile = _TRANSLATION_PROFILE_DEFAULTS[TRANSLATION_PERFORMANCE_PROFILE]
+
+TRANSLATION_MAX_CONCURRENT_REQUESTS = _env_int(
+    "TRANSLATION_MAX_CONCURRENT_REQUESTS",
+    _translation_profile["max_concurrent_requests"],
+    minimum=1,
+)
+TRANSLATION_REQUEST_COOLDOWN_SECONDS = _env_float(
+    "TRANSLATION_REQUEST_COOLDOWN_MS",
+    _translation_profile["request_cooldown_ms"],
+    minimum=0,
+) / 1000.0
 
 # (Opcional pero recomendado) Cache persistente en disco
 CACHES = {

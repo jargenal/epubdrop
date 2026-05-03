@@ -7,6 +7,7 @@ import random
 import re
 import requests
 import shutil
+import threading
 import time
 import zipfile
 import xml.etree.ElementTree as ET
@@ -87,7 +88,56 @@ if _CSS_SANITIZER is not None:
         if "style" not in ALLOWED_ATTRS[k]:
             ALLOWED_ATTRS[k].append("style")
 
-ALLOWED_PROTOCOLS = ["http", "https", "mailto", "data"]  # data allows embedded images
+# data is kept for embedded images, then narrowed by _allowed_html_attr.
+ALLOWED_PROTOCOLS = ["http", "https", "mailto", "data"]
+SAFE_DATA_IMAGE_RE = re.compile(r"^data:image/(?:png|jpe?g|gif|webp);base64,[a-z0-9+/=\s]+$", re.IGNORECASE)
+
+
+def _is_safe_data_image(value: str) -> bool:
+    return bool(SAFE_DATA_IMAGE_RE.fullmatch((value or "").strip()))
+
+
+def _is_safe_dimension(value: str) -> bool:
+    return bool(re.fullmatch(r"\s*(?:\d{1,5}(?:\.\d+)?%?)\s*", value or ""))
+
+
+def _is_safe_loading_value(value: str) -> bool:
+    return (value or "").strip().lower() in {"lazy", "eager", "auto"}
+
+
+def _allowed_html_attr(tag: str, name: str, value: str) -> bool:
+    tag = (tag or "").lower()
+    name = (name or "").lower()
+    value = value or ""
+
+    allowed_for_tag = set(ALLOWED_ATTRS.get("*", [])) | set(ALLOWED_ATTRS.get(tag, []))
+    if name not in allowed_for_tag:
+        return False
+
+    if name == "style":
+        return _CSS_SANITIZER is not None
+
+    if tag == "a" and name == "href":
+        return not value.strip().lower().startswith("data:")
+
+    if tag == "img" and name == "src":
+        if value.strip().lower().startswith("data:"):
+            return _is_safe_data_image(value)
+        return True
+
+    if tag == "img" and name in {"width", "height"}:
+        return _is_safe_dimension(value)
+
+    if tag == "img" and name == "loading":
+        return _is_safe_loading_value(value)
+
+    if tag in {"th", "td"} and name in {"colspan", "rowspan"}:
+        return bool(re.fullmatch(r"\s*\d{1,3}\s*", value or ""))
+
+    if tag == "a" and name == "target":
+        return value.strip().lower() in {"_blank", "_self", "_parent", "_top"}
+
+    return True
 
 
 def sanitize_html_trusted(html: str) -> str:
@@ -102,7 +152,7 @@ def sanitize_html_trusted(html: str) -> str:
 
     kwargs: Dict[str, Any] = dict(
         tags=ALLOWED_TAGS,
-        attributes=ALLOWED_ATTRS,
+        attributes=_allowed_html_attr,
         protocols=ALLOWED_PROTOCOLS,
         strip=True,
     )
@@ -655,6 +705,124 @@ def _get_opf_dir_from_epub(epub_path: str) -> str:
     except Exception:
         return ""
 
+
+def _normalize_book_href(href: str) -> str:
+    raw = (href or "").strip().replace("\\", "/")
+    if not raw:
+        return ""
+    raw = raw.split("#", 1)[0].split("?", 1)[0].strip().lstrip("/")
+    if raw.startswith("./"):
+        raw = raw[2:]
+    if not raw:
+        return ""
+
+    parts: List[str] = []
+    for part in raw.split("/"):
+        if part in ("", "."):
+            continue
+        if part == "..":
+            if parts:
+                parts.pop()
+            continue
+        parts.append(part)
+    return "/".join(parts)
+
+
+def _candidate_href_paths(href: str, opf_dir: str) -> List[str]:
+    normalized = _normalize_book_href(href)
+    if not normalized:
+        return []
+
+    candidates: List[str] = [normalized]
+    if opf_dir:
+        prefix = opf_dir.strip("/") + "/"
+        if normalized.startswith(prefix):
+            without_prefix = normalized[len(prefix):]
+            if without_prefix:
+                candidates.append(without_prefix)
+        else:
+            candidates.append(prefix + normalized)
+    return candidates
+
+
+def _extract_toc_title_and_href(entry) -> Tuple[str, str]:
+    title = ""
+    href = ""
+
+    for attr in ("title", "label"):
+        value = getattr(entry, attr, None)
+        if callable(value):
+            try:
+                value = value()
+            except Exception:
+                value = None
+        if isinstance(value, str) and value.strip():
+            title = value.strip()
+            break
+
+    for attr in ("href", "src", "file_name"):
+        value = getattr(entry, attr, None)
+        if isinstance(value, str) and value.strip():
+            href = value.strip()
+            break
+
+    return title, href
+
+
+def _flatten_toc_entries(toc_node) -> List[Tuple[str, str]]:
+    out: List[Tuple[str, str]] = []
+
+    def walk(node):
+        if node is None:
+            return
+
+        if isinstance(node, (list, tuple)):
+            for child in node:
+                walk(child)
+            return
+
+        title, href = _extract_toc_title_and_href(node)
+        if title and href:
+            out.append((title, href))
+
+        subitems = getattr(node, "subitems", None)
+        if isinstance(subitems, (list, tuple)):
+            for child in subitems:
+                walk(child)
+
+    walk(toc_node)
+    return out
+
+
+def _spine_toc_titles_by_index(book: epub.EpubBook, opf_dir: str) -> Dict[int, str]:
+    html_spine_index_to_title: Dict[int, str] = {}
+    spine_path_to_index: Dict[str, int] = {}
+
+    for spine_index, (item_id, _linear) in enumerate(book.spine or []):
+        item = book.get_item_with_id(item_id)
+        if not item:
+            continue
+        name = (item.get_name() or "").strip()
+        if not name.lower().endswith((".xhtml", ".html", ".htm")):
+            continue
+        for candidate in _candidate_href_paths(name, opf_dir):
+            spine_path_to_index.setdefault(candidate, spine_index)
+
+    for title, href in _flatten_toc_entries(book.toc or []):
+        clean_title = re.sub(r"\s+", " ", (title or "").strip())
+        if not clean_title:
+            continue
+        target_index = None
+        for candidate in _candidate_href_paths(href, opf_dir):
+            target_index = spine_path_to_index.get(candidate)
+            if target_index is not None:
+                break
+        if target_index is None:
+            continue
+        html_spine_index_to_title.setdefault(target_index, clean_title)
+
+    return html_spine_index_to_title
+
 # ============================================================
 # Reader: build sections from spine (doc_base_url per XHTML dir)
 # ============================================================
@@ -679,7 +847,9 @@ def build_reader_sections_with_blocks_from_spine(
     if opf_dir:
         opf_dir = opf_dir.strip("/")
 
-    for item_id, _linear in (book.spine or []):
+    toc_titles_by_spine_index = _spine_toc_titles_by_index(book, opf_dir)
+
+    for spine_index, (item_id, _linear) in enumerate(book.spine or []):
         item = book.get_item_with_id(item_id)
         if not item:
             continue
@@ -712,9 +882,10 @@ def build_reader_sections_with_blocks_from_spine(
         cleaned = sanitize_html_trusted(raw)
 
         chunks = split_html_by_blocks(cleaned, max_section_chars=max_section_chars)
+        toc_title = toc_titles_by_spine_index.get(spine_index, "")
         for ch in chunks:
             blocks = split_section_html_into_blocks(ch)
-            out.append({"id": "s%d" % sec_idx, "blocks": blocks})
+            out.append({"id": "s%d" % sec_idx, "blocks": blocks, "title": toc_title})
             sec_idx += 1
 
     return out
@@ -741,6 +912,14 @@ TRANSLATION_FAILURE_MARKERS = [
     "please provide the full text",
     "if you want me to translate",
     "cannot process the provided html",
+    "nota del traductor",
+    "nota de traduccion",
+    "translator note",
+    "translation note",
+    "left untranslated",
+    "se deja sin traducir",
+    "parrafo sin traducir",
+    "untranslated paragraph",
 ]
 
 STRUCTURAL_TAGS = [
@@ -750,6 +929,26 @@ STRUCTURAL_TAGS = [
     "table", "thead", "tbody", "tfoot", "tr", "th", "td",
     "figure", "figcaption", "img",
 ]
+
+TEXTUAL_SEGMENT_TAGS = [
+    "p", "h1", "h2", "h3", "h4", "h5", "h6",
+    "li", "blockquote", "figcaption", "th", "td",
+]
+
+ENGLISH_HINT_WORDS = {
+    "a", "an", "and", "are", "as", "at", "be", "but", "by", "each", "for", "from",
+    "has", "have", "how", "if", "in", "into", "is", "it", "its", "of", "on", "or",
+    "own", "that", "the", "their", "there", "these", "they", "this", "to", "was",
+    "we", "with", "you", "your",
+}
+
+SPANISH_HINT_WORDS = {
+    "al", "como", "con", "de", "del", "el", "en", "es", "esta", "este", "hola",
+    "la", "las", "los", "para", "por", "que", "se", "su", "sus", "una", "uno", "y",
+}
+
+_TRANSLATION_REQUEST_SEMAPHORE_LOCK = threading.Lock()
+_TRANSLATION_REQUEST_SEMAPHORES: Dict[int, threading.BoundedSemaphore] = {}
 
 
 def _normalize_for_hash(html_fragment: str) -> str:
@@ -778,6 +977,22 @@ def _inner_html(node) -> str:
     return "".join(parts).strip()
 
 
+def _get_translation_request_semaphore() -> threading.BoundedSemaphore:
+    max_requests = max(1, int(getattr(settings, "TRANSLATION_MAX_CONCURRENT_REQUESTS", 1)))
+    with _TRANSLATION_REQUEST_SEMAPHORE_LOCK:
+        semaphore = _TRANSLATION_REQUEST_SEMAPHORES.get(max_requests)
+        if semaphore is None:
+            semaphore = threading.BoundedSemaphore(max_requests)
+            _TRANSLATION_REQUEST_SEMAPHORES[max_requests] = semaphore
+        return semaphore
+
+
+def _cooldown_after_translation_request() -> None:
+    cooldown_seconds = float(getattr(settings, "TRANSLATION_REQUEST_COOLDOWN_SECONDS", 0.0) or 0.0)
+    if cooldown_seconds > 0:
+        time.sleep(cooldown_seconds)
+
+
 def _extract_wrapped_translation(response_text: str) -> str:
     wrapped = _strip_code_fences(response_text)
     try:
@@ -798,6 +1013,60 @@ def _has_translatable_text(html_fragment: str) -> bool:
         text = re.sub(r"<[^>]+>", " ", html_fragment)
         text = re.sub(r"\s+", " ", text).strip()
     return bool(re.search(r"[A-Za-zÀ-ÿ]", text or ""))
+
+
+def _normalize_text_for_comparison(text: str) -> str:
+    normalized = html.unescape(text or "").replace("\xa0", " ")
+    normalized = re.sub(r"[^\wÀ-ÿ]+", " ", normalized, flags=re.UNICODE)
+    normalized = re.sub(r"\s+", " ", normalized).strip().lower()
+    return normalized
+
+
+def _word_tokens(text: str) -> List[str]:
+    return re.findall(r"[A-Za-zÀ-ÿ]+(?:['’-][A-Za-zÀ-ÿ]+)?", (text or "").lower())
+
+
+def _looks_like_english_source_text(text: str) -> bool:
+    tokens = _word_tokens(text)
+    if len(tokens) < 3:
+        return False
+
+    english_hits = sum(1 for token in tokens if token in ENGLISH_HINT_WORDS)
+    spanish_hits = sum(1 for token in tokens if token in SPANISH_HINT_WORDS)
+    if english_hits >= 2 and english_hits >= spanish_hits:
+        return True
+
+    alpha_tokens = [token for token in tokens if any("a" <= ch.lower() <= "z" or "\u00c0" <= ch <= "\u00ff" for ch in token)]
+    if len(alpha_tokens) < 3:
+        return False
+
+    ascii_token_count = sum(1 for token in alpha_tokens if re.fullmatch(r"[A-Za-z]+(?:['’-][A-Za-z]+)?", token))
+    long_token_count = sum(1 for token in alpha_tokens if len(token) >= 4)
+    return ascii_token_count >= len(alpha_tokens) - 1 and long_token_count >= 3 and spanish_hits == 0
+
+
+def _extract_text_segments(html_fragment: str) -> List[Tuple[str, str, str]]:
+    try:
+        fragment = lxml_html.fragment_fromstring(html_fragment, create_parent=True)
+    except Exception:
+        return []
+
+    out: List[Tuple[str, str, str]] = []
+    for element in fragment.iter():
+        tag = getattr(element, "tag", None)
+        if not isinstance(tag, str):
+            continue
+        tag = tag.lower()
+        if tag not in TEXTUAL_SEGMENT_TAGS:
+            continue
+        if any(getattr(ancestor, "tag", "").lower() in {"pre", "code"} for ancestor in element.iterancestors()):
+            continue
+
+        text = " ".join(piece.strip() for piece in element.itertext() if piece and piece.strip())
+        normalized = _normalize_text_for_comparison(text)
+        if normalized:
+            out.append((tag, normalized, text.strip()))
+    return out
 
 
 def _tag_counts(html_fragment: str, tags: List[str]) -> Dict[str, int]:
@@ -829,6 +1098,7 @@ def _build_translation_prompt(original_html: str, attempt: int, invalid_reason: 
             f"{reason_line}"
             "- Si no puedes traducir un nodo, devuelve ESE nodo exacto sin explicación.\n"
             "- Nunca escribas metacomentarios del tipo 'No hay contenido HTML'.\n"
+            "- No dejes parrafos, listas o celdas en ingles si su texto es traducible.\n"
             "- Si hay solo un título (h1-h6), traduce únicamente su texto y conserva la etiqueta.\n"
             "- Si hay enlaces o imágenes, conserva src/href/atributos intactos.\n"
         )
@@ -840,7 +1110,9 @@ def _build_translation_prompt(original_html: str, attempt: int, invalid_reason: 
         "2) Conserva TODAS las etiquetas y su jerarquia (h1-h6, p, ul/ol/li, table, blockquote, pre, code, figure, figcaption, img, a).\n"
         "3) No elimines ni cambies atributos de recursos: src, href, width, height, class, id, style.\n"
         "4) No inventes mensajes tipo 'no puedo traducir' ni des instrucciones al usuario.\n"
-        "5) No elimines imagenes ni enlaces."
+        "5) No elimines imagenes ni enlaces.\n"
+        "6) Traduce TODO el texto legible al espanol; no dejes texto fuente intacto salvo codigo literal dentro de pre/code o nombres propios inevitables.\n"
+        "7) No agregues comentarios HTML ni notas del traductor."
         f"{extra}\n\n"
         "HTML de entrada (mantener el contenedor con id):\n"
         f"<div id=\"__epubdrop_root__\">{original_html}</div>"
@@ -851,6 +1123,9 @@ def _translation_is_valid(original_html: str, translated_html: str) -> Tuple[boo
     translated = (translated_html or "").strip()
     if not translated:
         return False, "empty_translation"
+
+    if re.search(r"<!--[\s\S]*?-->", translated):
+        return False, "html_comment"
 
     low = translated.lower()
     if any(marker in low for marker in TRANSLATION_FAILURE_MARKERS):
@@ -873,7 +1148,20 @@ def _translation_is_valid(original_html: str, translated_html: str) -> Tuple[boo
     if original_hrefs and not original_hrefs.issubset(translated_hrefs):
         return False, "missing_link_hrefs"
 
+    original_segments = _extract_text_segments(original_html)
+    translated_segments = _extract_text_segments(translated)
+    for idx, (original_segment, translated_segment) in enumerate(zip(original_segments, translated_segments)):
+        _orig_tag, orig_normalized, orig_text = original_segment
+        _translated_tag, translated_normalized, _translated_text = translated_segment
+        if orig_normalized == translated_normalized and _looks_like_english_source_text(orig_text):
+            return False, f"unchanged_text_segment:{idx}"
+
     return True, ""
+
+
+def is_valid_translation_html(original_html: str, translated_html: str) -> bool:
+    ok, _ = _translation_is_valid(original_html, translated_html)
+    return ok
 
 
 def _post_ollama(endpoint: str, model: str, prompt: str, timeout_seconds: int) -> str:
@@ -906,18 +1194,22 @@ def translate_html_with_ollama(html: str, *, force_refresh: bool = False) -> str
     if not _has_translatable_text(original_html):
         return original_html
 
-    endpoint = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
-    model = os.getenv("OLLAMA_MODEL", "translategemma:4b")
-    timeout_seconds = int(os.getenv("OLLAMA_TIMEOUT_SECONDS", "120"))
-    max_retries = max(1, int(os.getenv("OLLAMA_MAX_RETRIES", "3")))
-    retry_base_seconds = max(0.1, float(os.getenv("OLLAMA_RETRY_BASE_SECONDS", "0.6")))
+    endpoint = getattr(settings, "OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
+    model = getattr(settings, "OLLAMA_MODEL", "translategemma:4b")
+    timeout_seconds = int(getattr(settings, "OLLAMA_TIMEOUT_SECONDS", 120))
+    max_retries = max(1, int(getattr(settings, "OLLAMA_MAX_RETRIES", 3)))
+    retry_base_seconds = max(0.1, float(getattr(settings, "OLLAMA_RETRY_BASE_SECONDS", 0.6)))
 
     cache_hash = _content_hash(original_html)
     cached = TranslationCache.objects.filter(content_hash=cache_hash, model_name=model).first()
     if cached and cached.translated_html.strip() and not force_refresh:
-        ok_cached, _ = _translation_is_valid(original_html, cached.translated_html)
+        cached_html = sanitize_html_trusted(cached.translated_html)
+        ok_cached, _ = _translation_is_valid(original_html, cached_html)
         if ok_cached:
-            return cached.translated_html
+            if cached_html != cached.translated_html:
+                cached.translated_html = cached_html
+                cached.save(update_fields=["translated_html"])
+            return cached_html
         cached.delete()
 
     last_error: Optional[Exception] = None
@@ -925,8 +1217,18 @@ def translate_html_with_ollama(html: str, *, force_refresh: bool = False) -> str
     for attempt in range(1, max_retries + 1):
         try:
             prompt = _build_translation_prompt(original_html, attempt=attempt, invalid_reason=last_invalid_reason)
-            raw_response = _post_ollama(endpoint, model, prompt, timeout_seconds=timeout_seconds)
-            translated_candidate = _extract_wrapped_translation(raw_response)
+            request_semaphore = _get_translation_request_semaphore()
+            request_semaphore.acquire()
+            try:
+                raw_response = _post_ollama(endpoint, model, prompt, timeout_seconds=timeout_seconds)
+            finally:
+                _cooldown_after_translation_request()
+                request_semaphore.release()
+            raw_candidate = _extract_wrapped_translation(raw_response)
+            if re.search(r"<!--[\s\S]*?-->", raw_candidate or ""):
+                last_invalid_reason = "html_comment"
+                raise ValueError("invalid_translation_shape")
+            translated_candidate = sanitize_html_trusted(raw_candidate)
 
             is_valid, invalid_reason = _translation_is_valid(original_html, translated_candidate)
             if is_valid:

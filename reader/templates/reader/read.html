@@ -170,7 +170,8 @@
                      data-block-id="{{ blk.id }}">
 
                   <!-- IZQUIERDA: traducido (sin línea entre párrafos) -->
-                  <div class="epub-content no-radius bg-white">
+                  <div class="epub-content no-radius bg-white translated-content"
+                       data-translation-state="{% if blk.has_translation %}ready{% else %}pending{% endif %}">
                     {{ blk.translated_html|safe }}
                   </div>
 
@@ -300,6 +301,6 @@
   </div>
   {{ bookmarks|json_script:"initial-bookmarks" }}
 
-  <script src="{% static 'reader/read.js' %}?v=20260215b" defer></script>
+  <script src="{% static 'reader/read.js' %}?v=20260503-lazy" defer></script>
 </body>
 </html>

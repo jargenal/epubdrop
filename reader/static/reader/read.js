@@ -145,6 +145,10 @@ let searchHits = [];
 let searchCursor = -1;
 let useContainerScroll = true;
 let rowObserver = null;
+let translationObserver = null;
+const translationRequests = new Set();
+const translatedRows = new Set();
+let lazyTranslationScanTimer = null;
 
 function getHeaderOffset() {
   const h = stickyHeader ? Math.round(stickyHeader.getBoundingClientRect().height) : 0;
@@ -715,6 +719,97 @@ function recreateRowObserver() {
   rows.forEach((r) => rowObserver.observe(r));
 }
 
+function getTranslatedCell(row) {
+  return row ? row.querySelector(".translated-content") : null;
+}
+
+function markTranslationState(row, state) {
+  const cell = getTranslatedCell(row);
+  if (cell) cell.dataset.translationState = state;
+}
+
+async function requestLazyTranslation(row) {
+  if (!BOOK_ID || !row) return;
+  const blockId = row.dataset.blockId || `${row.dataset.s}:${row.dataset.b}`;
+  const cell = getTranslatedCell(row);
+  if (!cell || cell.dataset.translationState !== "pending") return;
+  if (translationRequests.has(blockId) || translatedRows.has(blockId)) return;
+
+  translationRequests.add(blockId);
+  markTranslationState(row, "loading");
+
+  const sectionIdx = Number(row.dataset.s || 0);
+  const blockIdx = Number(row.dataset.b || 0);
+  try {
+    const res = await fetch(`/api/books/${BOOK_ID}/translate-block/${sectionIdx}/${blockIdx}/`, {
+      method: "GET",
+      credentials: "same-origin",
+      headers: { "Accept": "application/json" },
+    });
+    if (!res.ok) throw new Error(`translate_block_http_${res.status}`);
+    const data = await res.json();
+    if (data && data.ok && typeof data.translated_html === "string" && data.translated_html.trim()) {
+      cell.innerHTML = data.translated_html;
+      optimizeImgs(cell);
+      translatedRows.add(blockId);
+      markTranslationState(row, data.fallback ? "fallback" : "ready");
+      recalcScrollMode();
+      return;
+    }
+    markTranslationState(row, "fallback");
+  } catch (_) {
+    markTranslationState(row, "fallback");
+  } finally {
+    translationRequests.delete(blockId);
+  }
+}
+
+function recreateTranslationObserver() {
+  if (translationObserver) {
+    translationObserver.disconnect();
+    translationObserver = null;
+  }
+  if (!rows.length || !("IntersectionObserver" in window)) return;
+  translationObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      requestLazyTranslation(entry.target);
+    });
+  }, {
+    root: useContainerScroll ? readerScroll : null,
+    rootMargin: "900px 0px",
+    threshold: 0.01,
+  });
+  rows.forEach((row) => {
+    const cell = getTranslatedCell(row);
+    if (cell && cell.dataset.translationState === "pending") {
+      translationObserver.observe(row);
+    }
+  });
+}
+
+function requestVisibleLazyTranslations() {
+  rows.forEach((row) => {
+    const cell = getTranslatedCell(row);
+    if (!cell || cell.dataset.translationState !== "pending") return;
+    const rect = row.getBoundingClientRect();
+    const rootRect = useContainerScroll
+      ? readerScroll.getBoundingClientRect()
+      : { top: 0, bottom: window.innerHeight };
+    if (rect.bottom >= rootRect.top - 900 && rect.top <= rootRect.bottom + 900) {
+      requestLazyTranslation(row);
+    }
+  });
+}
+
+function scheduleLazyTranslationScan() {
+  if (lazyTranslationScanTimer) return;
+  lazyTranslationScanTimer = window.setTimeout(() => {
+    lazyTranslationScanTimer = null;
+    requestVisibleLazyTranslations();
+  }, 180);
+}
+
 // Imágenes
 function optimizeImgs(root=document) {
   q("img", root).forEach(img => { img.loading = "lazy"; img.decoding = "async"; });
@@ -732,6 +827,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   updateVirtualSections();
   recalcScrollMode();
   recreateRowObserver();
+  recreateTranslationObserver();
+  scheduleLazyTranslationScan();
   setTocActive(activeSectionIndex);
   updateBookmarkButtonState();
   renderBookmarks();
@@ -784,6 +881,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   updateProgress();
   updateChapter();
   updateVirtualSections();
+  scheduleLazyTranslationScan();
   saveProgress();
   setSaveStatus("saved", "Guardado");
 });
@@ -842,6 +940,7 @@ readerScroll.addEventListener("scroll", () => {
   updateProgress();
   updateChapter();
   updateVirtualSections();
+  scheduleLazyTranslationScan();
   updateBookmarkButtonState();
   scheduleSave();
 });
@@ -851,6 +950,7 @@ window.addEventListener("scroll", () => {
   updateProgress();
   updateChapter();
   updateVirtualSections();
+  scheduleLazyTranslationScan();
   updateBookmarkButtonState();
   scheduleSave();
 }, { passive: true });
@@ -860,7 +960,9 @@ window.addEventListener("resize", () => {
   recalcScrollMode();
   if (prev !== useContainerScroll) {
     recreateRowObserver();
+    recreateTranslationObserver();
   }
+  requestVisibleLazyTranslations();
 });
 
 const backLink = document.getElementById("backLink");
