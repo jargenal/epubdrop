@@ -21,7 +21,8 @@ EPUBDrop es una aplicación Django para cargar EPUBs, abrirlos de inmediato y le
   - bookmarks por bloque
 - Lectura inmediata después de subir:
   - el EPUB se procesa y queda disponible apenas se guardan los bloques originales
-  - la traducción se genera progresivamente cuando el lector necesita cada bloque
+  - la traducción avanza en segundo plano después de subir el EPUB
+  - el lector también puede generar bloques bajo demanda si llega antes que la tarea de fondo
   - si Ollama falla o devuelve una salida inválida, se conserva el HTML original como fallback
 - Lector bilingüe en dos columnas:
   - izquierda traducido, derecha original
@@ -32,12 +33,12 @@ EPUBDrop es una aplicación Django para cargar EPUBs, abrirlos de inmediato y le
   - guardado remoto en backend
   - respaldo local por libro si falla red
   - indicador visual de estado de guardado
-- Endpoint de traducción lazy por bloque.
+- Traducción en background con endpoint lazy por bloque como respaldo.
 - Caché de traducción (`TranslationCache`) para evitar retraducciones innecesarias.
 
 ## Calidad de traducción y prevención de fallos
 
-El pipeline de traducción lazy incluye controles para evitar respuestas “descriptivas” del modelo (por ejemplo: “No hay contenido HTML para traducir…”):
+El pipeline de traducción con Ollama incluye controles para evitar respuestas “descriptivas” del modelo (por ejemplo: “No hay contenido HTML para traducir…”):
 
 - Validación estructural de salida traducida:
   - rechaza salida vacía
@@ -67,13 +68,14 @@ EPUBDrop renderiza HTML con `|safe` en el lector, por eso todo contenido HTML pa
 
 1. El usuario sube un EPUB.
 2. El backend valida el archivo, extrae metadata/assets y guarda secciones y bloques originales.
-3. El libro aparece en la biblioteca y puede abrirse inmediatamente, aunque su estado siga en `TRANSLATING`.
-4. El lector muestra dos columnas:
+3. El backend inicia una traducción completa en background usando Ollama.
+4. El libro aparece en la biblioteca y puede abrirse inmediatamente, aunque su estado siga en `TRANSLATING`.
+5. El lector muestra dos columnas:
    - izquierda: traducción si ya existe; si no existe, muestra temporalmente el original.
    - derecha: contenido original.
-5. El frontend solicita `/api/books/<book_id>/translate-block/<section_idx>/<block_idx>/` solo para bloques cercanos o visibles.
-6. El backend reutiliza `translated_html` si ya existe; si no, llama a Ollama, sanitiza y valida la salida, y guarda la traducción válida.
-7. `translated_blocks / total_blocks` se actualiza conforme se traducen bloques por demanda.
+6. El frontend solicita `/api/books/<book_id>/translate-block/<section_idx>/<block_idx>/` solo para bloques cercanos o visibles que aún no tengan traducción.
+7. El backend reutiliza `translated_html` si ya existe; si no, llama a Ollama, sanitiza y valida la salida, y guarda la traducción válida.
+8. `translated_blocks / total_blocks` se actualiza conforme avanza la tarea de fondo o se traducen bloques bajo demanda.
 
 ## Stack técnico
 
@@ -101,7 +103,7 @@ EPUBDrop renderiza HTML con `|safe` en el lector, por eso todo contenido HTML pa
 - `reader/models.py`: entidades principales.
 - `reader/views.py`: capa HTTP delgada para biblioteca, lectura y APIs JSON.
 - `reader/services.py`: lógica de negocio de biblioteca, upload EPUB, lector, progreso, bookmarks y traducción lazy.
-- `reader/tasks.py`: traducción completa/manual por libro usada como soporte operativo.
+- `reader/tasks.py`: traducción completa en background y reinicios manuales por libro.
 - `reader/utils.py`: parsing EPUB, traducción con Ollama, validación/sanitización.
 - `reader/static/reader/read.js`: lector, progreso, bookmarks, búsqueda y solicitudes de traducción lazy.
 - `reader/management/commands/audit_translations.py`: auditoría manual de traducciones.
@@ -168,7 +170,7 @@ ollama pull translategemma:4b
 
 ## Operaciones de traducción
 
-El uso normal es traducción lazy por bloque desde el lector. Además existen comandos manuales para mantenimiento o reparación.
+El uso normal es traducción completa en background con traducción lazy como respaldo al leer. Además existen comandos manuales para mantenimiento o reparación.
 
 ### Auditoría de traducciones
 
@@ -203,7 +205,7 @@ TOTAL books=1 scanned=5074 valid=5039 repaired=35 fallback_original=0
 
 ### Reiniciar traducción completa de un libro
 
-El comando `restart_translation` fuerza una retraducción completa de un libro usando el código actual. Es una operación manual de mantenimiento, no el flujo normal de lectura.
+El comando `restart_translation` fuerza una retraducción completa de un libro usando el código actual. Es una operación manual de mantenimiento para reiniciar o reparar un libro específico.
 
 ```bash
 .venv/bin/python manage.py restart_translation --book-id <BOOK_UUID>
@@ -211,7 +213,7 @@ El comando `restart_translation` fuerza una retraducción completa de un libro u
 
 ## Notas operativas
 
-- Cerrar el navegador detiene nuevas solicitudes lazy desde el lector, pero no borra traducciones ya guardadas.
-- Un libro puede abrirse mientras está en `TRANSLATING`; ese estado indica progreso de traducción por bloques.
+- Cerrar el navegador detiene nuevas solicitudes lazy desde el lector, pero la tarea de background puede seguir avanzando mientras el proceso Django siga vivo.
+- Un libro puede abrirse mientras está en `TRANSLATING`; ese estado indica progreso de traducción por bloques en background y/o bajo demanda.
 - `READY` significa que todos los bloques registrados ya tienen traducción guardada.
 - Para operaciones de reparación masiva, mantén Ollama activo antes de ejecutar auditorías.

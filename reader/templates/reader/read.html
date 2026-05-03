@@ -29,12 +29,13 @@
 
 <body
   class="min-h-screen bg-slate-50 text-slate-900 theme-light"
-  data-book-id="{{ book_id|escapejs }}"
+  data-book-id="{{ book_id }}"
+  data-translation-enabled="{% if translation_enabled %}1{% else %}0{% endif %}"
   data-saved-section="{{ saved_progress.section_index|default:0 }}"
   data-saved-block="{{ saved_progress.block_index|default:0 }}"
   data-saved-offset="{{ saved_progress.block_offset_percent|default:0 }}"
   data-saved-block-id="{{ saved_progress.block_id|default:0 }}"
-  data-saved-anchor-text="{{ saved_progress.anchor_text|default:''|escapejs }}"
+  data-saved-anchor-text="{{ saved_progress.anchor_text|default:'' }}"
   data-saved-anchor-char="{{ saved_progress.anchor_char_index|default:0 }}">
 
   <!-- Top bar -->
@@ -80,6 +81,19 @@
             <rect x="3" y="7" width="18" height="10" rx="2" stroke-width="2"></rect>
             <circle cx="8" cy="12" r="2" stroke-width="2"></circle>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 12h7M16 7V4m2 3V4m-2 16v-3m2 3v-3"/>
+          </svg>
+        </button>
+        <button id="toggleReadingMode"
+                class="reading-mode-toggle top-icon-btn inline-flex items-center justify-center bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                title="Cambiar a solo español"
+                aria-label="Cambiar a solo español">
+          <svg class="reading-mode-icon reading-mode-icon--split h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="4" y="5" width="16" height="14" rx="2" stroke-width="2"></rect>
+            <path d="M12 5v14" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <svg class="reading-mode-icon reading-mode-icon--single h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="5" y="5" width="14" height="14" rx="2" stroke-width="2"></rect>
+            <path d="M8 9h8M8 12h8M8 15h6" stroke-width="2" stroke-linecap="round"></path>
           </svg>
         </button>
         <button id="themeToggle"
@@ -155,7 +169,7 @@
       </div>
     </div>
     <!-- Contenedor principal: sin redondeo -->
-    <div id="readerScroll" class="no-radius h-[calc(100vh-6.25rem)] overflow-y-auto bg-white ring-1 ring-slate-200">
+    <div id="readerScroll" class="reader-panel h-[calc(100vh-6.25rem)] overflow-y-auto bg-white ring-1 ring-slate-200">
       <div class="px-4 py-5">
 
         {% for sec in sections %}
@@ -176,7 +190,7 @@
                   </div>
 
                   <!-- DERECHA: original (sin línea entre párrafos) -->
-                  <div class="epub-content no-radius bg-white">
+                  <div class="epub-content no-radius bg-white original-content">
                     {{ blk.original_html|safe }}
                   </div>
 
@@ -258,7 +272,7 @@
       <div class="p-4 space-y-6 overflow-y-auto">
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-2">Tamaño de texto</label>
-          <input id="fontSize" type="range" min="14" max="22" value="16" class="w-full">
+          <input id="fontSize" type="range" min="14" max="24" value="16" class="w-full">
           <div class="mt-2 text-xs text-slate-500">Actual: <span id="fontSizeVal">16</span>px</div>
         </div>
 
@@ -288,6 +302,35 @@
           <div class="mt-2 text-xs text-slate-500">Actual: <span id="themeModeVal">Claro</span></div>
         </div>
 
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-2">Paleta de lectura</label>
+          <select id="readingPalette" class="w-full border border-slate-200 bg-white px-3 py-2 text-sm">
+            <option value="default">Sistema</option>
+            <option value="warm">Gris cálido</option>
+            <option value="sepia">Sepia suave</option>
+            <option value="dusk">Oscuro cálido</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="flex items-center justify-between gap-3 text-xs font-semibold text-slate-600">
+            <span>Lectura cómoda</span>
+            <input id="comfortMode" type="checkbox" class="h-4 w-4 accent-slate-700">
+          </label>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-2">Interlineado</label>
+          <input id="lineHeight" type="range" min="1.45" max="1.95" step="0.05" value="1.65" class="w-full">
+          <div class="mt-2 text-xs text-slate-500">Actual: <span id="lineHeightVal">1.65</span></div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-2">Ancho de columna</label>
+          <input id="columnWidth" type="range" min="680" max="1120" step="20" value="920" class="w-full">
+          <div class="mt-2 text-xs text-slate-500">Actual: <span id="columnWidthVal">920</span>px</div>
+        </div>
+
         <div class="bg-slate-50 ring-1 ring-slate-200 p-4 text-xs text-slate-600">
           <div class="font-semibold text-slate-700 mb-1">Notas</div>
           <ul class="list-disc pl-5 space-y-1">
@@ -301,6 +344,6 @@
   </div>
   {{ bookmarks|json_script:"initial-bookmarks" }}
 
-  <script src="{% static 'reader/read.js' %}?v=20260503-lazy" defer></script>
+  <script src="{% static 'reader/read.js' %}?v=20260503-comfort" defer></script>
 </body>
 </html>

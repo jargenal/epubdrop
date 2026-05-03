@@ -5,6 +5,7 @@ function extractBookIdFromPath() {
 
 const pageData = document.body.dataset || {};
 const BOOK_ID = pageData.bookId || extractBookIdFromPath();
+const TRANSLATION_ENABLED = pageData.translationEnabled !== "0";
 const SAVED_SECTION = Number(pageData.savedSection || 0);
 const SAVED_BLOCK = Number(pageData.savedBlock || 0);
 const SAVED_OFFSET = Number(pageData.savedOffset || 0);
@@ -33,7 +34,10 @@ const searchClearBtn = document.getElementById("searchClear");
 const searchCount = document.getElementById("searchCount");
 const stickyHeader = document.querySelector("header.sticky");
 const saveStatus = document.getElementById("saveStatus");
+const toggleReadingModeBtn = document.getElementById("toggleReadingMode");
 const PROGRESS_LOCAL_KEY = BOOK_ID ? `readerProgress:${BOOK_ID}` : "";
+const READING_LAYOUT_KEY = "readerLayoutMode";
+const READING_LAYOUT_MODES = new Set(["bilingual", "translated"]);
 
 function q(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
 
@@ -44,6 +48,12 @@ const closeConfig = document.getElementById("closeConfig");
 const fontSize = document.getElementById("fontSize");
 const fontSizeVal = document.getElementById("fontSizeVal");
 const fontFamily = document.getElementById("fontFamily");
+const readingPalette = document.getElementById("readingPalette");
+const comfortMode = document.getElementById("comfortMode");
+const lineHeight = document.getElementById("lineHeight");
+const lineHeightVal = document.getElementById("lineHeightVal");
+const columnWidth = document.getElementById("columnWidth");
+const columnWidthVal = document.getElementById("columnWidthVal");
 const themeMode = document.getElementById("themeMode");
 const themeModeVal = document.getElementById("themeModeVal");
 const themeToggle = document.getElementById("themeToggle");
@@ -52,6 +62,10 @@ const STORAGE_KEYS = {
   size: "readerFontSize",
   family: "readerFontFamily",
   theme: "appThemeMode",
+  palette: "readerPalette",
+  comfort: "readerComfortMode",
+  lineHeight: "readerLineHeight",
+  columnWidth: "readerColumnWidth",
 };
 
 function openDrawer(){ overlay.classList.remove("hidden"); document.body.style.overflow="hidden"; }
@@ -63,29 +77,98 @@ overlay.addEventListener("click", (e)=>{ if(e.target===overlay) closeDrawer(); }
 function applyTypography() {
   const size = parseInt(fontSize.value, 10);
   const family = fontFamily.value;
+  const leading = Math.max(1.45, Math.min(1.95, Number(lineHeight?.value || 1.65)));
+  const width = Math.max(680, Math.min(1120, Number(columnWidth?.value || 920)));
+  const paragraphSpacing = Math.max(0.52, Math.min(0.9, leading - 1.05));
   fontSizeVal.textContent = String(size);
+  if (lineHeightVal) lineHeightVal.textContent = leading.toFixed(2);
+  if (columnWidthVal) columnWidthVal.textContent = String(width);
   readerScroll.style.fontSize = `${size}px`;
   readerScroll.style.fontFamily = family;
+  readerScroll.style.setProperty("--reader-line-height", String(leading));
+  readerScroll.style.setProperty("--reader-paragraph-spacing", `${paragraphSpacing.toFixed(2)}em`);
+  readerScroll.style.setProperty("--reader-column-width", `${width}px`);
   saveSettings();
+  recalcScrollMode();
 }
 fontSize.addEventListener("input", applyTypography);
 fontFamily.addEventListener("change", applyTypography);
+if (lineHeight) lineHeight.addEventListener("input", applyTypography);
+if (columnWidth) columnWidth.addEventListener("input", applyTypography);
 
 function saveSettings() {
   localStorage.setItem(STORAGE_KEYS.size, fontSize.value);
   localStorage.setItem(STORAGE_KEYS.family, fontFamily.value);
   localStorage.setItem(STORAGE_KEYS.theme, themeMode.value);
+  if (readingPalette) localStorage.setItem(STORAGE_KEYS.palette, readingPalette.value);
+  if (comfortMode) localStorage.setItem(STORAGE_KEYS.comfort, comfortMode.checked ? "1" : "0");
+  if (lineHeight) localStorage.setItem(STORAGE_KEYS.lineHeight, lineHeight.value);
+  if (columnWidth) localStorage.setItem(STORAGE_KEYS.columnWidth, columnWidth.value);
 }
 
 function loadSettings() {
   const savedSize = localStorage.getItem(STORAGE_KEYS.size);
   const savedFamily = localStorage.getItem(STORAGE_KEYS.family);
   const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
+  const savedPalette = localStorage.getItem(STORAGE_KEYS.palette);
+  const savedComfort = localStorage.getItem(STORAGE_KEYS.comfort);
+  const savedLineHeight = localStorage.getItem(STORAGE_KEYS.lineHeight);
+  const savedColumnWidth = localStorage.getItem(STORAGE_KEYS.columnWidth);
   const legacyTheme = localStorage.getItem("readerThemeMode");
   if (savedSize) fontSize.value = savedSize;
   if (savedFamily) fontFamily.value = savedFamily;
   if (savedTheme) themeMode.value = savedTheme;
   else if (legacyTheme) themeMode.value = legacyTheme;
+  if (savedPalette && readingPalette) readingPalette.value = savedPalette;
+  if (savedComfort && comfortMode) comfortMode.checked = savedComfort === "1";
+  if (savedLineHeight && lineHeight) lineHeight.value = savedLineHeight;
+  if (savedColumnWidth && columnWidth) columnWidth.value = savedColumnWidth;
+}
+
+function applyReaderPalette() {
+  const palette = readingPalette?.value || "default";
+  document.body.classList.toggle("reader-palette-warm", palette === "warm");
+  document.body.classList.toggle("reader-palette-sepia", palette === "sepia");
+  document.body.classList.toggle("reader-palette-dusk", palette === "dusk");
+  saveSettings();
+}
+
+function applyComfortMode() {
+  readerScroll.classList.toggle("reader-comfort", Boolean(comfortMode?.checked));
+  saveSettings();
+  recalcScrollMode();
+  updateProgress();
+  updateChapter();
+}
+
+if (readingPalette) readingPalette.addEventListener("change", applyReaderPalette);
+if (comfortMode) comfortMode.addEventListener("change", applyComfortMode);
+
+function getReadingLayoutMode() {
+  const stored = localStorage.getItem(READING_LAYOUT_KEY) || "bilingual";
+  return READING_LAYOUT_MODES.has(stored) ? stored : "bilingual";
+}
+
+function applyReadingLayoutMode(mode) {
+  const normalized = READING_LAYOUT_MODES.has(mode) ? mode : "bilingual";
+  const translatedOnly = normalized === "translated";
+  readerScroll.classList.toggle("reader-translated-only", translatedOnly);
+  if (toggleReadingModeBtn) {
+    toggleReadingModeBtn.dataset.mode = normalized;
+    const label = translatedOnly ? "Cambiar a español e inglés" : "Cambiar a solo español";
+    toggleReadingModeBtn.setAttribute("title", label);
+    toggleReadingModeBtn.setAttribute("aria-label", label);
+  }
+  localStorage.setItem(READING_LAYOUT_KEY, normalized);
+  recalcScrollMode();
+  updateProgress();
+  updateChapter();
+  requestVisibleLazyTranslations();
+}
+
+function toggleReadingLayoutMode() {
+  const current = getReadingLayoutMode();
+  applyReadingLayoutMode(current === "translated" ? "bilingual" : "translated");
 }
 
 themeMode.addEventListener("change", () => {
@@ -103,6 +186,10 @@ if (themeToggle) {
       saveSettings();
     }, 0);
   });
+}
+
+if (toggleReadingModeBtn) {
+  toggleReadingModeBtn.addEventListener("click", toggleReadingLayoutMode);
 }
 
 // Progreso
@@ -148,6 +235,13 @@ let rowObserver = null;
 let translationObserver = null;
 const translationRequests = new Set();
 const translatedRows = new Set();
+const translationQueuedRows = new Map();
+const translationRetryAt = new Map();
+const translationAttempts = new Map();
+const MAX_ACTIVE_LAZY_TRANSLATIONS = 2;
+const MAX_LAZY_TRANSLATION_ATTEMPTS = 4;
+const LAZY_TRANSLATION_RETRY_DELAY_MS = 15000;
+let activeLazyTranslations = 0;
 let lazyTranslationScanTimer = null;
 
 function getHeaderOffset() {
@@ -728,14 +822,64 @@ function markTranslationState(row, state) {
   if (cell) cell.dataset.translationState = state;
 }
 
-async function requestLazyTranslation(row) {
-  if (!BOOK_ID || !row) return;
-  const blockId = row.dataset.blockId || `${row.dataset.s}:${row.dataset.b}`;
+function getRowTranslationKey(row) {
+  return row ? (row.dataset.blockId || `${row.dataset.s}:${row.dataset.b}`) : "";
+}
+
+function canAttemptLazyTranslation(row, blockId) {
   const cell = getTranslatedCell(row);
-  if (!cell || cell.dataset.translationState !== "pending") return;
-  if (translationRequests.has(blockId) || translatedRows.has(blockId)) return;
+  if (!cell) return false;
+  const state = cell.dataset.translationState;
+  if (state !== "pending" && state !== "fallback") return false;
+  if (translationRequests.has(blockId) || translatedRows.has(blockId)) return false;
+
+  const attempts = Number(translationAttempts.get(blockId) || 0);
+  if (attempts >= MAX_LAZY_TRANSLATION_ATTEMPTS) return false;
+
+  const retryAt = Number(translationRetryAt.get(blockId) || 0);
+  return retryAt <= Date.now();
+}
+
+function queueLazyTranslation(row) {
+  if (!TRANSLATION_ENABLED) return;
+  if (!BOOK_ID || !row) return;
+  const blockId = getRowTranslationKey(row);
+  if (!blockId || !canAttemptLazyTranslation(row, blockId)) return;
+  translationQueuedRows.set(blockId, row);
+  pumpLazyTranslationQueue();
+}
+
+function pumpLazyTranslationQueue() {
+  if (activeLazyTranslations >= MAX_ACTIVE_LAZY_TRANSLATIONS) return;
+  for (const [blockId, row] of translationQueuedRows) {
+    if (activeLazyTranslations >= MAX_ACTIVE_LAZY_TRANSLATIONS) return;
+    translationQueuedRows.delete(blockId);
+    if (!canAttemptLazyTranslation(row, blockId)) continue;
+    requestLazyTranslation(row);
+  }
+}
+
+function markLazyTranslationRetry(row, blockId) {
+  translationRetryAt.set(blockId, Date.now() + LAZY_TRANSLATION_RETRY_DELAY_MS);
+  markTranslationState(row, "fallback");
+  window.setTimeout(() => {
+    const cell = getTranslatedCell(row);
+    if (cell && cell.dataset.translationState === "fallback") {
+      queueLazyTranslation(row);
+    }
+  }, LAZY_TRANSLATION_RETRY_DELAY_MS + 50);
+}
+
+async function requestLazyTranslation(row) {
+  if (!TRANSLATION_ENABLED) return;
+  if (!BOOK_ID || !row) return;
+  const blockId = getRowTranslationKey(row);
+  const cell = getTranslatedCell(row);
+  if (!blockId || !cell || !canAttemptLazyTranslation(row, blockId)) return;
 
   translationRequests.add(blockId);
+  activeLazyTranslations += 1;
+  translationAttempts.set(blockId, Number(translationAttempts.get(blockId) || 0) + 1);
   markTranslationState(row, "loading");
 
   const sectionIdx = Number(row.dataset.s || 0);
@@ -751,16 +895,23 @@ async function requestLazyTranslation(row) {
     if (data && data.ok && typeof data.translated_html === "string" && data.translated_html.trim()) {
       cell.innerHTML = data.translated_html;
       optimizeImgs(cell);
-      translatedRows.add(blockId);
-      markTranslationState(row, data.fallback ? "fallback" : "ready");
+      if (data.fallback) {
+        markLazyTranslationRetry(row, blockId);
+      } else {
+        translatedRows.add(blockId);
+        translationRetryAt.delete(blockId);
+        markTranslationState(row, "ready");
+      }
       recalcScrollMode();
       return;
     }
-    markTranslationState(row, "fallback");
+    markLazyTranslationRetry(row, blockId);
   } catch (_) {
-    markTranslationState(row, "fallback");
+    markLazyTranslationRetry(row, blockId);
   } finally {
     translationRequests.delete(blockId);
+    activeLazyTranslations = Math.max(0, activeLazyTranslations - 1);
+    pumpLazyTranslationQueue();
   }
 }
 
@@ -769,11 +920,12 @@ function recreateTranslationObserver() {
     translationObserver.disconnect();
     translationObserver = null;
   }
+  if (!TRANSLATION_ENABLED) return;
   if (!rows.length || !("IntersectionObserver" in window)) return;
   translationObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      requestLazyTranslation(entry.target);
+      queueLazyTranslation(entry.target);
     });
   }, {
     root: useContainerScroll ? readerScroll : null,
@@ -789,6 +941,7 @@ function recreateTranslationObserver() {
 }
 
 function requestVisibleLazyTranslations() {
+  if (!TRANSLATION_ENABLED) return;
   rows.forEach((row) => {
     const cell = getTranslatedCell(row);
     if (!cell || cell.dataset.translationState !== "pending") return;
@@ -797,7 +950,7 @@ function requestVisibleLazyTranslations() {
       ? readerScroll.getBoundingClientRect()
       : { top: 0, bottom: window.innerHeight };
     if (rect.bottom >= rootRect.top - 900 && rect.top <= rootRect.bottom + 900) {
-      requestLazyTranslation(row);
+      queueLazyTranslation(row);
     }
   });
 }
@@ -818,6 +971,9 @@ function optimizeImgs(root=document) {
 document.addEventListener("DOMContentLoaded", async () => {
   recalcScrollMode();
   loadSettings();
+  applyReaderPalette();
+  applyComfortMode();
+  applyReadingLayoutMode(getReadingLayoutMode());
   applyTypography();
   if (typeof window.applyAppTheme === "function") window.applyAppTheme(themeMode.value);
   saveSettings();
