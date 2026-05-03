@@ -100,15 +100,15 @@
               <button type="button" class="view-btn rounded-lg border border-transparent px-2 py-1 text-[11px] font-semibold text-[#64748b]" data-view="galeria">Galería</button>
             </div>
             <span class="rounded-full bg-[#e0e7ff] px-3 py-1 text-xs font-semibold text-[#2563eb]">
-              {{ ready_books|length }} listos
+              {{ library_books|length }} libros
             </span>
           </div>
         </div>
 
         <div class="shelf rounded-3xl px-6 py-6">
-          {% if ready_books %}
+          {% if library_books %}
             <div id="libraryList" class="library-list" data-view="mosaico">
-              {% for book in ready_books %}
+              {% for book in library_books %}
                 <article class="book-card rounded-2xl bg-white/80 p-4 shadow-sm">
                   <div class="book-body">
                     <div class="book-cover overflow-hidden rounded-xl border border-[#cbd5e1] bg-[#e0e7ff]">
@@ -120,6 +120,11 @@
                     </div>
                     <div class="book-meta min-w-0">
                       <h3 class="book-title text-sm font-semibold text-[#0f172a]">{{ book.title }}</h3>
+                      {% if book.status == "translating" %}
+                        <div class="mt-1 text-[11px] font-semibold text-[#2563eb]">Traducción por bloques</div>
+                      {% elif book.status == "failed" %}
+                        <div class="mt-1 text-[11px] font-semibold text-red-600">Disponible con contenido original</div>
+                      {% endif %}
                       <div class="book-actions mt-4 flex items-center justify-between">
                         <a href="{% url 'read_book' book_id=book.id %}"
                            class="read-btn rounded-full bg-[#1f2937] px-4 py-2 text-xs font-semibold text-white hover:bg-[#1e3a8a]">
@@ -139,7 +144,7 @@
             </div>
           {% else %}
             <div class="rounded-2xl border border-dashed border-[#cbd5e1] bg-white/70 px-6 py-8 text-center text-sm text-[#475569]">
-              Aun no hay libros listos. Sube un EPUB para comenzar.
+              Aun no hay libros. Sube un EPUB para comenzar a leer.
             </div>
           {% endif %}
         </div>
@@ -152,7 +157,7 @@
               <div class="flex items-start justify-between">
                 <div>
                   <h2 class="brand text-lg font-semibold text-[#0f172a]">Cargar nuevo libro</h2>
-                  <p class="mt-1 text-xs text-[#475569]">Traduccion automatica y persistente.</p>
+                  <p class="mt-1 text-xs text-[#475569]">Lectura inmediata con traduccion por bloques.</p>
                 </div>
                 <div class="rounded-full bg-[#e0e7ff] px-3 py-1 text-xs font-semibold text-[#2563eb]">Gratis</div>
               </div>
@@ -186,7 +191,7 @@
                 </div>
 
                 <div>
-                  <label class="mb-2 block text-xs font-semibold text-[#475569]">Correo para avisarte cuando termine</label>
+                  <label class="mb-2 block text-xs font-semibold text-[#475569]">Correo para avisos de traduccion</label>
                   <input
                     type="email"
                     name="notify_email"
@@ -197,7 +202,7 @@
 
                 <button type="submit"
                         class="w-full rounded-xl bg-[#1e3a8a] px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#1e3a8a]">
-                  Subir y traducir
+                  Subir y leer
                 </button>
               </form>
             </section>
