@@ -7,12 +7,11 @@ from typing import Optional
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import transaction
-from django.db.models import F
 from django.utils import timezone
 
 from .models import Book, Section, Block
 from .logging_utils import log_event
-from .utils import translate_html_with_ollama
+from .utils import is_valid_translation_html, translate_html_with_ollama
 
 logger = logging.getLogger(__name__)
 TRANSLATION_RUN_ID_KEY = "translation_run_id"
@@ -28,6 +27,7 @@ def prepare_book_for_translation(book_id: str, *, reset_blocks: bool = False) ->
     run_id = uuid.uuid4().hex
     info = dict(book.info or {})
     info[TRANSLATION_RUN_ID_KEY] = run_id
+    info.pop("translation_disabled", None)
 
     with transaction.atomic():
         if reset_blocks:
@@ -40,6 +40,27 @@ def prepare_book_for_translation(book_id: str, *, reset_blocks: bool = False) ->
             updated_at=timezone.now(),
         )
     return run_id
+
+
+def _count_translated_blocks(book_id: str) -> int:
+    return Block.objects.filter(
+        section__book_id=book_id,
+    ).exclude(translated_html="").count()
+
+
+def _sync_book_translation_progress(book_id: str, *, complete_if_ready: bool = False) -> int:
+    translated_count = _count_translated_blocks(book_id)
+    update_fields = {
+        "translated_blocks": translated_count,
+        "updated_at": timezone.now(),
+    }
+    if complete_if_ready:
+        total_blocks = Book.objects.filter(pk=book_id).values_list("total_blocks", flat=True).first() or 0
+        if total_blocks > 0 and translated_count >= total_blocks:
+            update_fields["status"] = Book.Status.READY
+            update_fields["error_message"] = ""
+    Book.objects.filter(pk=book_id).update(**update_fields)
+    return translated_count
 
 
 def _translation_run_is_current(book_id: str, run_id: str) -> bool:
@@ -134,6 +155,7 @@ def _translate_book(book_id: str, run_id: Optional[str] = None) -> None:
         _log_translation_superseded(book_id, run_id)
         return
 
+    _sync_book_translation_progress(book_id)
     log_event(logger, logging.INFO, "translation.book.begin", book_id=book_id, title=book.title, run_id=run_id)
 
     had_errors = False
@@ -150,21 +172,26 @@ def _translate_book(book_id: str, run_id: Optional[str] = None) -> None:
                         block_index=block.index,
                     )
                     return
-                if block.translated_html:
-                    Book.objects.filter(pk=book_id).update(
-                        translated_blocks=F("translated_blocks") + 1,
-                        updated_at=timezone.now(),
-                    )
+                current_translated_html = Block.objects.filter(pk=block.pk).values_list("translated_html", flat=True).first()
+                if current_translated_html:
                     run_guard.mark_block_processed()
                     continue
 
-                translated_html = ""
                 try:
                     translated_html = translate_html_with_ollama(block.original_html)
-                    if not translated_html.strip():
-                        translated_html = block.original_html
+                    if not translated_html.strip() or not is_valid_translation_html(block.original_html, translated_html):
+                        had_errors = True
+                        log_event(
+                            logger,
+                            logging.WARNING,
+                            "translation.block.invalid_fallback",
+                            book_id=book_id,
+                            section_index=section.index,
+                            block_index=block.index,
+                        )
+                        run_guard.mark_block_processed()
+                        continue
                 except Exception:
-                    translated_html = block.original_html
                     had_errors = True
                     log_event(
                         logger,
@@ -174,6 +201,8 @@ def _translate_book(book_id: str, run_id: Optional[str] = None) -> None:
                         section_index=section.index,
                         block_index=block.index,
                     )
+                    run_guard.mark_block_processed()
+                    continue
 
                 if not run_guard.is_current():
                     _log_translation_superseded(
@@ -184,22 +213,23 @@ def _translate_book(book_id: str, run_id: Optional[str] = None) -> None:
                     )
                     return
 
-                Block.objects.filter(pk=block.pk).update(translated_html=translated_html)
-                Book.objects.filter(pk=book_id).update(
-                    translated_blocks=F("translated_blocks") + 1,
-                    updated_at=timezone.now(),
-                )
+                updated = Block.objects.filter(pk=block.pk, translated_html="").update(translated_html=translated_html)
+                if updated:
+                    _sync_book_translation_progress(book_id)
                 run_guard.mark_block_processed()
 
         if not run_guard.is_current(force=True):
             _log_translation_superseded(book_id, run_id)
             return
 
-        Book.objects.filter(pk=book_id).update(
-            status=Book.Status.READY,
-            error_message="",
-            updated_at=timezone.now(),
-        )
+        translated_count = _sync_book_translation_progress(book_id, complete_if_ready=True)
+        final_book = Book.objects.filter(pk=book_id).only("status", "total_blocks").first()
+        if final_book and final_book.status != Book.Status.READY:
+            Book.objects.filter(pk=book_id).update(
+                status=Book.Status.TRANSLATING,
+                error_message="Algunos bloques no obtuvieron traducción válida; se reintentarán bajo demanda.",
+                updated_at=timezone.now(),
+            )
         log_event(
             logger,
             logging.INFO,
@@ -207,6 +237,7 @@ def _translate_book(book_id: str, run_id: Optional[str] = None) -> None:
             book_id=book_id,
             run_id=run_id,
             had_errors=had_errors,
+            translated_blocks=translated_count,
         )
         _send_completion_email(book, had_errors=had_errors)
     except Exception as exc:

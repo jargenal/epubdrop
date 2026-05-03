@@ -163,12 +163,42 @@ class ReaderSecurityTests(TestCase):
 
         read_response = chrome.get(reverse("read_book", kwargs={"book_id": str(own_book.id)}))
         self.assertEqual(read_response.status_code, 200)
+        self.assertContains(read_response, f'data-book-id="{own_book.id}"')
+        self.assertNotContains(read_response, "\\u002D")
         self.assertContains(read_response, 'data-saved-section="1"')
         self.assertContains(read_response, 'data-saved-block="2"')
         self.assertContains(read_response, 'data-saved-offset="0.62"')
         self.assertContains(read_response, f'data-saved-block-id="{block.id}"')
         self.assertContains(read_response, 'data-saved-anchor-text="Original avanzado"')
         self.assertContains(read_response, 'data-saved-anchor-char="9"')
+
+    def test_translate_block_with_invalid_uuid_returns_missing_book_fallback(self):
+        self.client.force_login(self.user_a)
+        response = self.client.get(
+            "/api/books/1549703c\\u002D4481\\u002D47e7\\u002Dade7\\u002D5bf51adc8e1b/translate-block/0/0/"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["fallback"], "missing_book")
+
+    def test_translation_disabled_book_does_not_translate_lazy_blocks(self):
+        book = self._make_ready_book(owner=self.user_a, status=Book.Status.TRANSLATING)
+        book.info = {"translation_disabled": True}
+        book.save(update_fields=["info"])
+        Block.objects.filter(section__book=book).update(translated_html="")
+
+        self.client.force_login(self.user_a)
+        read_response = self.client.get(reverse("read_book", kwargs={"book_id": str(book.id)}))
+        self.assertEqual(read_response.status_code, 200)
+        self.assertContains(read_response, 'data-translation-enabled="0"')
+
+        with patch("reader.services.translate_html_with_ollama") as translate_mock:
+            response = self.client.get(
+                reverse("translate_block", kwargs={"book_id": str(book.id), "section_idx": 0, "block_idx": 0})
+            )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["fallback"], "translation_disabled")
+        translate_mock.assert_not_called()
 
     def test_translate_block_for_non_owner_returns_missing_book_fallback(self):
         other_book = self._make_ready_book(owner=self.user_b)
@@ -306,7 +336,7 @@ class ReaderSecurityTests(TestCase):
             ), patch(
                 "reader.services.build_reader_sections_with_blocks_from_spine",
                 return_value=[{"id": "s0", "blocks": ["<p>uno</p>"]}],
-            ):
+            ), patch("reader.views.start_book_translation_async") as start_translation_mock:
                 response = self.client.post(
                     reverse("upload_epub"),
                     data={"epub_file": epub_file, "notify_email": "owner@example.com"},
@@ -317,6 +347,7 @@ class ReaderSecurityTests(TestCase):
         self.assertEqual(created.owner_id, self.user_a.id)
         self.assertEqual(created.status, Book.Status.TRANSLATING)
         self.assertEqual(created.translated_blocks, 0)
+        start_translation_mock.assert_called_once_with(str(created.id))
 
     def test_upload_persists_section_titles_from_builder(self):
         epub_file = SimpleUploadedFile(
@@ -335,7 +366,7 @@ class ReaderSecurityTests(TestCase):
                     {"id": "s0", "blocks": ["<p>uno</p>"], "title": "Capítulo 1"},
                     {"id": "s1", "blocks": ["<p>dos</p>"], "title": "Capítulo 2"},
                 ],
-            ):
+            ), patch("reader.views.start_book_translation_async"):
                 response = self.client.post(
                     reverse("upload_epub"),
                     data={"epub_file": epub_file, "notify_email": "owner@example.com"},
@@ -698,14 +729,14 @@ class TranslationTaskTests(TestCase):
             status=Book.Status.FAILED,
             total_blocks=1,
             translated_blocks=1,
-            info={"section_titles": ["Intro"]},
+            info={"section_titles": ["Intro"], "translation_disabled": True},
             error_message="boom",
         )
         section = Section.objects.create(book=book, index=0)
         block = Block.objects.create(
             section=section,
             index=0,
-            original_html="<p>Hello world</p>",
+            original_html="<p>The quick brown fox jumps over the lazy dog</p>",
             translated_html="<p>Hola mundo</p>",
         )
 
@@ -720,6 +751,7 @@ class TranslationTaskTests(TestCase):
         self.assertEqual(book.error_message, "")
         self.assertEqual(book.info.get("section_titles"), ["Intro"])
         self.assertEqual(book.info.get("translation_run_id"), run_id)
+        self.assertNotIn("translation_disabled", book.info)
 
     def test_translate_book_does_not_run_full_sanitize_pass_after_translation(self):
         user = CustomUser.objects.create_user(email="task@example.com", password="pass1234")
@@ -734,7 +766,7 @@ class TranslationTaskTests(TestCase):
         Block.objects.create(
             section=section,
             index=0,
-            original_html="<p>Hello world</p>",
+            original_html="<p>The quick brown fox jumps over the lazy dog</p>",
             translated_html="",
         )
 
@@ -747,6 +779,35 @@ class TranslationTaskTests(TestCase):
         book.refresh_from_db()
         self.assertEqual(book.status, Book.Status.READY)
         self.assertEqual(book.translated_blocks, 1)
+
+    def test_translate_book_does_not_save_invalid_fallback_as_translation(self):
+        user = CustomUser.objects.create_user(email="invalid-task@example.com", password="pass1234")
+        book = Book.objects.create(
+            owner=user,
+            title="Invalid task book",
+            status=Book.Status.TRANSLATING,
+            total_blocks=1,
+            translated_blocks=0,
+        )
+        section = Section.objects.create(book=book, index=0)
+        block = Block.objects.create(
+            section=section,
+            index=0,
+            original_html="<p>The quick brown fox jumps over the lazy dog</p>",
+            translated_html="",
+        )
+
+        with patch("reader.tasks.translate_html_with_ollama", return_value="<p>The quick brown fox jumps over the lazy dog</p>"), patch(
+            "reader.tasks._send_completion_email", return_value=None
+        ):
+            _translate_book(str(book.id))
+
+        block.refresh_from_db()
+        book.refresh_from_db()
+        self.assertEqual(block.translated_html, "")
+        self.assertEqual(book.translated_blocks, 0)
+        self.assertEqual(book.status, Book.Status.TRANSLATING)
+        self.assertIn("Algunos bloques", book.error_message)
 
     def test_translate_book_reuses_cached_run_check_across_multiple_blocks(self):
         user = CustomUser.objects.create_user(email="cached@example.com", password="pass1234")

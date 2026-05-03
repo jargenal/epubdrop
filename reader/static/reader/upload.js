@@ -168,6 +168,16 @@ if (uploadForm) {
   });
 }
 
+document.querySelectorAll(".delete-book-form").forEach((form) => {
+  form.addEventListener("submit", (event) => {
+    const title = form.dataset.bookTitle || "este libro";
+    const confirmed = window.confirm(`¿Eliminar "${title}"? Esta acción borrará el libro y sus archivos.`);
+    if (!confirmed) {
+      event.preventDefault();
+    }
+  });
+});
+
 if (!hasProgressItems) {
   sessionStorage.removeItem("epubdropAutoRefresh");
 }

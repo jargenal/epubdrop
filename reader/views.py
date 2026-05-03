@@ -7,6 +7,7 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 
 from . import services
 from .logging_utils import log_event
+from .tasks import start_book_translation_async
 
 logger = logging.getLogger(__name__)
 
@@ -82,8 +83,9 @@ def upload_epub(request):
         user_id=request.user.id,
         book_id=str(book.id),
         total_blocks=total_blocks,
-        translation_mode="lazy",
+        translation_mode="background_with_lazy_fallback",
     )
+    start_book_translation_async(str(book.id))
     return redirect("upload_epub")
 
 

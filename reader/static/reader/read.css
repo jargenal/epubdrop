@@ -11,6 +11,10 @@
   --epub-text: #111827;
   --epub-muted: #4b5563;
   --accent: #1e3a8a;
+  --reader-line-height: 1.65;
+  --reader-paragraph-spacing: 0.6em;
+  --reader-column-width: 920px;
+  --reader-content-padding: 1rem;
 }
 
 .theme-dark,
@@ -25,6 +29,87 @@
   --epub-text: #e5e7eb;
   --epub-muted: #cbd5e1;
   --accent: #3b82f6;
+}
+
+.reader-palette-warm {
+  color-scheme: light;
+  --bg: #f3f1ec;
+  --surface: #fbfaf7;
+  --text: #1f2933;
+  --muted: #647067;
+  --border: #d6d0c6;
+  --border-strong: #b8afa2;
+  --epub-text: #1f2933;
+  --epub-muted: #657166;
+  --accent: #365f7c;
+}
+
+.reader-palette-sepia {
+  color-scheme: light;
+  --bg: #f4ead8;
+  --surface: #fbf3e4;
+  --text: #2f2419;
+  --muted: #735f49;
+  --border: #d8c4a8;
+  --border-strong: #b59670;
+  --epub-text: #2f2419;
+  --epub-muted: #735f49;
+  --accent: #7c4a21;
+}
+
+.reader-palette-dusk {
+  color-scheme: dark;
+  --bg: #12100d;
+  --surface: #1b1813;
+  --text: #e8dcc9;
+  --muted: #c7b9a4;
+  --border: #4b4032;
+  --border-strong: #6a5945;
+  --epub-text: #eadfce;
+  --epub-muted: #c7b9a4;
+  --accent: #d19a5b;
+}
+
+.reader-palette-warm .bg-white,
+.reader-palette-warm .bg-slate-50,
+.reader-palette-sepia .bg-white,
+.reader-palette-sepia .bg-slate-50,
+.reader-palette-dusk .bg-white,
+.reader-palette-dusk .bg-slate-50 {
+  background-color: var(--surface) !important;
+}
+
+.reader-palette-warm .text-slate-900,
+.reader-palette-warm .text-slate-700,
+.reader-palette-warm .text-slate-600,
+.reader-palette-sepia .text-slate-900,
+.reader-palette-sepia .text-slate-700,
+.reader-palette-sepia .text-slate-600,
+.reader-palette-dusk .text-slate-900,
+.reader-palette-dusk .text-slate-700,
+.reader-palette-dusk .text-slate-600 {
+  color: var(--text) !important;
+}
+
+.reader-palette-warm .text-slate-500,
+.reader-palette-warm .text-slate-400,
+.reader-palette-warm .text-slate-300,
+.reader-palette-sepia .text-slate-500,
+.reader-palette-sepia .text-slate-400,
+.reader-palette-sepia .text-slate-300,
+.reader-palette-dusk .text-slate-500,
+.reader-palette-dusk .text-slate-400,
+.reader-palette-dusk .text-slate-300 {
+  color: var(--muted) !important;
+}
+
+.reader-palette-warm .border-slate-200,
+.reader-palette-warm .ring-slate-200,
+.reader-palette-sepia .border-slate-200,
+.reader-palette-sepia .ring-slate-200,
+.reader-palette-dusk .border-slate-200,
+.reader-palette-dusk .ring-slate-200 {
+  border-color: var(--border) !important;
 }
 
 body {
@@ -111,7 +196,7 @@ h4 {
 
 .epub-content {
   font-size: inherit;
-  line-height: 1.65;
+  line-height: var(--reader-line-height);
   color: var(--epub-text);
 }
 
@@ -126,7 +211,7 @@ h4 {
 }
 
 .epub-content p {
-  margin: 0.6em 0;
+  margin: var(--reader-paragraph-spacing) 0;
 }
 
 .epub-content h1 {
@@ -198,6 +283,64 @@ h4 {
   contain-intrinsic-size: 1px 800px;
 }
 
+.reading-mode-icon--single {
+  display: none;
+}
+
+.reading-mode-toggle[data-mode="translated"] {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: var(--accent) !important;
+}
+
+.reading-mode-toggle[data-mode="translated"] .reading-mode-icon--split {
+  display: none;
+}
+
+.reading-mode-toggle[data-mode="translated"] .reading-mode-icon--single {
+  display: block;
+}
+
+#readerScroll.reader-translated-only .row {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+#readerScroll.reader-translated-only .original-content {
+  display: none !important;
+}
+
+#readerScroll.reader-translated-only .translated-content {
+  width: 100%;
+  max-width: var(--reader-column-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#readerScroll.reader-comfort {
+  --reader-line-height: 1.8;
+  --reader-paragraph-spacing: 0.82em;
+  --reader-content-padding: clamp(1.25rem, 4vw, 4rem);
+}
+
+#readerScroll.reader-comfort .row {
+  gap: clamp(1.75rem, 3vw, 3.25rem);
+}
+
+#readerScroll.reader-comfort .original-content {
+  color: color-mix(in srgb, var(--epub-text) 72%, var(--surface));
+}
+
+#readerScroll.reader-comfort.reader-translated-only .translated-content {
+  max-width: min(100%, var(--reader-column-width));
+}
+
+.theme-dark .reading-mode-toggle[data-mode="translated"],
+[data-theme="dark"] .reading-mode-toggle[data-mode="translated"] {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: var(--accent) !important;
+}
+
 .no-radius,
 .no-radius * {
   border-radius: 0 !important;
@@ -227,6 +370,39 @@ h4 {
 #readerScroll {
   background: var(--surface) !important;
   border-color: var(--border) !important;
+}
+
+.reader-panel {
+  border-radius: 0.75rem;
+  clip-path: inset(0 round 0.75rem);
+  scrollbar-color: var(--border-strong) color-mix(in srgb, var(--surface) 82%, var(--border));
+  scrollbar-width: auto;
+}
+
+.reader-panel::-webkit-scrollbar {
+  width: 1.15rem;
+}
+
+.reader-panel::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--surface) 82%, var(--border));
+  border-left: 1px solid var(--border);
+  border-radius: 0 0.75rem 0.75rem 0;
+  margin: 0.35rem 0;
+}
+
+.reader-panel::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 55%, var(--border-strong));
+  border: 4px solid color-mix(in srgb, var(--surface) 82%, var(--border));
+  border-radius: 9999px;
+}
+
+.reader-panel::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+#readerScroll > div {
+  padding-left: var(--reader-content-padding) !important;
+  padding-right: var(--reader-content-padding) !important;
 }
 
 .theme-toggle .icon-sun {

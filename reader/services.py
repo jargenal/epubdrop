@@ -177,7 +177,10 @@ def create_book_from_upload(user, uploaded, notify_email: str) -> tuple[Optional
 
 
 def get_owned_book(user, book_id: str) -> Optional[Book]:
-    return Book.objects.filter(pk=book_id, owner=user).first()
+    try:
+        return Book.objects.filter(pk=book_id, owner=user).first()
+    except (TypeError, ValueError, ValidationError):
+        return None
 
 
 def _extract_section_title(blocks: list, fallback: str) -> str:
@@ -294,6 +297,8 @@ def build_reader_context(book: Book, user) -> dict:
         for idx, sec in enumerate(sections_out)
     ]
 
+    translation_enabled = not bool((book.info or {}).get("translation_disabled"))
+
     return {
         "book_id": str(book.id),
         "title": book.title,
@@ -310,7 +315,7 @@ def build_reader_context(book: Book, user) -> dict:
             }
             for bm in bookmarks
         ],
-        "translation_enabled": True,
+        "translation_enabled": translation_enabled,
         "saved_progress": {
             "section_index": progress.section_index if progress else 0,
             "block_index": progress.block_index if progress else 0,
@@ -326,6 +331,9 @@ def translate_block_for_user(user, book_id: str, section_idx: int, block_idx: in
     book = get_owned_book(user, book_id)
     if not book:
         return {"ok": True, "translated_html": "<p></p>", "fallback": "missing_book"}
+
+    if (book.info or {}).get("translation_disabled"):
+        return {"ok": True, "translated_html": "<p></p>", "fallback": "translation_disabled"}
 
     section = Section.objects.filter(book=book, index=section_idx).first()
     if not section:
@@ -355,6 +363,7 @@ def translate_block_for_user(user, book_id: str, section_idx: int, block_idx: in
                 "ok": True,
                 "translated_html": original_html,
                 "fallback": "invalid_translation",
+                "_log_event": "book.block.translate.invalid_fallback",
             }
 
         updated = Block.objects.filter(pk=block.pk, translated_html="").update(translated_html=translated)
