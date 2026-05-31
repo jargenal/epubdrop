@@ -276,7 +276,7 @@ class ReaderSecurityTests(TestCase):
         self.assertEqual(book.translated_blocks, 1)
         self.assertEqual(book.status, Book.Status.READY)
 
-    def test_translate_block_invalid_translation_falls_back_without_counting(self):
+    def test_translate_block_invalid_translation_is_marked_processed(self):
         book = Book.objects.create(
             owner=self.user_a,
             title="Fallback book",
@@ -299,11 +299,13 @@ class ReaderSecurityTests(TestCase):
             )
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["fallback"], "invalid_translation")
+        self.assertEqual(response.json()["processed_fallback"], "invalid_translation")
+        self.assertEqual(response.json()["translated_html"], "<p>Hello world again</p>")
         block.refresh_from_db()
         book.refresh_from_db()
-        self.assertEqual(block.translated_html, "")
-        self.assertEqual(book.translated_blocks, 0)
+        self.assertEqual(block.translated_html, "<p>Hello world again</p>")
+        self.assertEqual(book.translated_blocks, 1)
+        self.assertEqual(book.status, Book.Status.READY)
 
     def test_clear_book_allows_owner_only(self):
         own_book = Book.objects.create(
@@ -798,7 +800,7 @@ class TranslationTaskTests(TestCase):
         self.assertEqual(book.status, Book.Status.READY)
         self.assertEqual(book.translated_blocks, 1)
 
-    def test_translate_book_does_not_save_invalid_fallback_as_translation(self):
+    def test_translate_book_marks_invalid_fallback_as_processed(self):
         user = CustomUser.objects.create_user(email="invalid-task@example.com", password="pass1234")
         book = Book.objects.create(
             owner=user,
@@ -822,10 +824,10 @@ class TranslationTaskTests(TestCase):
 
         block.refresh_from_db()
         book.refresh_from_db()
-        self.assertEqual(block.translated_html, "")
-        self.assertEqual(book.translated_blocks, 0)
-        self.assertEqual(book.status, Book.Status.TRANSLATING)
-        self.assertIn("Algunos bloques", book.error_message)
+        self.assertEqual(block.translated_html, "<p>The quick brown fox jumps over the lazy dog</p>")
+        self.assertEqual(book.translated_blocks, 1)
+        self.assertEqual(book.status, Book.Status.READY)
+        self.assertEqual(book.error_message, "")
 
     def test_translate_book_reuses_cached_run_check_across_multiple_blocks(self):
         user = CustomUser.objects.create_user(email="cached@example.com", password="pass1234")
@@ -914,6 +916,44 @@ class RestartTranslationCommandTests(TestCase):
         self.assertEqual(block.translated_html, "<p>Hola mundo</p>")
         self.assertEqual(book.status, Book.Status.READY)
         self.assertEqual(book.translated_blocks, 1)
+
+
+class ResumeTranslationCommandTests(TestCase):
+    def test_resume_translation_command_keeps_existing_translations(self):
+        user = CustomUser.objects.create_user(email="resume-cmd@example.com", password="pass1234")
+        book = Book.objects.create(
+            owner=user,
+            title="Resume cmd book",
+            status=Book.Status.TRANSLATING,
+            total_blocks=2,
+            translated_blocks=1,
+        )
+        section = Section.objects.create(book=book, index=0)
+        translated_block = Block.objects.create(
+            section=section,
+            index=0,
+            original_html="<p>Hello world</p>",
+            translated_html="<p>Hola mundo existente</p>",
+        )
+        pending_block = Block.objects.create(
+            section=section,
+            index=1,
+            original_html="<p>Good morning</p>",
+            translated_html="",
+        )
+
+        with patch("reader.tasks.translate_html_with_ollama", return_value="<p>Buenos dias</p>"), patch(
+            "reader.tasks._send_completion_email", return_value=None
+        ):
+            call_command("resume_translation", book_id=str(book.id))
+
+        translated_block.refresh_from_db()
+        pending_block.refresh_from_db()
+        book.refresh_from_db()
+        self.assertEqual(translated_block.translated_html, "<p>Hola mundo existente</p>")
+        self.assertEqual(pending_block.translated_html, "<p>Buenos dias</p>")
+        self.assertEqual(book.status, Book.Status.READY)
+        self.assertEqual(book.translated_blocks, 2)
 
 
 class BookmarkApiTests(TestCase):

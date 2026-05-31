@@ -113,7 +113,7 @@ def translate_block(request, book_id: str, section_idx: int, block_idx: int):
     payload = services.translate_block_for_user(request.user, book_id, section_idx, block_idx)
     event = payload.pop("_log_event", "")
     if event:
-        level = logging.WARNING if payload.get("fallback") == "translate_failed" else logging.INFO
+        level = logging.WARNING if payload.get("processed_fallback") == "translate_failed" else logging.INFO
         log_kwargs = {
             "user_id": request.user.id,
             "book_id": book_id,

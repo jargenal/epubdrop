@@ -49,18 +49,26 @@ def _count_translated_blocks(book_id: str) -> int:
 
 
 def _sync_book_translation_progress(book_id: str, *, complete_if_ready: bool = False) -> int:
+    total_count = Block.objects.filter(section__book_id=book_id).count()
     translated_count = _count_translated_blocks(book_id)
     update_fields = {
+        "total_blocks": total_count,
         "translated_blocks": translated_count,
         "updated_at": timezone.now(),
     }
     if complete_if_ready:
-        total_blocks = Book.objects.filter(pk=book_id).values_list("total_blocks", flat=True).first() or 0
-        if total_blocks > 0 and translated_count >= total_blocks:
+        if total_count > 0 and translated_count >= total_count:
             update_fields["status"] = Book.Status.READY
             update_fields["error_message"] = ""
     Book.objects.filter(pk=book_id).update(**update_fields)
     return translated_count
+
+
+def _mark_block_processed_with_original(block: Block, book_id: str) -> None:
+    fallback_html = (block.original_html or "").strip() or "<p></p>"
+    updated = Block.objects.filter(pk=block.pk, translated_html="").update(translated_html=fallback_html)
+    if updated:
+        _sync_book_translation_progress(book_id)
 
 
 def _translation_run_is_current(book_id: str, run_id: str) -> bool:
@@ -181,6 +189,7 @@ def _translate_book(book_id: str, run_id: Optional[str] = None) -> None:
                     translated_html = translate_html_with_ollama(block.original_html)
                     if not translated_html.strip() or not is_valid_translation_html(block.original_html, translated_html):
                         had_errors = True
+                        _mark_block_processed_with_original(block, book_id)
                         log_event(
                             logger,
                             logging.WARNING,
@@ -193,6 +202,7 @@ def _translate_book(book_id: str, run_id: Optional[str] = None) -> None:
                         continue
                 except Exception:
                     had_errors = True
+                    _mark_block_processed_with_original(block, book_id)
                     log_event(
                         logger,
                         logging.WARNING,

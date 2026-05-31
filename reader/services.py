@@ -9,7 +9,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import transaction
-from django.db.models import Avg, F, Q, Sum
+from django.db.models import Avg, Q, Sum
 from django.utils import timezone
 from lxml import html as lxml_html
 
@@ -181,6 +181,30 @@ def get_owned_book(user, book_id: str) -> Optional[Book]:
         return Book.objects.filter(pk=book_id, owner=user).first()
     except (TypeError, ValueError, ValidationError):
         return None
+
+
+def _sync_book_translation_counts(book_id: str) -> tuple[int, int]:
+    total = Block.objects.filter(section__book_id=book_id).count()
+    translated = Block.objects.filter(section__book_id=book_id).exclude(translated_html="").count()
+    update_fields = {
+        "total_blocks": total,
+        "translated_blocks": translated,
+        "updated_at": timezone.now(),
+    }
+    if total > 0 and translated >= total:
+        update_fields["status"] = Book.Status.READY
+        update_fields["error_message"] = ""
+    Book.objects.filter(pk=book_id).update(**update_fields)
+    return translated, total
+
+
+def _mark_block_processed_with_original(book_id: str, block: Block) -> str:
+    fallback_html = (block.original_html or "").strip() or "<p></p>"
+    updated = Block.objects.filter(pk=block.pk, translated_html="").update(translated_html=fallback_html)
+    if updated:
+        _sync_book_translation_counts(book_id)
+        return fallback_html
+    return Block.objects.filter(pk=block.pk).values_list("translated_html", flat=True).first() or fallback_html
 
 
 def _extract_section_title(blocks: list, fallback: str) -> str:
@@ -359,25 +383,17 @@ def translate_block_for_user(user, book_id: str, section_idx: int, block_idx: in
     try:
         translated = (translate_html_with_ollama(original_html) or "").strip()
         if not translated or not is_valid_translation_html(original_html, translated):
+            translated = _mark_block_processed_with_original(book_id, block)
             return {
                 "ok": True,
-                "translated_html": original_html,
-                "fallback": "invalid_translation",
+                "translated_html": translated,
+                "processed_fallback": "invalid_translation",
                 "_log_event": "book.block.translate.invalid_fallback",
             }
 
         updated = Block.objects.filter(pk=block.pk, translated_html="").update(translated_html=translated)
         if updated:
-            Book.objects.filter(pk=book_id).update(
-                translated_blocks=F("translated_blocks") + 1,
-                updated_at=timezone.now(),
-            )
-            Book.objects.filter(
-                pk=book_id,
-                status=Book.Status.TRANSLATING,
-                total_blocks__gt=0,
-                translated_blocks__gte=F("total_blocks"),
-            ).update(status=Book.Status.READY, error_message="", updated_at=timezone.now())
+            _sync_book_translation_counts(book_id)
         else:
             translated = Block.objects.filter(pk=block.pk).values_list("translated_html", flat=True).first() or translated
 
@@ -388,10 +404,11 @@ def translate_block_for_user(user, book_id: str, section_idx: int, block_idx: in
             "_log_event": "book.block.translate.generated",
         }
     except Exception:
+        translated = _mark_block_processed_with_original(book_id, block)
         return {
             "ok": True,
-            "translated_html": original_html,
-            "fallback": "translate_failed",
+            "translated_html": translated,
+            "processed_fallback": "translate_failed",
             "_log_event": "book.block.translate.fallback",
         }
 
