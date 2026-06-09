@@ -1,0 +1,328 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>8. Macro Architecture: Handling Security</title>
+<link href="9780138249595.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:5cddacd8-016d-40ae-8bbb-614b0314c95e" name="Adept.expected.resource"/>
+</head>
+<body>
+<section epub:type="chapter">
+<h2 class="h2" id="ch08"><span epub:type="pagebreak" id="page_85"/><span class="big">8</span></h2>
+<h2 class="h2a">Macro Architecture: Handling Security</h2>
+<p class="noindent">Security involves securing the system’s points that communicate with the outside, managing users, and making sure only authorized users can perform actions on systems, data, and any assets belonging to the organization. Security also involves ensuring that the data and the systems are handled according to the rules and regulations enforced by law or voluntarily by the organization, while balancing costs and risks.</p>
+<p class="noindent">Security is a broad and specialized area. To fully understand the role of security in your overall architecture and the trade-offs involved, you often need to seek the help of a security architect. The following discussion has two goals. The first is to help you understand how security fits into your overall architecture and its trade-offs. The second is to help you understand when you should enlist a security expert.</p>
+<p class="noindent">We can implement most security aspects either from scratch or by using middleware or cloud services. I do not recommend implementing security constructs from scratch, unlike other parts of the design, unless under extraordinary circumstances. Why?</p>
+<ul class="bull">
+<li><p class="bullet">Security is risky, and there is little room for mistakes. Implementing your own security system is asking for trouble unless there are extraordinary circumstances, such as your system needs a very small memory footprint (e.g., less than 10MB).</p></li>
+<li><p class="bullet">A simple use case needs to handle password management, password recovery, multifactor authentication, anomalous logging detection, and so on, creating a series of never-ending new feature requests.</p></li>
+<li><p class="bullet">It is best to outsource these requirements to a middleware or cloud service provider. There’s a lot to handle here, and if you choose to start from scratch, you will end up investing significant effort and time and still not get it right.</p></li>
+<li><p class="bullet"><span epub:type="pagebreak" id="page_86"/>Security is standards-driven (e.g., OpenID Connect and OAuth), making it easy to adopt tools for implementation. At the same time, not implementing specifications properly when executing your systems hinders your ability to integrate and work with other systems. Getting specifications correct often requires a lot of work.</p></li>
+<li><p class="bullet">There are relatively cheaper cloud security solutions.</p></li>
+<li><p class="bullet">When a user logs in at the start of a session, the user information can be remembered for hours. Because authentication happens once for the session, network latency induced by the cloud provider is often manageable if carefully implemented.</p></li>
+</ul>
+<p class="noindent">Using security tools is also a continuum. For example, we can choose to connect to open-source libraries and build the solution we need, which imposes the most cost and effort. Alternatively, we can use a cloud service that gives us greater flexibility. In this chapter, we discuss these security topics:</p>
+<ul class="bull">
+<li><p class="bullet">User management</p></li>
+<li><p class="bullet">Interaction security (including authorization)</p></li>
+<li><p class="bullet">Storage, GDPR, and other regulations</p></li>
+<li><p class="bullet">Security strategy and advice</p></li>
+</ul>
+<section>
+<h3 class="h3" id="ch08lev1sec01">User Management</h3>
+<p class="noindent">User management handles identities and authentications. First is creating, storing, and managing identities and associated credentials, where authentication verifies the request to ensure the claimed identity sends it. Let’s explore the typical use cases a system requires when managing users.</p>
+<p class="noindent">We often start handling identities as simple configurations; the Tomcat user file (tomcat-users.xml) is one good example. More advanced implementations use databases or LDAP (Lightweight Directory Access Protocol) such as Active Directory to store identities. Systems also can use identity and access management (IAM) products. Identities, credentials, and associated data represent a significant risk to the organization, where any compromise can be costly both in terms of money and reputation.</p>
+<p class="noindent">Moreover, having multiple identities for the same user often leads to confusion, mistakes, and poor UX, while increasing risks. The security architecture should, therefore, avoid duplicating identities, either through all systems referring to a single LDAP/identity server or through identity federation.</p>
+<p class="noindent">In addition to these caveats, user management and authentication require many features. For example,</p>
+<ul class="bull">
+<li><p class="bullet">User registration and onboarding: This includes setting up profiles and credentials and inviting new users or guests into the system. Doing so sometimes also includes supporting custom workflows such as manager approval.</p></li>
+<li><p class="bullet"><span epub:type="pagebreak" id="page_87"/>User authentication methods: This includes passwords, tokens shared through emails and token generators, SMS, letters, mobile apps, and biometrics such as fingerprints and voice recognition. A specific deployment can use one or more of these methods or can apply them based on trust levels.</p></li>
+<li><p class="bullet">User logins: Using their account with their own identity enables reusing identities from large internet service providers like Google and Facebook. This is a win-win situation because users do not need to remember new account details, and the system does not need to store and handle credentials.</p></li>
+<li><p class="bullet">User federation: Organizations often let users from other organizations log in using their own credentials, which is called <em>federation</em>. Many organizations have different systems and will let the users log in once and then use any of their systems without logging in again. This is called <em>single sign-on (SSO)</em>.</p></li>
+<li><p class="bullet">Contingency features: Users may also require profile updates, password recovery, and other contingencies arising from the use case.</p></li>
+</ul>
+<p class="noindent">The security system has a full view of when users log in and, often, what they do. This is the best place to build a user profile with user activities, which can be useful for marketing, sales, and customer support. For example, the user profile includes</p>
+<ul class="bull">
+<li><p class="bullet">Audit logs and support investigations</p></li>
+<li><p class="bullet">User credentials, including SSH keys, passwords, and other authentication methods</p></li>
+</ul>
+<p class="noindent">User management is also evolving with concepts such as decentralized identities, which might become a requirement for future use cases. In mid-size and large organizations, which include many integrated systems working together, onboarding and managing the employee lifecycle can be complicated. This effort may include provisioning accounts and managing processes related to the accounts across the different systems. Based on the system you are building and the size of your organization, you may require a different subset of features. Clearly, they are too complicated to build from scratch (unless you are building a security product).</p>
+<p class="noindent">The next dimension to understand is that not all users are created equal. Organizations usually handle four types of users:</p>
+<ul class="bull">
+<li><p class="bullet">Public users who visit the website and products anonymously</p></li>
+<li><p class="bullet">Registered users or customers who use the organization’s services</p></li>
+<li><p class="bullet">Internal users or employees</p></li>
+<li><p class="bullet">Superusers and privileged users</p></li>
+</ul>
+<p class="noindent">Each use case focuses on a subset of users, where feature requirements vary significantly based on the user category. For example, when users are customers, the focus is on scale and ease of use, and when users are employees, the use cases may require complex authorization models, audits, and permission management.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_88"/>Initially, the market for user management was called IAM (identity and access management). However, the required scope for all IAM features proved to be too broad, and in the last few years, different vendors have focused on different market subsets, thus breaking the IAM market into three parts:</p>
+<ul class="bull">
+<li><p class="bullet">CIAM (customer IAM) focuses on customers.</p></li>
+<li><p class="bullet">IAM focuses on employees.</p></li>
+<li><p class="bullet">PAM (privileged access management) focuses on system administrators.</p></li>
+</ul>
+<p class="noindent">In the new model, however, products from each market have a lot more depth. This depth makes the architect’s job much more complicated because the security solution requires integration of multiple products. If your system is simple and requires only user management, you can directly connect to LDAP (e.g., Active Directory) for users. If you require additional features, you may need to use an IAM product.</p>
+</section>
+<section>
+<h3 class="h3" id="ch08lev1sec02">Interaction Security</h3>
+<p class="noindent">The first steps with security are to get the basics right. This means setting up certificates and reminders to renew them and then using SSL for interaction between customers to your systems, whether that’s a website running in the browser or a mobile app. All programming languages we use have support for SSL when connecting to other systems, and we should use those languages.</p>
+<p class="noindent">While considering user authentication, some interactions have multiple registered users and some don’t. For example, our bookstore users create an account and then use the bookstore. These are interactions with users. Conversely, we can use many mobile apps and web pages without creating an account. These are interactions without multiple registered users. It is worth noting that applications for one registered user behave similarly to those with no registered users.</p>
+<p class="noindent">In this chapter, we call applications and scenarios that have multiple registered users <em>multi-user applications</em>, and the others we call <em>non-multi-user applications</em>. Examples of non-multi-user applications are anonymous mobile applications such as weather applications or where the system’s client is another system. When we handle non-multi-user applications, we have several choices:</p>
+<ul class="bull">
+<li><p class="bullet">We can use an API management solution. API management enables us to expose a service securely to users outside our team. After exposing an API as a service, we get an API key that our clients can use to securely do API calls using SSL.</p></li>
+<li><p class="bullet">We can use mutual SSL. The SSL client also provides an SSL certificate and then connects only if its certificate is trusted.</p></li>
+<li><p class="bullet">We can use cloud providers. These providers also provide a special type of account called a service account, which is intended for automation-related tasks, such as Google service accounts (see <a href="https://cloud.google.com/iam/docs/understanding-service-accounts">https://cloud.google.com/iam/docs/understanding-service-accounts</a>).</p></li>
+</ul>
+<p class="noindent"><span epub:type="pagebreak" id="page_89"/>Considering multi-user applications and related interactions, <a href="ch08.xhtml#ch08fig01">Figure 8.1</a> shows the different security roles involved. These roles can live in a single application or can be scattered across multiple services. Understanding this setup makes our discussion much easier.</p>
+<figure class="figure" id="ch08fig01">
+<img alt="Images" src="graphics/08fig01.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 8.1</strong></p>
+<p class="title-f1">Security roles for multi-user interactions.</p>
+</figcaption>
+</figure>
+<p class="noindent">The identity provider (IDP) offers user management and authentication. When users call the application, the policy enforcement point (PEP) intercepts the call and invokes the policy decision point (PDP) to make an authorization decision. The separation of PEP and PDP allows for a specialized authorization logic evaluation. PDP often needs more information, which it might get by calling the policy information point (PIP). Sometimes, the IDP plays the role of PIP. Other times, authenticated tokens issued by the IDP include all required information, and PIP is not required.</p>
+<p class="noindent">The next two sections discuss authentication and authorization techniques used with multi-user interactions. In our discussion, we often refer to roles described in <a href="ch08.xhtml#ch08fig01">Figure 8.1</a>.</p>
+<section>
+<h4 class="h4" id="ch08lev2sec01">Authentication Techniques</h4>
+<p class="noindent">Authentication applies only to multi-user interactions. The simplest option is to use HTTP Basic Auth, where the application asks the browser to prompt for the user name and password and sends a representation with the request. Once the user is authenticated, the system remembers the authentication session, and any other requests in the same session are allowed without a challenge. Instead of a password prompt, most systems now use an embedded HTTP form or forward the user to a dedicated authentication form from the initial (home) page. The rest of the authentication flow works as before.</p>
+<p class="noindent">The recommended authentication flow never sends passwords to the server. Rather, clients demonstrate they have the password or the security key (e.g., using a shared key or public-private key pair) by encrypting a random challenge string sent by the server and then sending it back. If the server can decrypt the encrypted challenge and reproduce it, the server knows that client has the correct key.</p>
+<p class="noindent">Even with this architecture, many attacks such as SQL injection and <em>cross-site request forgery (CSRF)</em> can happen, but we do not discuss these attacks here because to do so is outside the <span epub:type="pagebreak" id="page_90"/>scope of this chapter. (If you need more information about these attacks, many websites can provide details.)</p>
+<p class="noindent">With older architectures, services are authenticated by calling the database, LDAP, or identity server when a request is received. In such cases, they play the role of the IDP. The state-of-the-art solution is to use an identity server and a token-based approach such as OAuth as described in Sam Newman’s book, <em>Building Microservices</em> (O’Reilly Media, 2015). <a href="ch08.xhtml#ch08fig02">Figure 8.2</a> depicts this approach.</p>
+<figure class="figure" id="ch08fig02">
+<img alt="Images" src="graphics/08fig02.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 8.2</strong></p>
+<p class="title-f1">A token-based approach to authentication.</p>
+</figcaption>
+</figure>
+<p class="noindent">With the token-based approach, when clients come to our website or mobile app, we direct them to an IDP. The client sends their credentials to the IDP, which authenticates them. Then they receive a signed token with SAML or OpenIDConnect that describes their roles, and the information comes back to our application. Our system verifies the token and authorizes the calls based on the user roles described in the token.</p>
+<p class="noindent">This model pushes the authorization to the application. For example, with this model and the same request, a user with the role <em>publisher</em> might see different results than a user with the role <em>admin</em> because they have different permissions. Most IAM providers support this architecture. We expand this topic in the next section.</p>
+<p class="noindent">Note that the client can get the token and reuse it throughout the session. Hence, authentication needs to happen only once per session; therefore, the overhead of the additional call to authenticate is small. This approach enables us to use cloud-based IAM solutions widely.</p>
+</section>
+<section>
+<h4 class="h4" id="ch08lev2sec02">Authorization Techniques</h4>
+<p class="noindent">Authorization applies only when the interaction includes users. For authorization to work, the system administrators need to explain to the system when users are allowed and what actions they can carry out. For example, system administrators can ask the system to allow <span epub:type="pagebreak" id="page_91"/>users in the admin group the right to delete users. As such, authorization requires several decisions:</p>
+<ul class="bull">
+<li><p class="bullet">How to express authorization logic?</p></li>
+<li><p class="bullet">Where to place the logic?</p></li>
+</ul>
+<p class="noindent">Let’s explore authorization logic. Authorization logic needs to support two kinds of queries. The first query is given a user, a resource, an action, and whether the user can perform an action on the resource. The second query is given a user, all the resources they can use, and the actions they can carry out. The latter query is required for building reasonable user experiences because showing a user some resources and then denying access to the same resource leads to unpleasant user experiences. If you’re interested, see Sam Scott’s article “Why Authorization Is Hard,” which provides a detailed discussion of this topic.<sup><a href="#ch08fn1" id="ich08fn1">1</a></sup></p>
+<p class="footnote"><a href="#ich08fn1" id="ch08fn1">1</a>. <a href="https://www.osohq.com/post/why-authorization-is-hard">https://www.osohq.com/post/why-authorization-is-hard</a></p>
+<p class="noindent">We can always use code to express whatever logic we want. However, this approach forces developers to change code to modify authorizations. Furthermore, it also forces developers to reinvent the authorization model every time a change is needed. Supporting the what-are-my-resources query with this approach takes painstaking work, and keeping it in sync is not easy either.</p>
+<p class="noindent">The next level of authorization includes access control lists (ACLs), which are usually stored in a database. The database records identify who can do what operation(s) in the system. Fortunately, ACLs can support the what-are-my-resources query. However, specifying individual user permissions is tedious and hard to manage if there are lots of users.</p>
+<p class="noindent">The most widely used authorization model is called a role-based access control (RBAC). This model includes users, groups, permissions, and roles. As <a href="ch08.xhtml#ch08fig03">Figure 8.3</a> shows, a group is a collection of users. Permissions are things users can do within the system, and roles are a collection of permissions. Authorizations are defined only as the mapping between groups and roles.</p>
+<figure class="figure" id="ch08fig03">
+<img alt="Images" src="graphics/08fig03.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 8.3</strong></p>
+<p class="title-f1">A role-based access control (RBAC) authorization model.</p>
+</figcaption>
+</figure>
+<p class="noindent">Say that, in our bookstore example, we want to let the bookstore admins add or remove items in the shop. To support this use case, we define a bookstore admin role and then list the <span epub:type="pagebreak" id="page_92"/>resources and the actions allowed by that role. Next, we define an admin user group and give permission for users in that group to perform the admin actions for the bookstore.</p>
+<p class="noindent">Unlike ACLs, RBACs do not require that we add a rule for each new user added. Typically, the IDP holds users and groups, and the application or authorization part of the system holds permissions, roles, and mappings between groups and roles.</p>
+<p class="noindent">RBACs can support what-are-my-resources queries as well. Most identity and access management systems—IAM, CIAM, and PAM (see the earlier “<a href="ch08.xhtml#ch08lev1sec01">User Management</a>” section for clarification)—support RBAC, and most systems can work with a simple authorization model on top of users, groups, roles, and permissions. For example, Azure’s model has consumers, contributors, and admins as default groups. Additionally, we can use the same model or extend or create a new model as needed. My recommendation is to use the same model when possible.</p>
+<p class="noindent">RBAC also has its limitations. For example, there is no simple way to tell if the owner of each item can edit or delete the item (such as a book in the bookstore).</p>
+<p class="noindent">An extended form of RBAC, which supports advanced queries, is called Relationship-based access control (ReBAC).<sup><a href="#ch08fn2" id="ich08fn2">2</a></sup> Google’s Zanzibar is a comprehensive authorization model built using these ideas, and you can find an open-source implementation of it at <a href="https://github.com/ory/keto">https://github.com/ory/keto</a>.</p>
+<p class="footnote"><a href="#ich08fn2" id="ch08fn2">2</a>. <a href="https://en.wikipedia.org/wiki/Relationship-based_access_control">https://en.wikipedia.org/wiki/Relationship-based_access_control</a></p>
+<p class="noindent">ReBAC is not yet widely supported by most IAM providers. My recommendation is that RBAC is sufficient for most use cases, but more complex authorization models are possible. Let’s look at two in the following section.</p>
+<section>
+<h5 class="h5" id="ch08lev3sec01">Complex Authorizations Models</h5>
+<p class="noindent">Let’s look first at attribute-based authorization, where authorization is defined as rules based on the user’s attributes. For example, a bank’s rule may say that a user can create a regular account only if the user is older than 18 years. Often, an IDP provides tokens that assert the attributes, and the applications use the tokens to authorize. How to support a what-are-my-resources query is not clear in this instance.</p>
+<p class="noindent">Furthermore, it is possible to use a fully token-based approach, where we issue users tokens explaining what they can do, and the users send them back when they want to interact with the system. The primary advantage of this model is that it’s decentralized; tokens issued by trusted IDPs can give rise to a rich security landscape. However, a token-based approach poses several challenges.</p>
+<p class="noindent">In this approach, the user needs to store and manage those tokens, which is harder from the user’s perspective. The user might inadvertently (or maliciously) give those tokens to outsiders. Revoking permissions is also complicated. Finally, supporting a what-are-my-resources query is difficult.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_93"/>These complex authorization models are implemented using XACML (Extensible Access Control Markup Language) or Open Policy Agent (OPA), but you should seek help from a security architect if adapting these models. Next, let’s focus on where to place the authorization logic.</p>
+</section>
+<section>
+<h5 class="h5" id="ch08lev3sec02">Coupling Authentication and Authorization?</h5>
+<p class="noindent">We can combine authorization (PEP, PDP, and PIP) with authentication and put that into an application or keep it separate. Although there can be exceptions, coupling authentication and authorization is often a bad idea because the associated code for each is written by different developers at different stages of development.</p>
+<p class="noindent">Considering each role, PEP is either an application itself or some code such as a gateway or an HTTP filter fronting the application. PEP extracts necessary information and calls the PDP. The PDP is your authorization model. For example, if you use the Kito Zanzibar implementation, that is your PDP. Alternatively, you can have your PDP implemented as a custom service. My recommendation is to keep PDP separate.</p>
+<p class="noindent">If tokens include all the information, PIP is not required. Otherwise, a database or an IAM server might play that role. In the next section, we discuss how we can implement common security interaction by combining these ideas.</p>
+</section>
+</section>
+<section>
+<h4 class="h4" id="ch08lev2sec03">Common Interaction Security Scenarios for an App</h4>
+<p class="noindent">When we build an application, security scenarios are driven by two primary considerations: is the client code running in a trusted environment, and does the application or system include users? An example of a trusted environment is an API call done from a secure system, whereas an untrusted environment is a mobile app or web page, where the end user can look at the application and extract the embedded credentials. This leads to the following scenarios, presented as four cases.</p>
+<p class="noindent"><a href="ch08.xhtml#ch08tab01">Table 8.1</a> compares the trusted and untrusted environments with multi-users and non-multi-user applications. Each cell in the table discusses techniques that we can use in that particular situation. For example, for the multi-user’s case, where the client is in an untrusted environment, we can use backend-for-frontend (BFF)–based architecture. BFF is often called a backend for the frontend or secure backend.</p>
+<figure class="table" id="ch08tab01">
+<figcaption>
+<p class="title-t"><strong>Table 8.1 Security Scenarios for Your App for Different Situations</strong></p>
+</figcaption>
+<table class="table1">
+<thead>
+<tr>
+<th class="borderb"><p class="tab-head"> </p></th>
+<th class="borderb"><p class="tab-head"><strong>Non-Multi-User Applications</strong></p></th>
+<th class="borderb"><p class="tab-head"><strong>Multi-User Applications</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="borderb1"><p class="tab-para">Client in a trusted environment</p></td>
+<td class="borderb1"><p class="tab-para">Case 1: API keys, SSL mutual authentication, or service accounts</p></td>
+<td class="borderb1"><p class="tab-para">Case 2: API keys, SSL mutual authentication, or user tokens</p></td>
+</tr>
+<tr>
+<td class="borderb2"><p class="tab-para">Client in an untrusted environment</p></td>
+<td class="borderb2"><p class="tab-para">Case 3: Users are anonymous</p></td>
+<td class="borderb2"><p class="tab-para">Case 4: User tokens with or without BFF</p></td>
+</tr>
+</tbody>
+</table>
+</figure>
+<section>
+<h5 class="h5" id="ch08lev3sec03"><span epub:type="pagebreak" id="page_94"/>Case 1: A Trusted System Making API Calls with Non-Multi-User Applications</h5>
+<p class="noindent">An example of this use case is calling the OpenAI API from an application running in our data center. When the client is trusted, and there’s no risk for the credentials to be compromised, we can use following approaches:</p>
+<ul class="bull">
+<li><p class="bullet">API keys with SSL (Typically, users get API keys by logging in to a web page; e.g., developer portals for API managers or for Google, Amazon, and so forth.)</p></li>
+<li><p class="bullet">Mutual SSL</p></li>
+<li><p class="bullet">A service account if the API supports it</p></li>
+</ul>
+</section>
+<section>
+<h5 class="h5" id="ch08lev3sec04">Case 2: A Trusted System Making API Calls with Multi-User Applications</h5>
+<p class="noindent">An example of this case is a server-side web application (e.g., JSP or PHP-based) that makes calls to an API. There are several ways we can implement this case:</p>
+<ul class="bull">
+<li><p class="bullet">We can use API keys with SSL and determine the user from the API keys.</p></li>
+<li><p class="bullet">We can use mutual SSL and determine the user from SSL certificates.</p></li>
+<li><p class="bullet">We can use SSL and send a user token issued by the IAM system with the request.</p></li>
+</ul>
+</section>
+<section>
+<h5 class="h5" id="ch08lev3sec05">Case 3: An Untrusted System with Multi-User Applications</h5>
+<p class="noindent">Single-page (web) applications (SPA) and mobile applications that support end users creating accounts and logins fall under this category. With untrusted clients, any credentials we put into the client can be extracted by the user and used for attacks.</p>
+<p class="noindent">For example, let’s assume we are writing a mobile app for the bookstore. Users of the mobile app can extract any API key or credential we put into the mobile app. Hence, we have to either authenticate the users with something they already know or put credentials outside of the mobile app. We can do the former without a BFF by passing a user token. We can do the latter using a BFF, where the users make API calls. Let’s look at each choice.</p>
+<section>
+<h6 class="h6" id="ch08lev4sec01">Choice 1: With a Secure Backend (a.k.a. Backend for Frontend, or BFF)</h6>
+<p class="noindent">There are two ways to get a secure backend. The first is to create an API (BFF) for that purpose only, which can be used with mobile or web apps. The second is to use server-side technology (e.g., JSP, PHP) to generate the website and then use the server side as the BFF. Note that this approach works only with web apps, however.</p>
+<p class="noindent"><a href="ch08.xhtml#ch08fig04">Figure 8.4</a> depicts how security is handled with a BFF. In the figure, we pass Bob’s token to the BFF and verify the validity of the token to authenticate users. To call the API from the BFF, we can either use API keys, Bob’s token, or an exchanged token, based on what is required by the backend APIs.</p>
+<span epub:type="pagebreak" id="page_95"/>
+<figure class="figure" id="ch08fig04">
+<img alt="Images" src="graphics/08fig04.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 8.4</strong></p>
+<p class="title-f1">Security setup with a BFF (a backend for the frontend or a secure backend).</p>
+</figcaption>
+</figure>
+<p class="noindent">It is important to understand the concept of secure token service (STS). Our application talks to some APIs that may not understand tokens issued by our IAM system. In such cases, we talk to an STS, which accepts tokens issued by IAM and gives us a token accepted by the target API.</p>
+<p class="noindent">For example, if our API talks to the Google Map API, it likely will not accept tokens issued by our IAM. Instead, STS issues a token that Google understands. Architecturally, STS keeps token-issuing code in one place and avoids scattering it across many parts of the system. Most IAM vendors support an STS. However, setting this up and configuring it requires a security architect.</p>
+</section>
+<section>
+<h6 class="h6" id="ch08lev4sec02">Choice 2: Without a Secure Backend (a.k.a. Backend for Frontend, or BFF)</h6>
+<p class="noindent">Applications can work without a secure backend, but this is possible only if the APIs used by the application support and are aware of the users. <a href="ch08.xhtml#ch08fig05">Figure 8.5</a> shows the application prompting users to log in. After they’ve logged in, they need to include the user token with the backend API, which happens via SSL/TLS. This approach is possible only if the backend API supports the same users and groups as the frontend.</p>
+<figure class="figure" id="ch08fig05">
+<img alt="Images" src="graphics/08fig05.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 8.5</strong></p>
+<p class="title-f1">Security setup without a BFF.</p>
+</figcaption>
+</figure>
+<p class="noindent"><span epub:type="pagebreak" id="page_96"/>If the backend API does not support the same users, the application should use an STS to exchange the user token for a token supported by the backend as described in “Choice 1: With a Secure Backend.” This complex case requires help from a security architect.</p>
+<p class="noindent">In both of these choices, an STS or a backend API should check authorization. The recommended approach is to use a separate PDP as <a href="ch08.xhtml#ch08fig01">Figure 8.1</a> shows.</p>
+</section>
+</section>
+<section>
+<h5 class="h5" id="ch08lev3sec06">Case 4: An Untrusted System with Non-Multi-User Applications</h5>
+<p class="noindent">An example of this case is a mobile app that does not have a registered user (consider a weather mobile app). In this case, we do not have a user registered in our system to send a token as in case 3. Because the client (the mobile app) is not trusted, we can’t give any credentials to it. Hence, our users are anonymous. We can’t provide any permissions-based checks, and we need to handle unfair use by some form of user throttling.</p>
+</section>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch08lev1sec03">Storage, GDPR, and Other Regulations</h3>
+<p class="noindent">Data stored on disk for a long time poses many challenges to the organization. Because a disk holds “concentrated” data a long time, the risks associated with that data are much higher. Let’s look at some examples.</p>
+<p class="noindent">Stored data is often the target of many attacks, which can damage the reputation of the organization for losing its data this way. When the compromised data includes confidential user profiles or credit cards, for example, the harm can be massive, in addition to a direct loss of money.</p>
+<p class="noindent">A significant risk vector is your employees, who can misuse or inadvertently share sensitive data outside the workplace. Your ability to audit and control the data used by employees is complicated. Also, leaks can happen through the organizational partners, who may have relaxed security guidelines or have intentionally misused the data (e.g., Facebook and Cambridge Analytica).</p>
+<p class="noindent">Many organizations serve a wider global audience. US, Europe, and several other countries now have regulations for customer data that is stored for a long time. It’s likely that more countries will adopt similar regulations. It is, therefore, a good practice to design your system for regulations like GDPR even if you are not covered by those regulations currently. Regulations such as GDPR (General Data Protection Regulation) and PSD2 (the revised Payment Services Directive) assert that holding such data comes with implied obligations. For example,</p>
+<ul class="bull">
+<li><p class="bullet">GDPR mandates organizations to secure users’ personally identifiable information (PII), such as Social Security numbers, mailing or email addresses, and phone numbers, and to delete it on request.</p></li>
+<li><p class="bullet">PSD2 obligates banks to expose their data as APIs.</p></li>
+<li><p class="bullet">US healthcare regulations compel organizations to share their data via APIs.</p></li>
+</ul>
+<p class="noindent"><span epub:type="pagebreak" id="page_97"/>Furthermore, the right for information laws, as well as law enforcement agencies, might require organizations to share their data. Additionally, if you support users from multiple jurisdictions, you may have to hold the data in the corresponding jurisdictions to protect the rights of each group of individuals.</p>
+<p class="noindent">From a security point of view, it is best to hold as little data as possible. However, data can be a source of a significant competitive advantage, which creates an interesting dilemma. Moreover, it is not simple to pick and choose what data to keep because it is often not easy to guess which data would be valuable five to ten years from now and which data isn’t. Following are some of the best practices for handling data.</p>
+<p class="noindent">First, decide which data carries high risks. Doing so requires a detailed audit of types and brainstorming their use. Second, separate sensitive data and securely store it in an encrypted manner (for example, replacing PIIs with UUIDs). Most analytics and machine learning use cases do not require knowing exactly who the user is, and this allows us to store data as UUIDs, thus avoiding the need for keeping PIIs. This approach enables us to delete PII data, and the system will still continue to work, considering the user as an anonymous user. Furthermore, separating PIIs from other sensitive data allows us to respond to GDPR queries easily.</p>
+<p class="noindent">The best practice is to store all sensitive data as UUIDs (for example, system or activity logs, audits, or transactions) and keep PIIs only in your IAM system. This approach limits PII storage to IAM, which you can guard with many layers of security. Sometimes, it is possible to convert a PII to a non-PII. For example, we can remove the last few bits of an IP address or store the country or organization of the IP address instead.</p>
+<p class="noindent">If PIIs are required and need to be retained, we should keep them in a separate storage area and encrypt them to guard against leakage, even if someone hacks into the databases holding them. It is a good practice never to hold decryption keys in plain-text files. Instead, issue a service call to get the decryption password.</p>
+<p class="noindent">Another risk is that a search can leak data, even if no PIIs are returned. Circumstantial evidence might be enough to identify an individual user, violating their privacy. For example, if there is only one person older than 70 in a certain area, a search on anonymized medical reports might let someone guess the owner of some reports. Regulations like HIPAA (The Health Insurance Portability and Accountability Act) cover this topic.</p>
+<p class="noindent">Third, define who has access to data and why and then set up processes that govern access and audit the processes. As discussed, any access to PIIs should be carefully guarded. Another best practice is to keep the data in the cloud or a data center, letting users remotely work on the data (for example, using Python Jupyter [iPython] notebooks), while making it hard for them to take data out of the system. This approach can help a lot in reducing mistakes as well as planned attacks.</p>
+<p class="noindent">Sometimes, organizations want to share or integrate data with partners. As happened with the much discussed Cambridge Analytica case, partners may have lax security requirements <span epub:type="pagebreak" id="page_98"/>or might even misuse the data (as happened in the aforementioned case). When an organization gives a partner or a tool access to its data, it has to ensure that those entities can also maintain the same level of security precautions. Instead of sharing data outright with partners or tools, in some cases, we can expose an API that shares the data in a controlled manner.</p>
+<p class="noindent">Unfortunately, other than APIs and a few experimental techniques that we discuss shortly, technology does not help solve the data-sharing problem. Often this problem is handled through legal agreements and processes.</p>
+<p class="noindent">The recommendations mentioned in this section are not exhaustive. Some regulations are domain-specific (e.g., HIPAA for health data). You should talk to a security consultant who is well versed in your domain to identify all the requirements and can handle them accordingly.</p>
+</section>
+<section>
+<h3 class="h3" id="ch08lev1sec04">Security Strategy and Advice</h3>
+<p class="noindent">This section presents a few strategic considerations for security architecture. As we discussed, because the margin of error for security design is narrow, starting with a naive or simple design and gradually improving it is not recommended. Instead, my recommendation is to adopt an IAM or CIAM product and build the architecture on top of those products.</p>
+<p class="noindent">The ability to analyze data and extract insights is a major competitive advantage. Therefore, organizations should enable their employees to run experiments as needed and without too much red tape. If trying out an idea requires a lot of paperwork and weeks of waiting, chances are a lot of good ideas will not get tried at all. We need to hit a balance between security risks and the cost of adding friction through processes. This is the responsibility of the technology leader.</p>
+<p class="noindent">IAM or CIAM systems can be hard to replace, although not impossible, so you must consider your current and future requirements carefully before choosing a system. In your design, as much as possible, keep the option open for switching to a different IAM or CIAM if required, unless doing that incurs significant costs.</p>
+<p class="noindent">Most tools use monthly active users (MAUs) as a pricing yardstick, and it is a good idea to seriously consider your current and future MAU needs before making the final decision on which system to choose. This argument also applies to storage. Available tools support GDPR; however, most tools provide little or no support for sharing data with partners, forcing us to build that part ourselves if needed.</p>
+<p class="noindent">When designing the architecture, we should keep authorization logic separate and simple, but we also need to consider potential future complex authorization requirements as part of the design. My recommendation is to choose an RBAC model or a ReBAC model. Having said that, let’s look at a few other considerations for IAM architectures.</p>
+<section>
+<h4 class="h4" id="ch08lev2sec04"><span epub:type="pagebreak" id="page_99"/>Performance and Latency</h4>
+<p class="noindent">With a current de facto security design, which forwards the user to another system to be authenticated, performance could be a challenge. The user would first authenticate to get a token, which they will then use to invoke the system again and again. We call those system invocations the <em>system access path</em>. We need to carefully watch the latency of this path because that part is triggered often, and it significantly affects the UX. We can optimize this path by reducing database calls to check permissions (for example, by keeping the permission model in memory or by exclusively using tokens) and by reducing the need for complex cryptographic operations such as public-key cryptography.</p>
+<p class="noindent">Token checks also need to scale with the rest of the system. If those checks are stateless (make the decision only by looking at the request when tokens are used), it greatly simplifies the scaling design. In addition, latency challenges often surface, not as average latency spikes, but as tail latency spikes, where the latter is much harder to debug because they are harder to recreate. Tail latencies often occur in cache-miss paths, so careful and focused testing at development can save a lot of time later.</p>
+</section>
+<section>
+<h4 class="h4" id="ch08lev2sec05">Zero-Trust Approach</h4>
+<p class="noindent">Historically, we defend systems by securing the perimeter and trusting users within the perimeter. However, attacks have significantly increased by multiple factors as IoT, mobile phones, and APIs are becoming more common. Organizations may also have to integrate with other systems and partners, which also complicates the attack surface, and it increases the risk of parameter breaches. It is worth noting that these engagements and integrations add significant value to the organization, and staying disconnected is often not an option. It is the architectural leader’s responsibility to communicate the importance of these integrations.</p>
+<p class="noindent">To handle elevated risk, security experts have stressed the need to switch to a zero-trust model, where we secure each service independently by authenticating and checking permissions for all calls in the system. This approach moves us away from a perimeter-based model. With the zero-trust model, there is no perimeter where we trust the users inside. Instead, users are authenticated, authorized, and continuously validated at each step of the way.</p>
+<p class="noindent">In contrast to the old model, where we authenticate and check permission at the edge, the new model requires us to use code to check permissions and authorization at each service. Consequently, security appears in more places in the system, and the performance of the security becomes even more critical.</p>
+<p class="noindent">A key principle in zero trust is to limit the blast radius. One way of doing this is to use the security principle of providing minimal privilege to the user. The second is to identify multiple levels of logins, where critical operations require higher levels of authentication (for example, more factors). To reduce the blast radius, we may need to require consent from multiple users before allowing extraordinary actions, such as downloading all users.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_100"/>We often couple an anomaly detection system with zero trust, where the system detects any anomalies and either forces users to give additional authentication (for example, a new factor or questions based on previous user interactions) or forces them to re-authenticate. When we’re implementing zero trust, it is worth considering the NIST 800-207 standard when applicable.<sup><a href="#ch08fn3" id="ich08fn3">3</a></sup></p>
+<p class="footnote"><a href="#ich08fn3" id="ch08fn3">3</a>. <a href="https://csrc.nist.gov/publications/detail/sp/800-207/final">https://csrc.nist.gov/publications/detail/sp/800-207/final</a></p>
+</section>
+<section>
+<h4 class="h4" id="ch08lev2sec06">Take Caution When Running User-Provided Code</h4>
+<p class="noindent">Say our system executes user-provided code in some way that requires careful attention. This could be running user-provided JavaScript, Python, SQL, or Lua scripts or code, or adding user-provided parameters to an existing script. When a user uses the power of a script in input, it opens up many attacking possibilities. When this happens with SQL, it is called <em>SQL injection</em>, and careful use of libraries can handle most SQL injection cases.</p>
+<p class="noindent">Other scripts need careful auditing and testing. Even when we are running the user code as containers, the code has access to the internal network, which is a security threat. Also, all credentials provided to containers can be accessed via code running inside, which could let an attacker sneak into the system. One option is to use sandboxing technology such as gVisor (<a href="https://gvisor.dev/">https://gvisor.dev/</a>), Firecracker (<a href="https://firecracker-microvm.github.io/">https://firecracker-microvm.github.io/</a>), or Kata Containers (<a href="https://katacontainers.io/">https://katacontainers.io/</a>).</p>
+</section>
+<section>
+<h4 class="h4" id="ch08lev2sec07">Blockchain Topics</h4>
+<p class="noindent">Another topic that warrants our attention is blockchain. Using blockchain for a decentralized identity and for audits that can’t be tempered with are key use cases for this approach. The essential advantage it provides is that users, claims, or records are taken out of the control of an individual organization, increasing the organization’s trustworthiness. A company that is often mistrusted (e.g. organic food provider) can use such technology to create verifiable and auditable records, thus creating significant competitive advantages.</p>
+<p class="noindent">Despite the promise, wide attention, and concentrated efforts from Hyperledger (<a href="https://www.hyperledger.org/">https://www.hyperledger.org/</a>) and Ethereum (<a href="https://ethereum.org/en/">https://ethereum.org/en/</a>), blockchain has received only limited adoption, likely due to technical challenges and associated complexity. However, the potential is real, and it will likely be more fully utilized in the future. We should keep our eyes open to the benefit from any future developments.</p>
+</section>
+<section>
+<h4 class="h4" id="ch08lev2sec08">Other Topics</h4>
+<p class="noindent">Another challenging topic is denial-of-service (DoS) attacks, which are designed to render a service inaccessible. Using firewalls can solve DoS problems to some extent, but it is difficult if not impossible to completely fend off a carefully focused DoS attack. When we’re handling <span epub:type="pagebreak" id="page_101"/>this type of attack, running in the cloud might be the best option because we can use our cloud provider’s default protection and firewalls. Another new idea being considered is pushing the authentication to the edge, stopping distributed denial-of-service (DDoS) attacks at that level. DDoS attacks are used to overwhelm a targeted website with fake traffic.</p>
+<p class="noindent">Even if we have a lot of experience, a lot of risks are associated with security. It is the unknown that gets us into trouble, and the more eyes reviewing the design the better. I recommend a detailed audit with an external expert. Also, it is important to foster a culture where any potential risk can be brought up and examined. It is the leader’s responsibility to get a balance between risk and speed of change, without which the organization will die slowly or very fast.</p>
+<p class="noindent">It is not enough to just secure the system. With new regulations and the potential for users to sue, it is important that security be handled with as much professionalism and visibility as possible. If a breach happens, it is important to be able to show that all practical precautions were made. Certification from external parties can provide this visibility.</p>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch08lev1sec05">Leadership Considerations</h3>
+<p class="noindent">Finally, let’s reconsider the five questions and seven principles described in <a href="ch02.xhtml#ch02">Chapter 2</a>. Here are the questions and the principles again as a reminder:</p>
+<p class="ul-noindent">Question 1: When is the best time to market?</p>
+<p class="ul-noindent">Question 2: What is the skill level of the team?</p>
+<p class="ul-noindent">Question 3: What is our system’s performance sensitivity?</p>
+<p class="ul-noindent">Question 4: When can we rewrite the system?</p>
+<p class="ul-noindent">Question 5: What are the hard problems?</p>
+<p class="ul-noindent">Principle 1: Drive everything from the user’s journey.</p>
+<p class="ul-noindent">Principle 2: Use an iterative thin slice strategy.</p>
+<p class="ul-noindent">Principle 3: On each iteration, add the most value for the least effort to support more users.</p>
+<p class="ul-noindent">Principle 4: Make decisions and absorb the risks.</p>
+<p class="ul-noindent">Principle 5: Design deeply things that are hard to change but implement them slowly.</p>
+<p class="ul-noindent">Principle 6: Eliminate the unknowns and learn from the evidence by working on hard problems early and in parallel.</p>
+<p class="ul-noindent">Principle 7: Understand the trade-offs between cohesion and flexibility in the software architecture.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_102"/>Considering questions 1 and 4 and principles 2, 3, and 5, we can use different security features when they are not required for our current use cases. It’s important, however, that whichever feature we release, it must have deep security. As discussed earlier, we can’t start designing security with the simple solution and build up from there. For example, we can’t implement authentication with an old but simple algorithm or architecture and improve it later because it might have vulnerabilities.</p>
+<p class="noindent">Another related aspect is that we do not want to lower the security design, unlike other designs, to suit the team’s skill. We need to have the required minimum skills in the team or hire an expert as a consultant and use that expert to enhance the security skill levels of the team over time.</p>
+<p class="noindent">Considering questions 2 and 5 and principle 6, a common challenge with security is latency. It is important to consider latency in the design and carefully measure it in the system, adding instrumentation to monitor it. Most security capacity problems (e.g., database overload) surface as latency problems, and it is paramount that we have enough instrumentation to support the isolation of problems. Also, new architectures often employ multiple HTTP forwards, which also creates latency and can lead to timeouts.</p>
+<p class="noindent">Considering our hard problems, securing against different attack patterns is difficult, and as mentioned, we need the help of an experienced professional to get this right. Taking any kind of user input and running user-provided scripts are often weak points, which enable attacks (for example, SQL injection, cross-site scripting [XSS]).</p>
+<p class="noindent">Furthermore, security can easily interfere with our UX design. For example, a complicated password policy may stop many users from signing up. It is up to the security designer to think from a user’s point of view and to make the user’s experience as painless as possible. For example, if the user’s password does not match our policy, the system should tell which part of the policy is not correct rather than providing a blanket message. Adding things like email verification can also reduce conversion, delaying the user or detaching them from their first user experience. It is the technical leader’s responsibility to find the balance between security and UX.</p>
+<p class="noindent">Considering principle 4, security itself is a trade-off. The most secure system is one in which you do not give access to anyone, but such a system is not useful. It is the responsibility of the architect to find the right balance in this trade-off, as discussed previously. Sometimes the leaders need to take the responsibility (and risk) to enable designers to make progress with the program.</p>
+<p class="noindent">In summary, handling security in a macro architecture is a complicated topic and deviates from other topics we discussed. The main idea is that it may be OK to delay the additional security features, but whichever feature you choose to support requires a deep security design. It is best to adopt a CIAM or IAM solution and build on top of that, but you must get it right the first time and enlist external expertise if you must.</p>
+</section>
+<section>
+<h3 class="h3" id="ch08lev1sec06"><span epub:type="pagebreak" id="page_103"/>Summary</h3>
+<p class="noindent">Security is a key consideration in any design. Following are key takeaways:</p>
+<ul class="bull">
+<li><p class="bullet">Security is complex. My recommendation is to implement security on top of IAM and other products or SaaS services, rather than implementing those use cases ourselves.</p></li>
+<li><p class="bullet">We can use LDAP for simple cases, but we require an IAM product for complex cases.</p></li>
+<li><p class="bullet">Security use cases can be categorized as multi-user or non-multi-user applications. We handle non-multi-user applications using an API solution, mutual SSL, or service accounts.</p></li>
+<li><p class="bullet">Security in multi-user applications can be complex. We can handle them with authentication and authorization, or we can combine them with trusted and untrusted clients.</p></li>
+<li><p class="bullet">Due to associated risks, we can’t first implement a simple version and improve later with security use cases. Similarly, we can’t simplify a security design to suit the team’s skills.</p></li>
+<li><p class="bullet">Problems in security architecture often manifest as latency problems.</p></li>
+<li><p class="bullet">Data stored on disk poses many risks to the organization. At the same time, this can provide significant competitive advantages. Leaders need to balance the potential gains and associated risks.</p></li>
+<li><p class="bullet">Data handling is regulated by various countries, and it is wise to either support these regulations in our designs or to leave open the possibility of complying with them in the future.</p></li>
+<li><p class="bullet">Running user-provided code can introduce complex vulnerabilities.<span epub:type="pagebreak" id="page_104"/></p></li>
+</ul>
+</section>
+</section>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Never Send a Human to Do a Machine’s Job</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 13. Never Send a Human to Do a Machine’s Job" data-type="chapter" epub:type="chapter"><div class="chapter" id="AutomateEverything">
+<h1><span class="label">Chapter 13. </span>Never Send a Human <span class="keep-together">to Do a Machine’s Job</span></h1>
+
+
+<p class="subtitle">Automate Everything; What You Can’t <span class="keep-together">Automate, Make a Self-Service</span></p>
+
+<figure class="informal"><div class="figure" id="automate_ever">
+<img alt="Sending a machine to do a human’s job" src="assets/SAEch_014.png"/>
+<h6>Sending a machine to do a human’s job</h6>
+</div></figure>
+
+<p>Who<a data-primary="architecture" data-secondary="benefits of automation" data-type="indexterm" id="Aauto14"/><a data-primary="automation" data-secondary="benefits to architecture" data-type="indexterm" id="Aauto20"/> would have thought that you can learn so much about large-scale IT
+architecture from the movie trilogy <em>The Matrix</em>? Acknowledging that the
+Matrix is run by machines, it should not be completely surprising to
+find some nuggets of system design wisdom, though: Agent Smith teaches
+us that one should never send a human to do a machine’s job after his
+deal with Cypher, one of Morpheus’ human crew members, to betray and
+hand over his boss failed.</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Automate Everything!" data-type="sect1"><div class="sect1" id="idm45952855920664">
+<h1>Automate Everything!</h1>
+
+<p>There’s a certain irony in the fact that corporate IT, which has largely
+established itself by automating business processes, is often not very
+automated itself. Early in my corporate career, I shocked a large
+assembly of infrastructure architects by declaring my strategy as:
+“automate everything and make those parts that can’t be automated a
+self-service.” The reaction ranged from confusion and disbelief to mild
+anger. Still, this is exactly what Amazon et al. have done. And it has
+revolutionized how people procure and access IT infrastructure along the
+way. These companies have also attracted the top talent in the industry to build
+said infrastructure. If corporate IT wants to remain relevant, this is
+the way it ought to be thinking!</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="It’s Not Only About Efficiency" data-type="sect1"><div class="sect1" id="idm45952855918312">
+<h1>It’s Not Only About Efficiency</h1>
+
+<p>Just<a data-primary="automation" data-secondary="repeatability and resilience gained by" data-type="indexterm" id="idm45952855917000"/><a data-primary="repeatability" data-type="indexterm" id="idm45952855916040"/><a data-primary="resilience" data-type="indexterm" id="idm45952855915368"/> like test-driven development is not a testing technique (it’s
+primarily a design technique), automation is not just about efficiency
+but primarily about repeatability and resilience. A vendor’s architect
+once stated that automation shouldn’t be implemented for infrequently
+performed tasks because it isn’t economically viable. Basically, the
+vendor calculated that writing the automation would take more hours than
+would ever be spent completing the task manually (the vendor also appeared to be on a fixed-price contract).</p>
+
+<p>I challenged this reasoning with the argument of repeatability and
+traceability: wherever humans are involved, mistakes are bound to happen,
+and work will be performed ad hoc without proper documentation. That’s
+why you don’t send humans to do a machine’s job. The error rate is
+actually likely to be the highest for infrequently performed tasks
+because the operators are lacking routine.</p>
+
+<p>The second counter-example is disaster scenarios and outages: we hope
+that they occur infrequently, but when they happen, the systems better
+be fully automated to make sure they can return to a running state as
+quickly as possible. The economic argument here isn’t about saving
+manpower but minimizing the loss of business during the outage, which
+far exceeds the manual labor cost. To appreciate this thinking, you need
+to understand<a data-primary="economies of speed" data-type="indexterm" id="idm45952855912328"/> <em>economies of speed</em> (<a data-type="xref" href="ch35.html#EconomiesOfSpeed">Chapter 35</a>).
+Otherwise, you may as well argue that the fire brigade should use a
+bucket chain because all those fire trucks and pumps are not
+economically viable given how rarely buildings actually catch fire.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Repeatability Grows Confidence" data-type="sect1"><div class="sect1" id="idm45952855909720">
+<h1>Repeatability Grows Confidence</h1>
+
+<p>When I automate tasks, the biggest immediate benefit I usually derive is increased confidence. For example, when I wrote the original
+self-published version of the book in Markdown, I had to maintain two
+slightly different versions: the ebook version used hyperlinks for
+chapter references, whereas the print version used chapter numbers. After quickly becoming tired of manually converting between the formats, I developed two simple scripts that switch between print and epub versions of the text. Because it was easy to do, I also made the scripts idempotent, meaning that running a script multiple times caused no harm. With these scripts at hand, I didn’t even worry a split-second about switching between formats because I could be assured that nothing would go wrong. Automation is hugely liberating and hence speeds up work significantly.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Self-Service" data-type="sect1"><div class="sect1" id="idm45952855907256">
+<h1>Self-Service</h1>
+
+<p>Once<a data-primary="automation" data-secondary="self-service portals" data-type="indexterm" id="idm45952855905960"/><a data-primary="self-service portals" data-type="indexterm" id="idm45952855905016"/> things are fully automated, users can directly execute common
+procedures in a self-service portal. To provide the necessary
+parameters—for example, the size of a server—they must have a clear mental model of what they are ordering. Amazon Web Services provides a good example of an intuitive user interface, which not only alerts you that your server is reachable from any computer in the world but even detects your IP address to make it easy to restrict access.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>When filling out the spreadsheet required to order a Linux server, I was told to just copy the network
+settings from an existing server because I wouldn’t be able to
+understand what I need anyway.</p>
+</div>
+
+<p>Designing good user interfaces can be a challenging but valuable exercise for infrastructure engineers who are largely used to working in hiding on rather esoteric “plumbing.” It’s also a chance for them to show the <em>Pirate Ship</em> (<a data-type="xref" href="ch19.html#PirateShip">Chapter 19</a>), which is far more exciting than all the bits and pieces it’s made out of.</p>
+<div class="astronaut" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Self-service gives you better control, accuracy, and traceability than semi-manual processes.</p>
+</div>
+
+<p>Self-service doesn’t at all imply that infrastructure changes become a
+free-for-all. Just like a self-service restaurant still has a cashier,
+validations and approvals apply to users’ change requests. However,
+instead of a human having to <span class="keep-together">re-enter</span> a request submitted in free-form text or an Excel spreadsheet, when a self-service request is approved the workflow pushes the requested change into production without further human intervention and possibility of error. Self-service also reduces input errors: because
+free-form text or an Excel spreadsheet rarely perform validations, input
+errors lead to lengthy email cycles or pass through unnoticed. An
+automated approach gives immediate feedback to the user and makes sure
+the order actually reflects what the user needs.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Beyond Self-Service" data-type="sect1"><div class="sect1" id="idm45952855896376">
+<h1>Beyond Self-Service</h1>
+
+<p>Self-service portals<a data-primary="automation" data-secondary="configuration changes" data-type="indexterm" id="idm45952855895080"/><a data-primary="configuration changes" data-type="indexterm" id="idm45952855894136"/> are a major improvement over emailing spreadsheets. However, the best place for configuration changes is the source code repository, where approvals can be handled via <em>pull requests</em> and <em>merge</em> operations. Approved changes trigger an automated deployment into production.
+Source code management has long known how to administer large volumes of
+complex changes through review and approval processes, including
+commenting and audit trails. You should leverage these processes for
+configuration changes so that you can start to think like a <em>software developer</em> (<a data-type="xref" href="ch14.html#SoftwareEatstheWorld">Chapter 14</a>). Because it seems that any good idea needs a buzzword these days, using a source repository to manage code and configuration is now referred to as “GitOps.”</p>
+
+<p>Most enterprise software vendors pitch GUIs as the
+ultimate in ease of use and cost reduction. However, in large-scale
+operations the opposite is the case: manual entry into user interfaces
+is cumbersome and error prone, especially for repeated requests or
+complex setups. If you need 10 servers with slight variations, would you
+want to enter this data 10 times by hand? Fully automated configurations
+should therefore be done via APIs, which can be integrated with other
+systems or scripted as part of higher-level automation.</p>
+<div class="astronaut" data-type="note" epub:type="note"><h6>Note</h6>
+<p>I once set a rule that no infrastructure changes could be made from a user interface but had to be done through version-controlled automation. This put a monkey wrench into many vendor demos.</p>
+</div>
+
+<p>Allowing users to specify what they want and providing it quickly in
+high quality would seem like a pretty happy scenario. However, in the
+digital world, you can always push things a little further. For example,
+Google’s “zero-click search” initiative, which resulted in Google
+Now, considered even one user click too much of a burden, especially
+on mobile devices. The system should anticipate the users’ needs and
+answer before a question is even asked. It’s like going to McDonalds and
+finding your favorite happy meal already waiting for you at the counter.
+Now that’s customer service! An IT world equivalent may be autoscaling,
+which allows the infrastructure to automatically provision additional
+capacity under high load situations without any human intervention.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Automation Is Not a One-Way Street" data-type="sect1"><div class="sect1" id="idm45952855886376">
+<h1>Automation Is Not a One-Way Street</h1>
+
+<p>Automation<a data-primary="automation" data-secondary="understanding current system state" data-type="indexterm" id="idm45952855885064"/> usually focuses on the top-down part; for example, configuring a
+piece of low-level equipment based on a customer order or the needs of a
+higher-level component. However, we will learn that control can be an <em>illusion</em> (<a data-type="xref" href="ch27.html#ControlIsAnIllusion">Chapter 27</a>) wherever humans are
+involved. Also, “control” necessitates two-way communication that references the current system state: when your room is too hot, you want the control system to turn on the air conditioning instead of the heater. The same is true in IT system automation: to specify how much hardware to order or what network changes to request, you
+likely first need to examine the current state. Therefore, full
+transparency on existing system structures and a clear vocabulary are
+paramount. In one case, it took us weeks just to understand
+whether a datacenter has sufficient spare capacity to deploy a new
+application. All order process automation doesn’t help if it takes weeks
+to understand the current state of affairs.</p>
+
+<p>If you manage to fully automate and make your infrastructure immutable, meaning no manual changes are allowed at all, you can start working under the assumption that reality matches what’s specified in the configuration scripts. In that case, transparency becomes trivial: you just look at the scripts. While such a setup is a desirable end-state, it might take significant effort to consistently implement across a large IT estate. For example, legacy hardware or applications might not be automatable.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Explicit Knowledge Is Good Knowledge" data-type="sect1"><div class="sect1" id="idm45952855880488">
+<h1>Explicit Knowledge Is Good Knowledge</h1>
+
+<p>Tacit<a data-primary="automation" data-secondary="tacit versus explicit knowledge" data-type="indexterm" id="idm45952855879176"/> knowledge is knowledge that exists only in employees’ heads but
+isn’t documented or encoded anywhere. Such undocumented knowledge can be
+a major overhead for large or rapidly growing organizations because it
+can easily be lost and requires new employees to relearn things the
+organization already knew. Encoding tacit knowledge, which existed only
+in an operator’s head, into a set of scripts, tools, or source code
+makes these processes visible and eases knowledge transfer.</p>
+
+<p>Tacit knowledge is also a sore spot for any regulatory body whose job it is to assure that businesses in regulated industries operate according to well-defined and repeatable principles and procedures. Full automation forces processes to be well defined and explicit, eliminating unwritten rules and undesired variation inherent in manual processes. As a result, automated systems are easier to audit for compliance. Ironically, classic IT often insists on manual steps in order to maintain separation of duty, ignoring the fact that manually approving an automated process achieves both separation of concerns and repeatability.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="A Place for Humans" data-type="sect1"><div class="sect1" id="idm45952855876216">
+<h1>A Place for Humans</h1>
+
+<p>If<a data-primary="automation" data-secondary="versus humans" data-secondary-sortas="humans" data-type="indexterm" id="idm45952855874920"/> we automate everything, is there a place left for humans? Computers
+are much better at executing repetitive tasks, but even though we humans are
+no longer unbeatable at the board game <em>Go</em>, we are still number one in
+coming up with new and creative ideas, designing things, or automating
+stuff. We should stick to this separation of duty and let the machines
+do the repeatable tasks without fearing that Skynet will take over the
+world any moment.<a data-primary="" data-startref="Aauto14" data-type="indexterm" id="idm45952855872680"/><a data-primary="" data-startref="Aauto20" data-type="indexterm" id="idm45952855871736"/></p>
+</div></section>
+
+
+
+
+
+
+
+</div></section></body></html>

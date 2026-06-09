@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos191723" class="calibre_2"><span class="calibre2"><span class="bold">Data life cycle</span></span></p><p class="calibre_1">Another useful strategy for decomposing a system into components is based on the life cycle of the data in the system. <a></a>This is similar in concept to dividing the system based on the value streams or business processes of the system, but stretches out over a longer period. <a></a>For example, how long must data be retained before it can be deleted? <a></a>Data may have to live long after a business process or value stream is complete. <a></a>A case in a case management system is created, assigned, and ultimately completed, but the records of the case will need to be retained and managed for an extended period. <a></a>A product in an e-commerce system is authored, published, offered, sold, and discontinued, but so long as a customer still owns the product there is still a reason to keep the product detail information available. <a></a>Furthermore, as the data moves through its life cycle, it may be best to store the data in different formats and in different types of storage. <a></a>Retention policies may vary between different stages of the life cycle, such as allowing high transaction volume stages to purge old data to free up resources and improve performance. <a></a>Each stage in the data life cycle will typically be its own component, with different requirements and a different user base. <a></a>The data will flow through these stages and components based on the life cycle events that are published as the data ages.</p><div class="mbp_pagebreak" id="calibre_pb_47"></div>
+</body></html>

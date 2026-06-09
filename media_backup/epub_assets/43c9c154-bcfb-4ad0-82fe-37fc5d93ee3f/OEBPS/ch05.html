@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Managing a Team</title><link rel="stylesheet" type="text/css" href="epub.css"></link></head><body data-type="book"><div style="display:none;"><a id="GBS.0103.01"></a></div><section data-type="chapter" xmlns:epub="http://www.idpf.org/2007/ops" epub:type="chapter" data-pdf-bookmark="Chapter 5. Managing a Team"><div id="managing_a_team" class="chapter">
+<h1><span class="label">Chapter 5. </span>Managing a Team</h1>
+
+
+<p><a data-type="indexterm" data-primary="team management" data-secondary="description of" id="IEr219"></a>It&#8217;s a short step from managing a person or two to managing a whole team, but managing a team is more than just doing the job of managing the individuals. At this point, your job has changed. In fact, at every step beyond this level you will probably experience a totally different set of requirements and challenges. The hardest thing to prepare for as you advance in<a id="GBS.0103.02"></a> your career is the idea that you&#8217;re going to start doing totally different things. As much as you may want to believe that management is a natural progression of the skills you develop as a senior engineer, it&#8217;s really a whole new set of skills and challenges.</p>
+
+<p>Here is the job description that I used for the role of managing a team, which I called “engineering lead”:</p>
+<blockquote>
+<p><a data-type="indexterm" data-primary="coding" data-secondary="amount of, by team managers" id="idm140116580719888"></a><a data-type="indexterm" data-primary="team management" data-secondary="coding, amount of" id="idm140116580719040"></a>The engineering lead will<a id="GBS.0103.03"></a> spend less time writing code, but they still engage in small technical deliverables, such as bug fixes and small features, without blocking or slowing down the progress of their team. More than writing code, they hold responsibility for identifying bottlenecks in the process and roadblocks to success for their team and clearing these roadblocks.</p>
+
+<p>The person who fills this role is expected to<a id="GBS.0103.04"></a> have a large impact on the success of [the organization] as a whole. In particular, leaders in this role are capable of identifying the most high-value projects and keeping their team focused on these projects. As part of keeping the team focused, the engineering lead will partner closely with the product lead to manage project scope and ensure the technical deliverables are met. In addition to focusing<a id="GBS.0103.05"></a> the team, they are capable of identifying headcount needs for the team and planning and recruiting to fill these needs.</p>
+
+<p>The engineering lead is an independent manager. They are comfortable managing team members with different skill sets from their own. They communicate expectations clearly to all team members, and solicit and deliver individual feedback frequently (not just in the scope of review<a id="GBS.0104.01"></a> periods). In addition to strong management skills, the engineering lead acts as a leader for the technical roadmap for their product group (pillar). They clearly communicate the timeline, scope, and risks to their pillar partners, and lead the delivery of major initiatives on clear timelines. Additionally, they identify areas of strategic technical debt, do the cost/benefit analysis for resolving<a id="GBS.0104.02"></a> this debt, and communicate suggested timelines for prioritizing this to the management team.</p></blockquote>
+
+<p>We’ve covered the basics of managing individuals, but now let’s talk about what it takes to lead a whole team, all while still being technical.</p>
+
+<p><a data-type="indexterm" data-primary="" data-startref="IEr219" id="idm140116580710352"></a>The theme of this chapter is a focus on the job beyond the people management. Because it&#8217;s easy for new managers to get overly focused on the people-related<a id="GBS.0104.03"></a> tasks, I want to draw your attention back to the more technical, strategic, and leadership areas of managing a team.</p>
+<aside data-type="sidebar" epub:type="sidebar"><div id="becoming_a_people_manager" class="sidebar">
+<h5>Becoming a People Manager</h5>
+<p><a data-type="indexterm" data-primary="team management" data-secondary="of more senior team members" data-secondary-sortas="more senior team members" id="IEr222"></a>I started out as an informal team lead in a company that had resisted traditional managers. After I played that role for a while, it came time for me to become an official people manager. Managers as a role were new to the company, and the entire organization<a id="GBS.0104.04"></a> met the changes with some trepidation. When dividing engineering among managers, we weighed who would chafe at the new structure. Not everyone was comfortable working for their former peers, but I was pretty lucky. Most of the people I now managed had worked with me long enough to be OK with the idea that I was now their manager. Their support helped tons. It wasn&#8217;t perfect, but the pushback<a id="GBS.0104.05"></a> I received wasn&#8217;t significant.</p>
+
+<p>In this new role, I found myself managing a few people who were far more senior, tech-wise, than I was. It was the first time that I couldn’t rely on having the most knowledge as my main leadership tool. This wasn’t simple impostor syndrome. I knew I was out of my league. <em>They</em> knew I was out of my league! Of course, both of the most senior engineers I was now managing<a id="GBS.0105.01"></a> realized that this was awkward. We talked about how everyone had a job to do, and mine was to help them succeed however I could.</p>
+
+<p>One engineer continued to help me along the way with ongoing feedback. I worked hard to learn what was important to this person and what they needed to succeed. The other engineer had trouble adjusting to me being his manager. He transferred to another team&#8212;at first.<a id="GBS.0105.02"></a> Months later, a bit contrite, he returned to our team and agreed to work with me. It turns out, being a good manager isn&#8217;t about having the most technical knowledge. The work of supporting people was far more important to management success.<a data-type="indexterm" data-primary="" data-startref="IEr222" id="idm140116580698704"></a></p>
+
+<p class="byline">bethanye Blount</p>
+</div></aside>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Staying Technical"><div id="staying_technical" class="sect1">
+<h1>Staying Technical</h1>
+
+<p><a data-type="indexterm" data-primary="coding" data-secondary="amount of, by team managers" id="IEr32"></a><a data-type="indexterm" data-primary="team management" data-secondary="coding, amount of" id="IEr217"></a><a data-type="indexterm" data-primary="team management" data-secondary="technical skills, maintaining" id="IEr224"></a><a data-type="indexterm" data-primary="tech leads" data-secondary="coding, amount of" id="IEr235"></a><a data-type="indexterm" data-primary="technical skills" data-secondary="maintaining while managing teams" id="IEr245"></a>This book is for engineering managers. It&#8217;s not a generic management book. Engineering management is a technical<a id="GBS.0105.03"></a> discipline, not just a set of people skills. As you progress in your career, even though you may stop writing code, your job will require that you guide technical decision making. Even with architects who design the systems or other senior technical staff who are in charge of the details, as the manager of a team, you have the job of holding those people accountable for their decisions, of making<a id="GBS.0105.04"></a> sure that the decisions pass the technical smell test and have been balanced against the overall context of the team and the business. Technical instincts honed over years of doing the job are very important for guiding that process.</p>
+
+<p>Furthermore, if you truly wish to command the respect of an engineering team, they must see you as technically credible. Without technical credibility you face<a id="GBS.0105.05"></a> an uphill battle, and even though you may be able to get into a position of leadership in one company, your options will be limited. Don&#8217;t underestimate the value of your technical skills as you work to become a successful engineering manager.</p>
+
+<p>Of course, you have to learn how to balance. It&#8217;s a struggle to figure out how to stay technical as you transition to management. The new responsibilities<a id="GBS.0106.01"></a> that come with being a manager&#8212;more meetings, planning, administrative tasks&#8212;don&#8217;t lend themselves to having focused time to write code. It can be hard to work out how to stay in the code when you are pulled in a million directions.</p>
+
+<p>However, at this level, if you don&#8217;t stay in the code, you risk making yourself technically obsolete too early in your career. You may be on a management career<a id="GBS.0106.02"></a> path, but that doesn&#8217;t mean that you should wash your hands of technical responsibilities. In fact, I mention specifically in my engineering lead job description that I expect managers at this level to implement small features and bug fixes.</p>
+
+<p>Why bother writing any code if all you&#8217;re doing is small stuff? The answer is that you need to stay enough in the code to see where the bottlenecks and<a id="GBS.0106.03"></a> process problems are. You might be able to see this by observing metrics, but it&#8217;s far easier to feel these problems when you&#8217;re actively engaged in writing code yourself. If the build is really slow or deploying code takes too long or on-call is a nightmare, you&#8217;ll feel it in the difficulties you, an experienced engineer, have in knocking out trivial programming tasks. Imagine how frustrating it<a id="GBS.0106.04"></a> is for the members of your team! It&#8217;s far easier to identify technical debt and prioritize dealing with it when you&#8217;ve slogged through the code yourself.</p>
+
+<p>Additionally, as the manager of a single team, you&#8217;ll be called upon to help guide what is possible and impossible to do in your systems. When the product manager for your group has a crazy idea, it&#8217;s much easier to manage when you&#8217;re confident<a id="GBS.0106.05"></a> in your ability to evaluate how easy that feature will be to implement in the given systems (although beware of overconfidence in giving these estimates!). Strong engineering managers can identify the shortest path through the systems to implement new features. As you learned in your time as a tech lead, a critical part of complex project management is understanding the pieces of the system well<a id="GBS.0107.01"></a> enough to determine the best path to implementation. The more you understand the code in the system, the easier determining this path will be.</p>
+
+<p>Sadly, some companies don&#8217;t really have the role of &#8220;manager who has a little time to code&#8221; available. These companies split the management and technical tracks so cleanly that managers immediately start with large teams reporting directly to them. Thus<a id="GBS.0107.02"></a> the manager&#8217;s job becomes an administrative and people management position, and these managers end up grabbing technical time on nights and weekends, if ever. If your company is like this, my advice is to <em>stay technical</em> until you feel that you have truly mastered what you want to learn for writing code and designing systems, and then decide if you want to switch careers into management. It&#8217;s hard<a id="GBS.0107.03"></a> to make up lost time when you stop writing code, and if you do it too early in your career, you may never achieve sufficient technical savvy to get beyond the role of middle management.</p>
+
+<p>If you are horrified at my suggestion that managers stay in the code at all, don&#8217;t worry! In later chapters I&#8217;ll talk in detail about the point at which it doesn&#8217;t make sense to be in the code anymore, and I<a id="GBS.0107.04"></a> do believe that point exists. But for now, try to stay in it a little bit. I promise, it&#8217;ll make your job easier.<a data-type="indexterm" data-primary="" data-startref="IEr32" id="idm140116580686720"></a><a data-type="indexterm" data-primary="" data-startref="IEr217" id="idm140116580676016"></a><a data-type="indexterm" data-primary="" data-startref="IEr224" id="idm140116580692352"></a><a data-type="indexterm" data-primary="" data-startref="IEr235" id="idm140116580691520"></a><a data-type="indexterm" data-primary="" data-startref="IEr245" id="idm140116580703232"></a></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Debugging Dysfunctional Teams: The Basics"><div id="debugging_dysfunctional_teams_colon_the" class="sect1">
+<h1>Debugging Dysfunctional Teams: The Basics</h1>
+
+<p><a data-type="indexterm" data-primary="challenging situations" data-secondary="dysfunctional teams" id="IEr20"></a><a data-type="indexterm" data-primary="team management" data-secondary="dysfunctional teams, fixing" id="IEr220"></a><a data-type="indexterm" data-primary="teams" data-secondary="dysfunctional, fixing" id="IEr228"></a>Sometimes you&#8217;ll find yourself managing a dysfunctional team. They keep missing deliverables. People are unhappy. They keep quitting. The product manager is frustrated. The team is frustrated with the product manager. Or maybe<a id="GBS.0107.05"></a> they&#8217;re just lacking energy in their work, or lacking enthusiasm about the current projects. You can tell something is wrong, but you&#8217;re not entirely sure what it is. A few basic dysfunctions can creep into tech teams. I&#8217;ll introduce these dysfunctions briefly here so you know what to look for and how to solve it.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Not Shipping"><div id="not_shipping" class="sect2">
+<h2>Not Shipping</h2>
+
+<p><a data-type="indexterm" data-primary="coding" data-secondary="releases, missing dates of" id="IEr39"></a><a data-type="indexterm" data-primary="project delivery" data-secondary="release dates, missing" id="IEr173"></a>You may not think this is a dysfunction. Perhaps your team<a id="GBS.0108.01"></a> is in deep research mode on a new problem, for example. However, even teams doing research generally have goals and deliverables, even if they&#8217;re just in the form of initial findings. Humans, by and large, feel good when they set small goals and meet them regularly.</p>
+
+<p>As the manager of the team, you may worry about pushing them too hard, and so you let them miss deadlines without a fuss. The trick<a id="GBS.0108.02"></a> is to learn how to balance pushing your team and holding back. If you&#8217;re still writing code for the team, this may be a good time to roll up your sleeves and help the team meet its deliverables, or really dig in to the part of the project that&#8217;s slipping and partner with the engineers responsible to help understand the situation.</p>
+
+<p>Sometimes, teams aren&#8217;t shipping because the tools and processes<a id="GBS.0108.03"></a> they&#8217;ve been using make it hard to get work done quickly. A common example is that your team only tries to release changes to production once a week or less. Infrequent releases can hide pain points such as poor tooling around releases, heavily manual testing, features that are too big, or developers who don&#8217;t know how to break their work down. Now that you&#8217;re managing the team, start to push for<a id="GBS.0108.04"></a> the removal of these bottlenecks.</p>
+
+<p>At my last job, there was a critical part of the system that, for a time, we released only once a week. The releases took hours and were very painful, and often suffered from people trying to get in last-minute changes that broke tests and slowed everyone down. We all decided this was a problem and the team came together to improve the code base and automation,<a id="GBS.0108.05"></a> in order to make releases happen faster. Toward the end of the process, I pushed the team to make improvements that allowed us to release daily. The impact of this change on the team was immediate. It turns out that releases can be a point of resource contention. When people are contending for a scarce resource, conflicts and unhappiness among team members are almost inevitable. Making the code-shipping<a id="GBS.0109.01"></a> resource far less scarce immediately improved team morale.<a data-type="indexterm" data-primary="" data-startref="IEr39" id="idm140116580666000"></a><a data-type="indexterm" data-primary="" data-startref="IEr173" id="idm140116580665168"></a></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="People Drama"><div id="people_drama" class="sect2">
+<h2>People Drama</h2>
+
+<p><a data-type="indexterm" data-primary="brilliant jerks" id="idm140116580672832"></a><a data-type="indexterm" data-primary="challenging situations" data-secondary="brilliant jerks" id="idm140116580672224"></a><a data-type="indexterm" data-primary="drama" data-secondary="within the team" id="idm140116580671120"></a><a data-type="indexterm" data-primary="engineers" data-secondary="brilliant jerks" id="idm140116580670176"></a><a data-type="indexterm" data-primary="negative people" data-seealso="alpha geeks; brilliant jerks" id="idm140116580669232"></a><a data-type="indexterm" data-primary="people drama" id="idm140116580668320"></a>Sometimes we let ourselves hang onto that brilliant asshole for too long. You know, that person you think can’t be replaced because he’s just so productive and so smart, but who isn’t a team player and makes everyone around him unhappy. (For more on this kind of toxic employee, see <a data-type="xref" href="#the_brilliant_jerk">“The Brilliant Jerk”</a>.)<a id="GBS.0109.02"></a> A less critical version of this situation is the person who just stirs up drama, who dwells on negative experiences, or who spends a bit too much time on gossip and playing games of us-against-them.</p>
+
+<p>You have to be brave and nip people drama in the bud quickly. It&#8217;s OK to ask your manager for help with this, especially if it&#8217;s your first time doing it, but be aware that your manager may actually<a id="GBS.0109.03"></a> have an even harder time dealing with the brilliant jerk than you do. She isn&#8217;t seeing the immediate impact on team dynamics; she&#8217;s just seeing someone who gets things done. Be prepared to have a series of conversations with both the employee and your boss. It may be that a move to a different team will clear up the situation.</p>
+
+<p>The negative person is easier to deal with than the brilliant jerk.<a id="GBS.0109.04"></a> Make it clear to him that the behavior has to change, bring clear examples, and provide corrective feedback quickly after things happen. Sometimes the negative person is just unhappy and the best thing to do is to help him leave the team on good terms; you must be prepared for this outcome. Other times, the person has no idea about the impact he&#8217;s having on the team, and a quick chat will be all<a id="GBS.0109.05"></a> that&#8217;s needed to curtail the incidents.</p>
+
+<p>Be careful that vocally negative people don’t stay in that mindset on your team for long. The kind of toxic drama that is created by these energy vampires is hard for even the best manager to combat. The best defense is a good offense in this case, and quick action is essential.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Unhappiness Due to Overwork"><div id="unhappiness_due_to_overwork" class="sect2">
+<h2>Unhappiness Due to Overwork</h2>
+
+<p><a data-type="indexterm" data-primary="engineers" data-secondary="overworked" id="idm140116580655632"></a><a data-type="indexterm" data-primary="overwork" id="idm140116580659184"></a>This problem is much easier<a id="GBS.0110.01"></a> to solve. Usually, unhappiness due to overwork has a root in problems that you can address. For example, if overwork is due to (in)stability of the production systems, it&#8217;s your job as the manager to slow down the product roadmap in order to focus on stability for a while. Make clear measures of alerts, downtime, and incidents, and strive to reduce them. My advice is to dedicate 20% of your time in<a id="GBS.0110.02"></a> every planning session to system sustainability work (&#8220;sustainability&#8221; instead of the more common &#8220;technical debt&#8221;).</p>
+
+<p>In a case where overwork is due to a pressing, time-critical release, remember two things. First, you should be playing cheerleader. Support the team however they need supporting, especially by helping out with the work yourself. Order dinner. Tell them you appreciate the hard<a id="GBS.0110.03"></a> work. Make it clear that they&#8217;ll have explicit break time after the push. Make it as fun as you can in the moment. Sometimes a crunch period can serve as a bonding experience for a team. But they&#8217;ll remember whether their manager was with them during the stressful period, or off somewhere else, doing her own thing.</p>
+
+<p>Second, do everything you can to learn from this crunch period and avoid it the<a id="GBS.0110.04"></a> next time. Cut features if you can. Push back on the date if it&#8217;s truly unrealistic. Crunch periods will happen, but there is no reason they should happen <span class="keep-together">frequently.</span></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Collaboration Problems"><div id="collaboration_problems" class="sect2">
+<h2>Collaboration Problems</h2>
+
+<p><a data-type="indexterm" data-primary="collaboration" data-secondary="problems with" id="idm140116580651728"></a>Your team isn&#8217;t working well with the product team, or the design team, or another tech team, and the lack of collaboration is dragging everyone down. There&#8217;s no quick fix here, but showing<a id="GBS.0110.05"></a> a willingness to improve collaboration goes a long way. If you aren&#8217;t already, make sure you&#8217;re having regular touch-bases with the appropriate peers to work through issues. Gather actionable feedback from your team, and have productive conversations about possible improvements. You can make the situation worse by undermining your peers in front of your team, so even when you are frustrated with<a id="GBS.0111.01"></a> them, try to stay positive and supportive of their efforts in public.</p>
+
+<p>If your team isn&#8217;t working well together, look into creating some opportunities for them to hang out without it being all about work. Taking the whole team to lunch, leaving work early on a Friday afternoon to attend a fun event together, encouraging some PG-rated humor in chat rooms, and asking people how their lives are<a id="GBS.0111.02"></a> going are all ways to cultivate team unity. As a new manager I was pretty reluctant to get into this type of bonding, but even most introverts want to have a feeling of relatedness with their team. Assuming you don&#8217;t have any of the &#8220;people drama&#8221; problems listed earlier, small efforts in this area can warm the group up considerably.</p>
+<aside data-type="sidebar" epub:type="sidebar"><div id="managing_a_former_peer" class="sidebar">
+<h5>Ask the CTO: Managing a Former Peer</h5>
+<p><em>I just got promoted to<a id="GBS.0111.03"></a> run my team over another peer of mine, a senior engineer who also wanted the job. How can I make sure to manage this so that I don&#8217;t alienate him while still taking on the role?</em></p>
+
+<p><a data-type="indexterm" data-primary="peers" data-secondary="former, managing" id="IEr144"></a><a data-type="indexterm" data-primary="teams" data-secondary="former peers in" id="IEr231"></a><a data-type="indexterm" data-primary="Ask the CTO sections" data-secondary="Managing a Former Peer" id="idm140116580647072"></a>This experience can be deeply awkward, so the first thing to do is to acknowledge that. If you&#8217;re now managing someone who was truly your peer, acknowledge the weirdness of the transition. Be honest and transparent with<a id="GBS.0111.04"></a> this person that you&#8217;re going to do the best job you can, but you&#8217;ll need his help to do it. You need him to be honest with you about the things that are going well and the things that are not. You&#8217;re going to have to be a little bit vulnerable with him, because you won&#8217;t be perfect the first time around.</p>
+
+<p>Next, remember that your job has changed in some big ways. As his manager, you may now<a id="GBS.0111.05"></a> have the ability to override his decisions, but use this power very cautiously. Using your managerial power to override technical decisions is usually a bad idea. Resist the temptation to micromanage people&#8212;especially those who used to be your peers. They&#8217;re going to be sensitive to the feeling that you&#8217;ve been &#8220;rewarded,&#8221; even if they didn&#8217;t want to become managers themselves. If you question their<a id="GBS.0112.01"></a> every move and try to make every single decision yourself, you&#8217;ll make this sensitivity much worse.</p>
+
+<p><a data-type="indexterm" data-primary="coding" data-secondary="amount of, by team managers" id="idm140116580628112"></a><a data-type="indexterm" data-primary="team management" data-secondary="coding, amount of" id="idm140116580627168"></a>A corollary here is that you&#8217;re going to have to let go of some of your previous work as you ease into the additional responsibilities of people management. Every step up the management chain will mean adding new responsibilities and giving up some of your old ones. You can use this situation<a id="GBS.0112.02"></a> to your advantage with former peers by openly giving them more control over some of that technical work you used to own. This is also an opportunity to give new challenges to more junior members of the team. While many engineering organizations want first-level managers to continue to write some code, they likely expect the code those managers write to be smaller features, bug fixes, and enhancements,<a id="GBS.0112.03"></a> rather than deep new systems.</p>
+
+<p>Throughout all of this change, your goal is to show the team that you&#8217;re committed to helping them succeed. Your new role isn&#8217;t taking anything away from the rest of the team; it&#8217;s only giving you some new responsibilities that either were being neglected or used to belong to someone else, and shifting some of your old responsibilities to other members of the team.</p><a id="GBS.0112.04"></a>
+
+<p>Your team won’t be successful if your former peers all quit because they can’t stand working for you. They’re going to be extra-sensitive to any disagreements or perceived power grabs on your part. They may even do things to try to undermine you. Pick your battles. In the long run, handling this transition with maturity will pay off.<a data-type="indexterm" data-primary="" data-startref="IEr20" id="idm140116580623984"></a><a data-type="indexterm" data-primary="" data-startref="IEr144" id="idm140116580623152"></a><a data-type="indexterm" data-primary="" data-startref="IEr220" id="idm140116580622208"></a><a data-type="indexterm" data-primary="" data-startref="IEr228" id="idm140116580631152"></a><a data-type="indexterm" data-primary="" data-startref="IEr231" id="idm140116580630208"></a></p>
+</div></aside>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="The Shield"><div id="the_shield" class="sect1">
+<h1>The Shield</h1>
+
+<p><a data-type="indexterm" data-primary="drama" data-secondary="external, shielding team from" id="IEr71"></a><a data-type="indexterm" data-primary="shielding the team" id="IEr202"></a><a data-type="indexterm" data-primary="team management" data-secondary="shielding the team" id="IEr223"></a>Many pieces of management<a id="GBS.0112.05"></a> advice tell new managers that part of their job, if they are effective, is to be a shield (or, less politely, a &#8220;bullshit umbrella&#8221;). They should help their team focus on what they need to get done without being distracted by the wider drama, politics, and changes happening in the company around them.</p>
+
+<p>I have mixed feelings about this take on management. I do think that teams who are unnecessarily<a id="GBS.0113.01"></a> exposed to toxic drama that doesn&#8217;t concern them tend to get distracted and stressed out. If you&#8217;re managing an engineering team, they don&#8217;t need to be concerned with interpersonal incidents in the customer service organization. I&#8217;ve watched with mixed pride as my own teams continue to function smoothly when it seems to me like the world is burning down around my ears. It&#8217;s valuable for everyone<a id="GBS.0113.02"></a> to realize that they can and should focus on the things they can impact and change, and ignore the things they can&#8217;t. Drama in the workplace is usually little more than an ego-entertaining drain.</p>
+
+<p>So, yes, shielding your teams from distraction is important. Or, to put it another way, helping them understand the key important goals and focusing them on those goals is important. However, it&#8217;s unrealistic<a id="GBS.0113.03"></a> to expect that you can or should shield your team from everything. Sometimes it&#8217;s appropriate to let some of the stress through to the team. The goal is not to stress them out, but to help them get context into what they&#8217;re dealing with. The extreme shielders think they can best focus and motivate their teams by giving clear goals. But humans usually need some sort of context into <em>why</em> these goals<a id="GBS.0113.04"></a> have been set, and thereby into what problems they&#8217;re working to solve. If you&#8217;re going to have operational issues in November if a particular system isn&#8217;t up and running, your team deserves to understand that consequence. Appropriate context is what helps teams make good decisions about how and where to focus their energy. As the manager, it&#8217;s not your job to make all of those decisions by yourself.</p><a id="GBS.0113.05"></a>
+
+<p><a data-type="indexterm" data-primary="bad news, delivering" data-seealso="firing people" id="idm140116580615648"></a><a data-type="indexterm" data-primary="challenging situations" data-secondary="delivering bad news" id="idm140116580614912"></a><a data-type="indexterm" data-primary="communication skills" data-secondary="bad news, delivering" id="idm140116580614064"></a>Another error that the shield sometimes makes is denying that any drama exists in the outside world. If layoffs happen in another part of the company and the team finds out from someone else, rather than shielding your team from drama, you&#8217;ve created a situation where they feel like something bad is happening and no one wants to admit it. If you instead communicate information about such events<a id="GBS.0114.01"></a> in a straightforward, low-emotion way, you alleviate the gossip and quickly neutralize the impact on your team.</p>
+
+<p>You may be a shield, but you are not a parent. Sometimes, in combining the roles of shield and mentor we end up in a parenting-style relationship with our team, and treat them like fragile children to be protected, nurtured, and chided as appropriate. <em>You are not their parent.</em> Your<a id="GBS.0114.02"></a> team is made up of adults who need to be treated with appropriate respect. This respect is important for your sanity as well as for theirs. It&#8217;s too easy to take their mistakes personally when you view them as a child-like extension of yourself, or to get so emotionally invested that you take every disagreement they have with you personally.<a data-type="indexterm" data-primary="" data-startref="IEr71" id="idm140116580609136"></a><a data-type="indexterm" data-primary="" data-startref="IEr202" id="idm140116580620144"></a><a data-type="indexterm" data-primary="" data-startref="IEr223" id="idm140116580607600"></a></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="How to Drive Good Decisions"><div id="how_to_drive_good_decisions" class="sect1">
+<h1>How to Drive Good Decisions</h1>
+
+<p><a data-type="indexterm" data-primary="decision making" data-secondary="manager’s responsibilities for" id="IEr65"></a>What is<a id="GBS.0114.03"></a> your role in the decision-making process for your team? Do you know? You may have a product manager who works with your team and owns the product roadmap, or the set of business features that your team has committed to working on. You probably have a tech lead who, as we covered in <a data-type="xref" href="ch03.html#tech_lead">Chapter 3</a>, is still deep in the technology but is also thinking about project management and the work that needs<a id="GBS.0114.04"></a> to be done. So where does that leave you, the engineering manager?</p>
+
+<p>You have more responsibility than you may expect. While the product manager is responsible for the product roadmap, and the tech lead is responsible for the technical details, you are usually accountable for the team&#8217;s progress through each of these elements. The nature of leadership is that, while you may only have the authority<a id="GBS.0114.05"></a> to guide decisions rather than dictate them, you&#8217;ll still be judged by how well those decisions turn out.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Create a Data-Driven Team Culture"><div id="create_a_data-driven_team_culture" class="sect2">
+<h2>Create a Data-Driven Team Culture</h2>
+
+<p><a data-type="indexterm" data-primary="data-driven culture" data-secondary="establishing" id="idm140116580604768"></a><a data-type="indexterm" data-primary="decision making" data-secondary="factors influencing" id="idm140116580599136"></a><a data-type="indexterm" data-primary="team management" data-secondary="data-driven culture for" id="idm140116580636064"></a>When you have a product or business head, she should be accustomed to using data about the business, the customers, the current behavior, or the market potential to justify her decisions. Start adding other data to the mix. For example, give that<a id="GBS.0115.01"></a> person data about team productivity (such as the time it takes to complete features) or data about quality measures (like how much time is spent <span class="keep-together">dealing</span> with outages, or the number of bugs found in QA or after releases). These efficiency and technical data points can be used to evaluate decisions on both product features and technical changes.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Flex Your Own Product Muscles"><div id="flex_your_own_product_muscles" class="sect2">
+<h2>Flex Your Own Product Muscles</h2>
+
+<p><a data-type="indexterm" data-primary="customer empathy" id="idm140116580596144"></a>Strong<a id="GBS.0115.02"></a> leadership cares about cultivating success and having a team that delivers successful projects, which means honing your understanding of what is important to your customer. Whether you&#8217;re writing code for an external customer, developing tools for other engineers, or even running a support team, you have some group that depends on the output of your work. Treat them as your customers. Taking<a id="GBS.0115.03"></a> the time to develop customer empathy is important because you&#8217;ll need to give your engineers context for their work. Developing customer empathy will also help you figure out which areas of the technology have the greatest direct impact on your customers, and that understanding will guide where you invest engineering effort.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Look into the Future"><div id="look_into_the_future" class="sect2">
+<h2>Look into the Future</h2>
+
+<p><a data-type="indexterm" data-primary="product roadmap" data-secondary="decision making based on" id="idm140116580586448"></a><a data-type="indexterm" data-primary="roadmaps" data-secondary="product roadmap" id="idm140116580585600"></a><a data-type="indexterm" data-primary="strategies" data-secondary="product roadmap" id="idm140116580584688"></a>You need to think two steps ahead,<a id="GBS.0115.04"></a> from a product and technology perspective. Getting a sense of where the product roadmap is going helps you guide the technical roadmap. Many technical projects are supported on the strength of their ability to enable new features more easily&#8212;for example, rewriting the checkout system to plug in payment types like Apple Pay, or moving to a new JavaScript framework model that supports streaming<a id="GBS.0115.05"></a> data changes via WebSockets, in order to build a more interactive experience. Start asking the product team questions about what the future might look like, and spend some time keeping up with technological developments that might change the way you think about the software you&#8217;re writing or the way you&#8217;re operating it.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Review the Outcome of Your Decisions and Projects"><div id="review_the_outcome_of_your_decisions_and" class="sect2">
+<h2>Review the Outcome of Your Decisions and Projects</h2>
+
+<p><a data-type="indexterm" data-primary="decision making" data-secondary="tracking results of" id="idm140116580601424"></a>Talk about<a id="GBS.0116.01"></a> whether the hypotheses you used to motivate projects actually turned out to be true. Was it true that the team moved faster after you rewrote that system? Did customer behavior change in the way the product team predicted when you added the new feature? What have you learned from your A/B tests? It&#8217;s easy to forget to review assumptions after the project is done, but if you make this a habit<a id="GBS.0116.02"></a> for yourself and your team, you&#8217;ll always learn from your decisions.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Run Retrospectives for the Processes and Day-to-Day"><div id="run_retrospectives_for_the_processes_and" class="sect2">
+<h2>Run Retrospectives for the Processes and Day-to-Day</h2>
+
+<p><a data-type="indexterm" data-primary="" data-startref="IEr65" id="idm140116580578368"></a><a data-type="indexterm" data-primary="Agile software development" data-secondary="retrospective meetings" id="idm140116580582688"></a><a data-type="indexterm" data-primary="coding" data-secondary="retrospectives for" id="idm140116580581808"></a><a data-type="indexterm" data-primary="meetings" data-secondary="retrospectives for" id="idm140116580580864"></a><a data-type="indexterm" data-primary="processes" data-secondary="retrospectives for" id="idm140116580590080"></a><a data-type="indexterm" data-primary="retrospective meetings" id="idm140116580589136"></a>Agile processes usually have a retrospective meeting at the end of each two-week development sprint, where you discuss what happened during the sprint and pick a few events&#8212;good, bad, or neutral&#8212;to discuss in detail. Whether you work in an agile methodology<a id="GBS.0116.03"></a> or some other fashion, the regular process retrospective has a lot of value for detecting patterns and forcing a reckoning with the outcome of decisions. Is the team feeling good about how they get requirements? Do they feel good about the code quality? This process helps you learn how the decisions you make over time affect the way your team operates in the day-to-day. This approach is more subjective<a id="GBS.0116.04"></a> than gathering data about the team&#8217;s health, but it&#8217;s arguably even more valuable than many objective measures, because it comes from the things the team itself is noticing and struggling with or celebrating.</p>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Good Manager, Bad Manager: Conflict Avoider, Conflict Tamer"><div id="conflict_avoider_comma_conflict_tamer" class="sect1">
+<h1>Good Manager, Bad Manager: Conflict Avoider, Conflict Tamer</h1>
+
+<p><a data-type="indexterm" data-primary="challenging situations" data-secondary="conflict management" id="IEr19"></a><a data-type="indexterm" data-primary="conflict management" id="IEr45"></a><a data-type="indexterm" data-primary="team management" data-secondary="conflict management" id="IEr218"></a><a data-type="indexterm" data-primary="teams" data-secondary="conflicts, managing" id="IEr227"></a><a data-type="indexterm" data-primary="Good Manager, Bad Manager sections" data-secondary="Conflict Avoider, Conflict Tamer" id="idm140116580574528"></a>Jason&#8217;s team is overworked. Everyone knows that Charles should be working on the big system rewrite, but<a id="GBS.0116.05"></a> he&#8217;s been off on his own pet project for months. After hearing complaints that Charles isn&#8217;t helping with the new system, Jason calls the team together and asks them to vote on what projects should be dropped to get the workload down. It&#8217;s no surprise to anyone that they vote to drop Charles&#8217;s pet project&#8212;no surprise, that is, to anyone except Charles, who has never heard anything about this from<a id="GBS.0117.01"></a> Jason and who figured he was doing the right thing.</p>
+
+<p>Jason&#8217;s team is feeling the crunch partly because Jason doesn&#8217;t seem to stand up for them with other teams. He hates to say no to new projects, but he also doesn&#8217;t ask for more people to help manage the load. Jason is cool, everyone agrees, but it is so hard to get him to actually act on resolving conflicts or making difficult decisions. As<a id="GBS.0117.02"></a> a result, the team is overworked, struggles to prioritize a way forward, and is nursing several grudges among its members.</p>
+
+<p>Lydia&#8217;s team is also feeling crunched, and she has her own Charles to deal with. She promised Charles that he would get time to work on this project, but it&#8217;s clear that priorities have changed and so his work will need to change with them. In her 1-1 with Charles, Lydia<a id="GBS.0117.03"></a> explains the current workload, and tells Charles that his team needs him to help with the system rewrite. Charles is unhappy, and Lydia doesn&#8217;t enjoy this conversation, but she knows that as the manager of the team, she&#8217;s responsible for making sure they&#8217;re focused on the most important projects.</p>
+
+<p>Lydia knows that this project is important for the team to own, so while she pushes for more people,<a id="GBS.0117.04"></a> she makes sure that the team knows why she decided to take on this big project. She works with the team to prioritize the work, and guides them through their disagreements on what technology to use by following a structure for presenting options and soliciting feedback. Lydia&#8217;s team describes her as tough but fair, and though disagreements happen, the team is good at getting through challenges<a id="GBS.0117.05"></a> and collaborates well.</p>
+
+<p>When put in such stark terms, it seems pretty clear that Jason is not handling conflict well, while Lydia is taming it. While it seems like Jason&#8217;s democratic style should lead to an empowered team, his inability to say no or to take the responsibility for any decisions means that no one feels very secure. It&#8217;s hard to know what&#8217;s going to happen next on Jason&#8217;s team because<a id="GBS.0118.01"></a> instead of guiding the team, he&#8217;s having the team guide itself.</p>
+
+<p>Having a team that is constantly bickering and disagreeing is painful, and can be very dysfunctional. But there is such a thing as artificial harmony, and conflict-avoidant managers tend to favor harmony above functional working relationships. Creating a safe environment for disagreement to work itself out is far better than pretending<a id="GBS.0118.02"></a> that all disagreement does not exist.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="The Dos and Don’ts of Managing Conflict"><div id="idm140116580566976" class="sect2">
+<h2>The Dos and Don’ts of Managing Conflict</h2>
+
+<ul>
+<li>
+<p><strong>Don’t rely exclusively on consensus or voting.</strong> Consensus can appear morally authoritative, but that assumes that everyone involved in the voting process is impartial, has an equal stake in the various outcomes, and has equal knowledge of the context. These conditions are rarely met on teams where each person<a id="GBS.0118.03"></a> has different levels of expertise and different roles. As when the team voted down Charles&#8217;s work, consensus can be downright cruel. Don&#8217;t set people up for votes that you know will fail instead of taking the responsibility as a manager of delivering that bad news yourself.</p>
+</li>
+<li>
+<p><strong>Do <a data-type="indexterm" data-primary="processes" data-secondary="for decision making" data-secondary-sortas="decision making" id="idm140116580564016"></a>set up clear processes to depersonalize decisions.</strong> When you want to allow for group decision making, the group needs<a id="GBS.0118.04"></a> to have a clear set of standards that they use to evaluate decisions. Start with a shared understanding of the goals, risks, and the questions to answer before making a decision. When you assign the ownership for making a decision to someone on the team, make it clear which members of the team should be consulted for feedback and who needs to be informed of the decision or plan.</p>
+</li>
+<li>
+<p><strong>Don&#8217;t turn<a id="GBS.0118.05"></a> a blind eye to simmering issues.</strong> Another way that conflict avoidance manifests is an inability to address problems until they&#8217;ve gone on for way too long. As a manager, if you&#8217;re giving negative feedback in the course of a performance review, it shouldn&#8217;t be a major surprise to your employee. There may be nuances that you didn&#8217;t think through until writing the review, but if there are major problems<a id="GBS.0119.01"></a> with someone&#8217;s work, that person should know about them as soon as you notice them. If you don&#8217;t notice these problems yourself but learn about them during the review process via feedback from several peers, that&#8217;s not a good sign. It&#8217;s probably an indication that you are not paying attention, and not making space in your 1-1s for your team to discuss problems they&#8217;re having with their colleagues.</p><a id="GBS.0119.02"></a>
+</li>
+<li>
+<p><strong>Do address issues without courting drama.</strong> There&#8217;s a difference between addressing conflict and cultivating dysfunction. You want to allow space for people to express frustration, but mind the difference between letting off steam and a real interpersonal issue. Use your judgment as to what should be addressed and what should be dropped. The key questions to ask are: Is this an ongoing problem?<a id="GBS.0119.03"></a> Is it something you&#8217;ve personally noticed? Is this something many people on the team are struggling with? Is there a power dynamic or potential bias at play? The goal is to identify problems that are causing the team to work less effectively together and resolve them, not to become the team&#8217;s therapist.</p>
+</li>
+<li>
+<p><strong>Don’t take it out on other teams.</strong> Ironically, conflict-avoidant managers often seek conflict<a id="GBS.0119.04"></a> when it comes to other teams. They identify strongly with their own team and will aggressively react to what they perceive as threats from outsiders. When something goes wrong, like an incident that spans across teams, the manager turns into a bully and demands justice for his team, or blames the problems on the other team. Sometimes, this behavior is an outlet for the manager&#8217;s suppressed feelings<a id="GBS.0119.05"></a> about his own team. As one friend put it, &#8220;I was not telling my people the 10% of things they needed to be improving because I was afraid they would miss the message about the 90% of things that were good, and so I took that desire for accountability out on other teams. I really just wanted everyone to be fully accountable, and I needed to figure out how to express that internally and externally<a id="GBS.0120.01"></a> in a healthy manner.&#8221;</p>
+</li>
+<li>
+<p><strong>Do <a data-type="indexterm" data-primary="promotions" data-secondary="manager’s role in" id="idm140116580569488"></a>remember to be kind. It’s natural and perfectly human to want to be liked by other people.</strong> Many of us believe that the way to be liked is to be seen as nice—that niceness is itself the goal. Your goal as a manager, however, should not be to be <em>nice</em>, it should be to be <em>kind</em>. &#8220;Nice&#8221; is the language of polite society, where you&#8217;re trying to get along with strangers or<a id="GBS.0120.02"></a> acquaintances. Nice is saying &#8220;please&#8221; and &#8220;thank you&#8221; and holding doors for people struggling with bags or strollers. Nice is saying &#8220;I&#8217;m fine&#8221; when asked how you are, instead of &#8220;I&#8217;m in a really crappy mood and I wish you would leave me alone.&#8221; Nice is a good thing in casual conversation. But as a manager, you will have relationships that go deeper, and it&#8217;s more important to be kind. It&#8217;s kind<a id="GBS.0120.03"></a> to tell someone who isn&#8217;t ready for promotion that she isn&#8217;t ready, and back that up with the work she needs to do to get there. It&#8217;s unkind to lead that person on, saying &#8220;Maybe you could get promoted,&#8221; and then watch her fail. It&#8217;s kind to tell someone that his behavior in meetings is disrupting the group. It&#8217;s awkward, and uncomfortable, but it&#8217;s also part of your job as his manager to have these<a id="GBS.0120.04"></a> difficult conversations.</p>
+</li>
+<li>
+<p><strong>Don’t be afraid.</strong> Conflict avoidance often arises from fear. We&#8217;re scared of the responsibility of making the decision. We&#8217;re afraid of seeming too demanding. We&#8217;re afraid people will quit if we give them uncomfortable feedback. We&#8217;re afraid people won&#8217;t like us, or that we&#8217;ll fail when we take this risk. Some fear is natural, and being sensitive to the outcomes of conflict<a id="GBS.0120.05"></a> is a wise habit.</p>
+</li>
+<li>
+<p><strong>Do <a data-type="indexterm" data-primary="curiosity" data-secondary="with conflict management" data-secondary-sortas="conflict management" id="idm140116580546832"></a>get curious.</strong> Thinking about your actions is the best way to combat fear of conflict. Am I pushing this decision to the team because they really are the best people to decide, or am I just afraid that if I make an unpopular but necessary decision people will be mad at me? Am I avoiding working through this issue with my peer because she&#8217;s truly difficult to work with, or<a id="GBS.0121.01"></a> am I just hoping that the issue will resolve itself because I don&#8217;t want to have to discuss it and possibly be wrong? Am I holding back on giving my employee this feedback because he really was having a bad day and it&#8217;s just a one-off, or am I holding back because I&#8217;m afraid he won&#8217;t like me as a manager if I tell him? Be thoughtful about your behavior, and it&#8217;s unlikely that you&#8217;ll seek out unnecessary<a id="GBS.0121.02"></a> conflict.<a data-type="indexterm" data-primary="" data-startref="IEr19" id="idm140116580538592"></a><a data-type="indexterm" data-primary="" data-startref="IEr45" id="idm140116580537712"></a><a data-type="indexterm" data-primary="" data-startref="IEr218" id="idm140116580557040"></a><a data-type="indexterm" data-primary="" data-startref="IEr227" id="idm140116580556096"></a></p>
+</li>
+</ul>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Challenging Situations: Team Cohesion Destroyers"><div id="challenging_situations_colon_team_cohesi" class="sect1">
+<h1>Challenging Situations: Team Cohesion Destroyers</h1>
+
+<p><a data-type="indexterm" data-primary="challenging situations" data-secondary="dysfunctional teams" id="IEr21"></a><a data-type="indexterm" data-primary="challenging situations" data-secondary="team cohesion destroyers" id="IEr21a"></a><a data-type="indexterm" data-primary="peers" data-secondary="cohesion of team members" id="IEr140"></a><a data-type="indexterm" data-primary="team management" data-secondary="dysfunctional teams, fixing" id="IEr221"></a><a data-type="indexterm" data-primary="teams" data-secondary="cohesion of" id="IEr225"></a><a data-type="indexterm" data-primary="teams" data-secondary="dysfunctional, fixing" id="IEr229"></a>One of the critical elements of creating functional teams is building teams that work well and happily together. I was once given a test of a happy engineering team: “If you buy them pizza in the evening, will they stick around and socialize together, or will they race out the door as quickly as possible?”</p>
+
+<p><a id="GBS.0121.03"></a>I have some quibbles with that. Employees with obligations that take them out of the office at a strict time every day are no more or less engaged than those who are willing to stand around and chat. The larger point, however, is still a good one. Most gelled teams have a sense of camaraderie that makes them joke together, get coffee, share lunch, and feel friendly toward one another. They may have<a id="GBS.0121.04"></a> obligations they respect, and passions outside of work, but they don&#8217;t view their team as something they&#8217;re eager to escape every day.</p>
+
+<p>The real goal here is psychological safety&#8212;that is, a team whose members are willing to take risks and make mistakes in front of one another. This is the underpinning of a successful team. The work of gelling a team begins by creating the friendliness that leads<a id="GBS.0121.05"></a> to psychological safety. You can encourage this by taking the time to get to know people as human beings and asking them about their extracurricular lives and interests. Let them share what they feel comfortable sharing. Ask how their child&#8217;s birthday party went, how their ski trip was, how their marathon training is going. This is more than empty small talk; it fosters relatedness, the sense<a id="GBS.0122.01"></a> of people as individuals and not just anonymous cogs.</p>
+
+<p><a data-type="indexterm" data-primary="culture" data-secondary="team members fitting, importance of" id="idm140116580522864"></a>Beyond you personally cultivating relatedness, you want your teams to have their own relatedness among themselves. When companies talk about hiring for &#8220;culture fit,&#8221; they often mean they want to hire people they can be friendly with. While this can have some unwanted consequences, such as discrimination, it comes from a wise place. Teams<a id="GBS.0122.02"></a> that are friendly are happier, gel faster, and tend to produce better results. I mean, do you really want to go to work every day with a bunch of people you hate?</p>
+
+<p>This is why those who undermine team cohesion are so problematic. They almost always behave in a way that makes it hard for the rest of the team to feel safe around them. We refer to these employees as &#8220;toxic&#8221; because they tend to<a id="GBS.0122.03"></a> make everyone who comes into contact with them less effective. Dealing with them quickly is an important part of managing well.<a data-type="indexterm" data-primary="" data-startref="IEr140" id="idm140116580521728"></a><a data-type="indexterm" data-primary="" data-startref="IEr225" id="idm140116580520944"></a></p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="The Brilliant Jerk"><div id="the_brilliant_jerk" class="sect2">
+<h2>The Brilliant Jerk</h2>
+
+<p><a data-type="indexterm" data-primary="brilliant jerks" id="IEr8"></a><a data-type="indexterm" data-primary="challenging situations" data-secondary="brilliant jerks" id="IEr18"></a><a data-type="indexterm" data-primary="engineers" data-secondary="brilliant jerks" id="IEr75"></a>One variant of the toxic employee is the brilliant jerk, who, as we discussed earlier, produces individually outsized results, but is so ego-driven that she creates a mixture of fear and dislike in almost everyone around her. The challenge<a id="GBS.0122.04"></a> of the brilliant jerk is that she&#8217;s probably been rewarded for a very long time for her brilliance, and she clings to it like a life raft. Acknowledging that there is value in the world beyond sheer intelligence or productivity would challenge her place in the world and tends to be a scary proposition for her. So she bullies with her intellect, cutting down dissenting voices in a harsh way, ignoring<a id="GBS.0122.05"></a> those she believes are not her equal, and letting her frustration with anything she sees as stupid seep out openly.</p>
+
+<p>These days, most places claim that they don&#8217;t tolerate brilliant jerks, but I personally don&#8217;t believe that is true. It&#8217;s incredibly hard for a manager to justify getting rid of someone who produces great work, even though she&#8217;s a drain on everyone around her&#8212;especially if this<a id="GBS.0123.01"></a> person is only irregularly a jerk. How much jerk is too much? You start to run rings around the idea to try to justify keeping her on. You give her feedback, and she gets a little bit better for a while, but then she gets worse.</p>
+
+<p>The best way to avoid brilliant jerk syndrome is to simply not hire one. Once they&#8217;re hired, getting rid of brilliant jerks takes a level of management confidence that<a id="GBS.0123.02"></a> I think is uncommon. Fortunately, these folks will often get rid of themselves, because even though you may not have the guts to fire them, it&#8217;s unlikely that you&#8217;ll be stupid enough to promote them. Right? Let&#8217;s hope so.</p>
+
+<p>It takes a strong manager to deal with a brilliant jerk onboard. Expect her to fight you tooth and nail on all feedback. This isn&#8217;t going to be easy on either of you. The difficulty<a id="GBS.0123.03"></a> is, if she doesn&#8217;t see her behavior as a problem, she won&#8217;t change it. It&#8217;s unlikely that you alone will be able to convince her that her behavior is a problem. All the evidence in the world can&#8217;t change a person who doesn&#8217;t want to change.</p>
+
+<p>The best thing you can do for your team, in the context of having a brilliant jerk, is to simply and openly refuse to tolerate bad behavior. This may be<a id="GBS.0123.04"></a> one of the few instances where &#8220;praise in public, criticize in private&#8221; is upended. When a person is behaving badly in a way that is having a visible impact on the team, and a way you don&#8217;t want your culture to mimic, you need to say something in the moment to make the standard clear. &#8220;Please do not speak to people that way; it is disrespectful.&#8221; You&#8217;ll want to have tight control of your own reaction<a id="GBS.0123.05"></a> because delivering this in public is walking a fine line. If you seem emotional, it may undermine you. The offender may write off your feedback as just emotion, or you may come off as picking on the person. Keep the feedback neutral but to the point if you are going to deliver it in the moment, in public. Note that this approach should only be used for behavior you feel is detrimental to the whole<a id="GBS.0124.01"></a> group. If you just think the person is undermining you personally, discuss it in private. Your first goal is to protect your team as a whole, the second is to protect each individual on the team, and your last priority is protecting yourself.<a data-type="indexterm" data-primary="" data-startref="IEr8" id="idm140116580511600"></a><a data-type="indexterm" data-primary="" data-startref="IEr18" id="idm140116580515440"></a><a data-type="indexterm" data-primary="" data-startref="IEr75" id="idm140116580513920"></a></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="The Noncommunicator"><div id="the_noncommunicator" class="sect2">
+<h2>The Noncommunicator</h2>
+
+<p><a data-type="indexterm" data-primary="challenging situations" data-secondary="noncommunicators" id="idm140116580526064"></a><a data-type="indexterm" data-primary="communication skills" data-secondary="noncommunicators, managing" id="idm140116580525216"></a><a data-type="indexterm" data-primary="engineers" data-secondary="noncommunicators as" id="idm140116580524368"></a><a data-type="indexterm" data-primary="noncommunicators" id="idm140116580509744"></a>Another very common problem team member is the noncommunicator&#8212;the person who hides information from you, from his<a id="GBS.0124.02"></a> teammates, from his product manager. The person who prefers to work in secret and unveil a magical project when everything is done and perfect. The person who, instead of talking things out with teammates, reverts their commits, or takes their tickets and does the work for them. The person who doesn&#8217;t want to go through code review and who doesn&#8217;t ask for design review on big projects.</p>
+
+<p><a data-type="indexterm" data-primary="collaboration" data-secondary="problems with" id="idm140116580499872"></a>This<a id="GBS.0124.03"></a> team member annoys everyone around him. As the noncommunicator&#8217;s manager, you have to nip this information-hiding habit in the bud as soon as possible. If necessary, make it clear that he&#8217;s not meeting expectations for his work. This is often a sign of fear&#8212;the person is afraid that he&#8217;ll be found lacking, or he&#8217;ll be asked to do work he&#8217;s not interested in. Sometimes it&#8217;s a sign of a person who feels<a id="GBS.0124.04"></a> he should have more responsibility and who doesn&#8217;t respect his manager. Whatever the cause, this person disrupts team cohesion because he isn&#8217;t being collaborative with the rest of his teammates; he doesn&#8217;t feel safe sharing his work in progress, and his fear often sets an example for the rest of the team.</p>
+
+<p>If possible, address the root cause of the hiding. If the hider is afraid of being criticized,<a id="GBS.0124.05"></a> does your team have a harsh culture that needs to be addressed? Does your team have that psychological safety in general? Is the rest of the team treating this person like an outsider, perhaps because he has a different background or skill set? If the team is rejecting the individual, you will need to decide whether to try to correct the team or move the individual to another team. Sometimes,<a id="GBS.0125.01"></a> moving the individual is the kindest thing to do; other times, the best solution is to work with the team as a whole to change the balance of culture and break the habits that exclude new people.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="The Employee Who Lacks Respect"><div id="the_employee_who_lacks_respect" class="sect2">
+<h2>The Employee Who Lacks Respect</h2>
+
+<p><a data-type="indexterm" data-primary="challenging situations" data-secondary="disrespectful team members" id="idm140116580497360"></a><a data-type="indexterm" data-primary="disrespectful team members" id="idm140116580508832"></a><a data-type="indexterm" data-primary="engineers" data-secondary="disrespectful" id="idm140116580508224"></a>The third type of toxic individual is the person who simply doesn&#8217;t respect you as a manager, or who doesn&#8217;t respect her teammates. Addressing this person<a id="GBS.0125.02"></a> will be difficult and you may require some help from your manager, but if you can handle this yourself, it&#8217;s a sign of great character. Simply put, if your team member doesn&#8217;t respect you or her peers, why is she working there? Ask her if she wants to be working on your team. If she says she does, lay out what you expect, clearly and calmly. If she says she doesn&#8217;t, start the process to move her<a id="GBS.0125.03"></a> to another team, or help her leave the company.</p>
+
+<p>That’s it? That’s it. You can’t have a person working for you who doesn’t respect you, or doesn’t respect your team. It will eat away at the cohesion of the rest of the team as they wonder whether that person is right in not respecting you. The sooner you pull off the Band-aid, the better.<a data-type="indexterm" data-primary="" data-startref="IEr21" id="idm140116580506816"></a><a data-type="indexterm" data-primary="" data-startref="IEr21a" id="idm140116580505104"></a><a data-type="indexterm" data-primary="" data-startref="IEr221" id="idm140116580489280"></a><a data-type="indexterm" data-primary="" data-startref="IEr229" id="idm140116580488336"></a></p>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Advanced Project Management"><div id="advanced_project_management" class="sect1">
+<h1>Advanced Project Management</h1>
+
+<p><a data-type="indexterm" data-primary="project management" id="IEr177"></a>As<a id="GBS.0125.04"></a> an engineering manager, you will help set the schedule for your team. As the larger organization tries to figure out what the plans for the quarter or year might look like, you&#8217;ll estimate whether your team can do certain projects, how much work those projects will be, and whether you have the right people to complete the work. You might be asked if your team can take on the support of old systems<a id="GBS.0125.05"></a> in addition to their current commitments, or how many people you&#8217;d need to hire in order to support a new initiative. The organization will expect you to be capable of doing both off-the-cuff estimation and more concrete project planning.</p>
+
+<p>We gave a high-level overview of project management in <a data-type="xref" href="ch03.html#tech_lead">Chapter 3</a>&#8217;s discussion of being a tech lead, but now I want to dig into some of the advanced work. As<a id="GBS.0126.01"></a> the manager of a team, while you may push some of the project planning onto your tech leads, you&#8217;ll likely need to do some of that work yourself. You may have to decide which projects to take on, and when to push back on accepting projects. You&#8217;ll probably be asked for rough estimates as to when work will be done, even work that is planned and iterated on in an agile fashion.</p>
+
+<p>You need to have<a id="GBS.0126.02"></a> a strong sense of the rhythms and pace of your team to manage their workload successfully, but fortunately there are some shortcuts that can help.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Project Management Rules of Thumb"><div id="project_management_rules_of_thumb" class="sect2">
+<h2>Project Management Rules of Thumb</h2>
+
+<p>Here are some rules of thumb to keep in mind.</p>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="None of this is a replacement for agile project management"><div id="none_of_this_is_a_replacement_for_agile" class="sect3">
+<h3>None of this is a replacement for agile project management</h3>
+
+<p><a data-type="indexterm" data-primary="Agile software development" data-secondary="project management with" id="idm140116580492864"></a>Before I begin, I want to make clear that I&#8217;m not suggesting that you go into waterfall<a id="GBS.0126.03"></a> mode and plan every project in detail from the get-go. However, most teams have both high-level, long-term goals, and short-term objectives that will enable them to meet those goals. When it comes to actually planning the details of the smaller pieces, an agile process where the team collaborates to divide and roughly estimate work is very effective at smoothing and organizing the day-to-day. As<a id="GBS.0126.04"></a> the manager, you&#8217;re not trying to disrupt or even own that part of the execution process. However, you are responsible for the larger picture&#8212;the accomplishments that are measured in months instead of weeks&#8212;and this is where you have to start exerting some higher-level planning.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="You have 10 productive engineering weeks per engineer per quarter"><div id="you_have_10_productive_engineering_weeks" class="sect3">
+<h3>You have 10 productive engineering weeks per engineer per quarter</h3>
+
+<p><a data-type="indexterm" data-primary="coding" data-secondary="estimating time for" id="idm140116580484496"></a><a data-type="indexterm" data-primary="scheduling" data-secondary="projects" id="IEr184"></a>There are 52 weeks in a year, or<a id="GBS.0126.05"></a> about 13 per quarter. However, realistically your team will lose a lot of that time. Vacations, meetings, review season, production outages, onboarding new employees&#8212;all of these things take away from focus. Don&#8217;t expect to get more than 10 weeks&#8217; worth of focused effort on the main projects per team member per quarter. It&#8217;s likely that Q1 (immediately after the winter holidays) will be the most<a id="GBS.0127.01"></a> productive and Q4 (the quarter that includes winter and the end-of-year holidays) will be the least productive.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Budget 20% of time for generic sustaining engineering work across the board"><div id="budget_20_percent_of_time_for_generic_su" class="sect3">
+<h3>Budget 20% of time for generic sustaining engineering work across <span class="keep-together">the board</span></h3>
+
+<p><a data-type="indexterm" data-primary="coding" data-secondary="sustaining engineering work" id="idm140116580470992"></a>By &#8220;generic sustaining engineering work,&#8221; I mean testing, debugging, cleaning up legacy code, migrating language or platform versions, and doing other work that has to happen. If you make this<a id="GBS.0127.02"></a> a habit, you can use it to tackle some of the midsize legacy code every quarter and get decent improvements. Cleaning up systems as you go keeps those systems easy to work in, which keeps your teams moving forward on new features. In the worst case, you can use this slack to smooth over unexpected delays in feature development, but if you fill the schedule to 100% with feature development, expect<a id="GBS.0127.03"></a> that the feature development will quickly slow down as a result of this overscheduling.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="As you approach deadlines, it is your job to say no"><div id="as_you_approach_deadlines_comma_it_is" class="sect3">
+<h3>As you approach deadlines, it is your job to say no</h3>
+
+<p><a data-type="indexterm" data-primary="project delivery" data-secondary="cutting scope before" id="idm140116580462720"></a>You will almost certainly have occasional deadlines, either goal dates that you&#8217;ve set or goal dates that came down from on high. The only way to achieve these goals is to cut scope at the end of the project. That means that you, as the engineering<a id="GBS.0127.04"></a> team lead, will partner with your tech lead and the product lead/business representative to figure out what &#8220;must-haves&#8221; are not actually must-haves. You will have to say no to both sides. There will be times when the engineering team will say that they can&#8217;t possibly implement a feature without doing some other technical work, and you will need to figure out when to push for a hack implementation<a id="GBS.0127.05"></a> and when to hold back for the right implementation. There will be product features that require significant engineering complexity to implement, and you&#8217;ll need to work with the product team to figure out the real must-haves while explaining the cost to get to their vision. When push comes to shove, you&#8217;ll be the person to give the team options as to what can realistically be implemented,<a id="GBS.0128.01"></a> or how much more time getting everything in will require.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Use the doubling rule for quick estimates, but push for planning time to estimate longer tasks"><div id="use_the_doubling_rule_for_quick_estimate" class="sect3">
+<h3>Use the doubling rule for quick estimates, but push for planning time to estimate longer tasks</h3>
+
+<p>The popular doubling rule of software estimation is, &#8220;Whenever asked for an estimate, take your guess and double it.&#8221; This rule is appropriate and good to use when you&#8217;re asked for an off-the-cuff guess. However, when you&#8217;re<a id="GBS.0128.02"></a> talking about projects that you think will take longer than a couple of weeks, go ahead and double the estimate, but make it clear that you&#8217;ll need some planning time before you&#8217;re sure about the timescale. Sometimes the longer tasks will take far more than twice your estimate, and it&#8217;s worth spending some time planning more carefully before you commit your team to a big, unknown project.</p>
+</div></section>
+<a id="GBS.0128.03"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Be selective about what you bring to the team to estimate"><div id="be_selective_about_what_you_bring_to_the" class="sect3">
+<h3>Be selective about what you bring to the team to estimate</h3>
+
+<p>Part of the reason that I stress your role in this estimation and planning process is that it&#8217;s distracting and stressful for engineers to have a manager who&#8217;s constantly asking them for random project estimates. As the manager, you&#8217;re responsible for handling uncertainty and limiting how much of that uncertainty you expose<a id="GBS.0128.04"></a> to your team. Don&#8217;t be a telephone between the engineers and the rest of the company, parroting messages back and forth and distracting people who are busy with the important tasks you&#8217;ve already committed to do. But you&#8217;re not a black hole, either. Try to get a teamwide process in place for talking about new features and customer complaints, and limit estimations that occur outside of this process.<a data-type="indexterm" data-primary="" data-startref="IEr177" id="idm140116580477024"></a><a data-type="indexterm" data-primary="" data-startref="IEr184" id="idm140116580476192"></a></p><a id="GBS.0128.05"></a>
+<aside data-type="sidebar" epub:type="sidebar"><div id="joining_a_small_team" class="sidebar">
+<h5>Ask the CTO: Joining a Small Team</h5>
+<p><em>I’m a newly hired manager for a team of five engineers. I have been a manager before at other companies, but I’m brand new to the company, the technology, and the team. How should I think about my time in these first few weeks?</em></p>
+
+<p><a data-type="indexterm" data-primary="team management" data-secondary="new, getting up to speed" id="idm140116580474960"></a><a data-type="indexterm" data-primary="Ask the CTO sections" data-secondary="Joining a Small Team" id="idm140116580458480"></a>Joining a small team as a manager is tough. It&#8217;s one thing to balance technical work when you&#8217;ve been promoted to manager from software<a id="GBS.0129.01"></a> engineer, but it&#8217;s another thing to come in new with a team to manage and new code to learn.</p>
+
+<p>There are a few ways to get into the software without annoying the team. First, get someone to walk you through the systems and architecture, as well as the process for testing and releasing the software. If there is a normal developer onboarding process where you learn how to check out code and deploy<a id="GBS.0129.02"></a> the systems, go through that process. Spend some time getting comfortable in the code bases, and start watching the code reviews or pull requests, if they exist.</p>
+
+<p>Plan to work on at least a couple of features in your first 60 days. Take a specced-out feature and add it. Pair with one of the engineers on a feature he&#8217;s working on, and have him pair with you as you start working on a feature of<a id="GBS.0129.03"></a> your own. Get your code reviewed by a member of the team. Perform a release, and do a rotation of supporting the systems for at least a couple of days if support is part of the team&#8217;s responsibilities.</p>
+
+<p>You can probably tell that this means your management onboarding may go more slowly because you&#8217;re also learning how to work in the systems. This slowdown is worth it. By getting to know the code,<a id="GBS.0129.04"></a> the processes for writing code, and the tools and systems your team use for their day-to-day, you will gain the understanding necessary for managing the team, and the technical credibility necessary for them to see you as a capable leader.</p>
+</div></aside>
+</div></section>
+
+
+
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Assessing Your Own Experience"><div id="assessing_your_own_experience-id4" class="sect1">
+<h1>Assessing Your Own Experience</h1>
+
+<ul>
+<li>
+<p>What <a data-type="indexterm" data-primary="assessments" data-secondary="for team management" id="IEr6"></a><a data-type="indexterm" data-primary="team management" data-secondary="assessing your abilities at" id="IEr216"></a>are your new responsibilities now that you&#8217;re the manager of a team? What tasks have you<a id="GBS.0129.05"></a> stopped doing or handed off to someone else in order to make time for these new responsibilities?</p>
+</li>
+<li>
+<p>How well do you feel you know the day-to-day challenges of writing, deploying, and supporting code on your team?</p>
+</li>
+<li>
+<p>How often does your team mark work as completed?</p>
+</li>
+<li>
+<p>When was the last time you wrote a feature, debugged a problem, or paired with a member of your team on some code he or she was<a id="GBS.0130.01"></a> struggling with?</p>
+</li>
+<li>
+<p>Are there one or two team members who cause the bulk of negativity on the team? What is your plan for getting rid of the problem moving <span class="keep-together">forward?</span></p>
+</li>
+<li>
+<p>Do your team members seem engaged with one another? Do they smile in meetings? Make jokes in chat? Get coffee or lunch together? When was the last time you all sat down together without talking about work?</p>
+</li>
+<li>
+<p>How does your team<a id="GBS.0130.02"></a> make decisions? Do you have a process for assigning decision-making responsibility? What decisions do you hold yourself responsible for making?</p>
+</li>
+<li>
+<p>When was the last time you reviewed a completed project to see if it had achieved its goals?</p>
+</li>
+<li>
+<p>How well does your team understand why they are working on the projects they are working on?</p>
+</li>
+<li>
+<p>When was the last time you cut scope on a project? What did<a id="GBS.0130.03"></a> you use to determine which pieces to cut?<a data-type="indexterm" data-primary="" data-startref="IEr6" id="idm140116580437536"></a><a data-type="indexterm" data-primary="" data-startref="IEr216" id="idm140116580437024"></a></p>
+</li>
+</ul>
+</div></section>
+
+
+
+
+
+
+
+</div></section><div style="display:none;"><a id="GBS.0130.04"></a></div></body></html>

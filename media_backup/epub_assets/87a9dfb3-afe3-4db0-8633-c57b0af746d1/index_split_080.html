@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos300305" class="calibre_2"><span class="calibre2"><span class="bold">Solution</span></span></p><p class="calibre_1">Delegate events with unrecoverable errors to another component for handling so that they do not block legitimate events from processing. <a></a>Publish these errors as fault events, along with the affected events and the stream processor information, so that the events can be resubmitted when appropriate. <a></a>Monitor and alert on these fault events so that the team can react in a timely manner. <a></a>Provide the necessary utilities to resubmit the affected events from the data lake to the component that emitted the fault event.</p><p class="calibre_1">Implement the stream processor logic so that it is tolerant of events that are received out of order and idempotent when it receives and processes events more than once. <a></a>Optionally, leverage a traditional synchronous circuit breaker on resource calls so that faults can be produced immediately when a failure threshold is reached, and periodically test to see if the resource has healed. Leverage a functional reactive stream programming paradigm for implementing stream processors. <a></a>It is a very natural fit for stream processing and its pull-based model provides for backpressure that helps control the speed of the processing flow so that resources do not get overwhelmed with too many calls.</p><div class="mbp_pagebreak" id="calibre_pb_81"></div>
+</body></html>

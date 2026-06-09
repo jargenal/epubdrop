@@ -1,0 +1,322 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Enterprise Architect or Architect in the Enterprise?</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 4. Enterprise Architect or Architect in the Enterprise?" data-type="chapter" epub:type="chapter"><div class="chapter" id="EnterpriseArchitect">
+<h1><span class="label">Chapter 4. </span>Enterprise Architect or Architect in the Enterprise?</h1>
+
+
+<p class="subtitle">The Upper and Lower Floors of the Ivory Tower</p>
+
+<figure class="informal"><div class="figure" id="Arch_Ivorytower">
+<img alt="Architecture from the ivory tower" src="assets/SAEch_004.png"/>
+<h6>Architecture from the ivory tower</h6>
+</div></figure>
+
+<p>When<a data-primary="enterprise architects" data-secondary="role of" data-type="indexterm" id="idm45952856440248"/> I was hired as an enterprise architect, the <em>head of enterprise architecture</em> to be more precise, I had little idea what <em>enterprise architecture</em> really entailed. I also wondered whether my team should be
+called the “Feet of Enterprise Architecture,” but that contemplation didn’t
+find much love. The driver behind the tendency to prefix titles with
+“head of” was aptly described in an online forum I stumbled upon:<sup><a data-type="noteref" href="ch04.html#idm45952856437896" id="idm45952856437896-marker">1</a></sup></p>
+<blockquote>
+<p>This title typically implies that the candidate wanted a director/VP/executive title but the organization refused to extend the title. By using this obfuscation, the candidate appears senior to  external parties but without offending internal constituencies.</p>
+</blockquote>
+
+<p>I am not particularly fond of the “head of xyz” title because it
+focuses on the person heading (no pun intended) a team rather than
+accomplishing a specific function. I’d rather name the person by what they
+need to achieve, assuming that they don’t do this alone but have a team
+supporting them.</p>
+
+<p>All title prefixes aside, when IT folks meet an <em>enterprise architect</em>,
+their initial reaction is to place this person high up <em>into the penthouse</em> (<a data-type="xref" href="ch01.html#ArchitectElevator">Chapter 1</a>), where they draw
+pretty pictures that bear little resemblance to reality. To receive a
+warmer welcome from IT staff, one should therefore be careful with the
+label <em>enterprise architect</em>. However, what is an architect who works at
+enterprise scale supposed to be called, then?</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Enterprise Architecture" data-type="sect1"><div class="sect1" id="idm45952856431192">
+<h1>Enterprise Architecture</h1>
+
+<p>The<a data-primary="enterprise architecture (EA)" data-secondary="defined" data-type="indexterm" id="idm45952856429896"/> recurring challenge with the title <em>enterprise architect</em> tends to
+be that it could describe a person who architects the enterprise as a
+whole (including the business strategy level) or someone doing IT
+architecture at the enterprise level (as opposed to a departmental
+architect, for example).</p>
+
+<p>To help resolve this ambiguity, let’s defer to the defining book on the
+topic, <em>Enterprise Architecture as Strategy</em> by Jeanne Ross, Peter Weill, and David Robertson.<sup><a data-type="noteref" href="ch04.html#idm45952856427176" id="idm45952856427176-marker">2</a></sup> Here, we learn the following:</p>
+<blockquote>
+<p>Enterprise architecture is the organizing logic for business processes
+and IT infrastructure reflecting the integration and standardization
+requirements of the company’s operating model.</p>
+</blockquote>
+
+<p>Following this definition, <em>enterprise architecture</em> (EA) isn’t a pure
+IT function but also considers business processes, which are part of a
+company’s <a data-primary="models" data-secondary="business" data-type="indexterm" id="idm45952856423880"/>operating model. In fact, the book’s <a href="https://oreil.ly/D8ehD">most widely publicized diagram</a> shows four quadrants depicting business
+operating models with higher or lower levels of process standardization
+(uniformity across lines of business) and process integration (sharing
+of data and interconnection of processes). Giving industry examples for
+all quadrants, Weill and Robertson map each model to a suitable high-level IT
+architecture strategy. For example, a data and process integration
+program might yield little value if the business operating model is one of
+highly diversified business units with few shared customers. For such
+enterprises, IT should instead provide a common infrastructure, on top
+of which each division can implement its diverse processes. Conversely,
+a business that’s composed of largely identical units, such as a
+franchise, benefits from a highly standardized application landscape.
+The matrix demonstrates perfectly how EA forges the
+connection between the business and IT. Only if the two are well aligned
+does IT provide value to the business.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Connecting Business and IT" data-type="sect1"><div class="sect1" id="idm45952856420728">
+<h1>Connecting Business and IT</h1>
+
+<p>Connecting business<a data-primary="enterprise architecture (EA)" data-secondary="versus business architecture" data-secondary-sortas="business architecture" data-type="indexterm" id="EAbusi04"/> and IT is easier if the business side of the
+organization also has a well-defined architecture. Luckily, as business
+environments become more complex and digital disruptors force
+traditional enterprises to evolve their business models more rapidly,
+the notion<a data-primary="business architecture" data-type="indexterm" id="idm45952856417496"/> of <em>business architecture</em> has gained significant attention
+in recent years. Business architecture translates the <em>structured, architectural way of thinking</em> (<a data-type="xref" href="ch08.html#IsThisArchitecture">Chapter 8</a>)
+that’s guided by a formalized view of components and interrelationships
+into the business domain. Rather than connecting technical system
+components and reasoning about technical system properties such as
+security and scalability, business architecture describes the
+“the structure of the enterprise in terms of its governance structure, business processes and business information.”<sup><a data-type="noteref" href="ch04.html#idm45952856414456" id="idm45952856414456-marker">3</a></sup></p>
+
+<p>The business architecture essentially defines the company operating
+model, including how business areas are structured and
+integrated, derived from the business strategy. Meanwhile, the IT
+architecture builds the corresponding IT capabilities. If the two work
+seamlessly side by side, you don’t need much else. In the more likely case that the two aren’t
+well connected, you need something to pull them together. Therefore, here’s my proposed
+definition of enterprise <span class="keep-together">architecture:</span></p>
+<blockquote>
+<p>Enterprise architecture is the glue between business and IT
+architecture.</p>
+</blockquote>
+
+<p>This definition clarifies that EA, unlike IT
+architecture at enterprise level, isn’t an IT function. Accordingly, the
+EA team should be positioned close to the company leadership and not be
+buried deep within the IT organization, so that it can balance business,
+technical, and organizational considerations.</p>
+
+<p>The definition also implies that after business and IT are tightly
+interlinked, you won’t need much EA, which is one reason why you don’t find much EA within so-called digital giants.</p>
+<div class="pullquote" data-type="example">
+<h5><span class="label">Example 4-1. </span></h5>
+
+<p>Most digital giants don’t have EA departments because their business and IT are tightly interlinked.</p></div>
+
+<p>Alas, don’t panic! The translation between business
+needs and IT architecture remains a domain that’s perennially short of
+talent. It appears that most folks find comfort on one or the other side
+of the fence, but only a few can, and choose to, credibly play in both
+worlds. It’s a good time to be an enterprise architect.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="IT Is from Mars, Business Is from Venus" data-type="sect1"><div class="sect1" id="idm45952856406328">
+<h1>IT Is from Mars, Business Is from Venus</h1>
+
+<p>The strict separation between IT and business that is commonly found in
+enterprises seems troublesome to me. I tend to jest that in the old
+days, when everything was running on paper instead of computers,
+companies also didn’t have a separate “paper” department and a CPO—the chief paper officer. In digital companies business and IT are
+inseparable; IT is the business, and the business is IT.</p>
+
+<p>Connecting business and IT gives EA a whole new
+relevance but also new challenges. It’s like adding a mid-floor
+elevator that connects the business folks in the penthouse with the IT
+folks in the engine room because the respective elevators don’t quite
+reach each other. Although highly valuable, in the long run such an enterprise architecture
+department’s objective must be to make itself obsolete, or at least
+smaller, by extending the respective elevators. But no worries, rapid
+changes in both the business and technical environments make it unlikely
+that the need for enterprise architecture disappears altogether.</p>
+
+<p>Building a fruitful, bidirectional connection between business and IT
+architecture becomes easier if the business architecture is at a
+comparable level of maturity as IT architecture. More often than not,
+though, business architecture is even less mature as a domain than IT
+architecture. That’s not because businesses had no architecture; rather, it’s because the folks doing business architecture were not identified
+as such but were the business leaders, division heads, or COOs. Also,
+designing the business was rather attributed to business acumen than
+structured thinking. Where the business produced architecture-like
+artifacts, they often ended up being “functional capability maps” that don’t include any <em>lines</em> (<a data-type="xref" href="ch23.html#DrawingTheLine">Chapter 23</a>).</p>
+
+<p>Supporting the business is the ultimate goal and <em>raison d’être</em> of all
+enterprise functions. Positioning IT architecture on par with business
+architecture highlights, though, that the days when IT was a simple
+order-taker that provides a commodity resource at the lowest possible
+cost are (luckily) over. In the digital age, IT is a competitive
+differentiator and opportunity driver, not a commodity like electricity.</p>
+<div class="astronaut" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Digital giants like Google or Amazon
+aren’t technology companies; they are advertising or fulfillment
+companies that understand how to use technology for competitive
+advantage.</p>
+</div>
+
+<p>Therefore, the common excuse that “Google and Amazon are technology
+companies while we are an insurance company/bank/manufacturing
+business” no longer holds. These companies will compete with you, and if
+you want to be competitive, you also need to change your view of IT.
+It’s not an easy thing to do, but the digital giants have demonstrated
+how powerful that insight is.<a data-primary="" data-startref="EAbusi04" data-type="indexterm" id="idm45952856397464"/></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Value-Driven Architecture" data-type="sect1"><div class="sect1" id="idm45952856396200">
+<h1>Value-Driven Architecture</h1>
+
+<p>The<a data-primary="enterprise architecture (EA)" data-secondary="challenges of" data-type="indexterm" id="idm45952856394888"/> scale and complexity of doing architecture at enterprise scale makes large-scale IT architecture exciting, but it also presents
+one of the biggest dangers. It’s far too easy to become lost in this
+complexity and have an interesting time exploring it without ever
+producing tangible results. Such instances are the source of the
+stereotype that EA resides in the ivory tower and
+delivers little value. EA teams therefore need to
+have a clearly articulated path to value: any effort that is made needs
+to be paid back by providing value to the organization.</p>
+
+<p>Another danger lies in the long feedback cycles. Judging whether someone
+performs good EA takes even longer than judging
+good application architecture. Even though the digital world forces shorter cycles,
+many EA plans still span three to five years. Thus,
+enterprise architecture can become a hiding ground for wanna-be
+cartographers. That’s why enterprise architects <em>need to show impact</em> (<a data-type="xref" href="ch05.html#ThreeLegs">Chapter 5</a>).</p>
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Fools with tools" data-type="sect2"><div class="sect2" id="idm45952856390984">
+<h2>Fools with tools</h2>
+
+<p>Some enterprise architects associate themselves closely with a specific
+EA tool that captures the diverse aspects of the
+enterprise landscape. These tools allow structured mapping from business
+processes and capabilities, ideally produced by the business architects,
+to IT assets such as applications and servers.</p>
+<div class="warning" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Make sure that your tools work for you, not the other way around!</p>
+</div>
+
+<p>Done well, such tools can
+be the structured repository that builds the bridge between business and
+IT architecture. Done poorly, they become a never-ending discovery and
+documentation process that produces a deliverable that’s <em>missing an emphasis</em> (<a data-type="xref" href="ch21.html#EmphasisOverCompleteness">Chapter 21</a>) and is outdated by
+the time it’s published. Needless to say, such a deliverable provides little value.</p>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Visit All Floors" data-type="sect1"><div class="sect1" id="idm45952856385448">
+<h1>Visit All Floors</h1>
+
+<p>My<a data-primary="enterprise architects" data-secondary="versus technical architects" data-secondary-sortas="technical architects" data-type="indexterm" id="idm45952856384152"/> definition of EA also implies that some IT
+architects, who aren’t enterprise architects, work at enterprise scope.
+These are largely the folks I refer to in this book. Because they are
+the technical folks who have learned to <em>ride the elevator</em> (<a data-type="xref" href="ch01.html#ArchitectElevator">Chapter 1</a>) to the upper floors to engage with management and
+business architects, they are a critical element in any IT
+transformation.</p>
+
+<p>How is being an “enterprise-scale architect” different from a
+“normal” IT architect? First, everything is bigger. Many large
+enterprises are conglomerates of different business units and divisions,
+each of which can be a multibillion-dollar business and can be engaged
+in a different business model. As things get bigger, you will also find
+more legacy: businesses grow over time or through acquisitions, both of
+which breed legacy. This legacy isn’t constrained to systems, but also
+to people’s mindsets and ways of working. Enterprise-scale architects
+must therefore be able to <em>navigate organizations</em> (<a data-type="xref" href="ch34.html#LeadingChange">Chapter 34</a>)
+and complex political <span class="keep-together">situations.</span></p>
+
+<p>Performing true EA is as complex and as valuable as
+fixing a Java concurrency bug. There’s enormous complexity at all
+levels, but the good news is that you can use similar patterns of thinking
+at the different levels. For example, software architects need to
+balance their system’s granularity and interdependencies: a giant
+monolith is rather inflexible, whereas a thousand tiny services will be
+difficult to manage and can incur significant communication overhead.
+The exact same considerations apply to business architecture when
+considering the size of divisions and product lines. Lastly, EA also faces the same trade-offs when having to
+decide which systems should be centralized, which simplifies governance
+but can also stifle local flexibility. Architecture, if taken seriously,
+provides significant value at all levels.</p>
+
+<p>Enterprises resemble a fractal structure: the more you zoom in or
+out, the more things look similar. The short film <em>Powers of 10</em>,
+produced in 1977 by Charles and Ray Eames for IBM, illustrates this
+beautifully: the film zooms out from a picnic in Chicago by one order of
+magnitude every 10 seconds until it reaches <math xmlns="http://www.w3.org/1998/Math/MathML" alttext="10 Superscript 24">
+  <msup><mn>10</mn> <mn>24</mn> </msup>
+</math>, showing a sea of galaxies. Subsequently, it zooms in until at <math xmlns="http://www.w3.org/1998/Math/MathML" alttext="10 Superscript negative 18">
+  <msup><mn>10</mn> <mrow><mo>-</mo><mn>18</mn></mrow> </msup>
+</math> it shows the realm of <em>quarks</em>. Interestingly, the two views don’t look all that <span class="keep-together">different.</span></p>
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="idm45952856437896"><sup><a href="ch04.html#idm45952856437896-marker">1</a></sup> Keith Rabois, Quora, May 11, 2010, “What does “Head” usually mean in job titles like “Head of Social,” “Head of Product,” “Head of Sales,” etc.?”, <a href="https://oreil.ly/5LmbY"><em class="hyperlink">https://oreil.ly/5LmbY</em></a>.</p><p data-type="footnote" id="idm45952856427176"><sup><a href="ch04.html#idm45952856427176-marker">2</a></sup> Jeanne W. Ross, Peter Weill, and David C. Robertson, <em>Enterprise Architecture as Strategy: Creating a Foundation for Business Execution</em> (Boston, MA: Harvard Business Review Press, 2006).</p><p data-type="footnote" id="idm45952856414456"><sup><a href="ch04.html#idm45952856414456-marker">3</a></sup> Object Management Group website, <a href="http://www.omg.org/bawg"><em class="hyperlink">http://www.omg.org/bawg</em></a>.</p></div></div></section></body></html>

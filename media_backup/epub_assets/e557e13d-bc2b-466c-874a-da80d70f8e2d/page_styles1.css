@@ -1,0 +1,20 @@
+@page {
+  margin-bottom: 5pt;
+  margin-top: 5pt;
+}
+@font-face {
+  font-family: "Shift Light";
+  font-style: normal;
+  font-weight: normal;
+  src: url(fonts/00014.otf);
+}
+@font-face {
+  font-family: "Shift Light";
+  font-style: italic;
+  font-weight: normal;
+  src: url(fonts/00016.otf);
+}
+@font-face {
+  font-family: "Fort-Book";
+  src: url(fonts/00015.otf);
+}

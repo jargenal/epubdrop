@@ -1,0 +1,214 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Organizations</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><div data-pdf-bookmark="Part IV. Organizations" data-type="part" epub:type="part" id="Organizations_pt4">
+<h1><span class="label">Part IV. </span>Organizations</h1>
+
+
+<p>Architects<a data-primary="organizations" data-secondary="understanding organization structures and systems" data-type="indexterm" id="OunderstnandIV"/><a data-primary="enterprise architects" data-secondary="understanding organization structures and systems" data-type="indexterm" id="EAunderstandIV"/> in the enterprise live at the intersection of the technical
+and business worlds. In fact, getting these two pieces to work together
+seamlessly is one of an <em>architect’s key contributions</em> (<a data-type="xref" href="ch04.html#EnterpriseArchitect">Chapter 4</a>). Therefore, a good architect needs to not only
+understand the interplay between system components, but also the
+interplay in a large and dynamic system that is known as <em>organization</em>.</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Organizational Architecture: The Static View" data-type="sect1"><div class="sect1" id="idm45952854396856">
+<h1>Organizational Architecture: The Static View</h1>
+
+<p>The<a data-primary="organizational charts" data-type="indexterm" id="idm45952854395528"/> most common depiction of an organization’s architecture is the
+organizational chart (“org chart”). These charts depict who reports to
+whom, and one can measure people’s importance by how far they are from the
+CEO. Assuming you count from zero in good computer-science tradition, I am
+often at level two or three below a group CEO, a divisional CEO, and
+perhaps a COO in between. For an architect in a large organization, this
+isn’t bad at all—many people find themselves at level 6 or 7.</p>
+
+<p>Luckily, org charts have lines and thus pass our test for <em>architecture diagrams</em> (<a data-type="xref" href="ch23.html#DrawingTheLine">Chapter 23</a>). Computer-science-educated folks may recognize an org chart as a tree, a noncyclical, connected directed graph with a single <em>root</em> (math folks consider trees to be undirected, but that’s fine also). Alas, it’s only showing part of the picture: depicting the static structure tells us little about how people interact to make the business work.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Organizational Architecture: The Dynamic View" data-type="sect1"><div class="sect1" id="idm45952854391352">
+<h1>Organizational Architecture: The Dynamic View</h1>
+
+<p>An org chart depicts engineering, manufacturing, marketing, and finance
+departments as separate pillars of the organizational pyramid. However,
+in reality, engineering must design a product that can be easily and
+reliably manufactured, marketed to customers, and sold at a profit. How
+well organizations work is rarely defined by the organization’s structure—most organizations will have the aforementioned functions—but by how they interact: how slow or fast are their development cycles; do they work in a Waterfall or an Agile model; who talks to customers, who, interestingly, aren’t depicted in the org chart?</p>
+
+<p>Coworkers also routinely talk to one another to solve problems without
+following the lines in the organizational pyramid. This is a good thing
+because otherwise managers would quickly become communication
+bottlenecks. In many cases the org chart shows<a data-primary="control flow" data-type="indexterm" id="idm45952854388728"/><a data-primary="data flow" data-type="indexterm" id="idm45952854388056"/> the <em>control flow</em> of the organization—for example, to give budget approvals, whereas the <em>data flow</em> is much more open and dynamic. Ironically, the way people actually work
+with one another is rarely depicted in a diagram. Part of the reason might
+be that this data is difficult to gather; the other part could be that it
+doesn’t look nearly as neat as the org chart pyramid.</p>
+
+<p>When people coordinate and communicate electronically, the actual, dynamic
+organizational structure can be more easily observed. For example, if
+developers collaborate via a version-control system, we can analyze
+code reviews or check-in approvals to see the real collaboration taking
+place. Google had another interesting system that allowed you to see
+which persons are sitting nearby a given person. Because interaction and
+collaboration are often still based on ad hoc conversations, physical
+proximity can be a better predictor of collaboration patterns than the
+org chart structure.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="The Matrix (Not the Movie)" data-type="sect1"><div class="sect1" id="idm45952854384664">
+<h1>The Matrix (Not the Movie)</h1>
+
+<p>In<a data-primary="matrix organization" data-type="indexterm" id="idm45952854383352"/> large organizations, people can have multiple reporting lines: a
+“dotted line” to their project or program manager, and a “solid line”
+to their department or “line manager.” Such an arrangement is often
+part of a so-called <em>matrix organization</em> in which people report
+horizontally to the project and vertically to their manager. Or is it
+the other way around? If you find this a little confusing, you’re not
+alone. High-performance delivery organizations generally shun such
+arrangements, making sure people are fully assigned to, and responsible
+for, a single project. I often jest that I want all people working on a
+project to be on the same boat without life vests and no rescue lines to
+other parts of the organization. A team needs a shared success or, if it
+so happens, shared failure. Don’t worry, they are all able to swim.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="less_space pagebreak-before" data-pdf-bookmark="Organizations as Systems" data-type="sect1"><div class="sect1" id="idm45952854380952">
+<h1>Organizations as Systems</h1>
+
+<p>As architects, we know well how to design systems; for example, when to apply
+horizontal scaling, loose coupling, caching. We often are also
+trained in systems thinking (<a data-type="xref" href="ch09.html#Options">Chapter 9</a>), which teaches us how to reason about the
+relationship between elements in a system and the overall system
+behavior, driven, for example, by positive or negative feedback loops.
+However, we often hesitate to apply such rational thinking to
+organizations because organizations have a very human face, which makes
+us feel bad if we degrade our nice and not-so-nice coworkers into the <em>boxes and lines</em> (<a data-type="xref" href="ch23.html#DrawingTheLine">Chapter 23</a>) of some system architecture.</p>
+
+<p>However, even though they’re composed of individuals, large organizations behave much
+more like complex systems, including technical ones. Therefore, as
+architects we can apply our architectural mindset and rational systems
+thinking to large organizations in order to understand and influence
+them. It’s a bit like a reverse engineering, debugging, and refactoring
+exercise.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Organizations as People" data-type="sect1"><div class="sect1" id="idm45952854375560">
+<h1>Organizations as People</h1>
+
+<p>All rational reasoning aside, organizations are made up of individuals.
+We also shouldn’t forget that for many of them work is just a small part
+of their lives: they have families to take care of, bills to pay,
+doctors to visit, home repairs to make, or hangovers from the party last
+night to overcome. Understanding organizations depends on understanding
+people’s emotions and motivations. This can be a stretch for
+left-brain-type architects, but one they need to make. Consider this
+yoga for your brain.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Navigating Large Organizations" data-type="sect1"><div class="sect1" id="idm45952854373448">
+<h1>Navigating Large Organizations</h1>
+
+<p>Dealing with organizations can be challenging for architects. However,
+many concepts that are well known in the context of architect systems
+can also be applied to understanding organizations:</p>
+<dl>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch26.html#ReverseEngineering">Chapter 26, <em>Reverse-Engineering Organizations</em></a></dt>
+<dd>
+<p>To bring lasting change, you need to help organizations unlearn existing beliefs.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch27.html#ControlIsAnIllusion">Chapter 27, <em>Control Is an Illusion</em></a></dt>
+<dd>
+<p>Command-and-control structures aren’t a one-way street.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch28.html#Pyramids">Chapter 28, <em>They Don’t Build ’Em Quite Like That Anymore</em></a></dt>
+<dd>
+<p>Pyramids went out of vogue 4,500 years ago, but are still widely used in IT.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch29.html#BlackMarket">Chapter 29, <em>Black Markets Are Not Efficient</em></a></dt>
+<dd>
+<p>High-friction organizations breed black markets, which are dangerous.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch30.html#ScalingOrganizations">Chapter 30, <em>Scaling an Organization</em></a></dt>
+<dd>
+<p>Experience in distributed systems design can be applied to organizations.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch31.html#SlowChaos">Chapter 31, <em>Slow Chaos Is Not Order</em></a></dt>
+<dd>
+<p>Slow-moving things can seem well coordinated when in reality
+they’re just slow-motion chaos.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch32.html#Inception">Chapter 32, <em>Governance Through Inception</em></a></dt>
+<dd>
+<p>Governance by decree is difficult and better done by planting ideas.<a data-primary="" data-startref="OunderstnandIV" data-type="indexterm" id="idm45952854355400"/><a data-primary="" data-startref="EAunderstandIV" data-type="indexterm" id="idm45952854354456"/></p>
+</dd>
+</dl>
+</div></section>
+
+
+
+
+
+
+
+</div></body></html>

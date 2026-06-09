@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos943556" class="calibre_2"><span class="calibre2"><span class="bold">Serverless implications</span></span></p><p class="calibre_1">Serverless architectures are a unique costing challenge. <a></a>Most of the effective cost optimization efforts fall in writing effective code in order to reduce the code's execution time or the number of executions required. <a></a>This is evident from the pricing model of serverless code execution services such as AWS Lambda, which charges based on the number of executions, execution time, and allocated memory to the container that runs the code (<a></a><a href="https://s3.amazonaws.com/lambda-tools/pricing-calculator.html"><span class="calibre3"><tt class="calibre4">https://s3.amazonaws.com/lambda-tools/pricing-calculator.html</tt></span></a><a></a>). <a></a>Memory size can be optimized by tracking the amount of memory used per execution (this can be tracked in AWS CloudWatch).</p><p class="calibre_1">Other <a></a><span class="italic">serverless</span><a></a> cloud services, such as AWS Kinesis and Athena, follow a similar data-based pricing model (per shard hour and payload units for Kinesis, per TB of data scanned for Athena). <a></a>These services are almost always cheaper than their comparable services (such as Apache Kafka and Presto), which are hosted on self-managed compute nodes.</p><div class="mbp_pagebreak" id="calibre_pb_281"></div>
+</body></html>

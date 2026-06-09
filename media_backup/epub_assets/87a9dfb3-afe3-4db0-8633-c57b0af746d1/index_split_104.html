@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos400607" class="calibre_2"><span class="calibre2"><span class="bold">Solution</span></span></p><p class="calibre_1">Leverage the cloud provider's offline-first database service to store data locally and synchronize with the cloud and across devices. <a></a>Calculate user-specific materialized views, as discussed in the CQRS pattern, and synchronize the views to the device. <a></a>This allows users to always access the latest known information. <a></a>Store user actions and inputs locally and synchronize to the cloud when connected. <a></a>This allows users to proceed with their intentions even when disconnected. <a></a>The application should synchronize on explicit actions when possible, but otherwise synchronize in the background when connectivity is intermittent. <a></a>The user experience should be designed such that the user understands when data may be stale or when actions may be pending because of limited connectivity, and informed when connectivity issues are resolved. <a></a>On the backend, the system leverages Database-First Event Sourcing when synchronization occurs, to produce events based on state changes and user actions.</p><div class="mbp_pagebreak" id="calibre_pb_105"></div>
+</body></html>

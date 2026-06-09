@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos641196" class="calibre_2"><span class="calibre2"><span class="bold">Component testing</span></span></p><p class="calibre_1">Component testing verifies that the units within a component work together properly to produce the desired behavior while still isolating the component from external resources via test doubles. <a></a>The need for component testing depends on the complexity of the component. <a></a>In many cases, a bounded, isolated component can be sufficiently tested with just unit testing and integration testing, as covered in the next section. <a></a>However, some components may perform complex calculations and logic with many permutations. <a></a>These components will often have a strict set of acceptance tests that must be satisfied, in which case the tests may be implemented with a <a></a><span class="bold">behavior-driven development</span><a></a> (<a></a><span class="bold">BDD</span><a></a>) tool, such as Cucumber.</p><p class="calibre_1">The line between component testing and unit testing has become a bit blurry because the testing environment is usually the same. <a></a>It is less and less necessary to test cloud-native components in a full runtime environment. <a></a>Simulating the execution environment locally has become very straightforward, particularly for components implemented using function-as-a-service. <a></a>Tools such as serverless-offline and SAM Local simulate the deployment environment locally and within the CI/CD pipeline. <a></a>This significantly increases the efficiency of the deployment pipeline and further tightens the feedback loop. <a></a>We will see shortly that these same tools are leveraged to accomplish integration, contract, and end-to-end testing as well.</p><div class="mbp_pagebreak" id="calibre_pb_171"></div>
+</body></html>

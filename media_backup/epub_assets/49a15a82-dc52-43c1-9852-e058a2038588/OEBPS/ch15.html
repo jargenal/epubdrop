@@ -1,0 +1,434 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Billing, Budgeting, and Cost Management in AWS</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:a44aec70-12ef-4d3e-90ec-26a4e9d25e01" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 15. Billing, Budgeting, and Cost Management in AWS" data-type="chapter" epub:type="chapter"><div class="chapter" id="ch15_billing_budgeting_and_cost_management_in_aws_1763395116444180">
+<h1><span class="label">Chapter 15. </span>Billing, Budgeting, and <span class="keep-together">Cost Management in AWS</span></h1>
+
+<p>In this chapter, we’ll start by reviewing AWS’s pricing models, including On-Demand, Reserved Instances, Savings Plans, and Spot Instances.</p>
+
+<p>But picking the right pricing model is just the beginning. AWS gives you solid tools to help track and manage your costs. Tools like Cost Explorer, AWS Budgets, and the AWS Pricing Calculator give you visibility into where your money’s going, and help you make smarter decisions about resource usage.</p>
+
+<p>This chapter will also show how cost allocation tags can categorize expenses by team, project, or environment. When you combine these tags with AWS Organizations and the right support plans, you will have a strong foundation for managing cloud spend across different parts of your business.</p>
+
+<p>These topics represent the smallest proportion of the questions on the AWS Certified Cloud Practitioner exam, at 12%. But this certainly does not diminish their importance. In this chapter, we’ll look at what you need to know.</p>
+
+<section data-pdf-bookmark="AWS Pricing Models" data-type="sect1"><div class="sect1" id="ch15_aws_pricing_models_1763395116444316">
+<h1>AWS Pricing Models</h1>
+
+<p>AWS<a contenteditable="false" data-primary="pricing models" data-type="indexterm" id="jc15.1"/> pricing works much like your electricity bill. That is, you pay for what you use. Instead of shelling out sums up front for servers and infrastructure, you’re only charged based on your consumption.</p>
+
+<p>Pricing for services falls into three main categories: compute, storage, and outbound data transfers. You generally won’t pay anything for data coming into AWS or moving between services in the same region.</p>
+
+<p>Each AWS service has its own pricing factors. For EC2, costs depend on factors like how many hours you run instances, the types of instances you choose, whether you enable detailed monitoring, and any cross-region data transfers. For S3, pricing varies based on storage class, number of requests, and how often you retrieve data. EBS pricing takes into account your volume type, performance requirements, and snapshots for backups. RDS costs reflect database runtime, storage size, setup complexity, and your deployment architecture.</p>
+
+<p>For many organizations, compute resources make up the biggest slice of their AWS bill. That’s why Amazon has rolled out so many pricing models over the years: to give you as many tools as possible to optimize and control these costs without sacrificing performance.</p>
+
+<p>Let’s take a look at these pricing models.</p>
+
+<section data-pdf-bookmark="On-Demand Instance Pricing" data-type="sect2"><div class="sect2" id="ch15_on_demand_instance_pricing_1763395116444380">
+<h2>On-Demand Instance Pricing</h2>
+
+<p>When<a contenteditable="false" data-primary="On-Demand Instances" data-type="indexterm" id="id1405"/> you launch a VM in Amazon EC2, you’ll usually end up using On-Demand pricing by default. This option is straightforward and flexible. With On-Demand, you only pay for the compute time you use.</p>
+
+<p>The billing is precise. It’s calculated per second with a 60-second minimum for Linux instances. So whether your instance runs for a couple of minutes or several hours, you pay only for that exact usage.</p>
+
+<p>The On-Demand instance pricing model is a good choice for when you have workloads with sudden spikes in demand or for applications where resource needs fluctuate unpredictably. On-Demand pricing is also useful for testing, experimenting, or running proof-of-concept projects. You can spin up an instance in minutes, test your ideas, and shut it down without worrying about ongoing commitments.</p>
+</div></section>
+
+<section data-pdf-bookmark="Reserved Instance Pricing" data-type="sect2"><div class="sect2" id="ch15_reserved_instance_pricing_1763395116444433">
+<h2>Reserved Instance Pricing</h2>
+
+<p>Reserved<a contenteditable="false" data-primary="Reserved Instances" data-type="indexterm" id="id1406"/> Instances provide up to 72% savings for three-year<a contenteditable="false" data-primary="All Upfront payment option" data-type="indexterm" id="id1407"/> All Upfront commitments on specific instance types in a Region, though savings vary by term, payment option, and instance family. Although AWS often recommends Savings Plans for more flexibility, Reserved Instances pricing remains popular. The savings come from your commitment, which helps AWS plan its capacity better. You get to choose how you pay:</p>
+
+<ul>
+	<li>
+	<p>All Upfront</p>
+	</li>
+	<li>
+	<p>Partial Upfront<a contenteditable="false" data-primary="Partial Upfront payment option" data-type="indexterm" id="id1408"/> (you pay a smaller initial payment and then reduced hourly rates)</p>
+	</li>
+	<li>
+	<p>No Upfront <a contenteditable="false" data-primary="No Upfront payment option" data-type="indexterm" id="id1409"/> (skips the initial payment but still offers discounted hourly charges compared to On-Demand pricing)</p>
+	</li>
+</ul>
+
+<p>Reserved Instances work best when you have predictable, steady workloads and you know you’ll need those resources for a long time. They’re good for if you’re running mature applications with consistent usage, and you want both lower costs and predictable budgeting.</p>
+</div></section>
+
+<section data-pdf-bookmark="Savings Plan Pricing" data-type="sect2"><div class="sect2" id="ch15_savings_plan_pricing_1763395116444482">
+<h2>Savings Plan Pricing</h2>
+
+<p>The<a contenteditable="false" data-primary="Savings Plans" data-type="indexterm" id="id1410"/> Savings Plan pricing option is similar to Reserved Instances pricing. Both save up to 72% compared to On-Demand pricing, so long as there is a commitment of between one and three years. So what are the differences? First, the Savings Plan pricing option tends to be easier to manage across a wider range of services.</p>
+
+<p>For example, if you have a Compute Savings Plan, you’ll get the same discount whether you switch from C4 to C6g instances, move workloads between EU (Ireland) and EU (London), or migrate from EC2 to services like Fargate or Lambda.</p>
+
+<p>AWS currently offers three types of Savings Plans:</p>
+
+<dl>
+	<dt>Compute Savings Plan</dt>
+	<dd>
+	<p>The <a contenteditable="false" data-primary="Compute Savings Plan" data-type="indexterm" id="id1411"/>most flexible option, covering EC2, Fargate, and Lambda usage regardless of instance family or region.</p>
+	</dd>
+	<dt>EC2 Instance Savings Plan</dt>
+	<dd>
+	<p>Offers <a contenteditable="false" data-primary="EC2 Instance Savings Plan" data-type="indexterm" id="id1412"/>deeper discounts but requires you to stick with specific instance families within a region.</p>
+	</dd>
+	<dt>SageMaker Savings Plan</dt>
+	<dd>
+	<p>Designed <a contenteditable="false" data-primary="SageMaker Savings Plan" data-type="indexterm" id="id1413"/>specifically for ML workloads, giving you cost savings on SageMaker usage.</p>
+	</dd>
+</dl>
+
+<p>Savings Plans make the most sense for organizations with steady, predictable workloads that still want the freedom to adjust architectures or adopt new AWS services over time.</p>
+</div></section>
+
+<section data-pdf-bookmark="Spot Instance Pricing" data-type="sect2"><div class="sect2" id="ch15_spot_instance_pricing_1763395116444530">
+<h2>Spot Instance Pricing</h2>
+
+<p>Spot<a contenteditable="false" data-primary="Spot Instances" data-type="indexterm" id="id1414"/> Instance pricing provides unused EC2 capacity at discounts of up to 90% compared to the On-Demand model. But the pricing is dynamic. The cost goes up or down based on long-term trends in supply and demand for unused capacity. Moreover, if AWS needs that capacity back for On-Demand customers, it can reclaim your Spot Instances with little notice.</p>
+
+<p>Spot Instances work best for workloads that are fault-tolerant and can handle being interrupted. Think of stateless applications that don’t rely on persistent in-memory data. They’re also a good fit for batch processing, data analysis jobs, and ML model training.</p>
+
+<p>When using Spot Instances, you should build your applications to handle sudden termination smoothly.</p>
+</div></section>
+
+<section data-pdf-bookmark="Dedicated Host Pricing" data-type="sect2"><div class="sect2" id="ch15_dedicated_host_pricing_1763395116444574">
+<h2>Dedicated Host Pricing</h2>
+
+<p>Dedicated<a contenteditable="false" data-primary="Dedicated Hosts" data-type="indexterm" id="id1415"/> Host pricing is where you get an entire physical server. This setup gives you full control over the system.</p>
+
+<p>While Dedicated Host pricing usually comes with higher upfront costs than shared infrastructure, it can save you money in the right situations. For instance, if you already own licenses for software like Windows Server, SQL Server, or SUSE Linux Enterprise Server, you can bring those licenses to your dedicated hosts.</p>
+
+<p>AWS offers dedicated hosts through both On-Demand pricing and Savings Plans. This gives you flexibility in how you manage costs. You can pay as you go if you need short-term dedicated infrastructure or commit to longer terms for lower rates if you have predictable, ongoing needs.</p>
+</div></section>
+
+<section data-pdf-bookmark="Dedicated Instance Pricing" data-type="sect2"><div class="sect2" id="ch15_dedicated_instance_pricing_1763395116444619">
+<h2>Dedicated Instance Pricing</h2>
+
+<p>Both<a contenteditable="false" data-primary="Dedicated Instances" data-type="indexterm" id="kab15.1"/> Dedicated Instances and Dedicated Hosts provide your own physical servers. However, they work differently.</p>
+
+<p>Dedicated Instances don’t give you full control of the system. AWS manages the underlying servers for you.</p>
+
+<p>A disadvantage of the Dedicated Instance pricing model is that you cannot get the savings from server-bound licenses. The reason is that AWS cannot guarantee that your instances will stay on the same physical server.</p>
+
+<p>Another drawback is with compliance. Since there is uncertainty about the location of the physical servers, this could mean violating sovereign residency requirements.</p>
+
+<p>Then why use the Dedicated Instance pricing model? A major advantage is the simplicity. AWS only charges you for the instances you launch, not for the entire physical server.</p>
+</div></section>
+
+<section data-pdf-bookmark="On-Demand Capacity Reservation Pricing" data-type="sect2"><div class="sect2" id="ch15_on_demand_capacity_reservation_pricing_1763395116444667">
+<h2>On-Demand Capacity Reservation Pricing</h2>
+
+<p>On-Demand<a contenteditable="false" data-primary="On-Demand Capacity Reservations" data-type="indexterm" id="id1416"/> Capacity Reservation pricing <a contenteditable="false" data-primary="capacity reservation" data-type="indexterm" id="id1417"/>gives you a way to lock in EC2 capacity within a specific Availability Zone. It guarantees that the compute resources you need will be there when you need them, even during peak demand, without requiring a long-term commitment.</p>
+
+<p>When you create a capacity reservation, you’re securing compute resources in advance. This means your instances can launch without delay, even if other users are competing for the same capacity in that AZ. For organizations that can’t afford downtime, this assurance is critical.</p>
+
+<p>These reservations are suitable for business-critical and time-sensitive workloads where availability isn’t negotiable. For example, if you’re about to launch a major ecommerce promotion, run financial end-of-day processing, or host a live-streamed event, you don’t want to risk your instances failing to launch because capacity isn’t available.</p>
+
+<p>They’re also useful for compliance. Organizations with strict uptime and failover requirements can use reservations to meet their high availability standards reliably.</p>
+
+<p>Another important use case is disaster recovery. During regional outages or emergencies, many businesses scramble to spin up additional resources, which can lead to shortages. By reserving capacity in advance, you make sure your backup systems work as planned, keeping your operations running smoothly even when demand surges. On-Demand Capacity Reservations secure EC2 capacity in a specific Availability Zone but charge for reserved capacity whether used or not. But you can use Reserved Instances or Savings Plans for discounts on usage.</p>
+
+<p><a data-type="xref" href="#ch15_table_1_1763395116440154">Table 15-1</a> summarizes<a contenteditable="false" data-primary="On-Demand Instances" data-type="indexterm" id="id1418"/> <a contenteditable="false" data-primary="proofs of concept (POCs)" data-type="indexterm" id="id1419"/><a contenteditable="false" data-primary="POCs (proofs of concept)" data-type="indexterm" id="id1420"/>the<a contenteditable="false" data-primary="Reserved Instances" data-type="indexterm" id="id1421"/> <a contenteditable="false" data-primary="Savings Plans" data-type="indexterm" id="id1422"/>different<a contenteditable="false" data-primary="Spot Instances" data-type="indexterm" id="id1423"/> AWS<a contenteditable="false" data-primary="Dedicated Hosts" data-type="indexterm" id="id1424"/> <a contenteditable="false" data-primary="Dedicated Instances" data-startref="kab15.1" data-type="indexterm" id="id1425"/><a contenteditable="false" data-primary="On-Demand Capacity Reservations" data-type="indexterm" id="id1426"/>pricing models.</p>
+
+<table id="ch15_table_1_1763395116440154">
+	<caption><span class="label">Table 15-1. </span>AWS pricing models</caption>
+	<thead>
+		<tr>
+			<th>Models</th>
+			<th>Description and key points</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p>On-Demand Instance pricing</p>
+			</td>
+			<td>
+			<ul>
+				<li>Pay only for compute time used (per second, 60-sec minimum for Linux)</li>
+				<li>Flexible for unpredictable workloads, testing, or proofs of concept (POCs)</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Reserved Instance pricing</p>
+			</td>
+			<td>
+			<ul>
+				<li>Up to 72% discount for one- or three-year commitments</li>
+				<li>Options: All Upfront, Partial Upfront, or No Upfront payments</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Savings Plan pricing</p>
+			</td>
+			<td>
+			<ul>
+				<li>Similar savings to Reserved Instances with more flexibility</li>
+				<li>Types: Compute, EC2 Instance, SageMaker Savings Plans</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Spot Instance pricing</p>
+			</td>
+			<td>
+			<ul>
+				<li>Up to 90% discount on unused capacity</li>
+				<li>Best for fault-tolerant, interruptible workloads like batch jobs</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Dedicated Host pricing</p>
+			</td>
+			<td>
+			<ul>
+				<li>Entire physical server dedicated to you</li>
+				<li>Supports BYOL (Bring Your Own License) for certain software</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Dedicated Instance pricing</p>
+			</td>
+			<td>
+			<ul>
+				<li>Instances run on hardware dedicated to you but managed by AWS</li>
+				<li>Simpler billing; cannot use server-bound licenses</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>On-Demand Capacity Reservation pricing</p>
+			</td>
+			<td>
+			<ul>
+				<li>Reserve capacity in a specific AZ without long-term commitment</li>
+				<li>Ensures availability for critical<a contenteditable="false" data-primary="pricing models" data-startref="jc15.1" data-type="indexterm" id="id1427"/> or time-sensitive workloads</li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="AWS Billing and Cost Management" data-type="sect1"><div class="sect1" id="ch15_aws_billing_and_cost_management_1763395116444719">
+<h1>AWS Billing and Cost Management</h1>
+
+<p>The<a contenteditable="false" data-primary="billing and cost management" data-type="indexterm" id="jc15.2"/> AWS Billing Console is a financial dashboard for your AWS account. It gives you a clear view of both current and historical usage and costs. This makes it easier to spot trends, catch unexpected charges early, and plan ahead.</p>
+
+<p><a data-type="xref" href="#ch15_figure_1_1763395116438159">Figure 15-1</a> shows the dashboard. You can find this by first going to the AWS Management Console and searching for Billing and Cost Management.</p>
+
+<figure><div class="figure" id="ch15_figure_1_1763395116438159"><img alt="AWS Billing and Cost Management dashboard showing cost summary with current and last month's expenditures, all at $0.00, and a forecasted cost of $0.04." src="assets/awsc_1501.png"/>
+<h6><span class="label">Figure 15-1. </span>Dashboard for AWS Billing and Cost Management</h6>
+</div></figure>
+
+<p>A key advantage of this dashboard is centralized billing. If you manage multiple AWS accounts—say, for different teams or departments—you can pull all the costs into one place. This makes internal accounting simpler and helps keep everyone on the same page.</p>
+
+<p>For this, you can use AWS Organizations. They allow for grouping accounts into different units. This makes it easier to apply policies, allowing for stronger governance and improved security.</p>
+
+<p>The service also simplifies billing. Instead of managing invoices for every account, you get one consolidated bill. This makes it easier to track overall spending, divide costs by team or project, and take advantage of AWS volume discounts.</p>
+
+<p>Regardless of whether you use AWS Organizations, the dashboard provides various options for cost analysis, which you can find on the left sidebar. We’ll take a look at some of the main ones.</p>
+
+<section data-pdf-bookmark="AWS Cost Explorer" data-type="sect2"><div class="sect2" id="ch15_aws_cost_explorer_1763395116444768">
+<h2>AWS Cost Explorer</h2>
+
+<p>AWS<a contenteditable="false" data-primary="Cost Explorer" data-secondary="overview" data-type="indexterm" id="id1428"/> Cost Explorer gives you a clear, visual way to track your cloud spending over time.</p>
+
+<p>Once you turn it on through the AWS Billing and Cost Management Dashboard, it automatically pulls in up to 13 months of historical data and can project up to a year into the future. The data refreshes daily.</p>
+
+<p>To turn on this service, you click Cost Explorer and select Enable Cost Explorer. AWS may take a few minutes to prepare your historical cost and usage data.</p>
+
+<p>With the Cost Explorer, you can break down your costs by month or day, and if you need more detail, there’s an option to view hourly usage for the past two weeks.</p>
+
+<p>The Cost Explorer comes with a set of helpful reports, such as those showing monthly spend by service, or daily EC2 usage. But you can also create customized reports, using up to 18 filters, such as for tags, services, regions, resource types, and accounts.</p>
+
+<p>The Cost Explorer uses ML to forecast your future spending for up to 12 months.</p>
+
+<p>If you’re using Reserved Instances (RIs) or Savings Plans, Cost Explorer helps you keep track of utilization and coverage. It flags upcoming expirations and suggests new commitments based on your actual usage.</p>
+</div></section>
+
+<section data-pdf-bookmark="AWS Pricing Calculator" data-type="sect2"><div class="sect2" id="ch15_aws_pricing_calculator_1763395116444821">
+<h2>AWS Pricing Calculator</h2>
+
+<p>The<a contenteditable="false" data-primary="Pricing Calculator" data-type="indexterm" id="id1429"/> AWS Pricing Calculator helps you plan costs before you spin up any infrastructure, such as for configuring services like EC2, S3, RDS, and Lambda. For larger projects, you can group services into logical units, so it’s easier to manage complex estimates. Each estimate shows a clear breakdown of upfront and ongoing costs.</p>
+
+<p>Once you’re done, you can save your estimate as a shareable link, or export it to PDF or CSV. If you sign in with your AWS account, the calculator can factor in your existing usage patterns, discounts, and purchase commitments to produce more realistic, personalized estimates.</p>
+
+<p>However, the AWS Pricing Calculator is a planning tool, not a quote. Real-world costs can vary depending on your usage, pricing region, discounts, taxes, and more.</p>
+</div></section>
+
+<section data-pdf-bookmark="AWS Budgets" data-type="sect2"><div class="sect2" id="ch15_aws_budgets_1763395116444867">
+<h2>AWS Budgets</h2>
+
+<p>AWS<a contenteditable="false" data-primary="Budgets tool" data-type="indexterm" id="id1430"/><a contenteditable="false" data-primary="AWS Budgets" data-type="indexterm" id="id1431"/> Budgets provides tools to set spending limits, track usage, and get alerts before things spiral out of control. The budgets can run on a schedule that fits your needs: daily, monthly, quarterly, or annually. And you can slice them by service, tag, account, or region.</p>
+
+<p>What really sets AWS Budgets apart is its ability to act—not just alert you—when thresholds are hit. You can tie a budget to an automated response, like denying new resource provisioning by applying IAM.</p>
+</div></section>
+
+<section data-pdf-bookmark="AWS Cost Allocation Tags" data-type="sect2"><div class="sect2" id="ch15_aws_cost_allocation_tags_1763395116444912">
+<h2>AWS Cost Allocation Tags</h2>
+
+<p>AWS<a contenteditable="false" data-primary="Cost Allocation Tags" data-type="indexterm" id="id1432"/> cost allocation tags help you make sense of your cloud bill by adding context to your resources. They are labels in the form of key-value pairs, which you attach to services like EC2 instances, S3 buckets, or RDS databases. Cost allocation tags are included with tools like the Cost Explorer and Budgets. AWS supports both built-in system tags (like <code>aws:createdBy</code>) and fully custom, user-defined tags.</p>
+
+<p>It’s worth noting that tags only start affecting cost reports after you activate them. They don’t apply retroactively, and not every AWS service supports tagging. You’ll want to think about tag enforcement early, especially if you’re planning<a contenteditable="false" data-primary="billing and cost management" data-startref="jc15.2" data-type="indexterm" id="id1433"/> to use them for cost allocation.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="AWS Technical Resources and AWS Support Options" data-type="sect1"><div class="sect1" id="ch15_aws_technical_resources_and_aws_support_options_1763395116444960">
+<h1>AWS Technical Resources and AWS Support Options</h1>
+
+<p>AWS<a contenteditable="false" data-primary="support options" data-type="indexterm" id="jc15.4"/><a contenteditable="false" data-primary="technical resources" data-type="indexterm" id="jc15.3"/> has a wide range of technical resources and support options. Let’s start with the basics. AWS Documentation (at <em>docs.aws.amazon.com</em>) is packed with useful information. You’ll find everything from EC2 Linux and Windows user guides to detailed API references, CLI instructions, and tutorials covering services like Auto Scaling, Lambda, and Nitro Enclaves. It’s comprehensive, well-organized, and kept up to date.</p>
+
+<p>Alongside the documentation, AWS offers FAQs, whitepapers, and architecture guides that provide best practices for security, compliance, and cloud design patterns. The AWS Blog is also a great place to stay current. It features service announcements, technical walkthroughs, and real-world case studies.</p>
+
+<p>When you’re looking for more than documentation, AWS has specialized resources to help solve real-world challenges. AWS Prescriptive Guidance<a contenteditable="false" data-primary="Prescriptive Guidance" data-type="indexterm" id="id1434"/> offers curated strategies and reference implementations from AWS experts and partners. This is helpful for cloud adoption, migration, and modernization.</p>
+
+<p>For quick troubleshooting, there’s the AWS Knowledge Center,<a contenteditable="false" data-primary="Knowledge Center" data-type="indexterm" id="id1435"/><a contenteditable="false" data-primary="AWS Knowledge Center" data-type="indexterm" id="id1436"/> and if you prefer a community-driven approach, AWS re:Post <a contenteditable="false" data-primary="re:Post" data-type="indexterm" id="id1437"/>has a Q&amp;A platform.</p>
+
+<p>AWS support is based on tiers:</p>
+
+<dl>
+	<dt>Basic Support (free)</dt>
+	<dd>
+	<p>Covers<a contenteditable="false" data-primary="Basic Support tier, AWS" data-type="indexterm" id="id1438"/> billing issues, access to community forums, and basic health data.</p>
+	</dd>
+	<dt>Developer Support</dt>
+	<dd>
+	<p>Adds<a contenteditable="false" data-primary="Developer Support tier, AWS" data-type="indexterm" id="id1439"/> business-hours access to Cloud Support Associates. This is a good option for early-stage or test environments.</p>
+	</dd>
+	<dt>Business Support</dt>
+	<dd>
+	<p>Designed<a contenteditable="false" data-primary="Business Support tier, AWS" data-type="indexterm" id="id1440"/> for production use. It includes 24/7 access to senior engineers, the full Trusted Advisor toolkit, third-party software support, and optional event support through Infrastructure Event Management (IEM).</p>
+	</dd>
+	<dt>Enterprise On-Ramp</dt>
+	<dd>
+	<p>Built <a contenteditable="false" data-primary="Enterprise On-Ramp tier, AWS" data-type="indexterm" id="id1441"/>for critical workloads. It includes a pool of Technical Account Managers (TAMs), <a contenteditable="false" data-primary="Technical Account Managers (TAMs)" data-type="indexterm" id="id1442"/><a contenteditable="false" data-primary="TAMs (Technical Account Managers)" data-type="indexterm" id="id1443"/>prioritized case handling (e.g., 30-minute SLA for critical issues), architectural reviews, and AWS Countdown <a contenteditable="false" data-primary="Countdown" data-type="indexterm" id="id1444"/>planning<a contenteditable="false" data-primary="AWS Countdown" data-type="indexterm" id="id1445"/> for major events.</p>
+	</dd>
+	<dt>Enterprise Support</dt>
+	<dd>
+	<p>The <a contenteditable="false" data-primary="Enterprise Support tier, AWS" data-type="indexterm" id="id1446"/>top tier. You get a dedicated TAM, a Concierge billing team, <a contenteditable="false" data-primary="Concierge billing team" data-type="indexterm" id="id1447"/>faster SLAs (as low as 15 minutes), ongoing proactive reviews, and advanced automation tools to keep everything running smoothly at scale.</p>
+	</dd>
+</dl>
+
+<p>There is also the AWS Partner Network (APN),<a contenteditable="false" data-primary="AWS Partner Network (APN)" data-type="indexterm" id="id1448"/><a contenteditable="false" data-primary="APN (AWS Partner Network)" data-type="indexterm" id="id1449"/> which includes independent software vendors (ISVs),<a contenteditable="false" data-primary="independent software vendors (ISVs)" data-type="indexterm" id="id1450"/><a contenteditable="false" data-primary="ISVs (independent software vendors)" data-type="indexterm" id="id1451"/> system integrators, and consultants. Through the AWS Marketplace, <a contenteditable="false" data-primary="Marketplace" data-type="indexterm" id="id1452"/><a contenteditable="false" data-primary="AWS Marketplace" data-type="indexterm" id="id1453"/>customers can discover vetted tools for cost tracking, governance, security, and more.</p>
+
+<p>And when your team needs direct, hands-on help, AWS Professional Services<a contenteditable="false" data-primary="Professional Services" data-type="indexterm" id="id1454"/> and Solutions Architects<a contenteditable="false" data-primary="Solutions Architects" data-type="indexterm" id="id1455"/> are available to collaborate on architecture design, deployment, and<a contenteditable="false" data-primary="support options" data-startref="jc15.4" data-type="indexterm" id="id1456"/><a contenteditable="false" data-primary="technical resources" data-startref="jc15.3" data-type="indexterm" id="id1457"/> optimization.</p>
+</div></section>
+
+<section data-pdf-bookmark="Conclusion" data-type="sect1"><div class="sect1" id="ch15_conclusion_1763395116445005">
+<h1>Conclusion</h1>
+
+<p>In this chapter, we looked at the key concepts and tools related to AWS billing, budgeting, and cost management. From understanding the various pricing models to leveraging tools such as AWS Cost Explorer, Budgets, and the Pricing Calculator, we’ve seen how AWS provides a helpful framework for tracking and optimizing costs. We also covered resource tagging, centralized billing with AWS Organizations, and available support options to help ensure both financial control and operational efficiency.</p>
+
+<p>We have now reached the point of this book where we have covered all the main topics you may see on the exam. In the next chapter, we’ll look at tips and strategies for how to study for it.</p>
+</div></section>
+
+<section data-pdf-bookmark="Chapter Quiz" data-type="sect1"><div class="sect1" id="ch15_quiz_1763395116445049">
+<h1>Chapter Quiz</h1>
+
+<p>To check your answers, please refer to the <a data-type="xref" href="app02.html#appb_chapter_15_answer_key_1763395113746645">“Chapter 15 Answer Key”</a></p>
+
+<ol>
+	<li>
+	<p>What is a key benefit of AWS On-Demand Instance pricing?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>You pay only for compute time used without long-term commitments.</p>
+		</li>
+		<li>
+		<p>You receive up to a 72% discount with a three-year commitment.</p>
+		</li>
+		<li>
+		<p>It automatically scales based on traffic.</p>
+		</li>
+		<li>
+		<p>It requires upfront payment for cost optimization.</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>Which AWS service provides a visual breakdown of costs over time?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>AWS Pricing Calculator</p>
+		</li>
+		<li>
+		<p>AWS Budgets</p>
+		</li>
+		<li>
+		<p>AWS Cost and Usage Report</p>
+		</li>
+		<li>
+		<p>AWS Cost Explorer</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p class="less_space pagebreak-before">What is the key feature of On-Demand Capacity Reservation pricing?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>It requires a one-year commitment.</p>
+		</li>
+		<li>
+		<p>It automatically migrates instances.</p>
+		</li>
+		<li>
+		<p>It guarantees capacity in a specific Availability Zone.</p>
+		</li>
+		<li>
+		<p>It offers the cheapest Elastic Compute Cloud (EC2) rates.</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>What is the purpose of cost allocation tags?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>To encrypt resources</p>
+		</li>
+		<li>
+		<p>To track AWS resource costs based on project or department</p>
+		</li>
+		<li>
+		<p>To predict usage trends</p>
+		</li>
+		<li>
+		<p>To enable data replication</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>What is the role of AWS Organizations in billing?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>It hosts your EC2 instances.</p>
+		</li>
+		<li>
+		<p>It consolidates billing across multiple accounts.</p>
+		</li>
+		<li>
+		<p>It encrypts billing data.</p>
+		</li>
+		<li>
+		<p>It migrates workloads between accounts.</p>
+		</li>
+	</ol>
+	</li>
+</ol>
+</div></section>
+</div></section></body></html>

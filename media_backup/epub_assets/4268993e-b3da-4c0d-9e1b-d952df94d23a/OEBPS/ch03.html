@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xml:lang="en"
+lang="en"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>Enabling Microservice Success</title>
+<link rel="stylesheet" type="text/css" href="override_v1.css"/>
+<link rel="stylesheet" type="text/css" href="epub.css"/>
+</head>
+<body>
+<div id="book-content">
+<div id="sbo-rt-content"><section data-type="chapter" epub:type="chapter" data-pdf-bookmark="Chapter 3. Are Microservices Right for You?"><div class="chapter" id="chapter3">
+<h1><span class="label">Chapter 3. </span>Are Microservices Right for You?</h1>
+
+
+<p>Microservices are now a mainstream architectural choice, but they are not the only viable option, and you shouldn’t adopt them by default. You need to take time to work out whether they are the right solution for you. That depends on you and the problems you are facing: what kind of organization are you, what technology do you have in place, and what skills do your teams have?</p>
+
+<p>The answer to “why microservices?” should be “for business reasons.” That should be true of pretty much <em>every</em> technology decision we make—a decision should allow you to do something that matters to your business, whether directly (for example, allowing you to introduce new functionality more quickly) or indirectly (for example, through reducing risk or reducing cost).</p>
+
+<p>Understanding what you are hoping to get out of adopting microservices is important because it helps you to prioritize those specific outcomes. It guides you on what measures you should be tracking, and it can tell you when you’ve “done enough.”</p>
+
+<p>However, even if you have a problem that microservices can help with, you also need to look at whether you will be able to get the conditions in place to successfully adopt microservices. This is important because if you can’t make the necessary organizational and cultural changes to be successful, then you could end up in a worse position, with a more complicated architecture but without benefiting from being able to deliver better business outcomes to your organization.</p>
+
+<p>Let’s start by discussing reasons you might move to microservices, before looking at the things you need to have in place to be able to make that move successfully.</p>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Reasons to Choose Microservices"><div class="sect1" id="id262">
+<h1>Reasons to Choose Microservices</h1>
+
+<p>Microservices are very often a solution <a data-type="indexterm" data-primary="microservices" data-secondary="reasons to choose" id="mcsvcrc"></a>to an organizational problem rather than a technical one. That organizational problem is often about enabling large numbers of people to work on the system effectively, in parallel. It can also be about developer experience, which is important in speeding up delivery of value—because developers don’t have to fight the process and the tooling—but also in recruiting and retaining people.</p>
+
+<p>Having said that, there are also a number of technical reasons to choose microservices. Many of these were introduced in <a data-type="xref" href="ch01.html#chapter1">Chapter 1</a> as benefits of this architectural style; here I’ll be digging deeper into why each may lead you to decide that microservices are what you need. All these technical reasons result from the boundaries that a microservice architecture puts between different parts of the system. These boundaries mean that you can scale just part of the system, or implement auditing or compliance only where you are dealing with particular types of data. A failure can be limited to a single part, making the system more robust. You can deploy the different parts of your system independently, meaning you can move away from one big release and toward small releases when changes are ready. Finally, you can use different technologies for part of the system, ones that better fit the requirements.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Scaling the Organization"><div class="sect2" id="id41">
+<h2>Scaling the Organization</h2>
+
+<p>Up to a point, adding new people to <a data-type="indexterm" data-primary="scaling" data-secondary="organizational" id="sclggz"></a><a data-type="indexterm" data-primary="organizational scaling" id="ogztsg"></a>a team increases the productivity of the team. Different members will bring different skills, and there is more scope for people to work on the tasks that interest them and that they can do well. So a team of five is likely to be more effective than a team of two. But what about a team of 20?</p>
+
+<p>I expect your intuition is that a team of 20 wouldn’t work. And that has to do with the nature of a software development team. People on a software development team don’t work independently; they make decisions together, and communicate about the work they are doing.</p>
+
+<p>That communication becomes more of an overhead <a data-type="indexterm" data-primary="communication" data-secondary="overhead" id="commvh"></a><a data-type="indexterm" data-primary="teams" data-secondary="communication overhead" id="id766"></a>the more people you have on that team. For example, when you move from five to six people in a team, the number of lines of communication goes up by 50%, from 10 to 15 (see <a data-type="xref" href="#figure3-1">Figure 3-1</a>).</p>
+
+<figure><div id="figure3-1" class="figure">
+<img src="assets/emss_0301.png" alt="Five nodes connected to each other (10 lines total), six nodes connected to each other (15 lines total)" width="970" height="486"/>
+<h6><span class="label">Figure 3-1. </span>The number of communication links in a team of six is 50% higher than for a team of five.</h6>
+</div></figure>
+
+<p>Not every interaction in a team needs to happen 1-1, but plenty do. Think about a daily standup. If each person gives a 3-minute update, a 15-minute standup for a team of 5 becomes an hour for a team of 20.</p>
+
+<p>And it’s not just about the time spent in communication. As a team gets bigger, there are more opportunities for miscommunication to occur, making it harder to maintain a common understanding of the purpose of <a data-type="indexterm" data-primary="communication" data-secondary="overhead" data-startref="commvh" id="id767"></a>the team, and easier to end up with people in the team who have different perspectives on how parts of the system work or what the outcome of a particular task should look like.</p>
+
+<p>Research has shown there is also a tendency for individuals to slack off when working in groups. This <a href="https://oreil.ly/0xX2K">“social loafing” effect</a> may be related to feeling less personal responsibility for the output of the team as the team gets bigger, or to a feeling that your efforts just don’t matter.</p>
+
+<p>The outcome of all these <a data-type="indexterm" data-primary="two-pizza limit on team size" id="id768"></a><a data-type="indexterm" data-primary="teams" data-secondary="two-pizza limit" id="id769"></a>aspects is that you can’t keep adding people to a team and expect that team to continue to function effectively. Jeff Bezos famously introduced a two-pizza limit for teams at Amazon: if two pizzas aren’t enough to feed a team, the team is too big. This limit (let’s assume it’s four to six people, because it’s a pretty imprecise guideline) is supported by research by Neil Vidmar and Richard Hackman, where teams of various sizes were asked to complete a task then assess whether the team was too small or too large to achieve optimal results. The cross-over point where people were most satisfied with the size of the team was between four and five people.<sup><a data-type="noteref" id="id770-marker" href="ch03.html#id770">1</a></sup></p>
+
+<p class="less_space pagebreak-before">So, as the organization scales, you split into multiple teams. However, in a monolith, these teams are making changes to the same codebase. By default  (i.e., unless you actively design your monolith to prevent it), that means it’s possible for code to directly access other parts of the codebase and even the database. This can result in changes made by one team having unexpected consequences for another team that was relying on something that the first team felt was an “internal detail” and therefore safe to change. Alternatively, you can have multiple teams making changes to the same shared files with the associated challenges of releasing those files: what happens when the first team to commit changes to the file isn’t ready to push the change live?<sup><a data-type="noteref" id="id771-marker" href="ch03.html#id771">2</a></sup></p>
+
+<p>Well, it slows you down. <em>Accelerate</em>’s research into what high-performing technology organizations have in common identified that these organizations have loosely coupled teams and architecture, so that things can change in one place without impacting the wider system.<sup><a data-type="noteref" id="id772-marker" href="ch03.html#id772">3</a></sup></p>
+
+<p>Loose coupling is about finding the <a data-type="indexterm" data-primary="loose coupling" id="id773"></a><a data-type="indexterm" data-primary="coupling, loose" data-see="loose coupling" id="id774"></a>things in your system that change at the same time and grouping them together. That means they can be changed independently of each other. Information is encapsulated inside those domains, with access only via a well-defined interface, which reduces the direct knowledge that different parts of the system have of one another.</p>
+
+<p>Loose coupling means that teams can <a data-type="indexterm" data-primary="loose coupling" data-secondary="between teams" data-secondary-sortas="teams" id="id775"></a>generally get their work done without having to coordinate with people outside their team. That doesn’t mean that there is no interaction between components: what you are aiming for is to have all access via a defined interface. This means that you got the boundaries right so that the interface for a component is stable and changes infrequently and that most change happens within a component owned by a single team.</p>
+
+<p>For most people, the main reason to adopt microservices is the need to scale the organization. Done right, a microservice architecture is loosely coupled, and that loose coupling allows you to release small changes frequently.</p>
+
+<p><em>Accelerate</em> doesn’t advocate microservices, though; in fact, it says that what tools or technologies to use are the wrong questions to focus on. “What is important is enabling teams to make changes to their products or services without depending on other teams or systems.”<sup><a data-type="noteref" id="id776-marker" href="ch03.html#id776">4</a></sup></p>
+
+<p>As an alternative, also loosely coupled, you <a data-type="indexterm" data-primary="scaling" data-secondary="organizational" data-startref="sclggz" id="id777"></a><a data-type="indexterm" data-primary="organizational scaling" data-startref="ogztsg" id="id778"></a>can opt to make your monolith more modular. I discuss this later in this chapter, and it can be a good option when you don’t have the conditions in place to make a success of a microservice architecture.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Developer Experience"><div class="sect2" id="id42">
+<h2>Developer Experience</h2>
+
+<p>You want your technical stack to attract good <a data-type="indexterm" data-primary="developer experience" id="evpxp"></a>people to work for you and to keep the good people already working for you. The impact of this on technical decisions shouldn’t be underestimated.</p>
+
+<p>People are attracted by the technology they will get to use and learn, but also by the culture of the organization. Is there space to be innovative? Will they find it easy to move on in a few years’ time with this tech on their resumé? You don’t want to do resumé-driven development, <a data-type="indexterm" data-primary="resume-driven development" id="id779"></a>but equally, you don’t want to make it harder to recruit or retain people.<sup><a data-type="noteref" id="id780-marker" href="ch03.html#id780">5</a></sup> In my view, many organizations adopt technology around microservices (for example, Kubernetes) too early because of this driver.</p>
+
+<p>Microservices are now so widely used that for many people, it’s what they expect. Are people going to be hesitant to join an organization that has a large monolithic architecture with many teams working on it? Maybe.</p>
+
+<p>Beyond the choice of technology and the signal that sends, there is the actual experience of working as a developer using this architecture. The clear separation of a microservice architecture into different domains can mean that it is easier for a new developer to get up to speed, because they don’t need to understand the whole system, just the part they are working on. That goes for supporting the application too. It should take much less time to learn how to support a small application than the whole of a monolith.</p>
+
+<p>The local developer experience should be smoother than working on a monolithic application. You should not have to spin up the whole system on your laptop to work on a particular service. That means a shorter development cycle time of code, run, test, because it should take only seconds to compile and restart your application and to run the automated tests just for that service. You may not even need to do <em>local</em> development anymore with the rise of cloud development environments, already widely used in big tech companies.<sup><a data-type="noteref" id="id781-marker" href="ch03.html#id781">6</a></sup></p>
+
+<p>For many developers, the autonomy a microservice architecture gives them is also a major attraction, because it greatly reduces the amount of time they spend waiting for someone else to take an action. If you are used to doing a release once a month, being able to do a release in minutes is a significant benefit.</p>
+
+<p>A caveat, though. It’s easy to get microservices wrong and end up with a worse developer experience. This can be due to a lack of tooling or inconsistencies in how things are done from team to team, or it can be due to trying to work in ways that don’t really make much sense in a microservice architecture. A simple example, already mentioned in <a data-type="xref" href="ch02.html#chapter2">Chapter 2</a>, is when I first built microservices, we implemented an end-to-end acceptance test suite. It was very hard to maintain because data fixtures needed to be set up in multiple services. It coupled all our services together, and it slowed down development drastically. One developer made a change to business functionality that took half an hour. It then took over a week to fix all the acceptance tests because of the coupling and bad structure.</p>
+
+<p>This is related to the challenge I mentioned in <a data-type="xref" href="ch01.html#chapter1">Chapter 1</a>. The developer experience in microservices is different, and if <a data-type="indexterm" data-primary="developer experience" data-startref="evpxp" id="id782"></a>you don’t adapt the ways you work, you could 
+<span class="keep-together">struggle.</span></p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Separating Out Areas with Compliance and Security Requirements"><div class="sect2" id="id43">
+<h2>Separating Out Areas with Compliance and Security Requirements</h2>
+
+<p>While securing microservices can be a <a data-type="indexterm" data-primary="compliance" id="id783"></a><a data-type="indexterm" data-primary="security" data-secondary="requirements" id="id784"></a><a data-type="indexterm" data-primary="compliance" data-secondary="benefits of microservices for" id="id785"></a>challenge, because there are so many potential entry points into your system and because data is being sent over the network far more, they also allow you to separate out the parts of your system that handle sensitive data, or that have particular compliance requirements.</p>
+
+<p>This can be, for example, payments or PII. Segregating this information to a single data store, accessed by a single service, can make it a lot easier to make sure you are complying with requirements like the <a href="https://oreil.ly/3Xivz">Payment Card Industry (PCI) standards</a> or <a href="https://oreil.ly/KsLYU">General Data Protection Regulation (GDPR)</a>.</p>
+
+<p>The teams working on the service will need expertise in these requirements—for example, understanding what they can log without concern versus places where they need to log to somewhere that most people can’t access—but other developers won’t. They are protected by the boundaries put in place between these services and the rest of the system.</p>
+
+<p>Of course, to benefit from this, you need careful design and implementation. It’s all too easy to find that your PII data is not quite as locked down as you thought; for example, there’s no point having access to subscriber information in logs locked down for your log aggregation tool if someone has also sent those logs to a distributed tracing or error tracking system that doesn’t lock down access!</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Scaling for Load"><div class="sect2" id="id263">
+<h2>Scaling for Load</h2>
+
+<p>With a monolith, if you need to scale, you <a data-type="indexterm" data-primary="scaling" data-secondary="for load" id="scgfld"></a>have to scale the whole thing.</p>
+
+<p>With microservices, you can scale just the parts that need to be scaled. You can also run different services on different hardware, optimizing for the characteristics of that service—for example, whether it is I/O bound or CPU bound. And finally, if you have some parts of your system that are only needed at specific times, you can scale them right down or even turn them off.</p>
+
+<p>All of these options can save you money and increase performance. This kind of scaling is a key reason that companies like Google and Netflix use microservices (it may be less relevant for companies operating at smaller scale).</p>
+
+<p>Another advantage of a microservice architecture is that the application data is owned by individual services. That means each data store will contain less data, making it less likely that you will need to <a href="https://oreil.ly/Cc7HT">shard your database</a> across multiple servers. Sharding makes things more complicated since you need to be able to route requests to the appropriate shard. Moving to microservices that each own their own data can avoid this complexity.</p>
+
+<p>There is some nuance here. First of all, people do make the choice to use a single database to back up multiple microservices. This can be because it feels like overkill to have a database per service, although the example I have in mind is for the Content API team at the <em>FT</em>, where we had multiple services writing into the same graph database, because we needed our read microservices to be able to query across the graph of data. Whatever the reason, though, I think modeling which service owns which parts of the data is essential.</p>
+
+<p>The other point is around the other types of data you have in a system: operational data like logs and metrics, analytics, or the data used for business reporting. These are generally all in a single database, with large volumes of data (far larger than in a monolith <a data-type="indexterm" data-primary="scaling" data-secondary="for load" data-startref="scgfld" id="id786"></a>in many cases). Microservices do bring scale challenges!</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Increasing Robustness"><div class="sect2" id="id44">
+<h2>Increasing Robustness</h2>
+
+<p>As mentioned in <a data-type="xref" href="ch01.html#chapter1">Chapter 1</a>, with a monolith, it’s <a data-type="indexterm" data-primary="robustness" id="id787"></a>hard to degrade gracefully. If something goes badly wrong, your whole system will be unavailable. With microservices, you can design your system so that losing one service doesn’t affect the rest of the system. This can involve failing back to a simpler solution. For example, let’s imagine an online book store. If you can’t access information that allows you to show someone a personalized list of recommendations, you can show a list of the most popular items instead.</p>
+
+<p>This does take effort, because you need to decide what to do in case of partial failure. But it also means that failure has a smaller blast radius.</p>
+
+<p>Another thing that a microservice architecture allows is the ability to choose different levels of resilience for <a data-type="indexterm" data-primary="resilience" id="id788"></a>different parts of the system. With a monolith, if you need high availability, you need the whole monolith to be deployed in multiple availability zones and multiple regions. But with microservices, you can accept that some parts of the system are effectively “nice to haves”—which enables you to reduce cost and 
+<span class="keep-together">complexity</span> by running those systems with a lot less redundancy. So that list of 
+<span class="keep-together">personalized</span> recommendations might be a lot less important than the ability to search for a particular book.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Increasing Flexibility"><div class="sect2" id="id45">
+<h2>Increasing Flexibility</h2>
+
+<p>Sometimes you find a part of your system <a data-type="indexterm" data-primary="flexibility" data-secondary="microservices" id="id789"></a>that is quite different in its requirements. With microservices, you can choose different technologies for that domain much more easily.</p>
+
+<p>To expand on my example from <a data-type="xref" href="ch01.html#chapter1">Chapter 1</a>, when the <em>FT</em> had a monolithic Java app and a relational <a data-type="indexterm" data-primary="databases" data-secondary="relational" id="id790"></a><a data-type="indexterm" data-primary="relational databases" id="id791"></a>database for the content publishing platform, metadata had to be stored in that database. But metadata is a graph: an Author is linked to many Articles they have written. The Articles mention Organizations, which are linked to People—the CEO, the Founder, etc.</p>
+
+<p>Graph databases <a data-type="indexterm" data-primary="databases" data-secondary="graph" id="id792"></a><a data-type="indexterm" data-primary="graph databases" id="id793"></a>offer much simpler support for queries that navigate that graph. Moving to a graph database for storing metadata, and a document store for storing articles, fit the data we had and the way we wanted to interact with it much better than using the same relational database for both.</p>
+
+<p>Microservices also give you flexibility in testing out these new approaches. You can create a new service that writes to a new graph database alongside your existing service and database, and compare the two. To take another example from the <em>FT</em>, my team’s move from writing services in Java to writing them in Go started with writing the same new service in both languages and comparing them. We could then decide to start writing <a data-type="indexterm" data-primary="microservices" data-secondary="reasons to choose" data-startref="mcsvcrc" id="id794"></a>all new services in Go, without having to migrate the existing estate.</p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Conditions for Success"><div class="sect1" id="id467">
+<h1>Conditions for Success</h1>
+
+<p>So, let’s say you have a compelling reason to adopt microservices. How can you have confidence that this will deliver the change you need?</p>
+
+<p>In this section I want to go over a few questions to ask yourself about your organization and your context, before embarking on using a microservice architecture (whether this is a migration from an existing monolith or a new system built from scratch). If you don’t have these things in place already and can’t imagine introducing them, you could find microservices a challenge.</p>
+
+<p>These are all positive changes in my experience, whatever architectural style you end up using! So I encourage you to think about what it would take to introduce them in your organization whether or not you ultimately move to microservices. I will talk a little about change management later in the chapter.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" class="less_space pagebreak-before" data-pdf-bookmark="Domain Understanding"><div class="sect2" id="id46">
+<h2>Domain Understanding</h2>
+
+<p>The first question is, how well do you understand your domain?</p>
+
+<p>If you are building something new, you probably <a data-type="indexterm" data-primary="domains, understanding" id="id795"></a>don’t yet have a deep understanding of the domain. That means you will struggle to identify the right boundaries between parts of the system. If you divide up your system now, there’s a high chance you’ll find you need to move things around later.</p>
+
+<p>This is a good reason to start with a monolith. The early phases of any project tend to mean writing new functionality, which means less contention for making changes to the same code. You should make good progress to start with.</p>
+
+<p>As you work on the monolith, you will start to see code that hangs together nicely and changes at the same time. Then, when you need to move away from that monolith, you will have a good idea of where to split out a service.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Products Not Projects"><div class="sect2" id="id47">
+<h2>Products Not Projects</h2>
+
+<p>Many companies fund development <a data-type="indexterm" data-primary="product-focused approach" id="id796"></a>work through projects. A feature or set of features to develop is identified, a team is put together and funded for a period of time, and once those features are complete, the project is “finished.” After that point, the system goes into maintenance mode, run by a maintenance team.</p>
+<p class="fix_tracking">
+This doesn’t really work for a microservice architecture. The teams get to make decisions about the tech they use <em>because</em> they are going to support that tech in production. This is good for the quality of the system being built—you think differently when you are the team that might have to pay the price for a particular technology decision.</p>
+
+<p>What it means for the organization is that you need to move to a product-focused approach.<sup><a data-type="noteref" id="id797-marker" href="ch03.html#id797">7</a></sup> You form a team to build a product, and that team will own it throughout its lifetime. That doesn’t mean the team won’t change, or reduce in size. But it means that there is some continuity between the people making decisions and the people supporting the consequences.</p>
+
+<p>This is a fairly big change, and it can be difficult for leadership to loosen control to the point where they are no longer defining what gets built, but instead setting direction and letting the team get on with it. Also, many people would like to think that there is minimal work involved in maintaining an existing product. That’s never really been true, but it is even less true with a microservice architecture: you need a continued investment in maintenance and support.</p>
+
+<p>There are two things that can help “sell” the change. First, you should be able to make changes that people care about more quickly. And second, the change from project to product <em>should</em> mean more flexibility to meet the needs of stakeholders as they come to understand them, rather than those stakeholders needing to get everything they care about put into scope for a project up front. You need to prove this works though!</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Leadership Support"><div class="sect2" id="id48">
+<h2>Leadership Support</h2>
+
+<p>Microservices can require big organizational <a data-type="indexterm" data-primary="leadership support" id="id798"></a>and cultural changes that take years to complete and affect the whole technology organization. You can’t do that without leadership support. Your leaders need to see the value of these changes, and they will need to advocate for them. When you change, for example, from funding projects to funding products, it affects the whole technology organization in terms of the processes for planning and the ways costs are allocated.</p>
+
+<p>The changes you need to be successful with microservices can mean a change in role for many managers. If you move from aligning your teams to discipline, i.e., frontend, backend, and database, to having cross-functional teams, what does that mean for their manager? It can be worked out, but only by the technology leadership.</p>
+
+<p>And microservices have a start-up cost. You will move slowly while you build necessary tooling, and develop a culture of long-term ownership and support. If your leadership isn’t bought in, there is a good chance you won’t get that time.</p>
+
+<p>Make sure that your leaders understand the problems you are trying to address by moving to this architectural style, and the benefits and trade-offs.</p>
+
+<p>Think about what metrics matter to your leadership, and how you will show the positive impact of a microservice <a data-type="indexterm" data-primary="leadership metrics" id="id799"></a>architecture on those metrics. You do need to be willing to accept that microservices may not move those metrics that matter to them, and that should lead you to think carefully about whether this is the right time to adopt microservices.</p>
+
+<p>Metrics can be a tricky area, and it’s something I’ll discuss in <a data-type="xref" href="#recommendations2">“Recommendations”</a>.</p>
+
+<p>You also need to be clear about additional costs  that might be associated with the move. For example, if development teams are now all supporting their own systems, you have to think about how you pay teams for doing that support, which could increase the out-of-hours support costs considerably. You may also need 10 times as many licenses for operational software that handles or escalates incidents, because they are needed for all engineers, not just operations teams.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Teams That Want Autonomy"><div class="sect2" id="id264">
+<h2>Teams That Want Autonomy</h2>
+
+<p>If you move to microservices, you need each team to <em>want</em> to make its own decisions. That means the people on <a data-type="indexterm" data-primary="teams" data-secondary="autonomy" id="id800"></a><a data-type="indexterm" data-primary="autonomy" data-secondary="teams, wanting" id="id801"></a>the team need to be comfortable with the freedom that being given a desired outcome rather than a prescriptive plan gives, and to engage with the wider business context so they can understand which options will move them toward that desired outcome.</p>
+
+<p>Likewise, if your teams just want to write code and don’t want to think about operational concerns or infrastructure at all, moving to microservices is likely not going to work out.</p>
+
+<p>Over time, you can shape your teams through turnover and recruiting for experience and interest in microservices, and you can support people currently in the teams to feel more comfortable with new responsibilities.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Processes That Enable Autonomy"><div class="sect2" id="id49">
+<h2>Processes That Enable Autonomy</h2>
+
+<p>Do you have a change advisory board (CAB) that <a data-type="indexterm" data-primary="autonomy" data-secondary="enabling" id="autybg"></a><a data-type="indexterm" data-primary="CAB (change advisory board)" id="id802"></a><a data-type="indexterm" data-primary="change advisory board (CAB)" id="id803"></a>signs off on releases to production? Can a developer spin up infrastructure or do they need to raise a ticket and wait for a central team to approve it?</p>
+
+<p>A CAB <em>feels</em> like something that will make it less likely to have a problem in production, but research shows that isn’t the case.<sup><a data-type="noteref" id="id804-marker" href="ch03.html#id804">8</a></sup> All it really does is slow things down.</p>
+
+<p>Having a central team in control of the infrastructure feels like it will keep a handle on costs and reduce risk from misconfiguration. But again, waiting for that team to do something slows people down. It is more effective to provide self-service tools that help <a data-type="indexterm" data-primary="self-service" data-secondary="autonomy and" id="id805"></a>people set things up right, and to review your estate to pick up on wasted resources.</p>
+
+<p>Teams that handle infrastructure, operations, and other central concerns need a willingness to allow their customer teams to get on with things. This means adopting an enabling, self-service mindset where as much as possible, they remove “gates” that teams need to get through.</p>
+
+<p>Some of these changes will affect what people do, day-to-day. That makes this difficult and emotional. However, if you don’t make this change, you will struggle to truly benefit from adopting microservices.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Technical Maturity"><div class="sect2" id="id50">
+<h2>Technical Maturity</h2>
+
+<p>If your organization still does lots of <a data-type="indexterm" data-primary="technical maturity" id="id806"></a><a data-type="indexterm" data-primary="automation" data-secondary="technical maturity and" id="id807"></a>things manually, you aren’t yet in the right place for a move to microservices. <a href="https://oreil.ly/T4dwb">Sort out the groundwork first</a>. This means automation.</p>
+
+<p class="less_space pagebreak-before">There are a few benchmarks to determine if your organization is technically mature enough for microservices. You should:</p>
+
+<ul>
+<li>
+<p>Be able to spin up a new service in a matter of minutes in an automated, repeatable, reliable way.</p>
+</li>
+<li>
+<p>Be able to deploy via an automated pipeline that includes automated tests rather than manual regression testing.</p>
+</li>
+<li>
+<p>Have tools and processes in place to effectively monitor the health of your servers <em>and</em> your applications.</p>
+</li>
+</ul>
+
+<p>These are all changes that will provide value to your organization, whether or not you move to microservices afterwards.</p>
+
+<p>Note: you don’t have to introduce these things for all existing systems. You can extract a single service and start by automating deployment and introducing observability. However, if your organization can’t make these changes even for new services, either because of culture or technology, then you likely aren’t in a good place to adopt microservices.</p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Managing Change"><div class="sect1" id="id51">
+<h1>Managing Change</h1>
+
+<p>Maybe you don’t have the conditions in place to <a data-type="indexterm" data-primary="change management" id="cgmgn"></a>be successful—yet. So how can you influence your organization to change?</p>
+
+<p>Change management is a huge topic and is not in scope for this book, not least because I am not an expert! However, I do have a few comments <em>specifically</em> about managing a move to a microservice architecture, which I see as being as much an organizational and cultural change as a technical one, precisely because of what needs to be in place to be successful.</p>
+
+<p>First up, it is easier to try something out for small groups and for a limited period. Find a group of like-minded people, and run a project to extract a service, or to automate server provisioning, or to introduce continuous delivery.<sup><a data-type="noteref" id="id808-marker" href="ch03.html#id808">9</a></sup> See whether you get the benefits you were hoping for. A good reason to extract a service might be where it has different requirements, or where you want to try out something new on a small scale, such as a different database or even programming language.</p>
+
+<p>Sometimes, this is about finding a way to work around processes that slow you down. When I joined the <em>FT</em> in 2011 we had a CAB and would agree up front on when code could be released to our test and then production environments. But we had a third party that built key parts of our estate, and they didn’t have to follow the same process. When our stakeholders asked why that third party could get things done more quickly, it opened up a conversation about how comfortable the stakeholders were with trusting development teams to decide when to release changes. Soon, we moved away from a CAB, instead tracking all changes made and handing responsibility to teams to choose when to do them.</p>
+
+<p>Also, accept that not everyone will respond in the same way to a big change, such as a move to microservices and the related change in responsibilities. You will probably find that you have some keen adopters, some refusers, and some in the middle, both for whole teams and for individuals. Work with those who are keen, provide as much information and reassurance as you can for those in the middle, and accept that for some people, this will be a reason to move on. You have a chance through natural turnover and recruitment to shape your teams over time. This is an area where that leadership support is important, because your leaders are the ones who can be clear <a data-type="indexterm" data-primary="change management" data-startref="cgmgn" id="id809"></a>on what you are doing as an organization and why.</p>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Sticking with a Monolithic Architecture"><div class="sect1" id="id265">
+<h1>Sticking with a Monolithic Architecture</h1>
+
+<p>Unless you have compelling reasons to adopt microservices <em>and</em> can get the conditions in place to be successful, be wary.</p>
+
+<p>There are many advantages of building a <a data-type="indexterm" data-primary="monolithic architecture" data-secondary="keeping" id="monchk"></a><a data-type="indexterm" data-primary="monolithic architecture" data-secondary="advantages" id="id810"></a>monolith, or at least of building a monolith first. For example, they are a lot simpler to operate and to understand. And you can invest in making changes to the monolith to tackle those big challenges that tend to make people look toward microservices.</p>
+
+<p>Specifically, you can address the challenges of scaling your organization and with developer experience by building a modular monolith, one where the code is structured into domains with clearly defined boundaries.</p>
+
+<p>And you can address different requirements for parts of the system by splitting out parts of the monolith, without going further into a microservices approach. This will allow you to support different levels of required compliance, security, and redundancy, and to use different technologies if those are necessary.</p>
+
+<p>I will talk more about both of these in the following section, but first, I want to briefly talk about how you can deal with moving to zero-downtime deployments in a 
+<span class="keep-together">monolith.</span></p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Enable Zero-Downtime Deployments"><div class="sect2" id="id52">
+<h2>Enable Zero-Downtime Deployments</h2>
+
+<p>The ability to do a zero-downtime deployment <a data-type="indexterm" data-primary="deployment" data-secondary="zero-downtime" id="dpymzw"></a><a data-type="indexterm" data-primary="zero-downtime deployment" id="zdwply"></a>transforms your ability to deliver value, whatever the architecture. That’s because it lets you move toward releasing on demand, and <em>that</em> lets you start to improve on the DORA metrics: specifically, 
+<span class="keep-together">lowering</span> the lead time between committing code and releasing it, and allowing a higher deployment frequency.</p>
+
+<p>To be able to do a zero-downtime deployment, you need <a data-type="indexterm" data-primary="pipelines, zero-downtime deployment and" id="id811"></a>automated deployment pipelines, containing automated tests. This allows for quicker and reliably repeatable deployments. This is something you can do with your monolith.</p>
+<p class="fix_tracking">
+With a monolith, though, “quicker” still might not be particularly quick. Running every automated test for a large system can take a significant amount of time. You might find you have more changes happening than can each run through the pipeline in a day, in which case you will need to batch together more than one change, and have multiple changes going through the pipeline together. That does mean working out what happens to later deployments if a deployment fails. This can be complicated—but is it more complicated than supporting a distributed system architecture?
+</p>
+
+<p>Once you have continuous delivery working smoothly, the <a data-type="indexterm" data-primary="continuous delivery" data-secondary="zero-downtime deployment and" id="id812"></a>next thing you need is to be able to deploy code to a server that <a data-type="indexterm" data-primary="blue-green deployment" id="id813"></a><a data-type="indexterm" data-primary="databases" data-secondary="blue-green deployment" id="id814"></a>is not handling traffic (<a href="https://oreil.ly/SiCLs">blue-green deployment</a>). Once a deployment is complete, you can move traffic over to the new version. Generally, you want to do this gradually so you can find out about a broken release before it impacts more than a small percentage of your users. Again, this is possible for a monolith as it is for microservices.</p>
+
+<p>The most complicated aspect is generally the database. Keeping two databases in sync isn’t easy, and often the blue and green environments in fact share a database. This means database changes need to be backward compatible. For example, don’t drop a table or a column until you know you do not need to back out the code change that meant it wasn’t needed anymore. This is definitely more complicated when you have a single database that contains all your data than when you have microservices that own their own data, but it is easier when each individual change is relatively small than in <a data-type="indexterm" data-primary="deployment" data-secondary="zero-downtime" data-startref="dpymzw" id="id815"></a><a data-type="indexterm" data-primary="zero-downtime deployment" data-startref="zdwply" id="id816"></a>the days where a deployment contained weeks of schema and data changes.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Build a Modular Monolith"><div class="sect2" id="id53">
+<h2>Build a Modular Monolith</h2>
+
+<p>Microservices are not the only loosely coupled <a data-type="indexterm" data-primary="modular monolithic architecture" data-secondary="building" id="mdmtch"></a><a data-type="indexterm" data-primary="monolithic architecture" data-secondary="modular" data-tertiary="building" id="mthchd"></a><a data-type="indexterm" data-primary="loose coupling" data-secondary="modular monolithic architecture and" id="lscpmmch"></a><a data-type="indexterm" data-primary="boundaries" data-secondary="within a modular monolith" data-secondary-sortas="modular monolith" id="bdmmwt"></a>architecture. One alternative is to break up your monolith into logical modules. This is the approach taken by Shopify, and it has proven very successful for the organization.</p>
+
+<p>In this model, the code still lives in a single repository and is deployed as a single deployment unit through a single build and deployment pipeline, but it is split into components that map to different domains, and the boundaries between those domains are specified carefully, although probably not enforced.</p>
+<aside data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="cs_shopifymm">
+<h1>Case Study: Shopify’s Modular Monolith</h1>
+<p>Shopify started off with a Ruby on Rails monolith. This <a data-type="indexterm" data-primary="Shopify" id="spyfo"></a><a data-type="indexterm" data-primary="modular monolithic architecture" data-secondary="Shopify" id="mmarc"></a><a data-type="indexterm" data-primary="case studies" data-secondary="modular monolith at Shopify" id="cssmmy"></a>worked well for it initially, but by 2016, as Kirsten Westeinde notes in <a href="https://oreil.ly/JEGnF">her <em>Deconstructing the Monolith</em> blog post</a>, Shopify had millions of lines of code and over a thousand developers,<sup><a data-type="noteref" id="id817-marker" href="ch03.html#id817">10</a></sup> and they were starting to hit problems.</p>
+
+<p>There was nothing stopping code from calling code that was part of a different business domain, leading to a lot of coupling between different parts of the application.</p>
+
+<p>That meant that changes in one place could have unexpected consequences, so that a small change could cause many tests to start failing. This also made for a steep learning curve as developers had to understand a large part of the system before they could make changes to a smaller part.</p>
+
+<p>Shopify wanted to decrease the coupling between different parts of the system, reducing the density of the dependency graph and giving it confidence that changes in one part were not going to impact other parts.</p>
+
+<p>This is what microservices give you, but Shopify liked many aspects of having a 
+<span class="keep-together">monolith.</span> There is only one repository, meaning you can easily search within it, and make changes in calling code at the same time as in the code being called. There was only one build and deployment pipeline to maintain, and only one set of infrastructure. Calls between components were in-process rather than over the network, making them faster and more reliable.</p>
+
+<p>Rather than moving to microservices, Shopify reduced the dependencies by making the move to a modular monolith. This was a significant change—starting with a complete refactoring of the codebase to be based around domains rather than software layers (the <a href="https://oreil.ly/0KKcj">model, view, and controller</a> layers that a Ruby on Rails application defines by default within the app folder).</p>
+
+<p>Those domains then defined public APIs, with data owned by the component only to be accessed via those APIs. Shopify developed tools to flag any access not happening through the APIs, as it shows coupling across domain boundaries, and worked to reduce this coupling.</p>
+
+<p>These changes paid off. New developers could focus on the parts of the monolith they were making changes to, including running just the relevant subset of tests. Feature development time was reduced.</p>
+
+<p><a href="https://oreil.ly/pm8vk">Another blog post</a>, by Philip Müller,<sup><a data-type="noteref" id="id818-marker" href="ch03.html#id818">11</a></sup> provides an update several years into this transition, noting that while they stand by their original ideas, almost all the details have changed.<sup><a data-type="noteref" id="id819-marker" href="ch03.html#id819">12</a></sup></p>
+<p class="fix_tracking">
+When the members of the team reflected, they concluded that this was primarily a people problem rather than a technical one. They were making a fundamental change to a system actively being worked on, and they needed to change developer behavior. They found some of the things they were doing, for example defining patterns for designing component boundary interfaces, were adding friction, rather than making things easier.</p>
+
+<p>The team decided to focus its energy on:</p>
+
+<ul>
+<li>
+<p>Fostering grassroots efforts by giving talks, working with teams, and generally acting as evangelists</p>
+</li>
+<li>
+<p>Tackling the circular dependencies in its dependency graph, in particular through identifying key components like the <code>Shop</code> class that almost everything else depended on, and removing as much concrete implementation from it as possible to leave it depending on almost nothing</p>
+</li>
+<li>
+<p>Revisiting its tooling to remove noise and make the tooling much faster to run</p>
+</li>
+</ul>
+
+<p>For me, it’s fascinating to read this blog post, because the things Shopify has learned overlap significantly with the things the <em>FT</em> learned: modularization, whether within a monolith or via microservices, involves understanding and influencing developer behavior (which I discuss in <a data-type="xref" href="ch07.html#chapter7">Chapter 7</a>) and a careful application of tooling. And it takes time. While Shopify is already reaping the benefits of this work, it isn’t finished yet, several years into the process. That matches my experience from the <em>FT</em> that moving to microservices successfully takes years. You get benefits earlier, but the full benefits come when the new approach is ingrained in the team.</p>
+
+<p>One final comment on Shopify’s modular monolith is that it does in fact split out specific services too. The decision to do this is based on whether:</p>
+
+<ul>
+<li>
+<p>The functionality is something only some merchants need.</p>
+</li>
+<li>
+<p>There is a significantly different performance profile.</p>
+</li>
+<li>
+<p>There are significantly different security constraints.</p>
+</li>
+</ul>
+
+<p>An example is the Shopify storefront. When this was <a href="https://oreil.ly/wWWJ-">rebuilt in 2019</a>, that was done outside <a data-type="indexterm" data-primary="Shopify" data-startref="spyfo" id="id820"></a><a data-type="indexterm" data-primary="modular monolithic architecture" data-secondary="Shopify" data-startref="mmarc" id="id821"></a><a data-type="indexterm" data-primary="case studies" data-secondary="modular monolith at Shopify" data-startref="cssmmy" id="id822"></a>the monolith because performance is such a critical aspect for this service.</p>
+</div></aside>
+
+<p>Sticking with a single deployment artifact does reduce your flexibility. Examples of this are to treat parts of the system in different ways because they have specific security or performance requirements, or to use different technologies for different parts of your system—particularly things like different programming languages.  Personally though, I’m not super convinced of the value of multiple programming languages being supported for services operating in the same part of the stack, i.e., backend services. You <em>can</em> still use different data stores from within the monolith, for example a graph versus a document store, and you can certainly split your monolith to satisfy different requirements, without moving to a fully distributed microservices solution.</p>
+
+<p>The challenges you will encounter in order to successfully design a modular monolith are very similar to those faced in order to successfully design a microservice-based system. Can you identify business-focused domains where you have low coupling between the domains and high cohesion within them? Can you make that significant shift in thinking for the critical mass of developers so that modular design becomes the natural way to approach things?</p>
+
+<p>If you can’t do that, you won’t succeed, whether you are modularizing the monolith or going for microservices. Architect and creator of the <a href="https://c4model.com">C4 model</a> Simon Brown covered this well in his GOTO Berlin talk in 2018.<sup><a data-type="noteref" id="id823-marker" href="ch03.html#id823">13</a></sup> But maintaining the boundaries requires more effort when the boundaries are within one codebase, because it’s harder to spot when you are crossing a boundary. You also need to allow time for refactoring as you grow to understand where the right boundaries actually are.</p>
+
+<p>For both modular monoliths and microservices, modularization <a data-type="indexterm" data-primary="modular monolithic architecture" data-secondary="microservices comparison" id="mdmthcvp"></a>should lead you toward <em>developing and testing</em> against just your part of the overall system. You shouldn’t need to run all the tests—if you have managed to create loosely coupled components.</p>
+
+<p>Once your code is ready to <em>build and deploy</em>, things feel pretty different between the two. Although you can use a monorepo with microservices, in my experience it is more common to have each microservice in its own repo, with its own tests. In general, a deployment will go through the build pipeline in minutes, and deployments (and releases, since releasing functionality can happen after deploying the code when you make use of feature flags and blue-green deployments) for different microservices should be so independent that no coordination is required. You really do deploy at will. It’s unusual to have deployments queued up on a particular service. If something goes wrong, you can generally either roll back to the previous version of the service or make a code change and roll forward to the fixed version: I saw this “roll forward” happen a lot at the <em>Financial Times</em>. It’s possible when the change is well understood and the fix is small, and the developer finds out there’s a problem while they are still in the codebase.<sup><a data-type="noteref" id="id824-marker" href="ch03.html#id824">14</a></sup></p>
+<p class="fix_tracking">
+With a modular monolith, you are deploying the full system each time, through a single build pipeline. If your pipeline includes a lot of end-to-end tests, which tend to be slow to execute, each run can take a long time—a former colleague told me about a startup with 12 developers where the build pipeline took more than 40 minutes to run. Because of this, it may make sense to group more than one change into a deployment. Shopify can include up to 16 pull requests (PRs) in a single deployment to production. </p>
+
+<p>As you scale up, it’s pretty unlikely you can run all your tests for each deployment because it takes too long, even if you throw a lot of machines at the problem (at one point Shopify was running tests on more than 100 machines for each PR). Instead, you need to invest in ways to run a sensible subset of the tests: the ones that touch the code being changed in this release. You do often end up with deploys running through the process at the same time—think of this as like trains on a single track. If something goes wrong with a deployment, other trains have to wait.</p>
+
+<p>There are ways to mitigate these challenges—for example, by running full sets of tests against PRs ahead of merging code. Also, by focusing on writing tests that run quickly, so that almost all your tests are unit tests rather than integration tests.</p>
+
+<p>On the plus side, teams spend a lot less time setting up and maintaining build 
+<span class="keep-together">pipelines!</span></p>
+<p class="fix_tracking">
+Once the code is <em>running in production</em>, it’s unquestionably easier to understand what’s happening with a modular monolith, because there are significantly fewer moving parts.</p>
+
+<p>One thing to note, however, is that few monoliths are truly running in a nondistributed fashion, and that is because <a data-type="indexterm" data-primary="monolithic architecture" data-secondary="keeping" data-startref="monchk" id="id825"></a><a data-type="indexterm" data-primary="modular monolithic architecture" data-secondary="building" data-startref="mdmtch" id="id826"></a><a data-type="indexterm" data-primary="monolithic architecture" data-secondary="modular" data-tertiary="building" data-startref="mthchd" id="id827"></a><a data-type="indexterm" data-primary="loose coupling" data-secondary="modular monolithic architecture and" data-startref="lscpmmch" id="id828"></a><a data-type="indexterm" data-primary="boundaries" data-secondary="within a modular monolith" data-secondary-sortas="modular monolith" data-startref="bdmmwt" id="id829"></a><a data-type="indexterm" data-primary="modular monolithic architecture" data-secondary="microservices comparison" data-startref="mdmthcvp" id="id830"></a>of other changes happening in how we build our systems.</p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Everything Is Distributed Now"><div class="sect1" id="id54">
+<h1>Everything Is Distributed Now</h1>
+
+<p>With most software being delivered via a browser, it’s rare to have an application deployed on the <a data-type="indexterm" data-primary="CDNs (content delivery networks)" id="id831"></a><a data-type="indexterm" data-primary="content delivery networks (CDNs)" id="id832"></a><a data-type="indexterm" data-primary="distributed systems" id="dstbysms"></a>same box it is being used from. Monoliths generally talk to their database over a network, clients access them over the network, and there are content delivery networks (CDNs) in the path too.</p>
+
+<p class="less_space pagebreak-before">Also, the rise of the cloud and the volume of traffic many systems now need to handle means even monolithic applications are often running on many machines in parallel. As Brendan Burns says in <a href="https://learning.oreilly.com/library/view/designing-distributed-systems/9781491983638/" class="orm:hideurl"><em>Designing <span class="keep-together">Distributed Systems</span></em></a> (Sebastopol: O’Reilly, 2018): “Once upon a time, people wrote programs that ran on one machine and were also accessed from that machine. The world has changed. Now, nearly every application is a distributed system running on multiple machines and accessed by multiple users from all over the world.”</p>
+
+<p>Alongside this, many recent developments in software engineering push us toward a distributed architecture with small components. These are things that allow development teams to focus on business value, and hand other responsibilities off so they are someone else’s problem (even though it may not feel like that if you are struggling to cope with all the things you now need to know about, beyond how to write code!). Let’s explore this further.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="The Rise of Cloud Native"><div class="sect2" id="id55">
+<h2>The Rise of Cloud Native</h2>
+
+<p>To<a data-type="indexterm" data-primary="cloud native" id="id833"></a> be “cloud native” means taking advantage of the cloud rather than just treating it as a data center someone else runs. That means using the “value-added” stuff from the cloud providers rather than treating the cloud purely as self-service compute on demand.</p>
+
+<p>And lots of this value-added stuff is something that comes in small pieces, that you compose together: a queue, a data store, functions as a service. These approaches push you toward very different ways of building a system; serverless really is a cloud-only pattern. Serverless has a lot of the same benefits and challenges as microservices because it also involves small components in a distributed system and in fact, you can just treat it as one deployment option for this type of architecture.</p>
+
+<p>At the <em>Financial Times</em> we made use of many of the options available. We had microservices running on Heroku and AWS. One group used containers running on Kubernetes. And almost every team used AWS Lambdas, either acting as cron jobs or responding to events. It was a mix, and all of it was distributed.</p>
+
+<p>We will see this sort of mix become more common as we allow autonomous teams to choose the most appropriate tools for the job, rather than mandating the use of a single common platform.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="SaaS Makes Sense"><div class="sect2" id="id56">
+<h2>SaaS Makes Sense</h2>
+
+<p>The rise of the cloud has also enabled <a data-type="indexterm" data-primary="SaaS (software as a service)" id="id834"></a><a data-type="indexterm" data-primary="software as a service" data-see="SaaS" id="id835"></a>software as a service (SaaS), where companies run software for you, accessed over the internet, usually for a subscription fee.</p>
+
+<p class="less_space pagebreak-before">First, the cloud makes it easier for those SaaS companies, as they can scale to meet demand easily. But also, companies were cautious about giving up control of their applications—I can still remember discussions about why no one would want to run their code in the public cloud, and those discussions were happening not that long ago! However, once people have accepted that AWS is hosting their code, it’s a smaller step to using a third party who is also running on AWS.</p>
+
+<p>Using SaaS providers means you can focus on the things that are differentiators for your business. I am not interested in building my own authorization framework, but actually, I’m also not particularly interested in running one built by someone else, if instead I can hand the whole thing off to a third party. But this means that a lot of your business flows are necessarily distributed, because at least some of the steps pass out to third parties.</p>
+
+<p>Once you have learned how to handle that, the next <a data-type="indexterm" data-primary="distributed systems" data-startref="dstbysms" id="id836"></a>steps toward microservices are less intimidating.</p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Recommendations"><div class="sect1" id="recommendations2">
+<h1>Recommendations</h1>
+
+<p>Given all the things I’ve discussed so far in this chapter, what would my advice be to an organization considering whether to move to microservices?</p>
+
+<p>My advice varies depending on whether you are starting from scratch or replacing an existing monolith, and I will cover both in turn.</p>
+
+<p>Whichever situation, consider that a microservice architecture is made up of many services, which means you are building and operating a distributed system with a lot of moving parts, and that can be complicated. Everything you have to do—for 
+<span class="keep-together">example,</span> upgrading a dependency, or adding a security scanning tool into a build pipeline—now has to be done multiple times, once for each service. And rather than having calls between functions in the same running application, you are going over the network, with all the flakiness and latency that entails.</p>
+
+<p>The benefits can outweigh the costs, but only if you invest in the tools and processes you need, and make sure your organization is set up to allow you to work effectively. This is a nontrivial change: it will likely take years to complete, although you should see a positive impact much earlier than that.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" class="less_space pagebreak-before" data-pdf-bookmark="Starting from Scratch"><div class="sect2" id="id57">
+<h2>Starting from Scratch</h2>
+
+<p>If you are building something from scratch, I would tell you to start with monolithic systems (you may need more than one: even in the age of monolithic systems the organizations I worked in had several quite separate monoliths). First, you don’t know whether you need microservices. Why pay the “microservices tax”—the work it takes to provide tools to build, deploy, and operate multiple services—until you know whether you’re building something people are going to use?<sup><a data-type="noteref" id="id837-marker" href="ch03.html#id837">15</a></sup></p>
+
+<p>Second, you don’t yet have a full understanding of your domain. You are very unlikely to be able to work out the right boundaries between services until you have had a chance to see what parts of the system change together and what parts seem very independent of each other.</p>
+
+<p>Finally, you are unlikely to successfully build a microservice architecture from scratch because it’s too complex. You need to start with something simpler.</p>
+
+<p>Gall’s Law applies. “A complex system that works is <a data-type="indexterm" data-primary="Gall's Law" id="id838"></a>invariably found to have evolved from a simple system that worked. A complex system designed from scratch never works and cannot be patched up to make it work. You have to start over with a working simple system.”<sup><a data-type="noteref" id="id839-marker" href="ch03.html#id839">16</a></sup></p>
+
+<p>So, start with a monolith. As you grow your codebase and/or your team, look out for when you start to slow down and find you get in each other’s way. At that point, it’s time to do <em>something</em> to fix this. By then, it is likely to be clear where you have parts of that monolith that hang together coherently and could be extracted out, either within the monolith or as separate services.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Replacing an Existing Monolith"><div class="sect2" id="id266">
+<h2>Replacing an Existing Monolith</h2>
+
+<p>It is advisable to have a modular architecture <a data-type="indexterm" data-primary="monolithic architecture" data-secondary="replacing" id="mntccr"></a>for a modern software system once you have more than one team working on it: something with loose coupling and high cohesion, where you can release small changes regularly. Many of the benefits of a microservice architecture arise from defining component boundaries well. You will see these same benefits with a modular monolith (see <a data-type="xref" href="#figure3-2">Figure 3-2</a>).</p>
+
+<figure><div id="figure3-2" class="figure">
+<img src="assets/emss_0302.png" alt="Both microservices and modular monoliths benefit from high cohesion, low coupling, and appropriate boundaries, but microservices also have the benefits from a distributed system approach" width="2426" height="1622"/>
+<h6><span class="label">Figure 3-2. </span>Both modularization and a move to distributed systems have value. You can do the first without the second. Reproduced with permission from Simon Brown’s GOTO 2018 talk on <a href="https://oreil.ly/8GdXW">“Modular Monoliths”</a>.</h6>
+</div></figure>
+
+<p>Building a modular monolith might work for you, and if you don’t have the necessary things in place to make a success of microservices—for example, if your teams don’t want the responsibility of being fully autonomous or your leadership isn’t on board with what needs to happen—I would stick there.</p>
+
+<p>However, and this may not surprise you given I’m writing a book about microservices, I would definitely consider taking the next step and moving these modules into separate processes.</p>
+
+<p>With a modular monolith, you end up with a lot of complexity in the build and deployment process. It’s hard to make sure you can release code quickly and with a high degree of confidence. It’s also much harder to maintain boundaries between modules through consensus within a monolith than it is where services are built and deployed separately. It’s too easy for developers to make decisions for the short term that break the boundaries (true <a href="https://oreil.ly/GGiVu">Tech Debt</a> as defined by Ward Cunningham, in that you take it on knowing that you will be paying interest on it until you go back and 
+<span class="keep-together">fix it).</span></p>
+
+<p>It is a lot easier now to build and operate a distributed system than it was when we first started building microservices at the <em>FT</em>. There is over a decade of experience to draw on, and many more tools that can help. But even in 2015, you could build successful microservices-based systems. We built three at the same time at the <em>FT</em>!</p>
+
+<p>I’d certainly start with fairly coarse-grained services, to minimize the overhead of running them all and to minimize the chance that you have to deal with data changes across services. Sam Newman describes the Strangler Fig pattern<sup><a data-type="noteref" id="id840-marker" href="ch03.html#id840">17</a></sup> in Chapter 5 of his book <a href="https://learning.oreilly.com/library/view/monolith-to-microservices/9781492047834/ch03.html#ch05-Strangler-Pattern" class="orm:hideurl"><em>Monolith to Microservices</em></a>. It’s useful because your new system grows up around the old system, which acts as a support structure until the new system can stand on its own. You can extract a single service, see what benefits that brings, then go back and do another. Stop when you no longer get the value, or keep going until there is no monolith left.</p>
+
+<p>I would also aim for the least possible amount of additional technology while in the early stages of implementing a microservice architecture. You want to minimize the up-front setup costs, and setting up a Kubernetes platform—or learning about Kubernetes, if you choose a platform run by someone else—is likely to be quite an 
+<span class="keep-together">investment.</span></p>
+
+<p>If you are running in the cloud, I would aim to outsource as much effort to your cloud provider as possible. Package your application up as a container image and have those run for you.</p>
+
+<p>I would also take a good look at whether serverless solutions would work for you. Adrian Cockcroft pioneered the use of microservices when he was at Netflix. Now his advice is to look at serverless first, using serverless functions to glue together all the really reliable long-running services that cloud providers already offer, such as databases and message queues.</p>
+
+<p>I would probably use a container for anything that has a consistent workload, and anything where latency matters. I would definitely look at function as a service for any code that needs to respond to an event—for example, a file being written 
+<span class="keep-together">somewhere.</span></p>
+
+<p>Almost everything I’m going to say in this book applies to any distributed system made up of small services, whether those are long-running containers or short-running serverless functions. Though these days, it feels like things are converging a bit. As an example, AWS now supports <a data-type="indexterm" data-primary="monolithic architecture" data-secondary="replacing" data-startref="mntccr" id="id841"></a>deploying lambda functions as container images, allowing you to use a consistent set of tools across both, and choose to deploy containers or functions, whichever meets your need, and GCP Cloud Run is serverless<sup><a data-type="noteref" id="id842-marker" href="ch03.html#id842">18</a></sup> that you can deploy containers to.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Measuring Success"><div class="sect2" id="id58">
+<h2>Measuring Success</h2>
+
+<p>Metrics in general can be a difficult area. Many <a data-type="indexterm" data-primary="DORA (DevOps Research and Assessment) metrics" id="id843"></a><a data-type="indexterm" data-primary="metrics" data-secondary="DORA (DevOps Research and Assessment)" id="id844"></a><a data-type="indexterm" data-primary="developer productivity, prioritizing" data-secondary="measuring" id="id845"></a><a data-type="indexterm" data-primary="measure" data-secondary="success" id="id846"></a>metrics around developer productivity, for example, are pretty flawed: as soon as a measure becomes a target, it will be gamed;<sup><a data-type="noteref" id="id847-marker" href="ch03.html#id847">19</a></sup> and any measure that looks at individual performance rather than the team is likely to reduce the effectiveness of the team as a whole, as people focus on making sure they have good numbers, rather than—for example—supporting others within the team to achieve the business outcomes. As Kent Beck and Gergely Orosz write in their response to a proposed developer productivity measurement framework from McKinsey, measuring effort and output is easier, but measuring outcome and impact is better.<sup><a data-type="noteref" id="id848-marker" href="ch03.html#id848">20</a></sup></p>
+
+<p>Personally, I find the DORA metrics are very useful if you are starting from low scores. You can track the impact of introducing automated build pipelines, removing change advisory processes, etc. Once you hit high performance on the DORA metrics, the one that begins to matter the most for developer productivity is deployment frequency, because as you can reduce toil and get developers focused on value, you should see that changing while the other metrics stay pretty much the same.</p>
+<p class="fix_tracking">
+The <a href="https://oreil.ly/TQBKc">SPACE framework</a>, discussed in detail in <a data-type="xref" href="ch07.html#chapter7">Chapter 7</a>, considers five separate dimensions of developer productivity: satisfaction and well-being, performance, activity, communication and collaboration, and efficiency and flow. The authors of the SPACE framework are clear that developer productivity can’t be reduced to a single metric, shouldn’t be about activity rather than outcomes, and is about the team rather than the individual. It takes more work to develop and track developer productivity guided by the SPACE framework, because you need to design a set of complementary metrics that track multiple dimensions, but you are more likely to get a realistic understanding of the impact of changes you make on developer productivity. </p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="In Summary"><div class="sect1" id="id469">
+<h1>In Summary</h1>
+
+<p>Any architectural choice is a trade-off. Microservices can be complicated to build and operate, but they solve particular problems very well:</p>
+
+<ul>
+<li>
+<p>Scaling your organization while maintaining the ability to move fast</p>
+</li>
+<li>
+<p>Enhancing developer experience through quicker onboarding, a more rapid development cycle, and a faster release into production</p>
+</li>
+<li>
+<p>Allowing you to isolate compliance and security requirements</p>
+</li>
+<li>
+<p>Scaling just those parts of the system that need to be scaled</p>
+</li>
+<li>
+<p>Keeping the blast radius for an issue smaller, increasing the resilience of your 
+<span class="keep-together">system</span></p>
+</li>
+<li>
+<p>Letting you choose different technology for parts of your system, based on differing requirements, for example, having a graph database for data that is graph-like</p>
+</li>
+</ul>
+
+<p>Even where you have these challenges, you should make sure you have the conditions in place to be successful with a microservice architecture:</p>
+
+<ul>
+<li>
+<p>Understanding your business, because if you don’t yet understand it, you won’t be able to identify the right boundaries</p>
+</li>
+<li>
+<p>Long-term funding for products, allowing services to be owned, rather than short-term funding for projects that then need to be handed over to some other team</p>
+</li>
+<li>
+<p>High-level support for making the change, because it’s a cultural change, not a technology one</p>
+</li>
+<li>
+<p>Teams that want autonomy, and enabling teams that will support them with that, because you need people who will take responsibility for the services they build</p>
+</li>
+<li>
+<p>A high level of technical maturity around automation and infrastructure as code, because you can’t set up servers and release code by hand when you’re doing this frequently</p>
+</li>
+</ul>
+
+<p>Notice that there is nothing here about particular technologies. In fact, I strongly recommend avoiding introducing too many new technologies when getting started with microservices.<sup><a data-type="noteref" id="id849-marker" href="ch03.html#id849">21</a></sup></p>
+
+<p>You should definitely start something new with a monolith. When you find things slowing down, you should look to make your architecture more modular, whether that is within the monolith or by extracting microservices. But the world of software is moving in the direction of distributed components within an architecture, both through the use of cloud provider managed services and SaaS options. Even a monolith likely makes calls over networks, so you should get comfortable with distributed architectures.</p>
+
+<p class="less_space pagebreak-before">I like the firmer boundaries you get with a microservice architecture over a modular monolith. It constrains what people can get wrong! Once you have multiple teams working on a system, microservices would be my choice, although I would start with fairly coarse-grained services.</p>
+
+<p>If you <em>do</em> decide to go ahead with microservices—or already have—I have a lot of suggestions about how to make a success of that. In <a data-type="xref" href="part03.html#part3">Part III</a> of the book, I focus on the technological aspects. But first—and more importantly—in <a data-type="xref" href="part02.html#part2">Part II</a>, we will talk about the necessary changes in organizational structure and culture.</p>
+</div></section>
+<div data-type="footnotes"><p data-type="footnote" id="id770"><sup><a href="ch03.html#id770-marker">1</a></sup> Discussed in Richard Hackman’s book <em>Leading Teams</em> (Boston: Harvard Business Review Press, 2002).</p><p data-type="footnote" id="id771"><sup><a href="ch03.html#id771-marker">2</a></sup> I have worked on quite a few monoliths where the architecture could best be described as a <a href="https://oreil.ly/sQTyt">“Big Ball of Mud”</a>: haphazard, sprawling, and the result of pressure to build new functionality without the time to structure the code “properly.”</p><p data-type="footnote" id="id772"><sup><a href="ch03.html#id772-marker">3</a></sup> Nicole Forsgren, Jez Humble, and Gene Kim, <em>Accelerate: The Science of Building and Scaling High Performing Technology Organizations</em> (Portland, OR: IT Revolution, 2018).</p><p data-type="footnote" id="id776"><sup><a href="ch03.html#id776-marker">4</a></sup> From <em>Accelerate</em>’s chapter on Architecture.</p><p data-type="footnote" id="id780"><sup><a href="ch03.html#id780-marker">5</a></sup> In the UK, resumé-driven development is known as CV++!</p><p data-type="footnote" id="id781"><sup><a href="ch03.html#id781-marker">6</a></sup> See, for example, the blog post <a href="https://oreil.ly/dcoNt">“The End of Localhost”</a>.</p><p data-type="footnote" id="id797"><sup><a href="ch03.html#id797-marker">7</a></sup> As advocated in Mik Kersten’s <em>Project to Product</em> (Portland, OR: IT Revolution, 2018).</p><p data-type="footnote" id="id804"><sup><a href="ch03.html#id804-marker">8</a></sup> This is covered in Chapter 7 of <em>Accelerate</em>, and there is also a really interesting <a href="https://oreil.ly/x4F0v">review on <em>Implementing Technology Change</em></a> carried out by the UK’s Financial Conduct Authority in 2021 that concluded that CABs reject very few changes and likely perform more of a “flight control” than quality assurance function.</p><p data-type="footnote" id="id808"><sup><a href="ch03.html#id808-marker">9</a></sup> If you can’t find a group of like-minded people, or get permission to run a trial like this, it’s extremely unlikely you’ll be able to make microservices work in your organization.</p><p data-type="footnote" id="id817"><sup><a href="ch03.html#id817-marker">10</a></sup> I also recommend Kirsten’s 2022 Craft Conference talk, <a href="https://oreil.ly/iiJCV"><em>Deconstructing the Monolith</em></a>.</p><p data-type="footnote" id="id818"><sup><a href="ch03.html#id818-marker">11</a></sup> Former Staff Software Developer at Shopify. Thanks, Philip, for your input to this section!</p><p data-type="footnote" id="id819"><sup><a href="ch03.html#id819-marker">12</a></sup> Really interesting when people publicly reflect on how things have gone; I wish more people did it. I really want to know what the impact is many years in.</p><p data-type="footnote" id="id823"><sup><a href="ch03.html#id823-marker">13</a></sup> Simon Brown, <a href="https://oreil.ly/johGt">“Modular Monoliths”</a>, GOTO Berlin 2018.</p><p data-type="footnote" id="id824"><sup><a href="ch03.html#id824-marker">14</a></sup> When my team first moved to containers, our handwritten container orchestration system did not support rolling back. If we wanted to revert code, we’d build a new release with the code reverted back to an earlier state. This was not generally a problem for us.</p><p data-type="footnote" id="id837"><sup><a href="ch03.html#id837-marker">15</a></sup> This is Martin Fowler’s Design Stamina Hypothesis. Until you have built enough features to find out whether you have product market fit, who cares how well designed your system is? Once you know you have a successful system, it’s time to invest in intentional design.</p><p data-type="footnote" id="id839"><sup><a href="ch03.html#id839-marker">16</a></sup> Of course, you can also build a simple system that doesn’t work!</p><p data-type="footnote" id="id840"><sup><a href="ch03.html#id840-marker">17</a></sup> First captured by <a href="https://oreil.ly/SgfMr">Martin Fowler</a>.</p><p data-type="footnote" id="id842"><sup><a href="ch03.html#id842-marker">18</a></sup> In that it is pay per use and fully managed for you.</p><p data-type="footnote" id="id847"><sup><a href="ch03.html#id847-marker">19</a></sup> This is Goodhart’s Law: “When a measure becomes a target, it ceases to be a good measure.”</p><p data-type="footnote" id="id848"><sup><a href="ch03.html#id848-marker">20</a></sup> McKinsey’s article “Yes, You Can Measure Software Productivity,” published in August 2023,  includes both DORA and SPACE metrics, but adds a set of “opportunity-focused” metrics that largely focus on individuals and outputs. For a more detailed critique, see Kent and Gergely’s analysis via Gergely’s <a href="https://oreil.ly/yON3z">newsletter</a>.</p><p data-type="footnote" id="id849"><sup><a href="ch03.html#id849-marker">21</a></sup> Yes, this is about not jumping straight into setting up Kubernetes, service meshes, and API gateways. Wait until you need these things!</p></div></div></section></div>
+</div>
+</body>
+</html>

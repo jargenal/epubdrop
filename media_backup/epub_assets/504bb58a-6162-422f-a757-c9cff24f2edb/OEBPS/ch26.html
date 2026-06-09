@@ -1,0 +1,522 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Reverse-Engineering Organizations</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 26. Reverse-Engineering Organizations" data-type="chapter" epub:type="chapter"><div class="chapter" id="ReverseEngineering">
+<h1><span class="label">Chapter 26. </span>Reverse-Engineering Organizations</h1>
+
+
+<p class="subtitle">Learning Is Hard; Unlearning Is Much Harder</p>
+
+<figure class="informal"><div class="figure" id="reverse_engin">
+<img alt="Attaching some probes to the organization" src="assets/SAEch_026.png"/>
+<h6>Attaching some probes to the organization</h6>
+</div></figure>
+
+<p>To<a data-primary="reverse engineering" data-secondary="need for" data-type="indexterm" id="idm45952854347992"/><a data-primary="organizations" data-secondary="identifying and overcoming outdated assumptions" data-type="indexterm" id="Oassum26"/><a data-primary="decision making" data-secondary="revealing assumptions and principles leading to" data-type="indexterm" id="DMassum26"/> change a system’s observed behavior, you need to change
+<em>the system itself</em> (<a data-type="xref" href="ch10.html#Systems">Chapter 10</a>). For organizational systems, the systemic behavior is
+primarily guided by its culture. A significant portion of this culture
+derives from shared beliefs held by the organization’s members. So, to
+permanently change an organization’s observed behavior, you need to
+identify and change those beliefs.</p>
+
+<p>Unfortunately, these shared beliefs aren’t written down anywhere; there
+aren’t any motivational posters for shared beliefs. Also, most people
+won’t even be aware that they carry them. So, you’ll need to apply one of
+your well-honed engineering skills: <em>reverse engineering</em>.</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Dissecting IT Slogans" data-type="sect1"><div class="sect1" id="idm45952854341480">
+<h1>Dissecting IT Slogans</h1>
+
+<p>A<a data-primary="reverse engineering" data-secondary="dissecting IT slogans" data-type="indexterm" id="idm45952854340184"/><a data-primary="assumptions" data-secondary="uncovering" data-type="indexterm" id="Auncover26"/> good starting point for reverse-engineering an organization’s hidden
+beliefs are popular slogans. Anyone who has worked in IT for a little
+bit surely has heard the saying <em>“never touch a running system”</em> (<a data-type="xref" href="ch12.html#Zombies">Chapter 12</a>). Why would people not want to touch a system that’s running?
+Apparently because they believe that change is risky: if you touch it,
+you might break it. Deeper down, they may also believe that fixing broken
+things is cumbersome, so it’s better not to break them in the first
+place.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>The well-known IT slogan “never touch a running system” reflects the underlying belief that change is risky. And, worse yet, it also assumes that not changing anything bears no risk.</p>
+</div>
+
+<p>Importantly, though, there’s an additional assumption behind this simple
+slogan: if you don’t touch the system, all will be fine. This belief—that no change implies no risk, is worrisome. First, from an
+operational perspective, systems that aren’t maintained will rot and, for
+example, use outdated libraries and operating systems that pose security
+risks. Also, in the digital world, which is constantly evolving,
+standstill is regress: competitors move ahead with frequent updates and
+rapid feature evolution. Ultimately, not changing can be fatal for
+organizations—consider Kodak, Blockbuster, or BlackBerry.</p>
+
+<p>Second, you’ll notice how simple slogans can become self-fulfilling
+prophecies. When you avoid changing a system for a long time this actually does increase the risk of change: important details will have been long forgotten, and undocumented manual steps increase the odds that something will go wrong. Such experiences confirm and fuel the belief.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Unknown Beliefs" data-type="sect1"><div class="sect1" id="idm45952854332360">
+<h1>Unknown Beliefs</h1>
+
+<p>Not<a data-primary="reverse engineering" data-secondary="discovering unknown beliefs" data-type="indexterm" id="idm45952854331064"/> all organizational beliefs manifest in slogans, though. In most
+cases, people might not even be aware that they carry certain beliefs
+until their assumptions are being challenged. I had that very experience
+at a Munich beer festival.</p>
+
+<p>The well-known Munich Oktoberfest has a springtime cousin, the <em>Starkbier Fest</em> (“strong beer festival”). As the name suggests, this festival
+serves beer with an alcohol content about 50% higher than the
+Oktoberfest, in the same 1 liter jugs. Needless to say, “having a beer
+or two” can make the way home somewhat challenging. The more surprised
+I was when my younger colleague commented that he drove to the festival
+in a convertible to take advantage of the sunny weather. My immediate
+reaction was: “Are you out of your mind to drive to a beer fest?” His
+calm answer was, “No, I leave the car here.”</p>
+<div class="pullquote" data-type="example">
+<h5><span class="label">Example 26-1. </span></h5>
+
+<p>You can’t just ask people what their beliefs are because most are unaware of them.</p></div>
+
+<p>Not only did I feel old, I also realized that I had been carrying a
+fundamental belief about cars: if you drive somewhere, you (hopefully)
+come back with the same car; otherwise, it would be difficult to go
+somewhere else tomorrow. What broke this assumption, which was useful in
+the past? Car sharing—the ability to pick up a car near your home, to
+rent it by the minute, and to leave it at your destination. Without
+ubiquitous smart phones, GPS, telematics, and other good stuff, my
+assumption was handy and never challenged; now it limited my <span class="keep-together">thinking.</span></p>
+
+<p>Because most people are unaware of the assumptions they hold, you can’t just ask them what their beliefs are. If you
+had asked me about my beliefs about cars, I might have said that you must
+have liability insurance and fuel in the tank.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Beliefs Are Proven Until Disproven" data-type="sect1"><div class="sect1" id="idm45952854324088">
+<h1>Beliefs Are Proven Until Disproven</h1>
+
+<p>Beliefs<a data-primary="reverse engineering" data-secondary="reluctance to change" data-type="indexterm" id="idm45952854322776"/><a data-primary="resistance to change" data-secondary="persistence of beliefs" data-type="indexterm" id="idm45952854321832"/> stick because people often have living proof or firsthand
+experience. When the environment changes, though, and the belief is no
+longer applicable, their past experience makes them reluctant to change.</p>
+
+<p>Think of kids who learned that touching a stove top is a bad idea.
+Some of them learned this the very hard and painful way, others were
+told many times. They therefore embraced a useful belief that
+prevents accidents. Alas, the invention of the induction cooktop makes
+this belief obsolete: induction cookers heat pots directly through
+electromagnetic fields, leaving the cooktop surface relatively cool. You
+will find it difficult, though, to make children touch this new cooktop,
+because they learned their lesson well. The best way might be to touch the
+cooktop yourself to demonstrate the change.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Because most people have living proof for their
+beliefs, just telling them otherwise is unlikely to succeed.</p>
+</div>
+
+<p>The same is true in IT: most IT folks will be able to tell you a story
+in which someone did touch a running system, causing it to fail, and needing operations teams to stay up 48
+hours straight trying to get it back up and running. Simply telling
+people that they are wrong or that magically everything is different is
+unlikely to be successful. Trying to convince them that change isn’t
+risky by spewing out buzzwords and acronyms like TDD, IaC, Git, and
+Spinnaker is like explaining to kids that an induction stove is safe to
+touch by citing Faraday’s law. Instead, you might start by explaining
+the tenets of DevOps, such as deployment automation, version control,
+and automated testing. Also, making smaller changes reduces the risk of
+change. Better yet, you demonstrate the effect with a real software
+delivery project.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Unlearning Old Habits" data-type="sect1"><div class="sect1" id="idm45952854316376">
+<h1>Unlearning Old Habits</h1>
+
+<p>Bringing<a data-primary="reverse engineering" data-secondary="unlearning old habits" data-type="indexterm" id="idm45952854315080"/> change into an organization can easily stumble over existing,
+strongly held beliefs that are part of the existing culture. For
+example, selling Continuous Delivery to a person who equates change with
+risk is going to be quite a challenge. We therefore need to help the
+organization <em>unlearn</em> these old habits before lasting
+change can take hold. Learning new things isn’t easy, but unlearning old habits, especially ones that served us well many times, is much more difficult.<sup><a data-type="noteref" href="ch26.html#idm45952854313080" id="idm45952854313080-marker">1</a></sup> It seems that replacing existing beliefs requires you to free up a memory slot in the brain first before you can program it again.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Common IT Beliefs" data-type="sect1"><div class="sect1" id="idm45952854311416">
+<h1>Common IT Beliefs</h1>
+
+<p>When<a data-primary="decision making" data-secondary="priming" data-type="indexterm" id="idm45952854310120"/><a data-primary="priming" data-type="indexterm" id="idm45952854309176"/><a data-primary="reverse engineering" data-secondary="common IT beliefs" data-type="indexterm" id="REIT26"/> trying to reverse-engineer existing beliefs, there’s one ray of
+hope: many IT organizations hold similar beliefs because they were
+subject to the same learning, or <em>priming</em> (<a data-type="xref" href="ch06.html#MakingDecisions">Chapter 6</a>). Hence,
+the following list of beliefs can give you a head start:</p>
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Speed and Quality Are Opposed (“Quick and Dirty”)" data-type="sect2"><div class="sect2" id="idm45952854305496">
+<h2>Speed and Quality Are Opposed (“Quick and Dirty”)</h2>
+
+<p>The<a data-primary="IT beliefs" data-secondary="speed and quality are opposed" data-type="indexterm" id="idm45952854304168"/><a data-primary="quality" data-secondary="fallacy that speed and quality are opposed" data-type="indexterm" id="idm45952854303208"/><a data-primary="speed" data-secondary="fallacy that speed and quality are opposed" data-type="indexterm" id="idm45952854302232"/> so-called project management triangle is both one of the most
+popular and most dangerous tools in IT management because it purports
+that scope, time, and resources have a simple relationship. For example,
+twice as many people would be able to accomplish the same work in half
+the time. Worse yet, it assumes that by compromising quality, things can
+be sped up further.</p>
+
+<p>While the triangle might work for simple, physical tasks, it surely
+doesn’t work in software delivery where the opposite is often the case.
+For example, if a developer wanted to secretly sabotage a software
+project, a suitable way would be to introduce subtle, hard-to-find bugs.
+How then, can lower quality speed things up?</p>
+
+<p>Modern developers know that in software development the opposite effect
+takes place: we speed things up by automating them, which also <em>increases quality</em> (<a data-type="xref" href="ch40.html#NewDimensions">Chapter 40</a>) and repeatability.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Quality Can Be Added Later" data-type="sect2"><div class="sect2" id="idm45952854297832">
+<h2>Quality Can Be Added Later</h2>
+
+<p>Classic<a data-primary="IT beliefs" data-secondary="quality can be added later" data-type="indexterm" id="idm45952854296520"/><a data-primary="quality" data-secondary="fallacy that quality can be added later" data-type="indexterm" id="idm45952854295560"/> software projects end with a “QA” phase, the quality assurance
+phase, which consists of a team of testers checking whether the
+deliverable is of high quality. Behind this common approach rests a
+fundamental belief that quality is something that can be added to an
+existing work product: if something of poor quality goes into QA, it
+comes out with higher quality.</p>
+
+<p>Detecting bugs and reworking can improve some aspects of software, but
+it cannot correct fundamental deficiencies in the internal quality of a
+software system, such as its structure or testability. Those must be
+built in from the beginning. Methods such as shift-left testing<sup><a data-type="noteref" href="ch26.html#idm45952854293384" id="idm45952854293384-marker">2</a></sup> follow this approach.</p>
+
+<p>This belief and the previous one are related. If you work under
+the assumption that quality is added at the end, compressing the
+schedule will most likely decimate the (manual) QA activity, actually
+resulting in lower quality.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="All Problems Can Be Solved with More People or Money" data-type="sect2"><div class="sect2" id="idm45952854290552">
+<h2>All Problems Can Be Solved with More People or Money</h2>
+
+<p>Also<a data-primary="IT beliefs" data-secondary="all problems can be solved with more people or more money" data-type="indexterm" id="idm45952854289224"/> guided by the scope-resources-time triangle, some organizations
+assume that more people reduce time under constant scope.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>There’s a common saying that when a project manager
+in a typical bank tells the business that it’s impossible to deliver the
+project in three months, the business responds by asking “how much more
+money do you need?”</p>
+</div>
+
+<p>Fred Brooks already documented four decades ago<sup><a data-type="noteref" href="ch26.html#idm45952854285832" id="idm45952854285832-marker">3</a></sup> that adding people requires
+onboarding and increases communication overhead, both of
+which will slow down a project. Also, large projects often come to a
+grinding halt due to excessive complexity. Adding more resources is
+likely to increase complexity, exacerbating the problem.</p>
+
+<p>Therefore, if you want to speed up a project, look to reduce friction instead of adding more resources. If your car’s (or your organization’s) handbrake is set, you’ll want to release the brake, not step harder on the gas pedal.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Following a Proven Process Leads to Proven Good Results" data-type="sect2"><div class="sect2" id="idm45952854283320">
+<h2>Following a Proven Process Leads to Proven Good Results</h2>
+
+<p>Much<a data-primary="IT beliefs" data-secondary="following a proven process leads to proven good results" data-type="indexterm" id="idm45952854281992"/> of an organization’s way of working is encoded in well-defined
+processes, which aim to reduce risk, control spending, and assure high-quality deliverables. Many large organizations even have entire
+ departments whose job it is to define and update processes.</p>
+
+<p>Even though most processes, such as approvals or budget reviews, are well
+intended, following them assures only one thing: that the process was
+followed. There’s a big leap from someone checking a box or completing a
+task to actually achieving the desired result, such as reducing spend or
+assuring architecture compliance. Especially if processes are
+cumbersome, people will be inclined to just obtain the necessary process
+check marks without fulfilling the intention of the process, possibly
+leading to a flourishing <em>black market</em> (<a data-type="xref" href="ch29.html#BlackMarket">Chapter 29</a>). Some
+organizations therefore police and audit for process compliance by
+investigating projects and their implementations, resulting in a <em>catch me if you can</em> kind of game.</p>
+
+<p>Attempting to achieve desirable results via processes and check lists
+typically stems from a lack of transparency. If you can’t see what a
+project does or what kind of code it develops, the next best thing you
+could do is to make sure a certain process was followed. Modern
+development and deployment practices such as central code repositories,
+automated code quality checks, automated policy checkers, and cloud
+runtimes provide a much higher level of transparency and allow much
+more effective compliance checks.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Late Changes Are Expensive or Impossible" data-type="sect2"><div class="sect2" id="idm45952854276536">
+<h2>Late Changes Are Expensive or Impossible</h2>
+
+<p>Did<a data-primary="IT beliefs" data-secondary="late changes are expensive or impossible" data-type="indexterm" id="idm45952854275208"/> you ever wonder why a typical IT project has an endless list of
+requirements that appears to anticipate any possible use case or
+scenario for the next five years? It’s based on a simple belief: the
+business has learned that late changes are expensive or even impossible.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>An old joke goes that IT tends to deliver only half of what it promised,
+so the business asks for twice as much in the hope that they get the
+right half.</p>
+</div>
+
+<p>This belief stems from IT service providers’ common practice of charging large sums for late changes. Because they compete aggressively on the
+initial bid for a project, they compensate by charging astronomical sums
+for changes during project execution when the customer doesn’t have a
+lot of alternatives. Even internal projects that are subject to budget
+approvals or are poorly architected might have reconfirmed this belief
+because they are difficult to change later.</p>
+
+<p>Welcoming late changes is a key tenet of Agile development, dispelling
+this common belief. It’s best illustrated by Mary Poppendieck’s
+observation that “a late change in requirements is a competitive
+advantage.”</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Agility Opposes Discipline" data-type="sect2"><div class="sect2" id="idm45952854270344">
+<h2>Agility Opposes Discipline</h2>
+
+<p>Because<a data-primary="IT beliefs" data-secondary="agility opposes discipline" data-type="indexterm" id="idm45952854269032"/> Agile development welcomes change during a project, it is often
+seen as being at odds with stable processes. After all, change and
+stability are opposites of each other. Following this logic, some
+organizations even believe that in the absence of rigid steering and
+control mechanisms, things descend into utter chaos.</p>
+
+<p>However, the opposite is true: Agile development is actually a very
+disciplined process because <em>speed and lack of discipline don’t mix</em> (<a data-type="xref" href="ch31.html#SlowChaos">Chapter 31</a>). Agile methods prioritize on delivering value
+early and maintain velocity through a rigid adherence to regular
+(re)planning and tracking of progress and quality, something often
+missing in traditional projects.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="The Unexpected Is Undesired" data-type="sect2"><div class="sect2" id="idm45952854265256">
+<h2>The Unexpected Is Undesired</h2>
+
+<p>After<a data-primary="IT beliefs" data-secondary="the unexpected is undesired" data-type="indexterm" id="idm45952854263944"/> spending a lot of time creating a plan, traditional organizations
+expect things to go according to their plan. Deviations from the plan or
+unexpected outcomes are undesired and considered a failure.</p>
+
+<p>However, when something unexpected happens, the most learning happens.
+That’s because the unexpected can tell you that you made a poor
+assumption or that an error was hidden in the system. Therefore,
+successful businesses run experiments to verify or falsify a hypothesis.
+Either way, the outcome implies learning and isn’t a failure at all.
+This means that traditional enterprises learn less, which is dangerous in a
+world that’s constantly changing.</p>
+
+<p>Rather than avoid deviations, enterprise should identify valuable
+hypothesis that they can test quickly and cheaply. Therefore, minimizing
+the cost of experimentation is a better goal than minimizing deviation.<a data-primary="" data-startref="Auncover26" data-type="indexterm" id="idm45952854261112"/><a data-primary="" data-startref="REIT26" data-type="indexterm" id="idm45952854260168"/></p>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Reprogramming the Organization" data-type="sect1"><div class="sect1" id="idm45952854258744">
+<h1>Reprogramming the Organization</h1>
+
+<p>Given<a data-primary="transformation" data-secondary="reprogramming organizations" data-type="indexterm" id="idm45952854257432"/><a data-primary="assumptions" data-secondary="overcoming" data-type="indexterm" id="idm45952854256472"/> how strongly existing beliefs influence an organization’s ability
+to transform, how do you best go about identifying and changing them?
+There is no magic three-step recipe, but you can combine several
+behaviors to tackle them:</p>
+<dl>
+<dt>Observe carefully</dt>
+<dd>
+<p>You can’t just ask people about their beliefs, because
+most of the time they aren’t even aware of them. Instead, observe how
+people behave and look for unusual or unexpected decisions. Then,
+consider which belief would make such a decision appear rational.</p>
+</dd>
+<dt>Ask questions</dt>
+<dd>
+<p>Keep asking people (<a data-type="xref" href="ch07.html#QuestionEverything">Chapter 7</a>) why they
+would choose a particular option to uncover what drives their behavior.</p>
+</dd>
+<dt>Explain carefully</dt>
+<dd>
+<p>Acknowledge the usefulness of their belief in the
+past, but explain what has changed since then.</p>
+</dd>
+<dt>Define new beliefs</dt>
+<dd>
+<p>Because it’s difficult for people to unlearn things, establish clear new beliefs that can replace the old ones.</p>
+</dd>
+<dt>Be patient</dt>
+<dd>
+<p>Change takes time (<a data-type="xref" href="part05.html#Transformation_pt5">Part V</a>).</p>
+</dd>
+</dl>
+
+<p>Your goal isn’t to turn everyone’s belief upside-down but to identify and dislodge those beliefs that impede the change you are trying
+to bring. Reverting too many beliefs will make folks insecure and
+confused.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Handed-Down Beliefs" data-type="sect1"><div class="sect1" id="idm45952854244888">
+<h1>Handed-Down Beliefs</h1>
+
+<p>Whereas most beliefs stem from actual experience, others are handed down
+through generations. A classic (unconfirmed) story of beliefs taking a
+life of their own involves monkeys, water, and bananas: several primates
+were in a cage with bananas hung in the middle. As soon as any monkey
+would reach for the tempting bananas, all monkeys would be sprayed with
+cold water, something they weren’t particularly fond of. Every now
+and then, a monkey was replaced with a new one. If the new arrival would reach
+for the bananas, the others would be quick to hold them back because
+they knew what was going to happen. Even after all the original monkeys
+have been replaced and none of the resident monkeys have ever been
+sprayed with water, the best practice of “don’t touch the bananas”
+lives on.</p>
+
+<p>This story isn’t based on scientific evidence, but sometimes it does
+feel that despite all the technical advances we have made, our basic
+behavior hasn’t evolved that much from reaching for bananas.<a data-primary="" data-startref="Oassum26" data-type="indexterm" id="idm45952854242168"/><a data-primary="" data-startref="DMassum26" data-type="indexterm" id="idm45952854241224"/></p>
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="idm45952854313080"><sup><a href="ch26.html#idm45952854313080-marker">1</a></sup> Barry O’Reilly, <em>Unlearn: Let Go of Past Success to Achieve Extraordinary Results</em> (New York: McGraw-Hill, 2018).</p><p data-type="footnote" id="idm45952854293384"><sup><a href="ch26.html#idm45952854293384-marker">2</a></sup> Wikipedia, “Shift-Left Testing,” <a href="https://oreil.ly/iotex"><em class="hyperlink">https://oreil.ly/iotex</em></a>.</p><p data-type="footnote" id="idm45952854285832"><sup><a href="ch26.html#idm45952854285832-marker">3</a></sup> Fredrick P. Brooks, <em>The Mythical Man-Month: Essays on Software Engineering, Anniversary Edition</em>  (Boston: Addison-Wesley Professional, 1995).</p></div></div></section></body></html>

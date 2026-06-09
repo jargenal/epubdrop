@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos1083789" class="calibre_2"><span class="calibre2"><span class="bold">Service</span></span></p><p class="calibre_1">Within the AWS Lambda function, although you can perform any backend action, the following are the most common ones that most customers perform:</p><div class="calibre_6"> </div><ul class="calibre_7"><li value="1" class="calibre_8">Do the entire processing within the AWS Lambda function, which may involve data processing to transformation, local scripts execution, and so on, and finally the result is stored in a data store for long-term persistence. A perfect choice for lots of customers in this scenario is Amazon DynamoDB, which again extends the serverless architecture with no host to manage and is easy to integrate with AWS Lambda with API/SDKs.</li><a></a><li value="2" class="calibre_8">For interacting with another third-party external service or even another microservice within the same environment, many customers use AWS Lambda to invoke those other services. These invocations can be synchronous or asynchronous, depending on the use case.</li><a></a></ul><div class="calibre_6"> </div><ul class="calibre_7"><li value="1" class="calibre_8">Another possibility here is to integrate with other cloud services to perform some other actions. As an example, suppose you want to trigger a LAMP stack creation using an API, so in this case you could invoke CloudFormation from your Lambda code to bring up a new LAMP stack environment.</li><a></a></ul><p class="calibre_1">These are just examples on how to create serverless microservices in AWS, but generally the possibilities are infinite.</p><div class="mbp_pagebreak" id="calibre_pb_326"></div>
+</body></html>

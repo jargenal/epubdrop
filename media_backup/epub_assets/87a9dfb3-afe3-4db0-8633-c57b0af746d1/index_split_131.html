@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos481482" class="calibre_2"><span class="calibre2"><span class="bold">Solution</span></span></p><p class="calibre_1">Create a component for each business process to act as a mediator between the collaborator components and orchestrate the collaboration flow across those components. <a></a>Each component defines the events it will consume and publish independently of any business processes. <a></a>The mediator maps and translates the published events of upstream components to the consumed events of downstream components. <a></a>These mappings and translations are encapsulated in the mediator as a set of rules, which define the transitions in the collaboration flow.</p><p class="calibre_1">The mediator consumes events from the stream based on these rules and emits transition events, following the Event-First variant of the Event Sourcing pattern, to trigger the necessary downstream components. <a></a>Downstream components consume the events and perform the needed command. <a></a>Each consuming component emits another event regarding the outcome of the command, usually following the Database-First variant of the Event Sourcing pattern. <a></a>The mediator consumes the outcome events and the cycle repeats.</p><div class="mbp_pagebreak" id="calibre_pb_132"></div>
+</body></html>

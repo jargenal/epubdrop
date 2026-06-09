@@ -1,0 +1,366 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>The IT World Is Flat</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 16. The IT World Is Flat" data-type="chapter" epub:type="chapter"><div class="chapter" id="WorldMap">
+<h1><span class="label">Chapter 16. </span>The IT World Is Flat</h1>
+
+
+<p class="subtitle">Without a Map, Any Road Looks Promising</p>
+
+<figure class="informal"><div class="figure" id="worldmap_co">
+<img alt="Living in the Middle Kingdom" src="assets/SAEch_017.png"/>
+<h6>Living in the Middle Kingdom—by Kwong Hing Yen (江慶人)</h6>
+</div></figure>
+
+<p>Maps have been valuable tools for millennia, despite most of them,
+especially world maps, being quite badly distorted. The fundamental
+challenge of plotting the surface of a sphere onto a flat sheet of paper
+forces maps to make compromises when depicting angles, sizes, and
+distances—if the earth were flat, things would be much easier. For
+example, the historically popular <em>Mercator projection</em> provides true
+angles for seafarers, meaning you can read an angle off the map and use
+the same angle on the ship’s compass (compensating for the discrepancy
+between geographic and magnetic north). The price to pay for this
+convenient property, which avoids distorting angles, is area distortion:
+the further away countries are from the equator, the larger they
+appear on the map. That’s why Africa looks
+disproportionately small on such maps,<sup><a data-type="noteref" href="ch16.html#idm45952855353512" id="idm45952855353512-marker">1</a></sup> a trade-off that might be acceptable when navigating
+by boat: misestimating the distance is likely a lesser problem than
+heading into the wrong direction.</p>
+
+<p>Plotting the surface of a sphere also presents the challenge of deciding
+where the “middle” is. Most world maps conveniently position Europe in
+the center, supported by 0 degree longitude (the <em>prime meridian</em>) going
+through Greenwich, England. This depiction results in Asia being in the “East” and the Americas being in the “West.” The keen observer will quickly conclude that when living on a sphere, notions of West and East are somewhat relative to the viewpoint of the beholder. The same type of thinking likely motivated the residents of East Asia to historically put their country in the middle of the map and even name it accordingly: 中國 , the “middle kingdom.”</p>
+
+<p>Although many centuries later we might regard such a world view as a tad
+self-centered, at the time it simply made practical sense: having the
+most detail about places that are near you makes putting your starting
+point in the middle of your map natural. It also roughly lines up the map
+boundaries with your travel limits.</p>
+
+<p>IT<a data-primary="IT worldview" data-secondary="challenges of establishing" data-type="indexterm" id="idm45952855348728"/> landscapes are also vast, and navigating a typical enterprise’s range
+of products and technologies can be equally daunting to sailing Cape
+Horn. Despite some similarities, each IT landscape tends to be its own
+planet, making universal IT world maps hard to come by. Aside from some
+useful attempts like the
+<a href="https://oreil.ly/_yNxO">Big Data Landscape by Matt Turck</a>, enterprise architects therefore often
+rely on maps provided by their vendors.</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Vendors’ Middle Kingdoms" data-type="sect1"><div class="sect1" id="idm45952855346360">
+<h1>Vendors’ Middle Kingdoms</h1>
+
+<p>As<a data-primary="vendors, selecting" data-type="indexterm" id="venselect17"/><a data-primary="IT worldview" data-secondary="vendors' perspective" data-type="indexterm" id="idm45952855344104"/> chief architect of a large company, you’ll quickly gather new friends: account managers, (presales) solution architects, field CTOs, and sales
+executives, to name a few. Their job is to sell their products to large enterprises
+like yours that rely heavily on external hardware, software, and
+services. It makes sense to buy systems that aren’t a competitive differentiator or to lease them via a software as a service (SaaS) model. Creating an accounting system yourself is in most cases as valuable as creating your own electricity. It’s important to have such things, but they won’t give you any competitive advantage. So just as you’re unlikely to  benefit from operating your own power plant, you should also abstain from building your own accounting system.</p>
+
+<p>Enterprise vendors are also an important source of information,
+especially for architects, as vendors keep close track of industry
+trends. Do keep in mind, however, that the information you are given
+might be skewed by the vendor’s worldview. That’s because enterprise
+vendors live in their own <em>middle kingdom</em>, generally depicting their
+home state disproportionately large and accepting a fair degree of
+distortion on the periphery. Distortion can take the form of vendors
+defining product categories or buzzwords by features that only their product has. For example, I have seen “Zero Trust” pegged to safe web browsing and “GitOps” tied to Kubernetes. Both are a stretch of imagination at best.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>I often joke that if you have no concept whatsoever
+of what a car is and only ever talked to one specific German automaker,
+you’d end up walking away with the firm belief that a star emblem on the
+hood is a defining feature of an <span class="keep-together">automobile.</span></p>
+</div>
+
+<p>IT architects in large enterprises must therefore develop their own,
+balanced worldview so that they can safely navigate the treacherous waters
+of enterprise architecture and IT transformation. Vendors’ distortion
+doesn’t imply deception; it’s largely a byproduct of the context people
+grew up in. If you develop databases, it’s natural to view the database
+as the center of any application: after all, that’s where the data is
+stored. Server and storage hardware are viewed as parts of a <em>database appliance</em>, whereas application logic becomes a <em>data feed</em>. Conversely, to
+a storage hardware manufacturer, everything else is just “data,” and
+databases are lumped into a generic “middleware” segment. It’s like me
+on my first trip to Australia considering a quick hop to New Zealand
+because I thought it was so super close. Realizing that it’s still a good
+three-and-a-half-hour flight from Melbourne to Auckland proved that my world
+map is also distorted on the periphery.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Plotting Your World Map" data-type="sect1"><div class="sect1" id="idm45952855335880">
+<h1>Plotting Your World Map</h1>
+
+<p>To<a data-primary="IT worldview" data-secondary="developing an undistorted map" data-type="indexterm" id="idm45952855334584"/><a data-primary="enterprise architects" data-secondary="developing an undistorted IT worldview" data-type="indexterm" id="idm45952855333624"/> avoid falling into the “star on the hood” or the “it’s all a
+database” trap, it’s important that your architecture team first
+develops its own, undistorted map of the IT landscape—a great exercise
+for <em>enterprise architects</em> (<a data-type="xref" href="ch04.html#EnterpriseArchitect">Chapter 4</a>). Luckily, the
+world of IT is flat, so it’s a bit easier to plot on a whiteboard or a
+piece of paper. Your own map gives you a much better, product-neutral
+understanding and may, for example, illustrate that a car’s drive train
+is much more relevant than the hood emblem.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Any architect who carries a product name in their title likely carries the vendor’s map as opposed to your own.</p>
+</div>
+
+<p>It’s OK to draw the map piece-by-piece, starting, for example, where a
+new product needs to be set up or an old one replaced—<em>rate of change</em> (<a data-type="xref" href="ch03.html#ArchitectsFirstDerivative">Chapter 3</a>) is once again a good
+indicator for architecture. Another good starting point is where
+existing products represent critical differentiators for the company.</p>
+
+<p>Drawing your map requires you to piece together information from various
+sources, which will often be distorted. Maybe one day we’ll have an
+AI-driven application that can do this for enterprise architecture the
+same way smartphones can stitch together multiple photos into a
+panorama. Until then, you have to collect information from
+vendors, blogs, industry analyst reports, and your infrastructure and
+development teams. Resist the temptation to simply ask your favorite two-
+or three-lettered enterprise supplier to make the map for you. For one,
+it will once again be distorted, and second, at today’s rate of innovation
+many of them are outdated, as well.</p>
+
+<p>When placing countries and territories on your map, focus on function
+and relationships as opposed to product names.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Describing the architecture of a big data system as “Microsoft SQL Server” is no more useful than claiming the
+architecture of a house is “Ytong.”<sup><a data-type="noteref" href="ch16.html#idm45952855324152" id="idm45952855324152-marker">2</a></sup> Both may be good choices, but neither describes the
+architecture.</p>
+</div>
+
+<p>Because IT architecture operates <em>between</em> the buzzwords and the product
+names, it’s less concerned with the pieces than with how they are put
+together. This is why it’s so important to look not only at the boxes but also the <em>lines</em> (<a data-type="xref" href="ch23.html#DrawingTheLine">Chapter 23</a>).</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Defining Borders" data-type="sect1"><div class="sect1" id="idm45952855320440">
+<h1>Defining Borders</h1>
+
+<p>Where<a data-primary="IT worldview" data-secondary="defining borders" data-type="indexterm" id="idm45952855319144"/> to place the “borders” in your map is a key aspect of doing
+architecture in the enterprise. Although we all like to think of
+boundary-free architecture, if we want to establish a meaningful map and
+vocabulary for our enterprise, we need to place some borders. For
+example, should our “data” continent be separated into data
+warehouses, data lakes, data marts, and databases? Would databases then
+break down into relational and NoSQL databases, which could further
+break down into graph databases, object stores, and so on? Would you want to distinguish managed cloud databases like DynamoDB or Spanner from other
+<span class="keep-together">databases?</span> Would you want to separate operational databases from those
+used for analytics? There are many ways to slice, and defining these
+boundaries is a key element of doing architecture at an enterprise level.
+The<a data-primary="reference architecture" data-type="indexterm" id="idm45952855316520"/> word <em>reference architecture</em> even comes to mind, but you need to
+keep in mind that architecture isn’t a copy-paste exercises. You need to
+define the continents and countries that are meaningful for your
+organization, your business strategy, and your business architecture, as illustrated in <a data-type="xref" href="#a_plausible_data_continent">Figure 16-1</a>.</p>
+
+<figure><div class="figure" id="a_plausible_data_continent">
+<img alt="A plausible database continent" src="assets/tsae_1701.png"/>
+<h6><span class="label">Figure 16-1. </span>A plausible database continent</h6>
+</div></figure>
+
+<p>A colleague of mine conducted a thorough mapping exercise for
+application monitoring that includes black-box monitoring, white-box
+monitoring, troubleshooting, log analysis, alerting, and predictive
+monitoring. All are distinct but interrelated aspects of an application
+monitoring solution. Many vendors, especially those with a history in
+application performance monitoring, will also include performance
+testing because that’s the middle of their map. Whether you want to do the
+same or whether it’s part of the development tool chain is your
+decision.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>When I see most reference architectures, I feel that they ought to print a disclaimer at the bottom, similar to those used for movies: “Any similarities with real persons or systems is purely coincidental.”</p>
+</div>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Charting Territory" data-type="sect1"><div class="sect1" id="idm45952855309096">
+<h1>Charting Territory</h1>
+
+<p>As<a data-primary="IT worldview" data-secondary="charting territory" data-type="indexterm" id="idm45952855307800"/> soon as your IT world map has undisputed borders, you can start populating
+“countries” with vendor products that may be in use or available on
+the market. The map will help you assess how well a vendor’s product fits your map. Some products may not completely cover the gap, while others
+have significant overlap with solutions already in place.</p>
+<div class="bubble" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Placing products on an IT world map is a bit like playing Tetris: the piece that fits best depends on what you already have in place. This means that rather than picking the “best” product, you should select the one that fits best.</p>
+</div>
+
+<p>Most large IT organizations govern their <em>product portfolio</em> (<a data-type="xref" href="ch32.html#Inception">Chapter 32</a>) via a standards group. Standards reduce product diversity
+and allow enterprises to harvest economies of scale; for example, by
+bundling purchasing power. When defining standards, the world map can be
+an enormous help because it can determine what kind of standards you’ll want and at which level you’d want to apply them. For example, defining different types of databases or data stores on your “database continent” can tell you whether you need a different standard for relational databases and NoSQL databases or whether you distinguish light-weight use cases from mission-critical ones. Having a good map is essential to navigating the complexity of vendor offerings.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>A vivid example of the difficulty of discussing<a data-primary="product fit" data-type="indexterm" id="idm45952855301016"/> product fit without a
+good map came up in a conversation about a web portal: a divisional IT manager using a shared web portal
+lamented the lack of documentation on port forwarding. The project’s
+architect replied that a web server isn’t part of their solution,
+assuming port forwarding is done in a web server. Much debate and
+confusion ensued because the division implemented port forwarding in an
+integrated network management tool, not in a web server. They used
+different world maps and continued to talk past each other for some
+time.</p>
+</div>
+
+<p>Looking at the map to get the proverbial “lay of the land” can
+help a lot to resolve misunderstandings. For<a data-primary="Application Delivery Controller (ADC)" data-type="indexterm" id="idm45952855298952"/> example, a map might show
+that port forwarding is part of the concept of an <em>Application Delivery Controller</em> (ADC), which manages web traffic by including functions such
+as reverse proxying, load balancing, and also port forwarding. You can
+utilize a web server as ADC in simple cases or purchase an integrated
+product like <em>F5</em>.</p>
+<div class="warning" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Ironically, conducting the worthwhile exercise of plotting your own IT
+world map can be challenged by traditional IT managers as “academic.”
+This can be especially amusing in Germany where IT management is
+littered with PhDs (not necessarily in any technical major) who carry
+the title “Dr.” as part of their legal name. If <em>pragmatic</em> means
+“haphazard,” I am happy to be in the “academic” camp: I am paid to think
+and plan, not to play product lottery.</p>
+</div>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Product Philosophy Compatibility Check" data-type="sect1"><div class="sect1" id="idm45952855294280">
+<h1>Product Philosophy Compatibility Check</h1>
+
+<p>When<a data-primary="IT worldview" data-secondary="product philosophy compatibility check" data-type="indexterm" id="idm45952855292968"/><a data-primary="product philosophy compatibility checks" data-type="indexterm" id="idm45952855292008"/> plotting vendor offerings onto your map, it’s not enough to just understand the
+vendor’s current product portfolio, but also where it is headed—the
+world of IT never stands still. That’s why I first like to understand
+whether a vendor’s and our worldviews align.</p>
+
+<p>Meeting with vendors’ senior technical staff, such as a CTO, is most
+effective when discussing worldview and comparing maps because too many
+“solution architects” are just glorified technical salespeople, who
+navigate purely off the vendor’s map, the “middle kingdom” so to
+speak. I need a world map, though.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>When an account manager starts the meeting with
+“please help us understand your environment,” which roughly translates
+into “please tell me what I should sell to you,” I typically preempt
+the exercise by asking the senior person about their product philosophy.
+It’s a bit of a big word, but it’s helpful in shifting the conversation
+to the vendor’s world map.</p>
+</div>
+
+<p>I prefer to ask vendors two key questions to understand their world map:</p>
+
+<ul>
+<li>
+<p><em>What base assumptions did you have to make?</em> No one can operate on a
+completely empty map without borders, so the vendor must have made
+choices and picked boundaries. The answer to this question tells you
+where the edge of their map is.</p>
+</li>
+<li>
+<p><em>What’s the toughest problem you had to solve?</em> The answer to this
+question will tell you where the center of their map is.</p>
+</li>
+</ul>
+
+<p>Discussing what base assumptions and decisions are baked into a product
+gives you great insight into a vendor’s world map (see <a data-type="xref" href="#a_product_vendors_core_and_periphery">Figure 16-2</a>), both about the center and the edge (remember the IT world is flat, so it has
+edges).</p>
+
+<figure><div class="figure" id="a_product_vendors_core_and_periphery">
+<img alt="A product vendor’s core and periphery" src="assets/tsae_1702.png"/>
+<h6><span class="label">Figure 16-2. </span>A product vendor’s core and periphery</h6>
+</div></figure>
+
+<p>Naturally, this works only when talking to someone who is
+actually defining the vendor’s corporate or product strategy. Looking at
+the company leadership page can help you identify the right people.
+Looking at the leadership’s history can also help you understand “where
+they come from”; that is, under which assumptions they operate.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>When asking these questions of a monitoring vendor, it became clear that the core of their map was being able to monitor
+running applications without having access to the source code. This
+feature is particularly useful if you look at the problem from an
+operational point of view, especially if you work in <em>an organization that separates “change” from “run”</em> (<a data-type="xref" href="ch12.html#Zombies">Chapter 12</a>). However, in a
+“you build it, you run it” environment where development teams are
+directly involved in operational aspects, this intellectual property
+would be less valuable. You can end up paying for something that you
+don’t need. Understanding the vendor’s world map can help you make
+better decisions.</p>
+</div>
+
+<p>Comparing world maps isn’t about finding out which one is right and
+which one is wrong; it’s about comparing worldviews. For example, I
+believe that a good programming language and a disciplined software development life cycle (SDLC) beats <em>“easy” configuration</em> (<a data-type="xref" href="ch11.html#ConfigureThis">Chapter 11</a>). That’s because I come
+from a software engineer mindset. Other folks might be happy to not have
+to hassle with <code>git stash</code> and compilation errors and prefer the
+vendor’s configuration tools.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="less_space pagebreak-before" data-pdf-bookmark="Shifting Territory" data-type="sect1"><div class="sect1" id="idm45952855274152">
+<h1>Shifting Territory</h1>
+
+<p>While<a data-primary="IT worldview" data-secondary="shifting territory" data-type="indexterm" id="idm45952855272568"/> the real world is relatively static (continental drift is pretty
+slow and the trend of splitting countries in the ’90s has also slowed
+down a bit), the world of IT is changing faster than ever. Because it’s
+difficult for a vendor to change its product philosophy, you will likely
+encounter old products with a new coat of paint on it. Your job as an
+architect is to look through the shiny new paint and see whether there’s
+any rust or filler underneath.<a data-primary="" data-startref="venselect17" data-type="indexterm" id="idm45952855271016"/></p>
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="idm45952855353512"><sup><a href="ch16.html#idm45952855353512-marker">1</a></sup> “The True Size Of Africa,” Information Is Beautiful, Oct. 14, 2010, <a href="https://oreil.ly/yeVps"><em class="hyperlink">https://oreil.ly/yeVps</em></a>.</p><p data-type="footnote" id="idm45952855324152"><sup><a href="ch16.html#idm45952855324152-marker">2</a></sup> Ytong is the name of a popular brand of aerated concrete bricks used in Europe for building construction.</p></div></div></section></body></html>

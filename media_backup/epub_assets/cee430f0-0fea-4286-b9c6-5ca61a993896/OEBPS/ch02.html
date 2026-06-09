@@ -1,0 +1,624 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Authorization and Authentication Basics</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:e0000000-0000-0000-0000-000006723159" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 2. Authorization and Authentication Basics" data-type="chapter" epub:type="chapter"><div class="chapter" id="authorization_and_authentication_basics">
+<h1><span class="label">Chapter 2. </span>Authorization and Authentication Basics</h1>
+<p><a contenteditable="false" data-primary="controls" data-type="indexterm" id="idm46523890555240"/><a contenteditable="false" data-primary="authorization and authentication" data-type="indexterm" id="aa_ch"/>In <a data-type="xref" href="ch01.html#introduction_to_cloud_microservices">Chapter 1</a>, I talked about how security professionals may employ certain measures called <em>controls</em> (also known as <em>countermeasures</em>) to reduce the aggregate risk of any application. Some controls are better than others at applying nuanced security logic, to block only the unauthorized requests without affecting the experience of authorized users. Controls that are effective at identifying unauthorized requests and denying them access are said to be <em>precise</em> or <em>sharp</em>. The objective of this chapter is to examine two of the most precise security controls that an organization can employ on AWS:<em>authorization</em> and <em>authentication.</em> The level of granularity at which these controls work allows them to be sharpened enough to incorporate organizational nuance, resulting in well-tuned precision. This sharpening makes these controls your strongest and most targeted defense against potential threats.</p>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>The concepts from this chapter are applicable to all applications running on AWS, not just microservices. Identity and access controls are the fundamental building blocks of every secure system. However, throughout the chapter, I will point at places where these controls benefit from the modularity that is provided by <span class="keep-together">microservices</span>.</p>
+</div>
+<p><a contenteditable="false" data-primary="principals" data-type="indexterm" id="idm46523890553512"/><a contenteditable="false" data-primary="resources" data-type="indexterm" id="idm46523890558520"/>To begin introducing these controls, let me define some terms. Each interaction or request within the cloud infrastructure can be thought of as initiated by some calling entity, called a <em>principal.</em> A principal can be a user or a service within or external to the organization. On the receiving end of this request may be a data store or another service that the principal wishes to interact with, called a <em>resource</em>. Thus, principals perform various <em>actions</em> on cloud resources.</p>
+<p class="pagebreak-before">I will now use these terms to define authorization and authentication in more detail:</p>
+<dl>
+<dt>Authorization (access control)</dt>
+<dd>Authorization is the process through which access to particular resources is defined. In determining whether access may be granted to a request, factors such as the principal’s identity, the target resource, the circumstances under which the request is made, and the location of the request may be considered. In most cases, prior to evaluating requests, access control systems require that the principal’s identity be known to them.</dd>
+<dt>Authentication (identity management)</dt>
+<dd>Authentication is the mechanism by which principals are able to identify themselves and prove their identities to the target system, thus distinguishing themselves from any impostors. Cloud systems can map an end user’s identity to a predefined set of known identities after a user has been authenticated. This enables cloud systems to control access to all incoming requests from this user through the authorization process.</dd>
+</dl>
+<p>Authentication and authorization work together to provide you with granular controls that guard against potential threats. The authentication process ensures that legitimate principals can identify themselves to the access control (authorization) system. Upon identification, the access control system can determine if the request is authorized or needs to be blocked.</p>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="about" data-type="indexterm" id="idm46523890540936"/>As one might imagine, in a microservice architecture there are many principals and many resources. Thus, there are many ways a malicious actor could exploit vulnerabilities to compromise the system. As a result, the access policy and, overall, the general security policy of a microservice architecture may get quite complex. This is where identity and access management (IAM) comes into play. The IAM system within an organization is used to specify rules as prescribed by the organization’s access policy. Each request is evaluated against these rules to identify if the sender of the request is permitted access. Each IAM access policy evaluation boils down to deciding whether to allow or deny a request.</p>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>The way I think about IAM is that by using IAM policies, you write business logic for AWS. AWS refers to this business logic to enforce access control and thus enhance the security posture of your organization. This way, you can help AWS in sharpening the controls you have on your assets.</p>
+</div>
+<section data-pdf-bookmark="Basics of AWS Identity and Access Management" data-type="sect1"><div class="sect1" id="basics_of_aws_identity_and_access_manag">
+<h1>Basics of AWS Identity and Access Management</h1>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="about" data-type="indexterm" id="idm46523890543624"/><a contenteditable="false" data-primary="authorization and authentication" data-secondary="IAM (identity and access management)" data-type="indexterm" id="aa_iam"/><a contenteditable="false" data-primary="monolithic model" data-type="indexterm" id="idm46523890548968"/>Although IAM does not apply specifically to microservices, it lays the foundation of any architecture that you may implement on AWS. As opposed to monoliths, where most communication happens in memory, microservices utilize external communication channels. AWS IAM can intercept each of these requests and evaluate them against the access policy of the organization. Hence, the role played by AWS IAM as an arbitrator of access control and authentication is crucial in securing a microservice architecture.</p>
+<p>IAM was designed to be a global and fully managed service. Instead of scattering access control policies and authentication logic across the cloud, IAM allows cloud architects to centralize access policies in one place. AWS was also able to implement some of the best practices in security engineering by taking on the responsibility of protecting the access control mechanism. AWS IAM can be assumed to be highly available, highly scalable, and completely managed by AWS as part of the AWS Shared Responsibility Model (SRM).</p>
+<p><a data-type="xref" href="#aws_iam_acts_as_a_centralized_service_t">Figure 2-1</a> illustrates a typical microservice application for an ecommerce company with AWS IAM providing centralized authorization services for each of their requests. AWS IAM is programmed to allow legitimate communication requests. As seen in the figure, requests 1 and 2 are allowed to proceed, while request 3 is denied since it is not allowed by IAM policy.</p>
+<p>IAM also provides authentication services. So, when an imposter—“Hacked microservice”—tries to communicate with the purchase service (request 4), IAM denies the request.</p>
+<figure><div class="figure" id="aws_iam_acts_as_a_centralized_service_t">
+<img alt="" src="assets/smaa_0201.png"/>
+<h6><span class="label">Figure 2-1. </span>AWS IAM acts as a centralized service that provides authentication and authorization services for all of your microservice architecture.</h6>
+</div></figure>
+<p>As seen in <a data-type="xref" href="#aws_iam_acts_as_a_centralized_service_t">Figure 2-1</a>, there is no reason why the “Time display microservice” should ever be allowed to make a purchase. Microservices can run securely on the cloud when such rules are configured in AWS IAM.</p>
+<p>To sum up, it is the responsibility of the security professionals to come up with the security policy (more specifically, the access policy) that dictates which users and microservices are allowed to interact with one another within the application. This policy needs to be designed in such a way that potential threat actors are not able to exploit vulnerabilities. Once created inside AWS IAM, AWS then assumes the responsibility of enforcing this access policy as part of the SRM.</p>
+<section data-pdf-bookmark="Principals on AWS" data-type="sect2"><div class="sect2" id="principals_on_aws">
+<h2>Principals on AWS</h2>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="principals" data-type="indexterm" id="idm46523890530792"/><a contenteditable="false" data-primary="principals" data-type="indexterm" id="idm46523890529336"/>Before I go into the details of securing cloud resources through access control, let me briefly explain the major types of principals that exist on AWS:</p>
+<dl>
+<dt>IAM users</dt>
+<dd><a contenteditable="false" data-primary="IAM users" data-type="indexterm" id="idm46523890521320"/>These are your day-to-day users (employees, contractors, guests) who log in to your account with their individual credentials and interact with your cloud infrastructure.</dd>
+<dt>Root users</dt>
+<dd><a contenteditable="false" data-primary="root users" data-type="indexterm" id="idm46523890519720"/>These are special types of IAM users that exist on AWS. These are account owners who have full control and superuser privilege over an AWS account. Given the near universal permissions that these users get on your AWS accounts, these accounts should be secured and never used for day-to-day activities. Ideally, root user accounts should only be used to create other IAM users where permissions are more granularly defined.</dd>
+<dt>IAM groups</dt>
+<dd><a contenteditable="false" data-primary="IAM groups" data-type="indexterm" id="idm46523890522888"/>An IAM group is a collection of users that can be attached to a common permission policy, making it easier to manage organizational growth.</dd>
+<dt>IAM roles</dt>
+<dd><a contenteditable="false" data-primary="IAM roles" data-type="indexterm" id="idm46523890514872"/>IAM roles are very similar to IAM users. An IAM role maps to a set of tasks or job functions that each identity is expected to perform. IAM roles can be thought of as IAM users without access credentials. (I cover roles in detail later in this chapter.)</dd>
+</dl>
+</div></section>
+<section data-pdf-bookmark="IAM Policies" data-type="sect2"><div class="sect2" id="iam_policies">
+<h2>IAM Policies</h2>
+<p><a contenteditable="false" data-primary="policies" data-secondary="IAM (identity and access management)" data-type="indexterm" id="idm46523890511656"/><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="policies" data-type="indexterm" id="idm46523890517224"/>Access control on AWS is governed by IAM policies, which are JavaScript Object Notation (JSON) documents that codify permissions regarding access control for each principal in an account. AWS consults these policies when determining whether to grant access to requests.</p>
+<p><a contenteditable="false" data-primary="principals" data-type="indexterm" id="idm46523890510408"/>An access control policy involves two types of actors: principals and resources. A principal is an actor that requests access. This actor could be an employee or, at times, another cloud service. A resource represents the service being accessed. This resource could be a database, an Amazon Simple Storage Service (S3) bucket, or any other cloud service that is being provided by AWS.</p>
+<p><a data-type="xref" href="#identity-based_and_resource-based_polic">Figure 2-2</a> illustrates the difference between identity-based policies and resource-based policies:</p>
+<figure><div class="figure" id="identity-based_and_resource-based_polic">
+<img alt="" src="assets/smaa_0202.png"/>
+<h6><span class="label">Figure 2-2. </span>Identity-based and resource-based policies can be used to control access.</h6>
+</div></figure>
+<p>There are two ways to implement an access control policy in AWS IAM:</p>
+<ul>
+<li><p><a contenteditable="false" data-primary="principal-based policies" data-type="indexterm" id="idm46523890504360"/><a contenteditable="false" data-primary="identity-based policies" data-type="indexterm" id="idm46523890501768"/>Access can be limited by limiting what each principal can do within the cloud system. These policies are called <em>principal-based policies</em> (or <em>identity-based <span class="keep-together">policies</span></em>).</p></li>
+<li><p><a contenteditable="false" data-primary="resource-based policies" data-type="indexterm" id="idm46523890499240"/>A resource’s actions can be restricted based on the principal that is requesting to perform them. These policies are called <em>resource-based policies.</em></p></li>
+</ul>
+<p>IAM policies can be found in the Policies tab inside the Identity and Access Management tab in your AWS Management Console. IAM policies exist independent of the principal or the resource that they are applied to and can be applied to multiple principals to enable reuse.</p>
+</div></section>
+<section data-pdf-bookmark="Principle of Least Privilege" data-type="sect2"><div class="sect2" id="principle_of_least_privilege_left_paren">
+<h2 class="pagebreak-before less_space">Principle of Least Privilege</h2>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="PoLP (Principle of Least Privilege)" data-type="indexterm" id="idm46523890494840"/><a contenteditable="false" data-primary="PoLP (principle of least privilege)" data-secondary="about" data-type="indexterm" id="idm46523890493368"/>Now that I have introduced you to the tool that will aid you in defining controls to protect your microservices, I would like to introduce you to the process you can follow to build these controls. This process is called <em>need to know</em>. In complex <span class="keep-together">environments,</span> the security architect creates a list of all the principals in the organization and determines what resources each principal needs access to. The list is then used to determine which policies will be applied to each principal or resource.</p>
+<p><a contenteditable="false" data-primary="need to know process" data-type="indexterm" id="idm46523890487272"/><a contenteditable="false" data-primary="Association for Computing Machinery" data-type="indexterm" id="idm46523890490488"/>“Need to know” is the first step to applying what is known as the <em>principle of least privilege</em>, or PoLP. The PoLP was originally formulated back in 1958 by the Association for Computing Machinery as the following: “Every program and every privileged user of the system should operate using the least amount of privilege necessary to complete the job.”</p>
+<p>A great way of visualizing the PoLP can be to follow the four rules highlighted in <a data-type="xref" href="#a_great_quote_for_remembering_the_polp">Figure 2-3</a> as demonstrated by <a href="https://oreil.ly/8gYDk">AWS</a>.</p>
+<figure><div class="figure" id="a_great_quote_for_remembering_the_polp">
+<img alt="" src="assets/smaa_0203.png"/>
+<h6><span class="label">Figure 2-3. </span>A great quote for remembering the PoLP.</h6>
+</div></figure>
+<p>PoLP helps ensure that vulnerabilities in one area of the system can’t affect other areas. Policies should be assigned using PoLP, which means a principal should be assigned the most restrictive policy possible while still allowing them to do their job.</p>
+</div></section>
+<section data-pdf-bookmark="PoLP and Blast Radius" data-type="sect2"><div class="sect2" id="polp_and_blast_radius">
+<h2>PoLP and Blast Radius</h2>
+<p><a contenteditable="false" data-primary="blast radius" data-secondary="PoLP and" data-type="indexterm" id="idm46523890480312"/><a contenteditable="false" data-primary="PoLP (principle of least privilege)" data-secondary="blast radius and" data-type="indexterm" id="idm46523890478696"/>In <a data-type="xref" href="ch01.html#introduction_to_cloud_microservices">Chapter 1</a>, I discussed the concept of blast radius and how modular applications are advantageous because they minimize the impact of security incidents by locking attackers into specific modules. It is through the use of PoLP and access control that this advantage can be achieved.</p>
+<p><a contenteditable="false" data-primary="monolithic model" data-type="indexterm" id="idm46523890475912"/><a data-type="xref" href="#a_comparison_of_access_control_policies">Figure 2-4</a> compares two applications for an ecommerce company. One is built using a monolithic architecture and the other using a microservice-based architecture. The application connects to three different databases: Marketing DB, Finance DB, and User Profile DB for different business needs.</p>
+<p>If PoLP is applied, in the case of a monolith, the application’s runtime identity (the user or role that the application runs as) will require access to all three of these databases. In the case of microservices, the application’s identity will have access to the specific database that it needs to connect to.</p>
+<figure><div class="figure" id="a_comparison_of_access_control_policies">
+<img alt="" src="assets/smaa_0204.png"/>
+<h6><span class="label">Figure 2-4. </span>A comparison of access control policies between a monolith and a microservice-based application. A microservice provides better incident isolation than a monolith due to its modular structure and the ability to grant more granular access to applications.</h6>
+</div></figure>
+<p>As you can see in <a data-type="xref" href="#a_comparison_of_access_control_policies">Figure 2-4</a>, in the case of a monolith, the application runtime identity ends up requiring access to all three of the databases to perform its job properly. Hence, the access policy for this identity is wide. Now compare that to a microservice-based application. Each microservice has to connect to one specific database. Therefore, the PoLP dictates that each identity has access only to the specific database it needs to perform its job. Now if a malicious actor were to compromise any of these identities, the impact is different.</p>
+<p>An attacker who compromised the monolith’s identity could access all the databases. However, for microservices, malicious actors would gain access only to the marketing database, as shown in <a data-type="xref" href="#a_comparison_of_access_control_policies">Figure 2-4</a>. Technically speaking, in case of an incident, the blast radius in a microservice application is smaller than that of a monolith. This is, however, only true as long as PoLP is applied while designing the permissions for all identities and resources.</p>
+</div></section>
+<section data-pdf-bookmark="Structure of AWS IAM Policies" data-type="sect2"><div class="sect2" id="structure_of_aws_iam_policies">
+<h2>Structure of AWS IAM Policies</h2>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="policies" data-type="indexterm" id="idm46523890470280"/><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="structure of policies" data-type="indexterm" id="idm46523890463000"/><a contenteditable="false" data-primary="policies" data-secondary="IAM (identity and access management)" data-type="indexterm" id="idm46523890461160"/>Now that I have conceptually defined access control, it is time to look at how it is configured on AWS IAM. As a reminder, the purpose of every statement within an IAM policy is to state which <em>principal</em> is <em>allowed</em> (or <em>denied</em>) access to which <em>resource</em> under which <em>conditions</em> and for which specific <em>action</em>. On AWS, each policy can make one or more such statements.</p>
+<p><a contenteditable="false" data-primary="PARC-E (Principal Action Resource Condition Effect)" data-type="indexterm" id="idm46523890456760"/>PARC-E is a handy acronym to remember the components of an access policy <span class="keep-together">statement</span>:</p>
+<dl>
+<dt>Principal</dt>
+<dd><a contenteditable="false" data-primary="Principal, in PARC-E acronym" data-type="indexterm" id="idm46523890452968"/>The principal that the statement is prescribing permissions for. This may be explicitly mentioned in the policy or implicitly assumed if the policy is attached to a principal.</dd>
+<dt>Action</dt>
+<dd><a contenteditable="false" data-primary="Action, in PARC-E acronym" data-type="indexterm" id="idm46523890450824"/>The action that the statement applies to, whether it is the ability to read the data or write to a table or any other action that the resource is able to perform.</dd>
+<dt>Resource</dt>
+<dd><a contenteditable="false" data-primary="Resource, in PARC-E acronym" data-type="indexterm" id="idm46523890449080"/>The resource or set of resources that the statement is applicable for.</dd>
+<dt>Condition (optional)</dt>
+<dd><a contenteditable="false" data-primary="Condition, in PARC-E acronym" data-type="indexterm" id="idm46523890446888"/>The conditions under which this statement should even be evaluated. Or the conditions under which the effect prescribed in the policy should be applied to the action.</dd>
+<dt>Effect</dt>
+<dd><a contenteditable="false" data-primary="Effect, in PARC-E acronym" data-type="indexterm" id="idm46523890444616"/>Whether the statement should allow or deny access.</dd>
+</dl>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p><a contenteditable="false" data-primary="ARN (Amazon Resource Name)" data-type="indexterm" id="idm46523890442904"/>All principals and resources within AWS are clearly identified by a unique ID assigned to them by AWS called the <em>Amazon Resource Name (ARN)</em>.</p>
+</div>
+<p>All policies are written in a JSON format. Here is an example of a customer-managed policy:</p>
+<pre>{
+    "Version": "2012-10-17",
+    "Id": "key-default-1",
+    "Statement": [
+        {
+ "Principal": {
+                "AWS": "arn:aws:iam::244255116257:root"
+            },
+            "Action": "kms:*",
+            "Resource": "*"
+            "Effect": "Allow",
+            "Sid": "Enable IAM User Permissions",
+        }
+    ]
+}</pre>
+<p>The statement within this policy says, <em>the principal with ARN (</em><code>arn:aws:iam</code><code>::244255116257:root</code><em>) is allowed to perform all the activities related to AWS KMS (</em><code>kms:*</code><em>)</em> on all of the resources that this policy is applied to<em>.</em></p>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>I demonstrate how the policy statements can be used to apply PoLP in large organizations in <a data-type="xref" href="app04.html#hands-on_example_of_applyi">Appendix D</a>.</p>
+</div>
+</div></section>
+<section data-pdf-bookmark="Principal-Based Policies" data-type="sect2"><div class="sect2" id="principal-based_policies">
+<h2>Principal-Based Policies</h2>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="principal-based policies" data-type="indexterm" id="idm46523890432328"/><a contenteditable="false" data-primary="policies" data-secondary="principal-based" data-type="indexterm" id="idm46523890430920"/><a contenteditable="false" data-primary="principal-based policies" data-type="indexterm" id="idm46523890429304"/>Principal-based policies are applied to a principal within an account, determining the level of access the principal in question has. A principal can be either a user, a group, or a role that lives within the account. The resource being accessed can be within the same account or a different account.</p>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>If you have the answer to the question <em>What resources is this user/role/group allowed to access?</em> principal-based policies are best suited for your needs<em>.</em></p>
+</div>
+<p><a contenteditable="false" data-primary="default deny rule" data-type="indexterm" id="idm46523890426008"/>IAM follows a <em>default deny</em> rule. By default, whenever a user or a role is added to an account, they will have no access to any resources within that account until an IAM policy is created by an administrator or a root user of the particular account to allow access.</p>
+<p>Policies that are principal-based apply to the principal in question; you don’t need to specify the principal explicitly in a policy statement (and AWS won’t allow you to). The principal of the policy is always the entity to which the policy is attached.</p>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>When the policy is attached to an IAM group, the principal is the IAM user in that group who is making the request.</p>
+</div>
+</div></section>
+<section data-pdf-bookmark="Resource-Based Policies" data-type="sect2"><div class="sect2" id="resource-based_policies">
+<h2>Resource-Based Policies</h2>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="resource-based policies" data-type="indexterm" id="idm46523890418552"/><a contenteditable="false" data-primary="policies" data-secondary="resource-based" data-type="indexterm" id="idm46523890420520"/><a contenteditable="false" data-primary="resource-based policies" data-type="indexterm" id="idm46523890417128"/>As the name suggests, resource-based policies are applied to specific supported resources. AWS maintains <a href="https://oreil.ly/fAo9L">a list</a> of resources that support resource-based policies. These policies are inline only. They are not bound by AWS accounts, so they may include principals from any AWS account, not necessarily the one the resource belongs to.</p>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>If you have the answer to the question <em>Who (which principal) is allowed to access this resource?</em> resource-based policies are best suited for your needs<em>.</em></p>
+</div>
+<p>Here is a sample resource-based policy. This policy allows a specific user  (<code>arn:aws:iam</code><code>::AWS-account-ID:user/user-name</code>) to invoke the Lambda function (<code>my-function</code>):</p>
+<pre>{
+    "Version": "2012-10-17",
+    "Id": "default",
+    "Statement": [
+        {
+            "Sid": "sample-resource-based-policy",
+            "Effect": "Allow",
+       "Principal": { "AWS": "arn:aws:iam::AWS-account-ID:user/user-name" }
+,
+            "Action": "lambda:InvokeFunction",
+            "Resource": "arn:aws:lambda:us-east-2:&lt;account&gt;:function:my-function”
+        }
+     ]
+}</pre>
+</div></section>
+<section data-pdf-bookmark="The Zone of Trust" data-type="sect2"><div class="sect2" id="the_zone_of_trust">
+<h2>The Zone of Trust</h2>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="zone of trust" data-type="indexterm" id="idm46523890408712"/><a contenteditable="false" data-primary="zone of trust" data-type="indexterm" id="idm46523890406952"/>In a single account setup, resource-based policies may provide an additional layer of protection on top of principal-based policies.</p>
+<p>Principals from one account may be allowed to call resources in another. Consider a scenario where Principal B in Account B would like to access Resource B in Account B (resource and principal being in the same account). Under a single-account <span class="keep-together">configuration,</span> an IAM policy that permits access to Resource B will provide the right access to Principal B.</p>
+<p>Essentially, Principal B can be granted access to any resource in its own account by simply attaching an identity-based IAM policy to it that grants this access without requiring a resource-based policy.</p>
+<p>Let’s consider a slightly different situation. Resource B is still in Account B, but Principal A is in Account A (resource and principal being in different accounts). Principal A has an identity-based policy that allows it to access Resource B. However, you will realize, simply adding an identity-based policy is not enough for cross-account access. A resource-based policy is required in Account B on Resource B, in addition to any identity-based policy to enable this access. <a data-type="xref" href="#for_principal_b_to_access_resource_bcom">Figure 2-5</a> illustrates this evaluation logic.</p>
+<p>In other words, even if Principal A is granted access to Resource B within Account A, AWS will not allow Principal A to access Resource B <em>unless</em> there is a resource-based policy within Account B that allows this access.</p>
+<figure><div class="figure" id="for_principal_b_to_access_resource_bcom">
+<img alt="" src="assets/smaa_0205.png"/>
+<h6><span class="label">Figure 2-5. </span>For Principal B to access Resource B, only IAM policy (1) is required. For Principal A to access Resource B, though, both resource-based policy (2) and IAM policy (3) are required.</h6>
+</div></figure>
+<p>Any internal request for a service from within an account is said to have come from within the <em>zone of trust</em> for that service. That’s not the case for external access. Resources have to explicitly mention the principals that they trust outside their zones of trust (in this case, their accounts). A zone of trust dictates whether a resource-based policy is required to access a particular resource.</p>
+<p><a data-type="xref" href="#if_the_request_happens_to_lie_in_any_of">Figure 2-6</a> shows a Venn diagram that sums up how the concept of a zone of trust fits in with the policy evaluation algorithm. Consider a scenario where Principal A, defined in an AWS Account A, requests access to Resource B.</p>
+<figure><div class="figure" id="if_the_request_happens_to_lie_in_any_of">
+<img alt="" src="assets/smaa_0206.png"/>
+<h6><span class="label">Figure 2-6. </span>If the request happens to lie in any of regions 1, 2, or 3, access to the resource will be granted. For all other requests, access will be denied.</h6>
+</div></figure>
+<p>In evaluating whether access should be allowed, we can ask three questions:</p>
+<ul>
+<li><p>Is Principal A in the same account as Resource A within the zone of trust?</p></li>
+<li><p>Does the IAM policy in Account A allow Principal A to access Resource B?</p></li>
+<li><p>Is there a resource policy on Resource B that allows Principal A to gain access?</p></li>
+</ul>
+<p>The request will be granted only if it falls into one of the three scenarios labeled in <a data-type="xref" href="#if_the_request_happens_to_lie_in_any_of">Figure 2-6</a>.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>In AWS, principals from one account are allowed to assume roles in other accounts and make requests to resources in the latter account. In such cases, the policy evaluation logic will assume that the request is originating from the target account’s role, and thus assume that it comes from within the zone of trust. There is no requirement for such a request to be accompanied by a resource-based policy.</p>
+</div>
+</div></section>
+<section data-pdf-bookmark="Evaluation of Policies" data-type="sect2"><div class="sect2" id="evaluation_of_policies">
+<h2>Evaluation of Policies</h2>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="evaluating policies" data-type="indexterm" id="idm46523890387160"/><a contenteditable="false" data-primary="policies" data-secondary="IAM (identity and access management)" data-type="indexterm" id="idm46523890385464"/>For any given request, there may be multiple policy statements that need to be evaluated in conjunction with one another. After evaluating the request, AWS must decide whether to allow it to proceed or deny it access to the resources or services to which the original request specified access.</p>
+<p><a contenteditable="false" data-primary="evaluation algorithm" data-type="indexterm" id="idm46523890379176"/>In making its decision, AWS follows a standard <a href="https://oreil.ly/yLeID">evaluation algorithm</a>:</p>
+<ol>
+<li><p>Start with the intent of denying the request by default (implicit deny).</p></li>
+<li><p>Go through all the policies and statements that are applicable. If there are conditions, only retain statements where conditions are satisfied.</p></li>
+<li><p>If there is a statement in a policy that explicitly denies this request, deny the request. <em>Explicit “denies” always override the “allows</em>.”</p></li>
+<li><p>As long as there is a policy allowing the request, the request should go on to the next step. In the absence of any identity-based policies allowing this request, deny the request and terminate the evaluation.</p></li>
+<li><p>If the principal is from the same account as the target resource, you can assume that the request is from within the zone of trust. Resource-based policies are not needed in such a scenario. Let such a request access the target resource.</p></li>
+<li><p>If the request comes from a principal from a different account, a resource-based policy is needed within the resource’s account allowing this request. Check to see whether such a resource-based policy exists.</p></li>
+</ol>
+<p><a data-type="xref" href="#each_request_is_evaluated_against_a_wor">Figure 2-7</a> illustrates this algorithm in a flowchart.</p>
+<figure><div class="figure" id="each_request_is_evaluated_against_a_wor">
+<img alt="" src="assets/smaa_0207.png"/>
+<h6><span class="label">Figure 2-7. </span>Each request is evaluated against a workflow to determine if access should be granted or denied to the underlying service or resource.</h6>
+</div></figure>
+</div></section>
+</div></section>
+<section data-pdf-bookmark="Advanced Concepts in AWS IAM Policies" data-type="sect1"><div class="sect1" id="advanced_concepts_in_aws_iam_policies">
+<h1>Advanced Concepts in AWS IAM Policies</h1>
+<p>Microservices generally have a large number of principals and resources. Because of this, security professionals often realize that they can benefit from using some of the advanced tools AWS provides to better design their security policies. In this section, I will highlight some of the commonly used policy tools that can help in writing policies for large organizations.</p>
+<section data-pdf-bookmark="IAM Policy Conditions" data-type="sect2"><div class="sect2" id="iam_policy_conditions">
+<h2>IAM Policy Conditions</h2>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="policy conditions" data-type="indexterm" id="idm46523890366824"/><a contenteditable="false" data-primary="policies" data-secondary="IAM (identity and access management)" data-type="indexterm" id="idm46523890365576"/>Policies and statements within a policy can be evaluated on a conditional basis, adding more flexibility to the IAM process. AWS gathers context on each request it receives. This context includes information such as the following:</p>
+<ul>
+<li><p>The action that the request wants to perform on AWS</p></li>
+<li><p>The name and ARN of the resource that the request wants to interact with</p></li>
+<li><p>The principal or the identity performing this request</p></li>
+<li><p class="pagebreak-before less_space">Environment data that may be part of the request—this may include a variety of factors, such as the IP address of the requestor, the user agent, whether the request comes using a secure transport, whether the principal is another AWS service, and so on.</p></li>
+<li><p>More information associated with the target resource, such as any tags on a resource or any tables in a target database</p></li>
+</ul>
+<p>A system administrator could then use all this information to formulate conditional logic to enforce one or more IAM policies. The conditional evaluation process relies on the ability to identify the policy context in which the policy applies and comparing this context with the actual request context when deciding eligibility.</p>
+<p>For example, access may be granted to a resource only if the source of the request is from an IP belonging to your corporate office. This policy can be written like this:</p>
+<pre>{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Effect": "Deny",
+        "Action": "*",
+        "Resource": "*",
+        "Condition": {
+            "NotIpAddress": {
+                "aws:SourceIp": [
+                    "1.2.3.4/32"
+                ]
+            }
+        }
+    }
+}</pre>
+<p>This policy will deny any request to all resources within the account. However, since this policy is only applicable if the IP address is not <code>1.2.3.4/32</code>, it will restrict external access to resources without interfering with any other AWS policies related to requests originating from the IP address <code>1.2.3.4/32</code>.</p>
+<p>Here is another example where conditions can be used. To ensure that a particular resource can only be accessed using an HTTPS endpoint (secure endpoint), you can use this condition:</p>
+<pre>  "Condition": {"Bool": {"aws:SecureTransport": "true"}}</pre>
+<p><a contenteditable="false" data-primary="AWS" data-type="indexterm" id="idm46523890352104"/>This condition will evaluate to true if the incoming request to access a resource comes by way of a secure transport such as HTTPS. AWS maintains <a href="https://oreil.ly/FaBG9">a list</a> of all conditions that it supports within AWS policies.</p>
+</div></section>
+<section data-pdf-bookmark="AWS Tags and Attribute-Based Access Control" data-type="sect2"><div class="sect2" id="aws_tags_and_attribute-based_access_con">
+<h2 class="pagebreak-before less_space">AWS Tags and Attribute-Based Access Control</h2>
+<p><a contenteditable="false" data-primary="data center" data-type="indexterm" id="idm46523890353256"/><a contenteditable="false" data-primary="server tagging" data-type="indexterm" id="idm46523890348952"/><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="AWS tags" data-type="indexterm" id="idm46523890347976"/><a contenteditable="false" data-primary="AWS tag" data-type="indexterm" id="idm46523890346600"/><a contenteditable="false" data-primary="ABAC (attribute-based access control)" data-type="indexterm" id="idm46523890345544"/><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="ABAC (attribute-based access control)" data-type="indexterm" id="idm46523890344456"/>When physical data centers were the primary mode of deploying applications, connecting wires and boxes used to be color coded to identify their purpose and the level of sensitivity of the data that was present in these boxes. Access was granted to employees based on the levels and the color codes. Each server had stickers on it that allowed them to record basic metadata (such as the sensitivity of the data that the server dealt with). This way, teams could identify their resources. This process of marking resources based on teams is called <em>server tagging</em>.</p>
+<p>You can assign metadata to your cloud resources using tags on AWS. Tags are simple labels composed of a key and an optional value that can be used to manage, search for, and filter resources. You can categorize resources based on purposes, owners, environments, bounded contexts, subdomains, or other criteria. In the case of microservices, with the increased fragmentation of services, tags can prove to be a great resource managing all of your cloud resources and, more importantly, controlling access to them.</p>
+<p><a contenteditable="false" data-primary="level-manager" data-type="indexterm" id="idm46523890342312"/>Assigning attributes (tags) to various resources allows your administrators to specify the sensitivity level of the data and the minimum clearance level required for accessing the resource. You can also specify the tag that a principal should have in order to gain access to this resource. So you may have conditional policies such as “only a manager can access resources that have a <em>level</em>-<em>manager</em> set on them” or “only a person from Team X can access a resource that has a tag <em>team</em> set to <em>team x.</em>” Such a system is called <em>attribute-based access control (ABAC)</em>.</p>
+<p>IAM policies have access to the tags in the request’s context and thus can be used to compare the tag present on the resource to determine whether the request should be allowed:</p>
+<pre>   "Condition": {
+                "StringEquals": {"aws:ResourceTag/project":
+                  "${aws:PrincipalTag/project}"}
+            }</pre>
+<p>As you can imagine, microservices are great environments for using ABAC.</p>
+</div></section>
+<section data-pdf-bookmark="“Not” Policy Elements: NotPrincipal and NotResource" data-type="sect2"><div class="sect2" id="quotation_marknotquotation_mark_policy">
+<h2>“Not” Policy Elements: NotPrincipal and NotResource</h2>
+<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="NorPrincipal element" data-type="indexterm" id="idm46523890336040"/><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="NotResource element" data-type="indexterm" id="idm46523890334312"/><a contenteditable="false" data-primary="NotPrincipal" data-type="indexterm" id="idm46523890330488"/><a contenteditable="false" data-primary="NotResource" data-type="indexterm" id="idm46523890329336"/>Two commonly used exclusion policy statements are <code>NotPrincipal</code> and <span class="keep-together"><code>NotResource</code></span>. Since both statements are similar in structure and have a somewhat similar effect, I have bundled them together.</p>
+<p>They are both used to specify a list of items that the specified policy does not apply to. Let’s say you want to create a policy that denies access to S3 buckets to everyone except for a few users in the organization. You can use <code>NotPrincipal</code> to specify a deny policy that applies to everyone in the account except the users specified in the policy:</p>
+<pre>{
+    "Version": "2012-10-17",
+    "Statement": [{
+        "Effect": "Deny",
+        "NotPrincipal": {"AWS": [
+            "arn:aws:iam::&lt;accountid&gt;:user/&lt;username&gt;",
+        ]},
+        "Action": "s3:*",
+        "Resource": [
+            "arn:aws:s3:::&lt;BucketName|&gt;"
+        ]
+    }]
+}</pre>
+<p><code>NotResource</code> can be used in a similar way; it can be used with a deny policy if you want to deny access for one user to all buckets except one S3 bucket:</p>
+<pre>{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Deny",
+    "Action": "s3:*",
+    "NotResource": [
+      "arn:aws:s3:::&lt;theonlybuckettoaccess&gt;"
+    ]
+  }
+}</pre>
+</div></section>
+<section data-pdf-bookmark="Wrapping Up IAM Policies" data-type="sect2"><div class="sect2" id="wrapping_up_iam_policies">
+<h2>Wrapping Up IAM Policies</h2>
+<p>It is impossible to overstate the importance of IAM in any cloud application and, specifically, in a microservice application. Due to their nature, in a microservice environment you may end up requiring significantly more IAM policies in order to control each and every service. This proliferation of policies may add to the complexity of the application.</p>
+<p>However, what you lose in complexity, you may gain in configurability. Microservices afford better control due to their modular nature. With a domain-driven design (DDD), it is possible to frame IAM policies that are targeted and hence can provide preventive controls against potential threats. In order to target attacks, AWS provides you with many different conditions that can help in tailoring these IAM policies to better suit the needs of the service. AWS provides great <a href="https://oreil.ly/cAyea">documentation</a> on how you can tailor these policies further.</p>
+<p class="pagebreak-before less_space">Even so, for large organizations, IAM policies may end up causing friction between developers and microservice security architects. In <a data-type="xref" href="ch08.html#security_design_for_organizational_comp">Chapter 8</a>, I will attempt to <span class="keep-together">introduce</span> you to some other techniques that aim at reducing the burden of complexity that microservices bring with them.</p>
+</div></section>
+</div></section>
+<section data-pdf-bookmark="Role-Based Access Control" data-type="sect1"><div class="sect1" id="role-based_access_control_left_parenth">
+<h1>Role-Based Access Control</h1>
+<p><a contenteditable="false" data-primary="RBAC (role-based access control)" data-secondary="about" data-type="indexterm" id="idm46523890318968"/><a contenteditable="false" data-primary="roles" data-secondary="defined" data-type="indexterm" id="idm46523890317112"/>Because microservices involve a lot of services running with different identities, IAM policies may get complicated very soon, mainly due to their sheer volume. In such a situation, AWS roles aim to simplify the development of these identities while keeping the security policy simple and scalable. The concept of roles has been borrowed from social sciences. <em>A role is a set of permissions, behaviors, identities, and norms as defined by people in a specific circumstance</em>.</p>
+<p>For example, a student attending a class and the same student at a party are the same person, yet that person plays two different roles. In class, the student may not be allowed to play loud music. However, at a party, the same student may be able to blast their stereo. Using role-based access control (RBAC), it is possible to place different restrictions on the same individual depending on the role they currently play.</p>
+<p><a contenteditable="false" data-primary="Role-Based Access Control (Ferraiolo et al)" data-type="indexterm" id="idm46523890304872"/><a contenteditable="false" data-primary="Ferraiolo, David, Role-Based Access Control" data-type="indexterm" id="idm46523890311064"/>RBAC is an access control paradigm and a fascinating topic in the field of security. For readers interested in learning further, I recommend <em>Role-Based Access Control</em> by David Ferraiolo et al. (Artech House).</p>
+<div data-type="tip"><h6>Tip</h6>
+
+<p><a contenteditable="false" data-primary="GBAC (graph-based access control)" data-type="indexterm" id="idm46523890306168"/><a contenteditable="false" data-primary="MAC (mandatory access control)" data-type="indexterm" id="idm46523890308184"/>RBAC is not the only way of organizing access control across complex organizations. There are many others, such as ABAC, mandatory access control (MAC), graph-based access control (GBAC), and more. Every organization needs to find the access control paradigm that best suits its security needs; each has their advantages. Since RBAC is widely used and ties well with other microservice concepts, it’s covered in this chapter.</p>
+</div>
+<p><a contenteditable="false" data-primary="Lifecycle" data-type="indexterm" id="idm46523890296296"/>If I am working for an organization and would like to access a resource, RBAC dictates that my responsibilities be converted to a role that I am allowed to assume. The role that I will be assuming can have a lifecycle that may not be tied to my lifecycle in the company. In this way, if I get replaced in the organization, the person who replaces me can still use the same role and access the same resource.</p>
+<p><a data-type="xref" href="#in_rbaccomma_the_same_user_can_request">Figure 2-8</a> shows how access to a resource modeled after a role instead of an individual user helps in enforcing a similar access control policy. In this case, user Gaurav Raje does not have access to a resource. However, the same user is able to access the resource when he assumes a system administrator role.</p>
+<figure><div class="figure" id="in_rbaccomma_the_same_user_can_request">
+<img alt="" src="assets/smaa_0208.png"/>
+<h6><span class="label">Figure 2-8. </span>In RBAC, the same user can request access to a resource either by using their individual identity or by using a role that they are authorized to perform within the organization.</h6>
+</div></figure>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>Organization-wide paradigm shifts like RBAC require top-down alignment when it comes to implementation. The transitions can be a challenge at times, especially in large organizations. But once implemented, RBAC leads to reduced complexity, improved access visibility, improved compliance, and an easy-to-manage security infrastructure.</p>
+</div>
+<section data-pdf-bookmark="RBAC Modeling" data-type="sect2"><div class="sect2" id="rbac_modeling">
+<h2>RBAC Modeling</h2>
+<p><a contenteditable="false" data-primary="modeling, RBAC" data-type="indexterm" id="idm46523890298104"/><a contenteditable="false" data-primary="RBAC (role-based access control)" data-secondary="modeling" data-type="indexterm" id="idm46523890292792"/>In RBAC modeling, the first step is to identify the various resources and the actions that are authorized to be performed on these resources:</p>
+<ol>
+<li><p>An inventory is taken of each and every action that needs to be performed on these resources.</p></li>
+<li><p>After that, the organization is analyzed to identify the different employees and the actions they perform on each of the resources within the organization. This may include grouping actions based on the employees, their positions, their titles, and their access privileges.</p></li>
+<li><p>Roles are then created to reflect the individual access pattern that employees within the organization use to perform their jobs, as reflected in Step 2.</p></li>
+<li><p>Roles are then assigned IAM policies to control their access. A rule of thumb here is to follow PoLP by providing access only to the bare minimum resources and actions to each role.</p></li>
+<li><p>Finally, individual users are allowed to assume these roles, whereas direct access to resources (without using roles) is disabled for all users.</p></li>
+</ol>
+<p><a data-type="xref" href="#how_an_organization_can_transition_from">Figure 2-9</a> illustrates this process of role modeling and compares the access patterns before and after an implementation of RBAC.</p>
+<figure><div class="figure" id="how_an_organization_can_transition_from">
+<img alt="" src="assets/smaa_0209.png"/>
+<h6><span class="label">Figure 2-9. </span>How an organization can transition from user-based access to role-based access by modeling the user access patterns into roles.</h6>
+</div></figure>
+<p>After completing the RBAC model, access to resources for each user should be restricted through roles rather than direct access.</p>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>RBAC can be useful only if the PoLP is applied within the organization. Overly permissive roles may compromise the security of the application. On the other hand, excessively restrictive roles may deter legitimate users from doing their jobs.</p>
+</div>
+</div></section>
+<section data-pdf-bookmark="Securing Roles" data-type="sect2"><div class="sect2" id="securing_roles">
+<h2>Securing Roles</h2>
+<p><a contenteditable="false" data-primary="AWS STS (Security Token Service)" data-type="indexterm" id="idm46523890279224"/><a contenteditable="false" data-primary="roles" data-secondary="securing" data-type="indexterm" id="idm46523890278104"/><a contenteditable="false" data-primary="RBAC (role-based access control)" data-secondary="securing roles" data-type="indexterm" id="idm46523890276408"/>Assuming your application has already implemented the roles required for every employee and microservice in the organization, the next step is to allow these principals to assume these roles. AWS has many ways that users or other services can assume the roles necessary to accomplish what they need to do. Under the hood, AWS uses the AWS Security Token Service (AWS STS) to support all these methods of switching roles. For a principal to be able to switch roles, there needs to be an IAM policy attached to it that allows the principal to call the <code>AssumeRole</code> action on STS:</p>
+<pre>{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Action": "sts:AssumeRole",
+    "Resource": "arn:aws:iam::ACCOUNT-ID-WITHOUT-HYPHENS:role/&lt;Role&gt;"
+  }
+}</pre>
+<p><a contenteditable="false" data-primary="IAM role trust policy" data-type="indexterm" id="idm46523890273672"/>In addition, IAM roles can also have a special type of a resource-based policy attached to them, called an <em>IAM role trust policy</em>. An IAM role trust policy can be written just like any other resource-based policy, by specifying the principals that are allowed to assume the role in question:</p>
+<pre>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::&lt;accountid&gt;:user/&lt;username&gt;"
+      },
+      "Action": "sts:AssumeRole",
+    }
+  ]
+}</pre>
+<p><a contenteditable="false" data-primary="trusted entity" data-type="indexterm" id="idm46523890269672"/><a contenteditable="false" data-primary="AWS Management Console" data-type="indexterm" id="idm46523890271240"/>Any principal that is allowed to access a role is called a <em>trusted entity</em> for that role. A trusted entity can also be added to a role through the AWS Management Console by specifying it in the Trust relationships tab on the Roles page within the Identity and Access Management setup, as seen in <a data-type="xref" href="#new_principals_can_be_added_into_the_re">Figure 2-10</a>.</p>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>IAM role trust policy is like any other resource-based policy and allows principals to be from external accounts. Assuming a role within the current account is a great way of sharing access to AWS resources across accounts in a controlled way.</p>
+</div>
+<figure><div class="figure" id="new_principals_can_be_added_into_the_re">
+<img alt="" src="assets/smaa_0210.png"/>
+<h6><span class="label">Figure 2-10. </span>New principals can be added into the resource policy for IAM roles by editing the trust relationships of the role.</h6>
+</div></figure>
+
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>As with any policy evaluation, trust relationships and identity-based IAM policies are evaluated simultaneously when a user attempts to assume a role with IAM. To succeed in assuming a role, both these policies should allow the action to proceed. The user will not be able to assume the role if either of these policies leads to a denial.</p>
+</div>
+</div></section>
+<section data-pdf-bookmark="Assuming Roles" data-type="sect2"><div class="sect2" id="assuming_roles">
+<h2>Assuming Roles</h2>
+<p><a contenteditable="false" data-primary="RBAC (role-based access control)" data-secondary="assuming roles" data-type="indexterm" id="rbac_ar"/><a contenteditable="false" data-primary="roles" data-secondary="assuming" data-type="indexterm" id="ro_ass"/>I have already mentioned that the process of assuming a role involves the use of AWS STS behind the scenes. Assuming a role involves requesting a temporary set of credentials from AWS that can be used in future requests. <a data-type="xref" href="#aws_sts_is_used_to_issue_temporary_cred">Figure 2-11</a> shows two users, Bob and Alice, attempting to assume a role (Role A) using AWS STS. Bob is not specified in the trust policy for Role A while Alice is.</p>
+<figure><div class="figure" id="aws_sts_is_used_to_issue_temporary_cred">
+<img alt="" src="assets/smaa_0211.png"/>
+<h6><span class="label">Figure 2-11. </span>AWS STS is used to issue temporary credentials to any user specified within the trust policy of the role that tries to assume that role.</h6>
+</div></figure>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p><a contenteditable="false" data-primary="root users" data-type="indexterm" id="idm46523890251576"/>Root users are not allowed to assume roles using AWS STS. <span class="keep-together"><code>AssumeRole</code></span> must be called with credentials for an IAM user or a role.</p>
+</div>
+<p>Roles allow access to resources. This is how roles are used to access resources:</p>
+<ol>
+<li><p>IAM checks whether a user is allowed to make an STS request to assume a role.</p></li>
+<li><p>A user makes a request to AWS STS to assume a particular role and get temporary credentials.</p></li>
+<li><p>AWS STS checks with IAM to ensure that the target role allows the calling principal to assume this role in the trust policy of the target role.</p></li>
+<li><p>The calling principal exchanges its own identity in return for temporary credentials of the target role.</p></li>
+</ol>
+<p><a data-type="xref" href="#aws_sts_allows_users_from_either_the_sa">Figure 2-12</a> illustrates this evaluation flow.</p>
+<figure><div class="figure" id="aws_sts_allows_users_from_either_the_sa">
+<img alt="" src="assets/smaa_0212.png"/>
+<h6><span class="label">Figure 2-12. </span>AWS STS allows users from either the same or external accounts to exchange their identities for that of a role in a target account.</h6>
+</div></figure>
+<p>In the event that the assumed role has access to a particular resource, the calling identity can access the resource in question by using the temporary credentials that it has of the assumed role. In <a data-type="xref" href="#aws_sts_allows_users_from_either_the_sa">Figure 2-12</a>, because Role A has access to Resource A, User B can access Resource A by assuming Role A.</p>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>Giving up original credentials and access while assuming roles may be problematic for certain use cases—such as where one role with access to one AWS S3 bucket would like to copy or compare files with another bucket that allows access only to a different role. In such situations, using resource-based policies to allow access to both buckets for such a role may be the best solution.</p>
+</div>
+<p><a contenteditable="false" data-primary="AWS CLI (Command Line Interface)" data-type="indexterm" id="idm46523890238696"/>As the same user may access resources in different roles, it is sometimes difficult to remember the exact identity used to access a particular resource. You can find out which identity is being used when interacting with AWS through the AWS CLI.</p>
+<p>If you run the following command, AWS will inform you of the user’s current identity, as you can see in <a data-type="xref" href="#a_call_to_sts_get-caller-identity_will">Figure 2-13</a>. It could be a user or a role that you may have assumed:</p>
+<pre>aws sts get-caller-identity</pre>
+<figure><div class="figure" id="a_call_to_sts_get-caller-identity_will">
+<img alt="" src="assets/smaa_0213.png"/>
+<h6><span class="label">Figure 2-13. </span>A call to sts get-caller-identity will return the current user ID, account ID, and the ARN of the identity of the current session.</h6>
+</div></figure>
+</div></section>
+<section data-pdf-bookmark="Assume Roles Using the AWS Command-Line Interface (CLI)" data-type="sect2"><div class="sect2" id="assume_roles_using_the_aws_command_line">
+<h2>Assume Roles Using the AWS Command-Line Interface (CLI)</h2>
+<p>The AWS CLI can be used to assume a role using AWS STS by running the following command:</p>
+<pre>aws sts assume-role --role-arn arn:aws:iam::123456789012:role/targetrole
+  --role-session-name assumed-role-session</pre>
+<p>AWS responds to such requests by issuing temporary credentials that the caller can use to access AWS resources:</p>
+<pre>{
+    "AssumedRoleUser": {
+        "AssumedRoleId": "AXAISKDJSALA:assumed-role-session",
+        "Arn":
+          "arn:aws:sts::123456789012:assumed-role/
+          targetrole/assumed-role-session"
+    },
+    "Credentials": {
+        "SecretAccessKey": "9drTJvcXLB89EXAMPLELB8923FB892xMFI",
+        "SessionToken": "AQoXdzELDDY//////////
+        wEaoAK1wvxJY12r2IrDFT2IvAzTCn3zHoZ7YNtpiQLF0MqZye/
+        qwjzP2iEXAMPLEbw/m3hsj8VBTkPORGvr9jM5sgP+w9IZWZnU+LWhmg+a5f
+        Di2oTGUYcdg9uexQ4mtCHIHfi4citgqZTgco40Yqr4lIlo4V2b2Dyauk0eY
+        FNebHtYlFVgAUj+7Indz3LU0aTWk1WKIjHmmMCIoTkyYp/k7kUG7moeEYKS
+        itwQIi6Gjn+nyzM+PtoA3685ixzv0R7i5rjQi0YE0lf1oeie3bDiNHncmzo
+        sRM6SFiPzSvp6h/32xQuZsjcypmwsPSDtTPYcs0+YN/8BRi2/IcrxSpnWEX
+        AMPLEXSDFTAQAM6Dl9zR0tXoybnlrZIwMLlMi1Kcgo5OytwU=",
+        "Expiration": "2016-03-15T00:05:07Z",
+        "AccessKeyId": "ASIAJEXAMPLEXEG2JICEA"
+    }
+}</pre>
+<p><a contenteditable="false" data-primary="" data-startref="rbac_ar" data-type="indexterm" id="idm46523890229256"/><a contenteditable="false" data-primary="" data-startref="ro_ass" data-type="indexterm" id="idm46523890226024"/>Temporary credentials are used for the same reasons as regular credentials, except that they expire after a certain date and time, and they are tied to a session. The credentials in the response can be used to access other resources.</p>
+</div></section>
+<section data-pdf-bookmark="Switching Roles Using AWS Management Console" data-type="sect2"><div class="sect2" id="switching_roles_using_aws_management_co">
+<h2>Switching Roles Using AWS Management Console</h2>
+<p><a contenteditable="false" data-primary="AWS Management Console" data-type="indexterm" id="idm46523890223288"/><a contenteditable="false" data-primary="roles" data-secondary="switching using AWS Management Console" data-type="indexterm" id="idm46523890221656"/>AWS allows users to switch to roles that the current logged-in user has access to, right through the AWS Management Console, as shown in <a data-type="xref" href="#a_new_role_can_be_added_to_the_list_of">Figure 2-14</a> and <a data-type="xref" data-xrefstyle="select:labelnumber" href="#to_add_a_new_rolecomma_you_can_add_the">2-15</a>.</p>
+<figure><div class="figure" id="a_new_role_can_be_added_to_the_list_of">
+<img alt="" src="assets/smaa_0214.png"/>
+<h6><span class="label">Figure 2-14. </span>A new role can be added to the list of roles that the logged user can switch to by selecting Switch Roles.</h6>
+</div></figure>
+<figure><div class="figure" id="to_add_a_new_rolecomma_you_can_add_the">
+<img alt="" src="assets/smaa_0215.png"/>
+<h6><span class="label">Figure 2-15. </span>To add a new role, you can add the role name and account ID as well as a convenient nickname to the form; AWS will switch the console to the newly assumed identity of the role in the target account.</h6>
+</div></figure>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>Now that you can set up roles for everyone in your organization and ask users to assume roles to access resources, your IAM policies should be much cleaner, since each access can now be tied to a role instead of individual users. This also helps in decoupling user identities from their function within the application.</p>
+</div>
+</div></section>
+<section data-pdf-bookmark="Service-Linked Role" data-type="sect2"><div class="sect2" id="service-linked_role">
+<h2>Service-Linked Role</h2>
+<p><a contenteditable="false" data-primary="RBAC (role-based access control)" data-secondary="service-linked role" data-type="indexterm" id="idm46523890210504"/><a contenteditable="false" data-primary="roles" data-secondary="service-linked" data-type="indexterm" id="idm46523890208520"/><a contenteditable="false" data-primary="service-linked role" data-type="indexterm" id="idm46523890207160"/>In a microservice environment, least privilege should be applied to the roles that microservices assume in order to run on the cloud infrastructure. To make this process easier, AWS allows the creation of a service-linked role for certain supported services. A service-linked role has its policies and statements prewritten by AWS. All service-linked roles are predefined by the service that assumes these roles. They include all the permissions that the assuming service needs to make calls to other AWS services. Service-linked roles can be created from the command line using the following command:</p>
+<pre> aws iam create-service-linked-role --aws-service-name &lt;service name&gt;</pre>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>The service name in this case can be looked up <a href="https://oreil.ly/lhrIj">in the AWS <span class="keep-together">documentation</span></a>.</p>
+</div>
+</div></section>
+</div></section>
+<section data-pdf-bookmark="Authentication and Identity Management" data-type="sect1"><div class="sect1" id="authentication_and_identity_management">
+<h1>Authentication and Identity Management</h1>
+<p><a contenteditable="false" data-primary="authorization and authentication" data-secondary="authentication and identity management" data-type="indexterm" id="aa_aim"/>So far, it has been assumed that AWS knew the user’s identity, without explaining how it could be accomplished. Access control tried to limit the amount of damage a known identity could inflict on a system. As long as AWS is aware of the real identity of the user, access control works effectively. But for an access control system, what makes you <em>you</em>? What should it base its decision on? Is it the way you look? Is it the identity card you possess that says who you are? This section shows the various ways in which this initial identity can be established, proven, and secured so that the rest of IAM is able to successfully apply controls around threats pertaining to unauthorized access.</p>
+<aside data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="basics_of_identity">
+<h5>Basics of Identity</h5>
+<p>For microservices, the concept of identities can get a little complex. It may be desirable to identify a cluster of services that provide the same microservice with a common identity, even if they are running on different servers (and sometimes even in different regions). On the other hand, multiple users can interact with the same resources using the same workstation, so identifying each user uniquely may be required for the purpose of access control.</p>
+<p>For the purpose of access control in information systems, the identity of a user is made up of three aspects, or basic building blocks:</p>
+<dl>
+<dt>Entitlements</dt>
+<dd><a contenteditable="false" data-primary="entitlements, identity and" data-type="indexterm" id="idm46523890196712"/>Rights or privileges granted to a user for the purpose of performing their tasks. These may be due to their job positions, group membership, or something else. For example, Sruthi, who works for the finance department within your organization, may have full access to all the accounting databases simply due to the fact that she works in the finance department. To protect against unauthorized access, the system needs to make sure that Sruthi is part of the finance department. In fact, if I join the finance department, I may automatically gain this access as well, because of my position.</dd>
+<dt>Attributes</dt>
+<dd><a contenteditable="false" data-primary="attributes" data-type="indexterm" id="idm46523890198184"/>Unlike entitlements, attributes are acquired over the lifetime of the identity. These may either be granted by administrators or be acquired by performing certain actions. Rather than being a right of the employee, the administrator grants attributes on a temporary basis, and they may be revoked easily. Anyone in your organization with a security clearance, for example, may be able to access sensitive data. To protect against unauthorized access, the system needs to ensure that the attributes are protected against tampering or spoofing. Therefore, George, who does not possess a security clearance, shouldn’t be able to fool your access control system into believing he does.</dd>
+<dt>Traits</dt>
+<dd><a contenteditable="false" data-primary="traits, identity and" data-type="indexterm" id="idm46523890176872"/>Traits are inherent features of the subject. These may include biological features or any other identity information that belongs to the user, which access control systems may use to grant access. For example, if your building’s security manager knows you personally, you may be able to enter your building without showing an access card since the security manager is able to identify you based on your physical appearance.</dd>
+</dl>
+<p>An access control system may use one or more of these aspects of your identity to enable you to perform tasks or prevent you from completing them. For example, when you buy alcohol from a liquor store, you may be asked to provide proof of age in the form of a driver’s license. Your driver’s license is an <em>attribute</em> that was granted to you by your local government. You have an <em>entitlement</em> to purchase alcohol because you are older than the minimum legal drinking age (that is, you belong to the group of people who are allowed to purchase alcohol). The picture on your driver’s license matches your face, allowing the store to verify your identity—this is the <em>trait</em> aspect of your identity. As seen, all three aspects of your identity work together with one another to allow you to buy alcohol.</p>
+<p>Identities are said to have been compromised if a malicious actor or an imposter is able to gain access to systems using the identity of a legitimate user.</p>
+</div></aside>
+<section data-pdf-bookmark="Basics of Authentication" data-type="sect2"><div class="sect2" id="basics_of_authentication">
+<h2>Basics of Authentication</h2>
+<p><a contenteditable="false" data-primary="authorization and authentication" data-secondary="basics of authentication" data-type="indexterm" id="idm46523890189544"/>Maintaining the integrity of identities ensures that access control systems can prevent unauthorized access by using these identities. For example, to prevent minors from purchasing alcohol, a liquor store may require every customer to show their driver’s license (attribute). It is possible to have strong security guards to ensure that people without such a document cannot buy alcohol. However, if it were easy to fabricate a fake driver’s license, minors could easily circumvent the access control system by creating fake proof of age, thus making such a system useless. It is the job of an authentication system to ensure that a compromise of identities is prevented. In the case of driver’s licenses, this may mean the introduction of 3D holograms or computerized scanners that ensure the integrity of the document.</p>
+<p>Authentication is the process of establishing confidence in user identities presented to an electronic system. An authenticating user or service must perform certain actions that your AWS account believes can only be performed by that particular user in order to establish their identity. In the case of AWS, these actions can be roughly classified into three buckets:</p>
+<dl>
+<dt>Authentication using knowledge factors</dt>
+<dd><a contenteditable="false" data-primary="knowledge factors" data-type="indexterm" id="idm46523890174104"/>In this bucket, AWS requires the user to prove knowledge of a secret that only a legitimate user is supposed to know. Typing in a password, using a passphrase, answering a security question, or using any secret pin code are all examples of knowledge factors.</dd>
+<dt>Authentication using a possession factor</dt>
+<dd><a contenteditable="false" data-primary="YubiKey" data-type="indexterm" id="idm46523890185512"/><a contenteditable="false" data-primary="Google Titan key" data-type="indexterm" id="idm46523890183960"/><a contenteditable="false" data-primary="possession factor, authentication using" data-type="indexterm" id="idm46523890182872"/>In this one, AWS requires the user to prove the possession of an item that only that user may be in possession of. This might include the user’s cellphone or a physical hardware authentication device (such as a YubiKey or a Google Titan key).</dd>
+<dt>Authentication using federated authentication</dt>
+<dd><a contenteditable="false" data-primary="Active Directory" data-type="indexterm" id="idm46523890167688"/><a contenteditable="false" data-primary="federated authentication, authentication using" data-type="indexterm" id="idm46523890171448"/>Instead of the AWS taking on the responsibility for authentication, a different system is designated to perform the checks. This enables an organization’s existing authentication process to be reused. With federated authentication, AWS can delegate authentication tasks to established systems within the organization, such as Active Directory or any other mechanisms that the organization may already be using for registering identities.</dd>
+</dl>
+<div data-type="tip"><h6>Tip</h6>
+
+<p><a contenteditable="false" data-primary="MFA (multifactor authentication)" data-secondary="about" data-type="indexterm" id="idm46523890169544"/>In most secure organizations, a possession factor is used in addition to any of the other mechanisms to add an extra layer of security. This is known as multifactor authentication (MFA). Throughout this book, I will keep insisting on the importance of using MFA.</p>
+</div>
+</div></section>
+<section data-pdf-bookmark="Identity Federation on AWS" data-type="sect2"><div class="sect2" id="identity_federation_on_aws">
+<h2>Identity Federation on AWS</h2>
+<p><a contenteditable="false" data-primary="identity federation" data-secondary="on AWS" data-type="indexterm" id="idm46523890161048"/>A strong password requirement on the AWS Management Console is a good start to securing your cloud infrastructure, but the added liability of requiring users to keep their login credentials could result in friction within organizations. This may be further aggravated by having stricter password policies for IAM credentials. Employees may already have corporate identities within most companies, so requiring them to create new accounts on AWS (with strong password policies) could simply increase friction among employees.</p>
+<p><a contenteditable="false" data-primary="IdP (identity provider)" data-secondary="about" data-type="indexterm" id="idm46523890165816"/><a contenteditable="false" data-primary="AWS Identity Services" data-type="indexterm" id="idm46523890159112"/><a contenteditable="false" data-primary="Dotson, Chris, Practical Cloud Security" data-type="indexterm" id="idm46523890158104"/><a contenteditable="false" data-primary="Practical Cloud Security (Dotson)" data-type="indexterm" id="idm46523890156952"/>AWS gives organizations the ability to integrate AWS Identity Services into their own identity management systems. This system of delegating the authentication aspect of AWS to a trusted third-party system is called <em>identity federation</em>. The key to federated identities is the fact that you have two identity providers—your on-premises system and AWS IAM—and the two providers agree to link their identities to each other (for more on this, see Chris Dotson’s book <a href="https://oreil.ly/0JXCh"><em>Practical Cloud Security</em> (O’Reilly)</a>). The third-party system that performs the actual identity check on behalf of AWS is called an <em>identity provider (IdP)</em>.</p>
+<p>There are many ways to perform identity federation. Most involve the use of RBAC to map external third-party identities to established roles within the AWS account and allowing these third-party identities to exchange their credentials for an AWS role.</p>
+<p><a contenteditable="false" data-primary="On-premises" data-type="indexterm" id="idm46523890155832"/>There are many ways of achieving identity federation, but they all follow a common theme (highlighted in <a data-type="xref" href="#most_of_the_identity_federation_mechani">Figure 2-16</a>). Let us assume a user wishes to access a resource within AWS called Target Resource using federated identity. The on-premises system already has all of the users’ identifiers. This system is the IdP and is capable of determining the levels of privilege or the role that this user should be allowed to assume to perform their task with the minimum privilege.</p>
+<figure><div class="figure" id="most_of_the_identity_federation_mechani">
+<img alt="" src="assets/smaa_0216.png"/>
+<h6><span class="label">Figure 2-16. </span>Most of the identity federation mechanisms follow some version of this abstract flow when it comes to authenticating requests from federated identity sources.</h6>
+</div></figure>
+<p>This is the flow shown in <a data-type="xref" href="#most_of_the_identity_federation_mechani">Figure 2-16</a>:</p>
+<ol>
+<li><p>The external identity management system will set up some sort of a trust relationship with an AWS account.</p></li>
+<li><p>A user who wishes to access the target resource first authenticates with the on-premises system. (This on-premises system can use whatever combinations of factors it chooses to ensure the identity of the calling user.)</p></li>
+<li><p>The on-premises authentication system responds with some form of an assurance that it believes will be able to convince AWS of a successful validation. AWS on its end is able to look at this token and determine its validity.</p></li>
+<li><p>The user uses this token to make a request to AWS by saying, “Here is my request along with the assurance that I have been authenticated by the IdP that you agreed to trust.”</p></li>
+<li><p>AWS verifies the identity of the token (or the assertion that is present in the token) to ensure that the user is indeed validated by the IdP.</p></li>
+<li><p>Upon verification, the end user can now exchange their identity within their target account for an AWS role, much like what was discussed in <a data-type="xref" href="#role-based_access_control_left_parenth">“Role-Based Access Control”</a>. As opposed to being an external AWS account user that is authenticated by AWS, in this case the user is authenticated by a third-party system that you have instructed AWS to trust. Since the target role has access to the “target resource,” the end user can access the target resource using the identity of the role it just assumed.</p></li>
+</ol>
+</div></section>
+<section data-pdf-bookmark="Identity Federation Using SAML 2.0 and OpenID Connect" data-type="sect2"><div class="sect2" id="identity_federation_using_saml_twodotze">
+<h2>Identity Federation Using SAML 2.0 and OpenID Connect</h2>
+<p><a contenteditable="false" data-primary="SAML 2.0" data-type="indexterm" id="idm46523890146312"/><a contenteditable="false" data-primary="identity federation" data-secondary="using SAML 2.0 and OpenID Connect" data-type="indexterm" id="idm46523890137384"/><a contenteditable="false" data-primary="OIDC (OpenID Connect)" data-type="indexterm" id="idm46523890136008"/><a contenteditable="false" data-primary="OpenID Connect OIDC" data-type="indexterm" id="idm46523890134936"/>Security Assertion Markup Language (SAML) 2.0 is one of the most common standards used in exchanging identities between security domains. Many third-party IdPs are fully compliant with SAML 2.0; hence, being able to integrate with SAML allows your organization a wide array of third-party authentication providers.</p>
+<div data-type="tip"><h6>Tip</h6>
+
+<p><a data-type="xref" href="app02.html#example_of_a_saml_identity_p">Appendix B</a> shows a hands-on example of integrating with a third-party SAML provider. If you’re interested in setting up federated IdPs, you will find the exercise very worthwhile.</p>
+</div>
+<p><a contenteditable="false" data-primary="OAutho 2.0" data-type="indexterm" id="idm46523890130168"/>OpenId Connect (OIDC) is another tool you can use to add a trusted IdP to your AWS account. OIDC is built on top of OAuth 2.0 and allows AWS to verify the identity of the end user based on an HTTP-based exchange. Like SAML, OIDC also allows federated users to exchange their existing external identity for the purpose of assuming a role within their target AWS account. This role can be made to reflect the policy of least privilege and all the concepts discussed in <a data-type="xref" href="#rbac_modeling">“RBAC Modeling”</a>.</p>
+<p>This way, using either a SAML- or an OIDC-based IdP, AWS allows for the delegation of authentication to your existing IdPs, thus reducing the number of login credentials that your employees may have to keep track of.</p>
+<div data-type="tip"><h6>Tip</h6>
+
+<p><a contenteditable="false" data-primary="" data-startref="aa_aim" data-type="indexterm" id="idm46523890122376"/><a contenteditable="false" data-primary="" data-startref="aa_iam" data-type="indexterm" id="idm46523890120776"/>Because AWS trusts IdPs for authentication, it is important that the IdP that is used for authentication adhere to security best practices. This may include choosing strong password policies, enforcing MFA on users, and reviewing access regularly to eliminate users who no longer need access to AWS resources.</p>
+</div>
+</div></section>
+</div></section>
+<section data-pdf-bookmark="RBAC and Microservices" data-type="sect1"><div class="sect1" id="rbac_and_microservices">
+<h1>RBAC and Microservices</h1>
+<p><a contenteditable="false" data-primary="authorization and authentication" data-secondary="RBAC and microservices" data-type="indexterm" id="aa_rbac"/><a contenteditable="false" data-primary="microservices" data-secondary="RBAC and" data-type="indexterm" id="mic_rbac"/><a contenteditable="false" data-primary="RBAC (role-based access control)" data-secondary="microservices and" data-type="indexterm" id="rbac_mic"/>This chapter has laid the foundation for IAM for any cloud system on AWS. IAM roles, authentication, and policies allow you to build secure microservices. Nevertheless, given that microservice applications have a greater number of services running and interacting with one another, it’s likely that your IAM policies will grow complicated if you aren’t careful. I would like to talk a little about some of the cloud infrastructure’s architecture elements that you can leverage in order to preserve the complexity of a microservice application.</p>
+<p>To start, I will assume that your application has a clean separation of services <span class="keep-together">based on</span> domain design. As a result, each microservice within your application is focused on a specific business responsibility. Given that the service is neatly aligned <span class="keep-together">with business-level</span> objectives, it may be easier to define the service in terms of a business role. RBAC can be a good approach for implementing access control for such use cases.</p>
+<p>In most microservice applications, you can perform the exercise of role modeling on these services. You will have to document all the ways in which each of your services accesses AWS resources and assign roles according to the permissions required for such access, based on the contexts of these requests. With the exception of tying each role to a service instead of to an employee, role modeling done on microservices is very similar to it being done with employees.</p>
+<p>So, after a successful implementation of RBAC, you can assume that each of your microservices can be mapped to a role that will have the right level of access within your infrastructure. By applying the PoLP to this role, you can ensure that your microservices will never stray from their defined roles.</p>
+<section data-pdf-bookmark="Execution Roles" data-type="sect2"><div class="sect2" id="execution_roles">
+<h2>Execution Roles</h2>
+<p><a contenteditable="false" data-primary="execution roles" data-type="indexterm" id="idm46523890105448"/><a contenteditable="false" data-primary="roles" data-secondary="execution" data-type="indexterm" id="idm46523890113832"/>Many supported AWS services run by assuming a certain default role called an execution role. These roles can be created identical to roles that users assume. RBAC brings in a huge advantage to microservices that I will demonstrate with an example. Let’s say you have a microservice that is running a certain application that requires access to a certain sensitive cloud resource (say, a database). You may have multiple cloud environments where your service can be deployed. In a staging environment, you may have a database that has certain staged data, while in a production environment, you may have actual customer data.</p>
+<p>Before execution roles and cloud deployments, access control used to be controlled primarily with passwords or other authentication mechanisms. These passwords either used to live alongside application code in the form of encrypted config files or needed access to other third-party configuration management services, adding to the complexity of the application. This problem is mitigated by the implementation of execution roles. All you need to do is create a role that has access to the database and make this role the execution role of your deployed microservice. The application code will now attempt to access the cloud resource by assuming that the role it runs as has the required access. If the code is deployed to the production environment, it will run by assuming the production role. Simply assuming this role gives this microservice the ability to access the production data without needing any separate authentication logic. In a similar vein, deploying the same service to a staging environment can give access to the staging database. <a data-type="xref" href="#execution_roles_simplify_the_process_of">Figure 2-17</a> illustrates this.</p>
+<figure><div class="figure" id="execution_roles_simplify_the_process_of">
+<img alt="" src="assets/smaa_0217.png"/>
+<h6><span class="label">Figure 2-17. </span>Execution roles simplify the process of authenticating against cloud resources since you can use their identities (roles) in place of passwords.</h6>
+</div></figure>
+<p>In such a setup, developers focus on writing business logic while security professionals can sharpen the execution roles to apply least privilege, clearly separating the duties. Application logic is never made aware of any security or access rules, making the process extremely elegant. Hence, it is a best practice for applications running microservices to use roles to access cloud resources rather than passwords, which may bring in concerns with respect to maintainability. Based on the type of microservices you’re running for your organization, let’s look at how to get microservices to assume these roles.</p>
+</div></section>
+<section data-pdf-bookmark="RBAC with AWS Lambda" data-type="sect2"><div class="sect2" id="rbac_with_aws_lambda">
+<h2>RBAC with AWS Lambda</h2>
+<p><a contenteditable="false" data-primary="AWS Lambda" data-secondary="RBAC with" data-type="indexterm" id="idm46523890100664"/><a contenteditable="false" data-primary="RBAC (role-based access control)" data-secondary="with AWS Lambda" data-type="indexterm" id="idm46523890109816"/>We’ll start off with AWS Lambda functions since they require the least amount of effort in setting up. For serverless microservices using AWS Lambda, it is possible to specify the execution role while creating an AWS Lambda function. As seen in <a data-type="xref" href="#you_have_the_choice_of_either_creating">Figure 2-18</a>, you can either create a new role or use an existing role while creating the Lambda function.</p>
+<figure><div class="figure" id="you_have_the_choice_of_either_creating">
+<img alt="" src="assets/smaa_0218.png"/>
+<h6><span class="label">Figure 2-18. </span>You have the choice of either creating a role or specifying an existing role for Lambda execution.</h6>
+</div></figure>
+<p>Using an execution role, it is easy to design an entire microservice application running on AWS Lambda with clean access control logic that doesn’t violate the PoLP, since each Lambda function will have a role associated with it. As mentioned earlier in <a data-type="xref" href="#execution_roles">“Execution Roles”</a> any code deployed to a Lambda will already have assumed the execution role that was specified while creating the Lambda. To achieve clean access control, you merely need to grant this role access to any sensitive resource in the correct context. You can reuse your code across multiple environments by using different roles across different environments.</p>
+</div></section>
+<section data-pdf-bookmark="RBAC with EC2 and the Instance Metadata Service" data-type="sect2"><div class="sect2" id="rbac_with_ectwo_and_the_instance_metada">
+<h2>RBAC with EC2 and the Instance Metadata Service</h2>
+<p><a contenteditable="false" data-primary="EC2 instance" data-type="indexterm" id="ec_ab"/><a contenteditable="false" data-primary="IMDS (instance metadata service)" data-type="indexterm" id="imds_ab"/><a contenteditable="false" data-primary="RBAC (role-based access control)" data-secondary="with EC2 and IMDS" data-type="indexterm" id="rbac_ec"/>All AWS Lambdas come with an execution role, and if all of your microservices run on AWS Lambda, you may be lucky enough to get great RBAC without a lot of heavy lifting. But not everyone is as lucky, and chances are you may have different AWS compute services backing your microservice architecture. Let’s consider AWS Elastic Cloud Compute (EC2), since it’s one of the most popular compute engines.</p>
+<p>Multiple applications may run on EC2 instances, unlike AWS Lambdas where functions run on their own. With AWS, your applications running on top of EC2 can use a slightly modified version of AWS Lambda’s execution roles for gaining access to cloud resources called the <em>instance metadata service (IMDS)</em>.</p>
+<p>On AWS, you can run an EC2 instance and attach a role to the running instance. <a data-type="xref" href="#iam_roles_can_be_assigned_to_ectwo_inst">Figure 2-19</a> shows an example of such an instance being created.</p>
+<figure><div class="figure" id="iam_roles_can_be_assigned_to_ectwo_inst">
+<img alt="" src="assets/smaa_0219.png"/>
+<h6><span class="label">Figure 2-19. </span>IAM roles can be assigned to EC2 instances during their creation in the Configure Instance Details step.</h6>
+</div></figure>
+<p>Every Amazon EC2 instance is equipped with the IMDS service, which allows applications running on top of these instances to access and find more information about their runtime environments. The role assigned to the EC2 instance is within this information. Through the IMDS, applications are able to access information such as their AWS access secret key and their AWS access key ID. The role-specific security credentials are used to grant the application access to the actions and resources you have assigned to the role. These security credentials are temporarily rotated automatically. So when you write your microservices and deploy them onto EC2 instances, the following steps happen:</p>
+<ol>
+<li><p class="pagebreak-before less_space">The application contains no information around its identity. However, you can configure it to query the IMDS to find out about its identity.</p></li>
+<li><p>Upon being queried, the IMDS can then respond with the identity of the execution role that the EC2 instance runs as.</p></li>
+<li><p>Applications running on EC2 can use the temporary credentials that IMDS returns, thus assuming the execution role.</p></li>
+<li><p>The applications can make requests to the resources using the temporary credentials returned in Step 3.</p></li>
+</ol>
+<p>This way, applications can run without the need to have any secrets or config files within their code and rely solely on the IMDS to provide identity and access, as seen in <a data-type="xref" href="#imds_allows_applications_to_access_the">Figure 2-20</a>.</p>
+<figure><div class="figure" id="imds_allows_applications_to_access_the">
+<img alt="" src="assets/smaa_0220.png"/>
+<h6><span class="label">Figure 2-20. </span>IMDS allows applications to access the temporary credentials of the role that is attached to the EC2 instance.</h6>
+</div></figure>
+<p>You can query IMDS by making a simple HTTP curl request to the endpoint <em>http://169.254.169.254/latest.</em></p>
+<p class="pagebreak-before less_space">So, if you have an application running on EC2, you can make the following request:</p>
+<pre>TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token"
+    -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
+    &amp;&amp; curl -H "X-aws-ec2-metadata-token: $TOKEN" -v
+    http://169.254.169.254/latest/meta-data/iam/security-credentials/
+      s3access</pre>
+<p>This request returns an output similar to this:</p>
+<pre>{
+  "Code" : "Success",
+  "LastUpdated" : "2012-04-26T16:39:16Z",
+  "Type" : "AWS-HMAC",
+  "AccessKeyId" : "ASIAIOSFODNN7EXAMPLE",
+  "SecretAccessKey" : "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+  "Token" : "token",
+  "Expiration" : "2017-05-17T15:09:54Z"
+}</pre>
+<p><a contenteditable="false" data-primary="AWS secret access key" data-type="indexterm" id="idm46523890066648"/>Now that your application has the AWS access key ID and the AWS secret access key, you can use AWS STS to assume any role it wishes to and thus get access to resources that it wants, very similar to the way AWS Lambda does.</p>
+<p><a contenteditable="false" data-primary="" data-startref="ec_ab" data-type="indexterm" id="idm46523890063944"/><a contenteditable="false" data-primary="" data-startref="imds_ab" data-type="indexterm" id="idm46523890062376"/><a contenteditable="false" data-primary="" data-startref="rbac_ec" data-type="indexterm" id="idm46523890060984"/>This means your code can assume a role on any environment of your choice. Depending on where it is deployed, it can call the IMDS and assume the role that the environment wants it to assume. Through IMDS, your applications can securely make API requests from your instances without having to manage the security credentials within the application code.</p>
+</div></section>
+<section data-pdf-bookmark="RBAC with Amazon EKS Using IAM Roles for Service Accounts" data-type="sect2"><div class="sect2" id="rbac_with_amazon_eks_using_iam_roles_fo">
+<h2>RBAC with Amazon EKS Using IAM Roles for Service Accounts</h2>
+<p><a contenteditable="false" data-primary="RBAC (role-based access control)" data-secondary="with Amazon EKS" data-type="indexterm" id="idm46523890057832"/><a contenteditable="false" data-primary="Amazon EKS (Elastic Kubernetes Service)" data-type="indexterm" id="idm46523890055992"/><a contenteditable="false" data-primary="IRSA (IAM roles for service accounts)" data-type="indexterm" id="idm46523890054984"/>IMDS works with EC2 instances, so any service running on EC2 can use RBAC to gain access to AWS resources. If each EC2 instance in your microservice application hosted only one service at a time, this design would work flawlessly for your use. However, if multiple applications run on top of the same EC2 instance, they will be tied to the same underlying instance’s IAM role, making it harder to implement PoLP.</p>
+<p>This is especially true for services running containerized microservices applications such as those running on AWS Elastic Kubernetes Service (EKS) nodes on EC2 instances. Containerized applications are known to have deployment transparency. Having the IAM role of the underlying node tied to each microservice makes sharing instances insecure from a security standpoint because multiple different microservices share the same instance. This means the resulting role is a union of all the permissions required by the underlying services. Since each service will have extra access, this goes against PoLP.</p>
+<p class="pagebreak-before less_space">To make matters worse, Kubernetes also has its own RBAC mechanism where users are granted access based on Kubernetes identities and roles. So, in such a system, you have two sets of identities. On the Kubernetes side, you have the Kubernetes role bindings that may allow access to pods or users depending on your Kubernetes config. On the AWS side, you have IAM roles that you would like to utilize to control access to cloud resources such as AWS S3 buckets.</p>
+<p>If this problem of having two separate identities in two different systems sounds familiar, you’re right. It’s very similar to the problem faced by organizations using multiple authentication mechanisms. I talked in depth about how identity federation helped resolve such a problem, and to synchronize identities between Kubernetes and AWS I recommend a similar approach.</p>
+<p>In <a href="https://oreil.ly/4dqgB">their words</a>, AWS decided to make Kubernetes pods first-class citizens in AWS. With Kubernetes service account annotations and OIDC identity providers, you can assign IAM roles to individual pods and use roles the same way you did with AWS Lambda. <a data-type="xref" href="#using_irsacomma_pods_can_use_oidc_idp_a">Figure 2-21</a> shows how IAM roles for service accounts (IRSA) works when a microservice running on a pod would like to access an AWS resource by assuming an AWS role.</p>
+<figure><div class="figure" id="using_irsacomma_pods_can_use_oidc_idp_a">
+<img alt="" src="assets/smaa_0221.png"/>
+<h6><span class="label">Figure 2-21. </span>Using IRSA, pods can use OIDC IdP and AWS STS to assume roles and access AWS resources without being tied to the underlying node.</h6>
+</div></figure>
+<p class="pagebreak-before less_space">Let’s examine this more closely:</p>
+<ol>
+<li><p>Each pod starts with an <a href="https://oreil.ly/wvoe3">annotation</a> about a service account along with a token that it can use to exchange with AWS STS in return for a role within your organization. This is done by mutating the pod with information that EKS injects into it through the mutating webhook. It also injects the web identity token file that the pod can use to identify itself to an OIDC IdP in Step 2.</p></li>
+<li><p>To fetch the credentials, the pod makes a request to AWS STS to assume the identity of the role along with the service account token that was injected in Step 1. This token will be exchanged in order to get temporary authentication credentials with AWS.</p></li>
+<li><p>AWS STS makes a request to the OIDC IdP to verify the validity of the request.</p></li>
+<li><p>OIDC IdP responds with an affirmative response.</p></li>
+<li><p>AWS STS responds with temporary credentials that the pod can use to access AWS resources using the role that it wanted to use.</p></li>
+<li><p>The pod accesses the AWS resource using the temporary credentials provided to it by AWS STS.</p></li>
+</ol>
+<p><a contenteditable="false" data-primary="" data-startref="aa_rbac" data-type="indexterm" id="idm46523890039160"/><a contenteditable="false" data-primary="" data-startref="mic_rbac" data-type="indexterm" id="idm46523890039928"/><a contenteditable="false" data-primary="" data-startref="rbac_mic" data-type="indexterm" id="idm46523890035512"/>By creating roles and assigning those roles to pods, IRSA also provides RBAC for Kubernetes pods. Once assigned to pods, these roles can be used to design access control using RBAC similar to how execution roles were used with AWS Lambda.</p>
+</div></section>
+</div></section>
+<section data-pdf-bookmark="Summary" data-type="sect1"><div class="sect1" id="summary-id000005">
+<h1>Summary</h1>
+<p><a contenteditable="false" data-primary="" data-startref="aa_ch" data-type="indexterm" id="idm46523890033048"/>Authorization and authentication are the two most important controls that security architects have for reducing the aggregate risk of any secure system. Getting a good grasp on both of these mechanisms will help every security architect design better systems. Since microservices are made up of modular services that have a very specific purpose for their existence, it is easier for security architects to frame the security policies around microservices using the PoLP. The security policies can be added to the AWS IAM, a service specifically designed for providing identity management services. On AWS, authorization and authentication generally provide you with the most comprehensive and granular protection against potential threats when combined with encryption controls. This interplay between authorization, authentication, and encryption will be covered in great detail in <a data-type="xref" href="ch03.html#foundations_of_encryption">Chapter 3</a>.</p>
+</div></section>
+</div></section></body></html>

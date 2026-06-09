@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos762845" class="calibre_2"><span class="calibre2"><span class="bold">Component layer</span></span></p><p class="calibre_1">The component layer has many different security responsibilities. <a></a>A BFF component will deploy its own CDN that is connected to the WAF, as discussed earlier. <a></a>The BFF component will play a role in DDoS protection as well, by employing an API gateway that will handle throttling and by providing sufficient autoscaling to absorb traffic that reaches its internals. <a></a>Each component will also monitor for and alert on deviations from normal request rates, as discussed in <a></a><span class="calibre3"><tt class="calibre4">Chapter 8</tt></span><a></a>, <a></a><span class="italic">Monitoring</span><a></a>.</p><p class="calibre_1">Least privileged access is another important responsibility of each component. <a></a>Following security-by-design practices, teams will define strict permissions for each component to grant it access to its required resources. <a></a>For example, an API gateway will be granted specific permissions to the functions that it accesses and those functions will be granted specific permissions to the resources they access, such as cloud-native databases and event streams. <a></a>All cloud services and resources originate with no access privileges, which helps guarantee least privileged access, so long as teams are specific in the access they grant to their components.</p><p class="calibre_1">Each component is responsible for encryption of data in transit and at rest, as we will discuss in the <a></a><span class="italic">Encryption</span><a></a> section. <a></a>Each BFF component is responsible for processing JWT tokens, as we will discuss in the <a></a><span class="italic">Application security</span><a></a> section.</p><div class="mbp_pagebreak" id="calibre_pb_203"></div>
+</body></html>

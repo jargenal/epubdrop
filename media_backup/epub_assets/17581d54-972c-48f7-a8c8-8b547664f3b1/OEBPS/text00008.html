@@ -1,0 +1,1736 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Storage and Retrieval</title>
+<link rel="stylesheet" type="text/css" href="flow0001.css" />
+</head>
+<body data-type="book">
+<section data-type="chapter" data-pdf-bookmark="Chapter 3. Storage and Retrieval">
+<div class="chapter" id="ch_storage">
+<h1>
+<span class="label">Chapter 3.</span>
+ Storage and Retrieval</h1>
+<blockquote data-type="epigraph">
+<div>
+<em>Wer Ordnung hält, ist nur zu faul zum Suchen.</em>
+</div>
+<div>
+<em>(If you keep things tidily ordered, you’re just too lazy to go searching.)</em>
+</div>
+<div data-type="attribution">German proverb</div>
+</blockquote>
+<div class="map-ebook"><img id="c269" src="Image00019.gif" hisrc="assets/ch03-map-ebook.png" />
+</div>
+<div></div>
+<p><a data-type="indexterm" data-primary="storage engines" id="ix_store"></a>
+ On the most fundamental level, a database needs to do two things: when you give it some data, it should store the data, and when you ask it again later, it should give the data back to you.</p>
+<p>In <a data-type="xref" href="text00007.html#ch_datamodels">Chapter 2</a>
+ we discussed data models and query languages — i.e., the format in which you (the application developer) give the database your data, and the mechanism by which you can ask for it again later. In this chapter we discuss the same from the database’s point of view: how we can store the data that we’re given, and how we can find it again when we’re asked for it.</p>
+<p>Why should you, as an application developer, care how the database handles storage and retrieval internally? You’re probably not going to implement your own storage engine from scratch, but you <em>do</em>
+ need to select a storage engine that is appropriate for your application, from the many that are available. In order to tune a storage engine to perform well on your kind of workload, you need to have a rough idea of what the storage engine is doing under the hood.</p>
+<p>In particular, there is a big difference between storage engines that are optimized for transactional workloads and those that are optimized for analytics. We will explore that distinction later in <a data-type="xref" href="text00008.html#sec_storage_analytics">“Transaction Processing or Analytics?”</a>
+ , and in <a data-type="xref" href="text00008.html#sec_storage_column">“Column-Oriented Storage”</a>
+ we’ll discuss a family of storage engines that <span class="keep-together">is optimized</span>
+ for analytics.</p>
+<p>However, first we’ll start this chapter by talking about storage engines that are used in the kinds of databases that you’re probably familiar with: traditional relational databases, and also most so-called NoSQL databases. We will examine two families of storage engines: <em>log-structured</em>
+ storage engines, and <em>page-oriented</em>
+ storage engines such as B-trees.</p>
+<section data-type="sect1" data-pdf-bookmark="Data Structures That Power Your Database">
+<div class="sect1" id="sec_storage_oltp">
+<h1>Data Structures That Power Your Database</h1>
+<p><a data-type="indexterm" data-primary="storage engines" data-secondary="row-oriented" id="ix_storedatastruct"></a>
+ <a data-type="indexterm" data-primary="bash shell (Unix)" id="idm140060724158560"></a>
+ Consider the world’s simplest database, implemented as two Bash functions:</p>
+<pre data-type="programlisting" data-code-language="bash">
+<code class="c">#!/bin/bash</code>
+
+
+
+db_set <code class="o">()</code>
+
+ <code class="o">{</code>
+
+
+    <code class="nb">echo</code>
+
+ <code class="s2">"</code>
+
+<code class="nv">$1</code>
+
+<code class="s2">,</code>
+
+<code class="nv">$2</code>
+
+<code class="s2">"</code>
+
+ &gt;&gt; database
+<code class="o">}</code>
+
+
+
+db_get <code class="o">()</code>
+
+ <code class="o">{</code>
+
+
+    grep <code class="s2">"^</code>
+
+<code class="nv">$1</code>
+
+<code class="s2">,"</code>
+
+ database <code class="p">|</code>
+
+ sed -e <code class="s2">"s/^</code>
+
+<code class="nv">$1</code>
+
+<code class="s2">,//"</code>
+
+ <code class="p">|</code>
+
+ tail -n 1
+<code class="o">}</code>
+
+</pre>
+<p><a data-type="indexterm" data-primary="key-value stores" id="idm140060724087760"></a>
+ These two functions implement a key-value store. You can call <code>db_set key value</code>
+ , which will store <code>key</code>
+ and <code>value</code>
+ in the database. The key and value can be (almost) anything you like — for example, the value could be a JSON document. You can then call <code>db_get key</code>
+ , which looks up the most recent value associated with that particular key and returns it.</p>
+<p>And it works:</p>
+<pre data-type="programlisting">
+$ <strong>db_set 123456 '{"name":"London","attractions":["Big Ben","London Eye"]}'</strong>
+
+
+
+$ <strong>db_set 42 '{"name":"San Francisco","attractions":["Golden Gate Bridge"]}'</strong>
+
+
+
+$ <strong>db_get 42</strong>
+
+
+{"name":"San Francisco","attractions":["Golden Gate Bridge"]}
+</pre>
+<p><a data-type="indexterm" data-primary="CSV (comma-separated values)" id="idm140060724117920"></a>
+ The underlying storage format is very simple: a text file where each line contains a key-value pair, separated by a comma (roughly like a CSV file, ignoring escaping issues). Every call to <code>db_set</code>
+ appends to the end of the file, so if you update a key several times, the old versions of the value are not overwritten — you need to look at the last occurrence of a key in a file to find the latest value (hence the <code>tail -n 1</code>
+ in <code>db_get</code>
+ ):</p>
+<pre data-type="programlisting">
+$ <strong>db_set 42 '{"name":"San Francisco","attractions":["Exploratorium"]}'</strong>
+
+
+
+$ <strong>db_get 42</strong>
+
+
+{"name":"San Francisco","attractions":["Exploratorium"]}
+
+$ <strong>cat database</strong>
+
+
+123456,{"name":"London","attractions":["Big Ben","London Eye"]}
+42,{"name":"San Francisco","attractions":["Golden Gate Bridge"]}
+42,{"name":"San Francisco","attractions":["Exploratorium"]}
+</pre>
+<p><a data-type="indexterm" data-primary="logs (data structure)" data-secondary="log-structured storage" id="ix_logstructured"></a>
+ <a data-type="indexterm" data-primary="append-only files" data-see="logs" id="idm140060724111552"></a>
+ Our <code>db_set</code>
+ function actually has pretty good performance for something that is so simple, because appending to a file is generally very efficient. Similarly to what <code>db_set</code>
+ does, many databases internally use a <em>log</em>
+ , which is an append-only data file. Real databases have more issues to deal with (such as concurrency control, reclaiming disk space so that the log doesn’t grow forever, and handling errors and partially written records), but the basic principle is the same. Logs are incredibly useful, and we will encounter them several times in the rest of this book.</p>
+<div class="orm-notedivider"><hr data-amznremoved-m8="true" />
+</div>
+<div data-type="note">
+<h6>Note</h6>
+<p><a data-type="indexterm" data-primary="logs (data structure)" id="idm140060724107776"></a>
+ The word <em>log</em>
+ is often used to refer to application logs, where an application outputs text that describes what’s happening. In this book, <em>log</em>
+ is used in the more general sense: an append-only sequence of records. It doesn’t have to be human-readable; it might be binary and intended only for other programs to read.</p>
+</div>
+<div class="orm-notedivider"><hr data-amznremoved-m8="true" />
+</div>
+<p>On the other hand, our <code>db_get</code>
+ function has terrible performance if you have a large number of records in your database. Every time you want to look up a key, <code>db_get</code>
+ has to scan the entire database file from beginning to end, looking for occurrences of the key. In algorithmic terms, the cost of a lookup is <em>O</em>
+ (<em>n</em>
+ ): if you double the number of records <em>n</em>
+ in your database, a lookup takes twice as long. That’s not good.</p>
+<p><a data-type="indexterm" data-primary="indexes" id="idm140060724102400"></a>
+ In order to efficiently find the value for a particular key in the database, we need a different data structure: an <em>index</em>
+ . In this chapter we will look at a range of indexing structures and see how they compare; the general idea behind them is to keep some additional metadata on the side, which acts as a signpost and helps you to locate the data you want. If you want to search the same data in several different ways, you may need several different indexes on different parts of the data.</p>
+<p>An index is an <em>additional</em>
+ structure that is derived from the primary data. Many databases allow you to add and remove indexes, and this doesn’t affect the contents of the database; it only affects the performance of queries. Maintaining additional structures incurs overhead, especially on writes. For writes, it’s hard to beat the performance of simply appending to a file, because that’s the simplest possible write operation. Any kind of index usually slows down writes, because the index also needs to be updated every time data is written.</p>
+<p>This is an important trade-off in storage systems: well-chosen indexes speed up read queries, but every index slows down writes. For this reason, databases don’t usually index everything by default, but require you — the application developer or database administrator — to choose indexes manually, using your knowledge of the application’s typical query patterns. You can then choose the indexes that give your application the greatest benefit, without introducing more overhead than necessary.</p>
+<section data-type="sect2" data-pdf-bookmark="Hash Indexes">
+<div class="sect2" id="sec_storage_hash_index">
+<h2>Hash Indexes</h2>
+<p><a data-type="indexterm" data-primary="algorithms" data-secondary="hash indexes" id="ix_DShashindex"></a>
+ <a data-type="indexterm" data-primary="hash indexes" id="ix_hashindex"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="hash" id="ix_indexhash"></a>
+ <a data-type="indexterm" data-primary="key-value stores" data-secondary="hash indexes" id="ix_keyvalhash"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="row-oriented" data-tertiary="log-structured" id="ix_storenglog"></a>
+ Let’s start with indexes for key-value data. This is not the only kind of data you can index, but it’s very common, and it’s a useful building block for more complex indexes.</p>
+<p><a data-type="indexterm" data-primary="memory" data-secondary="use by indexes" id="idm140060724049312"></a>
+ Key-value stores are quite similar to the <em>dictionary</em>
+ type that you can find in most programming languages, and which is usually implemented as a hash map (hash table). Hash maps are described in many algorithms textbooks [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Aho1983vj-marker" href="text00008.html#Aho1983vj">1</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Cormen2009uw-marker" href="text00008.html#Cormen2009uw">2</a>
+ ], so we won’t go into detail of how they work here. Since we already have hash maps for our in-memory data structures, why not use them to index our data on disk?</p>
+<p>Let’s say our data storage consists only of appending to a file, as in the preceding example. Then the simplest possible indexing strategy is this: keep an in-memory hash map where every key is mapped to a byte offset in the data file — the location at which the value can be found, as illustrated in <a data-type="xref" href="text00008.html#fig_storage_csv_hash_index">Figure 3-1</a>
+ . Whenever you append a new key-value pair to the file, you also update the hash map to reflect the offset of the data you just wrote (this works both for inserting new keys and for updating existing keys). When you want to look up a value, use the hash map to find the offset in the data file, seek to that location, and read the value.</p>
+<figure>
+<div id="fig_storage_csv_hash_index" class="figure"><img src="Image00020.gif" alt="ddia 0301" hisrc="assets/ddia_0301.png" />
+<h6>
+<span class="label">Figure 3-1.</span>
+ Storing a log of key-value pairs in a CSV-like format, indexed with an in-memory hash map.</h6>
+</div>
+</figure>
+<p><a data-type="indexterm" data-primary="Bitcask (storage engine)" id="idm140060724040464"></a>
+ <a data-type="indexterm" data-primary="Riak (database)" data-secondary="Bitcask storage engine" id="idm140060724039616"></a>
+ This may sound simplistic, but it is a viable approach. In fact, this is essentially what Bitcask (the default storage engine in Riak) does [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Sheehy2010uy-marker" href="text00008.html#Sheehy2010uy">3</a>
+ ]. Bitcask offers high-performance reads and writes, subject to the requirement that all the keys fit in the available RAM, since the hash map is kept completely in memory. The values can use more space than there is available memory, since they can be loaded from disk with just one disk seek. If that part of the data file is already in the filesystem cache, a read doesn’t require any disk I/O at all.</p>
+<p>A storage engine like Bitcask is well suited to situations where the value for each key is updated frequently. For example, the key might be the URL of a cat video, and the value might be the number of times it has been played (incremented every time someone hits the play button). In this kind of workload, there are a lot of writes, but there are not too many distinct keys — you have a large number of writes per key, but it’s feasible to keep all keys in memory.</p>
+<p><a data-type="indexterm" data-primary="compaction" data-secondary="of log-structured storage" id="idm140060724035024"></a>
+ <a data-type="indexterm" data-primary="logs (data structure)" data-secondary="compaction" id="idm140060724033856"></a>
+ As described so far, we only ever append to a file — so how do we avoid eventually running out of disk space? A good solution is to break the log into segments of a certain size by closing a segment file when it reaches a certain size, and making subsequent writes to a new segment file. We can then perform <em>compaction</em>
+ on these segments, as illustrated in <a data-type="xref" href="text00008.html#fig_storage_compaction">Figure 3-2</a>
+ . Compaction means throwing away duplicate keys in the log, and keeping only the most recent update for each key.</p>
+<figure>
+<div id="fig_storage_compaction" class="figure"><img src="Image00021.gif" alt="ddia 0302" hisrc="assets/ddia_0302.png" />
+<h6>
+<span class="label">Figure 3-2.</span>
+ Compaction of a key-value update log (counting the number of times each cat video was played), retaining only the most recent value for each key.</h6>
+</div>
+</figure>
+<p><a data-type="indexterm" data-primary="threads (concurrency)" data-secondary="background threads" id="idm140060724028704"></a>
+ Moreover, since compaction often makes segments much smaller (assuming that a key is overwritten several times on average within one segment), we can also merge several segments together at the same time as performing the compaction, as shown in <a data-type="xref" href="text00008.html#fig_storage_merging">Figure 3-3</a>
+ . Segments are never modified after they have been written, so the merged segment is written to a new file. The merging and compaction of frozen segments can be done in a background thread, and while it is going on, we can still continue to serve read and write requests as normal, using the old segment files. After the merging process is complete, we switch read requests to using the new merged segment instead of the old segments — and then the old segment files can simply be deleted.</p>
+<figure>
+<div id="fig_storage_merging" class="figure"><img src="Image00022.gif" alt="ddia 0303" hisrc="assets/ddia_0303.png" />
+<h6>
+<span class="label">Figure 3-3.</span>
+ Performing compaction and segment merging simultaneously.</h6>
+</div>
+</figure>
+<p>Each segment now has its own in-memory hash table, mapping keys to file offsets. In order to find the value for a key, we first check the most recent segment’s hash map; if the key is not present we check the second-most-recent segment, and so on. The merging process keeps the number of segments small, so lookups don’t need to check many hash maps.</p>
+<p>Lots of detail goes into making this simple idea work in practice. Briefly, some of the issues that are important in a real implementation are:</p>
+<div class="variable_list_term">File format</div>
+<blockquote class="variable_list_definition">
+<div>CSV is not the best format for a log. It’s faster and simpler to use a binary format that first encodes the length of a string in bytes, followed by the raw string (without need for escaping).</div>
+</blockquote>
+<div class="variable_list_term">Deleting records</div>
+<blockquote class="variable_list_definition">
+<div><a data-type="indexterm" data-primary="tombstones" id="idm140060724019376"></a>
+ If you want to delete a key and its associated value, you have to append a special deletion record to the data file (sometimes called a <em>tombstone</em>
+ ). When log segments are merged, the tombstone tells the merging process to discard any previous values for the deleted key.</div>
+</blockquote>
+<div class="variable_list_term">Crash recovery</div>
+<blockquote class="variable_list_definition">
+<div>If the database is restarted, the in-memory hash maps are lost. In principle, you can restore each segment’s hash map by reading the entire segment file from beginning to end and noting the offset of the most recent value for every key as you go along. However, that might take a long time if the segment files are large, which would make server restarts painful. <a data-type="indexterm" data-primary="Bitcask (storage engine)" data-secondary="crash recovery" id="idm140060724016160"></a>
+ Bitcask speeds up recovery by storing a snapshot of each segment’s hash map on disk, which can be loaded into memory more quickly.</div>
+</blockquote>
+<div class="variable_list_term">Partially written records</div>
+<blockquote class="variable_list_definition">
+<div>The database may crash at any time, including halfway through appending a record to the log. Bitcask files include checksums, allowing such corrupted parts of the log to be detected and ignored.</div>
+</blockquote>
+<div class="variable_list_term">Concurrency control</div>
+<blockquote class="variable_list_definition">
+<div>As writes are appended to the log in a strictly sequential order, a common implementation choice is to have only one writer thread. Data file segments are append-only and otherwise immutable, so they can be read concurrently by multiple threads.</div>
+</blockquote>
+<p>An append-only log seems wasteful at first glance: why don’t you update the file in place, overwriting the old value with the new value? But an append-only design turns out to be good for several reasons:</p>
+<ul>
+<li><a data-type="indexterm" data-primary="hard disks" data-secondary="sequential write throughput" id="idm140060724010336"></a>
+ <a data-type="indexterm" data-primary="solid state drives (SSDs)" data-secondary="sequential write throughput" id="idm140060724009216"></a>
+ Appending and segment merging are sequential write operations, which are generally much faster than random writes, especially on magnetic spinning-disk hard drives. To some extent sequential writes are also preferable on flash-based <em>solid state drives</em>
+ (SSDs) [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Li2010te-marker" href="text00008.html#Li2010te">4</a>
+ ]. We will discuss this issue further in <a data-type="xref" href="text00008.html#sec_storage_btree_lsm_comparison">“Comparing B-Trees and LSM-Trees”</a>
+ .</li>
+<li><a data-type="indexterm" data-primary="immutability" data-secondary="for crash recovery" id="idm140060724003552"></a>
+ Concurrency and crash recovery are much simpler if segment files are append-only or immutable. For example, you don’t have to worry about the case where a crash happened while a value was being overwritten, leaving you with a file containing part of the old and part of the new value spliced together.</li>
+<li>Merging old segments avoids the problem of data files getting fragmented over time.</li>
+</ul>
+<p>However, the hash table index also has limitations:</p>
+<ul>
+<li>The hash table must fit in memory, so if you have a very large number of keys, you’re out of luck. In principle, you could maintain a hash map on disk, but unfortunately it is difficult to make an on-disk hash map perform well. It requires a lot of random access I/O, it is expensive to grow when it becomes full, and hash collisions require fiddly logic [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Graefe2011kk-marker" href="text00008.html#Graefe2011kk">5</a>
+ ].</li>
+<li>Range queries are not efficient. For example, you cannot easily scan over all keys between <code>kitty00000</code>
+ and <code>kitty99999</code>
+ — you’d have to look up each key individually in the hash maps.</li>
+</ul>
+<p>In the next section we will look at an indexing structure that doesn’t have those limitations. <a data-type="indexterm" data-primary="algorithms" data-secondary="hash indexes" data-startref="ix_DShashindex" id="idm140060723993664"></a>
+ <a data-type="indexterm" data-primary="hash indexes" data-startref="ix_hashindex" id="idm140060723992288"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="hash" data-startref="ix_indexhash" id="idm140060723991184"></a>
+ <a data-type="indexterm" data-primary="key-value stores" data-secondary="hash indexes" data-startref="ix_keyvalhash" id="idm140060723989808"></a>
+</p>
+</div>
+</section>
+<section data-type="sect2" data-pdf-bookmark="SSTables and LSM-Trees">
+<div class="sect2" id="sec_storage_lsm_trees">
+<h2>SSTables and LSM-Trees</h2>
+<p><a data-type="indexterm" data-primary="algorithms" data-secondary="SSTables and LSM-trees" id="ix_datastructSST"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="SSTables and LSM-trees" id="ix_indexSSTLSM"></a>
+ In <a data-type="xref" href="text00008.html#fig_storage_merging">Figure 3-3</a>
+ , each log-structured storage segment is a sequence of key-value pairs. These pairs appear in the order that they were written, and values later in the log take precedence over values for the same key earlier in the log. Apart from that, the order of key-value pairs in the file does not matter.</p>
+<p>Now we can make a simple change to the format of our segment files: we require that the sequence of key-value pairs is <em>sorted by key</em>
+ . At first glance, that requirement seems to break our ability to use sequential writes, but we’ll get to that in a moment.</p>
+<p><a data-type="indexterm" data-primary="SSTables (storage format)" id="ix_sstables"></a>
+ <a data-type="indexterm" data-primary="Sorted String Tables" data-see="SSTables" id="idm140060723968592"></a>
+ <a data-type="indexterm" data-primary="SSTables (storage format)" data-secondary="advantages over hash indexes" id="idm140060723967488"></a>
+ We call this format <em>Sorted String Table</em>
+ , or <em>SSTable</em>
+ for short. We also require that each key only appears once within each merged segment file (the compaction process already ensures that). SSTables have several big advantages over log segments with hash indexes:</p>
+<ol>
+<li value="1"><a data-type="indexterm" data-primary="algorithms" data-secondary="mergesort" id="idm140060723964336"></a>
+ <a data-type="indexterm" data-primary="merging sorted files" id="idm140060723963360"></a>
+ Merging segments is simple and efficient, even if the files are bigger than the available memory. The approach is like the one used in the <em>mergesort</em>
+ algorithm and is illustrated in <a data-type="xref" href="text00008.html#fig_storage_sstable_merging">Figure 3-4</a>
+ : you start reading the input files side by side, look at the first key in each file, copy the lowest key (according to the sort order) to the output file, and repeat. This produces a new merged segment file, also sorted by key.<figure>
+<div id="fig_storage_sstable_merging" class="figure"><img src="Image00023.gif" alt="ddia 0304" hisrc="assets/ddia_0304.png" />
+<h6>
+<span class="label">Figure 3-4.</span>
+ Merging several SSTable segments, retaining only the most recent value for each key.</h6>
+</div>
+</figure>
+<br/>
+What if the same key appears in several input segments? Remember that each segment contains all the values written to the database during some period of time. This means that all the values in one input segment must be more recent than all the values in the other segment (assuming that we always merge adjacent segments). When multiple segments contain the same key, we can keep the value from the most recent segment and discard the values in older segments.</li>
+<li value="2"><a data-type="indexterm" data-primary="memory" data-secondary="use by indexes" id="idm140060723957296"></a>
+ In order to find a particular key in the file, you no longer need to keep an index of all the keys in memory. See <a data-type="xref" href="text00008.html#fig_storage_sstable_index">Figure 3-5</a>
+ for an example: say you’re looking for the key <code>handiwork</code>
+ , but you don’t know the exact offset of that key in the segment file. However, you do know the offsets for the keys <em>handbag</em>
+ and <em>handsome</em>
+ , and because of the sorting you know that <em>handiwork</em>
+ must appear between those two. This means you can jump to the offset for <em>handbag</em>
+ and scan from there until you find <em>handiwork</em>
+ (or not, if the key is not present in the file).<figure>
+<div id="fig_storage_sstable_index" class="figure"><img src="Image00024.gif" alt="ddia 0305" hisrc="assets/ddia_0305.png" />
+<h6>
+<span class="label">Figure 3-5.</span>
+ An SSTable with an in-memory index.</h6>
+</div>
+</figure>
+<br/>
+You still need an in-memory index to tell you the offsets for some of the keys, but it can be sparse: one key for every few kilobytes of segment file is sufficient, because a few kilobytes can be scanned very quickly.<sup xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook">
+<a data-type="noteref" id="idm140060723949808-marker" href="text00008.html#idm140060723949808">i</a>
+</sup>
+</li>
+<li value="3">Since read requests need to scan over several key-value pairs in the requested range anyway, it is possible to group those records into a block and compress it before writing it to disk (indicated by the shaded area in <a data-type="xref" href="text00008.html#fig_storage_sstable_index">Figure 3-5</a>
+ ). Each entry of the sparse in-memory index then points at the start of a compressed block. Besides saving disk space, compression also reduces the I/O bandwidth use.</li>
+</ol>
+<section data-type="sect3" class="pagebreak-before" data-pdf-bookmark="Constructing and maintaining SSTables">
+<div class="sect3" id="idm140060723946144">
+<h3>Constructing and maintaining SSTables</h3>
+<p><a data-type="indexterm" data-primary="SSTables (storage format)" data-secondary="constructing and maintaining" id="idm140060723944496"></a>
+ Fine so far — but how do you get your data to be sorted by key in the first place? Our incoming writes can occur in any order.</p>
+<p><a data-type="indexterm" data-primary="algorithms" data-secondary="red-black trees" id="idm140060723942912"></a>
+ Maintaining a sorted structure on disk is possible (see <a data-type="xref" href="text00008.html#ix_datastructBtree">“B-Trees”</a>
+ ), but maintaining it in memory is much easier. There are plenty of well-known tree data structures that you can use, such as red-black trees or AVL trees [<a data-type="noteref" href="text00008.html#Cormen2009uw">2</a>
+ ]. With these data structures, you can insert keys in any order and read them back in sorted order.</p>
+<p>We can now make our storage engine work as follows:</p>
+<ul>
+<li><a data-type="indexterm" data-primary="memtable (in LSM-trees)" id="idm140060723938528"></a>
+ When a write comes in, add it to an in-memory balanced tree data structure (for example, a red-black tree). This in-memory tree is sometimes called a <em>memtable</em>
+ .</li>
+<li>When the memtable gets bigger than some threshold — typically a few megabytes — write it out to disk as an SSTable file. This can be done efficiently because the tree already maintains the key-value pairs sorted by key. The new SSTable file becomes the most recent segment of the database. While the SSTable is being written out to disk, writes can continue to a new memtable instance.</li>
+<li>In order to serve a read request, first try to find the key in the memtable, then in the most recent on-disk segment, then in the next-older segment, etc.</li>
+<li>From time to time, run a merging and compaction process in the background to combine segment files and to discard overwritten or deleted values.</li>
+</ul>
+<p>This scheme works very well. It only suffers from one problem: if the database crashes, the most recent writes (which are in the memtable but not yet written out to disk) are lost. In order to avoid that problem, we can keep a separate log on disk to which every write is immediately appended, just like in the previous section. That log is not in sorted order, but that doesn’t matter, because its only purpose is to restore the memtable after a crash. Every time the memtable is written out to an SSTable, the corresponding log can be discarded.</p>
+</div>
+</section>
+<section data-type="sect3" data-pdf-bookmark="Making an LSM-tree out of SSTables">
+<div class="sect3" id="sec_storage_lsm_usage">
+<h3>Making an LSM-tree out of SSTables</h3>
+<p><a data-type="indexterm" data-primary="LSM-trees (indexes)" id="ix_lsmtree"></a>
+ <a data-type="indexterm" data-primary="SSTables (storage format)" data-secondary="making LSM-Tree from" id="idm140060723929312"></a>
+ <a data-type="indexterm" data-primary="LevelDB (storage engine)" id="idm140060723928192"></a>
+ <a data-type="indexterm" data-primary="RocksDB (storage engine)" id="idm140060723927344"></a>
+ <a data-type="indexterm" data-primary="Riak (database)" data-secondary="LevelDB storage engine" id="idm140060723926496"></a>
+ <a data-type="indexterm" data-primary="Cassandra (database)" data-secondary="log-structured storage" id="idm140060723925392"></a>
+ <a data-type="indexterm" data-primary="HBase (database)" data-secondary="log-structured storage" id="idm140060723924288"></a>
+ <a data-type="indexterm" data-primary="Google" data-secondary="Bigtable (database)" data-tertiary="storage layout" id="idm140060723923184"></a>
+ <a data-type="indexterm" data-primary="logs (data structure)" data-secondary="log-structured storage" data-tertiary="log-structured merge tree" data-see="LSM-trees" id="idm140060723921808"></a>
+ The algorithm described here is essentially what is used in LevelDB [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="LevelDB2014-marker" href="text00008.html#LevelDB2014">6</a>
+ ] and RocksDB [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Borthakur2013uc-marker" href="text00008.html#Borthakur2013uc">7</a>
+ ], key-value storage engine libraries that are designed to be embedded into other applications. Among other things, LevelDB can be used in Riak as an alternative to Bitcask. Similar storage engines are used in Cassandra and HBase [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Bertozzi2012wu-marker" href="text00008.html#Bertozzi2012wu">8</a>
+ ], both of which were inspired by Google’s Bigtable paper [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Chang2006ta_ch3-marker" href="text00008.html#Chang2006ta_ch3">9</a>
+ ] (which introduced the terms <em>SSTable</em>
+ and <em>memtable</em>
+ ).</p>
+<p>Originally this indexing structure was described by Patrick O’Neil et al. under the name <em>Log-Structured Merge-Tree</em>
+ (or LSM-Tree) [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="ONeil1996iq-marker" href="text00008.html#ONeil1996iq">10</a>
+ ], building on earlier work on log-structured filesystems [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Rosenblum1992dr-marker" href="text00008.html#Rosenblum1992dr">11</a>
+ ]. Storage engines that are based on this principle of merging and compacting sorted files are often called LSM storage engines.</p>
+<p><a data-type="indexterm" data-primary="full-text search" data-secondary="Lucene storage engine" id="idm140060723903200"></a>
+ <a data-type="indexterm" data-primary="Lucene (storage engine)" id="idm140060723901856"></a>
+ <a data-type="indexterm" data-primary="Apache Lucene" data-see="Lucene" id="idm140060723901072"></a>
+ <a data-type="indexterm" data-primary="Elasticsearch (search server)" data-secondary="use of Lucene" id="idm140060723900000"></a>
+ <a data-type="indexterm" data-primary="Solr (search server)" data-secondary="use of Lucene" id="idm140060723898832"></a>
+ Lucene, an indexing engine for full-text search used by Elasticsearch and Solr, uses a similar method for storing its <em>term dictionary</em>
+ [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Grand2013ws-marker" href="text00008.html#Grand2013ws">12</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Kandepet2011uy-marker" href="text00008.html#Kandepet2011uy">13</a>
+ ]. A full-text index is much more complex than a key-value index but is based on a similar idea: given a word in a search query, find all the documents (web pages, product descriptions, etc.) that mention the word. This is implemented with a key-value structure where the key is a word (a <em>term</em>
+ ) and the value is the list of IDs of all the documents that contain the word (the <em>postings list</em>
+ ). In Lucene, this mapping from term to postings list is kept in SSTable-like sorted files, which are merged in the background as needed [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="McCandless2011vt-marker" href="text00008.html#McCandless2011vt">14</a>
+ ].</p>
+</div>
+</section>
+<section data-type="sect3" data-pdf-bookmark="Performance optimizations">
+<div class="sect3" id="sec_storage_lsm_optimize">
+<h3>Performance optimizations</h3>
+<p><a data-type="indexterm" data-primary="Bloom filter (algorithm)" id="idm140060723888032"></a>
+ As always, a lot of detail goes into making a storage engine perform well in practice. For example, the LSM-tree algorithm can be slow when looking up keys that do not exist in the database: you have to check the memtable, then the segments all the way back to the oldest (possibly having to read from disk for each one) before you can be sure that the key does not exist. In order to optimize this kind of access, storage engines often use additional <em>Bloom filters</em>
+ [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Bloom1970gl-marker" href="text00008.html#Bloom1970gl">15</a>
+ ]. (A Bloom filter is a memory-efficient data structure for approximating the contents of a set. It can tell you if a key does not appear in the database, and thus saves many unnecessary disk reads for nonexistent keys.)</p>
+<p><a data-type="indexterm" data-primary="compaction" data-secondary="of log-structured storage" data-tertiary="size-tiered and leveled approaches" id="idm140060723882896"></a>
+ <a data-type="indexterm" data-primary="logs (data structure)" data-secondary="compaction" id="idm140060723881296"></a>
+ <a data-type="indexterm" data-primary="leveled compaction" id="idm140060723880192"></a>
+ <a data-type="indexterm" data-primary="size-tiered compaction" id="idm140060723879360"></a>
+ <a data-type="indexterm" data-primary="RocksDB (storage engine)" data-secondary="leveled compaction" id="idm140060723878528"></a>
+ <a data-type="indexterm" data-primary="Cassandra (database)" data-secondary="compaction strategy" id="idm140060723877408"></a>
+ <a data-type="indexterm" data-primary="HBase (database)" data-secondary="size-tiered compaction" id="idm140060723876304"></a>
+ There are also different strategies to determine the order and timing of how SSTables are compacted and merged. The most common options are <em>size-tiered</em>
+ and <em>leveled</em>
+ compaction. LevelDB and RocksDB use leveled compaction (hence the name of LevelDB), HBase uses size-tiered, and Cassandra supports both [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="CassandraCompaction-marker" href="text00008.html#CassandraCompaction">16</a>
+ ]. In size-tiered compaction, newer and smaller SSTables are successively merged into older and larger SSTables. In leveled compaction, the key range is split up into smaller SSTables and older data is moved into separate “levels,” which allows the compaction to proceed more incrementally and use less disk space.</p>
+<p>Even though there are many subtleties, the basic idea of LSM-trees — keeping a cascade of SSTables that are merged in the background — is simple and effective. Even when the dataset is much bigger than the available memory it continues to work well. Since data is stored in sorted order, you can efficiently perform range queries (scanning all keys above some minimum and up to some maximum), and because the disk writes are sequential the LSM-tree can support remarkably high write throughput. <a data-type="indexterm" data-primary="SSTables (storage format)" data-startref="ix_sstables" id="idm140060723870928"></a>
+ <a data-type="indexterm" data-primary="LSM-trees (indexes)" data-startref="ix_lsmtree" id="idm140060723869888"></a>
+ <a data-type="indexterm" data-primary="algorithms" data-secondary="SSTables and LSM-trees" data-startref="ix_datastructSST" id="idm140060723868784"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="SSTables and LSM-trees" data-startref="ix_indexSSTLSM" id="idm140060723867408"></a>
+ <a data-type="indexterm" data-primary="logs (data structure)" data-secondary="log-structured storage" data-startref="ix_logstructured" id="idm140060723866032"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="row-oriented" data-tertiary="log-structured" data-startref="ix_storenglog" id="idm140060723864656"></a>
+</p>
+</div>
+</section>
+</div>
+</section>
+<section data-type="sect2" data-pdf-bookmark="B-Trees">
+<div class="sect2" id="sec_storage_b_trees">
+<h2>B-Trees</h2>
+<p><a data-type="indexterm" data-primary="algorithms" data-secondary="B-trees" id="ix_datastructBtree"></a>
+ <a data-type="indexterm" data-primary="B-trees (indexes)" id="ix_Btree"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="B-trees" id="ix_indexBtree"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="row-oriented" data-tertiary="B-trees" id="ix_storestructBtree"></a>
+ The log-structured indexes we have discussed so far are gaining acceptance, but they are not the most common type of index. The most widely used indexing structure is quite different: the <em>B-tree</em>
+ .</p>
+<p><a data-type="indexterm" data-primary="relational databases" data-secondary="use of B-tree indexes" id="idm140060723854880"></a>
+ Introduced in 1970 [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Bayer1970tq-marker" href="text00008.html#Bayer1970tq">17</a>
+ ] and called “ubiquitous” less than 10 years later [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Comer1979uy-marker" href="text00008.html#Comer1979uy">18</a>
+ ], B-trees have stood the test of time very well. They remain the standard index implementation in almost all relational databases, and many nonrelational databases use them too.</p>
+<p>Like SSTables, B-trees keep key-value pairs sorted by key, which allows efficient key-value lookups and range queries. But that’s where the similarity ends: B-trees have a very different design philosophy.</p>
+<p>The log-structured indexes we saw earlier break the database down into variable-size <em>segments</em>
+ , typically several megabytes or more in size, and always write a segment sequentially. By contrast, B-trees break the database down into fixed-size <em>blocks</em>
+ or <em>pages</em>
+ , traditionally 4 KB in size (sometimes bigger), and read or write one page at a time. This design corresponds more closely to the underlying hardware, as disks are also arranged in fixed-size blocks.</p>
+<p>Each page can be identified using an address or location, which allows one page to refer to another — similar to a pointer, but on disk instead of in memory. We can use these page references to construct a tree of pages, as illustrated in <a data-type="xref" href="text00008.html#fig_storage_b_tree">Figure 3-6</a>
+ .</p>
+<figure>
+<div id="fig_storage_b_tree" class="figure"><img src="Image00025.gif" alt="ddia 0306" hisrc="assets/ddia_0306.png" />
+<h6>
+<span class="label">Figure 3-6.</span>
+ Looking up a key using a B-tree index.</h6>
+</div>
+</figure>
+<p>One page is designated as the <em>root</em>
+ of the B-tree; whenever you want to look up a key in the index, you start here. The page contains several keys and references to child pages. Each child is responsible for a continuous range of keys, and the keys between the references indicate where the boundaries between those ranges lie.</p>
+<p>In the example in <a data-type="xref" href="text00008.html#fig_storage_b_tree">Figure 3-6</a>
+ , we are looking for the key 251, so we know that we need to follow the page reference between the boundaries 200 and 300. That takes us to a similar-looking page that further breaks down the 200–300 range into subranges. Eventually we get down to a page containing individual keys (a <em>leaf page</em>
+ ), which either contains the value for each key inline or contains references to the pages where the values can be found.</p>
+<p><a data-type="indexterm" data-primary="B-trees (indexes)" data-secondary="branching factor" id="idm140060723839328"></a>
+ The number of references to child pages in one page of the B-tree is called the <em>branching factor</em>
+ . For example, in <a data-type="xref" href="text00008.html#fig_storage_b_tree">Figure 3-6</a>
+ the branching factor is six. In practice, the branching factor depends on the amount of space required to store the page references and the range boundaries, but typically it is several hundred.</p>
+<p><a data-type="indexterm" data-primary="B-trees (indexes)" data-secondary="growing by splitting a page" id="idm140060723836512"></a>
+ If you want to update the value for an existing key in a B-tree, you search for the leaf page containing that key, change the value in that page, and write the page back to disk (any references to that page remain valid). If you want to add a new key, you need to find the page whose range encompasses the new key and add it to that page. If there isn’t enough free space in the page to accommodate the new key, it is split into two half-full pages, and the parent page is updated to account for the new subdivision of key ranges — see <a data-type="xref" href="text00008.html#fig_storage_b_tree_split">Figure 3-7</a>
+ .<sup xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook">
+<a data-type="noteref" id="idm140060723833968-marker" href="text00008.html#idm140060723833968">ii</a>
+</sup>
+</p>
+<figure>
+<div id="fig_storage_b_tree_split" class="figure"><img src="Image00026.gif" alt="ddia 0307" hisrc="assets/ddia_0307.png" />
+<h6>
+<span class="label">Figure 3-7.</span>
+ Growing a B-tree by splitting a page.</h6>
+</div>
+</figure>
+<p>This algorithm ensures that the tree remains <em>balanced</em>
+ : a B-tree with <em>n</em>
+ keys always has a depth of <em>O</em>
+ (log <em>n</em>
+ ). Most databases can fit into a B-tree that is three or four levels deep, so you don’t need to follow many page references to find the page you are looking for. (A four-level tree of 4 KB pages with a branching factor of 500 can store up to 256 TB.)</p>
+<section data-type="sect3" data-pdf-bookmark="Making B-trees reliable">
+<div class="sect3" id="sec_storage_btree_wal">
+<h3>Making B-trees reliable</h3>
+<p><a data-type="indexterm" data-primary="B-trees (indexes)" data-secondary="crash recovery" id="idm140060723825824"></a>
+ The basic underlying write operation of a B-tree is to overwrite a page on disk with new data. It is assumed that the overwrite does not change the location of the page; i.e., all references to that page remain intact when the page is overwritten. This is in stark contrast to log-structured indexes such as LSM-trees, which only append to files (and eventually delete obsolete files) but never modify files in place.</p>
+<p>You can think of overwriting a page on disk as an actual hardware operation. On a magnetic hard drive, this means moving the disk head to the right place, waiting for the right position on the spinning platter to come around, and then overwriting the appropriate sector with new data. On SSDs, what happens is somewhat more complicated, due to the fact that an SSD must erase and rewrite fairly large blocks of a storage chip at a time [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Goossaert2014wj-marker" href="text00008.html#Goossaert2014wj">19</a>
+ ].</p>
+<p>Moreover, some operations require several different pages to be overwritten. For example, if you split a page because an insertion caused it to be overfull, you need to write the two pages that were split, and also overwrite their parent page to update the references to the two child pages. This is a dangerous operation, because if the database crashes after only some of the pages have been written, you end up with a corrupted index (e.g., there may be an <em>orphan</em>
+ page that is not a child of any parent).</p>
+<p><a data-type="indexterm" data-primary="consistency" data-secondary="crash recovery" id="idm140060723819504"></a>
+ <a data-type="indexterm" data-primary="write-ahead log (WAL)" id="idm140060723818320"></a>
+ <a data-type="indexterm" data-primary="WAL (write-ahead log)" id="idm140060723817488"></a>
+ <a data-type="indexterm" data-primary="corruption of data" data-secondary="preventing using write-ahead logs" id="idm140060723816656"></a>
+ In order to make the database resilient to crashes, it is common for B-tree implementations to include an additional data structure on disk: a <em>write-ahead log</em>
+ (WAL, also known as a <em>redo log</em>
+ ). This is an append-only file to which every B-tree modification must be written before it can be applied to the pages of the tree itself. When the database comes back up after a crash, this log is used to restore the B-tree back to a consistent state [<a data-type="noteref" href="text00008.html#Graefe2011kk">5</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Mohan1992wo-marker" href="text00008.html#Mohan1992wo">20</a>
+ ].</p>
+<p>An additional complication of updating pages in place is that careful concurrency control is required if multiple threads are going to access the B-tree at the same time — otherwise a thread may see the tree in an inconsistent state. This is typically done by protecting the tree’s data structures with <em>latches</em>
+ (lightweight locks). Log-structured approaches are simpler in this regard, because they do all the merging in the background without interfering with incoming queries and atomically swap old segments for new segments from time to time.</p>
+</div>
+</section>
+<section data-type="sect3" data-pdf-bookmark="B-tree optimizations">
+<div class="sect3" id="idm140060723809232">
+<h3>B-tree optimizations</h3>
+<p><a data-type="indexterm" data-primary="B-trees (indexes)" data-secondary="optimizations" id="idm140060723808032"></a>
+ As B-trees have been around for so long, it’s not surprising that many optimizations have been developed over the years. To mention just a few:</p>
+<ul>
+<li><a data-type="indexterm" data-primary="B-trees (indexes)" data-secondary="append-only/copy-on-write variants" id="idm140060723805648"></a>
+ <a data-type="indexterm" data-primary="append-only B-trees" id="idm140060723804352"></a>
+ <a data-type="indexterm" data-primary="copy-on-write (B-trees)" id="idm140060723803520"></a>
+ <a data-type="indexterm" data-primary="immutability" data-secondary="in B-trees" id="idm140060723802688"></a>
+ <a data-type="indexterm" data-primary="LMDB (storage engine)" id="idm140060723801584"></a>
+ Instead of overwriting pages and maintaining a WAL for crash recovery, some databases (like LMDB) use a copy-on-write scheme [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Chu2014we-marker" href="text00008.html#Chu2014we">21</a>
+ ]. A modified page is written to a different location, and a new version of the parent pages in the tree is created, pointing at the new location. This approach is also useful for concurrency control, as we shall see in <a data-type="xref" href="text00013.html#sec_transactions_snapshot_isolation">“Snapshot Isolation and Repeatable Read”</a>
+ .</li>
+<li>We can save space in pages by not storing the entire key, but abbreviating it. Especially in pages on the interior of the tree, keys only need to provide enough information to act as boundaries between key ranges. Packing more keys into a page allows the tree to have a higher branching factor, and thus fewer levels.<sup xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook">
+<a data-type="noteref" id="idm140060723796352-marker" href="text00008.html#idm140060723796352">iii</a>
+</sup>
+</li>
+<li>In general, pages can be positioned anywhere on disk; there is nothing requiring pages with nearby key ranges to be nearby on disk. If a query needs to scan over a large part of the key range in sorted order, that page-by-page layout can be inefficient, because a disk seek may be required for every page that is read. Many B-tree implementations therefore try to lay out the tree so that leaf pages appear in sequential order on disk. However, it’s difficult to maintain that order as the tree grows. By contrast, since LSM-trees rewrite large segments of the storage in one go during merging, it’s easier for them to keep sequential keys close to each other on disk.</li>
+<li>Additional pointers have been added to the tree. For example, each leaf page may have references to its sibling pages to the left and right, which allows scanning keys in order without jumping back to parent pages.</li>
+<li><a data-type="indexterm" data-primary="fractal trees" id="idm140060723791632"></a>
+ B-tree variants such as <em>fractal trees</em>
+ [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Kuszmaul2014wr-marker" href="text00008.html#Kuszmaul2014wr">22</a>
+ ] borrow some log-structured ideas to reduce disk seeks (and they have nothing to do with fractals). <a data-type="indexterm" data-primary="algorithms" data-secondary="B-trees" data-startref="ix_datastructBtree" id="idm140060723787920"></a>
+ <a data-type="indexterm" data-primary="B-trees (indexes)" data-startref="ix_Btree" id="idm140060723786544"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="B-trees" data-startref="ix_indexBtree" id="idm140060723785440"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="row-oriented" data-tertiary="B-trees" data-startref="ix_storestructBtree" id="idm140060723784064"></a>
+</li>
+</ul>
+</div>
+</section>
+</div>
+</section>
+<section data-type="sect2" data-pdf-bookmark="Comparing B-Trees and LSM-Trees">
+<div class="sect2" id="sec_storage_btree_lsm_comparison">
+<h2>Comparing B-Trees and LSM-Trees</h2>
+<p><a data-type="indexterm" data-primary="indexes" data-secondary="comparison of B-trees and LSM-trees" id="ix_indexBtreeLSM"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="row-oriented" data-tertiary="comparing B-trees and LSM-trees" id="ix_storestructcomp"></a>
+ <a data-type="indexterm" data-primary="LSM-trees (indexes)" data-secondary="comparison to B-trees" id="ix_LSMtreeBtree"></a>
+ <a data-type="indexterm" data-primary="B-trees (indexes)" data-secondary="comparison to LSM-trees" id="ix_BtreeLSM"></a>
+ Even though B-tree implementations are generally more mature than LSM-tree implementations, LSM-trees are also interesting due to their performance characteristics. As a rule of thumb, LSM-trees are typically faster for writes, whereas B-trees are thought to be faster for reads [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Athanassoulis2016jk-marker" href="text00008.html#Athanassoulis2016jk">23</a>
+ ]. Reads are typically slower on LSM-trees because they have to check several different data structures and SSTables at different stages of compaction.</p>
+<p>However, benchmarks are often inconclusive and sensitive to details of the workload. You need to test systems with your particular workload in order to make a valid comparison. In this section we will briefly discuss a few things that are worth considering when measuring the performance of a storage engine.</p>
+<section data-type="sect3" data-pdf-bookmark="Advantages of LSM-trees">
+<div class="sect3" id="idm140060723770912">
+<h3>Advantages of LSM-trees</h3>
+<p>A B-tree index must write every piece of data at least twice: once to the write-ahead log, and once to the tree page itself (and perhaps again as pages are split). There is also overhead from having to write an entire page at a time, even if only a few bytes in that page changed. Some storage engines even overwrite the same page twice in order to avoid ending up with a partially updated page in the event of a power failure [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Zaitsev2006wa-marker" href="text00008.html#Zaitsev2006wa">24</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Vondra2016bp-marker" href="text00008.html#Vondra2016bp">25</a>
+ ].</p>
+<p><a data-type="indexterm" data-primary="write amplification" id="idm140060723764208"></a>
+ <a data-type="indexterm" data-primary="amplification" data-secondary="write amplification" id="idm140060723763504"></a>
+ Log-structured indexes also rewrite data multiple times due to repeated compaction and merging of SSTables. This effect — one write to the database resulting in multiple writes to the disk over the course of the database’s lifetime — is known as <em>write amplification</em>
+ . It is of particular concern on SSDs, which can only overwrite blocks a limited number of times before wearing out.</p>
+<p>In write-heavy applications, the performance bottleneck might be the rate at which the database can write to disk. In this case, write amplification has a direct performance cost: the more that a storage engine writes to disk, the fewer writes per second it can handle within the available disk bandwidth.</p>
+<p><a data-type="indexterm" data-primary="hard disks" data-secondary="access patterns" id="idm140060723760624"></a>
+ <a data-type="indexterm" data-primary="solid state drives (SSDs)" data-secondary="access patterns" id="idm140060723759520"></a>
+ Moreover, LSM-trees are typically able to sustain higher write throughput than B-trees, partly because they sometimes have lower write amplification (although this depends on the storage engine configuration and workload), and partly because they sequentially write compact SSTable files rather than having to overwrite several pages in the tree [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Callaghan2016wk-marker" href="text00008.html#Callaghan2016wk">26</a>
+ ]. This difference is particularly important on magnetic hard drives, where sequential writes are much faster than random writes.</p>
+<p>LSM-trees can be compressed better, and thus often produce smaller files on disk than B-trees. B-tree storage engines leave some disk space unused due to fragmentation: when a page is split or when a row cannot fit into an existing page, some space in a page remains unused. Since LSM-trees are not page-oriented and periodically rewrite SSTables to remove fragmentation, they have lower storage overheads, especially when using leveled compaction [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Callaghan2016cm-marker" href="text00008.html#Callaghan2016cm">27</a>
+ ].</p>
+<p>On many SSDs, the firmware internally uses a log-structured algorithm to turn random writes into sequential writes on the underlying storage chips, so the impact of the storage engine’s write pattern is less pronounced [<a data-type="noteref" href="text00008.html#Goossaert2014wj">19</a>
+ ]. However, lower write amplification and reduced fragmentation are still advantageous on SSDs: representing data more compactly allows more read and write requests within the available I/O bandwidth.</p>
+</div>
+</section>
+<section data-type="sect3" data-pdf-bookmark="Downsides of LSM-trees">
+<div class="sect3" id="idm140060723750896">
+<h3>Downsides of LSM-trees</h3>
+<p><a data-type="indexterm" data-primary="compaction" data-secondary="of log-structured storage" data-tertiary="issues with" id="idm140060723749488"></a>
+ A downside of log-structured storage is that the compaction process can sometimes interfere with the performance of ongoing reads and writes. Even though storage engines try to perform compaction incrementally and without affecting concurrent access, disks have limited resources, so it can easily happen that a request needs to wait while the disk finishes an expensive compaction operation. The impact on throughput and average response time is usually small, but at higher percentiles (see <a data-type="xref" href="text00006.html#idm140060728506384">“Describing Performance”</a>
+ ) the response time of queries to log-structured storage engines can sometimes be quite high, and B-trees can be more predictable [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Mutsuzaki2011wx-marker" href="text00008.html#Mutsuzaki2011wx">28</a>
+ ].</p>
+<p><a data-type="indexterm" data-primary="threads (concurrency)" data-secondary="background threads" id="idm140060723744160"></a>
+ Another issue with compaction arises at high write throughput: the disk’s finite write bandwidth needs to be shared between the initial write (logging and flushing a <span class="keep-together">memtable</span>
+ to disk) and the compaction threads running in the background. When writing to an empty database, the full disk bandwidth can be used for the initial write, but the bigger the database gets, the more disk bandwidth is required for compaction.</p>
+<p>If write throughput is high and compaction is not configured carefully, it can happen that compaction cannot keep up with the rate of incoming writes. In this case, the number of unmerged segments on disk keeps growing until you run out of disk space, and reads also slow down because they need to check more segment files. Typically, SSTable-based storage engines do not throttle the rate of incoming writes, even if compaction cannot keep up, so you need explicit monitoring to detect this situation [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Cassandra1608-marker" href="text00008.html#Cassandra1608">29</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="RocksDBTuning-marker" href="text00008.html#RocksDBTuning">30</a>
+ ].</p>
+<p>An advantage of B-trees is that each key exists in exactly one place in the index, whereas a log-structured storage engine may have multiple copies of the same key in different segments. This aspect makes B-trees attractive in databases that want to offer strong transactional semantics: in many relational databases, transaction isolation is implemented using locks on ranges of keys, and in a B-tree index, those locks can be directly attached to the tree [<a data-type="noteref" href="text00008.html#Graefe2011kk">5</a>
+ ]. In <a data-type="xref" href="text00013.html#ch_transactions">Chapter 7</a>
+ we will discuss this point in more detail.</p>
+<p>B-trees are very ingrained in the architecture of databases and provide consistently good performance for many workloads, so it’s unlikely that they will go away anytime soon. In new datastores, log-structured indexes are becoming increasingly popular. There is no quick and easy rule for determining which type of storage engine is better for your use case, so it is worth testing empirically. <a data-type="indexterm" data-primary="indexes" data-secondary="comparison of B-trees and LSM-trees" data-startref="ix_indexBtreeLSM" id="idm140060723733296"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="row-oriented" data-tertiary="comparing B-trees and LSM-trees" data-startref="ix_storestructcomp" id="idm140060723731856"></a>
+ <a data-type="indexterm" data-primary="LSM-trees (indexes)" data-secondary="comparison to B-trees" data-startref="ix_LSMtreeBtree" id="idm140060723730192"></a>
+ <a data-type="indexterm" data-primary="B-trees (indexes)" data-secondary="comparison to LSM-trees" data-startref="ix_BtreeLSM" id="idm140060723728816"></a>
+</p>
+</div>
+</section>
+</div>
+</section>
+<section data-type="sect2" data-pdf-bookmark="Other Indexing Structures">
+<div class="sect2" id="sec_storage_other_indexing">
+<h2>Other Indexing Structures</h2>
+<p><a data-type="indexterm" data-primary="primary keys" id="idm140060723725824"></a>
+ So far we have only discussed key-value indexes, which are like a <em>primary key</em>
+ index in the relational model. A primary key uniquely identifies one row in a relational table, or one document in a document database, or one vertex in a graph database. Other records in the database can refer to that row/document/vertex by its primary key (or ID), and the index is used to resolve such references.</p>
+<p><a data-type="indexterm" data-primary="CREATE INDEX statement (SQL)" id="idm140060723723904"></a>
+ <a data-type="indexterm" data-primary="secondary indexes" id="idm140060723722912"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="secondary" data-seealso="secondary indexes" id="idm140060723722048"></a>
+ <a data-type="indexterm" data-primary="joins" data-secondary="secondary indexes and" id="idm140060723720672"></a>
+ It is also very common to have <em>secondary indexes</em>
+ . In relational databases, you can create several secondary indexes on the same table using the <code>CREATE INDEX</code>
+ command, and they are often crucial for performing joins efficiently. For example, in <a data-type="xref" href="text00007.html#fig_billgates_relational">Figure 2-1</a>
+ in <a data-type="xref" href="text00007.html#ch_datamodels">Chapter 2</a>
+ you would most likely have a secondary index on the <code>user_id</code>
+ columns so that you can find all the rows belonging to the same user in each of the tables.</p>
+<p>A secondary index can easily be constructed from a key-value index. The main difference is that keys are not unique; i.e., there might be many rows (documents, vertices) with the same key. This can be solved in two ways: either by making each value in the index a list of matching row identifiers (like a postings list in a full-text index) or by making each key unique by appending a row identifier to it. Either way, both B-trees and log-structured indexes can be used as secondary indexes.</p>
+<section data-type="sect3" data-pdf-bookmark="Storing values within the index">
+<div class="sect3" id="idm140060723715504">
+<h3>Storing values within the index</h3>
+<p><a data-type="indexterm" data-primary="heap files (databases)" id="idm140060723714096"></a>
+ The key in an index is the thing that queries search for, but the value can be one of two things: it could be the actual row (document, vertex) in question, or it could be a reference to the row stored elsewhere. In the latter case, the place where rows are stored is known as a <em>heap file</em>
+ , and it stores data in no particular order (it may be append-only, or it may keep track of deleted rows in order to overwrite them with new data later). The heap file approach is common because it avoids duplicating data when multiple secondary indexes are present: each index just references a location in the heap file, and the actual data is kept in one place.</p>
+<p>When updating a value without changing the key, the heap file approach can be quite efficient: the record can be overwritten in place, provided that the new value is not larger than the old value. The situation is more complicated if the new value is larger, as it probably needs to be moved to a new location in the heap where there is enough space. In that case, either all indexes need to be updated to point at the new heap location of the record, or a forwarding pointer is left behind in the old heap location [<a data-type="noteref" href="text00008.html#Graefe2011kk">5</a>
+ ].</p>
+<p><a data-type="indexterm" data-primary="clustered indexes" id="idm140060723710128"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="clustered" id="idm140060723709072"></a>
+ <a data-type="indexterm" data-primary="InnoDB (storage engine)" data-secondary="clustered index on primary key" id="idm140060723707968"></a>
+ <a data-type="indexterm" data-primary="MySQL (database)" data-secondary="InnoDB storage engine" data-see="InnoDB" id="idm140060723706896"></a>
+ In some situations, the extra hop from the index to the heap file is too much of a performance penalty for reads, so it can be desirable to store the indexed row directly within an index. This is known as a <em>clustered index</em>
+ . For example, in MySQL’s InnoDB storage engine, the primary key of a table is always a clustered index, and secondary indexes refer to the primary key (rather than a heap file location) [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="MySQL2014-marker" href="text00008.html#MySQL2014">31</a>
+ ]. In SQL Server, you can specify one clustered index per table [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="SQLServer2012-marker" href="text00008.html#SQLServer2012">32</a>
+ ].</p>
+<p><a data-type="indexterm" data-primary="covering indexes" id="idm140060723701088"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="covering (with included columns)" id="idm140060723700032"></a>
+ A compromise between a clustered index (storing all row data within the index) and a nonclustered index (storing only references to the data within the index) is known as a <em>covering index</em>
+ or <em>index with included columns</em>
+ , which stores <em>some</em>
+ of a table’s columns within the index [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Webb2008uj-marker" href="text00008.html#Webb2008uj">33</a>
+ ]. This allows some queries to be answered by using the index alone (in which case, the index is said to <em>cover</em>
+ the query) [<a data-type="noteref" href="text00008.html#SQLServer2012">32</a>
+ ].</p>
+<p>As with any kind of duplication of data, clustered and covering indexes can speed up reads, but they require additional storage and can add overhead on writes. Databases also need to go to additional effort to enforce transactional guarantees, because applications should not see inconsistencies due to the duplication.</p>
+</div>
+</section>
+<section data-type="sect3" data-pdf-bookmark="Multi-column indexes">
+<div class="sect3" id="sec_storage_index_multicolumn">
+<h3>Multi-column indexes</h3>
+<p><a data-type="indexterm" data-primary="indexes" data-secondary="multi-column" id="idm140060723691440"></a>
+ <a data-type="indexterm" data-primary="multi-column indexes" id="idm140060723690336"></a>
+ The indexes discussed so far only map a single key to a value. That is not sufficient if we need to query multiple columns of a table (or multiple fields in a document) simultaneously.</p>
+<p><a data-type="indexterm" data-primary="concatenated indexes" id="idm140060723689040"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="concatenated" id="idm140060723688048"></a>
+ The most common type of multi-column index is called a <em>concatenated index</em>
+ , which simply combines several fields into one key by appending one column to another (the index definition specifies in which order the fields are concatenated). This is like an old-fashioned paper phone book, which provides an index from (<em>lastname</em>
+ , <em>firstname</em>
+ ) to phone number. Due to the sort order, the index can be used to find all the people with a particular last name, or all the people with a particular <em>lastname-firstname</em>
+ combination. However, the index is useless if you want to find all the people with a particular first name.</p>
+<p>Multi-dimensional indexes are a more general way of querying several columns at once, which is particularly important for geospatial data. For example, a restaurant-search website may have a database containing the latitude and longitude of each restaurant. When a user is looking at the restaurants on a map, the website needs to search for all the restaurants within the rectangular map area that the user is currently viewing. This requires a two-dimensional range query like the following:</p>
+<pre data-type="programlisting" data-code-language="sql">
+<code class="k">SELECT</code>
+
+ <code class="o">*</code>
+
+ <code class="k">FROM</code>
+
+ <code class="n">restaurants</code>
+
+ <code class="k">WHERE</code>
+
+ <code class="n">latitude</code>
+
+  <code class="o">&gt;</code>
+
+ <code class="mi">51</code>
+
+<code class="p">.</code>
+
+<code class="mi">4946</code>
+
+ <code class="k">AND</code>
+
+ <code class="n">latitude</code>
+
+  <code class="o">&lt;</code>
+
+ <code class="mi">51</code>
+
+<code class="p">.</code>
+
+<code class="mi">5079</code>
+
+
+                            <code class="k">AND</code>
+
+ <code class="n">longitude</code>
+
+ <code class="o">&gt;</code>
+
+ <code class="o">-</code>
+
+<code class="mi">0</code>
+
+<code class="p">.</code>
+
+<code class="mi">1162</code>
+
+ <code class="k">AND</code>
+
+ <code class="n">longitude</code>
+
+ <code class="o">&lt;</code>
+
+ <code class="o">-</code>
+
+<code class="mi">0</code>
+
+<code class="p">.</code>
+
+<code class="mi">1004</code>
+
+<code class="p">;</code>
+
+</pre>
+<p>A standard B-tree or LSM-tree index is not able to answer that kind of query efficiently: it can give you either all the restaurants in a range of latitudes (but at any longitude), or all the restaurants in a range of longitudes (but anywhere between the North and South poles), but not both simultaneously.</p>
+<p><a data-type="indexterm" data-primary="indexes" data-secondary="geospatial" id="idm140060723644800"></a>
+ <a data-type="indexterm" data-primary="geospatial indexes" id="idm140060723643600"></a>
+ <a data-type="indexterm" data-primary="R-trees (indexes)" id="idm140060723642768"></a>
+ <a data-type="indexterm" data-primary="PostgreSQL (database)" data-secondary="PostGIS geospatial indexes" id="idm140060723641936"></a>
+ One option is to translate a two-dimensional location into a single number using a space-filling curve, and then to use a regular B-tree index [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Ramsak2000wm-marker" href="text00008.html#Ramsak2000wm">34</a>
+ ]. More commonly, specialized spatial indexes such as R-trees are used. For example, PostGIS implements geospatial indexes as R-trees using PostgreSQL’s Generalized Search Tree indexing facility [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="PostGIS2014-marker" href="text00008.html#PostGIS2014">35</a>
+ ]. We don’t have space to describe R-trees in detail here, but there is plenty of literature on them.</p>
+<p>An interesting idea is that multi-dimensional indexes are not just for geographic locations. For example, on an ecommerce website you could use a three-dimensional index on the dimensions (<em>red</em>
+ , <em>green</em>
+ , <em>blue</em>
+ ) to search for products in a certain range of colors, or in a database of weather observations you could have a two-dimensional index on (<em>date</em>
+ , <em>temperature</em>
+ ) in order to efficiently search for all the observations during the year 2013 where the temperature was between 25 and 30℃. With a one-dimensional index, you would have to either scan over all the records from 2013 (regardless of temperature) and then filter them by temperature, or vice versa. A 2D index could narrow down by timestamp and temperature simultaneously. <a data-type="indexterm" data-primary="HyperDex (database)" id="idm140060723632656"></a>
+ This technique is used by HyperDex [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Escriva2012gh-marker" href="text00008.html#Escriva2012gh">36</a>
+ ].</p>
+</div>
+</section>
+<section data-type="sect3" data-pdf-bookmark="Full-text search and fuzzy indexes">
+<div class="sect3" id="sec_storage_full_text">
+<h3>Full-text search and fuzzy indexes</h3>
+<p><a data-type="indexterm" data-primary="fuzzy search" data-see="similarity search" id="idm140060723627360"></a>
+ <a data-type="indexterm" data-primary="similarity search" data-secondary="edit distance" id="idm140060723626096"></a>
+ <a data-type="indexterm" data-primary="full-text search" data-secondary="and fuzzy indexes" id="idm140060723624992"></a>
+ <a data-type="indexterm" data-primary="indexes" data-secondary="full-text search" id="idm140060723623888"></a>
+ All the indexes discussed so far assume that you have exact data and allow you to query for exact values of a key, or a range of values of a key with a sort order. What they don’t allow you to do is search for <em>similar</em>
+ keys, such as misspelled words. Such <em>fuzzy</em>
+ querying requires different techniques.</p>
+<p><a data-type="indexterm" data-primary="Lucene (storage engine)" data-secondary="similarity search" id="idm140060723621600"></a>
+ <a data-type="indexterm" data-primary="edit distance (full-text search)" id="idm140060723620496"></a>
+ For example, full-text search engines commonly allow a search for one word to be expanded to include synonyms of the word, to ignore grammatical variations of words, and to search for occurrences of words near each other in the same document, and support various other features that depend on linguistic analysis of the text. To cope with typos in documents or queries, Lucene is able to search text for words within a certain edit distance (an edit distance of 1 means that one letter has been added, removed, or replaced) [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="McCandless2011wp-marker" href="text00008.html#McCandless2011wp">37</a>
+ ].</p>
+<p><a data-type="indexterm" data-primary="trie (data structure)" id="idm140060723616688"></a>
+ <a data-type="indexterm" data-primary="Levenshtein automata" id="idm140060723615664"></a>
+ As mentioned in <a data-type="xref" href="text00008.html#sec_storage_lsm_usage">“Making an LSM-tree out of SSTables”</a>
+ , Lucene uses a SSTable-like structure for its term dictionary. This structure requires a small in-memory index that tells queries at which offset in the sorted file they need to look for a key. In LevelDB, this in-memory index is a sparse collection of some of the keys, but in Lucene, the in-memory index is a finite state automaton over the characters in the keys, similar to a <em>trie</em>
+ [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Heinz2002hh-marker" href="text00008.html#Heinz2002hh">38</a>
+ ]. This automaton can be transformed into a <em>Levenshtein automaton</em>
+ , which supports efficient search for words within a given edit distance [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Schulz2002jt-marker" href="text00008.html#Schulz2002jt">39</a>
+ ].</p>
+<p>Other fuzzy search techniques go in the direction of document classification and machine learning. See an information retrieval textbook for more detail [e.g., <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Manning2008vf-marker" href="text00008.html#Manning2008vf">40</a>
+ ].</p>
+</div>
+</section>
+<section data-type="sect3" data-pdf-bookmark="Keeping everything in memory">
+<div class="sect3" id="sec_storage_inmemory">
+<h3>Keeping everything in memory</h3>
+<p><a data-type="indexterm" data-primary="in-memory databases" id="idm140060723602416"></a>
+ <a data-type="indexterm" data-primary="memory" data-secondary="in-memory databases" id="idm140060723601584"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="in-memory storage" id="idm140060723600480"></a>
+ The data structures discussed so far in this chapter have all been answers to the limitations of disks. Compared to main memory, disks are awkward to deal with. With both magnetic disks and SSDs, data on disk needs to be laid out carefully if you want good performance on reads and writes. However, we tolerate this awkwardness because disks have two significant advantages: they are durable (their contents are not lost if the power is turned off), and they have a lower cost per gigabyte than RAM.</p>
+<p>As RAM becomes cheaper, the cost-per-gigabyte argument is eroded. Many datasets are simply not that big, so it’s quite feasible to keep them entirely in memory, potentially distributed across several machines. This has led to the development of <em>in-memory databases</em>
+ .</p>
+<p><a data-type="indexterm" data-primary="key-value stores" data-secondary="in-memory" id="idm140060723597488"></a>
+ <a data-type="indexterm" data-primary="Memcached (caching server)" id="idm140060723596384"></a>
+ <a data-type="indexterm" data-primary="caches" id="idm140060723595488"></a>
+ Some in-memory key-value stores, such as Memcached, are intended for caching use only, where it’s acceptable for data to be lost if a machine is restarted. But other in-memory databases aim for durability, which can be achieved with special hardware (such as battery-powered RAM), by writing a log of changes to disk, by writing periodic snapshots to disk, or by replicating the in-memory state to other machines.</p>
+<p>When an in-memory database is restarted, it needs to reload its state, either from disk or over the network from a replica (unless special hardware is used). Despite writing to disk, it’s still an in-memory database, because the disk is merely used as an append-only log for durability, and reads are served entirely from memory. Writing to disk also has operational advantages: files on disk can easily be backed up, inspected, and analyzed by external utilities.</p>
+<p><a data-type="indexterm" data-primary="relational data model" data-secondary="in-memory databases with" id="idm140060723593072"></a>
+ <a data-type="indexterm" data-primary="VoltDB (database)" data-secondary="in-memory storage" id="idm140060723591808"></a>
+ <a data-type="indexterm" data-primary="MemSQL (database)" data-secondary="in-memory storage" id="idm140060723590704"></a>
+ <a data-type="indexterm" data-primary="Oracle (database)" data-secondary="TimesTen (in-memory database)" id="idm140060723589600"></a>
+ <a data-type="indexterm" data-primary="RAMCloud (in-memory storage)" id="idm140060723588480"></a>
+ Products such as VoltDB, MemSQL, and Oracle TimesTen are in-memory databases with a relational model, and the vendors claim that they can offer big performance improvements by removing all the overheads associated with managing on-disk data structures [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Stonebraker2007ub-marker" href="text00008.html#Stonebraker2007ub">41</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="VoltDB2014uj-marker" href="text00008.html#VoltDB2014uj">42</a>
+ ]. RAMCloud is an open source, in-memory key-value store with durability (using a log-structured approach for the data in memory as well as the data on disk) [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Rumble2014vz-marker" href="text00008.html#Rumble2014vz">43</a>
+ ]. <a data-type="indexterm" data-primary="Couchbase (database)" data-secondary="durability" id="idm140060723581152"></a>
+ <a data-type="indexterm" data-primary="Redis (database)" data-secondary="durability" id="idm140060723580048"></a>
+ Redis and Couchbase provide weak durability by writing to disk asynchronously.</p>
+<p><a data-type="indexterm" data-primary="performance" data-secondary="of in-memory databases" id="idm140060723578816"></a>
+ Counterintuitively, the performance advantage of in-memory databases is not due to the fact that they don’t need to read from disk. Even a disk-based storage engine may never need to read from disk if you have enough memory, because the operating system caches recently used disk blocks in memory anyway. Rather, they can be faster because they can avoid the overheads of encoding in-memory data structures in a form that can be written to disk [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Harizopoulos2008jb-marker" href="text00008.html#Harizopoulos2008jb">44</a>
+ ].</p>
+<p>Besides performance, another interesting area for in-memory databases is providing data models that are difficult to implement with disk-based indexes. For example, Redis offers a database-like interface to various data structures such as priority queues and sets. Because it keeps all data in memory, its implementation is comparatively simple.</p>
+<p><a data-type="indexterm" data-primary="anti-caching (in-memory databases)" id="idm140060723573344"></a>
+ <a data-type="indexterm" data-primary="virtual memory" data-secondary="versus memory management by databases" id="idm140060723572448"></a>
+ Recent research indicates that an in-memory database architecture could be extended to support datasets larger than the available memory, without bringing back the overheads of a disk-centric architecture [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="DeBrabant2013ts-marker" href="text00008.html#DeBrabant2013ts">45</a>
+ ]. The so-called <em>anti-caching</em>
+ approach works by evicting the least recently used data from memory to disk when there is not enough memory, and loading it back into memory when it is accessed again in the future. This is similar to what operating systems do with virtual memory and swap files, but the database can manage memory more efficiently than the OS, as it can work at the granularity of individual records rather than entire memory pages. This approach still requires indexes to fit entirely in memory, though (like the Bitcask example at the beginning of the chapter).</p>
+<p>Further changes to storage engine design will probably be needed if <em>non-volatile memory</em>
+ (NVM) technologies become more widely adopted [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Arulraj2015gs-marker" href="text00008.html#Arulraj2015gs">46</a>
+ ]. At present, this is a new area of research, but it is worth keeping an eye on in the future. <a data-type="indexterm" data-primary="storage engines" data-secondary="row-oriented" data-startref="ix_storedatastruct" id="idm140060723563904"></a>
+</p>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+<section data-type="sect1" data-pdf-bookmark="Transaction Processing or Analytics?">
+<div class="sect1" id="sec_storage_analytics">
+<h1>Transaction Processing or Analytics?</h1>
+<p><a data-type="indexterm" data-primary="transaction processing" id="ix_transactions"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="comparing requirements for transaction processing and analytics" id="ix_storetransact"></a>
+ <a data-type="indexterm" data-primary="business data processing" id="idm140060723559104"></a>
+ In the early days of business data processing, a write to the database typically corresponded to a <em>commercial transaction</em>
+ taking place: making a sale, placing an order with a supplier, paying an employee’s salary, etc. As databases expanded into areas that didn’t involve money changing hands, the term <em>transaction</em>
+ nevertheless stuck, referring to a group of reads and writes that form a logical unit.</p>
+<div class="orm-notedivider"><hr data-amznremoved-m8="true" />
+</div>
+<div data-type="note">
+<h6>Note</h6>
+<p><a data-type="indexterm" data-primary="ACID properties (transactions)" id="idm140060723556256"></a>
+ A transaction needn’t necessarily have ACID (atomicity, consistency, isolation, and durability) properties. <em>Transaction processing</em>
+ just means allowing clients to make low-latency reads and writes — as opposed to <em>batch processing</em>
+ jobs, which only run periodically (for example, once per day). We discuss the ACID properties in <a data-type="xref" href="text00013.html#ch_transactions">Chapter 7</a>
+ and batch processing in <a data-type="xref" href="text00017.html#ch_batch">Chapter 10</a>
+ .</p>
+</div>
+<div class="orm-notedivider"><hr data-amznremoved-m8="true" />
+</div>
+<p><a data-type="indexterm" data-primary="OLTP (online transaction processing)" id="idm140060723552320"></a>
+ Even though databases started being used for many different kinds of data — comments on blog posts, actions in a game, contacts in an address book, etc. — the basic access pattern remained similar to processing business transactions. An application typically looks up a small number of records by some key, using an index. Records are inserted or updated based on the user’s input. Because these applications are interactive, the access pattern became known as <em>online transaction processing</em>
+ (OLTP).</p>
+<p><a data-type="indexterm" data-primary="analytics" id="idm140060723550272"></a>
+ However, databases also started being increasingly used for <em>data analytics</em>
+ , which has very different access patterns. Usually an analytic query needs to scan over a huge number of records, only reading a few columns per record, and calculates aggregate statistics (such as count, sum, or average) rather than returning the raw data to the user. For example, if your data is a table of sales transactions, then analytic queries might be:</p>
+<ul>
+<li>What was the total revenue of each of our stores in January?</li>
+<li>How many more bananas than usual did we sell during our latest promotion?</li>
+<li>Which brand of baby food is most often purchased together with brand X <span class="keep-together">diapers?</span>
+</li>
+</ul>
+<p><a data-type="indexterm" data-primary="OLAP (online analytic processing)" id="idm140060723544544"></a>
+ <a data-type="indexterm" data-primary="analytics" data-secondary="comparison to transaction processing" id="idm140060723543504"></a>
+ <a data-type="indexterm" data-primary="transaction processing" data-secondary="comparison to analytics" id="idm140060723542384"></a>
+ These queries are often written by business analysts, and feed into reports that help the management of a company make better decisions (<em>business intelligence</em>
+ ). In order to differentiate this pattern of using databases from transaction processing, it has been called <em>online analytic processing</em>
+ (OLAP) [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Codd1993ww-marker" href="text00008.html#Codd1993ww">47</a>
+ ].<sup xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook">
+<a data-type="noteref" id="idm140060723516352-marker" href="text00008.html#idm140060723516352">iv</a>
+</sup>
+ The difference between OLTP and OLAP is not always clear-cut, but some typical characteristics are listed in <a data-type="xref" href="text00008.html#tab_oltp_vs_olap">Table 3-1</a>
+ .</p>
+<table id="tab_oltp_vs_olap" style="width: 100%">
+<caption>
+<span class="label">Table 3-1.</span>
+ Comparing characteristics of transaction processing versus analytic systems</caption>
+<thead>
+<tr>
+<th>Property</th>
+<th>Transaction processing systems (OLTP)</th>
+<th>Analytic systems (OLAP)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<p>Main read pattern</p>
+</td>
+<td>
+<p>Small number of records per query, fetched by key</p>
+</td>
+<td>
+<p>Aggregate over large number of records</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Main write pattern</p>
+</td>
+<td>
+<p>Random-access, low-latency writes from user input</p>
+</td>
+<td>
+<p>Bulk import (ETL) or event stream</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Primarily used by</p>
+</td>
+<td>
+<p>End user/customer, via web application</p>
+</td>
+<td>
+<p>Internal analyst, for decision support</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>What data represents</p>
+</td>
+<td>
+<p>Latest state of data (current point in time)</p>
+</td>
+<td>
+<p>History of events that happened over time</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Dataset size</p>
+</td>
+<td>
+<p>Gigabytes to terabytes</p>
+</td>
+<td>
+<p>Terabytes to petabytes</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>At first, the same databases were used for both transaction processing and analytic queries. SQL turned out to be quite flexible in this regard: it works well for OLTP-type queries as well as OLAP-type queries. Nevertheless, in the late 1980s and early 1990s, there was a trend for companies to stop using their OLTP systems for analytics purposes, and to run the analytics on a separate database instead. This separate database was called a <em>data warehouse</em>
+ .</p>
+<section data-type="sect2" data-pdf-bookmark="Data Warehousing">
+<div class="sect2" id="sec_storage_dwh">
+<h2>Data Warehousing</h2>
+<p><a data-type="indexterm" data-primary="analytics" data-secondary="data warehousing" data-see="data warehousing" id="idm140060723495632"></a>
+ <a data-type="indexterm" data-primary="data warehousing" id="ix_datawhse"></a>
+ An enterprise may have dozens of different transaction processing systems: systems powering the customer-facing website, controlling point of sale (checkout) systems in physical stores, tracking inventory in warehouses, planning routes for vehicles, managing suppliers, administering employees, etc. Each of these systems is complex and needs a team of people to maintain it, so the systems end up operating mostly autonomously from each other.</p>
+<p>These OLTP systems are usually expected to be highly available and to process transactions with low latency, since they are often critical to the operation of the business. Database administrators therefore closely guard their OLTP databases. They are usually reluctant to let business analysts run ad hoc analytic queries on an OLTP database, since those queries are often expensive, scanning large parts of the dataset, which can harm the performance of concurrently executing transactions.</p>
+<p><a data-type="indexterm" data-primary="data warehousing" data-secondary="ETL (extract-transform-load)" id="idm140060723491504"></a>
+ <a data-type="indexterm" data-primary="ETL (extract-transform-load)" id="idm140060723490208"></a>
+ <a data-type="indexterm" data-primary="extract-transform-load" data-see="ETL" id="idm140060723489360"></a>
+ A <em>data warehouse</em>
+ , by contrast, is a separate database that analysts can query to their hearts’ content, without affecting OLTP operations [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Chaudhuri1997bd-marker" href="text00008.html#Chaudhuri1997bd">48</a>
+ ]. The data warehouse contains a read-only copy of the data in all the various OLTP systems in the company. Data is extracted from OLTP databases (using either a periodic data dump or a continuous stream of updates), transformed into an analysis-friendly schema, cleaned up, and then loaded into the data warehouse. This process of getting data into the warehouse is known as <em>Extract–Transform–Load</em>
+ (ETL) and is illustrated in <a data-type="xref" href="text00008.html#fig_dwh_etl">Figure 3-8</a>
+ .</p>
+<figure>
+<div id="fig_dwh_etl" class="figure"><img src="Image00027.gif" alt="ddia 0308" hisrc="assets/ddia_0308.png" />
+<h6>
+<span class="label">Figure 3-8.</span>
+ Simplified outline of ETL into a data warehouse.</h6>
+</div>
+</figure>
+<p>Data warehouses now exist in almost all large enterprises, but in small companies they are almost unheard of. This is probably because most small companies don’t have so many different OLTP systems, and most small companies have a small amount of data — small enough that it can be queried in a conventional SQL database, or even analyzed in a spreadsheet. In a large company, a lot of heavy lifting is required to do something that is simple in a small company.</p>
+<p>A big advantage of using a separate data warehouse, rather than querying OLTP systems directly for analytics, is that the data warehouse can be optimized for analytic access patterns. It turns out that the indexing algorithms discussed in the first half of this chapter work well for OLTP, but are not very good at answering analytic queries. In the rest of this chapter we will look at storage engines that are optimized for analytics instead.</p>
+<section data-type="sect3" data-pdf-bookmark="The divergence between OLTP databases and data warehouses">
+<div class="sect3" id="sec_storage_dwh_divergence">
+<h3>The divergence between OLTP databases and data warehouses</h3>
+<p><a data-type="indexterm" data-primary="transaction processing" data-secondary="comparison to data warehousing" id="idm140060723477728"></a>
+ The data model of a data warehouse is most commonly relational, because SQL is generally a good fit for analytic queries. There are many graphical data analysis tools that generate SQL queries, visualize the results, and allow analysts to explore the data (through operations such as <em>drill-down</em>
+ and <em>slicing and dicing</em>
+ ).</p>
+<p>On the surface, a data warehouse and a relational OLTP database look similar, because they both have a SQL query interface. However, the internals of the systems can look quite different, because they are optimized for very different query patterns. Many database vendors now focus on supporting either transaction processing or analytics workloads, but not both.</p>
+<p><a data-type="indexterm" data-primary="SQL Server (database)" data-secondary="data warehousing support" id="idm140060723474352"></a>
+ <a data-type="indexterm" data-primary="SAP HANA (database)" id="idm140060723473232"></a>
+ Some databases, such as Microsoft SQL Server and SAP HANA, have support for transaction processing and data warehousing in the same product. However, they are increasingly becoming two separate storage and query engines, which happen to be accessible through a common SQL interface [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Larson2013wh-marker" href="text00008.html#Larson2013wh">49</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Farber2012tw-marker" href="text00008.html#Farber2012tw">50</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="OneSizeFitsNone2013vw-marker" href="text00008.html#OneSizeFitsNone2013vw">51</a>
+ ].</p>
+<p><a data-type="indexterm" data-primary="SQL (Structured Query Language)" data-secondary="SQL on Hadoop" id="idm140060723465120"></a>
+ <a data-type="indexterm" data-primary="Teradata (database)" id="idm140060723463600"></a>
+ <a data-type="indexterm" data-primary="Vertica (database)" id="idm140060723462768"></a>
+ <a data-type="indexterm" data-primary="ParAccel (database)" id="idm140060723461936"></a>
+ <a data-type="indexterm" data-primary="Amazon Web Services (AWS)" data-secondary="RedShift (database)" id="idm140060723461104"></a>
+ <a data-type="indexterm" data-primary="Spark (processing framework)" data-secondary="for data warehouses" id="idm140060723459984"></a>
+ <a data-type="indexterm" data-primary="Apache Spark" data-see="Spark" id="idm140060723458992"></a>
+ <a data-type="indexterm" data-primary="Hive (query engine)" data-secondary="for data warehouses" id="idm140060723457920"></a>
+ <a data-type="indexterm" data-primary="Apache Hive" data-see="Hive" id="idm140060723456944"></a>
+ <a data-type="indexterm" data-primary="Impala (query engine)" data-secondary="for data warehouses" id="idm140060723455872"></a>
+ <a data-type="indexterm" data-primary="Cloudera Impala" data-see="Impala" id="idm140060723454896"></a>
+ <a data-type="indexterm" data-primary="Apache Impala" data-see="Impala" id="idm140060723453952"></a>
+ <a data-type="indexterm" data-primary="Facebook" data-secondary="Presto (query engine)" id="idm140060723452880"></a>
+ <a data-type="indexterm" data-primary="Tajo (query engine)" id="idm140060723451776"></a>
+ <a data-type="indexterm" data-primary="Apache Tajo" data-see="Tajo" id="idm140060723451072"></a>
+ <a data-type="indexterm" data-primary="Drill (query engine)" id="idm140060723450000"></a>
+ <a data-type="indexterm" data-primary="Apache Drill" data-see="Drill" id="idm140060723449296"></a>
+ <a data-type="indexterm" data-primary="Google" data-secondary="Dremel (query engine)" id="idm140060723448224"></a>
+ Data warehouse vendors such as Teradata, Vertica, SAP HANA, and ParAccel typically sell their systems under expensive commercial licenses. Amazon RedShift is a hosted version of ParAccel. More recently, a plethora of open source SQL-on-Hadoop projects have emerged; they are young but aiming to compete with commercial data warehouse systems. These include Apache Hive, Spark SQL, Cloudera Impala, Facebook Presto, Apache Tajo, and Apache Drill [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Abadi2013vf-marker" href="text00008.html#Abadi2013vf">52</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Kornacker2015uv_ch3-marker" href="text00008.html#Kornacker2015uv_ch3">53</a>
+ ]. Some of them are based on ideas from Google’s Dremel [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Melnik2010up-marker" href="text00008.html#Melnik2010up">54</a>
+ ].</p>
+</div>
+</section>
+</div>
+</section>
+<section data-type="sect2" data-pdf-bookmark="Stars and Snowflakes: Schemas for Analytics">
+<div class="sect2" id="sec_storage_analytics_schemas">
+<h2>Stars and Snowflakes: Schemas for Analytics</h2>
+<p><a data-type="indexterm" data-primary="analytics" data-secondary="schemas for" id="ix_analyticschema"></a>
+ <a data-type="indexterm" data-primary="schemas" data-secondary="for analytics" id="ix_schemaanalytic"></a>
+ <a data-type="indexterm" data-primary="star schemas" id="ix_starschema"></a>
+ <a data-type="indexterm" data-primary="data warehousing" data-secondary="schema design" id="idm140060723434096"></a>
+ <a data-type="indexterm" data-primary="dimensional modeling" data-see="star schemas" id="idm140060723432992"></a>
+ As explored in <a data-type="xref" href="text00007.html#ch_datamodels">Chapter 2</a>
+ , a wide range of different data models are used in the realm of transaction processing, depending on the needs of the application. On the other hand, in analytics, there is much less diversity of data models. Many data warehouses are used in a fairly formulaic style, known as a <em>star schema</em>
+ (also known as <em>dimensional modeling</em>
+ [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Kimball2013tb_ch3-marker" href="text00008.html#Kimball2013tb_ch3">55</a>
+ ]).</p>
+<p><a data-type="indexterm" data-primary="fact tables" id="idm140060723428304"></a>
+ The example schema in <a data-type="xref" href="text00008.html#fig_dwh_schema">Figure 3-9</a>
+ shows a data warehouse that might be found at a grocery retailer. At the center of the schema is a so-called <em>fact table</em>
+ (in this example, it is called <code>fact_sales</code>
+ ). Each row of the fact table represents an event that occurred at a particular time (here, each row represents a customer’s purchase of a product). If we were analyzing website traffic rather than retail sales, each row might represent a page view or a click by a user.</p>
+<figure>
+<div id="fig_dwh_schema" class="figure"><img src="Image00028.gif" alt="ddia 0309" hisrc="assets/ddia_0309.png" />
+<h6>
+<span class="label">Figure 3-9.</span>
+ Example of a star schema for use in a data warehouse.</h6>
+</div>
+</figure>
+<p>Usually, facts are captured as individual events, because this allows maximum flexibility of analysis later. However, this means that the fact table can become extremely large. A big enterprise like Apple, Walmart, or eBay may have tens of petabytes of transaction history in its data warehouse, most of which is in fact tables [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Harris2013un-marker" href="text00008.html#Harris2013un">56</a>
+ ].</p>
+<p><a data-type="indexterm" data-primary="dimension tables" id="idm140060723420000"></a>
+ Some of the columns in the fact table are attributes, such as the price at which the product was sold and the cost of buying it from the supplier (allowing the profit margin to be calculated). Other columns in the fact table are foreign key references to other tables, called <em>dimension tables</em>
+ . As each row in the fact table represents an event, the dimensions represent the <em>who</em>
+ , <em>what</em>
+ , <em>where</em>
+ , <em>when</em>
+ , <em>how</em>
+ , and <em>why</em>
+ of the event.</p>
+<p>For example, in <a data-type="xref" href="text00008.html#fig_dwh_schema">Figure 3-9</a>
+ , one of the dimensions is the product that was sold. Each row in the <code>dim_product</code>
+ table represents one type of product that is for sale, including its stock-keeping unit (SKU), description, brand name, category, fat content, package size, etc. Each row in the <code>fact_sales</code>
+ table uses a foreign key to indicate which product was sold in that particular transaction. (For simplicity, if the customer buys several different products at once, they are represented as separate rows in the fact table.)</p>
+<p>Even date and time are often represented using dimension tables, because this allows additional information about dates (such as public holidays) to be encoded, allowing queries to differentiate between sales on holidays and non-holidays.</p>
+<p>The name “star schema” comes from the fact that when the table relationships are visualized, the fact table is in the middle, surrounded by its dimension tables; the connections to these tables are like the rays of a star.</p>
+<p><a data-type="indexterm" data-primary="snowflake schemas" id="idm140060723411504"></a>
+ A variation of this template is known as the <em>snowflake schema</em>
+ , where dimensions are further broken down into subdimensions. For example, there could be separate tables for brands and product categories, and each row in the <code>dim_product</code>
+ table could reference the brand and category as foreign keys, rather than storing them as strings in the <code>dim_product</code>
+ table. Snowflake schemas are more normalized than star schemas, but star schemas are often preferred because they are simpler for analysts to work with [<a data-type="noteref" href="text00008.html#Kimball2013tb_ch3">55</a>
+ ].</p>
+<p>In a typical data warehouse, tables are often very wide: fact tables often have over 100 columns, sometimes several hundred [<a data-type="noteref" href="text00008.html#OneSizeFitsNone2013vw">51</a>
+ ]. Dimension tables can also be very wide, as they include all the metadata that may be relevant for analysis — for example, the <code>dim_store</code>
+ table may include details of which services are offered at each store, whether it has an in-store bakery, the square footage, the date when the store was first opened, when it was last remodeled, how far it is from the nearest highway, etc. <a data-type="indexterm" data-primary="schemas" data-secondary="for analytics" data-startref="ix_schemaanalytic" id="idm140060723405680"></a>
+ <a data-type="indexterm" data-primary="star schemas" data-startref="ix_starschema" id="idm140060723404304"></a>
+ <a data-type="indexterm" data-primary="analytics" data-secondary="schemas for" data-startref="ix_analyticschema" id="idm140060723403200"></a>
+ <a data-type="indexterm" data-primary="data warehousing" data-startref="ix_datawhse" id="idm140060723401824"></a>
+ <a data-type="indexterm" data-primary="transaction processing" data-startref="ix_transactions" id="idm140060723400720"></a>
+</p>
+</div>
+</section>
+</div>
+</section>
+<section data-type="sect1" data-pdf-bookmark="Column-Oriented Storage">
+<div class="sect1" id="sec_storage_column">
+<h1>Column-Oriented Storage</h1>
+<p><a data-type="indexterm" data-primary="column-oriented storage" id="ix_colstore"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" id="ix_storecol"></a>
+ If you have trillions of rows and petabytes of data in your fact tables, storing and querying them efficiently becomes a challenging problem. Dimension tables are usually much smaller (millions of rows), so in this section we will concentrate primarily on storage of facts.</p>
+<p>Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (<code>"SELECT *"</code>
+ queries are rarely needed for analytics) [<a data-type="noteref" href="text00008.html#OneSizeFitsNone2013vw">51</a>
+ ]. Take the query in <a data-type="xref" href="text00008.html#fig_storage_analytics_query">Example 3-1</a>
+ : it accesses a large number of rows (every occurrence of someone buying fruit or candy during the 2013 calendar year), but it only needs to access three columns of the <code>fact_sales</code>
+ table: <code>date_key</code>
+ , <span class="keep-together">
+<code>product_sk</code>
+</span>
+ , and <code>quantity</code>
+ . The query ignores all other columns.</p>
+<div id="fig_storage_analytics_query" data-type="example">
+<h5>
+<span class="label">Example 3-1.</span>
+ Analyzing whether people are more inclined to buy fresh fruit or candy, depending on the day of the week</h5>
+<pre data-type="programlisting" data-code-language="sql">
+<code class="k">SELECT</code>
+
+
+  <code class="n">dim_date</code>
+
+<code class="p">.</code>
+
+<code class="n">weekday</code>
+
+<code class="p">,</code>
+
+ <code class="n">dim_product</code>
+
+<code class="p">.</code>
+
+<code class="n">category</code>
+
+<code class="p">,</code>
+
+
+  <code class="k">SUM</code>
+
+<code class="p">(</code>
+
+<code class="n">fact_sales</code>
+
+<code class="p">.</code>
+
+<code class="n">quantity</code>
+
+<code class="p">)</code>
+
+ <code class="k">AS</code>
+
+ <code class="n">quantity_sold</code>
+
+
+<code class="k">FROM</code>
+
+ <code class="n">fact_sales</code>
+
+
+  <code class="k">JOIN</code>
+
+ <code class="n">dim_date</code>
+
+    <code class="k">ON</code>
+
+ <code class="n">fact_sales</code>
+
+<code class="p">.</code>
+
+<code class="n">date_key</code>
+
+   <code class="o">=</code>
+
+ <code class="n">dim_date</code>
+
+<code class="p">.</code>
+
+<code class="n">date_key</code>
+
+
+  <code class="k">JOIN</code>
+
+ <code class="n">dim_product</code>
+
+ <code class="k">ON</code>
+
+ <code class="n">fact_sales</code>
+
+<code class="p">.</code>
+
+<code class="n">product_sk</code>
+
+ <code class="o">=</code>
+
+ <code class="n">dim_product</code>
+
+<code class="p">.</code>
+
+<code class="n">product_sk</code>
+
+
+<code class="k">WHERE</code>
+
+
+  <code class="n">dim_date</code>
+
+<code class="p">.</code>
+
+<code class="k">year</code>
+
+ <code class="o">=</code>
+
+ <code class="mi">2013</code>
+
+ <code class="k">AND</code>
+
+
+  <code class="n">dim_product</code>
+
+<code class="p">.</code>
+
+<code class="n">category</code>
+
+ <code class="k">IN</code>
+
+ <code class="p">(</code>
+
+<code class="s1">'Fresh fruit'</code>
+
+<code class="p">,</code>
+
+ <code class="s1">'Candy'</code>
+
+<code class="p">)</code>
+
+
+<code class="k">GROUP</code>
+
+ <code class="k">BY</code>
+
+
+  <code class="n">dim_date</code>
+
+<code class="p">.</code>
+
+<code class="n">weekday</code>
+
+<code class="p">,</code>
+
+ <code class="n">dim_product</code>
+
+<code class="p">.</code>
+
+<code class="n">category</code>
+
+<code class="p">;</code>
+
+</pre>
+</div>
+<p>How can we execute this query efficiently?</p>
+<p><a data-type="indexterm" data-primary="row-oriented storage" id="idm140060723386608"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="row-oriented" data-tertiary="defined" id="idm140060723318288"></a>
+ In most OLTP databases, storage is laid out in a <em>row-oriented</em>
+ fashion: all the values from one row of a table are stored next to each other. Document databases are similar: an entire document is typically stored as one contiguous sequence of bytes. You can see this in the CSV example of <a data-type="xref" href="text00008.html#fig_storage_csv_hash_index">Figure 3-1</a>
+ .</p>
+<p>In order to process a query like <a data-type="xref" href="text00008.html#fig_storage_analytics_query">Example 3-1</a>
+ , you may have indexes on <code>fact_sales.date_key</code>
+ and/or <code>fact_sales.product_sk</code>
+ that tell the storage engine where to find all the sales for a particular date or for a particular product. But then, a row-oriented storage engine still needs to load all of those rows (each consisting of over 100 attributes) from disk into memory, parse them, and filter out those that don’t meet the required conditions. That can take a long time.</p>
+<p><a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" data-tertiary="defined" id="idm140060723312848"></a>
+ The idea behind <em>column-oriented storage</em>
+ is simple: don’t store all the values from one row together, but store all the values from each <em>column</em>
+ together instead. If each column is stored in a separate file, a query only needs to read and parse those columns that are used in that query, which can save a lot of work. This principle is illustrated in <a data-type="xref" href="text00008.html#fig_column_store">Figure 3-10</a>
+ . <a data-type="indexterm" data-primary="storage engines" data-secondary="comparing requirements for transaction processing and analytics" data-startref="ix_storetransact" id="idm140060723309472"></a>
+</p>
+<div class="orm-notedivider"><hr data-amznremoved-m8="true" />
+</div>
+<div data-type="note">
+<h6>Note</h6>
+<p><a data-type="indexterm" data-primary="Parquet (data format)" data-seealso="column-oriented storage" id="idm140060723307408"></a>
+ <a data-type="indexterm" data-primary="Apache Parquet" data-see="Parquet" id="idm140060723306240"></a>
+ <a data-type="indexterm" data-primary="column-oriented storage" data-secondary="Parquet" id="idm140060723305168"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" data-tertiary="Parquet" id="idm140060723304064"></a>
+ <a data-type="indexterm" data-primary="Google" data-secondary="Dremel (query engine)" id="idm140060723302688"></a>
+ Column storage is easiest to understand in a relational data model, but it applies equally to nonrelational data. For example, Parquet [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="LeDem2013wc-marker" href="text00008.html#LeDem2013wc">57</a>
+ ] is a columnar storage format that supports a document data model, based on Google’s Dremel [<a data-type="noteref" href="text00008.html#Melnik2010up">54</a>
+ ].</p>
+</div>
+<div class="orm-notedivider"><hr data-amznremoved-m8="true" />
+</div>
+<figure>
+<div id="fig_column_store" class="figure"><img src="Image00029.gif" alt="ddia 0310" hisrc="assets/ddia_0310.png" />
+<h6>
+<span class="label">Figure 3-10.</span>
+ Storing relational data by column, rather than by row.</h6>
+</div>
+</figure>
+<p>The column-oriented storage layout relies on each column file containing the rows in the same order. Thus, if you need to reassemble an entire row, you can take the 23rd entry from each of the individual column files and put them together to form the 23rd row of the table.</p>
+<section data-type="sect2" data-pdf-bookmark="Column Compression">
+<div class="sect2" id="sec_storage_column_compression">
+<h2>Column Compression</h2>
+<p><a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" data-tertiary="column compression" id="ix_storecolcomp"></a>
+ <a data-type="indexterm" data-primary="column-oriented storage" data-secondary="column compression" id="idm140060723292096"></a>
+ Besides only loading those columns from disk that are required for a query, we can further reduce the demands on disk throughput by compressing data. Fortunately, column-oriented storage often lends itself very well to compression.</p>
+<p><a data-type="indexterm" data-primary="bitmap indexes" id="idm140060723290480"></a>
+ Take a look at the sequences of values for each column in <a data-type="xref" href="text00008.html#fig_column_store">Figure 3-10</a>
+ : they often look quite repetitive, which is a good sign for compression. Depending on the data in the column, different compression techniques can be used. One technique that is particularly effective in data warehouses is <em>bitmap encoding</em>
+ , illustrated in <a data-type="xref" href="text00008.html#fig_bitmap_index">Figure 3-11</a>
+ .</p>
+<figure>
+<div id="fig_bitmap_index" class="figure"><img src="Image00030.gif" alt="ddia 0311" hisrc="assets/ddia_0311.png" />
+<h6>
+<span class="label">Figure 3-11.</span>
+ Compressed, bitmap-indexed storage of a single column.</h6>
+</div>
+</figure>
+<p>Often, the number of distinct values in a column is small compared to the number of rows (for example, a retailer may have billions of sales transactions, but only 100,000 distinct products). We can now take a column with <em>n</em>
+ distinct values and turn it into <em>n</em>
+ separate bitmaps: one bitmap for each distinct value, with one bit for each row. The bit is 1 if the row has that value, and 0 if not.</p>
+<p>If <em>n</em>
+ is very small (for example, a <em>country</em>
+ column may have approximately 200 distinct values), those bitmaps can be stored with one bit per row. But if <em>n</em>
+ is bigger, there will be a lot of zeros in most of the bitmaps (we say that they are <em>sparse</em>
+ ). In that case, the bitmaps can additionally be run-length encoded, as shown at the bottom of <a data-type="xref" href="text00008.html#fig_bitmap_index">Figure 3-11</a>
+ . This can make the encoding of a column remarkably compact.</p>
+<p>Bitmap indexes such as these are very well suited for the kinds of queries that are common in a data warehouse. For example:</p>
+<div class="variable_list_term">
+<code>WHERE product_sk IN (30, 68, 69):</code>
+</div>
+<blockquote class="variable_list_definition">
+<div>Load the three bitmaps for <code>product_sk = 30</code>
+ , <code>product_sk = 68</code>
+ , and <code>product_sk = 69</code>
+ , and calculate the bitwise <em>OR</em>
+ of the three bitmaps, which can be done very efficiently.</div>
+</blockquote>
+<div class="variable_list_term">
+<code>WHERE product_sk = 31 AND store_sk = 3:</code>
+</div>
+<blockquote class="variable_list_definition">
+<div>Load the bitmaps for <code>product_sk = 31</code>
+ and <code>store_sk = 3</code>
+ , and calculate the bitwise <em>AND</em>
+ . This works because the columns contain the rows in the same order, so the <em>k</em>
+ th bit in one column’s bitmap corresponds to the same row as the <em>k</em>
+ th bit in another column’s bitmap.</div>
+</blockquote>
+<p>There are also various other compression schemes for different kinds of data, but we won’t go into them in detail — see [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Abadi2013kf-marker" href="text00008.html#Abadi2013kf">58</a>
+ ] for an overview.</p>
+<div class="orm-notedivider"><hr data-amznremoved-m8="true" />
+</div>
+<div data-type="note" id="note_column_families">
+<h1>Column-oriented storage and column families</h1>
+<p><a data-type="indexterm" data-primary="column families (Bigtable)" id="idm140060723267408"></a>
+ <a data-type="indexterm" data-primary="column-oriented storage" data-secondary="distinction between column families and" id="idm140060723266416"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" data-tertiary="distinction between column families and" id="idm140060723265296"></a>
+ <a data-type="indexterm" data-primary="Bigtable data model" id="idm140060723263904"></a>
+ <a data-type="indexterm" data-primary="Cassandra (database)" data-secondary="column-family data model" id="idm140060723263072"></a>
+ <a data-type="indexterm" data-primary="HBase (database)" data-secondary="column-family data model" id="idm140060723261952"></a>
+ Cassandra and HBase have a concept of <em>column families</em>
+ , which they inherited from Bigtable [<a data-type="noteref" href="text00008.html#Chang2006ta_ch3">9</a>
+ ]. However, it is very misleading to call them column-oriented: within each column family, they store all columns from a row together, along with a row key, and they do not use column compression. Thus, the Bigtable model is still mostly row-oriented.</p>
+</div>
+<div class="orm-notedivider"><hr data-amznremoved-m8="true" />
+</div>
+<section data-type="sect3" data-pdf-bookmark="Memory bandwidth and vectorized processing">
+<div class="sect3" id="sec_storage_vectorized">
+<h3>Memory bandwidth and vectorized processing</h3>
+<p><a data-type="indexterm" data-primary="CPUs" data-secondary="caching and pipelining" id="idm140060723257760"></a>
+ For data warehouse queries that need to scan over millions of rows, a big bottleneck is the bandwidth for getting data from disk into memory. However, that is not the only bottleneck. Developers of analytical databases also worry about efficiently using the bandwidth from main memory into the CPU cache, avoiding branch mispredictions and bubbles in the CPU instruction processing pipeline, and making use of single-instruction-multi-data (SIMD) instructions in modern CPUs [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Boncz2005ws-marker" href="text00008.html#Boncz2005ws">59</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Zhou2002gu-marker" href="text00008.html#Zhou2002gu">60</a>
+ ].</p>
+<p><a data-type="indexterm" data-primary="caches" data-secondary="in CPUs" id="idm140060723250752"></a>
+ <a data-type="indexterm" data-primary="column-oriented storage" data-secondary="vectorized processing" id="idm140060723249456"></a>
+ <a data-type="indexterm" data-primary="vectorized processing" id="idm140060723248352"></a>
+ Besides reducing the volume of data that needs to be loaded from disk, column-oriented storage layouts are also good for making efficient use of CPU cycles. For example, the query engine can take a chunk of compressed column data that fits comfortably in the CPU’s L1 cache and iterate through it in a tight loop (that is, with no function calls). A CPU can execute such a loop much faster than code that requires a lot of function calls and conditions for each record that is processed. Column compression allows more rows from a column to fit in the same amount of L1 cache. Operators, such as the bitwise <em>AND</em>
+ and <em>OR</em>
+ described previously, can be designed to operate on such chunks of compressed column data directly. This technique is known as <em>vectorized processing</em>
+ [<a data-type="noteref" href="text00008.html#Abadi2013kf">58</a>
+ , <a data-type="noteref" href="text00008.html#Larson2013wh">49</a>
+ ]. <a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" data-tertiary="column compression" data-startref="ix_storecolcomp" id="idm140060723243808"></a>
+</p>
+</div>
+</section>
+</div>
+</section>
+<section data-type="sect2" data-pdf-bookmark="Sort Order in Column Storage">
+<div class="sect2" id="idm140060723294960">
+<h2>Sort Order in Column Storage</h2>
+<p><a data-type="indexterm" data-primary="column-oriented storage" data-secondary="sort order in" id="ix_colsort"></a>
+ <a data-type="indexterm" data-primary="sorting" data-secondary="sort order in column storage" id="idm140060723239536"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" data-tertiary="sort order in" id="ix_storecolsort"></a>
+ In a column store, it doesn’t necessarily matter in which order the rows are stored. It’s easiest to store them in the order in which they were inserted, since then inserting a new row just means appending to each of the column files. However, we can choose to impose an order, like we did with SSTables previously, and use that as an indexing mechanism.</p>
+<p>Note that it wouldn’t make sense to sort each column independently, because then we would no longer know which items in the columns belong to the same row. We can only reconstruct a row because we know that the <em>k</em>
+ th item in one column belongs to the same row as the <em>k</em>
+ th item in another column.</p>
+<p>Rather, the data needs to be sorted an entire row at a time, even though it is stored by column. The administrator of the database can choose the columns by which the table should be sorted, using their knowledge of common queries. For example, if queries often target date ranges, such as the last month, it might make sense to make <code>date_key</code>
+ the first sort key. Then the query optimizer can scan only the rows from the last month, which will be much faster than scanning all rows.</p>
+<p>A second column can determine the sort order of any rows that have the same value in the first column. For example, if <code>date_key</code>
+ is the first sort key in <a data-type="xref" href="text00008.html#fig_column_store">Figure 3-10</a>
+ , it might make sense for <code>product_sk</code>
+ to be the second sort key so that all sales for the same product on the same day are grouped together in storage. That will help queries that need to group or filter sales by product within a certain date range.</p>
+<p>Another advantage of sorted order is that it can help with compression of columns. If the primary sort column does not have many distinct values, then after sorting, it will have long sequences where the same value is repeated many times in a row. A simple run-length encoding, like we used for the bitmaps in <a data-type="xref" href="text00008.html#fig_bitmap_index">Figure 3-11</a>
+ , could compress that column down to a few kilobytes — even if the table has billions of rows.</p>
+<p>That compression effect is strongest on the first sort key. The second and third sort keys will be more jumbled up, and thus not have such long runs of repeated values. Columns further down the sorting priority appear in essentially random order, so they probably won’t compress as well. But having the first few columns sorted is still a win overall.</p>
+<section data-type="sect3" data-pdf-bookmark="Several different sort orders">
+<div class="sect3" id="idm140060723228560">
+<h3>Several different sort orders</h3>
+<p><a data-type="indexterm" data-primary="Vertica (database)" data-secondary="replicas using different sort orders" id="idm140060723227344"></a>
+ A clever extension of this idea was introduced in C-Store and adopted in the commercial data warehouse Vertica [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Stonebraker2005uf-marker" href="text00008.html#Stonebraker2005uf">61</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Lamb2012ub-marker" href="text00008.html#Lamb2012ub">62</a>
+ ]. Different queries benefit from different sort orders, so why not store the same data sorted in <em>several different</em>
+ ways? Data needs to be replicated to multiple machines anyway, so that you don’t lose data if one machine fails. You might as well store that redundant data sorted in different ways so that when you’re processing a query, you can use the version that best fits the query <span class="keep-together">pattern.</span>
+</p>
+<p>Having multiple sort orders in a column-oriented store is a bit similar to having multiple secondary indexes in a row-oriented store. But the big difference is that the row-oriented store keeps every row in one place (in the heap file or a clustered index), and secondary indexes just contain pointers to the matching rows. In a column store, there normally aren’t any pointers to data elsewhere, only columns containing values. <a data-type="indexterm" data-primary="column-oriented storage" data-secondary="sort order in" data-startref="ix_colsort" id="idm140060723219392"></a>
+ <a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" data-tertiary="sort order in" data-startref="ix_storecolsort" id="idm140060723218016"></a>
+</p>
+</div>
+</section>
+</div>
+</section>
+<section data-type="sect2" data-pdf-bookmark="Writing to Column-Oriented Storage">
+<div class="sect2" id="idm140060723216240">
+<h2>Writing to Column-Oriented Storage</h2>
+<p><a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" data-tertiary="writing to" id="idm140060723214864"></a>
+ <a data-type="indexterm" data-primary="column-oriented storage" data-secondary="writing to" id="idm140060723213488"></a>
+ These optimizations make sense in data warehouses, because most of the load consists of large read-only queries run by analysts. Column-oriented storage, compression, and sorting all help to make those read queries faster. However, they have the downside of making writes more difficult.</p>
+<p>An update-in-place approach, like B-trees use, is not possible with compressed columns. If you wanted to insert a row in the middle of a sorted table, you would most likely have to rewrite all the column files. As rows are identified by their position within a column, the insertion has to update all columns consistently.</p>
+<p><a data-type="indexterm" data-primary="Vertica (database)" data-secondary="handling writes" id="idm140060723211072"></a>
+ Fortunately, we have already seen a good solution earlier in this chapter: LSM-trees. All writes first go to an in-memory store, where they are added to a sorted structure and prepared for writing to disk. It doesn’t matter whether the in-memory store is row-oriented or column-oriented. When enough writes have accumulated, they are merged with the column files on disk and written to new files in bulk. This is essentially what Vertica does [<a data-type="noteref" href="text00008.html#Lamb2012ub">62</a>
+ ].</p>
+<p>Queries need to examine both the column data on disk and the recent writes in memory, and combine the two. However, the query optimizer hides this distinction from the user. From an analyst’s point of view, data that has been modified with inserts, updates, or deletes is immediately reflected in subsequent queries. <a data-type="indexterm" data-primary="storage engines" data-secondary="column-oriented" data-startref="ix_storecol" id="idm140060723207952"></a>
+ <a data-type="indexterm" data-primary="column-oriented storage" data-startref="ix_colstore" id="idm140060723206576"></a>
+</p>
+</div>
+</section>
+<section data-type="sect2" data-pdf-bookmark="Aggregation: Data Cubes and Materialized Views">
+<div class="sect2" id="sec_storage_materialized_views">
+<h2>Aggregation: Data Cubes and Materialized Views</h2>
+<p><a data-type="indexterm" data-primary="aggregation" data-secondary="data cubes and materialized views" id="idm140060723203696"></a>
+ Not every data warehouse is necessarily a column store: traditional row-oriented databases and a few other architectures are also used. However, columnar storage can be significantly faster for ad hoc analytical queries, so it is rapidly gaining popularity [<a data-type="noteref" href="text00008.html#OneSizeFitsNone2013vw">51</a>
+ , <a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="LeDem2014tl-marker" href="text00008.html#LeDem2014tl">63</a>
+ ].</p>
+<p><a data-type="indexterm" data-primary="materialization" data-secondary="aggregate values" id="idm140060723198944"></a>
+ Another aspect of data warehouses that is worth mentioning briefly is <em>materialized aggregates</em>
+ . As discussed earlier, data warehouse queries often involve an aggregate function, such as <code>COUNT</code>
+ , <code>SUM</code>
+ , <code>AVG</code>
+ , <code>MIN</code>
+ , or <code>MAX</code>
+ in SQL. If the same aggregates are used by many different queries, it can be wasteful to crunch through the raw data every time. Why not cache some of the counts or sums that queries use most often?</p>
+<p><a data-type="indexterm" data-primary="materialization" data-secondary="materialized views" id="idm140060723194464"></a>
+ <a data-type="indexterm" data-primary="caches" data-secondary="and materialized views" id="idm140060723193360"></a>
+ One way of creating such a cache is a <em>materialized view</em>
+ . In a relational data model, it is often defined like a standard (virtual) view: a table-like object whose contents are the results of some query. The difference is that a materialized view is an actual copy of the query results, written to disk, whereas a virtual view is just a shortcut for writing queries. When you read from a virtual view, the SQL engine expands it into the view’s underlying query on the fly and then processes the expanded query.</p>
+<p><a data-type="indexterm" data-primary="denormalization (data representation)" data-secondary="materialized views" id="idm140060723191104"></a>
+ When the underlying data changes, a materialized view needs to be updated, because it is a denormalized copy of the data. The database can do that automatically, but such updates make writes more expensive, which is why materialized views are not often used in OLTP databases. In read-heavy data warehouses they can make more sense (whether or not they actually improve read performance depends on the individual case).</p>
+<p><a data-type="indexterm" data-primary="data cubes" id="idm140060723189296"></a>
+ <a data-type="indexterm" data-primary="OLAP (online analytic processing)" data-secondary="data cubes" id="idm140060723188240"></a>
+ A common special case of a materialized view is known as a <em>data cube</em>
+ or <em>OLAP cube</em>
+ [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Gray2007he-marker" href="text00008.html#Gray2007he">64</a>
+ ]. It is a grid of aggregates grouped by different dimensions. <a data-type="xref" href="text00008.html#fig_data_cube">Figure 3-12</a>
+ shows an example.</p>
+<figure>
+<div id="fig_data_cube" class="figure"><img src="Image00031.gif" alt="ddia 0312" hisrc="assets/ddia_0312.png" />
+<h6>
+<span class="label">Figure 3-12.</span>
+ Two dimensions of a data cube, aggregating data by summing.</h6>
+</div>
+</figure>
+<p>Imagine for now that each fact has foreign keys to only two dimension tables — in <a data-type="xref" href="text00008.html#fig_data_cube">Figure 3-12</a>
+ , these are <em>date</em>
+ and <em>product</em>
+ . You can now draw a two-dimensional table, with dates along one axis and products along the other. Each cell contains the aggregate (e.g., <code>SUM</code>
+ ) of an attribute (e.g., <code>net_price</code>
+ ) of all facts with that date-product combination. Then you can apply the same aggregate along each row or column and get a summary that has been reduced by one dimension (the sales by product regardless of date, or the sales by date regardless of product).</p>
+<p>In general, facts often have more than two dimensions. In <a data-type="xref" href="text00008.html#fig_dwh_schema">Figure 3-9</a>
+ there are five dimensions: date, product, store, promotion, and customer. It’s a lot harder to imagine what a five-dimensional hypercube would look like, but the principle remains the same: each cell contains the sales for a particular date-product-store-promotion-customer combination. These values can then repeatedly be summarized along each of the dimensions.</p>
+<p>The advantage of a materialized data cube is that certain queries become very fast because they have effectively been precomputed. For example, if you want to know the total sales per store yesterday, you just need to look at the totals along the appropriate dimension — no need to scan millions of rows.</p>
+<p>The disadvantage is that a data cube doesn’t have the same flexibility as querying the raw data. For example, there is no way of calculating which proportion of sales comes from items that cost more than $100, because the price isn’t one of the dimensions. Most data warehouses therefore try to keep as much raw data as possible, and use aggregates such as data cubes only as a performance boost for certain queries.</p>
+</div>
+</section>
+</div>
+</section>
+<section data-type="sect1" data-pdf-bookmark="Summary">
+<div class="sect1" id="idm140060723399408">
+<h1>Summary</h1>
+<p>In this chapter we tried to get to the bottom of how databases handle storage and retrieval. What happens when you store data in a database, and what does the database do when you query for the data again later?</p>
+<p>On a high level, we saw that storage engines fall into two broad categories: those optimized for transaction processing (OLTP), and those optimized for analytics (OLAP). There are big differences between the access patterns in those use cases:</p>
+<ul>
+<li>OLTP systems are typically user-facing, which means that they may see a huge volume of requests. In order to handle the load, applications usually only touch a small number of records in each query. The application requests records using some kind of key, and the storage engine uses an index to find the data for the requested key. Disk seek time is often the bottleneck here.</li>
+<li>Data warehouses and similar analytic systems are less well known, because they are primarily used by business analysts, not by end users. They handle a much lower volume of queries than OLTP systems, but each query is typically very demanding, requiring many millions of records to be scanned in a short time. Disk bandwidth (not seek time) is often the bottleneck here, and column-oriented storage is an increasingly popular solution for this kind of workload.</li>
+</ul>
+<p>On the OLTP side, we saw storage engines from two main schools of thought:</p>
+<ul>
+<li>The log-structured school, which only permits appending to files and deleting obsolete files, but never updates a file that has been written. Bitcask, SSTables, LSM-trees, LevelDB, Cassandra, HBase, Lucene, and others belong to this group.</li>
+<li>The update-in-place school, which treats the disk as a set of fixed-size pages that can be overwritten. B-trees are the biggest example of this philosophy, being used in all major relational databases and also many nonrelational ones.</li>
+</ul>
+<p>Log-structured storage engines are a comparatively recent development. Their key idea is that they systematically turn random-access writes into sequential writes on disk, which enables higher write throughput due to the performance characteristics of hard drives and SSDs.</p>
+<p>Finishing off the OLTP side, we did a brief tour through some more complicated indexing structures, and databases that are optimized for keeping all data in memory.</p>
+<p>We then took a detour from the internals of storage engines to look at the high-level architecture of a typical data warehouse. This background illustrated why analytic workloads are so different from OLTP: when your queries require sequentially scanning across a large number of rows, indexes are much less relevant. Instead it becomes important to encode data very compactly, to minimize the amount of data that the query needs to read from disk. We discussed how column-oriented storage helps achieve this goal.</p>
+<p>As an application developer, if you’re armed with this knowledge about the internals of storage engines, you are in a much better position to know which tool is best suited for your particular application. If you need to adjust a database’s tuning parameters, this understanding allows you to imagine what effect a higher or a lower value may have.</p>
+<p>Although this chapter couldn’t make you an expert in tuning any one particular storage engine, it has hopefully equipped you with enough vocabulary and ideas that you can make sense of the documentation for the database of your choice. <a data-type="indexterm" data-primary="storage engines" data-startref="ix_store" id="idm140060723126272"></a>
+</p>
+</div>
+</section>
+<div data-type="footnotes">
+<h5>Footnotes</h5>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="idm140060723949808">
+<sup>
+<a href="text00008.html#idm140060723949808-marker">i</a>
+</sup>
+ If all keys and values had a fixed size, you could use binary search on a segment file and avoid the in-memory index entirely. However, they are usually variable-length in practice, which makes it difficult to tell where one record ends and the next one starts if you don’t have an index.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="idm140060723833968">
+<sup>
+<a href="text00008.html#idm140060723833968-marker">ii</a>
+</sup>
+ Inserting a new key into a B-tree is reasonably intuitive, but deleting one (while keeping the tree balanced) is somewhat more involved [<a data-type="noteref" href="text00008.html#Cormen2009uw">2</a>
+ ].</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="idm140060723796352">
+<sup>
+<a href="text00008.html#idm140060723796352-marker">iii</a>
+</sup>
+ This variant is sometimes known as a B<sup>+</sup>
+ tree, although the optimization is so common that it often isn’t distinguished from other B-tree variants.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="idm140060723516352">
+<sup>
+<a href="text00008.html#idm140060723516352-marker">iv</a>
+</sup>
+ The meaning of <em>online</em>
+ in OLAP is unclear; it probably refers to the fact that queries are not just for predefined reports, but that analysts use the OLAP system interactively for explorative queries.</p>
+</div>
+<div data-type="references">
+<h5>References</h5>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Aho1983vj">[<a href="text00008.html#Aho1983vj-marker">1</a>
+ ] Alfred V. Aho, John E. Hopcroft, and Jeffrey D. Ullman: <em>Data Structures and Algorithms</em>
+ . Addison-Wesley, 1983. ISBN: 978-0-201-00023-8</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Cormen2009uw">[<a href="text00008.html#Cormen2009uw-marker">2</a>
+ ] Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein: <em>Introduction to Algorithms</em>
+ , 3rd edition. MIT Press, 2009. ISBN: 978-0-262-53305-8</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Sheehy2010uy">[<a href="text00008.html#Sheehy2010uy-marker">3</a>
+ ] Justin Sheehy and David Smith: “<a href="http://basho.com/wp-content/uploads/2015/05/bitcask-intro.pdf">Bitcask: A Log-Structured Hash Table for Fast Key/Value Data</a>
+ ,” Basho Technologies, April 2010.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Li2010te">[<a href="text00008.html#Li2010te-marker">4</a>
+ ] Yinan Li, Bingsheng He, Robin Jun Yang, et al.: “<a href="http://www.vldb.org/pvldb/vldb2010/papers/R106.pdf">Tree Indexing on Solid State Drives</a>
+ ,” <em>Proceedings of the VLDB Endowment</em>
+ , volume 3, number 1, pages 1195–1206, September 2010.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Graefe2011kk">[<a href="text00008.html#Graefe2011kk-marker">5</a>
+ ] Goetz Graefe: “<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.219.7269&amp;rep=rep1&amp;type=pdf">Modern B-Tree Techniques</a>
+ ,” <em>Foundations and Trends in Databases</em>
+ , volume 3, number 4, pages 203–402, August 2011. <a href="http://dx.doi.org/10.1561/1900000028">doi:10.1561/1900000028</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="LevelDB2014">[<a href="text00008.html#LevelDB2014-marker">6</a>
+ ] Jeffrey Dean and Sanjay Ghemawat: “<a href="https://github.com/google/leveldb/blob/master/doc/impl.html">LevelDB Implementation Notes</a>
+ ,” <em>leveldb.googlecode.com</em>
+ .</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Borthakur2013uc">[<a href="text00008.html#Borthakur2013uc-marker">7</a>
+ ] Dhruba Borthakur: “<a href="http://rocksdb.blogspot.com/">The History of RocksDB</a>
+ ,” <em>rocksdb.blogspot.com</em>
+ , November 24, 2013.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Bertozzi2012wu">[<a href="text00008.html#Bertozzi2012wu-marker">8</a>
+ ] Matteo Bertozzi: “<a href="http://blog.cloudera.com/blog/2012/06/hbase-io-hfile-input-output/">Apache HBase I/O – HFile</a>
+ ,” <em>blog.cloudera.com</em>
+ , June, 29 2012.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Chang2006ta_ch3">[<a href="text00008.html#Chang2006ta_ch3-marker">9</a>
+ ] Fay Chang, Jeffrey Dean, Sanjay Ghemawat, et al.: “<a href="http://research.google.com/archive/bigtable.html">Bigtable: A Distributed Storage System for Structured Data</a>
+ ,” at <em>7th USENIX Symposium on Operating System Design and Implementation</em>
+ (OSDI), November 2006.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="ONeil1996iq">[<a href="text00008.html#ONeil1996iq-marker">10</a>
+ ] Patrick O’Neil, Edward Cheng, Dieter Gawlick, and Elizabeth O’Neil: “<a href="http://www.cs.umb.edu/~poneil/lsmtree.pdf">The Log-Structured Merge-Tree (LSM-Tree)</a>
+ ,” <em>Acta Informatica</em>
+ , volume 33, number 4, pages 351–385, June 1996. <a href="http://dx.doi.org/10.1007/s002360050048">doi:10.1007/s002360050048</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Rosenblum1992dr">[<a href="text00008.html#Rosenblum1992dr-marker">11</a>
+ ] Mendel Rosenblum and John K. Ousterhout: “<a href="http://research.cs.wisc.edu/areas/os/Qual/papers/lfs.pdf">The Design and Implementation of a Log-Structured File System</a>
+ ,” <em>ACM Transactions on Computer Systems</em>
+ , volume 10, number 1, pages 26–52, February 1992. <a href="http://dx.doi.org/10.1145/146941.146943">doi:10.1145/146941.146943</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Grand2013ws">[<a href="text00008.html#Grand2013ws-marker">12</a>
+ ] Adrien Grand: “<a href="http://www.slideshare.net/lucenerevolution/what-is-inaluceneagrandfinal">What Is in a Lucene Index?</a>
+ ,” at <em>Lucene/Solr Revolution</em>
+ , November 14, 2013.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Kandepet2011uy">[<a href="text00008.html#Kandepet2011uy-marker">13</a>
+ ] Deepak Kandepet: “<a href="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">Hacking Lucene — The Index Format</a>
+ ,” <em>hackerlabs.org</em>
+ , October 1, 2011.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="McCandless2011vt">[<a href="text00008.html#McCandless2011vt-marker">14</a>
+ ] Michael McCandless: “<a href="http://blog.mikemccandless.com/2011/02/visualizing-lucenes-segment-merges.html">Visualizing Lucene’s Segment Merges</a>
+ ,” <em>blog.mikemccandless.com</em>
+ , February 11, 2011.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Bloom1970gl">[<a href="text00008.html#Bloom1970gl-marker">15</a>
+ ] Burton H. Bloom: “<a href="http://www.cs.upc.edu/~diaz/p422-bloom.pdf">Space/Time Trade-offs in Hash Coding with Allowable Errors</a>
+ ,” <em>Communications of the ACM</em>
+ , volume 13, number 7, pages 422–426, July 1970. <a href="http://dx.doi.org/10.1145/362686.362692">doi:10.1145/362686.362692</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="CassandraCompaction">[<a href="text00008.html#CassandraCompaction-marker">16</a>
+ ] “<a href="https://cassandra.apache.org/doc/latest/operating/compaction.html">Operating Cassandra: Compaction</a>
+ ,” Apache Cassandra Documentation v4.0, 2016.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Bayer1970tq">[<a href="text00008.html#Bayer1970tq-marker">17</a>
+ ] Rudolf Bayer and Edward M. McCreight: “<a href="http://www.dtic.mil/cgi-bin/GetTRDoc?AD=AD0712079">Organization and Maintenance of Large Ordered Indices</a>
+ ,” Boeing Scientific Research Laboratories, Mathematical and Information Sciences Laboratory, report no. 20, July 1970.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Comer1979uy">[<a href="text00008.html#Comer1979uy-marker">18</a>
+ ] Douglas Comer: “<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.96.6637&amp;rep=rep1&amp;type=pdf">The Ubiquitous B-Tree</a>
+ ,” <em>ACM Computing Surveys</em>
+ , volume 11, number 2, pages 121–137, June 1979. <a href="http://dx.doi.org/10.1145/356770.356776">doi:10.1145/356770.356776</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Goossaert2014wj">[<a href="text00008.html#Goossaert2014wj-marker">19</a>
+ ] Emmanuel Goossaert: “<a href="http://codecapsule.com/2014/02/12/coding-for-ssds-part-1-introduction-and-table-of-contents/">Coding for SSDs</a>
+ ,” <em>codecapsule.com</em>
+ , February 12, 2014.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Mohan1992wo">[<a href="text00008.html#Mohan1992wo-marker">20</a>
+ ] C. Mohan and Frank Levine: “<a href="http://www.ics.uci.edu/~cs223/papers/p371-mohan.pdf">ARIES/IM: An Efficient and High Concurrency Index Management Method Using Write-Ahead Logging</a>
+ ,” at <em>ACM International Conference on Management of Data</em>
+ (SIGMOD), June 1992. <a href="http://dx.doi.org/10.1145/130283.130338">doi:10.1145/130283.130338</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Chu2014we">[<a href="text00008.html#Chu2014we-marker">21</a>
+ ] Howard Chu: “<a href="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX">LDAP at Lightning Speed</a>
+ ,” at <em>Build Stuff ’14</em>
+ , November 2014.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Kuszmaul2014wr">[<a href="text00008.html#Kuszmaul2014wr-marker">22</a>
+ ] Bradley C. Kuszmaul: “<a href="http://insideanalysis.com/wp-content/uploads/2014/08/Tokutek_lsm-vs-fractal.pdf">A Comparison of Fractal Trees to Log-Structured Merge (LSM) Trees</a>
+ ,” <em>tokutek.com</em>
+ , April 22, 2014.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Athanassoulis2016jk">[<a href="text00008.html#Athanassoulis2016jk-marker">23</a>
+ ] Manos Athanassoulis, Michael S. Kester, Lukas M. Maas, et al.: “<a href="http://openproceedings.org/2016/conf/edbt/paper-12.pdf">Designing Access Methods: The RUM Conjecture</a>
+ ,” at <em>19th International Conference on Extending Database Technology</em>
+ (EDBT), March 2016. <a href="http://dx.doi.org/10.5441/002/edbt.2016.42">doi:10.5441/002/edbt.2016.42</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Zaitsev2006wa">[<a href="text00008.html#Zaitsev2006wa-marker">24</a>
+ ] Peter Zaitsev: “<a href="https://www.percona.com/blog/2006/08/04/innodb-double-write/">Innodb Double Write</a>
+ ,” <em>percona.com</em>
+ , August 4, 2006.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Vondra2016bp">[<a href="text00008.html#Vondra2016bp-marker">25</a>
+ ] Tomas Vondra: “<a href="http://blog.2ndquadrant.com/on-the-impact-of-full-page-writes/">On the Impact of Full-Page Writes</a>
+ ,” <em>blog.2ndquadrant.com</em>
+ , November 23, 2016.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Callaghan2016wk">[<a href="text00008.html#Callaghan2016wk-marker">26</a>
+ ] Mark Callaghan: “<a href="http://smalldatum.blogspot.co.uk/2016/01/summary-of-advantages-of-lsm-vs-b-tree.html">The Advantages of an LSM vs a B-Tree</a>
+ ,” <em>smalldatum.blogspot.co.uk</em>
+ , January 19, 2016.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Callaghan2016cm">[<a href="text00008.html#Callaghan2016cm-marker">27</a>
+ ] Mark Callaghan: “<a href="http://www.codemesh.io/codemesh/mark-callaghan">Choosing Between Efficiency and Performance with RocksDB</a>
+ ,” at <em>Code Mesh</em>
+ , November 4, 2016.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Mutsuzaki2011wx">[<a href="text00008.html#Mutsuzaki2011wx-marker">28</a>
+ ] Michi Mutsuzaki: “<a href="https://github.com/m1ch1/mapkeeper/wiki/MySQL-vs.-LevelDB">MySQL vs. LevelDB</a>
+ ,” <em>github.com</em>
+ , August 2011.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Cassandra1608">[<a href="text00008.html#Cassandra1608-marker">29</a>
+ ] Benjamin Coverston, Jonathan Ellis, et al.: “<a href="https://issues.apache.org/jira/browse/CASSANDRA-1608">CASSANDRA-1608: Redesigned Compaction</a>
+ , <em>issues.apache.org</em>
+ , July 2011.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="RocksDBTuning">[<a href="text00008.html#RocksDBTuning-marker">30</a>
+ ] Igor Canadi, Siying Dong, and Mark Callaghan: “<a href="https://github.com/facebook/rocksdb/wiki/RocksDB-Tuning-Guide">RocksDB Tuning Guide</a>
+ ,” <em>github.com</em>
+ , 2016.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="MySQL2014">[<a href="text00008.html#MySQL2014-marker">31</a>
+ ] <a href="http://dev.mysql.com/doc/refman/5.7/en/index.html">
+<em>MySQL 5.7 Reference Manual</em>
+</a>
+ . Oracle, 2014.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="SQLServer2012">[<a href="text00008.html#SQLServer2012-marker">32</a>
+ ] <a href="http://msdn.microsoft.com/en-us/library/ms130214.aspx">
+<em>Books Online for SQL Server 2012</em>
+</a>
+ . Microsoft, 2012.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Webb2008uj">[<a href="text00008.html#Webb2008uj-marker">33</a>
+ ] Joe Webb: “<a href="https://www.simple-talk.com/sql/learn-sql-server/using-covering-indexes-to-improve-query-performance/">Using Covering Indexes to Improve Query Performance</a>
+ ,” <em>simple-talk.com</em>
+ , 29 September 2008.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Ramsak2000wm">[<a href="text00008.html#Ramsak2000wm-marker">34</a>
+ ] Frank Ramsak, Volker Markl, Robert Fenk, et al.: “<a href="http://www.vldb.org/conf/2000/P263.pdf">Integrating the UB-Tree into a Database System Kernel</a>
+ ,” at <em>26th International Conference on Very Large Data Bases</em>
+ (VLDB), September 2000.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="PostGIS2014">[<a href="text00008.html#PostGIS2014-marker">35</a>
+ ] The PostGIS Development Group: “<a href="http://postgis.net/docs/manual-2.1/">PostGIS 2.1.2dev Manual</a>
+ ,” <em>postgis.net</em>
+ , 2014.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Escriva2012gh">[<a href="text00008.html#Escriva2012gh-marker">36</a>
+ ] Robert Escriva, Bernard Wong, and Emin Gün Sirer: “<a href="http://www.cs.princeton.edu/courses/archive/fall13/cos518/papers/hyperdex.pdf">HyperDex: A Distributed, Searchable Key-Value Store</a>
+ ,” at <em>ACM SIGCOMM Conference</em>
+ , August 2012. <a href="http://dx.doi.org/10.1145/2377677.2377681">doi:10.1145/2377677.2377681</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="McCandless2011wp">[<a href="text00008.html#McCandless2011wp-marker">37</a>
+ ] Michael McCandless: “<a href="http://blog.mikemccandless.com/2011/03/lucenes-fuzzyquery-is-100-times-faster.html">Lucene’s FuzzyQuery Is 100 Times Faster in 4.0</a>
+ ,” <em>blog.mikemccandless.com</em>
+ , March 24, 2011.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Heinz2002hh">[<a href="text00008.html#Heinz2002hh-marker">38</a>
+ ] Steffen Heinz, Justin Zobel, and Hugh E. Williams: “<a href="http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.18.3499">Burst Tries: A Fast, Efficient Data Structure for String Keys</a>
+ ,” <em>ACM Transactions on Information Systems</em>
+ , volume 20, number 2, pages 192–223, April 2002. <a href="http://dx.doi.org/10.1145/506309.506312">doi:10.1145/506309.506312</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Schulz2002jt">[<a href="text00008.html#Schulz2002jt-marker">39</a>
+ ] Klaus U. Schulz and Stoyan Mihov: “<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.652">Fast String Correction with Levenshtein Automata</a>
+ ,” <em>International Journal on Document Analysis and Recognition</em>
+ , volume 5, number 1, pages 67–85, November 2002. <a href="http://dx.doi.org/10.1007/s10032-002-0082-8">doi:10.1007/s10032-002-0082-8</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Manning2008vf">[<a href="text00008.html#Manning2008vf-marker">40</a>
+ ] Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze: <a href="http://nlp.stanford.edu/IR-book/">
+<em>Introduction to Information Retrieval</em>
+</a>
+ . Cambridge University Press, 2008. ISBN: 978-0-521-86571-5, available online at <em>nlp.stanford.edu/IR-book</em>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Stonebraker2007ub">[<a href="text00008.html#Stonebraker2007ub-marker">41</a>
+ ] Michael Stonebraker, Samuel Madden, Daniel J. Abadi, et al.: “<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.137.3697&amp;rep=rep1&amp;type=pdf">The End of an Architectural Era (It’s Time for a Complete Rewrite)</a>
+ ,” at <em>33rd International Conference on Very Large Data Bases</em>
+ (VLDB), September 2007.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="VoltDB2014uj">[<a href="text00008.html#VoltDB2014uj-marker">42</a>
+ ] “<a href="https://www.voltdb.com/wptechnicaloverview">VoltDB Technical Overview White Paper</a>
+ ,” VoltDB, 2014.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Rumble2014vz">[<a href="text00008.html#Rumble2014vz-marker">43</a>
+ ] Stephen M. Rumble, Ankita Kejriwal, and John K. Ousterhout: “<a href="https://www.usenix.org/system/files/conference/fast14/fast14-paper_rumble.pdf">Log-Structured Memory for DRAM-Based Storage</a>
+ ,” at <em>12th USENIX Conference on File and Storage Technologies</em>
+ (FAST), February 2014.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Harizopoulos2008jb">[<a href="text00008.html#Harizopoulos2008jb-marker">44</a>
+ ] Stavros Harizopoulos, Daniel J. Abadi, Samuel Madden, and Michael Stonebraker: “<a href="http://hstore.cs.brown.edu/papers/hstore-lookingglass.pdf">OLTP Through the Looking Glass, and What We Found There</a>
+ ,” at <em>ACM International Conference on Management of Data</em>
+ (SIGMOD), June 2008. <a href="http://dx.doi.org/10.1145/1376616.1376713">doi:10.1145/1376616.1376713</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="DeBrabant2013ts">[<a href="text00008.html#DeBrabant2013ts-marker">45</a>
+ ] Justin DeBrabant, Andrew Pavlo, Stephen Tu, et al.: “<a href="http://www.vldb.org/pvldb/vol6/p1942-debrabant.pdf">Anti-Caching: A New Approach to Database Management System Architecture</a>
+ ,” <em>Proceedings of the VLDB Endowment</em>
+ , volume 6, number 14, pages 1942–1953, September 2013.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Arulraj2015gs">[<a href="text00008.html#Arulraj2015gs-marker">46</a>
+ ] Joy Arulraj, Andrew Pavlo, and Subramanya R. Dulloor: “<a href="http://www.pdl.cmu.edu/PDL-FTP/NVM/storage.pdf">Let’s Talk About Storage &amp; Recovery Methods for Non-Volatile Memory Database Systems</a>
+ ,” at <em>ACM International Conference on Management of Data</em>
+ (SIGMOD), June 2015. <a href="http://dx.doi.org/10.1145/2723372.2749441">doi:10.1145/2723372.2749441</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Codd1993ww">[<a href="text00008.html#Codd1993ww-marker">47</a>
+ ] Edgar F. Codd, S. B. Codd, and C. T. Salley: “<a href="http://www.minet.uni-jena.de/dbis/lehre/ss2005/sem_dwh/lit/Cod93.pdf">Providing OLAP to User-Analysts: An IT Mandate</a>
+ ,” E. F. Codd Associates, 1993.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Chaudhuri1997bd">[<a href="text00008.html#Chaudhuri1997bd-marker">48</a>
+ ] Surajit Chaudhuri and Umeshwar Dayal: “<a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/sigrecord.pdf">An Overview of Data Warehousing and OLAP Technology</a>
+ ,” <em>ACM SIGMOD Record</em>
+ , volume 26, number 1, pages 65–74, March 1997. <a href="http://dx.doi.org/10.1145/248603.248616">doi:10.1145/248603.248616</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Larson2013wh">[<a href="text00008.html#Larson2013wh-marker">49</a>
+ ] Per-Åke Larson, Cipri Clinciu, Campbell Fraser, et al.: “<a href="http://research.microsoft.com/pubs/193599/Apollo3%20-%20Sigmod%202013%20-%20final.pdf">Enhancements to SQL Server Column Stores</a>
+ ,” at <em>ACM International Conference on Management of Data</em>
+ (SIGMOD), June 2013.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Farber2012tw">[<a href="text00008.html#Farber2012tw-marker">50</a>
+ ] Franz Färber, Norman May, Wolfgang Lehner, et al.: “<a href="http://sites.computer.org/debull/A12mar/hana.pdf">The SAP HANA Database – An Architecture Overview</a>
+ ,” <em>IEEE Data Engineering Bulletin</em>
+ , volume 35, number 1, pages 28–33, March 2012.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="OneSizeFitsNone2013vw">[<a href="text00008.html#OneSizeFitsNone2013vw-marker">51</a>
+ ] Michael Stonebraker: “<a href="http://slideshot.epfl.ch/talks/166">The Traditional RDBMS Wisdom Is (Almost Certainly) All Wrong</a>
+ ,” presentation at <em>EPFL</em>
+ , May 2013.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Abadi2013vf">[<a href="text00008.html#Abadi2013vf-marker">52</a>
+ ] Daniel J. Abadi: “<a href="https://web.archive.org/web/20150622074951/http://hadapt.com/blog/2013/10/02/classifying-the-sql-on-hadoop-solutions/">Classifying the SQL-on-Hadoop Solutions</a>
+ ,” <em>hadapt.com</em>
+ , October 2, 2013.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Kornacker2015uv_ch3">[<a href="text00008.html#Kornacker2015uv_ch3-marker">53</a>
+ ] Marcel Kornacker, Alexander Behm, Victor Bittorf, et al.: “<a href="http://pandis.net/resources/cidr15impala.pdf">Impala: A Modern, Open-Source SQL Engine for Hadoop</a>
+ ,” at <em>7th Biennial Conference on Innovative Data Systems Research</em>
+ (CIDR), January 2015.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Melnik2010up">[<a href="text00008.html#Melnik2010up-marker">54</a>
+ ] Sergey Melnik, Andrey Gubarev, Jing Jing Long, et al.: “<a href="http://research.google.com/pubs/pub36632.html">Dremel: Interactive Analysis of Web-Scale Datasets</a>
+ ,” at <em>36th International Conference on Very Large Data Bases</em>
+ (VLDB), pages 330–339, September 2010.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Kimball2013tb_ch3">[<a href="text00008.html#Kimball2013tb_ch3-marker">55</a>
+ ] Ralph Kimball and Margy Ross: <em>The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling</em>
+ , 3rd edition. John Wiley &amp; Sons, July 2013. ISBN: 978-1-118-53080-1</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Harris2013un">[<a href="text00008.html#Harris2013un-marker">56</a>
+ ] Derrick Harris: “<a href="http://gigaom.com/2013/03/27/why-apple-ebay-and-walmart-have-some-of-the-biggest-data-warehouses-youve-ever-seen/">Why Apple, eBay, and Walmart Have Some of the Biggest Data Warehouses You’ve Ever Seen</a>
+ ,” <em>gigaom.com</em>
+ , March 27, 2013.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="LeDem2013wc">[<a href="text00008.html#LeDem2013wc-marker">57</a>
+ ] Julien Le Dem: “<a href="https://blog.twitter.com/2013/dremel-made-simple-with-parquet">Dremel Made Simple with Parquet</a>
+ ,” <em>blog.twitter.com</em>
+ , September 11, 2013.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Abadi2013kf">[<a href="text00008.html#Abadi2013kf-marker">58</a>
+ ] Daniel J. Abadi, Peter Boncz, Stavros Harizopoulos, et al.: “<a href="http://cs-www.cs.yale.edu/homes/dna/papers/abadi-column-stores.pdf">The Design and Implementation of Modern Column-Oriented Database Systems</a>
+ ,” <em>Foundations and Trends in Databases</em>
+ , volume 5, number 3, pages 197–280, December 2013. <a href="http://dx.doi.org/10.1561/1900000024">doi:10.1561/1900000024</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Boncz2005ws">[<a href="text00008.html#Boncz2005ws-marker">59</a>
+ ] Peter Boncz, Marcin Zukowski, and Niels Nes: “<a href="http://www.cidrdb.org/cidr2005/papers/P19.pdf">MonetDB/X100: Hyper-Pipelining Query Execution</a>
+ ,” at <em>2nd Biennial Conference on Innovative Data Systems Research</em>
+ (CIDR), January 2005.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Zhou2002gu">[<a href="text00008.html#Zhou2002gu-marker">60</a>
+ ] Jingren Zhou and Kenneth A. Ross: “<a href="http://www1.cs.columbia.edu/~kar/pubsk/simd.pdf">Implementing Database Operations Using SIMD Instructions</a>
+ ,” at <em>ACM International Conference on Management of Data</em>
+ (SIGMOD), pages 145–156, June 2002. <a href="http://dx.doi.org/10.1145/564691.564709">doi:10.1145/564691.564709</a>
+</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Stonebraker2005uf">[<a href="text00008.html#Stonebraker2005uf-marker">61</a>
+ ] Michael Stonebraker, Daniel J. Abadi, Adam Batkin, et al.: “<a href="http://www.vldb2005.org/program/paper/thu/p553-stonebraker.pdf">C-Store: A Column-oriented DBMS</a>
+ ,” at <em>31st International Conference on Very Large Data Bases</em>
+ (VLDB), pages 553–564, September 2005.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Lamb2012ub">[<a href="text00008.html#Lamb2012ub-marker">62</a>
+ ] Andrew Lamb, Matt Fuller, Ramakrishna Varadarajan, et al.: “<a href="http://vldb.org/pvldb/vol5/p1790_andrewlamb_vldb2012.pdf">The Vertica Analytic Database: C-Store 7 Years Later</a>
+ ,” <em>Proceedings of the VLDB Endowment</em>
+ , volume 5, number 12, pages 1790–1801, August 2012.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="LeDem2014tl">[<a href="text00008.html#LeDem2014tl-marker">63</a>
+ ] Julien Le Dem and Nong Li: “<a href="http://www.slideshare.net/julienledem/th-210pledem">Efficient Data Storage for Analytics with Apache Parquet 2.0</a>
+ ,” at <em>Hadoop Summit</em>
+ , San Jose, June 2014.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Gray2007he">[<a href="text00008.html#Gray2007he-marker">64</a>
+ ] Jim Gray, Surajit Chaudhuri, Adam Bosworth, et al.: “<a href="http://arxiv.org/pdf/cs/0701155.pdf">Data Cube: A Relational Aggregation Operator Generalizing Group-By, Cross-Tab, and Sub-Totals</a>
+ ,” <em>Data Mining and Knowledge Discovery</em>
+ , volume 1, number 1, pages 29–53, March 2007. <a href="http://dx.doi.org/10.1023/A:1009726021843">doi:10.1023/A:1009726021843</a>
+</p>
+</div>
+</div>
+</section>
+</body>
+</html>

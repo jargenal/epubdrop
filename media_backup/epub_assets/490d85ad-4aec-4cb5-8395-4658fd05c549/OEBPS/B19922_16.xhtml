@@ -1,0 +1,369 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-GB">
+	<head>
+		<title>B19922_16</title>
+		<link href="css/style-JRserifv6.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:c8ccfc40-76a9-4a04-b8f6-a8f601fe2ce2" name="Adept.expected.resource"/>
+	</head>
+	<body id="B19922_16">
+		<div id="_idContainer234">
+			<h1 class="chapter-number" id="_idParaDest-427"><a id="_idTextAnchor442"/>16</h1>
+			<h1 id="_idParaDest-428"><a id="_idTextAnchor443"/>Addressing Non-Functional Requirements – from a Thought to an Operation</h1>
+			<p>This chapter will show the reader about implementing Non-Functional requirements like HA, Fault Tolerance, Resilience, and allocating and optimizing the vCores to enhance the <span class="No-Break">application performance.</span></p>
+			<p>In this chapter, we will cover the <span class="No-Break">following topics:</span></p>
+			<ul>
+				<li>NFRs such as scalability, high availability, and <span class="No-Break">fault tolerance</span></li>
+				<li><strong class="bold">Disaster recovery</strong> (<strong class="bold">DR</strong>) for the <span class="No-Break">MuleSoft platform</span></li>
+				<li>vCores allocation <span class="No-Break">and optimization</span></li>
+			</ul>
+			<h1 id="_idParaDest-429"><a id="_idTextAnchor444"/>Prerequisites</h1>
+			<p>The following are the prerequisites for <span class="No-Break">this chapter:</span></p>
+			<ul>
+				<li>Knowledge of the MuleSoft platform, such as CloudHub 1.0, CloudHub 2.0, Runtime Fabric, and the on-premises <span class="No-Break">Mule runtime</span></li>
+				<li>Knowledge of Kubernetes and its container-based <span class="No-Break">application architecture</span></li>
+				<li>A basic understanding of NFRs such as scalability, high availability, fault tolerance, <span class="No-Break">and others</span></li>
+			</ul>
+			<h1 id="_idParaDest-430"><a id="_idTextAnchor445"/>What are NFRs?</h1>
+			<p>NFRs are a set <a id="_idIndexMarker1238"/>of specifications that describe the operating capabilities and limitations of a system. They act as requirements that describe how well a feature will work, such as its high availability, scalability, security, reliability, and data integrity. Let’s take a closer look at <span class="No-Break">these terms:</span></p>
+			<ul>
+				<li><strong class="bold">High availability</strong>: How well a system is available in the event of any system failures. This guarantees <span class="No-Break">business continuity.</span></li>
+				<li><strong class="bold">Scalability</strong>: How well a system can handle an increase in the number of requests <span class="No-Break">or workloads.</span></li>
+				<li><strong class="bold">Performance</strong>: How fast a system can respond to <span class="No-Break">any requests.</span></li>
+				<li><strong class="bold">Security</strong>: How well a system is protected against any unauthorized request, malicious attacks, or <span class="No-Break">data breaches.</span></li>
+				<li><strong class="bold">Reliability</strong>: How well a system is designed. Here, the percentage of failures should be small and the system should <span class="No-Break">be reliable.</span></li>
+				<li><strong class="bold">Data integrity</strong>: How well a system is designed to minimize the risk of <span class="No-Break">data breaches.</span></li>
+				<li><strong class="bold">Fault tolerance</strong>: How well a system is designed so that it can recover in the event of failures or <span class="No-Break">system crashes.</span></li>
+				<li><strong class="bold">DR</strong>: DR involves applying IT technologies and best practices to mitigate the effects of catastrophic events, such as cyberattacks, natural disasters, civil emergencies, and equipment failures, on business operations and <span class="No-Break">data loss</span></li>
+			</ul>
+			<p>In this chapter, we will explore a few non-functional criteria, such as DR, scalability, fault tolerance, and high availability. A few of the non-functional needs, such as API security, reliability, and performance, were covered in the <span class="No-Break">previous chapters.</span></p>
+			<h1 id="_idParaDest-431"><a id="_idTextAnchor446"/>High availability</h1>
+			<p>High availability refers to the ability of an IT system, component, or application to function continuously and at <a id="_idIndexMarker1239"/>a high level for extended periods, without the need for assistance. Infrastructure with high availability is set up to deliver excellent performance and manage different loads and breakdowns, with little to <span class="No-Break">no downtime.</span></p>
+			<h2 id="_idParaDest-432"><a id="_idTextAnchor447"/>High availability and fault tolerance with CloudHub 1.0</h2>
+			<p>CloudHub 1.0 provides <a id="_idIndexMarker1240"/>several components, such as the Anypoint Platform API and services, shared load balancers, monitoring components, and <a id="_idIndexMarker1241"/>many other components that are highly available by default within any AWS region. Mule applications running on CloudHub 1.0 can be deployed to more than one worker, ensuring high availability and improving overall application performance. If one worker fails, other workers are available to handle <span class="No-Break">the request.</span></p>
+			<p>Deploying an application to<a id="_idIndexMarker1242"/> multiple workers ensures that traffic is distributed among them using a load balancer. CloudHub 1.0 supports persistent queues to implement message reliability. Persistent queues are abundant in the region and may not be available when the AWS region is down. Here, data loss is possible, but communication is restored through the queues when the AWS region is <span class="No-Break">back up.</span></p>
+			<p>Some CloudHub components, such as Object Store V1, application settings, and monitoring-related data, are stored in the US East region, regardless of the application deployed in any region. Object Store V2 is stored in the same AWS region as the CloudHub 1.0 application AWS region. Object Store V1 is not available if the US East region is not available, and Object Store V2 is not available in the AWS region where the application is deployed. The information in the object store is persisted and is available again when the area is used. The<a id="_idIndexMarker1243"/> Anypoint <strong class="bold">Virtual Private Cloud</strong> (<strong class="bold">VPC</strong>) is configured on a region-by-region basis. If a region isn’t available, the Anypoint VPC won’t be available until a previous instance of Anypoint VPC has been configured for the <span class="No-Break">other region.</span></p>
+			<h3>CloudHub 1.0 availability within a region</h3>
+			<p>CloudHub 1.0 uses AWS cloud infrastructure, and the availability of CloudHub 1.0 depends on the AWS availability. CloudHub 1.0 availability and deployments are divided into different regions, and each region refers to its corresponding <span class="No-Break">Amazon region.</span></p>
+			<p>When an Amazon region goes down, applications in that region are unavailable and no longer automatically<a id="_idIndexMarker1244"/> replicated to <span class="No-Break">other regions.</span></p>
+			<p>For example, if the us-east-1 region is unavailable, the cloud management UI, as well as the various REST services that enable deployment, are unavailable until region availability is restored. No new application is deployed to the <span class="No-Break">us-east-1 region.</span></p>
+			<h3>CloudHub 1.0 availability within availability zones</h3>
+			<p>Deploying an application to multiple<a id="_idIndexMarker1245"/> workers ensures high availability as the application is deployed to separate <span class="No-Break">Availability Zones.</span></p>
+			<p>If one availability zone fails, your application is available in another Availability Zone to service your requests. Meanwhile, applications running in the failed availability zone will attempt to recover or restart in another <span class="No-Break">Availability Zone.</span></p>
+			<p>If the application is enabled for one worker and that worker fails due to availability zones going down, the worker will automatically try to recover and can restart in another availability zone. This may cause some <span class="No-Break">brief downtime.</span></p>
+			<p>We will cover this topic in more detail in <a href="B19922_09.xhtml#_idTextAnchor179"><span class="No-Break"><em class="italic">Chapter 9</em></span></a><span class="No-Break">.</span></p>
+			<h2 id="_idParaDest-433"><a id="_idTextAnchor448"/>High availability and fault tolerance with CloudHub 2.0</h2>
+			<p>CloudHub 2.0 is highly available <a id="_idIndexMarker1246"/>and scalable and provides redundancy, intelligent remediation, and zero-downtime updates. You can run <a id="_idIndexMarker1247"/>multiple replicas of the same application for load balancing and high <span class="No-Break">availability purposes.</span></p>
+			<p>CloudHub 2.0 supports clustering, something that applications benefit from in terms of increased stability, workload distribution, and scalability. CloudHub’s replica scale-out and scalable load balancing solutions power <span class="No-Break">these features.</span></p>
+			<p>Clustering allows multiple replicas to communicate with each other and share data via the object store and VM queues across multiple replicas of the same application. A minimum of two replicas is required for an application’s high availability and to enable clustering on <span class="No-Break">the application.</span></p>
+			<p>CloudHub 2.0 monitors replicas for<a id="_idIndexMarker1248"/> problems and provides a self-healing mechanism for recovery. If the underlying hardware fails, the<a id="_idIndexMarker1249"/> platform automatically migrates applications to a new replica. There is a private ingress load balancer within a private space that auto-scales to <span class="No-Break">accommodate traffic.</span></p>
+			<p>Anypoint VPN in CloudHub<a id="_idIndexMarker1250"/> 2.0 is highly available by default. You can create a redundant VPN in CloudHub 2.0 to ensure high availability. Certain configuration parameters from the original VPN setup are automatically transferred to the <span class="No-Break">redundant VPN.</span></p>
+			<h2 id="_idParaDest-434"><a id="_idTextAnchor449"/>High availability and fault tolerance with the on-premises Mule runtime</h2>
+			<p>Clustering can be used to <a id="_idIndexMarker1251"/>enable high availability for applications that are deployed to the on-premises Mule runtime. It provides a basic<a id="_idIndexMarker1252"/> failover capability <span class="No-Break">for Mule.</span></p>
+			<p>In the event of the primary node becoming unavailable, due to a <strong class="bold">Java Virtual Machine</strong> (<strong class="bold">JVM</strong>) failure, planned maintenance, or a hardware failure, one of the other nodes in the cluster will become the primary node and resume processing where the failed instance <span class="No-Break">left off.</span></p>
+			<p>The following figure shows how a node transitions to the primary node from the secondary node in the event of a primary <span class="No-Break">node failure:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer227">
+					<img alt="Figure 16.1: Anypoint clustering node transition (from the secondary node to the primary node)" src="image/B19922_16_1.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 16.1: Anypoint clustering node transition (from the secondary node to the primary node)</p>
+			<p>For HTTP workloads, you <a id="_idIndexMarker1253"/>should configure a third-party load balancer in front of the nodes to distribute traffic across multiple <a id="_idIndexMarker1254"/>nodes, as well as to ensure that it goes to <span class="No-Break">active nodes.</span></p>
+			<p>The following figure shows how to use a load balancer in front of nodes in a cluster to distribute <span class="No-Break">HTTP workloads:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer228">
+					<img alt="Figure 16.2: An HTTP load balancer with Anypoint clustering" src="image/B19922_16_2.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 16.2: An HTTP load balancer with Anypoint clustering</p>
+			<p>We discussed Anypoint server groups in <a href="B19922_12.xhtml#_idTextAnchor309"><span class="No-Break"><em class="italic">Chapter 12</em></span></a>. A server group can be also configured with a third-party<a id="_idIndexMarker1255"/> load balancer so that it can distribute traffic across multiple nodes in the <span class="No-Break">server group.</span></p>
+			<p>Note that the <a id="_idIndexMarker1256"/>customer is responsible for configuring and managing the load balancer, as well as setting up and managing the infrastructure required to run the on-premises <span class="No-Break">Mule runtime.</span></p>
+			<h2 id="_idParaDest-435"><a id="_idTextAnchor450"/>High availability and fault tolerance with Runtime Fabric (bare-metal servers/VMs)</h2>
+			<p>High availability on Runtime Fabric<a id="_idIndexMarker1257"/> can be achieved at the infrastructure level and the application level. Infrastructure-level <a id="_idIndexMarker1258"/>high availability can be achieved by setting up multiple master and worker nodes, as discussed in <a href="B19922_11.xhtml#_idTextAnchor263"><span class="No-Break"><em class="italic">Chapter 11</em></span></a><span class="No-Break">.</span></p>
+			<p>In <span class="No-Break"><em class="italic">Chapter 11</em></span>, we discussed Quorum management and how to use it to ensure high availability and a fault tolerance infrastructure for Runtime Fabric. We discussed the minimum master and control nodes<a id="_idIndexMarker1259"/> required for production and non-production environments to ensure<a id="_idIndexMarker1260"/> the infrastructure’s <span class="No-Break">high availability.</span></p>
+			<h2 id="_idParaDest-436"><a id="_idTextAnchor451"/>High availability and fault tolerance with Runtime Fabric (self-managed Kubernetes)</h2>
+			<p>Both the application and<a id="_idIndexMarker1261"/> infrastructure layers of Runtime Fabric can achieve high availability. Setting up multiple worker nodes <a id="_idIndexMarker1262"/>can help you achieve infrastructure-level high availability. Self-managed Kubernetes provides managed Kubernetes master nodes, which eliminates the need to manage master nodes. AWS oversees the EKS master nodes. Once again, managing the availability of the master nodes is the responsibility of the cloud providers (AWS, in the case of EKS) and is not the duty <span class="No-Break">of MuleSoft.</span></p>
+			<p>To achieve application-level high availability for Runtime Fabric on self-managed Kubernetes and VMs/bare-metal servers, you can deploy multiple replicas for your application. You can cluster multiple replicas to ensure that data and information are distributed among the replicas. Just like an on-premises cluster, Runtime Fabric supports <span class="No-Break">the cluster.</span></p>
+			<p>We discussed Anypoint clustering in detail in <a href="B19922_11.xhtml#_idTextAnchor263"><span class="No-Break"><em class="italic">Chapter 11</em></span></a><span class="No-Break">.</span></p>
+			<h1 id="_idParaDest-437"><a id="_idTextAnchor452"/>Scalability</h1>
+			<p>The capacity of a system to <a id="_idIndexMarker1263"/>adapt its performance and cost to changes in application and system processing demands is known as scalability. Examples include the way an operating system functions on various hardware classes, the way a database handles an increasing volume of queries, or the way a hardware system handles an increase in <span class="No-Break">user count.</span></p>
+			<p>There are two types <span class="No-Break">of scaling:</span></p>
+			<ul>
+				<li><strong class="bold">Horizontal scaling</strong>: Horizontal<a id="_idIndexMarker1264"/> scaling means adding more machines to your pool of resources. Horizontal scaling is divided into <span class="No-Break">two types:</span><ul><li><strong class="bold">Scaling up</strong>: Adding more machines to your pool <span class="No-Break">of resources</span></li><li><strong class="bold">Scaling down</strong>: Removing <a id="_idIndexMarker1265"/>a machine from your pool <span class="No-Break">of resources</span></li></ul></li>
+				<li><strong class="bold">Vertical scaling</strong>: Vertical scaling<a id="_idIndexMarker1266"/> means adding more power or compute resources, such as memory and CPU, to <span class="No-Break">existing servers:</span><ul><li><strong class="bold">Scaling out</strong>: Adding more power to your <span class="No-Break">existing machines</span></li><li><strong class="bold">Scaling in</strong>: Reducing the power of your <span class="No-Break">existing machines</span></li></ul></li>
+			</ul>
+			<p>Now, let’s consider scalability in <a id="_idIndexMarker1267"/>terms of <span class="No-Break">CloudHub 1.0.</span></p>
+			<h2 id="_idParaDest-438"><a id="_idTextAnchor453"/>Scalability with CloudHub 1.0</h2>
+			<p>CloudHub 1.0 is a managed<a id="_idIndexMarker1268"/> service where we don’t have to oversee its infrastructure, and it is completely managed by MuleSoft. We are only responsible for choosing the <a id="_idIndexMarker1269"/>correct worker and worker size required to run the Mule applications <span class="No-Break">or proxies.</span></p>
+			<p>MuleSoft will automatically configure infrastructure, depending on the worker and worker size we have selected for the application. An application can be horizontally scaled by increasing or decreasing the number of workers and vertically scaled by increasing or decreasing the <span class="No-Break">worker size.</span></p>
+			<p>CloudHub 1.0 supports auto-scaling features, as discussed in <a href="B19922_09.xhtml#_idTextAnchor179"><span class="No-Break"><em class="italic">Chapter 9</em></span></a>, which allows an application to auto-scale depending on an increase or decrease of <span class="No-Break">its traffic.</span></p>
+			<h2 id="_idParaDest-439"><a id="_idTextAnchor454"/>Scalability with CloudHub 2.0</h2>
+			<p>Like CloudHub 1.0, CloudHub <a id="_idIndexMarker1270"/>2.0 is a managed service that doesn’t have to oversee its infrastructure, and it is completely managed by MuleSoft. We are only responsible for <a id="_idIndexMarker1271"/>choosing the correct replica and replica size required to run the Mule applications <span class="No-Break">or proxies.</span></p>
+			<p>MuleSoft will automatically configure infrastructure, depending on the replica and replica size we have selected for the application. An application can be horizontally scaled by increasing or decreasing the number of replicas and vertically scaled by increasing or decreasing the replica size. CloudHub 2.0 doesn’t support the <span class="No-Break">auto-scaling feature.</span></p>
+			<p>We discussed scalability with CloudHub 2.0 in detail in <a href="B19922_10.xhtml#_idTextAnchor228"><span class="No-Break"><em class="italic">Chapter 10</em></span></a><span class="No-Break">.</span></p>
+			<h2 id="_idParaDest-440"><a id="_idTextAnchor455"/>Scalability with Runtime Fabric (bare-metal servers/VMs)</h2>
+			<p>The Runtime Fabric infrastructure can be scaled horizontally by adding more worker or master nodes to the cluster and scaled vertically<a id="_idIndexMarker1272"/> by increasing or decreasing computing resources, such as CPU and memory. It is the customer’s responsibility to perform the changes for implementing <a id="_idIndexMarker1273"/>scalability at the <span class="No-Break">infrastructure level.</span></p>
+			<p>An application can be scaled horizontally by adding more replicas of the application and vertically scaled by increasing the replica size (the reserved CPU, CPU limit, <span class="No-Break">or memory).</span></p>
+			<p>Runtime Fabric is a service provided by MuleSoft on top of Kubernetes for running Mule applications. This abstracts away the complexities of administering and managing the Kubernetes cluster, allowing developers to focus on application development <span class="No-Break">and deployments.</span></p>
+			<p>However, Runtime Fabric doesn’t directly provide capabilities for scaling applications. In such cases, Kubernetes comes into play to provide <span class="No-Break">robust scaling.</span></p>
+			<p>Kubernetes is an open source platform for automating containerized application deployment, scaling, <span class="No-Break">and administration.</span></p>
+			<p>Kubernetes provides two different ways of auto-scaling <span class="No-Break">application instances:</span></p>
+			<ul>
+				<li>A <strong class="bold">Horizontal Pod </strong><span class="No-Break"><strong class="bold">Autoscaler</strong></span><span class="No-Break"> (</span><span class="No-Break"><strong class="bold">HPA</strong></span><span class="No-Break">)</span></li>
+				<li>A <strong class="bold">Vertical Pod </strong><span class="No-Break"><strong class="bold">Autoscaler</strong></span><span class="No-Break"> (</span><span class="No-Break"><strong class="bold">VPA</strong></span><span class="No-Break">)</span></li>
+			</ul>
+			<p>The HPA adds more Pods in the event of more traffic. In the event of load decreases, the number of Pods will scale down to <span class="No-Break">a minimum.</span></p>
+			<p>The HPA is used as a controller and resource for the Kubernetes API. The controller’s behavior is dictated by the resource. The horizontal directory autoscaling controller, which is housed in the Kubernetes control plane, uses observed metrics, such as average CPU usage, average memory usage, or any other custom metric you specify, to determine the appropriate scale of its object (such as a <span class="No-Break">deployment) regularly.</span></p>
+			<p>The HPA works on the principle of targets. It adjusts the number of Pods in a deployment or replica that have been set to match a predefined target usage level for a given resource (such as CPU <span class="No-Break">or memory).</span></p>
+			<p>To create an HPA, you need to use the <strong class="source-inline">kubectl </strong><span class="No-Break"><strong class="source-inline">autoscale</strong></span><span class="No-Break"> command:</span></p>
+			<table class="No-Table-Style" id="table001-9">
+				<colgroup>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<pre class="console">
+<span lang="en-US" xml:lang="en-US">kubectl autoscale deployment mule-test-app --cpu-percent=80 --min=2 --max=6</span></pre>						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>Let’s break down the <a id="_idIndexMarker1274"/>preceding <span class="No-Break"><strong class="source-inline">kubectl</strong></span><span class="No-Break"> command:</span></p>
+			<ul>
+				<li>Here, <strong class="source-inline">mule-test-app</strong> is the<a id="_idIndexMarker1275"/> name of <span class="No-Break">the application.</span></li>
+				<li>Then, we have <strong class="source-inline">--cpu-percent=80</strong>, which means Kubernetes will add more replicas when the average CPU utilization of all Pods goes <span class="No-Break">above 80%</span></li>
+				<li>Finally, <strong class="source-inline">--min=2</strong> is the minimum number of replicas that will always run, and <strong class="source-inline">--max=6</strong> is the maximum number of replicas that Kubernetes can create if there is high <span class="No-Break">CPU utilization</span></li>
+			</ul>
+			<p>The <strong class="source-inline">kubectl autoscale</strong> command is a simple command that activates the HPA. However, defining the HPA with a manifest file is more flexible as it allows multiple metrics to <span class="No-Break">enable scaling.</span></p>
+			<p>The following manifest file allows you to scale horizontally if the average CPU utilization of a node reaches 80% or higher. Create a <strong class="source-inline">mulesoft-test-app-hpa.yaml</strong> manifest file. Then, execute the <strong class="source-inline">kubectl apply</strong> command to enable <span class="No-Break">the HPA:</span></p>
+			<table class="No-Table-Style" id="table002-7">
+				<colgroup>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<pre class="console">
+<span lang="en-US" xml:lang="en-US">kubectl apply -f mulesoft-test-app-hpa.yaml</span></pre>						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>Here’s <span class="No-Break">the output:</span></p>
+			<table class="No-Table-Style" id="table003-6">
+				<colgroup>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<pre class="console">
+apiVersion: autoscaling/v2</pre>							<pre class="console">
+kind: HorizontalPodAutoscaler</pre>							<pre class="console">
+metadata:</pre>							<pre class="console">
+  name: mulesoft-test-app</pre>							<pre class="console">
+spec:</pre>							<pre class="console">
+  scaleTargetRef:</pre>							<pre class="console">
+    apiVersion: apps/v1</pre>							<pre class="console">
+    kind: Deployment</pre>							<pre class="console">
+    name: mule-test-app</pre>							<pre class="console">
+  minReplicas: 2</pre>							<pre class="console">
+  maxReplicas: 6</pre>							<pre class="console">
+  metrics:</pre>							<pre class="console">
+  - type: Resource</pre>							<pre class="console">
+    resource:</pre>							<pre class="console">
+      name: cpu</pre>							<pre class="console">
+      target:</pre>							<pre class="console">
+        type: Utilization</pre>							<pre class="console">
+        averageUtilization: 80</pre>						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>Let’s take a closer look at the <a id="_idIndexMarker1276"/>attributes that have been defined in this <span class="No-Break">YAML file:</span></p>
+			<ul>
+				<li>Here, <strong class="source-inline">scaleTargetRef</strong> is the MuleSoft deployment that this HPA <span class="No-Break">will manage.</span></li>
+				<li>Then, we have <strong class="source-inline">minReplicas</strong>, which specifies the minimum number of replicas that will always<a id="_idIndexMarker1277"/> run, and <strong class="source-inline">maxReplicas</strong>, which specifies the maximum number of replicas that Kubernetes can scale in the event of CPU or memory utilization exceeding that defined <span class="No-Break">utilization threshold.</span></li>
+				<li><strong class="source-inline">metrics</strong> specifies the attributes that the HPA will use to determine when to scale. In this case, we have used CPU utilization as an attribute for <span class="No-Break">the HPA.</span></li>
+			</ul>
+			<p>The following figure shows how a Pod scales horizontally when the average CPU utilization reaches 80% <span class="No-Break">or higher:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer229">
+					<img alt="Figure 16.3: Kubernetes’ HPA" src="image/B19922_16_3.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 16.3: Kubernetes’ HPA</p>
+			<p>The VPA automatically adjusts <a id="_idIndexMarker1278"/>the CPU and memory required for a Pod to run an application at its correct size. This will ensure the effective<a id="_idIndexMarker1279"/> utilization of resources in the cluster. There are two types of configurations needed for <span class="No-Break">the VPA:</span></p>
+			<ul>
+				<li><span class="No-Break">Requests</span></li>
+				<li><span class="No-Break">Limits</span></li>
+			</ul>
+			<p>Requests are the minimum number of resources allocated to a Pod, and this guarantees the resources that the Pod will be allocated. Limits are the maximum number of resources that the Pod can consume in the event of more traffic. However, this is not guaranteed, and they can only be allocated if there are extra resources available to accommodate <span class="No-Break">more traffic.</span></p>
+			<p>The following figure shows how a Pod vertically scales in the event of more resources <span class="No-Break">being required:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer230">
+					<img alt="Figure 16.4: Kubernetes’ VPA" src="image/B19922_16_4.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 16.4: Kubernetes’ VPA</p>
+			<p>The following table shows <a id="_idIndexMarker1280"/>what can be done if more resources <span class="No-Break">are required:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table004-5">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="bold">Capacity </strong><span class="No-Break"><strong class="bold">Adjustment Required</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">HPA</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">VPA</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">More resources</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Add <span class="No-Break">more Pods</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Increase the memory or CPU of the <span class="No-Break">existing Pod</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Fewer resources</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Remove Pods</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Decrease the memory or CPU that’s been allocated to the <span class="No-Break">existing Pod</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 16.1: HPA and VPA resource allocation</p>
+			<p>We have talked about how to<a id="_idIndexMarker1281"/> allocate resources to the application deployed to Runtime Fabric allocates. We’ll now discuss the scalability of <span class="No-Break">Runtime fabric.</span></p>
+			<h2 id="_idParaDest-441"><a id="_idTextAnchor456"/>Scalability with Runtime Fabric (self-managed Kubernetes)</h2>
+			<p>Self-managed Kubernetes is a managed service provided by a cloud provider (<strong class="bold">Elastic Kubernetes Service</strong> (<strong class="bold">EKS</strong>) by AWS, <strong class="bold">Azure Kubernetes Service</strong> (<strong class="bold">AKS</strong>) by Azure, and <strong class="bold">Google Kubernetes Engine</strong> (<strong class="bold">GKE</strong>) by Google). Users can concentrate on their applications and workloads <a id="_idIndexMarker1282"/>as the cloud provider, using self-managed Kubernetes, manages the API server and the Kubernetes control plane, which includes<a id="_idIndexMarker1283"/> master nodes, storage, and other components. This means that cloud providers maintain and ensure that essential components are scalable and <span class="No-Break">highly available.</span></p>
+			<p>Self-managed Kubernetes can easily be scaled to meet your applications’ requirements. It facilitates worker node provisioning and management automatically, which makes scaling your cluster easier when an application demands change. The etcd persistence layer and Kubernetes API servers’ scalability and availability are automatically managed by <span class="No-Break">cloud providers.</span></p>
+			<p>An application can be scaled horizontally by adding more replicas of the application and vertically scaled by increasing the replica size (the reserved CPU, CPU limit, or memory), such as the Runtime Fabric component of <span class="No-Break">bare-metal servers/VMs.</span></p>
+			<h1 id="_idParaDest-442"><a id="_idTextAnchor457"/>DR</h1>
+			<p>DR is a critical<a id="_idIndexMarker1284"/> consideration for any organization to ensure business continuity and resume critical business functions as quickly as possible after unexpected disruptions, such as natural disasters, regional failure, and cyberattacks. You need to define a DR strategy to ensure business continuity; otherwise, you may incur revenue loss or reputational damage, and businesses can fold as <span class="No-Break">a result.</span></p>
+			<h2 id="_idParaDest-443"><a id="_idTextAnchor458"/>DR for CloudHub 1.0 (multi-region)</h2>
+			<p>CloudHub 1.0 provides<a id="_idIndexMarker1285"/> automatic DR across availability zones in the <a id="_idIndexMarker1286"/>same region. We discussed this option in <a href="B19922_09.xhtml#_idTextAnchor179"><span class="No-Break"><em class="italic">Chapter 9</em></span></a>. It is possible to set up DR across multiple regions so that if an entire region goes down, we have other regions to ensure <span class="No-Break">business continuity.</span></p>
+			<p>Here are some important points about DR for <span class="No-Break">CloudHub 1.0:</span></p>
+			<ul>
+				<li>Multi-region DR can be set up by creating two Anypoint VPCs in two different regions. One of the regions is the primary <a id="_idIndexMarker1287"/>region, and the other is the <span class="No-Break">DR region.</span></li>
+				<li>Two separate Anypoint dedicated load balancers can be set up for each region. Each dedicated<a id="_idIndexMarker1288"/> load balancer can be mapped with CNAME records on the <span class="No-Break">DNS server.</span></li>
+				<li>A global load balancer is the customer’s responsibility, and it is not provided by MuleSoft. It will route traffic between the primary and DR regions. The customer can use Route 53 or any DNS router to route traffic between primary and <span class="No-Break">DR regions.</span></li>
+				<li>The application name, Anypoint VPC name, and Anypoint dedicated load balancer name must be unique <span class="No-Break">across regions.</span></li>
+				<li>The object store is a regional service and cannot be accessed across regions. We need to define a strategy to use the object store or any persistent storage <span class="No-Break">across regions.</span></li>
+				<li>Separate VPN tunnel, VPC peering, or AWS Transit Gateway connectivity must be established between the primary and <span class="No-Break">DR regions.</span></li>
+				<li>In an active/active DR mechanism, switching from the primary region to the DR region will be faster than active/passive DR as the load balancer will identify that the primary region isn’t healthy and automatically route all traffic to the <span class="No-Break">DR region.</span></li>
+				<li>In an active/passive DR mechanism, switching from the primary region to the DR region will be manual. You might need to deploy the application to the DR region, and it will take additional time to<a id="_idIndexMarker1289"/> activate it. This can lead to a high <strong class="bold">recovery time </strong><span class="No-Break"><strong class="bold">objective</strong></span><span class="No-Break"> (</span><span class="No-Break"><strong class="bold">RTO</strong></span><span class="No-Break">).</span></li>
+			</ul>
+			<p>The RTO is the amount of downtime that businesses can accept during a region failure. For example, if a business can accept 1 hour of downtime, the RTO will be <span class="No-Break">1 hour.</span></p>
+			<p>The <strong class="bold">recovery point objective</strong> (<strong class="bold">RPO</strong>) is the<a id="_idIndexMarker1290"/> amount of data loss that is acceptable by the business after system recovery. For example, if the system fails at 2 P.M. and a maximum of 2 hours of<a id="_idIndexMarker1291"/> data loss can be accepted, the RPO will be <span class="No-Break">4 P.M.:</span></p>
+			<p class="IMG---Figure"> </p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer231">
+					<img alt="Figure 16.5: CloudHub 1.0 DR" src="image/B19922_16_5.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 16.5: CloudHub 1.0 DR</p>
+			<p><span class="No-Break"><em class="italic">Figure 16</em></span><em class="italic">.5</em> shows how to set up DR<a id="_idIndexMarker1292"/> across multiple regions in CloudHub 1.0, ensuring that an application is available even if one region completely goes down. We can set up two Anypoint VPCs in two different regions, and each region will have a dedicated load balancer to route traffic to the application that’s been deployed within the Anypoint VPC. The global load balancer is responsible for load balancing traffic between two regions. If one of the regions goes down, the global load balancer will detect that, and all traffic will be routed to the <span class="No-Break">other region.</span></p>
+			<h2 id="_idParaDest-444"><a id="_idTextAnchor459"/>DR for CloudHub 2.0 (multi-region)</h2>
+			<p>CloudHub 2.0 provides automatic DR across availability zones in the same region. We discussed this option in <a href="B19922_10.xhtml#_idTextAnchor228"><span class="No-Break"><em class="italic">Chapter 10</em></span></a>. It is possible to set up DR across multiple regions so that if an entire<a id="_idIndexMarker1293"/> region goes down, we have other regions to<a id="_idIndexMarker1294"/> ensure <span class="No-Break">business continuity.</span></p>
+			<p>Here are some important points about DR for <span class="No-Break">CloudHub 2.0:</span></p>
+			<ul>
+				<li>Multi-region DR can be set up by creating two private spaces in two different regions. One of the regions is the primary region, and the other is the <span class="No-Break">DR region.</span></li>
+				<li>Separate private and public endpoints will be created for the private space in <span class="No-Break">different regions.</span></li>
+				<li>A global load balancer is the customer’s responsibility, and it is not provided by MuleSoft. It will route traffic between the primary and DR regions. The customer can use Route 53 or any DNS router to route traffic between primary and <span class="No-Break">DR regions.</span></li>
+				<li>The object store is regional and cannot be accessed across the region. We need to define a strategy to use the object store or any persistent storage across <span class="No-Break">the regions.</span></li>
+				<li>A separate VPN tunnel or AWS Transit Gateway connectivity must be established between the primary and DR regions. VPN in CloudHub 2.0 is highly available by default in <span class="No-Break">all regions.</span></li>
+				<li>In an active/active DR mechanism, switching from the primary region to the DR region will be faster than active/passive DR as the load balancer will identify that the primary region isn’t healthy and automatically route all traffic to the <span class="No-Break">DR region.</span></li>
+				<li>In an active/passive DR mechanism, switching from the primary region to the DR region will be manual. You might need to deploy the application to the DR region, and it will take additional time to activate it. This can lead to a <span class="No-Break">high RTO:</span></li>
+			</ul>
+			<div>
+				<div class="IMG---Figure" id="_idContainer232">
+					<img alt="Figure 16.6: CloudHub 2.0 DR" src="image/B19922_16_6.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 16.6: CloudHub 2.0 DR</p>
+			<p><span class="No-Break"><em class="italic">Figure 16</em></span><em class="italic">.6</em> shows how to set<a id="_idIndexMarker1295"/> up DR across multiple regions in CloudHub 2.0 to ensure that an application is available even if one region completely goes down. We can set up two private spaces in two different regions, and each region has an ingress load balancer to route traffic to the application that’s been <a id="_idIndexMarker1296"/>deployed within the private space. The global load balancer is responsible for load balancing traffic between two regions. If one of the regions goes down, the global load balancer will detect that, and all traffic will be routed to the <span class="No-Break">other region.</span></p>
+			<h2 id="_idParaDest-445"><a id="_idTextAnchor460"/>DR for the on-premises Mule runtime</h2>
+			<p>DR for the on-premises Mule runtime<a id="_idIndexMarker1297"/> was discussed in <a href="B19922_12.xhtml#_idTextAnchor309"><span class="No-Break"><em class="italic">Chapter 12</em></span></a>. We explored various options to <span class="No-Break">implement it.</span></p>
+			<p>The following are the<a id="_idIndexMarker1298"/> options we discussed in <a href="B19922_12.xhtml#_idTextAnchor309"><span class="No-Break"><em class="italic">Chapter 12</em></span></a> for implementing high availability and DR for the on-premises <span class="No-Break">Mule runtime:</span></p>
+			<ul>
+				<li><span class="No-Break">Cold standby</span></li>
+				<li><span class="No-Break">Warm standby</span></li>
+				<li>Hot standby – <span class="No-Break">active-passive</span></li>
+				<li><span class="No-Break">Active-active</span></li>
+			</ul>
+			<p>You can use the on-premises Mule runtime (or backend applications) to provide enhanced dependability and prompt failover in the event of a main connection failure. Clients frequently adhere to the on-premises MuleSoft runtime DR plan that complements their entire data center <span class="No-Break">DR plan.</span></p>
+			<p>The following figure shows the architecture of the on-premises <span class="No-Break">DR plan:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer233">
+					<img alt="Figure 16.7: On-premises Mule runtime DR" src="image/B19922_16_7.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 16.7: On-premises Mule runtime DR</p>
+			<p>We’ve spoken about the NFRs that must be met for Mule apps to operate. In addition to these non-functional criteria, other requirements must be considered for the application to operate <a id="_idIndexMarker1299"/>reliably and efficiently. We <a id="_idIndexMarker1300"/>will address vCores allocation and optimization in the upcoming portion of this chapter as they are essential to <span class="No-Break">achieving this.</span></p>
+			<h1 id="_idParaDest-446"><a id="_idTextAnchor461"/>vCores allocation and optimization</h1>
+			<p>vCores refer to the number of CPU and computing resources required to run an application. A vCore is an abbreviation of the term virtual core. An application that’s deployed to CloudHub <a id="_idIndexMarker1301"/>or Runtime Fabric is measured in terms of vCores. In previous <em class="italic">chapters</em>, we discussed what different vCore sizes are available for <span class="No-Break">different platforms.</span></p>
+			<p>It is necessary to allocate the right vCores to an application so that it can perform consistently and stably. It is possible to end up under or over-allocating vCores to an application. If vCores are under-allocated, the application may not perform well and drop incoming traffic. If vCores are over-allocated, we may end up wasting the vCores that have been allocated <span class="No-Break">to applications.</span></p>
+			<p>An application may be given additional resources for the <span class="No-Break">following reasons:</span></p>
+			<ul>
+				<li>An application is <span class="No-Break">restarting frequently.</span></li>
+				<li>Errors in logs related to <span class="No-Break">performance problems.</span></li>
+				<li>An application is timing out frequently, with high resource usage recorded in the runtime dashboard. A slow response time may take up <span class="No-Break">more resources.</span></li>
+			</ul>
+			<p>Other factors need to be considered while allocating vCores to <span class="No-Break">an application:</span></p>
+			<ul>
+				<li>The number <a id="_idIndexMarker1302"/>of requests <span class="No-Break">per second</span></li>
+				<li>The <span class="No-Break">payload size</span></li>
+				<li>The number of errors in <span class="No-Break">the application</span></li>
+				<li>The response time of <span class="No-Break">the application</span></li>
+				<li><span class="No-Break">Throughput</span></li>
+				<li>The number of <span class="No-Break">Mule flows</span></li>
+				<li>Data <span class="No-Break">transformation complexity</span></li>
+				<li><span class="No-Break">Flow complexity</span></li>
+				<li>Object storage usage in <span class="No-Break">the application</span></li>
+			</ul>
+			<p>Multiple levels need to be considered when you’re deciding on the number of vCores <span class="No-Break">to allocate:</span></p>
+			<ul>
+				<li><span class="No-Break">Flow level:</span><ul><li><span class="No-Break">Flow complexity</span></li><li>Data <span class="No-Break">transformation complexity</span></li><li>The <span class="No-Break">object store</span></li></ul></li>
+				<li><span class="No-Break">Application level:</span><ul><li>The number <span class="No-Break">of flows</span></li><li>The type of <span class="No-Break">integration/flow (batch/API/integration/async)</span></li></ul></li>
+				<li><span class="No-Break">Worker level:</span><ul><li><span class="No-Break">Memory requirements</span></li><li><span class="No-Break">Computational requirements</span></li><li><span class="No-Break">Performance requirements</span></li><li>The number <span class="No-Break">of workers</span></li><li><span class="No-Break">Application availability</span></li></ul></li>
+			</ul>
+			<p>Real-time integration can be scaled horizontally or vertically. In most cases, real-time time integration will be scaled horizontally to accommodate more traffic. Batch integration cannot scale horizontally, but it may require additional memory or CPU to accept or process bigger payloads <span class="No-Break">or files.</span></p>
+			<p>Another approach can be <a id="_idIndexMarker1303"/>used to determine the exact resources required for an application – that is, testing the performance of an application in the sandbox environment before deploying it to production. This can help you determine the near-exact amount of vCores required for <span class="No-Break">the application.</span></p>
+			<h2 id="_idParaDest-447"><a id="_idTextAnchor462"/>vCores optimization and allocation with CloudHub 1.0 and CloudHub 2.0</h2>
+			<p>Workers or replicas that have the<a id="_idIndexMarker1304"/> capacity for fewer than 1 vCores (0.1 vCores and 0.2 vCores) offer limited CPU and I/O for smaller workloads. It is recommended<a id="_idIndexMarker1305"/> to allocate more vCores to an application that requires <span class="No-Break">high performance.</span></p>
+			<p>There is no golden rule that<a id="_idIndexMarker1306"/> says how many vCores should be allocated to an application to achieve <em class="italic">x</em> performance. An application that’s deployed to CloudHub 1.0 and CloudHub 2.0 and allocated the same amount of vCores may not <span class="No-Break">perform similarly.</span></p>
+			<p>One of the benefits of deploying an application to CloudHub (1.0 and 2.0) is that each application is run in a separate isolated container. Each application is allocated its own CPU and memory, so performance issues with one application will not impact the other application. Each application can scale horizontally or <span class="No-Break">vertically separately.</span></p>
+			<p>An application that’s been deployed to more than one worker or replica will allow traffic to be distributed across multiple replicas or workers via a <span class="No-Break">load balancer.</span></p>
+			<p>For example, an application that’s been deployed to CloudHub 1.0 with two workers and a worker size of 0.2 vCores means a total of 0.4 vCores will be consumed by the application, and there will be a 0.2-0.2 vCores split between both workers. The load balancer will ensure that traffic is distributed among the workers. The same logic applies to <span class="No-Break">CloudHub 2.0.</span></p>
+			<p>Performance testing is important to allocate the right worker or replica size to <span class="No-Break">an application.</span></p>
+			<h2 id="_idParaDest-448"><a id="_idTextAnchor463"/>vCores optimization and allocation with the on-premises Mule runtime</h2>
+			<p>Applications running on the same on-premises Mule runtime don’t allow you to allocate vCores to individual<a id="_idIndexMarker1307"/> applications. It is always recommended that batch application processing on the on-premises Mule runtime is run <a id="_idIndexMarker1308"/>during off-peak hours. This will ensure that a real-time API can get more resources to process <span class="No-Break">the requests.</span></p>
+			<p>When we deploy an application to the on-premises Mule runtime, there is no restriction on how many applications we can deploy to it, but it is necessary to make sure we don’t end up deploying more applications than the amount of resources available on the server. This will degrade the performance of the Mule application and can impact other applications running on the on-premises <span class="No-Break">Mule runtime.</span></p>
+			<h2 id="_idParaDest-449"><a id="_idTextAnchor464"/>vCores optimization and allocation with Runtime Fabric</h2>
+			<p>With Runtime Fabric, we allocate the CPU that’s been<a id="_idIndexMarker1309"/> reserved and the CPU limit to the application during deployment; this means an application will get the guaranteed CPU reserved value, and it can burst to CPU limit value. An application will only burst up to the CPU limit value if a spare CPU is available; otherwise, the CPU limit value is <span class="No-Break">not guaranteed.</span></p>
+			<p>The following strategies can be used when an application is deployed to Runtime Fabric, ensuring that extra CPU is available for other applications to use if there is <span class="No-Break">high traffic:</span></p>
+			<ul>
+				<li>Always deploy a nightly batch job for applications that have high traffic during the day. This way, an application can get extra CPU during the day, and a nightly batch job can get extra CPU during <span class="No-Break">the night.</span></li>
+				<li>To optimize the surface area for unallocated CPU, distribute multiple replicas of an application among <span class="No-Break">worker nodes.</span></li>
+			</ul>
+			<p>Regardless of whatever strategies you use, it is recommended to do performance testing and validate the resources that have been allocated to an application. Applications allocated with more vCores take less time to deploy compared to applications deployed <a id="_idIndexMarker1310"/>with <span class="No-Break">fewer vCores.</span></p>
+			<h1 id="_idParaDest-450"><a id="_idTextAnchor465"/>Summary</h1>
+			<p>In this chapter, we covered NFRs, which include DR, fault tolerance, high availability, and vCores allocation and optimization. Ensuring business continuity by implementing NFRs is crucial for <span class="No-Break">API implementation.</span></p>
+			<p>The foundation of application performance is application sizing. Low application performance can result from allocating less memory or CPU than an <span class="No-Break">application needs.</span></p>
+			<p>In the next chapter, we will discuss how to get ready for the MuleSoft Certified Platform <span class="No-Break">Architect exam.</span></p>
+		</div>
+	</body>
+</html>

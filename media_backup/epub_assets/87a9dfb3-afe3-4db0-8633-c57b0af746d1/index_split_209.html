@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos777821" class="calibre_2"><span class="calibre2"><span class="bold">Domain events</span></span></p><p class="calibre_1">The domain events that we exchange in our reactive cloud-native systems have interesting nuances with regard to data at rest because of their durability and immutability. <a></a>In many cases, an event is produced and discarded after it is consumed. <a></a>However, some consumers store events for a period of time or indefinitely, as is the case with the data lake. <a></a>This means that we must retain the keys for all domain events with encrypted values if we need to be able to read those values. <a></a>Regulations, such as the upcoming EU <a></a><span class="bold">General Data Protection Regulation</span><a></a> (<a></a><span class="bold">GDPR</span><a></a>), add another wrinkle for immutable events because of the requirement to forget a user's PII data upon request.</p><p class="calibre_1">There are many possible solutions and combinations of solutions to these nuances. <a></a>The first and most common option is to de-identify the data in domain events. <a></a>In this case, the sensitive data is only ever accessible in the context of the owning component. <a></a>Tokenization is an alternative for some data elements because there are no keys to retain and the data can be forgotten by removing the data from the vault, which effectively de-references the tokens. <a></a>A third alternative is crypto shredding, in which the encryption key is purposefully deleted rendering the data useless. <a></a>Security-by-design is critical for teams faced with these kinds of requirements.</p><div class="mbp_pagebreak" id="calibre_pb_210"></div>
+</body></html>

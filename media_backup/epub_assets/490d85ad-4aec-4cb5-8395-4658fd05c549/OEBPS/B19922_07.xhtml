@@ -1,0 +1,408 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-GB">
+	<head>
+		<title>B19922_07</title>
+		<link href="css/style-JRserifv6.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:c8ccfc40-76a9-4a04-b8f6-a8f601fe2ce2" name="Adept.expected.resource"/>
+	</head>
+	<body id="B19922_07">
+		<div id="_idContainer061">
+			<h1 class="chapter-number" id="_idParaDest-125"><a id="_idTextAnchor125"/>7</h1>
+			<h1 id="_idParaDest-126"><a id="_idTextAnchor126"/>Microservices, Application Networks, EDA, and API-led Design</h1>
+			<p>In <a href="B19922_06.xhtml#_idTextAnchor105"><span class="No-Break"><em class="italic">Chapter 6</em></span></a>, we learned how to align business outcomes to functional requirements. In this chapter, we will be discussing a few architectural styles, including <strong class="bold">microservices</strong>, <strong class="bold">event-driven architecture</strong>, and <strong class="bold">API-led connectivity architecture</strong> to build a composable <span class="No-Break">application network.</span></p>
+			<p>In this chapter, we will cover the <span class="No-Break">following topics:</span></p>
+			<ul>
+				<li>Monolithic architecture and its advantages <span class="No-Break">and disadvantages</span></li>
+				<li>Microservices and their advantages <span class="No-Break">and disadvantages</span></li>
+				<li>Microservices design patterns such as Saga and Circuit Breaker, <span class="No-Break">among others</span></li>
+				<li>Event-driven architecture and its advantages <span class="No-Break">and disadvantages</span></li>
+				<li><span class="No-Break">API-led connectivity</span></li>
+				<li>Application networks and <span class="No-Break">composable enterprises</span></li>
+				<li><span class="No-Break">Anypoint MQ</span></li>
+			</ul>
+			<p>Developing an effective integration solution requires the use of architectural design principles. Architects consider factors ranging from business requirements to system constraints to create end-to-end integration solutions. Here are some architectural approaches for <span class="No-Break">integration solutions:</span></p>
+			<ul>
+				<li><strong class="bold">Point-to-point integration</strong>: One of<a id="_idIndexMarker396"/> the oldest, but least recommended methods due to its simplicity, this approach allows two systems to communicate with each other without intermediaries. However, as systems are added, complexity increases, leading to <span class="No-Break">maintenance problems.</span></li>
+				<li><strong class="bold">Hub and spoke architecture</strong>: This approach connects all systems to a centralized<a id="_idIndexMarker397"/> integration hub, enabling efficient communication. Although this simplifies control, single points of failure <span class="No-Break">are possible.</span></li>
+				<li><strong class="bold">Enterprise service bus (ESB) architecture</strong>: This<a id="_idIndexMarker398"/> method uses standard interfaces and protocols to translate application functionality into reusable services. This simplifies integration and system management, but the initial installation of an ESB can be complex <span class="No-Break">and expensive.</span></li>
+				<li><strong class="bold">Microservices architecture</strong>: This <a id="_idIndexMarker399"/>breaks down large complex systems into small, loosely coupled services. While this allows for flexibility and scalability, it can also introduce data consistency and <span class="No-Break">management issues.</span></li>
+				<li><strong class="bold">Serverless architecture</strong>: This <a id="_idIndexMarker400"/>approach focuses on writing individual stateless actions that are triggered by events. It scales automatically and you only pay for what you consume, but it is not recommended for <span class="No-Break">long processes.</span></li>
+				<li><strong class="bold">API-based connectivity</strong>: This<a id="_idIndexMarker401"/> architectural approach focuses on developing production APIs that can be reused across the enterprise with security controls in place. This speeds up project delivery and encourages reuse, although it <span class="No-Break">adds complexity.</span></li>
+				<li><strong class="bold">Integrated platform as a service (iPaaS)</strong>: In this <a id="_idIndexMarker402"/>architecture, users can develop, operate, and manage integrated workflows in the cloud. Although it offers speed, cost effectiveness, and ease of use, it can have limitations when it comes to handling <span class="No-Break">complex integrations.</span></li>
+				<li><strong class="bold">Hybrid integration</strong>: A <a id="_idIndexMarker403"/>combination of on-premises and cloud-based integration models enables flexibility and scalability. However, it can be difficult to manage due to its <span class="No-Break">complex nature.</span></li>
+			</ul>
+			<p>Each of these architectural approaches has its strengths and weaknesses, and the choice often depends on the organization’s specific requirements, constraints, and preferences. Therefore, it is important to understand the nuances of each to make the right choice. In the next section, we will discuss some integration architectures in detail along with their advantages <span class="No-Break">and disadvantages.</span></p>
+			<h1 id="_idParaDest-127"><a id="_idTextAnchor127"/>Monolithic architecture</h1>
+			<p>Before we move<a id="_idIndexMarker404"/> into the microservices architecture, let’s make sure we understand the concept of <strong class="bold">monolithic architecture</strong>. Breaking down the term “monolithic,” <em class="italic">mono</em> means single, and <em class="italic">lithic</em> means stone (thus, single stone). So, the monolithic software architectural style is where we encompass all the functionality into one single application, as shown in <span class="No-Break"><em class="italic">Figure 7</em></span><span class="No-Break"><em class="italic">.1</em></span><span class="No-Break">.</span></p>
+			<p>Monolithic architecture unites all business concerns into a single, vast computer network with a single code base. This kind of application involves upgrading the complete stack to make changes, which includes generating and deploying an updated service-side interface and gaining access to the <span class="No-Break">code base.</span></p>
+			<p><span class="No-Break"><em class="italic">Figure 7</em></span><em class="italic">.1</em> shows that we have a single application containing all the functionality, including the authentication service, order service, payment service, and shipping service, all of which are connected to a database. A typical web application developed with this kind of monolithic architecture will have the user interface, data access layer, and business logic in the <span class="No-Break">same application.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer046">
+					<img alt="Figure 7.1﻿- Monolithic architecture" src="image/B19922_07_01.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.1- Monolithic architecture</p>
+			<p><span class="No-Break"><em class="italic">Figure 7</em></span><em class="italic">.2</em> shows a typical monolithic architecture where the authentication, order, payment, and <a id="_idIndexMarker405"/>shipping services are encompassed into a single executable JAR file. These services are tightly coupled and connected to the same database even though they have <span class="No-Break">separate functionality.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer047">
+					<img alt="Figure 7.2﻿ - Typical web application architecture" src="image/B19922_07_02.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.2 - Typical web application architecture</p>
+			<h2 id="_idParaDest-128"><a id="_idTextAnchor128"/>Advantages of a monolithic architecture</h2>
+			<p>The following are the <a id="_idIndexMarker406"/>advantages of the <span class="No-Break">monolithic architecture:</span></p>
+			<ul>
+				<li><strong class="bold">Easy deployment</strong>: The application can be deployed easily as there is just one single executable file for all the services and <span class="No-Break">user interface</span></li>
+				<li><strong class="bold">Easy application management</strong>: Because a unified application is consolidated, it typically requires less administration, coordination, and orchestration than alternative techniques, making monoliths frequently easier to manage than <span class="No-Break">other solutions</span></li>
+				<li><strong class="bold">Faster end-to-end testing</strong>: The monolithic application is a single, centralized unit, so<a id="_idIndexMarker407"/> end-to-end testing can be performed much faster than with <span class="No-Break">distributed applications</span></li>
+			</ul>
+			<h2 id="_idParaDest-129"><a id="_idTextAnchor129"/>Disadvantages of a monolithic architecture</h2>
+			<p>The following are <a id="_idIndexMarker408"/>the disadvantages of the <span class="No-Break">monolithic architecture:</span></p>
+			<ul>
+				<li><strong class="bold">Single point of failure</strong>: A monolithic architecture encompasses all the required functionality in one single application. This leads to the possibility that the entire application fails in the event of one or more components failing. This can lead to extended downtime for the <span class="No-Break">whole application.</span></li>
+				<li><strong class="bold">Scalability complexity</strong>: Because not every component of a monolithic application can scale independently (since each component has different resource requirements), scaling becomes more difficult as the size of the <span class="No-Break">application increases.</span></li>
+				<li><strong class="bold">Infrastructure cost</strong>: In the event of application performance issues, you need to scale the whole monolithic architecture. This may lead to additional <span class="No-Break">infrastructure costs.</span></li>
+				<li><strong class="bold">Time to market</strong>: Adding and releasing new functionality with monolithic architecture is time consuming. It may take more time to release even simple functionality. This is because the many components in the same application need to be tested to ensure that new changes don’t impact the functionality of <span class="No-Break">other components.</span></li>
+				<li><strong class="bold">Complexity in upgrading the application</strong>: Upgrading the application to new versions can be a tedious task. All the components need to be upgraded together and this can be a time-consuming process. In some cases, organizations end up not upgrading the application to <span class="No-Break">avoid this.</span></li>
+				<li><strong class="bold">Deployment complexity</strong>: Even small changes in the application result in the whole application needing to <span class="No-Break">be redeployed.</span></li>
+			</ul>
+			<p>A monolithic architecture<a id="_idIndexMarker409"/> can be suitable for smaller applications because of the faster development, testing, and deployment, and lower infrastructure costs. However, when your system is growing and the functionality required of the application increases, it can result in bottlenecks for the business and lead to the various <span class="No-Break">aforementioned issues.</span></p>
+			<p>The monolithic architecture and its advantages and disadvantages are now clear to us. We’re going to go over the microservices architecture to see how we can circumvent these limitations of monolithic <span class="No-Break">architecture now.</span></p>
+			<h1 id="_idParaDest-130"><a id="_idTextAnchor130"/>Microservices architecture</h1>
+			<p>In the case <a id="_idIndexMarker410"/>of software composed of small independent services communicating over well-defined APIs, microservices are an architectural and organizational approach to software development. Small, self-contained teams own <span class="No-Break">those services.</span></p>
+			<p>A microservices architecture allows teams to create independent, autonomous, loosely coupled, and independently <span class="No-Break">deployable units.</span></p>
+			<h2 id="_idParaDest-131"><a id="_idTextAnchor131"/>Characteristics of microservices</h2>
+			<p>The following <a id="_idIndexMarker411"/>are the characteristics of <span class="No-Break">the microservices:</span></p>
+			<ul>
+				<li>Services are independently deployable and loosely <span class="No-Break">coupled units</span></li>
+				<li>Each service has its own <span class="No-Break">code base</span></li>
+				<li><span class="No-Break">Autonomous services</span></li>
+				<li>Microservices are small <span class="No-Break">and independent</span></li>
+				<li>Each service can <span class="No-Break">scale independently</span></li>
+				<li><span class="No-Break">Technology agnostic</span></li>
+			</ul>
+			<p>Microservices are loosely coupled and highly cohesive. A highly cohesive microservice wraps its dependencies, logic, and data, and has a single responsibility inside a well-defined domain. When<a id="_idIndexMarker412"/> two systems are constructed so that modifications to one service’s implementation, design, or behavior won’t affect the other, they are said to be loosely <span class="No-Break">coupled microservices.</span></p>
+			<p>A microservices architecture aims to build large software using many small, independently deployable services. In this architecture, service cohesion and loose coupling are the two <span class="No-Break">main functions:</span></p>
+			<ul>
+				<li><strong class="bold">Cohesion</strong>: In the<a id="_idIndexMarker413"/> context of microservices, cohesion<a id="_idIndexMarker414"/> refers to the extent to which the responsibilities of a single service relate to each other. High cohesion within a service is desirable because it increases system maintainability and reduces the complexity of communication between services. A highly unified service performs only one logical function. For example, if you are developing an e-commerce platform, you may have separate services for user authentication, inventory management, order processing, and so on. Each service is unified because it focuses on one area of <span class="No-Break">the system.</span></li>
+				<li><strong class="bold">Coupling</strong>: Coupling<a id="_idIndexMarker415"/> refers to the extent to <a id="_idIndexMarker416"/>which one service depends on other services to perform its responsibilities. In a microservices architecture, the goal is to create “loosely coupled” services. Loosely coupled services can operate independently of each other, which increases system flexibility and enables easier change management. For example, your order processing service should not fail if your warehouse service goes down. It should still work, although it may not be able to provide real-time <span class="No-Break">inventory data.</span></li>
+			</ul>
+			<p>By focusing on high cohesion and loose coupling, developers can create microservices systems that are easier to maintain, more resilient, and more scalable than traditional <span class="No-Break">monolithic architectures.</span></p>
+			<p><strong class="bold">Domain-driven design</strong> (<strong class="bold">DDD</strong>) and the <strong class="bold">single-responsibility principle</strong> (<strong class="bold">SRP</strong>) are two important concepts in <span class="No-Break">microservices development:</span></p>
+			<ul>
+				<li><strong class="bold">DDD</strong>: This is<a id="_idIndexMarker417"/> an approach to <a id="_idIndexMarker418"/>software design that focuses on core business logic (the “domain”). In the context of microservices, DDD helps ensure that each service spans a bounded and unified business context. DDD helps to define clear and bounded contexts for each service, ensuring that they are directly related to business characteristics. For example, in an e-commerce application, you can use DDD principles to separate services such as user management, product catalog, ordering, and payment processing. All these services correspond to a specific business area in an <span class="No-Break">e-commerce application.</span></li>
+				<li><strong class="bold">SRP</strong>: This <a id="_idIndexMarker419"/>principle <a id="_idIndexMarker420"/>states that a class, module, or, in this context, microservice can have only one reason to change. This means that each microservice must handle a single function or process. In the e-commerce example, the user management service should only be responsible for processing users. This should not include activities related to the product catalog, order processing, or payment, as these are different responsibilities. This principle helps maintain high cohesion and low bond strength, resulting in more durable and <span class="No-Break">maintainable systems.</span></li>
+			</ul>
+			<p>By using DDD and SRP in microservices, you can create a system that effectively separates business logic into individual services, each responsible for one aspect of the entire business domain. This results in a system that is easier to understand, maintain, and extend <span class="No-Break">over time.</span></p>
+			<p>The following figure illustrates a microservices architecture where each service runs independently and in separate containers <span class="No-Break">or machines.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer048">
+					<img alt="Figure 7.3﻿ - Microservices architecture" src="image/B19922_07_03.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.3 - Microservices architecture</p>
+			<h2 id="_idParaDest-132"><a id="_idTextAnchor132"/>Advantages of a microservices architecture</h2>
+			<p>The following are<a id="_idIndexMarker421"/> the advantages of a <span class="No-Break">microservices architecture:</span></p>
+			<ul>
+				<li><strong class="bold">Agility and faster time to market</strong>: The microservices architecture allows for a rapid time to market because it simplifies the development, testing, maintenance, and evolution of big applications by splitting them into small pieces so they are easier to develop, test, maintain, and expand over time. Thus, teams can speed up their <span class="No-Break">code delivery.</span></li>
+				<li><strong class="bold">Scalability</strong>: Microservices allow you to scale one or more services independently without affecting other services. There’s a possibility we might have to scale up the services that don’t work very well and microservices allow us to do this on an <span class="No-Break">independent basis.</span></li>
+				<li><strong class="bold">Flexibility and agility</strong>: Each microservice can be developed and deployed independently, so implementing microservices allows nearshore development teams to quickly adjust to changing business needs. This is a more efficient method of getting results in more responsiveness and quicker <span class="No-Break">release cycles.</span></li>
+				<li><strong class="bold">Rapid development</strong>: Microservices make it easier for teams to work on small, focused components, leading to faster development cycles and faster time to market for new <a id="_idIndexMarker422"/>features <span class="No-Break">and updates.</span></li>
+				<li><strong class="bold">Continuous deployment</strong>: A microservices architecture allows you to perform continuous deployment and continuous integration effectively and allows for the continuous delivery of <span class="No-Break">software applications.</span></li>
+				<li><strong class="bold">Resource optimization and utilization</strong>: To optimize resource utilization and reduce infrastructure costs, microservices can be run in containerized environments or <span class="No-Break">serverless architectures.</span></li>
+				<li><strong class="bold">Business agility</strong>: The microservices are well aligned with agile methodologies, enabling organizations to react quickly to changing <span class="No-Break">business requirements.</span></li>
+			</ul>
+			<h2 id="_idParaDest-133"><a id="_idTextAnchor133"/>Disadvantages of a microservices architecture</h2>
+			<p>The <a id="_idIndexMarker423"/>following are the disadvantages of a <span class="No-Break">microservices architecture:</span></p>
+			<ul>
+				<li><strong class="bold">Deployment and scalability complexity</strong>: A microservices architecture allows you to scale and deploy the application independently, but at the same time, scaling and deploying multiple microservices can be challenging to manage and adds complexity. There are tools such as Kubernetes and Docker that help to reduce deployment and scalability complexity, but they come with their own <span class="No-Break">added complexity.</span></li>
+				<li><strong class="bold">Complex and distributed application network</strong>: Managing multiple microservices can be complex. With a greater number of services, it becomes harder to manage and monitor those services. Microservices are inherently distributed, which may result in additional network latency that is difficult to solve, as multiple services may need to be called to serve a single <span class="No-Break">client request.</span></li>
+				<li><strong class="bold">Increased costs</strong>: Microservices can add additional costs because the additional tools used to manage and control microservices, such as Kubernetes, Docker, and<a id="_idIndexMarker424"/> API gateways, are often required and come with <span class="No-Break">additional costs.</span></li>
+			</ul>
+			<p>We have now reviewed the monolithic and microservices architectures and discussed the advantages and disadvantages of both. Next, we will examine a couple of other architectural styles, namely, event-driven architecture and <span class="No-Break">API-led connectivity.</span></p>
+			<h1 id="_idParaDest-134"><a id="_idTextAnchor134"/>Saga pattern</h1>
+			<p>The <strong class="bold">Saga pattern</strong> is a<a id="_idIndexMarker425"/> failure management technique that assists in coordinating transactions across several microservices to preserve data consistency and aids in establishing consistency in distributed applications. Data consistency is managed and upheld across numerous microservices using this pattern. A single service completes each transaction, and it broadcasts changes in state to the other services participating in the Saga. Through a series of local transactions, the Saga architectural pattern offers transaction management. A Saga participant’s work is represented by a local transaction. A compensatory transaction can roll back every Saga activity. Furthermore, the Saga pattern ensures that the relevant compensation transactions are executed to roll back the previously finished work in case of any failure in between to ensure data consistency or that all activities <span class="No-Break">are completed.</span></p>
+			<p class="callout-heading">Note</p>
+			<p class="callout">In software, Saga is a design pattern used to manage distributed transactions. It is a series of local transactions where each event updates data in a single service. The term comes from the paper <a id="_idIndexMarker426"/>called <em class="italic">SAGAS</em> written by Hector Garcia-Molina and Kenneth Salem in 1987. The Saga pattern is mainly used in microservices architecture to ensure data consistency across multiple services. Each Saga transaction has a defined recovery process in case of failure. If one transaction fails, rollback processes are performed to maintain data consistency. Saga events are coordinated by an orchestra, which can be either centralized <span class="No-Break">or decentralized.</span></p>
+			<p>A local transaction within the Saga pattern refers to a transaction that occurs within a single microservice or database. Each of these local transactions can be executed independently and, if successful, should transition the system from one consistent state to another. The <a id="_idIndexMarker427"/>key distinction between local transactions in Saga and traditional distributed transactions is that partial success is acceptable in local transactions. This contrasts with traditional transactions where every part of the transaction must succeed for it to be <span class="No-Break">considered successful.</span></p>
+			<p>In the event of a failure in a local transaction, instead of rolling back like in a traditional transaction, the Saga pattern executes a series of compensating transactions. These compensating transactions are designed to undo the changes made by the preceding local transactions in the Saga, thereby maintaining overall system consistency. It is important to note that these compensating transactions themselves are also <span class="No-Break">local transactions.</span></p>
+			<p>The following diagram illustrates the <a id="_idIndexMarker428"/>Saga design <span class="No-Break">pattern architecture.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer049">
+					<img alt="Figure 7.4﻿ - The Saga design pattern architecture" src="image/B19922_07_04.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.4 - The Saga design pattern architecture</p>
+			<p>The Saga pattern can be implemented in <span class="No-Break">two ways:</span></p>
+			<ul>
+				<li>Saga <span class="No-Break">choreography pattern</span></li>
+				<li>Saga <span class="No-Break">orchestration pattern</span></li>
+			</ul>
+			<h2 id="_idParaDest-135"><a id="_idTextAnchor135"/>Saga choreography pattern</h2>
+			<p>The choreography approach<a id="_idIndexMarker429"/> involves a single microservice consuming an event, carrying out the necessary action, and then passing the event on to the subsequent service <span class="No-Break">to consume.</span></p>
+			<p>The Saga choreography pattern is used to implement the transaction span across multiple services in a <span class="No-Break">decentralized fashion.</span></p>
+			<p>The following figure depicts the Saga <span class="No-Break">choreography pattern.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer050">
+					<img alt="Figure 7.5﻿ - Saga choreography pattern" src="image/B19922_07_05.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.5 - Saga choreography pattern</p>
+			<p>In the preceding diagram, all the <a id="_idIndexMarker430"/>services in the Saga communicate via a message broker for executing the transactions as well as rolling them back. This communication happens asynchronously in a <span class="No-Break">sequenced manner.</span></p>
+			<p>Advantages of the Saga <span class="No-Break">choreography pattern</span></p>
+			<p>The following are<a id="_idIndexMarker431"/> the advantages of the Saga <span class="No-Break">choreography pattern:</span></p>
+			<ul>
+				<li>Easily extensible to add new services into the mix, as it works in a <span class="No-Break">decentralized fashion</span></li>
+				<li>Brings with it the advantages of messaging and event-driven architecture, such as loose coupling, asynchronous communication, <span class="No-Break">and reliability</span></li>
+				<li>Enables greater flexibility and evolution, improving scalability and availability, and decreasing coupling <span class="No-Break">between microservices</span></li>
+			</ul>
+			<h3>Disadvantages of the Saga choreography pattern</h3>
+			<p>The following <a id="_idIndexMarker432"/>are the disadvantages of the Saga <span class="No-Break">choreography pattern:</span></p>
+			<ul>
+				<li>There is no centralized control over the transaction processing, so it becomes complex to manage and understand the process if it spans <span class="No-Break">multiple services</span></li>
+				<li>Transaction rollback is complex as each service in a Saga must have transaction <span class="No-Break">rollback capabilities</span></li>
+				<li>Monitoring and controlling the interactions between the microservices in a choreographed system can be more challenging in the absence of a <span class="No-Break">central coordinator</span></li>
+			</ul>
+			<h2 id="_idParaDest-136"><a id="_idTextAnchor136"/>Saga orchestration pattern</h2>
+			<p>In the orchestration pattern, the <a id="_idIndexMarker433"/>application is completed by connecting each service to the centralized coordinator, which arranges the services in a predetermined sequence. A centralized Saga orchestrator instructs Saga players to carry out local transactions using command messages in an <span class="No-Break">orchestration-based Saga.</span></p>
+			<p>The following diagram illustrates the Saga <span class="No-Break">orchestration pattern:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer051">
+					<img alt="Figure 7.6﻿ - Saga orchestration pattern" src="image/B19922_07_06.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.6 - Saga orchestration pattern</p>
+			<p>Using a centralized<a id="_idIndexMarker434"/> controller, a distributed transaction may be implemented using the Saga orchestration microservice design. The calls between the Saga participants are coordinated using this centralized controller to carry out <span class="No-Break">a transaction.</span></p>
+			<p>Saga controllers manage communication with the service, perform transactions, and are responsible for notifying services in Saga to perform a rollback in case of <span class="No-Break">any failures.</span></p>
+			<h3>Advantages of the Saga orchestration pattern</h3>
+			<p>The following are <a id="_idIndexMarker435"/>the advantages of the Saga <span class="No-Break">orchestration pattern:</span></p>
+			<ul>
+				<li>More control of the processing of transactions when they are explicitly executed through the <span class="No-Break">orchestration pattern</span></li>
+				<li>Monitoring and controlling the interactions between the microservices in an orchestrated system is made simpler with a <span class="No-Break">central coordinator</span></li>
+			</ul>
+			<h3>Disadvantages of the Saga orchestration pattern</h3>
+			<p>The following are <a id="_idIndexMarker436"/>the disadvantages of the Saga <span class="No-Break">orchestration pattern:</span></p>
+			<ul>
+				<li>Adding new services or processes to the Saga is much more complicated as changes are required in the <span class="No-Break">Saga controller</span></li>
+				<li>Because orchestration is often more tightly coupled, the system may be less resilient <span class="No-Break">and scalable</span></li>
+				<li>In an orchestrated system, the central coordinator may serve as a single point of failure, reducing the <span class="No-Break">system’s resilience.</span></li>
+			</ul>
+			<p>Using the fictitious use case of an e-commerce application, let us demonstrate a simplified example of<a id="_idIndexMarker437"/> how MuleSoft can be utilized to implement <span class="No-Break">Saga choreography:</span></p>
+			<ol>
+				<li><strong class="bold">Microservices creation</strong>: Assume that a MuleSoft application has three separate microservices built into it: the Order service, the Payment service, and the <span class="No-Break">Delivery service.</span></li>
+				<li><strong class="bold">Event creation</strong>: The Order service initiates a new Saga and publishes <strong class="source-inline">OrderCreatedEvent</strong> upon receiving <span class="No-Break">an order.</span><p class="list-inset">This can be done in the MuleSoft application by adding a <strong class="source-inline">POST</strong> HTTP method to the Order service, which will cause an event to be triggered following the creation of an order. An Anypoint MQ service or a message broker such as RabbitMQ or ActiveMQ could receive <span class="No-Break">this event.</span></p></li>
+				<li><strong class="bold">Event subscription</strong>: <strong class="source-inline">OrderCreatedEvent</strong> has a subscription from the Payment service. It attempts to process the payment after receiving this event, and if it is successful, it publishes a <strong class="source-inline">PaymentProcessedEvent</strong>. This could be done in MuleSoft by configuring an Anypoint MQ subscriber in the Payment service to listen for <strong class="source-inline">OrderCreatedEvent</strong> and initiate the appropriate payment processing flow when it is detected. It adds a new event to its queue after processing <span class="No-Break">is complete.</span></li>
+				<li><strong class="bold">Orchestration</strong>: <strong class="source-inline">PaymentProcessedEvent</strong> is a subscribed service for the Delivery service. It begins the delivery procedure as soon as it receives this event. The Delivery service can have an MQ subscriber that listens for <strong class="source-inline">PaymentProcessedEvent</strong> and initiates delivery, just like the <span class="No-Break">Payment service.</span></li>
+				<li><strong class="bold">Compensating transactions</strong>: The Payment service issues <strong class="source-inline">PaymentFailedEvent</strong> if the payment procedure is unsuccessful. The order would then be canceled <a id="_idIndexMarker438"/>through a compensating transaction initiated by the Order service that has subscribed to this event. An order cancellation flow can be initiated by setting up an additional MQ subscriber in the Order service, which will listen <span class="No-Break">for </span><span class="No-Break"><strong class="source-inline">PaymentFailedEvent</strong></span><span class="No-Break">.</span></li>
+			</ol>
+			<p>This is merely a simplified example; the actual implementation will be far more complicated, considering a few additional factors such as managing transactional consistency between service calls and handling communication failures <span class="No-Break">between services.</span></p>
+			<p>Implementing Saga choreography would require MuleSoft’s ability to manage APIs and seamlessly integrate <span class="No-Break">various systems.</span></p>
+			<p>The Saga pattern for creating microservices has been demonstrated in the previous section. Next, we shall discuss the Competing Consumers pattern in <span class="No-Break">this part.</span></p>
+			<h1 id="_idParaDest-137"><a id="_idTextAnchor137"/>The Competing Consumers pattern</h1>
+			<p>Multiple consumers<a id="_idIndexMarker439"/> from the same channel can process messages in parallel thanks to the Competing Consumers pattern. When multiple consumers of the same pool instance need to process several small tasks in parallel and asynchronously, this pattern comes <span class="No-Break">in handy.</span></p>
+			<p>In a normal scenario, the traffic coming to the message broker from the publisher is low, and the consumer can process messages at the rate at which they come from the publisher, as shown in <span class="No-Break"><em class="italic">Figure 7</em></span><span class="No-Break"><em class="italic">.7</em></span><span class="No-Break">.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer052">
+					<img alt="Figure 7.7﻿ - Competing Consumers pattern for low traffic" src="image/B19922_07_07.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.7 - Competing Consumers pattern for low traffic</p>
+			<p>There might <a id="_idIndexMarker440"/>be a scenario where the ingress traffic increases, such as when publishers start sending more messages to the queue or the number of publishers increases. In this case, the rate at which messages are published to the queue is faster than that at which they <span class="No-Break">are consumed.</span></p>
+			<p>If this happens, we can increase the number of consumers listening to a message stream and allow more than one consumer per queue to process messages simultaneously. This way, the traffic is distributed amongst several consumers to enable the simultaneous processing of messages, with one message being transmitted to a single consumer regardless of how many consumers are listening to the <span class="No-Break">same queue.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer053">
+					<img alt="Figure 7.8﻿ - Competing Consumers pattern for high traffic" src="image/B19922_07_08.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.8 - Competing Consumers pattern for high traffic</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 7</em></span><em class="italic">.8</em>, we have <a id="_idIndexMarker441"/>added more consumers to the pool to process traffic coming at the same rate at which it comes from <span class="No-Break">the publisher.</span></p>
+			<h2 id="_idParaDest-138"><a id="_idTextAnchor138"/>Benefits of implementing the Competing Consumers pattern</h2>
+			<p>The following are the<a id="_idIndexMarker442"/> benefits of implementing the Competing <span class="No-Break">Consumers pattern:</span></p>
+			<ul>
+				<li><strong class="bold">Scalability</strong>: Depending on the traffic from publishers in message channels, consumers may be added or deleted. Increasing the number of consumers will allow the distribution of traffic between multiple consumers and each message can be processed asynchronously <span class="No-Break">and independently.</span></li>
+				<li><strong class="bold">High availability</strong>: The same message channel is being listened to by several consumers. Other consumers can process messages if one of the consumers fails <span class="No-Break">or stops.</span></li>
+				<li><strong class="bold">Reliability and resilience</strong>: If the message processing fails for one of the messages, the message will be returned to the queue and will be available for reprocessing again by <span class="No-Break">other consumers.</span></li>
+			</ul>
+			<p>We can use<a id="_idIndexMarker443"/> the Competing Consumers pattern in a variety <span class="No-Break">of applications:</span></p>
+			<ul>
+				<li>When distribution of traffic is necessary, as it cannot be handled by a single consumer, such as when there are very high and variable transport volumes. We may be able to have several consumers processing messages at the same time under <span class="No-Break">these circumstances.</span></li>
+				<li>Where reliability of the message, fault tolerance, and availability <span class="No-Break">are necessary.</span></li>
+				<li>If the process is split into a small set of tasks and each task can be executed asynchronously or independently in concurrent <span class="No-Break">execution mode.</span></li>
+			</ul>
+			<h1 id="_idParaDest-139"><a id="_idTextAnchor139"/>Circuit Breaker pattern</h1>
+			<p>Another <a id="_idIndexMarker444"/>design pattern used in software development is the Circuit Breaker pattern. In microservices, the <strong class="bold">Circuit Breaker design pattern</strong> prevents service failures by keeping an eye on interactions, establishing thresholds, and momentarily stopping or suspending traffic to malfunctioning services. It guarantees dependable performance in distributed architectures by assisting in the prevention of cascade failures and preserving <span class="No-Break">system stability.</span></p>
+			<p>It is named after <a id="_idIndexMarker445"/>the electrical circuit breaker that stops the flow of electricity when there is a fault detected. In software, the circuit breaker pattern is used to detect failures and to define the logic of preventing the failure from reoccurring, during maintenance, temporary external system failure, or unexpected <span class="No-Break">system problems.</span></p>
+			<p>That’s how it works, you know. When a system encounters a certain number of failures (e.g., it fails to call a microservice), the Circuit Breaker trips. The Circuit Breaker pattern will prevent any interaction with the service during a specified period and return an error without delay. The Circuit Breaker will allow a limited number of test requests to be passed once the timeout has expired. If they are successful, the Circuit Breaker will restart its usual operation; if it is unsuccessful, a timeout period shall <span class="No-Break">be resumed.</span></p>
+			<p>The Circuit Breaker pattern protects the system against allocating resources to operations that may fail, prevents overloading, and gives it a chance <span class="No-Break">to recover.</span></p>
+			<h2 id="_idParaDest-140"><a id="_idTextAnchor140"/>Circuit Breaker states</h2>
+			<p>The following<a id="_idIndexMarker446"/> are the various Circuit <span class="No-Break">Breaker states:</span></p>
+			<ul>
+				<li><strong class="bold">Open</strong>: When the configured trip timeout has been reached, the Subscriber source does not attempt to retrieve messages and does not skip <span class="No-Break">messages silently.</span></li>
+				<li><strong class="bold">Closed</strong>: The starting state in which messages are normally obtained from MQ based on the configuration of the <span class="No-Break">Subscriber source.</span></li>
+				<li><strong class="bold">Half-open</strong>: After trip timeout elapses, the Subscriber source goes to a Half-Open state. In the next poll for messages, the Subscriber source retrieves a single message from the service and uses that message to check whether the system has recovered before going back to the normal <span class="No-Break">Closed state.</span></li>
+			</ul>
+			<p>The following diagram illustrates <a id="_idIndexMarker447"/>the architecture of the Circuit <span class="No-Break">Breaker pattern.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer054">
+					<img alt="Figure 7.9﻿ - The Circuit Breaker pattern" src="image/B19922_07_09.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.9 - The Circuit Breaker pattern</p>
+			<p>MuleSoft allows<a id="_idIndexMarker448"/> us to implement the Circuit Breaker pattern using Anypoint MQ or by applying the Circuit Breaker policy to the API. This policy can be downloaded from MuleSoft Catalyst and published to your organization’s <span class="No-Break">Anypoint exchange.</span></p>
+			<h1 id="_idParaDest-141"><a id="_idTextAnchor141"/>Anypoint MQ</h1>
+			<p><strong class="bold">Anypoint MQ</strong> is a <a id="_idIndexMarker449"/>multitenant, cloud-based managed queuing service provided by MuleSoft for exchanging data between your applications asynchronously. The Anypoint MQ broker allows an application to publish the message to the queue so that another application can consume the message from the queue. Anypoint MQ is fully integrated with the Anypoint platform, offering access control, client management, <span class="No-Break">and connectors.</span></p>
+			<p>Mule applications can use Anypoint MQ Connector to publish and consume messages from the queue, whereas non-Mule applications can use Anypoint MQ REST APIs for publishing and consuming messages from <span class="No-Break">the queues.</span></p>
+			<h2 id="_idParaDest-142"><a id="_idTextAnchor142"/>Message exchanges and queues</h2>
+			<p><strong class="bold">Message queues</strong> are<a id="_idIndexMarker450"/> temporary storage where publishers can publish messages and consumers can consume messages. Message queues enable reliable and scalable communication between <span class="No-Break">multiple applications.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer055">
+					<img alt="Figure 7.10﻿ - Anypoint MQ (queue)" src="image/B19922_07_10.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.10 - Anypoint MQ (queue)</p>
+			<p>Message exchanges<a id="_idIndexMarker451"/> allow you to bind multiple queues to send the same copy of messages to all the queues bound to the exchange. The following figure illustrates how messages flow from the exchange to all <span class="No-Break">associated queues.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer056">
+					<img alt="Figure 7.11﻿ - Anypoint MQ (exchange)" src="image/B19922_07_11.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.11 - Anypoint MQ (exchange)</p>
+			<p>With an exchange, messages are routed intelligently to certain queues using message routing rules. The following figure illustrates how messages flow to specific queues depending on the <span class="No-Break">routing rules.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer057">
+					<img alt="Figure 7.12﻿ - Anypoint MQ (exchange intelligent routing)" src="image/B19922_07_12.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.12 - Anypoint MQ (exchange intelligent routing)</p>
+			<p>The following are a <a id="_idIndexMarker452"/>few considerations to keep in mind while using <span class="No-Break">message exchanges:</span></p>
+			<ul>
+				<li>450 queues can be bound to the <span class="No-Break">message exchange</span></li>
+				<li>Only 10 queues can be bound to a message exchange that has intelligent <span class="No-Break">routing enabled</span></li>
+				<li>One queue can be bound to <span class="No-Break">multiple queues</span></li>
+			</ul>
+			<p>Anypoint MQ <a id="_idIndexMarker453"/>supports <strong class="bold">first in first out</strong> (<strong class="bold">FIFO</strong>) queues. Ordered delivery of your messages is guaranteed by these queues. Applications that demand exactly one delivery and precise message ordering but not fast delivery speed are best suited for <span class="No-Break">FIFO queues.</span></p>
+			<p>10 in-flight messages per message group in a FIFO queue are supported by Anypoint MQ. There is no maximum number of message groups in a FIFO queue in <span class="No-Break">Anypoint MQ.</span></p>
+			<p>The following are <a id="_idIndexMarker454"/>the features supported by <span class="No-Break">Anypoint MQ:</span></p>
+			<ul>
+				<li>Up to 120,000 in-flight messages supported by standard queues and 10 in-flight messages supported by <span class="No-Break">FIFO queues</span></li>
+				<li>Anypoint MQ can be configured in multiple regions in the US, Europe, <span class="No-Break">and APAC</span></li>
+				<li>Encryption is supported for storing messages in <span class="No-Break">the queues</span></li>
+			</ul>
+			<h2 id="_idParaDest-143"><a id="_idTextAnchor143"/>Cross-region failover for Anypoint MQ standard queues</h2>
+			<p>Anypoint MQ automatically <a id="_idIndexMarker455"/>creates a fallback queue in a fallback region when you enable failover for a queue. A Mule application will publish and consume messages from the fallback queue if it is unable to connect to an Anypoint MQ server in <span class="No-Break">that area.</span></p>
+			<p>As soon as the connector determines that the main region is unavailable, it changes to publish and consume new messages from the fallback queue and periodically verifies that the main region is <span class="No-Break">operational again.</span></p>
+			<p>The following are the considerations for <span class="No-Break">cross-region failover:</span></p>
+			<ul>
+				<li>Failover is supported for standard queues but not for FIFO queues and <span class="No-Break">message exchanges.</span></li>
+				<li>Failover is not supported in the Anypoint government cloud as it supports only one region. The Anypoint government cloud is discussed in <a href="B19922_13.xhtml#_idTextAnchor349"><span class="No-Break"><em class="italic">Chapter 13</em></span></a><span class="No-Break">.</span></li>
+				<li>Either Anypoint MQ Connector 4.0.5 or later is required for <span class="No-Break">failover support.</span></li>
+				<li>In some countries, Anypoint MQ is available in just one area. The data is stored in a region outside the country until the primary region is available if failover is enabled for the queues in these regions and the primary region <span class="No-Break">is down.</span></li>
+				<li>Failover is not enabled by default. Once failover is enabled, it will create the queue with the <strong class="source-inline">_fb</strong> suffix in the failover region. For example, if you have a queue called <strong class="source-inline">myOrderQueue</strong> in the primary region, it will create <strong class="source-inline">myOrderQueue_fb</strong> in the <span class="No-Break">failover region.</span></li>
+			</ul>
+			<h2 id="_idParaDest-144"><a id="_idTextAnchor144"/>Dead-letter queues</h2>
+			<p>You can make <a id="_idIndexMarker456"/>sure that undeliverable messages are routed<a id="_idIndexMarker457"/> to a <strong class="bold">dead-letter queue</strong> (<strong class="bold">DLQ</strong>) using Anypoint MQ. After that, you can examine the messages that were sent to the DLQ to ascertain why they were not delivered. A DLQ only receives undelivered messages; otherwise, it functions similarly to any other queue. When creating the queue, you can set the <a id="_idIndexMarker458"/>delivery delay, encryption, and <strong class="bold">time-to-live</strong> (<span class="No-Break"><strong class="bold">TTL</strong></span><span class="No-Break">) value.</span></p>
+			<p>The following are other capabilities provided by <span class="No-Break">Anypoint MQ:</span></p>
+			<ul>
+				<li>It provides out-of-the-box Anypoint MQ Connector for publishing and consuming messages with the message exchange <span class="No-Break">and queues.</span></li>
+				<li>Non-MuleSoft applications or third-party applications can use Anypoint MQ REST APIs to publish and consume messages from the <span class="No-Break">Anypoint MQ.</span></li>
+				<li>It can transfer<a id="_idIndexMarker459"/> substantial payloads, up to 10 MB. Anypoint MQ converts the payload to a string before sending if it contains any format other than text (such as CSV, HTML, JSON, and XML), which increases the size of the payload. A payload too large error may occur if the payload is larger than the 10 MB maximum payload size because of <span class="No-Break">this conversion.</span></li>
+			</ul>
+			<h2 id="_idParaDest-145"><a id="_idTextAnchor145"/>The Circuit Breaker pattern with Anypoint MQ</h2>
+			<p>A <a id="_idIndexMarker460"/>Circuit Breaker capability is provided by the Subscriber source, allowing you to regulate how the connector responds to errors that arise <a id="_idIndexMarker461"/>during the processing of a consumed message. You can use the Circuit Breaker to handle any outage of an external service that you connect to. The Circuit Breaker enables the external service to recover under a lower load and permits the system to cease making requests. The following figure shows the configuration of the Circuit Breaker pattern on <span class="No-Break">Anypoint MQ.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer058">
+					<img alt="Figure 7.13﻿ - The Circuit Breaker pattern with Anypoint MQ" src="image/B19922_07_13.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.13 - The Circuit Breaker pattern with Anypoint MQ</p>
+			<p>The following are the parameters that need to be configured on Anypoint MQ to enable the<a id="_idIndexMarker462"/> Circuit <span class="No-Break">Breaker pattern:</span></p>
+			<ul>
+				<li><strong class="source-inline">onErrorType</strong>: This <a id="_idIndexMarker463"/>determines the kinds of errors that are considered failures when the flow is being executed. Only when the flow concludes with an error propagation does an error occurrence count. Every error is automatically interpreted as a <span class="No-Break">circuit failure.</span></li>
+				<li><strong class="source-inline">errorsThreshold</strong>: This determines the number of <strong class="source-inline">onErrorType</strong> errors that must be encountered by the Circuit Breaker <span class="No-Break">to open.</span></li>
+				<li><strong class="source-inline">tripTimeout</strong>: If <strong class="source-inline">errorsThreshold</strong> is reached, the circuit shall remain open for a time that can be specified with <span class="No-Break">this value.</span></li>
+				<li><strong class="source-inline">circuitName</strong>: The name of the Circuit Breaker that will be bound to this specification. Each queue has its own Circuit Breakers <span class="No-Break">by default.</span></li>
+			</ul>
+			<h1 id="_idParaDest-146"><a id="_idTextAnchor146"/>Event-driven architecture (EDA)</h1>
+			<p>Modern <a id="_idIndexMarker464"/>applications constructed with microservices frequently employ EDA, which makes use of events to trigger and communicate between decoupled services. An event is an update or change in status, such as when a product is added to a shopping cart in an <span class="No-Break">online store.</span></p>
+			<p>Let’s now discuss decoupling and loose coupling <span class="No-Break">within EDA.</span></p>
+			<p>Decoupling and loose coupling are related but distinct concepts within EDA. <strong class="bold">Decoupling</strong> is a <a id="_idIndexMarker465"/>way to eliminate the dependencies between the different components of the system. In the context of the EDA, publishers generate event data without knowing the consumer of the messages. This allows the publisher and consumer to communicate independently without knowing <span class="No-Break">each other.</span></p>
+			<p><strong class="bold">Loose coupling</strong> attempts <a id="_idIndexMarker466"/>to lessen the coupling between components (rather than totally separate them) by reducing their level of interdependence. While components in a loosely coupled system may communicate with one another, they do so without developing any kind <span class="No-Break">of dependency.</span></p>
+			<h2 id="_idParaDest-147"><a id="_idTextAnchor147"/>Benefits of EDA</h2>
+			<p>The following are the<a id="_idIndexMarker467"/> benefits <span class="No-Break">of EDA:</span></p>
+			<ul>
+				<li><strong class="bold">Parallel processing</strong>: Multiple processes can be triggered by a single event to be executed independently of each other. The key feature of EDA is its ability to handle messages asynchronously. This means that it can distribute workloads and support parallel processing. A broker can receive any number of events from various event producers and deliver them to various components <span class="No-Break">for processing.</span></li>
+				<li><strong class="bold">Improved responsiveness</strong>: Services can communicate asynchronously without waiting for instant answers by exchanging events. This method improves responsiveness, permits more parallelism, and lowers <span class="No-Break">system latency.</span></li>
+				<li><strong class="bold">Scalability</strong>: A single incident prompts several responses from various customers, enhancing performance. Decoupling makes it easier to add, update, or remove event producers and consumers, enabling rapid modifications in response to <span class="No-Break">changing needs.</span></li>
+				<li><strong class="bold">Fault tolerance and resilience</strong>: EDA can be resilient and fault tolerant by design. Other components can keep working on their own even if one breaks down or stops responding. This increases the application’s overall availability and dependability by guaranteeing that the system continues to function even in the event of <span class="No-Break">a breakdown.</span></li>
+			</ul>
+			<h2 id="_idParaDest-148"><a id="_idTextAnchor148"/>Limitations of EDA</h2>
+			<p>The following<a id="_idIndexMarker468"/> are the limitations of <span class="No-Break">the EDA:</span></p>
+			<ul>
+				<li><strong class="bold">Message ordering</strong>: The key principle of EDA is to process messages asynchronously and independently, and it becomes challenging to maintain the order and consistency of the events, especially when events are processed in a <span class="No-Break">distributed environment</span></li>
+				<li><strong class="bold">Error handling</strong>: In EDA, errors <a id="_idIndexMarker469"/>and exceptions may be handled differently, as events may be handled at different times and in <span class="No-Break">different locations</span></li>
+				<li><strong class="bold">Complexity</strong>: In terms of understanding the flow of events, relationships between events, and problems with troubleshooting, EDA can <span class="No-Break">create complexity</span></li>
+				<li><strong class="bold">Debugging challenges</strong>: In EDA, especially when events lead to a chain of interactions between components, it can be hard to identify the source <span class="No-Break">of problems</span></li>
+			</ul>
+			<p>We have discussed Anypoint MQ in this chapter, and it can be used to implement EDA. Another messaging system, such as JMS, AMQP, or Kafka, can be used to <span class="No-Break">implement EDA.</span></p>
+			<h1 id="_idParaDest-149"><a id="_idTextAnchor149"/>API-led connectivity and EDA together</h1>
+			<p>EDA and <a id="_idIndexMarker470"/>API-led connectivity are two potent<a id="_idIndexMarker471"/> software architecture techniques that work well together. With API-led connectivity, the software’s essential building blocks are the APIs. Because all the devices, systems, and applications are linked and communicate <a id="_idIndexMarker472"/>with one another via APIs, the systems are manageable, reusable, and modular. In contrast, the design paradigm known as EDA involves software components that respond to and create events. These occurrences indicate a modification in an application’s state, which sets off events in other <span class="No-Break">system components.</span></p>
+			<p>When combined, these two strategies can greatly improve the way an application is designed <span class="No-Break">and runs.</span></p>
+			<ul>
+				<li><strong class="bold">Enhanced scalability</strong>: API-led connectivity can facilitate the addition of new system components, while EDA can assist in managing the real-time flow <span class="No-Break">of information.</span></li>
+				<li><strong class="bold">Enhanced efficiency</strong>: The effective reuse of software components can be made possible by the combination of EDA and API-led connectivity, which can expedite and lower the cost <span class="No-Break">of development.</span></li>
+				<li><strong class="bold">Flexibility</strong>: While <a id="_idIndexMarker473"/>EDA enables real-time responsiveness to changes, enabling a flexible and dynamic system, API-led connectivity offers the flexibility to connect different applications, systems, <span class="No-Break">and devices.</span></li>
+				<li><strong class="bold">Real-time processing</strong>: While APIs can offer real-time access to the services and resources required for event processing, EDA makes it easier to process events in <span class="No-Break">real time.</span></li>
+				<li><strong class="bold">Simple maintainability</strong>: Updating <a id="_idIndexMarker474"/>and maintaining systems is made easier by the modular design of API-led connectivity. This is enhanced by EDA, which connects loosely coupled services and facilitates easy <span class="No-Break">system modification.</span></li>
+			</ul>
+			<p>In conclusion, EDA combined with API-led connectivity can yield a stable, scalable, and adaptable software architecture that effectively manages real-time data flow and dynamic <span class="No-Break">task processing.</span></p>
+			<h2 id="_idParaDest-150"><a id="_idTextAnchor150"/>Experience API</h2>
+			<p>As the name<a id="_idIndexMarker475"/> implies, an Experience API in API-led connectivity describes the experience of a particular user or system. An Experience API’s <a id="_idIndexMarker476"/>primary goal is to deliver data in the format needed by a specific device, web application, or channel. For its end user, system, or channel—be it a mobile app, a desktop website, or even another application—each Experience API offers a particular view that is appropriate. Because of this, developers can alter the user interface or the device’s data source without changing the underlying systems and procedures. We must modify experience APIs to meet the unique needs of each customer as they are optional and should only be utilized if they are unable to use <span class="No-Break">our APIs.</span></p>
+			<p>For instance, the information shown on a web-based application will not be the same as the information displayed on a mobile application. Experience APIs can help in this situation. They retrieve identical information from System or Process APIs, but their presentation varies according to the intended device or channel. Experience APIs provide great flexibility in terms of changing user interfaces and experiences without interfering<a id="_idIndexMarker477"/> with the <a id="_idIndexMarker478"/>business processes of the backend systems. This enables companies to promptly adjust to evolving consumer demands, market trends, <span class="No-Break">and preferences.</span></p>
+			<h2 id="_idParaDest-151"><a id="_idTextAnchor151"/>Process API</h2>
+			<p>In API-led connectivity, a <strong class="bold">Process API</strong> is used to coordinate data from System APIs and carry out a <a id="_idIndexMarker479"/>particular business function. These APIs can be <a id="_idIndexMarker480"/>reused across various channels and applications because they are made to handle business use cases and processes. An order process for a customer, for instance, could be managed by a Process API. It could use System APIs to calculate pricing, verify inventory, get product details, and oversee the life cycle of an order. Different Experience APIs (the third layer in API-led connectivity) can then use this Process API to obtain the data in the format needed by each channel or platform (such as a mobile app, web portal, or other customer touchpoints). Process APIs are optional and should only be used when gathering information from multiple System APIs for a <span class="No-Break">particular entity.</span></p>
+			<p>With the help of these Process APIs, the customer-facing application (Experience API) can abstract away the process of retrieving data from multiple systems, increasing process reusability and streamlining. In this manner, modifications to the underlying systems have no direct impact on how well customer-facing apps operate. Process agility, service reusability, and optimized data processes are all provided by using Process APIs in API-led connectivity, which facilitates and expedites <span class="No-Break">application development.</span></p>
+			<h2 id="_idParaDest-152"><a id="_idTextAnchor152"/>System API</h2>
+			<p>A <strong class="bold">System API</strong> is <a id="_idIndexMarker481"/>the kind of API that facilitates communication<a id="_idIndexMarker482"/> with databases, underlying systems, and other services in API-led connectivity. This kind of API doesn’t have any business logic or procedures; instead, it just serves as a mechanism for data retrieval and storage. With the help of system APIs, it is possible to efficiently encapsulate the technical details of the systems and only expose the necessary information. An instance of a System API could be the ability to retrieve customer information from a database or the features of a particular software program. System APIs are optional and should be used only in case the backends we are using do not already expose good <span class="No-Break">RESTful APIs.</span></p>
+			<p>To access a <a id="_idIndexMarker483"/>database, ERP, or email system, for instance, a system API might be developed. Higher-level process APIs or Experience APIs would then use this API to supply functionality for various user interfaces <span class="No-Break">or processes.</span></p>
+			<p>The following is the architecture <a id="_idIndexMarker484"/>of <span class="No-Break">API-led connectivity:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer059">
+					<img alt="Figure 7.14﻿ - API-led connectivity architecture" src="image/B19922_07_14.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.14 - API-led connectivity architecture</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 7</em></span><em class="italic">.14</em>, the communication between the Experience, Process, and System APIs happens via HTTP. Benefits such as better productivity, efficiency, agility, and flexibility are afforded by API-led connectivity. It allows organizations to create configurable and reused APIs, use new technologies, and streamline processes that allow them to maintain links with legacy <span class="No-Break">IT systems.</span></p>
+			<p>Let’s talk about API-led connectivity and EDA together. API-led connectivity and EDA complement each other, but they are two distinct styles <span class="No-Break">of architecture.</span></p>
+			<p>The following are some differences between EDA and the <span class="No-Break">REST API:</span></p>
+			<ul>
+				<li>EDA is asynchronous, whereas the REST API <span class="No-Break">is synchronous</span></li>
+				<li>EDA is loosely coupled, whereas the REST API is <span class="No-Break">tightly coupled</span></li>
+				<li>EDA communicates via a message broker, whereas the REST API communicates <span class="No-Break">over HTTP</span></li>
+			</ul>
+			<p>The following diagram shows EDA and API-led connectivity <span class="No-Break">architecture together.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer060">
+					<img alt="Figure 7.15﻿ - API-led connectivity architecture and EDA together" src="image/B19922_07_15.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 7.15 - API-led connectivity architecture and EDA together</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 7</em></span><em class="italic">.15</em>, we have <a id="_idIndexMarker485"/>combined EDA and API-led connectivity <a id="_idIndexMarker486"/>architecture to receive messages via Anypoint MQ or HTTP. We can ensure zero message loss, reliability, and guaranteed delivery with EDA, and we can make use benefits of both architectures when they are <span class="No-Break">implemented together.</span></p>
+			<h1 id="_idParaDest-153"><a id="_idTextAnchor153"/>Application networks and composability</h1>
+			<p>A set of capabilities in an <a id="_idIndexMarker487"/>approach called the <strong class="bold">MuleSoft composable enterprise</strong> is offered by the company that focuses on integration and API management solutions. The core of the composable enterprise concept is to<a id="_idIndexMarker488"/> create a flexible and configurable architecture that allows enterprises to rapidly adjust and evolve <span class="No-Break">their systems.</span></p>
+			<p>Application networks and APIs, which make an organization more flexible and enable quick responses to changing market dynamics, technological disruption, or business needs, are key elements of composable enterprises. An application network can assist a company in becoming more flexible, adjusting its pace of business, and adapting to shifts in its industry, market, and customer base without compromising its <span class="No-Break">core values.</span></p>
+			<p>Every newly<a id="_idIndexMarker489"/> built API can contribute additional value to your whole application network and marketplace when your composable organization adopts an <span class="No-Break">API-led approach.</span></p>
+			<p>The following are the key enablers of the <a id="_idIndexMarker490"/>composable <span class="No-Break">enterprise concept:</span></p>
+			<ul>
+				<li><strong class="bold">API-led connectivity</strong>: MuleSoft <a id="_idIndexMarker491"/>advocates the API-led connectivity architecture that allows you to manage, design, and implement reusable APIs to connect data, applications, and systems. APIs are building blocks for integrations that allow the composition of various services <span class="No-Break">and components.</span></li>
+				<li><strong class="bold">Reusable assets</strong>: The<a id="_idIndexMarker492"/> composable enterprise concept emphasizes building reusable components, assets, and building blocks such as APIs, templates, connectors, and frameworks. This allows us to create new APIs rapidly, reducing the length of the development cycle and minimizing overall development efforts. This means new features can be released much faster. These reusable assets can be stored in Anypoint Exchange, which allows the discovery of assets by <span class="No-Break">other developers.</span></li>
+				<li><strong class="bold">Hybrid integration</strong>: The <a id="_idIndexMarker493"/>composable enterprise supports hybrid implementations that allow organizations to connect on-premises and cloud-based systems. MuleSoft provides the connectors, platform components, and other services that enable connectivity with databases, services, and devices running on the cloud <span class="No-Break">and on-premises.</span></li>
+				<li><strong class="bold">Application networks</strong>: Building<a id="_idIndexMarker494"/> application networks—where APIs are arranged and shared in a regulated way—is a concept that MuleSoft advocates. This enables businesses to increase their connectivity capabilities by utilizing already-existing APIs and developing <span class="No-Break">new ones.</span></li>
+				<li><strong class="bold">Universal API management</strong>: Universal API management allows the creation, management, securing, and governing of APIs located anywhere or following any architecture<a id="_idIndexMarker495"/> or written in any technology. Most organizations have APIs running on multi-cloud and on-premises and probably have APIs based on different technologies. These businesses are unable to manage and coordinate these dissimilar APIs, and they lack visibility as information moves between these platforms. This is one of the issues that MuleSoft aims to resolve in universal API management, which, according to MuleSoft, is the capacity to extend full life cycle management capabilities to APIs that are developed and <span class="No-Break">implemented anywhere.</span></li>
+				<li><strong class="bold">Automation</strong>: Automation<a id="_idIndexMarker496"/> is one of the critical <a id="_idIndexMarker497"/>key enablers of the composable enterprise, which allows organizations to automate manual business processes and improve overall productivity by reducing manual tasks. LOB teams and non-technical users can independently create integration applications from central IT-created components with MuleSoft Composer. The creation of more feature-rich components is made simpler for builders via MuleSoft <span class="No-Break">Robotic Process.</span></li>
+			</ul>
+			<h1 id="_idParaDest-154"><a id="_idTextAnchor154"/>Summary</h1>
+			<p>This chapter has covered a variety of architectural styles that are crucial to understanding when creating a network using modular architecture. Along with other contemporary architectural styles such as EDA and API-led connectivity, we also reviewed the monolithic and <span class="No-Break">microservices architectures.</span></p>
+			<p>Several microservices design patterns, such as the Saga, Circuit Breaker, and Competing Consumers patterns, were also examined. Additionally, we now know how to use MuleSoft’s Anypoint MQ component to implement a messaging architecture <span class="No-Break">or EDA.</span></p>
+			<p>In the next chapter, we will be talking about the influence of non-functional requirements in <span class="No-Break">shaping architecture.</span></p>
+		</div>
+	</body>
+</html>

@@ -28,3 +28,7 @@ local_settings.py
 .env
 .env.*
 !.env.example
+
+#Temporales
+backup_sqlite.json
+regenerate_cover.py

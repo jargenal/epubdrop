@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+<head>
+<meta name="dtb:uid" content="9780063270565" />
+<meta name="dtb:depth" content="1" />
+<meta name="dtb:totalPageCount" content="0" />
+<meta name="dtb:maxPageNumber" content="0" />
+</head>
+<docTitle><text>Executive Presence 2.0</text></docTitle>
+<docAuthor><text>Sylvia Ann Hewlett</text></docAuthor>
+<navMap>
+<navPoint id="a1" playOrder="1"><navLabel><text>Cover</text></navLabel><content src="text/9780063270565_Cover.xhtml#cover" /></navPoint>
+<navPoint id="a2" playOrder="2"><navLabel><text>Title Page</text></navLabel><content src="text/9780063270565_Titlepage.xhtml#tit" /></navPoint>
+<navPoint id="a3" playOrder="3"><navLabel><text>Dedication</text></navLabel><content src="text/9780063270565_Dedication.xhtml#ded" /></navPoint>
+<navPoint id="a4" playOrder="4"><navLabel><text>Contents</text></navLabel><content src="text/9780063270565_Contents.xhtml" /></navPoint>
+<navPoint id="a5" playOrder="5"><navLabel><text>Introduction</text></navLabel><content src="text/9780063270565_Introduction.xhtml#int" /></navPoint>
+<navPoint id="a6" playOrder="6"><navLabel><text>Part I: Executive Presence 1.0</text></navLabel><content src="text/9780063270565_Part_1.xhtml#pt1" />
+<navPoint id="a7" playOrder="7"><navLabel><text>Chapter 1: What Is Executive Presence?</text></navLabel><content src="text/9780063270565_Chapter_1.xhtml#ch1" /></navPoint>
+<navPoint id="a8" playOrder="8"><navLabel><text>Chapter 2: Gravitas</text></navLabel><content src="text/9780063270565_Chapter_2.xhtml#ch2" /></navPoint>
+<navPoint id="a9" playOrder="9"><navLabel><text>Chapter 3: Communication</text></navLabel><content src="text/9780063270565_Chapter_3.xhtml#ch3" /></navPoint>
+<navPoint id="a10" playOrder="10"><navLabel><text>Chapter 4: Appearance</text></navLabel><content src="text/9780063270565_Chapter_4.xhtml#ch4" /></navPoint>
+<navPoint id="a11" playOrder="11"><navLabel><text>Chapter 5: Feedback Failures</text></navLabel><content src="text/9780063270565_Chapter_5.xhtml#ch5" /></navPoint>
+<navPoint id="a12" playOrder="12"><navLabel><text>Chapter 6: Walking the Tightrope</text></navLabel><content src="text/9780063270565_Chapter_6.xhtml#ch6" /></navPoint>
+<navPoint id="a13" playOrder="13"><navLabel><text>Chapter 7: Authenticity vs. Conformity</text></navLabel><content src="text/9780063270565_Chapter_7.xhtml#ch7" /></navPoint>
+</navPoint>
+<navPoint id="a14" playOrder="14"><navLabel><text>Part II: Executive Presence 2.0</text></navLabel><content src="text/9780063270565_Part_2.xhtml#pt2" />
+<navPoint id="a15" playOrder="15"><navLabel><text>Chapter 8: Gravitas 2.0</text></navLabel><content src="text/9780063270565_Chapter_8.xhtml#ch8" /></navPoint>
+<navPoint id="a16" playOrder="16"><navLabel><text>Chapter 9: Communication 2.0</text></navLabel><content src="text/9780063270565_Chapter_9.xhtml#ch9" /></navPoint>
+<navPoint id="a17" playOrder="17"><navLabel><text>Chapter 10: Appearance 2.0</text></navLabel><content src="text/9780063270565_Chapter_10.xhtml#ch10" /></navPoint>
+</navPoint>
+<navPoint id="a18" playOrder="18"><navLabel><text>Conclusion</text></navLabel><content src="text/9780063270565_Conclusion.xhtml#con" /></navPoint>
+<navPoint id="a19" playOrder="19"><navLabel><text>Acknowledgments</text></navLabel><content src="text/9780063270565_Acknowledgments.xhtml#ack" /></navPoint>
+<navPoint id="a20" playOrder="20"><navLabel><text>Appendix A: Executive Presence Self-Diagnostic</text></navLabel><content src="text/9780063270565_Appendix.xhtml#app" /></navPoint>
+<navPoint id="a21" playOrder="21"><navLabel><text>Index of Exhibits</text></navLabel><content src="text/9780063270565_Index_E.xhtml#ind1" /></navPoint>
+<navPoint id="a22" playOrder="22"><navLabel><text>Notes</text></navLabel><content src="text/9780063270565_Notes.xhtml#not" /></navPoint>
+<navPoint id="a23" playOrder="23"><navLabel><text>Index</text></navLabel><content src="text/9780063270565_Index.xhtml#ind" /></navPoint>
+<navPoint id="a24" playOrder="24"><navLabel><text>About the Author</text></navLabel><content src="text/About_the_Author.xhtml#ata" /></navPoint>
+<navPoint id="a25" playOrder="25"><navLabel><text>Praise for Executive Presence</text></navLabel><content src="text/9780063270565_Praise.xhtml#pra" /></navPoint>
+<navPoint id="a26" playOrder="26"><navLabel><text>Also by Sylvia Ann Hewlett</text></navLabel><content src="text/9780063270565_Alsoby.xhtml#als" /></navPoint>
+<navPoint id="a27" playOrder="27"><navLabel><text>Copyright</text></navLabel><content src="text/9780063270565_Copyright.xhtml#cop" /></navPoint>
+<navPoint id="a28" playOrder="28"><navLabel><text>About the Publisher</text></navLabel><content src="text/About_the_Publisher.xhtml#atp" /></navPoint>
+</navMap>
+</ncx>
+

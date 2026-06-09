@@ -1,0 +1,334 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Every System Is Perfect…</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 10. Every System Is Perfect…" data-type="chapter" epub:type="chapter"><div class="chapter" id="Systems">
+<h1><span class="label">Chapter 10. </span>Every System Is Perfect…</h1>
+
+
+<p class="subtitle">For What It Was Designed to Do!</p>
+
+<figure class="informal"><div class="figure" id="CO_art">
+<img alt="Analyzing system behavior" src="assets/SAEch_011.png"/>
+<h6>Analyzing system behavior</h6>
+</div></figure>
+
+<p>Much<a data-primary="complexity management" data-secondary="systems thinking" data-type="indexterm" id="idm45952856196136"/><a data-primary="systems thinking" data-type="indexterm" id="systemst11"/><a data-primary="complex systems" data-type="indexterm" id="idm45952856194248"/> of what architects do is reason about the behavior of <em>complex systems</em>: systems that have many pieces and complex interrelationships.
+There’s an entire field dedicated to such reasoning, called <em>systems thinking</em> or <em>complex systems theory</em>. While popular software
+architecture definitions focus on a system’s components and interrelationships,
+systems thinking <em>emphasizes behavior</em> (<a data-type="xref" href="ch08.html#IsThisArchitecture">Chapter 8</a>). As architects, we should view structure simply as a means to achieve a desired behavior. Thinking in systems helps us do so.</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Heater as a System" data-type="sect1"><div class="sect1" id="idm45952856190264">
+<h1>Heater as a System</h1>
+
+<p>A<a data-primary="complexity management" data-secondary="heater analogy" data-type="indexterm" id="idm45952856188968"/> residential heater provides a canonical example of a <em>system</em>, which
+we also look at when we realize that control
+is an <em>illusion</em> (<a data-type="xref" href="ch27.html#ControlIsAnIllusion">Chapter 27</a>). As demonstrated in <a data-type="xref" href="#a_structural_view_left_and_a_systems_view_right_of_a_heater">Figure 10-1</a>, a heating system’s typical architecture diagram would
+depict the components and their relationships: a furnace generates hot
+water or air, a <span class="keep-together">radiator</span> or air duct delivers the heat to the room, and
+a thermostat controls the furnace. The structural/control system theory
+point of view, shown at the top of the figure, considers the thermostat the central element: it switches the furnace on and off as needed to regulate the room temperature.<a data-primary="heating system analogy" data-type="indexterm" id="idm45952856184056"/></p>
+
+<figure><div class="figure" id="a_structural_view_left_and_a_systems_view_right_of_a_heater">
+<img alt="A structural view (top) and a systems view (bottom) of a heater" src="assets/tsae_1101.png"/>
+<h6><span class="label">Figure 10-1. </span>A structural view (top) and a systems view (bottom) of a heater</h6>
+</div></figure>
+
+<p>In contrast, the systems thinking point of view, at the bottom of <a data-type="xref" href="#a_structural_view_left_and_a_systems_view_right_of_a_heater">Figure 10-1</a>, focuses on the room
+temperature as the central variable and the reasons why it is
+influenced: the burning furnace increases the room
+temperature while heat dissipation to the outside reduces it. Heat
+dissipation depends on both the room and the outside temperature: in
+cold weather more heat dissipates through walls and windows. That’s why
+smart heating systems increase the heating power in cold weather. In a
+way, systems thinking is a parallel universe that looks at the same
+system from a completely different angle, an angle that helps us better
+understand <em>why</em> we are building something.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Feedback Loops" data-type="sect1"><div class="sect1" id="idm45952856178488">
+<h1>Feedback Loops</h1>
+
+<p>Systems thinking<a data-primary="complexity management" data-secondary="feedback loops" data-type="indexterm" id="idm45952856177192"/> helps us understand interrelated behavior; for example,
+feedback loops. The room thermostat establishes a negative feedback
+loop, which is typical for control systems: if the room temperature is
+too high, the furnace turns off, letting the room cool down again.
+Negative feedback loops usually aim to keep a system in a relatively
+stable state—the room temperature will still oscillate slightly
+depending on the hysteresis of the thermostat and the inertia of the
+heating system. The self-stabilizing range of most systems is limited,
+though: a heater cannot cool a room in the heat of summer or compensate
+for an open window during winter.</p>
+
+<p>Positive feedback loops behave in the opposite way: an increase in one
+system variable fuels a further increase. We know the dramatic effects
+of such behavior from explosives (heat releases more oxygen to burn
+hotter), nuclear reactions (a classical “chain reaction”), or
+hyperinflation (a spiral of price and wage increases). Another positive
+feedback loop consists of more cars on the road leading to investments
+in roads as opposed to public transit, which makes it more compelling to
+commute by car. Likewise, rich people tend to have more investment
+options to achieve higher returns, leading to a “the rich getting
+richer” symptom, as for example described in Piketty’s <em>Capital in the Twenty-First Century</em>.<sup><a data-type="noteref" href="ch10.html#idm45952856173880" id="idm45952856173880-marker">1</a></sup></p>
+
+<p>Positive feedback loops can be dangerous due to their “explosive”
+nature. Policies are often designed to counteract such positive feedback
+loops with negative ones; for example, by applying higher tax rates to higher
+incomes or by increasing gasoline tax while subsidizing public transit.
+However, it’s difficult to balance out the exponential character of
+positive feedback loops. Thinking in systems helps us reason about such
+effects.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Organized Complexity" data-type="sect1"><div class="sect1" id="idm45952856171640">
+<h1>Organized Complexity</h1>
+
+<p>Gerald<a data-primary="complexity management" data-secondary="organized complexity" data-type="indexterm" id="idm45952856170344"/><a data-primary="organized complexity" data-type="indexterm" id="idm45952856169400"/> Weinberg<sup><a data-type="noteref" href="ch10.html#idm45952856168568" id="idm45952856168568-marker">2</a></sup> highlighted the importance of thinking in
+systems by dividing the world into three areas: <em>organized simplicity</em>
+is the realm of well-understood mechanics, such as levers or electrical
+systems consisting of discrete resistors and capacitors. You can
+calculate exactly how these systems behave. On the other end of the
+spectrum, <em>unorganized complexity</em> doesn’t allow us to understand
+exactly what’s going on, but we can model the system as a whole
+statistically because the behavior is unorganized, meaning the parts
+don’t interrelate much. Modeling the spread of a virus falls into this
+category. The tricky domain is the one of <em>organized complexity</em>, where
+structure and interaction between <span class="keep-together">components</span> matter, but the system is
+too complex to solve it by using a formula. This is the area of systems.
+And the area of systems architecture.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="System Effects" data-type="sect1"><div class="sect1" id="idm45952856164264">
+<h1>System Effects</h1>
+
+<p>If<a data-primary="complexity management" data-secondary="recurring system effects/patterns" data-type="indexterm" id="idm45952856162968"/> we can’t determine system behavior with mathematical formulas, how
+can systems thinking help us? Complex systems, especially systems
+involving humans, tend to be subject to recurring system effects or
+patterns. These effects explain why fishermen keep overfishing,
+depleting their own livelihood, and why tourists flocking to the same
+destination destroy exactly what attracted them. Understanding these
+patterns allows us to better predict system behavior and influence it.
+Donella Meadows’s book <em>Thinking in Systems</em><sup><a data-type="noteref" href="ch10.html#idm45952856161080" id="idm45952856161080-marker">3</a></sup> contains a list of common
+effects, including these typical ones:</p>
+
+<ul>
+<li>
+<p><em>Bounded rationality</em>, a<a data-primary="bounded rationality" data-type="indexterm" id="idm45952856158488"/> term coined by Nobel laureate Herbert A.
+Simon, captures the effect that people will generally do what is
+rational, but only within the context that they observe. For example,
+if an apartment building has a central heating system without
+consumption-based billing, people will leave the heater on all day and
+open the windows to cool down the apartment as needed. Obviously, this
+is a giant waste of energy and leads to pollution, resource depletion,
+and global warming. However, if your bounded context is just that of the
+temperature in your apartment and your wallet, this behavior is the
+rational thing to do, whether you like it or not: keeping the heater
+running allows you to control the room temperature more easily as you
+avoid the inertia of the heating system having to warm up.</p>
+</li>
+<li>
+<p>The<a data-primary="tragedy of the commons" data-type="indexterm" id="idm45952856155992"/> idea of the <em>tragedy of the commons</em> derives from the concept of <em>the commons</em>, a shared pasture in old Irish and English villages that was open to grazing by all the villagers’ animals. As this common resource is free, villagers are incentivized to acquire more cattle to feed on the commons. Of course, as the commons is a finite resource, this behavior will lead to resource depletion and poverty; hence, the tragedy. One reason such a <span class="keep-together">system</span> doesn’t self-regulate is delay: the effect of the wrong behavior will only become apparent when it is too late.</p>
+</li>
+</ul>
+
+<p>The complexity of these effects is underlined by the fact that Elinor Ostrom, the only woman to win the Nobel Prize in Economics, famously debunked<sup><a data-type="noteref" href="ch10.html#idm45952856152184" id="idm45952856152184-marker">4</a></sup> the concept of the <em>tragedy of the commons</em>.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Understanding System Behavior" data-type="sect1"><div class="sect1" id="idm45952856149048">
+<h1>Understanding System Behavior</h1>
+
+<p>Systems<a data-primary="complexity management" data-secondary="understanding system behavior" data-type="indexterm" id="idm45952856147736"/> documentation, especially in IT, tends to depict the static
+structure but rarely the behavior of the system. Ironically, however, the
+system’s behavior is what’s most interesting: systems generally
+exist to exhibit a certain, desirable behavior. For example, the heating
+system was created to keep the temperature in your house at a
+comfortable level. Server infrastructure is made redundant to increase
+availability. In both cases the system structure is simply a means to an end.</p>
+<div class="pullquote" data-type="example">
+<h5><span class="label">Example 10-1. </span></h5>
+
+<p>A system’s structure is simply a means to achieve a desired <span class="keep-together">behavior.</span></p></div>
+
+<p>The difficulty in deriving system behavior from its components can be
+illustrated by the heating system in my apartment, which supplies both
+floor heating and wall radiators with hot water and comprises a handful
+of major components: the gas burner heats the water inside a primary
+circuit driven by a built-in pump. Two additional external pumps feed
+the hot water from the primary circuit to the floor heating and wall
+radiators, respectively. A misconfiguration caused the secondary pumps
+to not draw enough water, and therefore heat, from the primary circuit,
+which quickly overheated. This, in turn, caused the gas heater to shut
+off for a fixed duration, leading to a lack of heating power: naturally,
+the house cannot get warm when the heater is not burning. Because the
+house wouldn’t warm up, the technician’s intuition was to <em>increase</em> the
+burner’s heating power. However, this only exacerbated the problem: the
+system wasn’t able to move enough heat away from the primary circuit, so
+increasing the gas burner’s power only overheated it faster. After
+almost a dozen attempts, the heating system still wasn’t operating as
+designed, because the technicians might understand the individual system
+components but they are not comprehending the complex system behavior.</p>
+
+<p>Seems a little complicated? For architects, this stuff is our daily
+bread and butter. Understanding complex interrelationships between
+system components and influencing them to achieve a desired behavior is
+what architects do. Often a good <em>diagram</em> (<a data-type="xref" href="ch22.html#DiagramDrivenDesign">Chapter 22</a>) will help.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Influencing System Behavior" data-type="sect1"><div class="sect1" id="idm45952856139560">
+<h1>Influencing System Behavior</h1>
+
+<p>Most<a data-primary="complexity management" data-secondary="influencing system behavior" data-type="indexterm" id="idm45952856138248"/> of what users see from a system are events: things happening as a
+result of the system behavior, which in turn is determined by the system
+structure, that is often invisible. If the users are unhappy with those
+events, such as the heater shutting off despite the room being cold,
+they often try to inflict a change, such as setting the room thermostat
+higher, without analyzing or changing the system behind them. The book
+<em>Inviting Disaster</em><sup><a data-type="noteref" href="ch10.html#idm45952856136424" id="idm45952856136424-marker">5</a></sup> provides dramatic examples of how misunderstanding a
+system led to major catastrophes such as the Three Mile Island nuclear
+reactor incident or the capsizing of the Deepwater Horizon drilling
+platform. In both cases, compromised system displays led operators to
+perform the very action that caused the disaster because they didn’t
+understand the underlying system and its behavior from the events they
+observed. Their <em>mental model</em> deviated<a data-primary="mental model, dangers of" data-type="indexterm" id="idm45952856134360"/> from the real system, causing
+them to make fatal decisions.</p>
+
+<p>It has repeatedly been observed that humans are particularly bad at
+steering systems that have slow feedback loops, meaning those that exhibit
+reactions to changing inputs only after a significant delay. A classic
+example is MIT’s “beer game” in which participants on average perform
+almost 10 times worse than the ideal scenario.<sup><a data-type="noteref" href="ch10.html#idm45952856132696" id="idm45952856132696-marker">6</a></sup> Overuse of credit cards is another classic example: people keep piling on debt until they are no longer able to pay even the interest and wonder how they got themselves into such a mess.</p>
+
+<p>Also, humans who don’t think about the system as a whole are prone to
+taking actions that have the opposite of the intended effect. For
+example, people react to overly full work calendars by setting up
+“blockers,” which make the calendars even fuller. Instead, we need
+to understand and fix what causes the full calendars; for example, a
+misaligned organizational structure that requires too many alignment
+meetings. You can’t fix a system by merely addressing the symptoms.</p>
+
+<p>Understanding system effects can help you devise more effective ways to
+influence the system and thus its behavior. For example, transparency is
+a useful antidote to the bounded rationality effect because it widens
+people’s bounds. An example from Donella Meadows’s book illustrates that
+having the electricity meter visible in the hallway caused people to be
+more conservative with their energy consumption without additional rules
+or penalties. Interestingly, systems thinking can be applied to both
+organizational and technical systems. We’ll learn this, for example,
+when we scale an <em>organization</em> (<a data-type="xref" href="ch30.html#ScalingOrganizations">Chapter 30</a>).</p>
+
+<p>John Gall’s <em>Systems Bible</em><sup><a data-type="noteref" href="ch10.html#idm45952856126232" id="idm45952856126232-marker">7</a></sup> gives a humorous but also
+insightful account of the ways in which systems behave, often against
+our intention or intuition.<a data-primary="" data-startref="systemst11" data-type="indexterm" id="idm45952856124904"/></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Systems Resist Change" data-type="sect1"><div class="sect1" id="idm45952856123640">
+<h1>Systems Resist Change</h1>
+
+<p>Changing<a data-primary="organizations" data-secondary="resistance to change in" data-type="indexterm" id="idm45952856122344"/><a data-primary="resistance to change" data-secondary="challenges of" data-type="indexterm" id="idm45952856121400"/><a data-primary="complexity management" data-secondary="resistance to change" data-type="indexterm" id="idm45952856120456"/> systems is difficult not only because of their complex structure,
+but also because most of them actively resist change. Organizational
+systems’ change resistance achieves longevity, for example, through well-defined
+processes, but presents a challenge when a shift in the environment
+requires the organization to change. Frederic Laloux<sup><a data-type="noteref" href="ch10.html#idm45952856119032" id="idm45952856119032-marker">8</a></sup> describes it as a key
+characteristic<a data-primary="organizations" data-secondary="amber organizations" data-type="indexterm" id="idm45952856117736"/><a data-primary="amber organizations" data-type="indexterm" id="idm45952856116792"/> of <em>amber organizations</em>: they are built on the
+assumption that what worked in the past will work in the future, and it
+often served them well over thousands of years.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>As described in <a data-type="xref" href="ch07.html#QuestionEverything">Chapter 7</a>, if you request better documentation for architecture
+reviews, “the system” might respond by scheduling lengthy workshops that
+drain your available time. If you increase pressure, the system will
+respond with subquality documentation that increases your review
+cycles. You must therefore get to the root of the problem and highlight
+the value of good documentation, properly train architects, and allocate
+time for this task in project schedules.</p>
+</div>
+
+<p>Most organizational systems have settled into a steady state over time
+and serve their purpose well enough. If the business environment demands
+a different system behavior, the system will actively resist by wanting
+to revert to its previous state. It’s like trying to push a car out of a
+ditch: the car keeps rolling back until you finally get it over the
+hump. This system effect makes organizational transformation so
+challenging.</p>
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="idm45952856173880"><sup><a href="ch10.html#idm45952856173880-marker">1</a></sup> Thomas Piketty, <em>Capital in the Twenty-First Century</em> (Boston: Belknap Press, 2014).</p><p data-type="footnote" id="idm45952856168568"><sup><a href="ch10.html#idm45952856168568-marker">2</a></sup> Gerald M. Weinberg, <em>An Introduction to General Systems Thinking</em> (Dorset House, 2001).</p><p data-type="footnote" id="idm45952856161080"><sup><a href="ch10.html#idm45952856161080-marker">3</a></sup> Donella H. Meadows, <em>Thinking in Systems: A Primer</em> (White River Junction, VT: Chelsea Green Publishing, 2008).</p><p data-type="footnote" id="idm45952856152184"><sup><a href="ch10.html#idm45952856152184-marker">4</a></sup> David Bollier, “The Only Woman to Win the Nobel Prize in Economics Also Debunked the Orthodoxy,” <em>Evonomics</em>, July 28, 2015, <a href="https://oreil.ly/9Na0H"><em class="hyperlink">https://oreil.ly/9Na0H</em></a>.</p><p data-type="footnote" id="idm45952856136424"><sup><a href="ch10.html#idm45952856136424-marker">5</a></sup> James R. Chiles, <em>Inviting Disaster: Lessons from the Edge of Technology</em> (New York: Harper Business, 2002).</p><p data-type="footnote" id="idm45952856132696"><sup><a href="ch10.html#idm45952856132696-marker">6</a></sup> John D. Sterman, “Modeling Managerial Behavior,” <em>Management Science</em>, Vol. 35, No. 3 (March 1989), <a href="https://oreil.ly/wrtzb"><em class="hyperlink">https://oreil.ly/wrtzb</em></a>.</p><p data-type="footnote" id="idm45952856126232"><sup><a href="ch10.html#idm45952856126232-marker">7</a></sup> John Gall, <em>The Systems Bible</em>, Third Edition (Walker, MN: General Systemantics Press, 2002).</p><p data-type="footnote" id="idm45952856119032"><sup><a href="ch10.html#idm45952856119032-marker">8</a></sup> Frederic Laloux and Ken Wilber, <em>Reinventing Organizations: A Guide to Creating Organizations Inspired by the Next Stage in Human Consciousness</em> (Nelson Parker, 2014).</p></div></div></section></body></html>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package version="3.0" unique-identifier="pub-identifier" prefix="ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/" xmlns="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/">
+  <metadata xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:identifier id="pub-identifier">979-8-341-64022-1</dc:identifier>
+    <meta id="meta-identifier" property="dcterms:identifier">979-8-341-64022-1</meta>
+    <dc:title id="pub-title">AWS Certified Cloud Practitioner (CLF-C02) Study Guide</dc:title>
+    <meta id="meta-title" property="dcterms:title">AWS Certified Cloud Practitioner (CLF-C02) Study Guide</meta>
+    <dc:language id="pub-language">eng</dc:language>
+    <meta id="meta-language" property="dcterms:language">en</meta>
+    <meta property="dcterms:modified">2026-01-09T08:57:30Z</meta>
+    <dc:publisher>O'Reilly Media</dc:publisher>
+    <meta property="dcterms:publisher">O'Reilly Media, Inc.</meta>
+    <dc:date>2026-01-14</dc:date>
+    <meta property="dcterms:date">2026-01-14</meta>
+    <dc:description>Cloud computing continues to drive innovation across industries, fueling advancements like digital transformation, scalability, and the rise of artificial intelligence. Amazon Web Services is at the forefront of this evolution, and the AWS Certified Cloud Practitioner certification is the perfect entry point for anyone looking to build a strong foundation in cloud technology. This comprehensive study guide helps you thoroughly prepare for the exam, covering cloud computing principles, AWS's global infrastructure, security best practices, pricing and billing models, and more. It also affords opportunities for hands-on practice with AWS services and Lambda and includes test-taking strategies and practice questions.</dc:description>
+    <meta property="dcterms:description">Cloud computing continues to drive innovation across industries, fueling advancements like digital transformation, scalability, and the rise of artificial intelligence. Amazon Web Services is at the forefront of this evolution, and the AWS Certified Cloud Practitioner certification is the perfect entry point for anyone looking to build a strong foundation in cloud technology. This comprehensive study guide helps you thoroughly prepare for the exam, covering cloud computing principles, AWS's global infrastructure, security best practices, pricing and billing models, and more. It also affords opportunities for hands-on practice with AWS services and Lambda and includes test-taking strategies and practice questions.</meta>
+    <dc:creator>Tom Taulli;</dc:creator>
+    <meta property="dcterms:creator">Tom Taulli</meta>
+    <meta name="cover" content="cover-image"/>
+    <meta property="ibooks:specified-fonts">true</meta>
+    <meta property="schema:accessMode">textual</meta>
+    <meta property="schema:accessMode">visual</meta>
+    <meta property="schema:accessModeSufficient">textual</meta>
+    <meta property="schema:accessModeSufficient">visual</meta>
+    <meta property="schema:accessibilityFeature">tableOfContents</meta>
+    <meta property="schema:accessibilityFeature">index</meta>
+    <meta property="schema:accessibilityHazard">none</meta>
+    <meta property="schema:accessibilitySummary">While some O&amp;#x2019;Reilly content may include additional accessibility features, all of our content supports language tagging and structural, landmark, and index navigation. No accessibility features are actively disabled.</meta>
+    <meta name="Sigil version" content="2.0.1"/>
+  </metadata>
+  <manifest>
+    <item id="toc.ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="epub-css" href="epub.css" media-type="text/css"/>
+    <item id="epub.embedded.asset.1" href="DejaVuSans-Bold.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="epub.embedded.asset.2" href="DejaVuSerif.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="epub.embedded.asset.3" href="UbuntuMono-Bold.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="epub.embedded.asset.4" href="UbuntuMono-BoldItalic.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="epub.embedded.asset.5" href="UbuntuMono-Italic.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="epub.embedded.asset.6" href="UbuntuMono-Regular.otf" media-type="application/vnd.ms-opentype"/>
+    <item id="epub.embedded.asset.7" href="css_assets/titlepage_footer_ebook.png" media-type="image/png"/>
+    <item id="cover" href="cover.html" media-type="application/xhtml+xml"/>
+    <item id="cover-image" href="assets/cover.png" media-type="image/png" properties="cover-image"/>
+    <item id="img-id230" href="assets/awsc_0201.png" media-type="image/png"/>
+    <item id="img-id231" href="assets/awsc_0202.png" media-type="image/png"/>
+    <item id="img-id232" href="assets/awsc_0301.png" media-type="image/png"/>
+    <item id="img-id233" href="assets/awsc_0302.png" media-type="image/png"/>
+    <item id="img-id234" href="assets/awsc_0401.png" media-type="image/png"/>
+    <item id="img-id235" href="assets/awsc_0501.png" media-type="image/png"/>
+    <item id="img-id236" href="assets/awsc_0601.png" media-type="image/png"/>
+    <item id="img-id237" href="assets/awsc_0602.png" media-type="image/png"/>
+    <item id="img-id238" href="assets/awsc_0603.png" media-type="image/png"/>
+    <item id="img-id239" href="assets/awsc_0604.png" media-type="image/png"/>
+    <item id="img-id240" href="assets/awsc_0701.png" media-type="image/png"/>
+    <item id="img-id241" href="assets/awsc_0801.png" media-type="image/png"/>
+    <item id="img-id242" href="assets/awsc_0901.png" media-type="image/png"/>
+    <item id="img-id243" href="assets/awsc_0902.png" media-type="image/png"/>
+    <item id="img-id244" href="assets/awsc_0903.png" media-type="image/png"/>
+    <item id="img-id245" href="assets/awsc_0904.png" media-type="image/png"/>
+    <item id="img-id246" href="assets/awsc_1001.png" media-type="image/png"/>
+    <item id="img-id247" href="assets/awsc_1002.png" media-type="image/png"/>
+    <item id="img-id248" href="assets/awsc_1101.png" media-type="image/png"/>
+    <item id="img-id249" href="assets/awsc_1201.png" media-type="image/png"/>
+    <item id="img-id250" href="assets/awsc_1202.png" media-type="image/png"/>
+    <item id="img-id251" href="assets/awsc_1301.png" media-type="image/png"/>
+    <item id="img-id252" href="assets/awsc_1302.png" media-type="image/png"/>
+    <item id="img-id253" href="assets/awsc_1501.png" media-type="image/png"/>
+    <item id="titlepage-id254" href="titlepage01.html" media-type="application/xhtml+xml"/>
+    <item id="copyright-page-id255" href="copyright-page01.html" media-type="application/xhtml+xml"/>
+    <item id="toc-id256" href="toc01.html" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="preface-id257" href="preface01.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id1" href="ch01.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id258" href="ch02.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id259" href="ch03.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id260" href="ch04.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id261" href="ch05.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id262" href="ch06.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id263" href="ch07.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id109" href="ch08.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id264" href="ch09.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id265" href="ch10.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id147" href="ch11.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id266" href="ch12.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id165" href="ch13.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id267" href="ch14.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id268" href="ch15.html" media-type="application/xhtml+xml"/>
+    <item id="chapter-id269" href="ch16.html" media-type="application/xhtml+xml"/>
+    <item id="appendix-id270" href="app01.html" media-type="application/xhtml+xml"/>
+    <item id="appendix-id271" href="app02.html" media-type="application/xhtml+xml"/>
+    <item id="glossary-id272" href="glossary01.html" media-type="application/xhtml+xml"/>
+    <item id="index-id273" href="ix01.html" media-type="application/xhtml+xml"/>
+    <item id="colophon-id274" href="colophon01.html" media-type="application/xhtml+xml"/>
+    <item id="colophon-id275" href="colophon02.html" media-type="application/xhtml+xml"/>
+    <item id="x0dsc00531.jpg" href="assets/0dsc00531.jpg" media-type="image/jpeg"/>
+  </manifest>
+  <spine toc="toc.ncx">
+    <itemref idref="cover"/>
+    <itemref idref="titlepage-id254"/>
+    <itemref idref="copyright-page-id255"/>
+    <itemref idref="preface-id257"/>
+    <itemref idref="chapter-id1"/>
+    <itemref idref="chapter-id258"/>
+    <itemref idref="chapter-id259"/>
+    <itemref idref="chapter-id260"/>
+    <itemref idref="chapter-id261"/>
+    <itemref idref="chapter-id262"/>
+    <itemref idref="chapter-id263"/>
+    <itemref idref="chapter-id109"/>
+    <itemref idref="chapter-id264"/>
+    <itemref idref="chapter-id265"/>
+    <itemref idref="chapter-id147"/>
+    <itemref idref="chapter-id266"/>
+    <itemref idref="chapter-id165"/>
+    <itemref idref="chapter-id267"/>
+    <itemref idref="chapter-id268"/>
+    <itemref idref="chapter-id269"/>
+    <itemref idref="appendix-id270"/>
+    <itemref idref="appendix-id271"/>
+    <itemref idref="glossary-id272"/>
+    <itemref idref="index-id273"/>
+    <itemref idref="colophon-id274"/>
+    <itemref idref="colophon-id275"/>
+  </spine>
+  <guide>
+    <reference type="cover" title="Cover" href="cover.html"/>
+    <reference type="text" title="Start of Text" href="titlepage01.html"/>
+  </guide>
+</package>

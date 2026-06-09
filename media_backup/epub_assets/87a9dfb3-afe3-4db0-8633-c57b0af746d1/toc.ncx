@@ -1,0 +1,2379 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="eng">
+  <head>
+    <meta name="dtb:uid" content="375d5666-171e-4261-adc6-f6dd5d17db19"/>
+    <meta name="dtb:depth" content="2"/>
+    <meta name="dtb:generator" content="calibre (5.26.0)"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>Architecting Cloud Native Applications</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="num_1" playOrder="1" class="chapter">
+      <navLabel>
+        <text>Title Page</text>
+      </navLabel>
+      <content src="index_split_000.html"/>
+    </navPoint>
+    <navPoint id="num_2" playOrder="2" class="chapter">
+      <navLabel>
+        <text>Copyright and Credits</text>
+      </navLabel>
+      <content src="index_split_001.html"/>
+    </navPoint>
+    <navPoint id="num_3" playOrder="2" class="chapter">
+      <navLabel>
+        <text>Architecting Cloud Native Applications</text>
+      </navLabel>
+      <content src="index_split_001.html"/>
+    </navPoint>
+    <navPoint id="num_4" playOrder="3" class="chapter">
+      <navLabel>
+        <text>About Packt</text>
+      </navLabel>
+      <content src="index_split_002.html"/>
+    </navPoint>
+    <navPoint id="num_5" playOrder="4" class="chapter">
+      <navLabel>
+        <text>Why subscribe?</text>
+      </navLabel>
+      <content src="index_split_003.html"/>
+    </navPoint>
+    <navPoint id="num_6" playOrder="5" class="chapter">
+      <navLabel>
+        <text>Packt.com</text>
+      </navLabel>
+      <content src="index_split_004.html"/>
+    </navPoint>
+    <navPoint id="num_7" playOrder="6" class="chapter">
+      <navLabel>
+        <text>Contributors</text>
+      </navLabel>
+      <content src="index_split_005.html"/>
+    </navPoint>
+    <navPoint id="num_8" playOrder="7" class="chapter">
+      <navLabel>
+        <text>About the authors</text>
+      </navLabel>
+      <content src="index_split_006.html"/>
+    </navPoint>
+    <navPoint id="num_9" playOrder="8" class="chapter">
+      <navLabel>
+        <text>Packt is searching for authors like you</text>
+      </navLabel>
+      <content src="index_split_007.html"/>
+    </navPoint>
+    <navPoint id="num_10" playOrder="9" class="chapter">
+      <navLabel>
+        <text>Preface</text>
+      </navLabel>
+      <content src="index_split_009.html"/>
+    </navPoint>
+    <navPoint id="num_11" playOrder="10" class="chapter">
+      <navLabel>
+        <text>Who this book is for</text>
+      </navLabel>
+      <content src="index_split_010.html"/>
+    </navPoint>
+    <navPoint id="num_12" playOrder="11" class="chapter">
+      <navLabel>
+        <text>What this book covers</text>
+      </navLabel>
+      <content src="index_split_011.html"/>
+    </navPoint>
+    <navPoint id="num_13" playOrder="12" class="chapter">
+      <navLabel>
+        <text>To get the most out of this book</text>
+      </navLabel>
+      <content src="index_split_012.html"/>
+    </navPoint>
+    <navPoint id="num_14" playOrder="13" class="chapter">
+      <navLabel>
+        <text>Download the example code files</text>
+      </navLabel>
+      <content src="index_split_013.html"/>
+    </navPoint>
+    <navPoint id="num_15" playOrder="14" class="chapter">
+      <navLabel>
+        <text>Conventions used</text>
+      </navLabel>
+      <content src="index_split_014.html"/>
+    </navPoint>
+    <navPoint id="num_16" playOrder="15" class="chapter">
+      <navLabel>
+        <text>Get in touch</text>
+      </navLabel>
+      <content src="index_split_015.html"/>
+    </navPoint>
+    <navPoint id="num_17" playOrder="16" class="chapter">
+      <navLabel>
+        <text>Reviews</text>
+      </navLabel>
+      <content src="index_split_016.html"/>
+    </navPoint>
+    <navPoint id="num_18" playOrder="17" class="chapter">
+      <navLabel>
+        <text>Understanding Cloud Native Concepts</text>
+      </navLabel>
+      <content src="index_split_017.html"/>
+    </navPoint>
+    <navPoint id="num_19" playOrder="18" class="chapter">
+      <navLabel>
+        <text>Establishing the context</text>
+      </navLabel>
+      <content src="index_split_018.html"/>
+    </navPoint>
+    <navPoint id="num_20" playOrder="19" class="chapter">
+      <navLabel>
+        <text>Rewiring your software engineering brain</text>
+      </navLabel>
+      <content src="index_split_019.html"/>
+    </navPoint>
+    <navPoint id="num_21" playOrder="20" class="chapter">
+      <navLabel>
+        <text>Defining cloud-native</text>
+      </navLabel>
+      <content src="index_split_020.html"/>
+    </navPoint>
+    <navPoint id="num_22" playOrder="21" class="chapter">
+      <navLabel>
+        <text>Powered by disposable infrastructure</text>
+      </navLabel>
+      <content src="index_split_021.html"/>
+    </navPoint>
+    <navPoint id="num_23" playOrder="22" class="chapter">
+      <navLabel>
+        <text>Composed of bounded, isolated components</text>
+      </navLabel>
+      <content src="index_split_022.html"/>
+    </navPoint>
+    <navPoint id="num_24" playOrder="23" class="chapter">
+      <navLabel>
+        <text>Scales globally</text>
+      </navLabel>
+      <content src="index_split_023.html"/>
+    </navPoint>
+    <navPoint id="num_25" playOrder="24" class="chapter">
+      <navLabel>
+        <text>Embraces disposable architecture</text>
+      </navLabel>
+      <content src="index_split_024.html"/>
+    </navPoint>
+    <navPoint id="num_26" playOrder="25" class="chapter">
+      <navLabel>
+        <text>Leverages value-added cloud services</text>
+      </navLabel>
+      <content src="index_split_025.html"/>
+    </navPoint>
+    <navPoint id="num_27" playOrder="26" class="chapter">
+      <navLabel>
+        <text>Welcomes polyglot cloud</text>
+      </navLabel>
+      <content src="index_split_026.html"/>
+    </navPoint>
+    <navPoint id="num_28" playOrder="27" class="chapter">
+      <navLabel>
+        <text>Empowers self-sufficient, full-stack teams</text>
+      </navLabel>
+      <content src="index_split_027.html"/>
+    </navPoint>
+    <navPoint id="num_29" playOrder="28" class="chapter">
+      <navLabel>
+        <text>Drives cultural change</text>
+      </navLabel>
+      <content src="index_split_028.html"/>
+    </navPoint>
+    <navPoint id="num_30" playOrder="29" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_029.html"/>
+    </navPoint>
+    <navPoint id="num_31" playOrder="30" class="chapter">
+      <navLabel>
+        <text>The Anatomy of Cloud Native Systems</text>
+      </navLabel>
+      <content src="index_split_030.html"/>
+    </navPoint>
+    <navPoint id="num_32" playOrder="31" class="chapter">
+      <navLabel>
+        <text>The cloud is the database</text>
+      </navLabel>
+      <content src="index_split_031.html"/>
+    </navPoint>
+    <navPoint id="num_33" playOrder="32" class="chapter">
+      <navLabel>
+        <text>Reactive Manifesto</text>
+      </navLabel>
+      <content src="index_split_032.html"/>
+    </navPoint>
+    <navPoint id="num_34" playOrder="33" class="chapter">
+      <navLabel>
+        <text>Turning the database inside out</text>
+      </navLabel>
+      <content src="index_split_033.html"/>
+    </navPoint>
+    <navPoint id="num_35" playOrder="34" class="chapter">
+      <navLabel>
+        <text>Bulkheads</text>
+      </navLabel>
+      <content src="index_split_034.html"/>
+    </navPoint>
+    <navPoint id="num_36" playOrder="35" class="chapter">
+      <navLabel>
+        <text>Event streaming</text>
+      </navLabel>
+      <content src="index_split_035.html"/>
+    </navPoint>
+    <navPoint id="num_37" playOrder="36" class="chapter">
+      <navLabel>
+        <text>Polyglot Persistence</text>
+      </navLabel>
+      <content src="index_split_036.html"/>
+    </navPoint>
+    <navPoint id="num_38" playOrder="37" class="chapter">
+      <navLabel>
+        <text>Cloud native database</text>
+      </navLabel>
+      <content src="index_split_037.html"/>
+    </navPoint>
+    <navPoint id="num_39" playOrder="38" class="chapter">
+      <navLabel>
+        <text>Cloud native patterns</text>
+      </navLabel>
+      <content src="index_split_038.html"/>
+    </navPoint>
+    <navPoint id="num_40" playOrder="39" class="chapter">
+      <navLabel>
+        <text>Foundation patterns</text>
+      </navLabel>
+      <content src="index_split_039.html"/>
+    </navPoint>
+    <navPoint id="num_41" playOrder="40" class="chapter">
+      <navLabel>
+        <text>Boundary patterns</text>
+      </navLabel>
+      <content src="index_split_040.html"/>
+    </navPoint>
+    <navPoint id="num_42" playOrder="41" class="chapter">
+      <navLabel>
+        <text>Control patterns</text>
+      </navLabel>
+      <content src="index_split_041.html"/>
+    </navPoint>
+    <navPoint id="num_43" playOrder="42" class="chapter">
+      <navLabel>
+        <text>Bounded isolated components</text>
+      </navLabel>
+      <content src="index_split_042.html"/>
+    </navPoint>
+    <navPoint id="num_44" playOrder="43" class="chapter">
+      <navLabel>
+        <text>Functional boundaries</text>
+      </navLabel>
+      <content src="index_split_043.html"/>
+    </navPoint>
+    <navPoint id="num_45" playOrder="44" class="chapter">
+      <navLabel>
+        <text>Bounded context</text>
+      </navLabel>
+      <content src="index_split_044.html"/>
+    </navPoint>
+    <navPoint id="num_46" playOrder="45" class="chapter">
+      <navLabel>
+        <text>Component patterns</text>
+      </navLabel>
+      <content src="index_split_045.html"/>
+    </navPoint>
+    <navPoint id="num_47" playOrder="46" class="chapter">
+      <navLabel>
+        <text>Data life cycle</text>
+      </navLabel>
+      <content src="index_split_046.html"/>
+    </navPoint>
+    <navPoint id="num_48" playOrder="47" class="chapter">
+      <navLabel>
+        <text>Single responsibility</text>
+      </navLabel>
+      <content src="index_split_047.html"/>
+    </navPoint>
+    <navPoint id="num_49" playOrder="48" class="chapter">
+      <navLabel>
+        <text>Technical isolation</text>
+      </navLabel>
+      <content src="index_split_048.html"/>
+    </navPoint>
+    <navPoint id="num_50" playOrder="49" class="chapter">
+      <navLabel>
+        <text>Regions and availability zones</text>
+      </navLabel>
+      <content src="index_split_049.html"/>
+    </navPoint>
+    <navPoint id="num_51" playOrder="50" class="chapter">
+      <navLabel>
+        <text>Components</text>
+      </navLabel>
+      <content src="index_split_050.html"/>
+    </navPoint>
+    <navPoint id="num_52" playOrder="51" class="chapter">
+      <navLabel>
+        <text>Data</text>
+      </navLabel>
+      <content src="index_split_051.html"/>
+    </navPoint>
+    <navPoint id="num_53" playOrder="52" class="chapter">
+      <navLabel>
+        <text>Accounts</text>
+      </navLabel>
+      <content src="index_split_052.html"/>
+    </navPoint>
+    <navPoint id="num_54" playOrder="53" class="chapter">
+      <navLabel>
+        <text>Providers</text>
+      </navLabel>
+      <content src="index_split_053.html"/>
+    </navPoint>
+    <navPoint id="num_55" playOrder="54" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_054.html"/>
+    </navPoint>
+    <navPoint id="num_56" playOrder="55" class="chapter">
+      <navLabel>
+        <text>Foundation Patterns</text>
+      </navLabel>
+      <content src="index_split_055.html"/>
+    </navPoint>
+    <navPoint id="num_57" playOrder="56" class="chapter">
+      <navLabel>
+        <text>Cloud-Native Databases Per Component</text>
+      </navLabel>
+      <content src="index_split_056.html"/>
+    </navPoint>
+    <navPoint id="num_58" playOrder="57" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_057.html"/>
+    </navPoint>
+    <navPoint id="num_59" playOrder="58" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_058.html"/>
+    </navPoint>
+    <navPoint id="num_60" playOrder="59" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_059.html"/>
+    </navPoint>
+    <navPoint id="num_61" playOrder="60" class="chapter">
+      <navLabel>
+        <text>Example – cloud-native database trigger</text>
+      </navLabel>
+      <content src="index_split_060.html"/>
+    </navPoint>
+    <navPoint id="num_62" playOrder="61" class="chapter">
+      <navLabel>
+        <text>Event Streaming</text>
+      </navLabel>
+      <content src="index_split_061.html"/>
+    </navPoint>
+    <navPoint id="num_63" playOrder="62" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_062.html"/>
+    </navPoint>
+    <navPoint id="num_64" playOrder="63" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_063.html"/>
+    </navPoint>
+    <navPoint id="num_65" playOrder="64" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_064.html"/>
+    </navPoint>
+    <navPoint id="num_66" playOrder="65" class="chapter">
+      <navLabel>
+        <text>Example – stream, producer, and consumer</text>
+      </navLabel>
+      <content src="index_split_065.html"/>
+    </navPoint>
+    <navPoint id="num_67" playOrder="66" class="chapter">
+      <navLabel>
+        <text>Event Sourcing</text>
+      </navLabel>
+      <content src="index_split_066.html"/>
+    </navPoint>
+    <navPoint id="num_68" playOrder="67" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_067.html"/>
+    </navPoint>
+    <navPoint id="num_69" playOrder="68" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_068.html"/>
+    </navPoint>
+    <navPoint id="num_70" playOrder="69" class="chapter">
+      <navLabel>
+        <text>Event-First Variant</text>
+      </navLabel>
+      <content src="index_split_069.html"/>
+    </navPoint>
+    <navPoint id="num_71" playOrder="70" class="chapter">
+      <navLabel>
+        <text>Database-First Variant</text>
+      </navLabel>
+      <content src="index_split_070.html"/>
+    </navPoint>
+    <navPoint id="num_72" playOrder="71" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_071.html"/>
+    </navPoint>
+    <navPoint id="num_73" playOrder="72" class="chapter">
+      <navLabel>
+        <text>Example – database-first event sourcing</text>
+      </navLabel>
+      <content src="index_split_072.html"/>
+    </navPoint>
+    <navPoint id="num_74" playOrder="73" class="chapter">
+      <navLabel>
+        <text>Data Lake</text>
+      </navLabel>
+      <content src="index_split_073.html"/>
+    </navPoint>
+    <navPoint id="num_75" playOrder="74" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_074.html"/>
+    </navPoint>
+    <navPoint id="num_76" playOrder="75" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_075.html"/>
+    </navPoint>
+    <navPoint id="num_77" playOrder="76" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_076.html"/>
+    </navPoint>
+    <navPoint id="num_78" playOrder="77" class="chapter">
+      <navLabel>
+        <text>Example – Data Lake consumer component</text>
+      </navLabel>
+      <content src="index_split_077.html"/>
+    </navPoint>
+    <navPoint id="num_79" playOrder="78" class="chapter">
+      <navLabel>
+        <text>Stream Circuit Breaker</text>
+      </navLabel>
+      <content src="index_split_078.html"/>
+    </navPoint>
+    <navPoint id="num_80" playOrder="79" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_079.html"/>
+    </navPoint>
+    <navPoint id="num_81" playOrder="80" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_080.html"/>
+    </navPoint>
+    <navPoint id="num_82" playOrder="81" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_081.html"/>
+    </navPoint>
+    <navPoint id="num_83" playOrder="82" class="chapter">
+      <navLabel>
+        <text>Example – stream processor flow control</text>
+      </navLabel>
+      <content src="index_split_082.html"/>
+    </navPoint>
+    <navPoint id="num_84" playOrder="83" class="chapter">
+      <navLabel>
+        <text>Trilateral API</text>
+      </navLabel>
+      <content src="index_split_083.html"/>
+    </navPoint>
+    <navPoint id="num_85" playOrder="84" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_084.html"/>
+    </navPoint>
+    <navPoint id="num_86" playOrder="85" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_085.html"/>
+    </navPoint>
+    <navPoint id="num_87" playOrder="86" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_086.html"/>
+    </navPoint>
+    <navPoint id="num_88" playOrder="87" class="chapter">
+      <navLabel>
+        <text>Example – asynchronous API documentation</text>
+      </navLabel>
+      <content src="index_split_087.html"/>
+    </navPoint>
+    <navPoint id="num_89" playOrder="88" class="chapter">
+      <navLabel>
+        <text>Example – component anatomy</text>
+      </navLabel>
+      <content src="index_split_088.html"/>
+    </navPoint>
+    <navPoint id="num_90" playOrder="89" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_089.html"/>
+    </navPoint>
+    <navPoint id="num_91" playOrder="90" class="chapter">
+      <navLabel>
+        <text>Boundary Patterns</text>
+      </navLabel>
+      <content src="index_split_090.html"/>
+    </navPoint>
+    <navPoint id="num_92" playOrder="91" class="chapter">
+      <navLabel>
+        <text>API Gateway</text>
+      </navLabel>
+      <content src="index_split_091.html"/>
+    </navPoint>
+    <navPoint id="num_93" playOrder="92" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_092.html"/>
+    </navPoint>
+    <navPoint id="num_94" playOrder="93" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_093.html"/>
+    </navPoint>
+    <navPoint id="num_95" playOrder="94" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_094.html"/>
+    </navPoint>
+    <navPoint id="num_96" playOrder="95" class="chapter">
+      <navLabel>
+        <text>Example – CRUD service</text>
+      </navLabel>
+      <content src="index_split_095.html"/>
+    </navPoint>
+    <navPoint id="num_97" playOrder="96" class="chapter">
+      <navLabel>
+        <text>Command Query Responsibility Segregation (CQRS)</text>
+      </navLabel>
+      <content src="index_split_096.html"/>
+    </navPoint>
+    <navPoint id="num_98" playOrder="97" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_097.html"/>
+    </navPoint>
+    <navPoint id="num_99" playOrder="98" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_098.html"/>
+    </navPoint>
+    <navPoint id="num_100" playOrder="99" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_099.html"/>
+    </navPoint>
+    <navPoint id="num_101" playOrder="100" class="chapter">
+      <navLabel>
+        <text>Example – inverse oplock</text>
+      </navLabel>
+      <content src="index_split_100.html"/>
+    </navPoint>
+    <navPoint id="num_102" playOrder="101" class="chapter">
+      <navLabel>
+        <text>Example – event sourced join</text>
+      </navLabel>
+      <content src="index_split_101.html"/>
+    </navPoint>
+    <navPoint id="num_103" playOrder="102" class="chapter">
+      <navLabel>
+        <text>Offline-first database</text>
+      </navLabel>
+      <content src="index_split_102.html"/>
+    </navPoint>
+    <navPoint id="num_104" playOrder="103" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_103.html"/>
+    </navPoint>
+    <navPoint id="num_105" playOrder="104" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_104.html"/>
+    </navPoint>
+    <navPoint id="num_106" playOrder="105" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_105.html"/>
+    </navPoint>
+    <navPoint id="num_107" playOrder="106" class="chapter">
+      <navLabel>
+        <text>Example – offline-first counter</text>
+      </navLabel>
+      <content src="index_split_106.html"/>
+    </navPoint>
+    <navPoint id="num_108" playOrder="107" class="chapter">
+      <navLabel>
+        <text>Backend For Frontend</text>
+      </navLabel>
+      <content src="index_split_107.html"/>
+    </navPoint>
+    <navPoint id="num_109" playOrder="108" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_108.html"/>
+    </navPoint>
+    <navPoint id="num_110" playOrder="109" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_109.html"/>
+    </navPoint>
+    <navPoint id="num_111" playOrder="110" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_110.html"/>
+    </navPoint>
+    <navPoint id="num_112" playOrder="111" class="chapter">
+      <navLabel>
+        <text>Example – Author BFF</text>
+      </navLabel>
+      <content src="index_split_111.html"/>
+    </navPoint>
+    <navPoint id="num_113" playOrder="112" class="chapter">
+      <navLabel>
+        <text>Example – Worker BFF</text>
+      </navLabel>
+      <content src="index_split_112.html"/>
+    </navPoint>
+    <navPoint id="num_114" playOrder="113" class="chapter">
+      <navLabel>
+        <text>Example – Customer BFF</text>
+      </navLabel>
+      <content src="index_split_113.html"/>
+    </navPoint>
+    <navPoint id="num_115" playOrder="114" class="chapter">
+      <navLabel>
+        <text>Example – Manager BFF</text>
+      </navLabel>
+      <content src="index_split_114.html"/>
+    </navPoint>
+    <navPoint id="num_116" playOrder="115" class="chapter">
+      <navLabel>
+        <text>External Service Gateway</text>
+      </navLabel>
+      <content src="index_split_115.html"/>
+    </navPoint>
+    <navPoint id="num_117" playOrder="116" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_116.html"/>
+    </navPoint>
+    <navPoint id="num_118" playOrder="117" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_117.html"/>
+    </navPoint>
+    <navPoint id="num_119" playOrder="118" class="chapter">
+      <navLabel>
+        <text>Outbound communication</text>
+      </navLabel>
+      <content src="index_split_118.html"/>
+    </navPoint>
+    <navPoint id="num_120" playOrder="119" class="chapter">
+      <navLabel>
+        <text>Inbound communication</text>
+      </navLabel>
+      <content src="index_split_119.html"/>
+    </navPoint>
+    <navPoint id="num_121" playOrder="120" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_120.html"/>
+    </navPoint>
+    <navPoint id="num_122" playOrder="121" class="chapter">
+      <navLabel>
+        <text>Example – user authentication integration</text>
+      </navLabel>
+      <content src="index_split_121.html"/>
+    </navPoint>
+    <navPoint id="num_123" playOrder="122" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_122.html"/>
+    </navPoint>
+    <navPoint id="num_124" playOrder="123" class="chapter">
+      <navLabel>
+        <text>Control Patterns</text>
+      </navLabel>
+      <content src="index_split_123.html"/>
+    </navPoint>
+    <navPoint id="num_125" playOrder="124" class="chapter">
+      <navLabel>
+        <text>Event collaboration</text>
+      </navLabel>
+      <content src="index_split_124.html"/>
+    </navPoint>
+    <navPoint id="num_126" playOrder="125" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_125.html"/>
+    </navPoint>
+    <navPoint id="num_127" playOrder="126" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_126.html"/>
+    </navPoint>
+    <navPoint id="num_128" playOrder="127" class="chapter">
+      <navLabel>
+        <text>Resulting Context</text>
+      </navLabel>
+      <content src="index_split_127.html"/>
+    </navPoint>
+    <navPoint id="num_129" playOrder="128" class="chapter">
+      <navLabel>
+        <text>Example – order collaboration</text>
+      </navLabel>
+      <content src="index_split_128.html"/>
+    </navPoint>
+    <navPoint id="num_130" playOrder="129" class="chapter">
+      <navLabel>
+        <text>Event orchestration</text>
+      </navLabel>
+      <content src="index_split_129.html"/>
+    </navPoint>
+    <navPoint id="num_131" playOrder="130" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_130.html"/>
+    </navPoint>
+    <navPoint id="num_132" playOrder="131" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_131.html"/>
+    </navPoint>
+    <navPoint id="num_133" playOrder="132" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_132.html"/>
+    </navPoint>
+    <navPoint id="num_134" playOrder="133" class="chapter">
+      <navLabel>
+        <text>Example – order orchestration</text>
+      </navLabel>
+      <content src="index_split_133.html"/>
+    </navPoint>
+    <navPoint id="num_135" playOrder="134" class="chapter">
+      <navLabel>
+        <text>Saga</text>
+      </navLabel>
+      <content src="index_split_134.html"/>
+    </navPoint>
+    <navPoint id="num_136" playOrder="135" class="chapter">
+      <navLabel>
+        <text>Context, problem, and forces</text>
+      </navLabel>
+      <content src="index_split_135.html"/>
+    </navPoint>
+    <navPoint id="num_137" playOrder="136" class="chapter">
+      <navLabel>
+        <text>Solution</text>
+      </navLabel>
+      <content src="index_split_136.html"/>
+    </navPoint>
+    <navPoint id="num_138" playOrder="137" class="chapter">
+      <navLabel>
+        <text>Resulting context</text>
+      </navLabel>
+      <content src="index_split_137.html"/>
+    </navPoint>
+    <navPoint id="num_139" playOrder="138" class="chapter">
+      <navLabel>
+        <text>Example – order collaboration with compensation</text>
+      </navLabel>
+      <content src="index_split_138.html"/>
+    </navPoint>
+    <navPoint id="num_140" playOrder="139" class="chapter">
+      <navLabel>
+        <text>Example – order orchestration with compensation</text>
+      </navLabel>
+      <content src="index_split_139.html"/>
+    </navPoint>
+    <navPoint id="num_141" playOrder="140" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_140.html"/>
+    </navPoint>
+    <navPoint id="num_142" playOrder="141" class="chapter">
+      <navLabel>
+        <text>Deployment</text>
+      </navLabel>
+      <content src="index_split_141.html"/>
+    </navPoint>
+    <navPoint id="num_143" playOrder="142" class="chapter">
+      <navLabel>
+        <text>Decoupling deployment from release</text>
+      </navLabel>
+      <content src="index_split_142.html"/>
+    </navPoint>
+    <navPoint id="num_144" playOrder="143" class="chapter">
+      <navLabel>
+        <text>Multi-level roadmaps</text>
+      </navLabel>
+      <content src="index_split_143.html"/>
+    </navPoint>
+    <navPoint id="num_145" playOrder="144" class="chapter">
+      <navLabel>
+        <text>Release roadmaps</text>
+      </navLabel>
+      <content src="index_split_144.html"/>
+    </navPoint>
+    <navPoint id="num_146" playOrder="145" class="chapter">
+      <navLabel>
+        <text>Story mapping</text>
+      </navLabel>
+      <content src="index_split_145.html"/>
+    </navPoint>
+    <navPoint id="num_147" playOrder="146" class="chapter">
+      <navLabel>
+        <text>Deployment roadmaps</text>
+      </navLabel>
+      <content src="index_split_146.html"/>
+    </navPoint>
+    <navPoint id="num_148" playOrder="147" class="chapter">
+      <navLabel>
+        <text>Task branch workflow</text>
+      </navLabel>
+      <content src="index_split_147.html"/>
+    </navPoint>
+    <navPoint id="num_149" playOrder="148" class="chapter">
+      <navLabel>
+        <text>Deployment pipeline</text>
+      </navLabel>
+      <content src="index_split_148.html"/>
+    </navPoint>
+    <navPoint id="num_150" playOrder="149" class="chapter">
+      <navLabel>
+        <text>Modern CI/CD</text>
+      </navLabel>
+      <content src="index_split_149.html"/>
+    </navPoint>
+    <navPoint id="num_151" playOrder="150" class="chapter">
+      <navLabel>
+        <text>npm</text>
+      </navLabel>
+      <content src="index_split_150.html"/>
+    </navPoint>
+    <navPoint id="num_152" playOrder="151" class="chapter">
+      <navLabel>
+        <text>Infrastructure as Code services</text>
+      </navLabel>
+      <content src="index_split_151.html"/>
+    </navPoint>
+    <navPoint id="num_153" playOrder="152" class="chapter">
+      <navLabel>
+        <text>Serverless Framework</text>
+      </navLabel>
+      <content src="index_split_152.html"/>
+    </navPoint>
+    <navPoint id="num_154" playOrder="153" class="chapter">
+      <navLabel>
+        <text>Zero-downtime deployment</text>
+      </navLabel>
+      <content src="index_split_153.html"/>
+    </navPoint>
+    <navPoint id="num_155" playOrder="154" class="chapter">
+      <navLabel>
+        <text>Blue-green deployment</text>
+      </navLabel>
+      <content src="index_split_154.html"/>
+    </navPoint>
+    <navPoint id="num_156" playOrder="155" class="chapter">
+      <navLabel>
+        <text>Canary deployment</text>
+      </navLabel>
+      <content src="index_split_155.html"/>
+    </navPoint>
+    <navPoint id="num_157" playOrder="156" class="chapter">
+      <navLabel>
+        <text>Multi-regional deployment</text>
+      </navLabel>
+      <content src="index_split_156.html"/>
+    </navPoint>
+    <navPoint id="num_158" playOrder="157" class="chapter">
+      <navLabel>
+        <text>Feature flags</text>
+      </navLabel>
+      <content src="index_split_157.html"/>
+    </navPoint>
+    <navPoint id="num_159" playOrder="158" class="chapter">
+      <navLabel>
+        <text>Versioning</text>
+      </navLabel>
+      <content src="index_split_158.html"/>
+    </navPoint>
+    <navPoint id="num_160" playOrder="159" class="chapter">
+      <navLabel>
+        <text>Synchronous API</text>
+      </navLabel>
+      <content src="index_split_159.html"/>
+    </navPoint>
+    <navPoint id="num_161" playOrder="160" class="chapter">
+      <navLabel>
+        <text>Database schema</text>
+      </navLabel>
+      <content src="index_split_160.html"/>
+    </navPoint>
+    <navPoint id="num_162" playOrder="161" class="chapter">
+      <navLabel>
+        <text>Asynchronous API</text>
+      </navLabel>
+      <content src="index_split_161.html"/>
+    </navPoint>
+    <navPoint id="num_163" playOrder="162" class="chapter">
+      <navLabel>
+        <text>Micro-frontend</text>
+      </navLabel>
+      <content src="index_split_162.html"/>
+    </navPoint>
+    <navPoint id="num_164" playOrder="163" class="chapter">
+      <navLabel>
+        <text>Trilateral API per container</text>
+      </navLabel>
+      <content src="index_split_163.html"/>
+    </navPoint>
+    <navPoint id="num_165" playOrder="164" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_164.html"/>
+    </navPoint>
+    <navPoint id="num_166" playOrder="165" class="chapter">
+      <navLabel>
+        <text>Testing</text>
+      </navLabel>
+      <content src="index_split_165.html"/>
+    </navPoint>
+    <navPoint id="num_167" playOrder="166" class="chapter">
+      <navLabel>
+        <text>Shifting testing to the left</text>
+      </navLabel>
+      <content src="index_split_166.html"/>
+    </navPoint>
+    <navPoint id="num_168" playOrder="167" class="chapter">
+      <navLabel>
+        <text>Test engineering</text>
+      </navLabel>
+      <content src="index_split_167.html"/>
+    </navPoint>
+    <navPoint id="num_169" playOrder="168" class="chapter">
+      <navLabel>
+        <text>Isolated testing</text>
+      </navLabel>
+      <content src="index_split_168.html"/>
+    </navPoint>
+    <navPoint id="num_170" playOrder="169" class="chapter">
+      <navLabel>
+        <text>Unit testing</text>
+      </navLabel>
+      <content src="index_split_169.html"/>
+    </navPoint>
+    <navPoint id="num_171" playOrder="170" class="chapter">
+      <navLabel>
+        <text>Component testing</text>
+      </navLabel>
+      <content src="index_split_170.html"/>
+    </navPoint>
+    <navPoint id="num_172" playOrder="171" class="chapter">
+      <navLabel>
+        <text>Transitive testing</text>
+      </navLabel>
+      <content src="index_split_171.html"/>
+    </navPoint>
+    <navPoint id="num_173" playOrder="172" class="chapter">
+      <navLabel>
+        <text>Integration testing</text>
+      </navLabel>
+      <content src="index_split_172.html"/>
+    </navPoint>
+    <navPoint id="num_174" playOrder="173" class="chapter">
+      <navLabel>
+        <text>Contract testing</text>
+      </navLabel>
+      <content src="index_split_173.html"/>
+    </navPoint>
+    <navPoint id="num_175" playOrder="174" class="chapter">
+      <navLabel>
+        <text>End-to-end testing</text>
+      </navLabel>
+      <content src="index_split_174.html"/>
+    </navPoint>
+    <navPoint id="num_176" playOrder="175" class="chapter">
+      <navLabel>
+        <text>Manual testing</text>
+      </navLabel>
+      <content src="index_split_175.html"/>
+    </navPoint>
+    <navPoint id="num_177" playOrder="176" class="chapter">
+      <navLabel>
+        <text>Example – end-to-end relay</text>
+      </navLabel>
+      <content src="index_split_176.html"/>
+    </navPoint>
+    <navPoint id="num_178" playOrder="177" class="chapter">
+      <navLabel>
+        <text>Submit order leg</text>
+      </navLabel>
+      <content src="index_split_177.html"/>
+    </navPoint>
+    <navPoint id="num_179" playOrder="178" class="chapter">
+      <navLabel>
+        <text>Order submitted leg</text>
+      </navLabel>
+      <content src="index_split_178.html"/>
+    </navPoint>
+    <navPoint id="num_180" playOrder="179" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_179.html"/>
+    </navPoint>
+    <navPoint id="num_181" playOrder="180" class="chapter">
+      <navLabel>
+        <text>Monitoring</text>
+      </navLabel>
+      <content src="index_split_180.html"/>
+    </navPoint>
+    <navPoint id="num_182" playOrder="181" class="chapter">
+      <navLabel>
+        <text>Shifting testing to the right</text>
+      </navLabel>
+      <content src="index_split_181.html"/>
+    </navPoint>
+    <navPoint id="num_183" playOrder="182" class="chapter">
+      <navLabel>
+        <text>Key performance indicators</text>
+      </navLabel>
+      <content src="index_split_182.html"/>
+    </navPoint>
+    <navPoint id="num_184" playOrder="183" class="chapter">
+      <navLabel>
+        <text>Real and synthetic traffic</text>
+      </navLabel>
+      <content src="index_split_183.html"/>
+    </navPoint>
+    <navPoint id="num_185" playOrder="184" class="chapter">
+      <navLabel>
+        <text>Real-user monitoring</text>
+      </navLabel>
+      <content src="index_split_184.html"/>
+    </navPoint>
+    <navPoint id="num_186" playOrder="185" class="chapter">
+      <navLabel>
+        <text>Synthetic transaction monitoring</text>
+      </navLabel>
+      <content src="index_split_185.html"/>
+    </navPoint>
+    <navPoint id="num_187" playOrder="186" class="chapter">
+      <navLabel>
+        <text>Observability</text>
+      </navLabel>
+      <content src="index_split_186.html"/>
+    </navPoint>
+    <navPoint id="num_188" playOrder="187" class="chapter">
+      <navLabel>
+        <text>Measurements</text>
+      </navLabel>
+      <content src="index_split_187.html"/>
+    </navPoint>
+    <navPoint id="num_189" playOrder="188" class="chapter">
+      <navLabel>
+        <text>Work metrics</text>
+      </navLabel>
+      <content src="index_split_188.html"/>
+    </navPoint>
+    <navPoint id="num_190" playOrder="189" class="chapter">
+      <navLabel>
+        <text>Resource metrics</text>
+      </navLabel>
+      <content src="index_split_189.html"/>
+    </navPoint>
+    <navPoint id="num_191" playOrder="190" class="chapter">
+      <navLabel>
+        <text>Events</text>
+      </navLabel>
+      <content src="index_split_190.html"/>
+    </navPoint>
+    <navPoint id="num_192" playOrder="191" class="chapter">
+      <navLabel>
+        <text>Telemetry</text>
+      </navLabel>
+      <content src="index_split_191.html"/>
+    </navPoint>
+    <navPoint id="num_193" playOrder="192" class="chapter">
+      <navLabel>
+        <text>Alerting</text>
+      </navLabel>
+      <content src="index_split_192.html"/>
+    </navPoint>
+    <navPoint id="num_194" playOrder="193" class="chapter">
+      <navLabel>
+        <text>Focus on recovery</text>
+      </navLabel>
+      <content src="index_split_193.html"/>
+    </navPoint>
+    <navPoint id="num_195" playOrder="194" class="chapter">
+      <navLabel>
+        <text>Performance</text>
+      </navLabel>
+      <content src="index_split_194.html"/>
+    </navPoint>
+    <navPoint id="num_196" playOrder="195" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_195.html"/>
+    </navPoint>
+    <navPoint id="num_197" playOrder="196" class="chapter">
+      <navLabel>
+        <text>Security</text>
+      </navLabel>
+      <content src="index_split_196.html"/>
+    </navPoint>
+    <navPoint id="num_198" playOrder="197" class="chapter">
+      <navLabel>
+        <text>Shared responsibility model</text>
+      </navLabel>
+      <content src="index_split_197.html"/>
+    </navPoint>
+    <navPoint id="num_199" playOrder="198" class="chapter">
+      <navLabel>
+        <text>Security by design</text>
+      </navLabel>
+      <content src="index_split_198.html"/>
+    </navPoint>
+    <navPoint id="num_200" playOrder="199" class="chapter">
+      <navLabel>
+        <text>Accounts as code</text>
+      </navLabel>
+      <content src="index_split_199.html"/>
+    </navPoint>
+    <navPoint id="num_201" playOrder="200" class="chapter">
+      <navLabel>
+        <text>Defense in depth</text>
+      </navLabel>
+      <content src="index_split_200.html"/>
+    </navPoint>
+    <navPoint id="num_202" playOrder="201" class="chapter">
+      <navLabel>
+        <text>Edge layer</text>
+      </navLabel>
+      <content src="index_split_201.html"/>
+    </navPoint>
+    <navPoint id="num_203" playOrder="202" class="chapter">
+      <navLabel>
+        <text>Component layer</text>
+      </navLabel>
+      <content src="index_split_202.html"/>
+    </navPoint>
+    <navPoint id="num_204" playOrder="203" class="chapter">
+      <navLabel>
+        <text>Data layer</text>
+      </navLabel>
+      <content src="index_split_203.html"/>
+    </navPoint>
+    <navPoint id="num_205" playOrder="204" class="chapter">
+      <navLabel>
+        <text>Encryption</text>
+      </navLabel>
+      <content src="index_split_204.html"/>
+    </navPoint>
+    <navPoint id="num_206" playOrder="205" class="chapter">
+      <navLabel>
+        <text>Data in transit</text>
+      </navLabel>
+      <content src="index_split_205.html"/>
+    </navPoint>
+    <navPoint id="num_207" playOrder="206" class="chapter">
+      <navLabel>
+        <text>Data at rest</text>
+      </navLabel>
+      <content src="index_split_206.html"/>
+    </navPoint>
+    <navPoint id="num_208" playOrder="207" class="chapter">
+      <navLabel>
+        <text>Envelope encryption</text>
+      </navLabel>
+      <content src="index_split_207.html"/>
+    </navPoint>
+    <navPoint id="num_209" playOrder="208" class="chapter">
+      <navLabel>
+        <text>Tokenization</text>
+      </navLabel>
+      <content src="index_split_208.html"/>
+    </navPoint>
+    <navPoint id="num_210" playOrder="209" class="chapter">
+      <navLabel>
+        <text>Domain events</text>
+      </navLabel>
+      <content src="index_split_209.html"/>
+    </navPoint>
+    <navPoint id="num_211" playOrder="210" class="chapter">
+      <navLabel>
+        <text>Disaster recovery</text>
+      </navLabel>
+      <content src="index_split_210.html"/>
+    </navPoint>
+    <navPoint id="num_212" playOrder="211" class="chapter">
+      <navLabel>
+        <text>Application security</text>
+      </navLabel>
+      <content src="index_split_211.html"/>
+    </navPoint>
+    <navPoint id="num_213" playOrder="212" class="chapter">
+      <navLabel>
+        <text>Federated identity management</text>
+      </navLabel>
+      <content src="index_split_212.html"/>
+    </navPoint>
+    <navPoint id="num_214" playOrder="213" class="chapter">
+      <navLabel>
+        <text>API gateway</text>
+      </navLabel>
+      <content src="index_split_213.html"/>
+    </navPoint>
+    <navPoint id="num_215" playOrder="214" class="chapter">
+      <navLabel>
+        <text>JWT assertion and filter patterns</text>
+      </navLabel>
+      <content src="index_split_214.html"/>
+    </navPoint>
+    <navPoint id="num_216" playOrder="215" class="chapter">
+      <navLabel>
+        <text>Regulatory compliance</text>
+      </navLabel>
+      <content src="index_split_215.html"/>
+    </navPoint>
+    <navPoint id="num_217" playOrder="216" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_216.html"/>
+    </navPoint>
+    <navPoint id="num_218" playOrder="217" class="chapter">
+      <navLabel>
+        <text>Cloud Native Application Design</text>
+      </navLabel>
+      <content src="index_split_217.html"/>
+    </navPoint>
+    <navPoint id="num_219" playOrder="218" class="chapter">
+      <navLabel>
+        <text>From monolithic to microservices and everything in between</text>
+      </navLabel>
+      <content src="index_split_218.html"/>
+    </navPoint>
+    <navPoint id="num_220" playOrder="219" class="chapter">
+      <navLabel>
+        <text>System design patterns</text>
+      </navLabel>
+      <content src="index_split_219.html"/>
+    </navPoint>
+    <navPoint id="num_221" playOrder="220" class="chapter">
+      <navLabel>
+        <text>Monolithic</text>
+      </navLabel>
+      <content src="index_split_220.html"/>
+    </navPoint>
+    <navPoint id="num_222" playOrder="221" class="chapter">
+      <navLabel>
+        <text>Client server</text>
+      </navLabel>
+      <content src="index_split_221.html"/>
+    </navPoint>
+    <navPoint id="num_223" playOrder="222" class="chapter">
+      <navLabel>
+        <text>Services</text>
+      </navLabel>
+      <content src="index_split_222.html"/>
+    </navPoint>
+    <navPoint id="num_224" playOrder="223" class="chapter">
+      <navLabel>
+        <text>Service-oriented architectures (SOAs)</text>
+      </navLabel>
+      <content src="index_split_223.html"/>
+    </navPoint>
+    <navPoint id="num_225" playOrder="224" class="chapter">
+      <navLabel>
+        <text>Microservices</text>
+      </navLabel>
+      <content src="index_split_224.html"/>
+    </navPoint>
+    <navPoint id="num_226" playOrder="225" class="chapter">
+      <navLabel>
+        <text>Why services matter</text>
+      </navLabel>
+      <content src="index_split_225.html"/>
+    </navPoint>
+    <navPoint id="num_227" playOrder="226" class="chapter">
+      <navLabel>
+        <text>Containers and serverless</text>
+      </navLabel>
+      <content src="index_split_226.html"/>
+    </navPoint>
+    <navPoint id="num_228" playOrder="227" class="chapter">
+      <navLabel>
+        <text>Containers and orchestration</text>
+      </navLabel>
+      <content src="index_split_227.html"/>
+    </navPoint>
+    <navPoint id="num_229" playOrder="228" class="chapter">
+      <navLabel>
+        <text>Registries</text>
+      </navLabel>
+      <content src="index_split_228.html"/>
+    </navPoint>
+    <navPoint id="num_230" playOrder="229" class="chapter">
+      <navLabel>
+        <text>Orchestration</text>
+      </navLabel>
+      <content src="index_split_229.html"/>
+    </navPoint>
+    <navPoint id="num_231" playOrder="230" class="chapter">
+      <navLabel>
+        <text>Container usage patterns</text>
+      </navLabel>
+      <content src="index_split_230.html"/>
+    </navPoint>
+    <navPoint id="num_232" playOrder="231" class="chapter">
+      <navLabel>
+        <text>Microservices with containers</text>
+      </navLabel>
+      <content src="index_split_231.html"/>
+    </navPoint>
+    <navPoint id="num_233" playOrder="232" class="chapter">
+      <navLabel>
+        <text>Hybrid and migration of application deployment</text>
+      </navLabel>
+      <content src="index_split_232.html"/>
+    </navPoint>
+    <navPoint id="num_234" playOrder="233" class="chapter">
+      <navLabel>
+        <text>Container anti patterns</text>
+      </navLabel>
+      <content src="index_split_233.html"/>
+    </navPoint>
+    <navPoint id="num_235" playOrder="234" class="chapter">
+      <navLabel>
+        <text>Serverless</text>
+      </navLabel>
+      <content src="index_split_234.html"/>
+    </navPoint>
+    <navPoint id="num_236" playOrder="235" class="chapter">
+      <navLabel>
+        <text>Scaling</text>
+      </navLabel>
+      <content src="index_split_235.html"/>
+    </navPoint>
+    <navPoint id="num_237" playOrder="236" class="chapter">
+      <navLabel>
+        <text>Serverless usage patterns</text>
+      </navLabel>
+      <content src="index_split_236.html"/>
+    </navPoint>
+    <navPoint id="num_238" playOrder="237" class="chapter">
+      <navLabel>
+        <text>Web and backend application processing</text>
+      </navLabel>
+      <content src="index_split_237.html"/>
+    </navPoint>
+    <navPoint id="num_239" playOrder="238" class="chapter">
+      <navLabel>
+        <text>Data and batch processing</text>
+      </navLabel>
+      <content src="index_split_238.html"/>
+    </navPoint>
+    <navPoint id="num_240" playOrder="239" class="chapter">
+      <navLabel>
+        <text>System automation</text>
+      </navLabel>
+      <content src="index_split_239.html"/>
+    </navPoint>
+    <navPoint id="num_241" playOrder="240" class="chapter">
+      <navLabel>
+        <text>Serverless anti patterns and concerns</text>
+      </navLabel>
+      <content src="index_split_240.html"/>
+    </navPoint>
+    <navPoint id="num_242" playOrder="241" class="chapter">
+      <navLabel>
+        <text>Development frameworks and approaches</text>
+      </navLabel>
+      <content src="index_split_241.html"/>
+    </navPoint>
+    <navPoint id="num_243" playOrder="242" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_242.html"/>
+    </navPoint>
+    <navPoint id="num_244" playOrder="243" class="chapter">
+      <navLabel>
+        <text>How to Choose Technology Stacks</text>
+      </navLabel>
+      <content src="index_split_243.html"/>
+    </navPoint>
+    <navPoint id="num_245" playOrder="244" class="chapter">
+      <navLabel>
+        <text>Cloud technology ecosystems</text>
+      </navLabel>
+      <content src="index_split_244.html"/>
+    </navPoint>
+    <navPoint id="num_246" playOrder="245" class="chapter">
+      <navLabel>
+        <text>Public cloud providers</text>
+      </navLabel>
+      <content src="index_split_245.html"/>
+    </navPoint>
+    <navPoint id="num_247" playOrder="246" class="chapter">
+      <navLabel>
+        <text>Independent software vendor (ISV) and technology partners</text>
+      </navLabel>
+      <content src="index_split_246.html"/>
+    </navPoint>
+    <navPoint id="num_248" playOrder="247" class="chapter">
+      <navLabel>
+        <text>Customer managed products</text>
+      </navLabel>
+      <content src="index_split_247.html"/>
+    </navPoint>
+    <navPoint id="num_249" playOrder="248" class="chapter">
+      <navLabel>
+        <text>Software as a Service</text>
+      </navLabel>
+      <content src="index_split_248.html"/>
+    </navPoint>
+    <navPoint id="num_250" playOrder="249" class="chapter">
+      <navLabel>
+        <text>Consulting partners</text>
+      </navLabel>
+      <content src="index_split_249.html"/>
+    </navPoint>
+    <navPoint id="num_251" playOrder="250" class="chapter">
+      <navLabel>
+        <text>Niche SI partners</text>
+      </navLabel>
+      <content src="index_split_250.html"/>
+    </navPoint>
+    <navPoint id="num_252" playOrder="251" class="chapter">
+      <navLabel>
+        <text>Regional SI partners</text>
+      </navLabel>
+      <content src="index_split_251.html"/>
+    </navPoint>
+    <navPoint id="num_253" playOrder="252" class="chapter">
+      <navLabel>
+        <text>Global SI partners</text>
+      </navLabel>
+      <content src="index_split_252.html"/>
+    </navPoint>
+    <navPoint id="num_254" playOrder="253" class="chapter">
+      <navLabel>
+        <text>Procurement in the cloud</text>
+      </navLabel>
+      <content src="index_split_253.html"/>
+    </navPoint>
+    <navPoint id="num_255" playOrder="254" class="chapter">
+      <navLabel>
+        <text>Cloud marketplaces</text>
+      </navLabel>
+      <content src="index_split_254.html"/>
+    </navPoint>
+    <navPoint id="num_256" playOrder="255" class="chapter">
+      <navLabel>
+        <text>Marketplace and service catalogs</text>
+      </navLabel>
+      <content src="index_split_255.html"/>
+    </navPoint>
+    <navPoint id="num_257" playOrder="256" class="chapter">
+      <navLabel>
+        <text>Cloud marketplace anti-patterns</text>
+      </navLabel>
+      <content src="index_split_256.html"/>
+    </navPoint>
+    <navPoint id="num_258" playOrder="257" class="chapter">
+      <navLabel>
+        <text>Licensing considerations</text>
+      </navLabel>
+      <content src="index_split_257.html"/>
+    </navPoint>
+    <navPoint id="num_259" playOrder="258" class="chapter">
+      <navLabel>
+        <text>Cloud vendor pricing models</text>
+      </navLabel>
+      <content src="index_split_258.html"/>
+    </navPoint>
+    <navPoint id="num_260" playOrder="259" class="chapter">
+      <navLabel>
+        <text>Example - AWS Lambda pricing</text>
+      </navLabel>
+      <content src="index_split_259.html"/>
+    </navPoint>
+    <navPoint id="num_261" playOrder="260" class="chapter">
+      <navLabel>
+        <text>Open source</text>
+      </navLabel>
+      <content src="index_split_260.html"/>
+    </navPoint>
+    <navPoint id="num_262" playOrder="261" class="chapter">
+      <navLabel>
+        <text>Cloud services</text>
+      </navLabel>
+      <content src="index_split_261.html"/>
+    </navPoint>
+    <navPoint id="num_263" playOrder="262" class="chapter">
+      <navLabel>
+        <text>Cloud services – vendor versus self-managed</text>
+      </navLabel>
+      <content src="index_split_262.html"/>
+    </navPoint>
+    <navPoint id="num_264" playOrder="263" class="chapter">
+      <navLabel>
+        <text>Self-managed approach</text>
+      </navLabel>
+      <content src="index_split_263.html"/>
+    </navPoint>
+    <navPoint id="num_265" playOrder="264" class="chapter">
+      <navLabel>
+        <text>Managed cloud services</text>
+      </navLabel>
+      <content src="index_split_264.html"/>
+    </navPoint>
+    <navPoint id="num_266" playOrder="265" class="chapter">
+      <navLabel>
+        <text>Vender lock-in</text>
+      </navLabel>
+      <content src="index_split_265.html"/>
+    </navPoint>
+    <navPoint id="num_267" playOrder="266" class="chapter">
+      <navLabel>
+        <text>Operating systems</text>
+      </navLabel>
+      <content src="index_split_266.html"/>
+    </navPoint>
+    <navPoint id="num_268" playOrder="267" class="chapter">
+      <navLabel>
+        <text>Windows versus Linux</text>
+      </navLabel>
+      <content src="index_split_267.html"/>
+    </navPoint>
+    <navPoint id="num_269" playOrder="268" class="chapter">
+      <navLabel>
+        <text>Do operating systems really matter any longer?</text>
+      </navLabel>
+      <content src="index_split_268.html"/>
+    </navPoint>
+    <navPoint id="num_270" playOrder="269" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_269.html"/>
+    </navPoint>
+    <navPoint id="num_271" playOrder="270" class="chapter">
+      <navLabel>
+        <text>Optimizing Cost</text>
+      </navLabel>
+      <content src="index_split_270.html"/>
+    </navPoint>
+    <navPoint id="num_272" playOrder="271" class="chapter">
+      <navLabel>
+        <text>Before the cloud</text>
+      </navLabel>
+      <content src="index_split_271.html"/>
+    </navPoint>
+    <navPoint id="num_273" playOrder="272" class="chapter">
+      <navLabel>
+        <text>Cloud cost view</text>
+      </navLabel>
+      <content src="index_split_272.html"/>
+    </navPoint>
+    <navPoint id="num_274" playOrder="273" class="chapter">
+      <navLabel>
+        <text>Cloud economics</text>
+      </navLabel>
+      <content src="index_split_273.html"/>
+    </navPoint>
+    <navPoint id="num_275" playOrder="274" class="chapter">
+      <navLabel>
+        <text>CapEx versus OpEx</text>
+      </navLabel>
+      <content src="index_split_274.html"/>
+    </navPoint>
+    <navPoint id="num_276" playOrder="275" class="chapter">
+      <navLabel>
+        <text>Cost monitoring</text>
+      </navLabel>
+      <content src="index_split_275.html"/>
+    </navPoint>
+    <navPoint id="num_277" playOrder="276" class="chapter">
+      <navLabel>
+        <text>Tagging best practices</text>
+      </navLabel>
+      <content src="index_split_276.html"/>
+    </navPoint>
+    <navPoint id="num_278" playOrder="277" class="chapter">
+      <navLabel>
+        <text>Cost optimization</text>
+      </navLabel>
+      <content src="index_split_277.html"/>
+    </navPoint>
+    <navPoint id="num_279" playOrder="278" class="chapter">
+      <navLabel>
+        <text>Compute optimization</text>
+      </navLabel>
+      <content src="index_split_278.html"/>
+    </navPoint>
+    <navPoint id="num_280" playOrder="279" class="chapter">
+      <navLabel>
+        <text>Storage optimization</text>
+      </navLabel>
+      <content src="index_split_279.html"/>
+    </navPoint>
+    <navPoint id="num_281" playOrder="280" class="chapter">
+      <navLabel>
+        <text>Serverless implications</text>
+      </navLabel>
+      <content src="index_split_280.html"/>
+    </navPoint>
+    <navPoint id="num_282" playOrder="281" class="chapter">
+      <navLabel>
+        <text>Cloud native toolkit</text>
+      </navLabel>
+      <content src="index_split_281.html"/>
+    </navPoint>
+    <navPoint id="num_283" playOrder="282" class="chapter">
+      <navLabel>
+        <text>Cloudability</text>
+      </navLabel>
+      <content src="index_split_282.html"/>
+    </navPoint>
+    <navPoint id="num_284" playOrder="283" class="chapter">
+      <navLabel>
+        <text>AWS Trusted Advisor</text>
+      </navLabel>
+      <content src="index_split_283.html"/>
+    </navPoint>
+    <navPoint id="num_285" playOrder="284" class="chapter">
+      <navLabel>
+        <text>Azure Cost Management</text>
+      </navLabel>
+      <content src="index_split_284.html"/>
+    </navPoint>
+    <navPoint id="num_286" playOrder="285" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_285.html"/>
+    </navPoint>
+    <navPoint id="num_287" playOrder="286" class="chapter">
+      <navLabel>
+        <text>Scalable and Available</text>
+      </navLabel>
+      <content src="index_split_286.html"/>
+    </navPoint>
+    <navPoint id="num_288" playOrder="287" class="chapter">
+      <navLabel>
+        <text>Introduction to the hyper-scale cloud infrastructure</text>
+      </navLabel>
+      <content src="index_split_287.html"/>
+    </navPoint>
+    <navPoint id="num_289" playOrder="288" class="chapter">
+      <navLabel>
+        <text>Always-on architectures</text>
+      </navLabel>
+      <content src="index_split_288.html"/>
+    </navPoint>
+    <navPoint id="num_290" playOrder="289" class="chapter">
+      <navLabel>
+        <text>Always-on – key architectural elements</text>
+      </navLabel>
+      <content src="index_split_289.html"/>
+    </navPoint>
+    <navPoint id="num_291" playOrder="290" class="chapter">
+      <navLabel>
+        <text>Network redundancy</text>
+      </navLabel>
+      <content src="index_split_290.html"/>
+    </navPoint>
+    <navPoint id="num_292" playOrder="291" class="chapter">
+      <navLabel>
+        <text>Redundant core services</text>
+      </navLabel>
+      <content src="index_split_291.html"/>
+    </navPoint>
+    <navPoint id="num_293" playOrder="292" class="chapter">
+      <navLabel>
+        <text>Monitoring</text>
+      </navLabel>
+      <content src="index_split_292.html"/>
+    </navPoint>
+    <navPoint id="num_294" playOrder="293" class="chapter">
+      <navLabel>
+        <text>Infrastructure as Code</text>
+      </navLabel>
+      <content src="index_split_293.html"/>
+    </navPoint>
+    <navPoint id="num_295" playOrder="294" class="chapter">
+      <navLabel>
+        <text>Immutable deployments</text>
+      </navLabel>
+      <content src="index_split_294.html"/>
+    </navPoint>
+    <navPoint id="num_296" playOrder="295" class="chapter">
+      <navLabel>
+        <text>Self-healing infrastructures</text>
+      </navLabel>
+      <content src="index_split_295.html"/>
+    </navPoint>
+    <navPoint id="num_297" playOrder="296" class="chapter">
+      <navLabel>
+        <text>Core tenets</text>
+      </navLabel>
+      <content src="index_split_296.html"/>
+    </navPoint>
+    <navPoint id="num_298" playOrder="297" class="chapter">
+      <navLabel>
+        <text>Service-oriented architectures and microservices</text>
+      </navLabel>
+      <content src="index_split_297.html"/>
+    </navPoint>
+    <navPoint id="num_299" playOrder="298" class="chapter">
+      <navLabel>
+        <text>Cloud-native toolkit</text>
+      </navLabel>
+      <content src="index_split_298.html"/>
+    </navPoint>
+    <navPoint id="num_300" playOrder="299" class="chapter">
+      <navLabel>
+        <text>Simian Army</text>
+      </navLabel>
+      <content src="index_split_299.html"/>
+    </navPoint>
+    <navPoint id="num_301" playOrder="300" class="chapter">
+      <navLabel>
+        <text>Docker</text>
+      </navLabel>
+      <content src="index_split_300.html"/>
+    </navPoint>
+    <navPoint id="num_302" playOrder="301" class="chapter">
+      <navLabel>
+        <text>Kubernetes</text>
+      </navLabel>
+      <content src="index_split_301.html"/>
+    </navPoint>
+    <navPoint id="num_303" playOrder="302" class="chapter">
+      <navLabel>
+        <text>Terraform</text>
+      </navLabel>
+      <content src="index_split_302.html"/>
+    </navPoint>
+    <navPoint id="num_304" playOrder="303" class="chapter">
+      <navLabel>
+        <text>OpenFaaS (Function as a Service)</text>
+      </navLabel>
+      <content src="index_split_303.html"/>
+    </navPoint>
+    <navPoint id="num_305" playOrder="304" class="chapter">
+      <navLabel>
+        <text>Envoy</text>
+      </navLabel>
+      <content src="index_split_304.html"/>
+    </navPoint>
+    <navPoint id="num_306" playOrder="305" class="chapter">
+      <navLabel>
+        <text>Linkerd</text>
+      </navLabel>
+      <content src="index_split_305.html"/>
+    </navPoint>
+    <navPoint id="num_307" playOrder="306" class="chapter">
+      <navLabel>
+        <text>Zipkin</text>
+      </navLabel>
+      <content src="index_split_306.html"/>
+    </navPoint>
+    <navPoint id="num_308" playOrder="307" class="chapter">
+      <navLabel>
+        <text>Ansible</text>
+      </navLabel>
+      <content src="index_split_307.html"/>
+    </navPoint>
+    <navPoint id="num_309" playOrder="308" class="chapter">
+      <navLabel>
+        <text>Apache Mesos</text>
+      </navLabel>
+      <content src="index_split_308.html"/>
+    </navPoint>
+    <navPoint id="num_310" playOrder="309" class="chapter">
+      <navLabel>
+        <text>Saltstack</text>
+      </navLabel>
+      <content src="index_split_309.html"/>
+    </navPoint>
+    <navPoint id="num_311" playOrder="310" class="chapter">
+      <navLabel>
+        <text>Vagrant</text>
+      </navLabel>
+      <content src="index_split_310.html"/>
+    </navPoint>
+    <navPoint id="num_312" playOrder="311" class="chapter">
+      <navLabel>
+        <text>OpenStack projects</text>
+      </navLabel>
+      <content src="index_split_311.html"/>
+    </navPoint>
+    <navPoint id="num_313" playOrder="312" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_312.html"/>
+    </navPoint>
+    <navPoint id="num_314" playOrder="313" class="chapter">
+      <navLabel>
+        <text>Amazon Web Services</text>
+      </navLabel>
+      <content src="index_split_313.html"/>
+    </navPoint>
+    <navPoint id="num_315" playOrder="314" class="chapter">
+      <navLabel>
+        <text>AWS' cloud native services (CNMM Axis-1)</text>
+      </navLabel>
+      <content src="index_split_314.html"/>
+    </navPoint>
+    <navPoint id="num_316" playOrder="315" class="chapter">
+      <navLabel>
+        <text>Introduction</text>
+      </navLabel>
+      <content src="index_split_315.html"/>
+    </navPoint>
+    <navPoint id="num_317" playOrder="316" class="chapter">
+      <navLabel>
+        <text>AWS platform – differentiators</text>
+      </navLabel>
+      <content src="index_split_316.html"/>
+    </navPoint>
+    <navPoint id="num_318" playOrder="317" class="chapter">
+      <navLabel>
+        <text>KRADL services</text>
+      </navLabel>
+      <content src="index_split_317.html"/>
+    </navPoint>
+    <navPoint id="num_319" playOrder="318" class="chapter">
+      <navLabel>
+        <text>AWS native security services</text>
+      </navLabel>
+      <content src="index_split_318.html"/>
+    </navPoint>
+    <navPoint id="num_320" playOrder="319" class="chapter">
+      <navLabel>
+        <text>Machine Learning/Artificial Intelligence</text>
+      </navLabel>
+      <content src="index_split_319.html"/>
+    </navPoint>
+    <navPoint id="num_321" playOrder="320" class="chapter">
+      <navLabel>
+        <text>Object storage (S3, Glacier, ecosystem)</text>
+      </navLabel>
+      <content src="index_split_320.html"/>
+    </navPoint>
+    <navPoint id="num_322" playOrder="321" class="chapter">
+      <navLabel>
+        <text>Application centric design (CNMM Axis-2)</text>
+      </navLabel>
+      <content src="index_split_321.html"/>
+    </navPoint>
+    <navPoint id="num_323" playOrder="322" class="chapter">
+      <navLabel>
+        <text>Serverless microservice</text>
+      </navLabel>
+      <content src="index_split_322.html"/>
+    </navPoint>
+    <navPoint id="num_324" playOrder="323" class="chapter">
+      <navLabel>
+        <text>API trigger</text>
+      </navLabel>
+      <content src="index_split_323.html"/>
+    </navPoint>
+    <navPoint id="num_325" playOrder="324" class="chapter">
+      <navLabel>
+        <text>Function</text>
+      </navLabel>
+      <content src="index_split_324.html"/>
+    </navPoint>
+    <navPoint id="num_326" playOrder="325" class="chapter">
+      <navLabel>
+        <text>Service</text>
+      </navLabel>
+      <content src="index_split_325.html"/>
+    </navPoint>
+    <navPoint id="num_327" playOrder="326" class="chapter">
+      <navLabel>
+        <text>Serverless microservice – sample walkthrough</text>
+      </navLabel>
+      <content src="index_split_326.html"/>
+    </navPoint>
+    <navPoint id="num_328" playOrder="327" class="chapter">
+      <navLabel>
+        <text>AWS Lambda function creation and configuration</text>
+      </navLabel>
+      <content src="index_split_327.html"/>
+    </navPoint>
+    <navPoint id="num_329" playOrder="328" class="chapter">
+      <navLabel>
+        <text>Configuring the Amazon API Gateway</text>
+      </navLabel>
+      <content src="index_split_328.html"/>
+    </navPoint>
+    <navPoint id="num_330" playOrder="329" class="chapter">
+      <navLabel>
+        <text>Setting up a Weather Service Account</text>
+      </navLabel>
+      <content src="index_split_329.html"/>
+    </navPoint>
+    <navPoint id="num_331" playOrder="330" class="chapter">
+      <navLabel>
+        <text>Testing the service</text>
+      </navLabel>
+      <content src="index_split_330.html"/>
+    </navPoint>
+    <navPoint id="num_332" playOrder="331" class="chapter">
+      <navLabel>
+        <text>Deploying the API</text>
+      </navLabel>
+      <content src="index_split_331.html"/>
+    </navPoint>
+    <navPoint id="num_333" playOrder="332" class="chapter">
+      <navLabel>
+        <text>Serverless microservice automation using AWS SAM</text>
+      </navLabel>
+      <content src="index_split_332.html"/>
+    </navPoint>
+    <navPoint id="num_334" playOrder="333" class="chapter">
+      <navLabel>
+        <text>SAM YAML template</text>
+      </navLabel>
+      <content src="index_split_333.html"/>
+    </navPoint>
+    <navPoint id="num_335" playOrder="334" class="chapter">
+      <navLabel>
+        <text>API definition Swagger file</text>
+      </navLabel>
+      <content src="index_split_334.html"/>
+    </navPoint>
+    <navPoint id="num_336" playOrder="335" class="chapter">
+      <navLabel>
+        <text>AWS Lambda code</text>
+      </navLabel>
+      <content src="index_split_335.html"/>
+    </navPoint>
+    <navPoint id="num_337" playOrder="336" class="chapter">
+      <navLabel>
+        <text>AWS SAM usage</text>
+      </navLabel>
+      <content src="index_split_336.html"/>
+    </navPoint>
+    <navPoint id="num_338" playOrder="337" class="chapter">
+      <navLabel>
+        <text>Automation in AWS (CNMM Axis-3)</text>
+      </navLabel>
+      <content src="index_split_337.html"/>
+    </navPoint>
+    <navPoint id="num_339" playOrder="338" class="chapter">
+      <navLabel>
+        <text>Infrastructure as code</text>
+      </navLabel>
+      <content src="index_split_338.html"/>
+    </navPoint>
+    <navPoint id="num_340" playOrder="339" class="chapter">
+      <navLabel>
+        <text>CI/CD for applications on Amazon EC2, Amazon Elastic Beanstalk</text>
+      </navLabel>
+      <content src="index_split_339.html"/>
+    </navPoint>
+    <navPoint id="num_341" playOrder="340" class="chapter">
+      <navLabel>
+        <text>CI/CD for serverless applications</text>
+      </navLabel>
+      <content src="index_split_340.html"/>
+    </navPoint>
+    <navPoint id="num_342" playOrder="341" class="chapter">
+      <navLabel>
+        <text>CI/CD for Amazon ECS (Docker containers)</text>
+      </navLabel>
+      <content src="index_split_341.html"/>
+    </navPoint>
+    <navPoint id="num_343" playOrder="342" class="chapter">
+      <navLabel>
+        <text>CI/CD for security services – DevSecOps</text>
+      </navLabel>
+      <content src="index_split_342.html"/>
+    </navPoint>
+    <navPoint id="num_344" playOrder="343" class="chapter">
+      <navLabel>
+        <text>Patterns for moving off monolithic application architectures to AWS native architectures</text>
+      </navLabel>
+      <content src="index_split_343.html"/>
+    </navPoint>
+    <navPoint id="num_345" playOrder="344" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_344.html"/>
+    </navPoint>
+    <navPoint id="num_346" playOrder="345" class="chapter">
+      <navLabel>
+        <text>Microsoft Azure</text>
+      </navLabel>
+      <content src="index_split_345.html"/>
+    </navPoint>
+    <navPoint id="num_347" playOrder="346" class="chapter">
+      <navLabel>
+        <text>Azure's Cloud Native Services (CNMM Axis-1)</text>
+      </navLabel>
+      <content src="index_split_346.html"/>
+    </navPoint>
+    <navPoint id="num_348" playOrder="347" class="chapter">
+      <navLabel>
+        <text>Microsoft Azure platform – differentiators</text>
+      </navLabel>
+      <content src="index_split_347.html"/>
+    </navPoint>
+    <navPoint id="num_349" playOrder="348" class="chapter">
+      <navLabel>
+        <text>Azure IoT</text>
+      </navLabel>
+      <content src="index_split_348.html"/>
+    </navPoint>
+    <navPoint id="num_350" playOrder="349" class="chapter">
+      <navLabel>
+        <text>Azure Cosmos DB</text>
+      </navLabel>
+      <content src="index_split_349.html"/>
+    </navPoint>
+    <navPoint id="num_351" playOrder="350" class="chapter">
+      <navLabel>
+        <text>Azure machine learning studio</text>
+      </navLabel>
+      <content src="index_split_350.html"/>
+    </navPoint>
+    <navPoint id="num_352" playOrder="351" class="chapter">
+      <navLabel>
+        <text>Visual Studio Team Services</text>
+      </navLabel>
+      <content src="index_split_351.html"/>
+    </navPoint>
+    <navPoint id="num_353" playOrder="352" class="chapter">
+      <navLabel>
+        <text>Office 365</text>
+      </navLabel>
+      <content src="index_split_352.html"/>
+    </navPoint>
+    <navPoint id="num_354" playOrder="353" class="chapter">
+      <navLabel>
+        <text>Application Centric Design (CNMM Axis-2)</text>
+      </navLabel>
+      <content src="index_split_353.html"/>
+    </navPoint>
+    <navPoint id="num_355" playOrder="354" class="chapter">
+      <navLabel>
+        <text>Serverless microservice</text>
+      </navLabel>
+      <content src="index_split_354.html"/>
+    </navPoint>
+    <navPoint id="num_356" playOrder="355" class="chapter">
+      <navLabel>
+        <text>Serverless microservice – walkthrough</text>
+      </navLabel>
+      <content src="index_split_355.html"/>
+    </navPoint>
+    <navPoint id="num_357" playOrder="356" class="chapter">
+      <navLabel>
+        <text>Browser-based testing</text>
+      </navLabel>
+      <content src="index_split_356.html"/>
+    </navPoint>
+    <navPoint id="num_358" playOrder="357" class="chapter">
+      <navLabel>
+        <text>Command-line-based testing</text>
+      </navLabel>
+      <content src="index_split_357.html"/>
+    </navPoint>
+    <navPoint id="num_359" playOrder="358" class="chapter">
+      <navLabel>
+        <text>Automation in Azure (CNMM Axis-3)</text>
+      </navLabel>
+      <content src="index_split_358.html"/>
+    </navPoint>
+    <navPoint id="num_360" playOrder="359" class="chapter">
+      <navLabel>
+        <text>Infrastructure as code</text>
+      </navLabel>
+      <content src="index_split_359.html"/>
+    </navPoint>
+    <navPoint id="num_361" playOrder="360" class="chapter">
+      <navLabel>
+        <text>CI/CD for serverless applications</text>
+      </navLabel>
+      <content src="index_split_360.html"/>
+    </navPoint>
+    <navPoint id="num_362" playOrder="361" class="chapter">
+      <navLabel>
+        <text>CI/CD for Azure container service (Docker containers)</text>
+      </navLabel>
+      <content src="index_split_361.html"/>
+    </navPoint>
+    <navPoint id="num_363" playOrder="362" class="chapter">
+      <navLabel>
+        <text>Patterns for moving from monolithic application architectures to Azure native architectures</text>
+      </navLabel>
+      <content src="index_split_362.html"/>
+    </navPoint>
+    <navPoint id="num_364" playOrder="363" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_363.html"/>
+    </navPoint>
+    <navPoint id="num_365" playOrder="364" class="chapter">
+      <navLabel>
+        <text>Google Cloud Platform</text>
+      </navLabel>
+      <content src="index_split_364.html"/>
+    </navPoint>
+    <navPoint id="num_366" playOrder="365" class="chapter">
+      <navLabel>
+        <text>GCP's cloud-native services (CNMM Axis-1)</text>
+      </navLabel>
+      <content src="index_split_365.html"/>
+    </navPoint>
+    <navPoint id="num_367" playOrder="366" class="chapter">
+      <navLabel>
+        <text>Introduction</text>
+      </navLabel>
+      <content src="index_split_366.html"/>
+    </navPoint>
+    <navPoint id="num_368" playOrder="367" class="chapter">
+      <navLabel>
+        <text>Google Cloud Platform – differentiators</text>
+      </navLabel>
+      <content src="index_split_367.html"/>
+    </navPoint>
+    <navPoint id="num_369" playOrder="368" class="chapter">
+      <navLabel>
+        <text>Cloud AI</text>
+      </navLabel>
+      <content src="index_split_368.html"/>
+    </navPoint>
+    <navPoint id="num_370" playOrder="369" class="chapter">
+      <navLabel>
+        <text>Kubernetes Engine</text>
+      </navLabel>
+      <content src="index_split_369.html"/>
+    </navPoint>
+    <navPoint id="num_371" playOrder="370" class="chapter">
+      <navLabel>
+        <text>G Suite</text>
+      </navLabel>
+      <content src="index_split_370.html"/>
+    </navPoint>
+    <navPoint id="num_372" playOrder="371" class="chapter">
+      <navLabel>
+        <text>Application Centric Design (CNMM Axis-2)</text>
+      </navLabel>
+      <content src="index_split_371.html"/>
+    </navPoint>
+    <navPoint id="num_373" playOrder="372" class="chapter">
+      <navLabel>
+        <text>Serverless microservice</text>
+      </navLabel>
+      <content src="index_split_372.html"/>
+    </navPoint>
+    <navPoint id="num_374" playOrder="373" class="chapter">
+      <navLabel>
+        <text>Serverless microservice – sample walkthrough</text>
+      </navLabel>
+      <content src="index_split_373.html"/>
+    </navPoint>
+    <navPoint id="num_375" playOrder="374" class="chapter">
+      <navLabel>
+        <text>Automation in the Google Cloud Platform (CNMM Axis-3)</text>
+      </navLabel>
+      <content src="index_split_374.html"/>
+    </navPoint>
+    <navPoint id="num_376" playOrder="375" class="chapter">
+      <navLabel>
+        <text>Infrastructure as code</text>
+      </navLabel>
+      <content src="index_split_375.html"/>
+    </navPoint>
+    <navPoint id="num_377" playOrder="376" class="chapter">
+      <navLabel>
+        <text>CI/CD for serverless microservices</text>
+      </navLabel>
+      <content src="index_split_376.html"/>
+    </navPoint>
+    <navPoint id="num_378" playOrder="377" class="chapter">
+      <navLabel>
+        <text>CI/CD for container-based applications</text>
+      </navLabel>
+      <content src="index_split_377.html"/>
+    </navPoint>
+    <navPoint id="num_379" playOrder="378" class="chapter">
+      <navLabel>
+        <text>Patterns for moving off from monolithic application architectures to Google cloud native architectures</text>
+      </navLabel>
+      <content src="index_split_378.html"/>
+    </navPoint>
+    <navPoint id="num_380" playOrder="379" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_379.html"/>
+    </navPoint>
+    <navPoint id="num_381" playOrder="380" class="chapter">
+      <navLabel>
+        <text>What's Next? Cloud Native Application Architecture Trends</text>
+      </navLabel>
+      <content src="index_split_380.html"/>
+    </navPoint>
+    <navPoint id="num_382" playOrder="381" class="chapter">
+      <navLabel>
+        <text>Predictions for the next three years – what to expect in terms of cloud native architecture evolution</text>
+      </navLabel>
+      <content src="index_split_381.html"/>
+    </navPoint>
+    <navPoint id="num_383" playOrder="382" class="chapter">
+      <navLabel>
+        <text>Open source frameworks and platforms</text>
+      </navLabel>
+      <content src="index_split_382.html"/>
+    </navPoint>
+    <navPoint id="num_384" playOrder="383" class="chapter">
+      <navLabel>
+        <text>Increased abstraction from infrastructure services</text>
+      </navLabel>
+      <content src="index_split_383.html"/>
+    </navPoint>
+    <navPoint id="num_385" playOrder="384" class="chapter">
+      <navLabel>
+        <text>Systems will become smarter and AI/ML driven, starting with DevOps and moving on to NoOps</text>
+      </navLabel>
+      <content src="index_split_384.html"/>
+    </navPoint>
+    <navPoint id="num_386" playOrder="385" class="chapter">
+      <navLabel>
+        <text>Developers will natively develop new applications in the cloud, instead of first developing locally</text>
+      </navLabel>
+      <content src="index_split_385.html"/>
+    </navPoint>
+    <navPoint id="num_387" playOrder="386" class="chapter">
+      <navLabel>
+        <text>Voice, chatbots, and AR/VR-based interaction models will become prevalent, mainly powered by the cloud</text>
+      </navLabel>
+      <content src="index_split_386.html"/>
+    </navPoint>
+    <navPoint id="num_388" playOrder="387" class="chapter">
+      <navLabel>
+        <text>Cloud native architectures will expand beyond data centers to "things"</text>
+      </navLabel>
+      <content src="index_split_387.html"/>
+    </navPoint>
+    <navPoint id="num_389" playOrder="388" class="chapter">
+      <navLabel>
+        <text>Data will continue to be new "oil"</text>
+      </navLabel>
+      <content src="index_split_388.html"/>
+    </navPoint>
+    <navPoint id="num_390" playOrder="389" class="chapter">
+      <navLabel>
+        <text>The future of enterprises on the cloud</text>
+      </navLabel>
+      <content src="index_split_389.html"/>
+    </navPoint>
+    <navPoint id="num_391" playOrder="390" class="chapter">
+      <navLabel>
+        <text>New IT roles</text>
+      </navLabel>
+      <content src="index_split_390.html"/>
+    </navPoint>
+    <navPoint id="num_392" playOrder="391" class="chapter">
+      <navLabel>
+        <text>Summary</text>
+      </navLabel>
+      <content src="index_split_391.html"/>
+    </navPoint>
+    <navPoint id="num_393" playOrder="392" class="chapter">
+      <navLabel>
+        <text>Other Books You May Enjoy</text>
+      </navLabel>
+      <content src="index_split_392.html"/>
+    </navPoint>
+    <navPoint id="num_394" playOrder="393" class="chapter">
+      <navLabel>
+        <text>Leave a review - let other readers know what you think</text>
+      </navLabel>
+      <content src="index_split_393.html"/>
+    </navPoint>
+  </navMap>
+</ncx>

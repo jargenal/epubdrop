@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos758674" class="calibre_2"><span class="calibre2"><span class="bold">Defense in depth</span></span></p><p class="calibre_1">Security and redundancy go hand in hand. <a></a>Each layer of the system architecture has its own fortification. <a></a>This redundancy ensures that if an outer layer is breached, then the next layer can potentially thwart the attack or at least slow it down long enough for the initial breach to be repaired. <a></a>The number of layers in our cloud-native components is purposefully shallow. <a></a>All inter-component communication is performed asynchronously via event streaming and all synchronous intra-component communication is with highly available, value-added cloud services, such as cloud-native databases. <a></a>Our boundary components, such as a BFF component, have the most layers with an edge layer, a component layer, and a data layer; whereas fully asynchronous components will not have an edge layer, because they are entirely internal. <a></a>The following diagram summarizes the topics we will discuss at the different layers:</p><p class="calibre_13"><img src="images/00067.jpg" class="calibre_59"/></p><div class="mbp_pagebreak" id="calibre_pb_201"></div>
+</body></html>

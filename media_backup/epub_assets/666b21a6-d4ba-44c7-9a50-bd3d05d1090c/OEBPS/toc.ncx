@@ -1,0 +1,3059 @@
+<?xml version="1.0" encoding="UTF-8"?><ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+
+  <head>
+    <meta content="urn:uuid:0ab29846-ad13-43b5-9f8a-92edbbf12b70" name="dtb:uid"/>
+    <meta content="7" name="dtb:depth"/>
+    <meta content="0" name="dtb:totalPageCount"/>
+    <meta content="0" name="dtb:maxPageNumber"/>
+  </head>
+  <docTitle>
+    <text>Solutions Architect’s Handbook_Third Edition</text>
+  </docTitle>
+  <docAuthor>
+    <text>Saurabh Shrivastava, Neelanjali Srivastav</text>
+  </docAuthor>
+  <navMap>
+    <navPoint id="navpoint6" playOrder="1">
+      <navLabel>
+        <text>Preface</text>
+      </navLabel>
+      <content src="Text/Preface.xhtml#_idParaDest-6"/>
+      <navPoint id="navpoint7" playOrder="2">
+        <navLabel>
+          <text>Who this book is for</text>
+        </navLabel>
+        <content src="Text/Preface.xhtml#_idParaDest-7"/>
+      </navPoint>
+      <navPoint id="navpoint8" playOrder="3">
+        <navLabel>
+          <text>What this book covers</text>
+        </navLabel>
+        <content src="Text/Preface.xhtml#_idParaDest-8"/>
+      </navPoint>
+      <navPoint id="navpoint9" playOrder="4">
+        <navLabel>
+          <text>To get the most out of this book</text>
+        </navLabel>
+        <content src="Text/Preface.xhtml#_idParaDest-9"/>
+      </navPoint>
+      <navPoint id="navpoint12" playOrder="5">
+        <navLabel>
+          <text>Get in touch</text>
+        </navLabel>
+        <content src="Text/Preface.xhtml#_idParaDest-12"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint15" playOrder="6">
+      <navLabel>
+        <text>Solutions Architects in Organizations</text>
+      </navLabel>
+      <content src="Text/Chapter_1.xhtml#_idParaDest-15"/>
+      <navPoint id="navpoint16" playOrder="7">
+        <navLabel>
+          <text>What is solution architecture?</text>
+        </navLabel>
+        <content src="Text/Chapter_1.xhtml#_idParaDest-16"/>
+        <navPoint id="navpoint17" playOrder="8">
+          <navLabel>
+            <text>The benefits of solution architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-17"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint18" playOrder="9">
+        <navLabel>
+          <text>he solutions architect’s role</text>
+        </navLabel>
+        <content src="Text/Chapter_1.xhtml#_idParaDest-18"/>
+        <navPoint id="navpoint19" playOrder="10">
+          <navLabel>
+            <text>Generalist solutions architect roles</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-19"/>
+          <navPoint id="navpoint20" playOrder="11">
+            <navLabel>
+              <text>Enterprise solutions architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-20"/>
+          </navPoint>
+          <navPoint id="navpoint21" playOrder="12">
+            <navLabel>
+              <text>Application Architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-21"/>
+          </navPoint>
+          <navPoint id="navpoint22" playOrder="13">
+            <navLabel>
+              <text>Cloud Architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-22"/>
+          </navPoint>
+          <navPoint id="navpoint23" playOrder="14">
+            <navLabel>
+              <text>Architect Evangelist</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-23"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint24" playOrder="15">
+          <navLabel>
+            <text>Specialist solutions architect roles</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-24"/>
+          <navPoint id="navpoint25" playOrder="16">
+            <navLabel>
+              <text>Infrastructure Architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-25"/>
+          </navPoint>
+          <navPoint id="navpoint26" playOrder="17">
+            <navLabel>
+              <text>Network Architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-26"/>
+          </navPoint>
+          <navPoint id="navpoint27" playOrder="18">
+            <navLabel>
+              <text>Data Architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-27"/>
+          </navPoint>
+          <navPoint id="navpoint28" playOrder="19">
+            <navLabel>
+              <text>ML Architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-28"/>
+          </navPoint>
+          <navPoint id="navpoint29" playOrder="20">
+            <navLabel>
+              <text>GenAI architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-29"/>
+          </navPoint>
+          <navPoint id="navpoint30" playOrder="21">
+            <navLabel>
+              <text>Security Architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-30"/>
+          </navPoint>
+          <navPoint id="navpoint31" playOrder="22">
+            <navLabel>
+              <text>DevOps architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-31"/>
+          </navPoint>
+          <navPoint id="navpoint32" playOrder="23">
+            <navLabel>
+              <text>Industry Architect</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-32"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint33" playOrder="24">
+        <navLabel>
+          <text>Understanding a solutions architect’s responsibilities</text>
+        </navLabel>
+        <content src="Text/Chapter_1.xhtml#_idParaDest-33"/>
+        <navPoint id="navpoint34" playOrder="25">
+          <navLabel>
+            <text>Analyze functional requirements (FRs)</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-34"/>
+        </navPoint>
+        <navPoint id="navpoint35" playOrder="26">
+          <navLabel>
+            <text>Define NFRs</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-35"/>
+        </navPoint>
+        <navPoint id="navpoint36" playOrder="27">
+          <navLabel>
+            <text>Understand and engage stakeholders</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-36"/>
+        </navPoint>
+        <navPoint id="navpoint37" playOrder="28">
+          <navLabel>
+            <text>Understand architecture constraints</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-37"/>
+        </navPoint>
+        <navPoint id="navpoint38" playOrder="29">
+          <navLabel>
+            <text>Make technology selections</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-38"/>
+        </navPoint>
+        <navPoint id="navpoint39" playOrder="30">
+          <navLabel>
+            <text>Develop a POC and prototype</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-39"/>
+        </navPoint>
+        <navPoint id="navpoint40" playOrder="31">
+          <navLabel>
+            <text>Solution design and delivery</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-40"/>
+          <navPoint id="navpoint41" playOrder="32">
+            <navLabel>
+              <text>Ensuring post-launch operability and maintenance</text>
+            </navLabel>
+            <content src="Text/Chapter_1.xhtml#_idParaDest-41"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint42" playOrder="33">
+          <navLabel>
+            <text>Solution scaling and technology evangelism</text>
+          </navLabel>
+          <content src="Text/Chapter_1.xhtml#_idParaDest-42"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint43" playOrder="34">
+        <navLabel>
+          <text>Solutions architect in an Agile organization</text>
+        </navLabel>
+        <content src="Text/Chapter_1.xhtml#_idParaDest-43"/>
+      </navPoint>
+      <navPoint id="navpoint44" playOrder="35">
+        <navLabel>
+          <text>Common challenges in the solutions architect role</text>
+        </navLabel>
+        <content src="Text/Chapter_1.xhtml#_idParaDest-44"/>
+      </navPoint>
+      <navPoint id="navpoint45" playOrder="36">
+        <navLabel>
+          <text>Career path and skill development for solutions architects</text>
+        </navLabel>
+        <content src="Text/Chapter_1.xhtml#_idParaDest-45"/>
+      </navPoint>
+      <navPoint id="navpoint46" playOrder="37">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_1.xhtml#_idParaDest-46"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint48" playOrder="38">
+      <navLabel>
+        <text>Principles of Solution Architecture Design</text>
+      </navLabel>
+      <content src="Text/Chapter_2.xhtml#_idParaDest-48"/>
+      <navPoint id="navpoint49" playOrder="39">
+        <navLabel>
+          <text>Building scalable architecture design</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-49"/>
+        <navPoint id="navpoint50" playOrder="40">
+          <navLabel>
+            <text>Scaling static content</text>
+          </navLabel>
+          <content src="Text/Chapter_2.xhtml#_idParaDest-50"/>
+          <navPoint id="navpoint51" playOrder="41">
+            <navLabel>
+              <text>Session management for application server scaling</text>
+            </navLabel>
+            <content src="Text/Chapter_2.xhtml#_idParaDest-51"/>
+          </navPoint>
+          <navPoint id="navpoint52" playOrder="42">
+            <navLabel>
+              <text>Database scaling</text>
+            </navLabel>
+            <content src="Text/Chapter_2.xhtml#_idParaDest-52"/>
+          </navPoint>
+          <navPoint id="navpoint53" playOrder="43">
+            <navLabel>
+              <text>Building elastic architecture</text>
+            </navLabel>
+            <content src="Text/Chapter_2.xhtml#_idParaDest-53"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint54" playOrder="44">
+        <navLabel>
+          <text>Building a highly available and resilient architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-54"/>
+        <navPoint id="navpoint55" playOrder="45">
+          <navLabel>
+            <text>Highly available architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_2.xhtml#_idParaDest-55"/>
+        </navPoint>
+        <navPoint id="navpoint56" playOrder="46">
+          <navLabel>
+            <text>Resilient architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_2.xhtml#_idParaDest-56"/>
+        </navPoint>
+        <navPoint id="navpoint57" playOrder="47">
+          <navLabel>
+            <text>Achieving redundancy</text>
+          </navLabel>
+          <content src="Text/Chapter_2.xhtml#_idParaDest-57"/>
+        </navPoint>
+        <navPoint id="navpoint58" playOrder="48">
+          <navLabel>
+            <text>Addressing component failure</text>
+          </navLabel>
+          <content src="Text/Chapter_2.xhtml#_idParaDest-58"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint59" playOrder="49">
+        <navLabel>
+          <text>Making your architecture fault-tolerant</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-59"/>
+      </navPoint>
+      <navPoint id="navpoint60" playOrder="50">
+        <navLabel>
+          <text>Designing for performance</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-60"/>
+      </navPoint>
+      <navPoint id="navpoint61" playOrder="51">
+        <navLabel>
+          <text>Creating immutable architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-61"/>
+      </navPoint>
+      <navPoint id="navpoint62" playOrder="52">
+        <navLabel>
+          <text>Think loose coupling</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-62"/>
+      </navPoint>
+      <navPoint id="navpoint63" playOrder="53">
+        <navLabel>
+          <text>Think service, not server</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-63"/>
+      </navPoint>
+      <navPoint id="navpoint64" playOrder="54">
+        <navLabel>
+          <text>Think data-driven design</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-64"/>
+      </navPoint>
+      <navPoint id="navpoint65" playOrder="55">
+        <navLabel>
+          <text>Adding security everywhere</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-65"/>
+      </navPoint>
+      <navPoint id="navpoint66" playOrder="56">
+        <navLabel>
+          <text>Making applications usable and accessible</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-66"/>
+        <navPoint id="navpoint67" playOrder="57">
+          <navLabel>
+            <text>Achieving usability</text>
+          </navLabel>
+          <content src="Text/Chapter_2.xhtml#_idParaDest-67"/>
+        </navPoint>
+        <navPoint id="navpoint68" playOrder="58">
+          <navLabel>
+            <text>Achieving accessibility</text>
+          </navLabel>
+          <content src="Text/Chapter_2.xhtml#_idParaDest-68"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint69" playOrder="59">
+        <navLabel>
+          <text>Building future-proof extendable and reusable architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-69"/>
+      </navPoint>
+      <navPoint id="navpoint70" playOrder="60">
+        <navLabel>
+          <text>Ensuring architectural interoperability and portability</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-70"/>
+        <navPoint id="navpoint71" playOrder="61">
+          <navLabel>
+            <text>Making applications interoperable</text>
+          </navLabel>
+          <content src="Text/Chapter_2.xhtml#_idParaDest-71"/>
+          <navPoint id="navpoint72" playOrder="62">
+            <navLabel>
+              <text>Making applications portable</text>
+            </navLabel>
+            <content src="Text/Chapter_2.xhtml#_idParaDest-72"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint73" playOrder="63">
+        <navLabel>
+          <text>Applying automation everywhere</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-73"/>
+      </navPoint>
+      <navPoint id="navpoint74" playOrder="64">
+        <navLabel>
+          <text>Plan for business continuity</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-74"/>
+      </navPoint>
+      <navPoint id="navpoint75" playOrder="65">
+        <navLabel>
+          <text>Design for operation</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-75"/>
+      </navPoint>
+      <navPoint id="navpoint76" playOrder="66">
+        <navLabel>
+          <text>Overcoming architectural constraints</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-76"/>
+        <navPoint id="navpoint77" playOrder="67">
+          <navLabel>
+            <text>Taking the MVP approach</text>
+          </navLabel>
+          <content src="Text/Chapter_2.xhtml#_idParaDest-77"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint78" playOrder="68">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_2.xhtml#_idParaDest-78"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint80" playOrder="69">
+      <navLabel>
+        <text>Cloud Migration and Cloud Architecture Design</text>
+      </navLabel>
+      <content src="Text/Chapter_3.xhtml#_idParaDest-80"/>
+      <navPoint id="navpoint81" playOrder="70">
+        <navLabel>
+          <text>Public, private, and hybrid clouds</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-81"/>
+      </navPoint>
+      <navPoint id="navpoint82" playOrder="71">
+        <navLabel>
+          <text>Solution architecture in the public cloud</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-82"/>
+        <navPoint id="navpoint83" playOrder="72">
+          <navLabel>
+            <text>Public cloud architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-83"/>
+        </navPoint>
+        <navPoint id="navpoint84" playOrder="73">
+          <navLabel>
+            <text>Popular public cloud providers</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-84"/>
+        </navPoint>
+        <navPoint id="navpoint85" playOrder="74">
+          <navLabel>
+            <text>Cloud-native architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-85"/>
+        </navPoint>
+        <navPoint id="navpoint86" playOrder="75">
+          <navLabel>
+            <text>Designing cloud-native architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-86"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint87" playOrder="76">
+        <navLabel>
+          <text>Creating a cloud migration strategy</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-87"/>
+        <navPoint id="navpoint88" playOrder="77">
+          <navLabel>
+            <text>Lift and shift migration</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-88"/>
+          <navPoint id="navpoint89" playOrder="78">
+            <navLabel>
+              <text>Rehost</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-89"/>
+          </navPoint>
+          <navPoint id="navpoint90" playOrder="79">
+            <navLabel>
+              <text>Replatform</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-90"/>
+          </navPoint>
+          <navPoint id="navpoint91" playOrder="80">
+            <navLabel>
+              <text>Relocate</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-91"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint92" playOrder="81">
+          <navLabel>
+            <text>The cloud-native approach</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-92"/>
+          <navPoint id="navpoint93" playOrder="82">
+            <navLabel>
+              <text>Refactor</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-93"/>
+          </navPoint>
+          <navPoint id="navpoint94" playOrder="83">
+            <navLabel>
+              <text>Repurchase</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-94"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint95" playOrder="84">
+          <navLabel>
+            <text>Retain or retire</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-95"/>
+          <navPoint id="navpoint96" playOrder="85">
+            <navLabel>
+              <text>Retain</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-96"/>
+          </navPoint>
+          <navPoint id="navpoint97" playOrder="86">
+            <navLabel>
+              <text>Retire</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-97"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint98" playOrder="87">
+        <navLabel>
+          <text>Choosing a cloud migration strategy</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-98"/>
+      </navPoint>
+      <navPoint id="navpoint99" playOrder="88">
+        <navLabel>
+          <text>Steps for cloud migration</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-99"/>
+        <navPoint id="navpoint100" playOrder="89">
+          <navLabel>
+            <text>Discovering your portfolio and workloads</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-100"/>
+        </navPoint>
+        <navPoint id="navpoint101" playOrder="90">
+          <navLabel>
+            <text>Analyzing the information</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-101"/>
+        </navPoint>
+        <navPoint id="navpoint102" playOrder="91">
+          <navLabel>
+            <text>Creating a migration plan</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-102"/>
+        </navPoint>
+        <navPoint id="navpoint103" playOrder="92">
+          <navLabel>
+            <text>Designing the application</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-103"/>
+        </navPoint>
+        <navPoint id="navpoint104" playOrder="93">
+          <navLabel>
+            <text>Executing application migration to the cloud</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-104"/>
+          <navPoint id="navpoint105" playOrder="94">
+            <navLabel>
+              <text>Data migration</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-105"/>
+          </navPoint>
+          <navPoint id="navpoint106" playOrder="95">
+            <navLabel>
+              <text>Server migration</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-106"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint107" playOrder="96">
+          <navLabel>
+            <text>Integrating, validating, and cutover</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-107"/>
+          <navPoint id="navpoint108" playOrder="97">
+            <navLabel>
+              <text>Validation</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-108"/>
+          </navPoint>
+          <navPoint id="navpoint109" playOrder="98">
+            <navLabel>
+              <text>Integration</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-109"/>
+          </navPoint>
+          <navPoint id="navpoint110" playOrder="99">
+            <navLabel>
+              <text>The cutover process</text>
+            </navLabel>
+            <content src="Text/Chapter_3.xhtml#_idParaDest-110"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint111" playOrder="100">
+          <navLabel>
+            <text>Operating the cloud application</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-111"/>
+        </navPoint>
+        <navPoint id="navpoint112" playOrder="101">
+          <navLabel>
+            <text>Application optimization in the cloud</text>
+          </navLabel>
+          <content src="Text/Chapter_3.xhtml#_idParaDest-112"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint113" playOrder="102">
+        <navLabel>
+          <text>Creating a hybrid cloud architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-113"/>
+      </navPoint>
+      <navPoint id="navpoint114" playOrder="103">
+        <navLabel>
+          <text>Taking a multi-cloud approach</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-114"/>
+      </navPoint>
+      <navPoint id="navpoint115" playOrder="104">
+        <navLabel>
+          <text>Implementing CloudOps</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-115"/>
+      </navPoint>
+      <navPoint id="navpoint116" playOrder="105">
+        <navLabel>
+          <text>CloudOps pillars</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-116"/>
+      </navPoint>
+      <navPoint id="navpoint117" playOrder="106">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-117"/>
+      </navPoint>
+      <navPoint id="navpoint118" playOrder="107">
+        <navLabel>
+          <text>Further reading</text>
+        </navLabel>
+        <content src="Text/Chapter_3.xhtml#_idParaDest-118"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint120" playOrder="108">
+      <navLabel>
+        <text>Solution Architecture Design Patterns</text>
+      </navLabel>
+      <content src="Text/Chapter_4.xhtml#_idParaDest-120"/>
+      <navPoint id="navpoint121" playOrder="109">
+        <navLabel>
+          <text>Building an n-tier layered architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-121"/>
+        <navPoint id="navpoint122" playOrder="110">
+          <navLabel>
+            <text>The web layer</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-122"/>
+        </navPoint>
+        <navPoint id="navpoint123" playOrder="111">
+          <navLabel>
+            <text>The application layer</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-123"/>
+        </navPoint>
+        <navPoint id="navpoint124" playOrder="112">
+          <navLabel>
+            <text>The database layer</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-124"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint125" playOrder="113">
+        <navLabel>
+          <text>Creating a multi-tenant SaaS-based architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-125"/>
+      </navPoint>
+      <navPoint id="navpoint126" playOrder="114">
+        <navLabel>
+          <text>Understanding service-oriented architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-126"/>
+        <navPoint id="navpoint127" playOrder="115">
+          <navLabel>
+            <text>RESTful web service architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-127"/>
+        </navPoint>
+        <navPoint id="navpoint128" playOrder="116">
+          <navLabel>
+            <text>Building a RESTful-architecture-based e-commerce website</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-128"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint129" playOrder="117">
+        <navLabel>
+          <text>Building a cache-based architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-129"/>
+        <navPoint id="navpoint130" playOrder="118">
+          <navLabel>
+            <text>Cache distribution pattern in a three-tier web architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-130"/>
+        </navPoint>
+        <navPoint id="navpoint131" playOrder="119">
+          <navLabel>
+            <text>Rename distribution pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-131"/>
+        </navPoint>
+        <navPoint id="navpoint132" playOrder="120">
+          <navLabel>
+            <text>Cache proxy pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-132"/>
+        </navPoint>
+        <navPoint id="navpoint133" playOrder="121">
+          <navLabel>
+            <text>Rewrite proxy pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-133"/>
+        </navPoint>
+        <navPoint id="navpoint134" playOrder="122">
+          <navLabel>
+            <text>App caching pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-134"/>
+        </navPoint>
+        <navPoint id="navpoint135" playOrder="123">
+          <navLabel>
+            <text>Memcached versus Redis</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-135"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint136" playOrder="124">
+        <navLabel>
+          <text>Model-View-Controller (MVC) architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-136"/>
+        <navPoint id="navpoint137" playOrder="125">
+          <navLabel>
+            <text>Applying MVC to design an online bookstore</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-137"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint138" playOrder="126">
+        <navLabel>
+          <text>Building Domain-Driven Design (DDD)</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-138"/>
+      </navPoint>
+      <navPoint id="navpoint139" playOrder="127">
+        <navLabel>
+          <text>Understanding the circuit breaker pattern</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-139"/>
+      </navPoint>
+      <navPoint id="navpoint140" playOrder="128">
+        <navLabel>
+          <text>Implementing the bulkhead pattern</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-140"/>
+      </navPoint>
+      <navPoint id="navpoint141" playOrder="129">
+        <navLabel>
+          <text>Creating a floating IP pattern</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-141"/>
+      </navPoint>
+      <navPoint id="navpoint142" playOrder="130">
+        <navLabel>
+          <text>Deploying an application with a container</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-142"/>
+        <navPoint id="navpoint143" playOrder="131">
+          <navLabel>
+            <text>The benefit of containers</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-143"/>
+        </navPoint>
+        <navPoint id="navpoint144" playOrder="132">
+          <navLabel>
+            <text>Container deployment</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-144"/>
+        </navPoint>
+        <navPoint id="navpoint145" playOrder="133">
+          <navLabel>
+            <text>Building container-based architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-145"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint146" playOrder="134">
+        <navLabel>
+          <text>Database handling in application architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-146"/>
+        <navPoint id="navpoint147" playOrder="135">
+          <navLabel>
+            <text>High-availability database pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_4.xhtml#_idParaDest-147"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint148" playOrder="136">
+        <navLabel>
+          <text>Clean Architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-148"/>
+      </navPoint>
+      <navPoint id="navpoint149" playOrder="137">
+        <navLabel>
+          <text>Avoiding anti-patterns in solution architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-149"/>
+      </navPoint>
+      <navPoint id="navpoint150" playOrder="138">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_4.xhtml#_idParaDest-150"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint152" playOrder="139">
+      <navLabel>
+        <text>Cloud-Native Architecture Design Patterns</text>
+      </navLabel>
+      <content src="Text/Chapter_5.xhtml#_idParaDest-152"/>
+      <navPoint id="navpoint153" playOrder="140">
+        <navLabel>
+          <text>What is cloud-native architecture?</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-153"/>
+      </navPoint>
+      <navPoint id="navpoint154" playOrder="141">
+        <navLabel>
+          <text>Building serverless architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-154"/>
+        <navPoint id="navpoint155" playOrder="142">
+          <navLabel>
+            <text>Considerations for serverless architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-155"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint156" playOrder="143">
+        <navLabel>
+          <text>Building stateless and stateful architectural designs</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-156"/>
+        <navPoint id="navpoint157" playOrder="144">
+          <navLabel>
+            <text>Stateful architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-157"/>
+        </navPoint>
+        <navPoint id="navpoint158" playOrder="145">
+          <navLabel>
+            <text>Stateless architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-158"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint159" playOrder="146">
+        <navLabel>
+          <text>Creating a microservice architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-159"/>
+        <navPoint id="navpoint160" playOrder="147">
+          <navLabel>
+            <text>Saga pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-160"/>
+        </navPoint>
+        <navPoint id="navpoint161" playOrder="148">
+          <navLabel>
+            <text>Fan-out/fan-in pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-161"/>
+        </navPoint>
+        <navPoint id="navpoint162" playOrder="149">
+          <navLabel>
+            <text>Service mesh pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-162"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint163" playOrder="150">
+        <navLabel>
+          <text>Reactive architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-163"/>
+      </navPoint>
+      <navPoint id="navpoint164" playOrder="151">
+        <navLabel>
+          <text>Building queue-based architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-164"/>
+        <navPoint id="navpoint165" playOrder="152">
+          <navLabel>
+            <text>Queuing chain pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-165"/>
+        </navPoint>
+        <navPoint id="navpoint166" playOrder="153">
+          <navLabel>
+            <text>Job observer pattern</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-166"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint167" playOrder="154">
+        <navLabel>
+          <text>Pipes-and-Filters Architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-167"/>
+      </navPoint>
+      <navPoint id="navpoint168" playOrder="155">
+        <navLabel>
+          <text>Creating Event-Driven Architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-168"/>
+        <navPoint id="navpoint169" playOrder="156">
+          <navLabel>
+            <text>Publisher/subscriber model</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-169"/>
+        </navPoint>
+        <navPoint id="navpoint170" playOrder="157">
+          <navLabel>
+            <text>Event stream model</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-170"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint171" playOrder="158">
+        <navLabel>
+          <text>Backend for Frontend pattern</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-171"/>
+      </navPoint>
+      <navPoint id="navpoint172" playOrder="159">
+        <navLabel>
+          <text>Cloud-native architecture anti-patterns</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-172"/>
+        <navPoint id="navpoint173" playOrder="160">
+          <navLabel>
+            <text>Single point of failure</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-173"/>
+        </navPoint>
+        <navPoint id="navpoint174" playOrder="161">
+          <navLabel>
+            <text>Manual scaling</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-174"/>
+        </navPoint>
+        <navPoint id="navpoint175" playOrder="162">
+          <navLabel>
+            <text>Tightly coupled services</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-175"/>
+        </navPoint>
+        <navPoint id="navpoint176" playOrder="163">
+          <navLabel>
+            <text>Ignoring security best practices</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-176"/>
+        </navPoint>
+        <navPoint id="navpoint177" playOrder="164">
+          <navLabel>
+            <text>Not monitoring or logging</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-177"/>
+        </navPoint>
+        <navPoint id="navpoint178" playOrder="165">
+          <navLabel>
+            <text>Ignoring network latency</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-178"/>
+        </navPoint>
+        <navPoint id="navpoint179" playOrder="166">
+          <navLabel>
+            <text>Lack of testing</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-179"/>
+        </navPoint>
+        <navPoint id="navpoint180" playOrder="167">
+          <navLabel>
+            <text>Over-optimization</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-180"/>
+        </navPoint>
+        <navPoint id="navpoint181" playOrder="168">
+          <navLabel>
+            <text>Not considering costs</text>
+          </navLabel>
+          <content src="Text/Chapter_5.xhtml#_idParaDest-181"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint182" playOrder="169">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_5.xhtml#_idParaDest-182"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint184" playOrder="170">
+      <navLabel>
+        <text>Performance Considerations</text>
+      </navLabel>
+      <content src="Text/Chapter_6.xhtml#_idParaDest-184"/>
+      <navPoint id="navpoint185" playOrder="171">
+        <navLabel>
+          <text>Design principles for high-performance architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_6.xhtml#_idParaDest-185"/>
+        <navPoint id="navpoint186" playOrder="172">
+          <navLabel>
+            <text>Reducing latency</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-186"/>
+        </navPoint>
+        <navPoint id="navpoint187" playOrder="173">
+          <navLabel>
+            <text>Improving throughput</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-187"/>
+        </navPoint>
+        <navPoint id="navpoint188" playOrder="174">
+          <navLabel>
+            <text>Handling concurrency</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-188"/>
+        </navPoint>
+        <navPoint id="navpoint189" playOrder="175">
+          <navLabel>
+            <text>Applying caching</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-189"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint190" playOrder="176">
+        <navLabel>
+          <text>Technology selection for performance optimization</text>
+        </navLabel>
+        <content src="Text/Chapter_6.xhtml#_idParaDest-190"/>
+        <navPoint id="navpoint191" playOrder="177">
+          <navLabel>
+            <text>Making a computational choice</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-191"/>
+          <navPoint id="navpoint192" playOrder="178">
+            <navLabel>
+              <text>Working with containers</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-192"/>
+          </navPoint>
+          <navPoint id="navpoint193" playOrder="179">
+            <navLabel>
+              <text>Going serverless</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-193"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint194" playOrder="180">
+          <navLabel>
+            <text>Making a storage choice</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-194"/>
+          <navPoint id="navpoint195" playOrder="181">
+            <navLabel>
+              <text>Working with block storage and storage area network</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-195"/>
+          </navPoint>
+          <navPoint id="navpoint196" playOrder="182">
+            <navLabel>
+              <text>Working with file storage and network area storage</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-196"/>
+          </navPoint>
+          <navPoint id="navpoint197" playOrder="183">
+            <navLabel>
+              <text>Working with object storage and cloud data storage</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-197"/>
+          </navPoint>
+          <navPoint id="navpoint198" playOrder="184">
+            <navLabel>
+              <text>Storage for databases</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-198"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint199" playOrder="185">
+          <navLabel>
+            <text>Making a database choice</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-199"/>
+          <navPoint id="navpoint200" playOrder="186">
+            <navLabel>
+              <text>Online transactional processing</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-200"/>
+          </navPoint>
+          <navPoint id="navpoint201" playOrder="187">
+            <navLabel>
+              <text>Nonrelational databases</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-201"/>
+          </navPoint>
+          <navPoint id="navpoint202" playOrder="188">
+            <navLabel>
+              <text>Online analytical processing</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-202"/>
+          </navPoint>
+          <navPoint id="navpoint203" playOrder="189">
+            <navLabel>
+              <text>Building a data search functionality</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-203"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint204" playOrder="190">
+          <navLabel>
+            <text>Improving network performance</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-204"/>
+          <navPoint id="navpoint205" playOrder="191">
+            <navLabel>
+              <text>Using edge computing</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-205"/>
+          </navPoint>
+          <navPoint id="navpoint206" playOrder="192">
+            <navLabel>
+              <text>Defining a DNS routing strategy</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-206"/>
+          </navPoint>
+          <navPoint id="navpoint207" playOrder="193">
+            <navLabel>
+              <text>Applying a load balancer</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-207"/>
+          </navPoint>
+          <navPoint id="navpoint208" playOrder="194">
+            <navLabel>
+              <text>Applying auto-scaling</text>
+            </navLabel>
+            <content src="Text/Chapter_6.xhtml#_idParaDest-208"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint209" playOrder="195">
+        <navLabel>
+          <text>Performance considerations for mobile applications</text>
+        </navLabel>
+        <content src="Text/Chapter_6.xhtml#_idParaDest-209"/>
+        <navPoint id="navpoint210" playOrder="196">
+          <navLabel>
+            <text>Optimization of load times</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-210"/>
+        </navPoint>
+        <navPoint id="navpoint211" playOrder="197">
+          <navLabel>
+            <text>Efficient use of resources</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-211"/>
+        </navPoint>
+        <navPoint id="navpoint212" playOrder="198">
+          <navLabel>
+            <text>Responsive user interface (UI)</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-212"/>
+        </navPoint>
+        <navPoint id="navpoint213" playOrder="199">
+          <navLabel>
+            <text>Network efficiency</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-213"/>
+        </navPoint>
+        <navPoint id="navpoint214" playOrder="200">
+          <navLabel>
+            <text>Battery consumption</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-214"/>
+        </navPoint>
+        <navPoint id="navpoint215" playOrder="201">
+          <navLabel>
+            <text>Cross-platform compatibility</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-215"/>
+        </navPoint>
+        <navPoint id="navpoint216" playOrder="202">
+          <navLabel>
+            <text>User experience (UX) design</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-216"/>
+        </navPoint>
+        <navPoint id="navpoint217" playOrder="203">
+          <navLabel>
+            <text>Effective data management</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-217"/>
+        </navPoint>
+        <navPoint id="navpoint218" playOrder="204">
+          <navLabel>
+            <text>Testing and quality assurance</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-218"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint219" playOrder="205">
+        <navLabel>
+          <text>Performance testing</text>
+        </navLabel>
+        <content src="Text/Chapter_6.xhtml#_idParaDest-219"/>
+        <navPoint id="navpoint220" playOrder="206">
+          <navLabel>
+            <text>Types of performance testing</text>
+          </navLabel>
+          <content src="Text/Chapter_6.xhtml#_idParaDest-220"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint221" playOrder="207">
+        <navLabel>
+          <text>Managing performance monitoring</text>
+        </navLabel>
+        <content src="Text/Chapter_6.xhtml#_idParaDest-221"/>
+      </navPoint>
+      <navPoint id="navpoint222" playOrder="208">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_6.xhtml#_idParaDest-222"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint224" playOrder="209">
+      <navLabel>
+        <text>Security Considerations</text>
+      </navLabel>
+      <content src="Text/Chapter_7.xhtml#_idParaDest-224"/>
+      <navPoint id="navpoint225" playOrder="210">
+        <navLabel>
+          <text>Design principles for architectural security</text>
+        </navLabel>
+        <content src="Text/Chapter_7.xhtml#_idParaDest-225"/>
+        <navPoint id="navpoint226" playOrder="211">
+          <navLabel>
+            <text>Implementing authentication and authorization control</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-226"/>
+        </navPoint>
+        <navPoint id="navpoint227" playOrder="212">
+          <navLabel>
+            <text>Applying security everywhere</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-227"/>
+        </navPoint>
+        <navPoint id="navpoint228" playOrder="213">
+          <navLabel>
+            <text>Reducing the blast radius</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-228"/>
+        </navPoint>
+        <navPoint id="navpoint229" playOrder="214">
+          <navLabel>
+            <text>Monitoring and auditing everything all the time</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-229"/>
+        </navPoint>
+        <navPoint id="navpoint230" playOrder="215">
+          <navLabel>
+            <text>Automating everything</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-230"/>
+        </navPoint>
+        <navPoint id="navpoint231" playOrder="216">
+          <navLabel>
+            <text>Protecting data</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-231"/>
+        </navPoint>
+        <navPoint id="navpoint232" playOrder="217">
+          <navLabel>
+            <text>Responding to security incidents</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-232"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint233" playOrder="218">
+        <navLabel>
+          <text>Selecting technology for architectural security</text>
+        </navLabel>
+        <content src="Text/Chapter_7.xhtml#_idParaDest-233"/>
+        <navPoint id="navpoint234" playOrder="219">
+          <navLabel>
+            <text>User identity and access management</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-234"/>
+          <navPoint id="navpoint235" playOrder="220">
+            <navLabel>
+              <text>Federated identity management and single sign-on</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-235"/>
+          </navPoint>
+          <navPoint id="navpoint236" playOrder="221">
+            <navLabel>
+              <text>Kerberos</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-236"/>
+          </navPoint>
+          <navPoint id="navpoint237" playOrder="222">
+            <navLabel>
+              <text>Microsoft Active Directory</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-237"/>
+          </navPoint>
+          <navPoint id="navpoint238" playOrder="223">
+            <navLabel>
+              <text>Security Assertion Markup Language</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-238"/>
+          </navPoint>
+          <navPoint id="navpoint239" playOrder="224">
+            <navLabel>
+              <text>OAuth</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-239"/>
+          </navPoint>
+          <navPoint id="navpoint240" playOrder="225">
+            <navLabel>
+              <text>JWT</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-240"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint241" playOrder="226">
+          <navLabel>
+            <text>Handling web security</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-241"/>
+          <navPoint id="navpoint242" playOrder="227">
+            <navLabel>
+              <text>Cyberattacks</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-242"/>
+          </navPoint>
+          <navPoint id="navpoint243" playOrder="228">
+            <navLabel>
+              <text>Web security mitigation</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-243"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint244" playOrder="229">
+          <navLabel>
+            <text>Securing an application and its infrastructure</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-244"/>
+          <navPoint id="navpoint245" playOrder="230">
+            <navLabel>
+              <text>Application and operating system hardening</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-245"/>
+          </navPoint>
+          <navPoint id="navpoint246" playOrder="231">
+            <navLabel>
+              <text>Software vulnerability mitigation and secure code</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-246"/>
+          </navPoint>
+          <navPoint id="navpoint247" playOrder="232">
+            <navLabel>
+              <text>Network security</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-247"/>
+          </navPoint>
+          <navPoint id="navpoint248" playOrder="233">
+            <navLabel>
+              <text>Intrusion detection system and intrusion prevention system</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-248"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint249" playOrder="234">
+          <navLabel>
+            <text>Data security</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-249"/>
+          <navPoint id="navpoint250" playOrder="235">
+            <navLabel>
+              <text>Data classification</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-250"/>
+          </navPoint>
+          <navPoint id="navpoint251" playOrder="236">
+            <navLabel>
+              <text>Data encryption at rest</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-251"/>
+          </navPoint>
+          <navPoint id="navpoint252" playOrder="237">
+            <navLabel>
+              <text>Data encryption in transit</text>
+            </navLabel>
+            <content src="Text/Chapter_7.xhtml#_idParaDest-252"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint253" playOrder="238">
+          <navLabel>
+            <text>Securing APIs</text>
+          </navLabel>
+          <content src="Text/Chapter_7.xhtml#_idParaDest-253"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint254" playOrder="239">
+        <navLabel>
+          <text>Security and compliance certifications</text>
+        </navLabel>
+        <content src="Text/Chapter_7.xhtml#_idParaDest-254"/>
+      </navPoint>
+      <navPoint id="navpoint255" playOrder="240">
+        <navLabel>
+          <text>The cloud’s shared security responsibility model</text>
+        </navLabel>
+        <content src="Text/Chapter_7.xhtml#_idParaDest-255"/>
+      </navPoint>
+      <navPoint id="navpoint256" playOrder="241">
+        <navLabel>
+          <text>Securing threat modeling</text>
+        </navLabel>
+        <content src="Text/Chapter_7.xhtml#_idParaDest-256"/>
+      </navPoint>
+      <navPoint id="navpoint257" playOrder="242">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_7.xhtml#_idParaDest-257"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint259" playOrder="243">
+      <navLabel>
+        <text>Architectural Reliability Considerations</text>
+      </navLabel>
+      <content src="Text/Chapter_8.xhtml#_idParaDest-259"/>
+      <navPoint id="navpoint260" playOrder="244">
+        <navLabel>
+          <text>Design principles for architectural reliability</text>
+        </navLabel>
+        <content src="Text/Chapter_8.xhtml#_idParaDest-260"/>
+        <navPoint id="navpoint261" playOrder="245">
+          <navLabel>
+            <text>Making systems self-healing by applying automation</text>
+          </navLabel>
+          <content src="Text/Chapter_8.xhtml#_idParaDest-261"/>
+          <navPoint id="navpoint262" playOrder="246">
+            <navLabel>
+              <text>Quality assurance</text>
+            </navLabel>
+            <content src="Text/Chapter_8.xhtml#_idParaDest-262"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint263" playOrder="247">
+          <navLabel>
+            <text>Creating a distributed system</text>
+          </navLabel>
+          <content src="Text/Chapter_8.xhtml#_idParaDest-263"/>
+        </navPoint>
+        <navPoint id="navpoint264" playOrder="248">
+          <navLabel>
+            <text>Monitoring and adding capacity</text>
+          </navLabel>
+          <content src="Text/Chapter_8.xhtml#_idParaDest-264"/>
+        </navPoint>
+        <navPoint id="navpoint265" playOrder="249">
+          <navLabel>
+            <text>Performing recovery validation</text>
+          </navLabel>
+          <content src="Text/Chapter_8.xhtml#_idParaDest-265"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint266" playOrder="250">
+        <navLabel>
+          <text>Technology selection for architectural reliability</text>
+        </navLabel>
+        <content src="Text/Chapter_8.xhtml#_idParaDest-266"/>
+        <navPoint id="navpoint267" playOrder="251">
+          <navLabel>
+            <text>Planning the RPO and RTO</text>
+          </navLabel>
+          <content src="Text/Chapter_8.xhtml#_idParaDest-267"/>
+        </navPoint>
+        <navPoint id="navpoint268" playOrder="252">
+          <navLabel>
+            <text>Replicating data</text>
+          </navLabel>
+          <content src="Text/Chapter_8.xhtml#_idParaDest-268"/>
+          <navPoint id="navpoint269" playOrder="253">
+            <navLabel>
+              <text>Synchronous versus asynchronous replication</text>
+            </navLabel>
+            <content src="Text/Chapter_8.xhtml#_idParaDest-269"/>
+          </navPoint>
+          <navPoint id="navpoint270" playOrder="254">
+            <navLabel>
+              <text>Replication methods</text>
+            </navLabel>
+            <content src="Text/Chapter_8.xhtml#_idParaDest-270"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint271" playOrder="255">
+          <navLabel>
+            <text>Planning disaster recovery</text>
+          </navLabel>
+          <content src="Text/Chapter_8.xhtml#_idParaDest-271"/>
+          <navPoint id="navpoint272" playOrder="256">
+            <navLabel>
+              <text>Backup and restore</text>
+            </navLabel>
+            <content src="Text/Chapter_8.xhtml#_idParaDest-272"/>
+          </navPoint>
+          <navPoint id="navpoint273" playOrder="257">
+            <navLabel>
+              <text>Pilot light</text>
+            </navLabel>
+            <content src="Text/Chapter_8.xhtml#_idParaDest-273"/>
+          </navPoint>
+          <navPoint id="navpoint274" playOrder="258">
+            <navLabel>
+              <text>Warm standby</text>
+            </navLabel>
+            <content src="Text/Chapter_8.xhtml#_idParaDest-274"/>
+          </navPoint>
+          <navPoint id="navpoint275" playOrder="259">
+            <navLabel>
+              <text>Multi-site</text>
+            </navLabel>
+            <content src="Text/Chapter_8.xhtml#_idParaDest-275"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint276" playOrder="260">
+          <navLabel>
+            <text>Applying best practices for DR</text>
+          </navLabel>
+          <content src="Text/Chapter_8.xhtml#_idParaDest-276"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint277" playOrder="261">
+        <navLabel>
+          <text>Improving reliability with the cloud</text>
+        </navLabel>
+        <content src="Text/Chapter_8.xhtml#_idParaDest-277"/>
+      </navPoint>
+      <navPoint id="navpoint278" playOrder="262">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_8.xhtml#_idParaDest-278"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint280" playOrder="263">
+      <navLabel>
+        <text>Operational Excellence Considerations</text>
+      </navLabel>
+      <content src="Text/Chapter_9.xhtml#_idParaDest-280"/>
+      <navPoint id="navpoint281" playOrder="264">
+        <navLabel>
+          <text>Design principles for operational excellence</text>
+        </navLabel>
+        <content src="Text/Chapter_9.xhtml#_idParaDest-281"/>
+        <navPoint id="navpoint282" playOrder="265">
+          <navLabel>
+            <text>Automating manual tasks</text>
+          </navLabel>
+          <content src="Text/Chapter_9.xhtml#_idParaDest-282"/>
+        </navPoint>
+        <navPoint id="navpoint283" playOrder="266">
+          <navLabel>
+            <text>Making incremental and reversible changes</text>
+          </navLabel>
+          <content src="Text/Chapter_9.xhtml#_idParaDest-283"/>
+        </navPoint>
+        <navPoint id="navpoint284" playOrder="267">
+          <navLabel>
+            <text>Predicting failures and responding</text>
+          </navLabel>
+          <content src="Text/Chapter_9.xhtml#_idParaDest-284"/>
+        </navPoint>
+        <navPoint id="navpoint285" playOrder="268">
+          <navLabel>
+            <text>Learning from mistakes and refining</text>
+          </navLabel>
+          <content src="Text/Chapter_9.xhtml#_idParaDest-285"/>
+        </navPoint>
+        <navPoint id="navpoint286" playOrder="269">
+          <navLabel>
+            <text>Keeping the operational runbook updated</text>
+          </navLabel>
+          <content src="Text/Chapter_9.xhtml#_idParaDest-286"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint287" playOrder="270">
+        <navLabel>
+          <text>Selecting technologies for operational excellence</text>
+        </navLabel>
+        <content src="Text/Chapter_9.xhtml#_idParaDest-287"/>
+        <navPoint id="navpoint288" playOrder="271">
+          <navLabel>
+            <text>Planning for operational excellence</text>
+          </navLabel>
+          <content src="Text/Chapter_9.xhtml#_idParaDest-288"/>
+        </navPoint>
+        <navPoint id="navpoint289" playOrder="272">
+          <navLabel>
+            <text>IT asset management</text>
+          </navLabel>
+          <content src="Text/Chapter_9.xhtml#_idParaDest-289"/>
+          <navPoint id="navpoint290" playOrder="273">
+            <navLabel>
+              <text>Configuration management</text>
+            </navLabel>
+            <content src="Text/Chapter_9.xhtml#_idParaDest-290"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint291" playOrder="274">
+          <navLabel>
+            <text>The functioning of operational excellence</text>
+          </navLabel>
+          <content src="Text/Chapter_9.xhtml#_idParaDest-291"/>
+          <navPoint id="navpoint292" playOrder="275">
+            <navLabel>
+              <text>Monitoring system health</text>
+            </navLabel>
+            <content src="Text/Chapter_9.xhtml#_idParaDest-292"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint293" playOrder="276">
+          <navLabel>
+            <text>Improving operational excellence</text>
+          </navLabel>
+          <content src="Text/Chapter_9.xhtml#_idParaDest-293"/>
+          <navPoint id="navpoint294" playOrder="277">
+            <navLabel>
+              <text>IT operations analytics</text>
+            </navLabel>
+            <content src="Text/Chapter_9.xhtml#_idParaDest-294"/>
+          </navPoint>
+          <navPoint id="navpoint295" playOrder="278">
+            <navLabel>
+              <text>Root Cause Analysis</text>
+            </navLabel>
+            <content src="Text/Chapter_9.xhtml#_idParaDest-295"/>
+          </navPoint>
+          <navPoint id="navpoint296" playOrder="279">
+            <navLabel>
+              <text>Auditing and reporting</text>
+            </navLabel>
+            <content src="Text/Chapter_9.xhtml#_idParaDest-296"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint297" playOrder="280">
+        <navLabel>
+          <text>Achieving operational excellence in the public cloud</text>
+        </navLabel>
+        <content src="Text/Chapter_9.xhtml#_idParaDest-297"/>
+      </navPoint>
+      <navPoint id="navpoint298" playOrder="281">
+        <navLabel>
+          <text>Driving efficiency with CloudOps</text>
+        </navLabel>
+        <content src="Text/Chapter_9.xhtml#_idParaDest-298"/>
+      </navPoint>
+      <navPoint id="navpoint299" playOrder="282">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_9.xhtml#_idParaDest-299"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint301" playOrder="283">
+      <navLabel>
+        <text>Cost Considerations</text>
+      </navLabel>
+      <content src="Text/Chapter_10.xhtml#_idParaDest-301"/>
+      <navPoint id="navpoint302" playOrder="284">
+        <navLabel>
+          <text>Design principles for cost optimization</text>
+        </navLabel>
+        <content src="Text/Chapter_10.xhtml#_idParaDest-302"/>
+        <navPoint id="navpoint303" playOrder="285">
+          <navLabel>
+            <text>Calculating the total cost of ownership</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-303"/>
+        </navPoint>
+        <navPoint id="navpoint304" playOrder="286">
+          <navLabel>
+            <text>Planning the budget and forecast</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-304"/>
+        </navPoint>
+        <navPoint id="navpoint305" playOrder="287">
+          <navLabel>
+            <text>Managing demand and service catalogs</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-305"/>
+        </navPoint>
+        <navPoint id="navpoint306" playOrder="288">
+          <navLabel>
+            <text>Keeping track of expenditure</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-306"/>
+        </navPoint>
+        <navPoint id="navpoint307" playOrder="289">
+          <navLabel>
+            <text>Continuous cost optimization</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-307"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint308" playOrder="290">
+        <navLabel>
+          <text>Understanding techniques for cost optimization</text>
+        </navLabel>
+        <content src="Text/Chapter_10.xhtml#_idParaDest-308"/>
+        <navPoint id="navpoint309" playOrder="291">
+          <navLabel>
+            <text>Reducing architectural complexity</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-309"/>
+        </navPoint>
+        <navPoint id="navpoint310" playOrder="292">
+          <navLabel>
+            <text>Increasing IT efficiency</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-310"/>
+        </navPoint>
+        <navPoint id="navpoint311" playOrder="293">
+          <navLabel>
+            <text>Applying standardization and governance</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-311"/>
+          <navPoint id="navpoint312" playOrder="294">
+            <navLabel>
+              <text>Resource cost tagging</text>
+            </navLabel>
+            <content src="Text/Chapter_10.xhtml#_idParaDest-312"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint313" playOrder="295">
+          <navLabel>
+            <text>Monitoring cost usage and reports</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-313"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint314" playOrder="296">
+        <navLabel>
+          <text>Driving cost optimization in the public cloud</text>
+        </navLabel>
+        <content src="Text/Chapter_10.xhtml#_idParaDest-314"/>
+      </navPoint>
+      <navPoint id="navpoint315" playOrder="297">
+        <navLabel>
+          <text>Green IT and its influence on cost considerations</text>
+        </navLabel>
+        <content src="Text/Chapter_10.xhtml#_idParaDest-315"/>
+        <navPoint id="navpoint316" playOrder="298">
+          <navLabel>
+            <text>Cost-effective and green application hosting on AWS</text>
+          </navLabel>
+          <content src="Text/Chapter_10.xhtml#_idParaDest-316"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint317" playOrder="299">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_10.xhtml#_idParaDest-317"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint319" playOrder="300">
+      <navLabel>
+        <text>DevOps and Solution Architecture Framework</text>
+      </navLabel>
+      <content src="Text/Chapter_11.xhtml#_idParaDest-319"/>
+      <navPoint id="navpoint320" playOrder="301">
+        <navLabel>
+          <text>Introducing DevOps</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-320"/>
+        <navPoint id="navpoint321" playOrder="302">
+          <navLabel>
+            <text>Understanding the benefits of DevOps</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-321"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint322" playOrder="303">
+        <navLabel>
+          <text>Understanding the components of DevOps</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-322"/>
+        <navPoint id="navpoint323" playOrder="304">
+          <navLabel>
+            <text>Continuous integration/Continuous deployment</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-323"/>
+        </navPoint>
+        <navPoint id="navpoint324" playOrder="305">
+          <navLabel>
+            <text>Continuous monitoring and improvement</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-324"/>
+        </navPoint>
+        <navPoint id="navpoint325" playOrder="306">
+          <navLabel>
+            <text>Infrastructure as code</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-325"/>
+        </navPoint>
+        <navPoint id="navpoint326" playOrder="307">
+          <navLabel>
+            <text>Configuration management</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-326"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint327" playOrder="308">
+        <navLabel>
+          <text>Introducing DevSecOps for Security</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-327"/>
+      </navPoint>
+      <navPoint id="navpoint328" playOrder="309">
+        <navLabel>
+          <text>Combining DevSecOps and CI/CD</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-328"/>
+      </navPoint>
+      <navPoint id="navpoint329" playOrder="310">
+        <navLabel>
+          <text>Implementing a CD strategy</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-329"/>
+        <navPoint id="navpoint330" playOrder="311">
+          <navLabel>
+            <text>In-place deployment</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-330"/>
+        </navPoint>
+        <navPoint id="navpoint331" playOrder="312">
+          <navLabel>
+            <text>Rolling deployment</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-331"/>
+        </navPoint>
+        <navPoint id="navpoint332" playOrder="313">
+          <navLabel>
+            <text>Blue-green deployment</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-332"/>
+        </navPoint>
+        <navPoint id="navpoint333" playOrder="314">
+          <navLabel>
+            <text>Red-black deployment</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-333"/>
+        </navPoint>
+        <navPoint id="navpoint334" playOrder="315">
+          <navLabel>
+            <text>Immutable deployment</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-334"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint335" playOrder="316">
+        <navLabel>
+          <text>Best practices for choosing the right deployment strategy</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-335"/>
+      </navPoint>
+      <navPoint id="navpoint336" playOrder="317">
+        <navLabel>
+          <text>Implementing continuous testing in the CI/CD pipeline</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-336"/>
+        <navPoint id="navpoint337" playOrder="318">
+          <navLabel>
+            <text>A/B testing</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-337"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint338" playOrder="319">
+        <navLabel>
+          <text>Using DevOps tools for CI/CD</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-338"/>
+        <navPoint id="navpoint339" playOrder="320">
+          <navLabel>
+            <text>Code editor</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-339"/>
+        </navPoint>
+        <navPoint id="navpoint340" playOrder="321">
+          <navLabel>
+            <text>Source code management</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-340"/>
+        </navPoint>
+        <navPoint id="navpoint341" playOrder="322">
+          <navLabel>
+            <text>CI server</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-341"/>
+        </navPoint>
+        <navPoint id="navpoint342" playOrder="323">
+          <navLabel>
+            <text>Code deployment</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-342"/>
+        </navPoint>
+        <navPoint id="navpoint343" playOrder="324">
+          <navLabel>
+            <text>Code pipeline</text>
+          </navLabel>
+          <content src="Text/Chapter_11.xhtml#_idParaDest-343"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint344" playOrder="325">
+        <navLabel>
+          <text>Implementing DevOps best practices</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-344"/>
+      </navPoint>
+      <navPoint id="navpoint345" playOrder="326">
+        <navLabel>
+          <text>Building DevOps and DevSecOps in the cloud</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-345"/>
+      </navPoint>
+      <navPoint id="navpoint346" playOrder="327">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_11.xhtml#_idParaDest-346"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint348" playOrder="328">
+      <navLabel>
+        <text>Data Engineering for Solution Architecture</text>
+      </navLabel>
+      <content src="Text/Chapter_12.xhtml#_idParaDest-348"/>
+      <navPoint id="navpoint349" playOrder="329">
+        <navLabel>
+          <text>What is big data architecture?</text>
+        </navLabel>
+        <content src="Text/Chapter_12.xhtml#_idParaDest-349"/>
+      </navPoint>
+      <navPoint id="navpoint350" playOrder="330">
+        <navLabel>
+          <text>Designing big data processing pipelines</text>
+        </navLabel>
+        <content src="Text/Chapter_12.xhtml#_idParaDest-350"/>
+      </navPoint>
+      <navPoint id="navpoint351" playOrder="331">
+        <navLabel>
+          <text>Data ingestion, storage, processing, and analytics</text>
+        </navLabel>
+        <content src="Text/Chapter_12.xhtml#_idParaDest-351"/>
+        <navPoint id="navpoint352" playOrder="332">
+          <navLabel>
+            <text>Data ingestion</text>
+          </navLabel>
+          <content src="Text/Chapter_12.xhtml#_idParaDest-352"/>
+          <navPoint id="navpoint353" playOrder="333">
+            <navLabel>
+              <text>Technology choices for data ingestion</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-353"/>
+          </navPoint>
+          <navPoint id="navpoint354" playOrder="334">
+            <navLabel>
+              <text>Ingesting data to the cloud</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-354"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint355" playOrder="335">
+          <navLabel>
+            <text>Storing data</text>
+          </navLabel>
+          <content src="Text/Chapter_12.xhtml#_idParaDest-355"/>
+          <navPoint id="navpoint356" playOrder="336">
+            <navLabel>
+              <text>Technology choices for data storage</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-356"/>
+          </navPoint>
+          <navPoint id="navpoint357" playOrder="337">
+            <navLabel>
+              <text>Structured data stores</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-357"/>
+          </navPoint>
+          <navPoint id="navpoint358" playOrder="338">
+            <navLabel>
+              <text>NoSQL databases</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-358"/>
+          </navPoint>
+          <navPoint id="navpoint359" playOrder="339">
+            <navLabel>
+              <text>Search data stores</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-359"/>
+          </navPoint>
+          <navPoint id="navpoint360" playOrder="340">
+            <navLabel>
+              <text>Unstructured data stores</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-360"/>
+          </navPoint>
+          <navPoint id="navpoint361" playOrder="341">
+            <navLabel>
+              <text>Object storage</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-361"/>
+          </navPoint>
+          <navPoint id="navpoint362" playOrder="342">
+            <navLabel>
+              <text>Vector Database (VectorDB)</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-362"/>
+          </navPoint>
+          <navPoint id="navpoint363" playOrder="343">
+            <navLabel>
+              <text>Blockchain data stores</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-363"/>
+          </navPoint>
+          <navPoint id="navpoint364" playOrder="344">
+            <navLabel>
+              <text>Streaming data stores</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-364"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint365" playOrder="345">
+        <navLabel>
+          <text>Data storage in the cloud</text>
+        </navLabel>
+        <content src="Text/Chapter_12.xhtml#_idParaDest-365"/>
+        <navPoint id="navpoint366" playOrder="346">
+          <navLabel>
+            <text>Processing data and performing analytics</text>
+          </navLabel>
+          <content src="Text/Chapter_12.xhtml#_idParaDest-366"/>
+          <navPoint id="navpoint367" playOrder="347">
+            <navLabel>
+              <text>Technology choices for data processing and analysis</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-367"/>
+          </navPoint>
+          <navPoint id="navpoint368" playOrder="348">
+            <navLabel>
+              <text>Data processing in the cloud</text>
+            </navLabel>
+            <content src="Text/Chapter_12.xhtml#_idParaDest-368"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint369" playOrder="349">
+        <navLabel>
+          <text>Visualizing data</text>
+        </navLabel>
+        <content src="Text/Chapter_12.xhtml#_idParaDest-369"/>
+        <navPoint id="navpoint370" playOrder="350">
+          <navLabel>
+            <text>Technology choices for data visualization</text>
+          </navLabel>
+          <content src="Text/Chapter_12.xhtml#_idParaDest-370"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint371" playOrder="351">
+        <navLabel>
+          <text>Designing big data architectures</text>
+        </navLabel>
+        <content src="Text/Chapter_12.xhtml#_idParaDest-371"/>
+        <navPoint id="navpoint372" playOrder="352">
+          <navLabel>
+            <text>Data lake architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_12.xhtml#_idParaDest-372"/>
+        </navPoint>
+        <navPoint id="navpoint373" playOrder="353">
+          <navLabel>
+            <text>Lakehouse architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_12.xhtml#_idParaDest-373"/>
+        </navPoint>
+        <navPoint id="navpoint374" playOrder="354">
+          <navLabel>
+            <text>Data mesh architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_12.xhtml#_idParaDest-374"/>
+        </navPoint>
+        <navPoint id="navpoint375" playOrder="355">
+          <navLabel>
+            <text>Streaming data architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_12.xhtml#_idParaDest-375"/>
+        </navPoint>
+        <navPoint id="navpoint376" playOrder="356">
+          <navLabel>
+            <text>Choosing the right big data architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_12.xhtml#_idParaDest-376"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint377" playOrder="357">
+        <navLabel>
+          <text>Big data architecture best practices</text>
+        </navLabel>
+        <content src="Text/Chapter_12.xhtml#_idParaDest-377"/>
+      </navPoint>
+      <navPoint id="navpoint378" playOrder="358">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_12.xhtml#_idParaDest-378"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint380" playOrder="359">
+      <navLabel>
+        <text>Machine Learning Architecture</text>
+      </navLabel>
+      <content src="Text/Chapter_13.xhtml#_idParaDest-380"/>
+      <navPoint id="navpoint381" playOrder="360">
+        <navLabel>
+          <text>What is machine learning?</text>
+        </navLabel>
+        <content src="Text/Chapter_13.xhtml#_idParaDest-381"/>
+        <navPoint id="navpoint382" playOrder="361">
+          <navLabel>
+            <text>Types of machine learning</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-382"/>
+          <navPoint id="navpoint383" playOrder="362">
+            <navLabel>
+              <text>Supervised learning</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-383"/>
+          </navPoint>
+          <navPoint id="navpoint384" playOrder="363">
+            <navLabel>
+              <text>Unsupervised learning</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-384"/>
+          </navPoint>
+          <navPoint id="navpoint385" playOrder="364">
+            <navLabel>
+              <text>Semi-supervised learning</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-385"/>
+          </navPoint>
+          <navPoint id="navpoint386" playOrder="365">
+            <navLabel>
+              <text>Reinforcement learning</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-386"/>
+          </navPoint>
+          <navPoint id="navpoint387" playOrder="366">
+            <navLabel>
+              <text>Self-supervised learning</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-387"/>
+          </navPoint>
+          <navPoint id="navpoint388" playOrder="367">
+            <navLabel>
+              <text>Multi-instance learning</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-388"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint389" playOrder="368">
+        <navLabel>
+          <text>Working with data science and machine learning</text>
+        </navLabel>
+        <content src="Text/Chapter_13.xhtml#_idParaDest-389"/>
+        <navPoint id="navpoint390" playOrder="369">
+          <navLabel>
+            <text>Evaluating ML models—overfitting versus underfitting</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-390"/>
+        </navPoint>
+        <navPoint id="navpoint391" playOrder="370">
+          <navLabel>
+            <text>Popular machine learning algorithms</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-391"/>
+          <navPoint id="navpoint392" playOrder="371">
+            <navLabel>
+              <text>Linear regression</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-392"/>
+          </navPoint>
+          <navPoint id="navpoint393" playOrder="372">
+            <navLabel>
+              <text>Logistic regression</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-393"/>
+          </navPoint>
+          <navPoint id="navpoint394" playOrder="373">
+            <navLabel>
+              <text>Decision trees</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-394"/>
+          </navPoint>
+          <navPoint id="navpoint395" playOrder="374">
+            <navLabel>
+              <text>Random forests</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-395"/>
+          </navPoint>
+          <navPoint id="navpoint396" playOrder="375">
+            <navLabel>
+              <text>K-Nearest Neighbours (k-NNs)</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-396"/>
+          </navPoint>
+          <navPoint id="navpoint397" playOrder="376">
+            <navLabel>
+              <text>Support vector machines (SVMs)</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-397"/>
+          </navPoint>
+          <navPoint id="navpoint398" playOrder="377">
+            <navLabel>
+              <text>Neural networks</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-398"/>
+          </navPoint>
+          <navPoint id="navpoint399" playOrder="378">
+            <navLabel>
+              <text>K-means clustering</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-399"/>
+          </navPoint>
+          <navPoint id="navpoint400" playOrder="379">
+            <navLabel>
+              <text>XGBoost</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-400"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint401" playOrder="380">
+          <navLabel>
+            <text>Popular machine learning tools and frameworks</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-401"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint402" playOrder="381">
+        <navLabel>
+          <text>Machine learning in the cloud</text>
+        </navLabel>
+        <content src="Text/Chapter_13.xhtml#_idParaDest-402"/>
+      </navPoint>
+      <navPoint id="navpoint403" playOrder="382">
+        <navLabel>
+          <text>Building machine learning architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_13.xhtml#_idParaDest-403"/>
+        <navPoint id="navpoint404" playOrder="383">
+          <navLabel>
+            <text>Prepare and label</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-404"/>
+        </navPoint>
+        <navPoint id="navpoint405" playOrder="384">
+          <navLabel>
+            <text>Select and build</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-405"/>
+        </navPoint>
+        <navPoint id="navpoint406" playOrder="385">
+          <navLabel>
+            <text>Train and tune</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-406"/>
+        </navPoint>
+        <navPoint id="navpoint407" playOrder="386">
+          <navLabel>
+            <text>Deploy and manage</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-407"/>
+        </navPoint>
+        <navPoint id="navpoint408" playOrder="387">
+          <navLabel>
+            <text>ML reference architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-408"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint409" playOrder="388">
+        <navLabel>
+          <text>Design principles for machine learning architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_13.xhtml#_idParaDest-409"/>
+        <navPoint id="navpoint410" playOrder="389">
+          <navLabel>
+            <text>Organizing the machine learning system into modules</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-410"/>
+        </navPoint>
+        <navPoint id="navpoint411" playOrder="390">
+          <navLabel>
+            <text>Ensuring scalability</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-411"/>
+        </navPoint>
+        <navPoint id="navpoint412" playOrder="391">
+          <navLabel>
+            <text>Ensuring reproducibility</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-412"/>
+        </navPoint>
+        <navPoint id="navpoint413" playOrder="392">
+          <navLabel>
+            <text>Implementing data quality assurance</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-413"/>
+        </navPoint>
+        <navPoint id="navpoint414" playOrder="393">
+          <navLabel>
+            <text>Ensuring flexibility</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-414"/>
+        </navPoint>
+        <navPoint id="navpoint415" playOrder="394">
+          <navLabel>
+            <text>Ensuring robustness and reliability</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-415"/>
+        </navPoint>
+        <navPoint id="navpoint416" playOrder="395">
+          <navLabel>
+            <text>Ensuring privacy and security</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-416"/>
+        </navPoint>
+        <navPoint id="navpoint417" playOrder="396">
+          <navLabel>
+            <text>Ensuring efficiency</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-417"/>
+        </navPoint>
+        <navPoint id="navpoint418" playOrder="397">
+          <navLabel>
+            <text>Ensuring interpretability</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-418"/>
+        </navPoint>
+        <navPoint id="navpoint419" playOrder="398">
+          <navLabel>
+            <text>Implementing real-time capability</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-419"/>
+        </navPoint>
+        <navPoint id="navpoint420" playOrder="399">
+          <navLabel>
+            <text>Ensuring fault tolerance</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-420"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint421" playOrder="400">
+        <navLabel>
+          <text>MLOps</text>
+        </navLabel>
+        <content src="Text/Chapter_13.xhtml#_idParaDest-421"/>
+        <navPoint id="navpoint422" playOrder="401">
+          <navLabel>
+            <text>MLOps principles</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-422"/>
+        </navPoint>
+        <navPoint id="navpoint423" playOrder="402">
+          <navLabel>
+            <text>MLOps best practices</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-423"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint424" playOrder="403">
+        <navLabel>
+          <text>Deep learning</text>
+        </navLabel>
+        <content src="Text/Chapter_13.xhtml#_idParaDest-424"/>
+        <navPoint id="navpoint425" playOrder="404">
+          <navLabel>
+            <text>Deep learning in the real world</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-425"/>
+          <navPoint id="navpoint426" playOrder="405">
+            <navLabel>
+              <text>Healthcare: diagnosis and prognosis</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-426"/>
+          </navPoint>
+          <navPoint id="navpoint427" playOrder="406">
+            <navLabel>
+              <text>Autonomous vehicles: navigation and safety</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-427"/>
+          </navPoint>
+          <navPoint id="navpoint428" playOrder="407">
+            <navLabel>
+              <text>Manufacturing: quality control and predictive maintenance</text>
+            </navLabel>
+            <content src="Text/Chapter_13.xhtml#_idParaDest-428"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint429" playOrder="408">
+        <navLabel>
+          <text>NLP</text>
+        </navLabel>
+        <content src="Text/Chapter_13.xhtml#_idParaDest-429"/>
+        <navPoint id="navpoint430" playOrder="409">
+          <navLabel>
+            <text>Chatbots and virtual assistants</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-430"/>
+        </navPoint>
+        <navPoint id="navpoint431" playOrder="410">
+          <navLabel>
+            <text>Sentiment analysis</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-431"/>
+        </navPoint>
+        <navPoint id="navpoint432" playOrder="411">
+          <navLabel>
+            <text>Text summarization</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-432"/>
+        </navPoint>
+        <navPoint id="navpoint433" playOrder="412">
+          <navLabel>
+            <text>Machine translation</text>
+          </navLabel>
+          <content src="Text/Chapter_13.xhtml#_idParaDest-433"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint434" playOrder="413">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_13.xhtml#_idParaDest-434"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint436" playOrder="414">
+      <navLabel>
+        <text>Generative AI Architecture</text>
+      </navLabel>
+      <content src="Text/Chapter_14.xhtml#_idParaDest-436"/>
+      <navPoint id="navpoint437" playOrder="415">
+        <navLabel>
+          <text>What is generative AI?</text>
+        </navLabel>
+        <content src="Text/Chapter_14.xhtml#_idParaDest-437"/>
+      </navPoint>
+      <navPoint id="navpoint438" playOrder="416">
+        <navLabel>
+          <text>Generative AI use cases</text>
+        </navLabel>
+        <content src="Text/Chapter_14.xhtml#_idParaDest-438"/>
+        <navPoint id="navpoint439" playOrder="417">
+          <navLabel>
+            <text>Customer experience transformation</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-439"/>
+        </navPoint>
+        <navPoint id="navpoint440" playOrder="418">
+          <navLabel>
+            <text>Employee productivity enhancement</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-440"/>
+        </navPoint>
+        <navPoint id="navpoint441" playOrder="419">
+          <navLabel>
+            <text>Optimizing business operations</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-441"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint442" playOrder="420">
+        <navLabel>
+          <text>The basic architecture of generative AI systems</text>
+        </navLabel>
+        <content src="Text/Chapter_14.xhtml#_idParaDest-442"/>
+        <navPoint id="navpoint443" playOrder="421">
+          <navLabel>
+            <text>Types of generative models</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-443"/>
+          <navPoint id="navpoint444" playOrder="422">
+            <navLabel>
+              <text>Generative Adversarial Networks (GANs)</text>
+            </navLabel>
+            <content src="Text/Chapter_14.xhtml#_idParaDest-444"/>
+          </navPoint>
+          <navPoint id="navpoint445" playOrder="423">
+            <navLabel>
+              <text>Variational Autoencoders (VAEs)</text>
+            </navLabel>
+            <content src="Text/Chapter_14.xhtml#_idParaDest-445"/>
+          </navPoint>
+          <navPoint id="navpoint446" playOrder="424">
+            <navLabel>
+              <text>Transformer-based generative models</text>
+            </navLabel>
+            <content src="Text/Chapter_14.xhtml#_idParaDest-446"/>
+          </navPoint>
+          <navPoint id="navpoint447" playOrder="425">
+            <navLabel>
+              <text>Other important generative models</text>
+            </navLabel>
+            <content src="Text/Chapter_14.xhtml#_idParaDest-447"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint448" playOrder="426">
+          <navLabel>
+            <text>Importance of hyperparameter tuning and regularization in architectures</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-448"/>
+          <navPoint id="navpoint449" playOrder="427">
+            <navLabel>
+              <text>Hyperparameter tuning</text>
+            </navLabel>
+            <content src="Text/Chapter_14.xhtml#_idParaDest-449"/>
+          </navPoint>
+          <navPoint id="navpoint450" playOrder="428">
+            <navLabel>
+              <text>Regularization</text>
+            </navLabel>
+            <content src="Text/Chapter_14.xhtml#_idParaDest-450"/>
+          </navPoint>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint451" playOrder="429">
+        <navLabel>
+          <text>Popular generative AI FMs</text>
+        </navLabel>
+        <content src="Text/Chapter_14.xhtml#_idParaDest-451"/>
+      </navPoint>
+      <navPoint id="navpoint452" playOrder="430">
+        <navLabel>
+          <text>How to start with generative AI</text>
+        </navLabel>
+        <content src="Text/Chapter_14.xhtml#_idParaDest-452"/>
+        <navPoint id="navpoint453" playOrder="431">
+          <navLabel>
+            <text>For end users</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-453"/>
+        </navPoint>
+        <navPoint id="navpoint454" playOrder="432">
+          <navLabel>
+            <text>For builders</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-454"/>
+        </navPoint>
+        <navPoint id="navpoint455" playOrder="433">
+          <navLabel>
+            <text>Using generative AI FMs in your applications with public cloud providers</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-455"/>
+          <navPoint id="navpoint456" playOrder="434">
+            <navLabel>
+              <text>Choosing the right FM</text>
+            </navLabel>
+            <content src="Text/Chapter_14.xhtml#_idParaDest-456"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint457" playOrder="435">
+          <navLabel>
+            <text>Preventing model hallucinations</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-457"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint458" playOrder="436">
+        <navLabel>
+          <text>Generative AI reference architecture for building a mortgage assistant app</text>
+        </navLabel>
+        <content src="Text/Chapter_14.xhtml#_idParaDest-458"/>
+      </navPoint>
+      <navPoint id="navpoint459" playOrder="437">
+        <navLabel>
+          <text>Challenges in implementing generative AI</text>
+        </navLabel>
+        <content src="Text/Chapter_14.xhtml#_idParaDest-459"/>
+        <navPoint id="navpoint460" playOrder="438">
+          <navLabel>
+            <text>Training stability issues</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-460"/>
+        </navPoint>
+        <navPoint id="navpoint461" playOrder="439">
+          <navLabel>
+            <text>Mode collapse</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-461"/>
+        </navPoint>
+        <navPoint id="navpoint462" playOrder="440">
+          <navLabel>
+            <text>Latent space interpolation challenges</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-462"/>
+        </navPoint>
+        <navPoint id="navpoint463" playOrder="441">
+          <navLabel>
+            <text>Ethical concerns and misuse</text>
+          </navLabel>
+          <content src="Text/Chapter_14.xhtml#_idParaDest-463"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint464" playOrder="442">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_14.xhtml#_idParaDest-464"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint466" playOrder="443">
+      <navLabel>
+        <text>Rearchitecting Legacy Systems</text>
+      </navLabel>
+      <content src="Text/Chapter_15.xhtml#_idParaDest-466"/>
+      <navPoint id="navpoint467" playOrder="444">
+        <navLabel>
+          <text>Learning the challenges of legacy systems</text>
+        </navLabel>
+        <content src="Text/Chapter_15.xhtml#_idParaDest-467"/>
+        <navPoint id="navpoint468" playOrder="445">
+          <navLabel>
+            <text>Difficulty in keeping up with user demand</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-468"/>
+        </navPoint>
+        <navPoint id="navpoint469" playOrder="446">
+          <navLabel>
+            <text>Higher cost of maintenance and updates</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-469"/>
+        </navPoint>
+        <navPoint id="navpoint470" playOrder="447">
+          <navLabel>
+            <text>Shortage of skills and documentation</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-470"/>
+        </navPoint>
+        <navPoint id="navpoint471" playOrder="448">
+          <navLabel>
+            <text>Vulnerability to corporate security issues</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-471"/>
+        </navPoint>
+        <navPoint id="navpoint472" playOrder="449">
+          <navLabel>
+            <text>Incompatibility with other systems</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-472"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint473" playOrder="450">
+        <navLabel>
+          <text>Defining a strategy for system modernization</text>
+        </navLabel>
+        <content src="Text/Chapter_15.xhtml#_idParaDest-473"/>
+        <navPoint id="navpoint474" playOrder="451">
+          <navLabel>
+            <text>Assessment of a legacy application</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-474"/>
+        </navPoint>
+        <navPoint id="navpoint475" playOrder="452">
+          <navLabel>
+            <text>Defining the modernization approach</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-475"/>
+        </navPoint>
+        <navPoint id="navpoint476" playOrder="453">
+          <navLabel>
+            <text>Benefits of system modernization</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-476"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint477" playOrder="454">
+        <navLabel>
+          <text>Looking at legacy system modernization techniques</text>
+        </navLabel>
+        <content src="Text/Chapter_15.xhtml#_idParaDest-477"/>
+        <navPoint id="navpoint478" playOrder="455">
+          <navLabel>
+            <text>Encapsulation, rehosting, and replatforming</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-478"/>
+        </navPoint>
+        <navPoint id="navpoint479" playOrder="456">
+          <navLabel>
+            <text>Refactoring and rearchitecting</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-479"/>
+        </navPoint>
+        <navPoint id="navpoint480" playOrder="457">
+          <navLabel>
+            <text>Redesigning and replacing</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-480"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint481" playOrder="458">
+        <navLabel>
+          <text>Defining a cloud migration strategy for legacy systems</text>
+        </navLabel>
+        <content src="Text/Chapter_15.xhtml#_idParaDest-481"/>
+        <navPoint id="navpoint482" playOrder="459">
+          <navLabel>
+            <text>Documentation and support</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-482"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint483" playOrder="460">
+        <navLabel>
+          <text>Mainframe migration with the public cloud</text>
+        </navLabel>
+        <content src="Text/Chapter_15.xhtml#_idParaDest-483"/>
+        <navPoint id="navpoint484" playOrder="461">
+          <navLabel>
+            <text>Challenges of mainframe modernization</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-484"/>
+        </navPoint>
+        <navPoint id="navpoint485" playOrder="462">
+          <navLabel>
+            <text>Migrating standalone applications</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-485"/>
+        </navPoint>
+        <navPoint id="navpoint486" playOrder="463">
+          <navLabel>
+            <text>Migrating applications with shared code</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-486"/>
+          <navPoint id="navpoint487" playOrder="464">
+            <navLabel>
+              <text>Application decoupling using a standalone API</text>
+            </navLabel>
+            <content src="Text/Chapter_15.xhtml#_idParaDest-487"/>
+          </navPoint>
+          <navPoint id="navpoint488" playOrder="465">
+            <navLabel>
+              <text>Application decoupling using a shared library</text>
+            </navLabel>
+            <content src="Text/Chapter_15.xhtml#_idParaDest-488"/>
+          </navPoint>
+          <navPoint id="navpoint489" playOrder="466">
+            <navLabel>
+              <text>Application decoupling using message queues</text>
+            </navLabel>
+            <content src="Text/Chapter_15.xhtml#_idParaDest-489"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint490" playOrder="467">
+          <navLabel>
+            <text>Benefits of using the public cloud for mainframe modernization</text>
+          </navLabel>
+          <content src="Text/Chapter_15.xhtml#_idParaDest-490"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint491" playOrder="468">
+        <navLabel>
+          <text>Modernizing legacy code with generative AI</text>
+        </navLabel>
+        <content src="Text/Chapter_15.xhtml#_idParaDest-491"/>
+      </navPoint>
+      <navPoint id="navpoint492" playOrder="469">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_15.xhtml#_idParaDest-492"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint494" playOrder="470">
+      <navLabel>
+        <text>Solution Architecture Document</text>
+      </navLabel>
+      <content src="Text/Chapter_16.xhtml#_idParaDest-494"/>
+      <navPoint id="navpoint495" playOrder="471">
+        <navLabel>
+          <text>Purpose of the SAD</text>
+        </navLabel>
+        <content src="Text/Chapter_16.xhtml#_idParaDest-495"/>
+      </navPoint>
+      <navPoint id="navpoint496" playOrder="472">
+        <navLabel>
+          <text>Views of the SAD</text>
+        </navLabel>
+        <content src="Text/Chapter_16.xhtml#_idParaDest-496"/>
+      </navPoint>
+      <navPoint id="navpoint497" playOrder="473">
+        <navLabel>
+          <text>Structure of the SAD</text>
+        </navLabel>
+        <content src="Text/Chapter_16.xhtml#_idParaDest-497"/>
+        <navPoint id="navpoint498" playOrder="474">
+          <navLabel>
+            <text>Solution overview</text>
+          </navLabel>
+          <content src="Text/Chapter_16.xhtml#_idParaDest-498"/>
+        </navPoint>
+        <navPoint id="navpoint499" playOrder="475">
+          <navLabel>
+            <text>Business context</text>
+          </navLabel>
+          <content src="Text/Chapter_16.xhtml#_idParaDest-499"/>
+        </navPoint>
+        <navPoint id="navpoint500" playOrder="476">
+          <navLabel>
+            <text>Conceptual solution overview</text>
+          </navLabel>
+          <content src="Text/Chapter_16.xhtml#_idParaDest-500"/>
+        </navPoint>
+        <navPoint id="navpoint501" playOrder="477">
+          <navLabel>
+            <text>Solution architecture</text>
+          </navLabel>
+          <content src="Text/Chapter_16.xhtml#_idParaDest-501"/>
+          <navPoint id="navpoint502" playOrder="478">
+            <navLabel>
+              <text>Information architecture</text>
+            </navLabel>
+            <content src="Text/Chapter_16.xhtml#_idParaDest-502"/>
+          </navPoint>
+          <navPoint id="navpoint503" playOrder="479">
+            <navLabel>
+              <text>Application architecture</text>
+            </navLabel>
+            <content src="Text/Chapter_16.xhtml#_idParaDest-503"/>
+          </navPoint>
+          <navPoint id="navpoint504" playOrder="480">
+            <navLabel>
+              <text>Data architecture</text>
+            </navLabel>
+            <content src="Text/Chapter_16.xhtml#_idParaDest-504"/>
+          </navPoint>
+          <navPoint id="navpoint505" playOrder="481">
+            <navLabel>
+              <text>Integration architecture</text>
+            </navLabel>
+            <content src="Text/Chapter_16.xhtml#_idParaDest-505"/>
+          </navPoint>
+          <navPoint id="navpoint506" playOrder="482">
+            <navLabel>
+              <text>Infrastructure architecture</text>
+            </navLabel>
+            <content src="Text/Chapter_16.xhtml#_idParaDest-506"/>
+          </navPoint>
+          <navPoint id="navpoint507" playOrder="483">
+            <navLabel>
+              <text>Security architecture</text>
+            </navLabel>
+            <content src="Text/Chapter_16.xhtml#_idParaDest-507"/>
+          </navPoint>
+        </navPoint>
+        <navPoint id="navpoint508" playOrder="484">
+          <navLabel>
+            <text>Solution implementation</text>
+          </navLabel>
+          <content src="Text/Chapter_16.xhtml#_idParaDest-508"/>
+        </navPoint>
+        <navPoint id="navpoint509" playOrder="485">
+          <navLabel>
+            <text>Solution management</text>
+          </navLabel>
+          <content src="Text/Chapter_16.xhtml#_idParaDest-509"/>
+        </navPoint>
+        <navPoint id="navpoint510" playOrder="486">
+          <navLabel>
+            <text>Appendix</text>
+          </navLabel>
+          <content src="Text/Chapter_16.xhtml#_idParaDest-510"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint511" playOrder="487">
+        <navLabel>
+          <text>Life cycle of the SAD</text>
+        </navLabel>
+        <content src="Text/Chapter_16.xhtml#_idParaDest-511"/>
+      </navPoint>
+      <navPoint id="navpoint512" playOrder="488">
+        <navLabel>
+          <text>SAD best practices and common pitfalls</text>
+        </navLabel>
+        <content src="Text/Chapter_16.xhtml#_idParaDest-512"/>
+      </navPoint>
+      <navPoint id="navpoint513" playOrder="489">
+        <navLabel>
+          <text>IT procurement documentation for a solution architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_16.xhtml#_idParaDest-513"/>
+      </navPoint>
+      <navPoint id="navpoint514" playOrder="490">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_16.xhtml#_idParaDest-514"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint516" playOrder="491">
+      <navLabel>
+        <text>Learning Soft Skills to Become a Better Solutions Architect</text>
+      </navLabel>
+      <content src="Text/Chapter_17.xhtml#_idParaDest-516"/>
+      <navPoint id="navpoint517" playOrder="492">
+        <navLabel>
+          <text>Importance of soft skills in solution architecture</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-517"/>
+      </navPoint>
+      <navPoint id="navpoint518" playOrder="493">
+        <navLabel>
+          <text>Acquiring pre-sales skills</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-518"/>
+        <navPoint id="navpoint519" playOrder="494">
+          <navLabel>
+            <text>Key skills</text>
+          </navLabel>
+          <content src="Text/Chapter_17.xhtml#_idParaDest-519"/>
+        </navPoint>
+        <navPoint id="navpoint520" playOrder="495">
+          <navLabel>
+            <text>Presenting to C-level executives</text>
+          </navLabel>
+          <content src="Text/Chapter_17.xhtml#_idParaDest-520"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint521" playOrder="496">
+        <navLabel>
+          <text>Taking ownership and accountability</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-521"/>
+        <navPoint id="navpoint522" playOrder="497">
+          <navLabel>
+            <text>Defining strategy execution with OKRs</text>
+          </navLabel>
+          <content src="Text/Chapter_17.xhtml#_idParaDest-522"/>
+        </navPoint>
+        <navPoint id="navpoint523" playOrder="498">
+          <navLabel>
+            <text>Thinking big</text>
+          </navLabel>
+          <content src="Text/Chapter_17.xhtml#_idParaDest-523"/>
+        </navPoint>
+      </navPoint>
+      <navPoint id="navpoint524" playOrder="499">
+        <navLabel>
+          <text>Being flexible and adaptable</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-524"/>
+      </navPoint>
+      <navPoint id="navpoint525" playOrder="500">
+        <navLabel>
+          <text>Design thinking</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-525"/>
+      </navPoint>
+      <navPoint id="navpoint526" playOrder="501">
+        <navLabel>
+          <text>Being a builder by engaging in coding hands-on</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-526"/>
+      </navPoint>
+      <navPoint id="navpoint527" playOrder="502">
+        <navLabel>
+          <text>Becoming better with continuous learning</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-527"/>
+      </navPoint>
+      <navPoint id="navpoint528" playOrder="503">
+        <navLabel>
+          <text>Being a mentor to others</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-528"/>
+      </navPoint>
+      <navPoint id="navpoint529" playOrder="504">
+        <navLabel>
+          <text>Becoming a technology evangelist and thought leader</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-529"/>
+      </navPoint>
+      <navPoint id="navpoint530" playOrder="505">
+        <navLabel>
+          <text>Summary</text>
+        </navLabel>
+        <content src="Text/Chapter_17.xhtml#_idParaDest-530"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navpoint533" playOrder="506">
+      <navLabel>
+        <text>Other Books You May Enjoy</text>
+      </navLabel>
+      <content src="Text/Other_Books_You_May_Enjoy.xhtml#_idParaDest-533"/>
+    </navPoint>
+    <navPoint id="navpoint536" playOrder="507">
+      <navLabel>
+        <text>Index</text>
+      </navLabel>
+      <content src="Text/Index.xhtml#_idParaDest-536"/>
+    </navPoint>
+  </navMap>
+</ncx>

@@ -1,0 +1,994 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="urn:isbn:979-8-8688-2364-0"/>
+  </head>
+  <docTitle><text>The MCP Standard</text></docTitle>
+  <docAuthor><text>Srinivasan Sekar</text></docAuthor>
+  <navMap>
+      <navPoint id="navpoint-1" playOrder="1">
+        <navLabel><text>The MCP Standard</text></navLabel>
+        <content src="html/Frontmatter_001.xhtml"/>
+</navPoint>
+      <navPoint id="navpoint-2" playOrder="2">
+        <navLabel><text>Foreword</text></navLabel>
+        <content src="html/Frontmatter_004.xhtml#forewordtitle1"/>
+</navPoint>
+      <navPoint id="navpoint-3" playOrder="3">
+        <navLabel><text>Introduction</text></navLabel>
+        <content src="html/Frontmatter_005.xhtml#prefacetitle1"/>
+        <navPoint id="navpoint-4" playOrder="4">
+          <navLabel><text>What This Book Is About</text></navLabel>
+          <content src="html/Frontmatter_005.xhtml#Sec1Heading"/>
+</navPoint>
+        <navPoint id="navpoint-5" playOrder="5">
+          <navLabel><text>Who This Book Is For</text></navLabel>
+          <content src="html/Frontmatter_005.xhtml#Sec2Heading"/>
+</navPoint>
+        <navPoint id="navpoint-6" playOrder="6">
+          <navLabel><text>The Journey Ahead</text></navLabel>
+          <content src="html/Frontmatter_005.xhtml#Sec3Heading"/>
+</navPoint>
+        <navPoint id="navpoint-7" playOrder="7">
+          <navLabel><text>A Word on Philosophy</text></navLabel>
+          <content src="html/Frontmatter_005.xhtml#Sec4Heading"/>
+</navPoint>
+        <navPoint id="navpoint-8" playOrder="8">
+          <navLabel><text>How to Use This Book</text></navLabel>
+          <content src="html/Frontmatter_005.xhtml#Sec5Heading"/>
+</navPoint>
+        <navPoint id="navpoint-9" playOrder="9">
+          <navLabel><text>The Bigger Picture</text></navLabel>
+          <content src="html/Frontmatter_005.xhtml#Sec6Heading"/>
+</navPoint>
+</navPoint>
+      <navPoint id="navpoint-10" playOrder="10">
+        <navLabel><text>Acknowledgments</text></navLabel>
+        <content src="html/Frontmatter_007.xhtml#acknowledgmenttitle"/>
+</navPoint>
+      <navPoint id="navpoint-11" playOrder="11">
+        <navLabel><text>Table of Contents</text></navLabel>
+        <content src="html/Frontmatter_008.xhtml#toctitle"/>
+</navPoint>
+      <navPoint id="navpoint-12" playOrder="12">
+        <navLabel><text>About the Author</text></navLabel>
+        <content src="html/Frontmatter_009.xhtml"/>
+</navPoint>
+      <navPoint id="navpoint-13" playOrder="13">
+        <navLabel><text>About the Technical Reviewers</text></navLabel>
+        <content src="html/Frontmatter_010.xhtml"/>
+</navPoint>
+      <navPoint id="navpoint-14" playOrder="14">
+        <navLabel><text>Part I: The Foundation: Why MCP Matters</text></navLabel>
+        <content src="html/Part_1.xhtml"/>
+        <navPoint id="navpoint-15" playOrder="15">
+          <navLabel><text>1. The Age of Tooling Chaos</text></navLabel>
+          <content src="html/676115_1_En_1_Chapter.xhtml"/>
+          <navPoint id="navpoint-16" playOrder="16">
+            <navLabel><text>The M×N Integration Nightmare</text></navLabel>
+            <content src="html/676115_1_En_1_Chapter.xhtml#Sec1Heading"/>
+</navPoint>
+          <navPoint id="navpoint-17" playOrder="17">
+            <navLabel><text>A Closer Look at the Pain: Anatomy of the Chaos</text></navLabel>
+            <content src="html/676115_1_En_1_Chapter.xhtml#Sec2Heading"/>
+            <navPoint id="navpoint-18" playOrder="18">
+              <navLabel><text>1. Interfaces</text></navLabel>
+              <content src="html/676115_1_En_1_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+            <navPoint id="navpoint-19" playOrder="19">
+              <navLabel><text>2. The Developer’s Cognitive Tax</text></navLabel>
+              <content src="html/676115_1_En_1_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+            <navPoint id="navpoint-20" playOrder="20">
+              <navLabel><text>3. The API Treadmill and Technical Debt by Fragmentation</text></navLabel>
+              <content src="html/676115_1_En_1_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+            <navPoint id="navpoint-21" playOrder="21">
+              <navLabel><text>4. The Siloed Garden of Innovation</text></navLabel>
+              <content src="html/676115_1_En_1_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-22" playOrder="22">
+            <navLabel><text>Echoes of the Past: Lessons from the Cloud Native Revolution</text></navLabel>
+            <content src="html/676115_1_En_1_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+          <navPoint id="navpoint-23" playOrder="23">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_1_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+          <navPoint id="navpoint-24" playOrder="24">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_1_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-25" playOrder="25">
+          <navLabel><text>2. The Solution: A Universal Language for AI</text></navLabel>
+          <content src="html/676115_1_En_2_Chapter.xhtml"/>
+          <navPoint id="navpoint-26" playOrder="26">
+            <navLabel><text>Introducing the Model Context Protocol (MCP)</text></navLabel>
+            <content src="html/676115_1_En_2_Chapter.xhtml#Sec1Heading"/>
+</navPoint>
+          <navPoint id="navpoint-27" playOrder="27">
+            <navLabel><text>The Monolithic Agent: An Architecture Before MCP</text></navLabel>
+            <content src="html/676115_1_En_2_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+          <navPoint id="navpoint-28" playOrder="28">
+            <navLabel><text>The MCP Architecture: The Decoupled Agent</text></navLabel>
+            <content src="html/676115_1_En_2_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+          <navPoint id="navpoint-29" playOrder="29">
+            <navLabel><text>The Core Promise: A Standardized Interface for Capabilities</text></navLabel>
+            <content src="html/676115_1_En_2_Chapter.xhtml#Sec4Heading"/>
+            <navPoint id="navpoint-30" playOrder="30">
+              <navLabel><text>1. Tools: Designed for Model Control</text></navLabel>
+              <content src="html/676115_1_En_2_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+            <navPoint id="navpoint-31" playOrder="31">
+              <navLabel><text>2. Resources: Designed for Application Control</text></navLabel>
+              <content src="html/676115_1_En_2_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+            <navPoint id="navpoint-32" playOrder="32">
+              <navLabel><text>3. Prompts: Designed for User Control</text></navLabel>
+              <content src="html/676115_1_En_2_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-33" playOrder="33">
+            <navLabel><text>Key Benefits of a Unified Approach</text></navLabel>
+            <content src="html/676115_1_En_2_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+          <navPoint id="navpoint-34" playOrder="34">
+            <navLabel><text>Analogy: The Universal Translator for AI Agents</text></navLabel>
+            <content src="html/676115_1_En_2_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+          <navPoint id="navpoint-35" playOrder="35">
+            <navLabel><text>MCP in the Emerging Agentic Ecosystem: A Look Ahead</text></navLabel>
+            <content src="html/676115_1_En_2_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+          <navPoint id="navpoint-36" playOrder="36">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_2_Chapter.xhtml#Sec11Heading"/>
+</navPoint>
+          <navPoint id="navpoint-37" playOrder="37">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_2_Chapter.xhtml#Sec12Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-38" playOrder="38">
+          <navLabel><text>3. MCP and the AI-Native Transformation</text></navLabel>
+          <content src="html/676115_1_En_3_Chapter.xhtml"/>
+          <navPoint id="navpoint-39" playOrder="39">
+            <navLabel><text>Learning from History: From Cloud Native to AI Native</text></navLabel>
+            <content src="html/676115_1_En_3_Chapter.xhtml#Sec1Heading"/>
+</navPoint>
+          <navPoint id="navpoint-40" playOrder="40">
+            <navLabel><text>The Role of Standardization in Technological Waves</text></navLabel>
+            <content src="html/676115_1_En_3_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+          <navPoint id="navpoint-41" playOrder="41">
+            <navLabel><text>How MCP Paves the Way for AI-Native Architectures</text></navLabel>
+            <content src="html/676115_1_En_3_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+          <navPoint id="navpoint-42" playOrder="42">
+            <navLabel><text>Positioning Your Organization for the Future</text></navLabel>
+            <content src="html/676115_1_En_3_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+          <navPoint id="navpoint-43" playOrder="43">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_3_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+          <navPoint id="navpoint-44" playOrder="44">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_3_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+      <navPoint id="navpoint-45" playOrder="45">
+        <navLabel><text>Part II: The Architecture: A Technical Deep Dive</text></navLabel>
+        <content src="html/Part_2.xhtml"/>
+        <navPoint id="navpoint-46" playOrder="46">
+          <navLabel><text>4. The MCP Architectural Roles</text></navLabel>
+          <content src="html/676115_1_En_4_Chapter.xhtml"/>
+          <navPoint id="navpoint-47" playOrder="47">
+            <navLabel><text>The Host: The Conductor of the AI Orchestra</text></navLabel>
+            <content src="html/676115_1_En_4_Chapter.xhtml#Sec1Heading"/>
+            <navPoint id="navpoint-48" playOrder="48">
+              <navLabel><text>Core Responsibilities of the Host</text></navLabel>
+              <content src="html/676115_1_En_4_Chapter.xhtml#Sec2Heading"/>
+              <navPoint id="navpoint-49" playOrder="49">
+                <navLabel><text>1. Managing the User Experience (the Stage)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+              <navPoint id="navpoint-50" playOrder="50">
+                <navLabel><text>2. Maintaining Session State (the Director’s Notes)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+              <navPoint id="navpoint-51" playOrder="51">
+                <navLabel><text>3. Initiating and Configuring Connections (Assembling the Orchestra)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+              <navPoint id="navpoint-52" playOrder="52">
+                <navLabel><text>4. Governing Capability (The Ultimate Gatekeeper)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-53" playOrder="53">
+            <navLabel><text>The Client</text></navLabel>
+            <content src="html/676115_1_En_4_Chapter.xhtml#Sec7Heading"/>
+            <navPoint id="navpoint-54" playOrder="54">
+              <navLabel><text>Core Responsibilities of the Client</text></navLabel>
+              <content src="html/676115_1_En_4_Chapter.xhtml#Sec8Heading"/>
+              <navPoint id="navpoint-55" playOrder="55">
+                <navLabel><text>1. Managing the Connection Lifecycle (Opening Diplomatic Channels)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+              <navPoint id="navpoint-56" playOrder="56">
+                <navLabel><text>2. Serializing and Deserializing Messages (Translation and Interpretation)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+              <navPoint id="navpoint-57" playOrder="57">
+                <navLabel><text>3. Dynamic Capability Discovery (Requesting the Menu)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec11Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-58" playOrder="58">
+            <navLabel><text>The Server: The Specialist in the Workshop</text></navLabel>
+            <content src="html/676115_1_En_4_Chapter.xhtml#Sec12Heading"/>
+            <navPoint id="navpoint-59" playOrder="59">
+              <navLabel><text>Core Responsibilities of the Server</text></navLabel>
+              <content src="html/676115_1_En_4_Chapter.xhtml#Sec13Heading"/>
+              <navPoint id="navpoint-60" playOrder="60">
+                <navLabel><text>1. Advertising Skills (Putting Up a Sign)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec14Heading"/>
+</navPoint>
+              <navPoint id="navpoint-61" playOrder="61">
+                <navLabel><text>2. Listening for and Executing Requests (Fulfilling the Order)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec15Heading"/>
+</navPoint>
+              <navPoint id="navpoint-62" playOrder="62">
+                <navLabel><text>3. The Range of Servers (from Local Scripts to Enterprise Services)</text></navLabel>
+                <content src="html/676115_1_En_4_Chapter.xhtml#Sec16Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-63" playOrder="63">
+            <navLabel><text>A Complete Interaction Trace</text></navLabel>
+            <content src="html/676115_1_En_4_Chapter.xhtml#Sec17Heading"/>
+</navPoint>
+          <navPoint id="navpoint-64" playOrder="64">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_4_Chapter.xhtml#Sec18Heading"/>
+</navPoint>
+          <navPoint id="navpoint-65" playOrder="65">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_4_Chapter.xhtml#Sec19Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-66" playOrder="66">
+          <navLabel><text>5. The Language of MCP: Tools, Resources, and Prompts</text></navLabel>
+          <content src="html/676115_1_En_5_Chapter.xhtml"/>
+          <navPoint id="navpoint-67" playOrder="67">
+            <navLabel><text>Breaking Down MCP’s Core Capabilities</text></navLabel>
+            <content src="html/676115_1_En_5_Chapter.xhtml#Sec1Heading"/>
+</navPoint>
+          <navPoint id="navpoint-68" playOrder="68">
+            <navLabel><text>Tools: The Verbs of Action</text></navLabel>
+            <content src="html/676115_1_En_5_Chapter.xhtml#Sec2Heading"/>
+            <navPoint id="navpoint-69" playOrder="69">
+              <navLabel><text>Anatomy of a Tool</text></navLabel>
+              <content src="html/676115_1_En_5_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+            <navPoint id="navpoint-70" playOrder="70">
+              <navLabel><text>Advanced Capabilities: ResourceLinks and Server-Side Sampling</text></navLabel>
+              <content src="html/676115_1_En_5_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-71" playOrder="71">
+            <navLabel><text>Resources: The Nouns of Context</text></navLabel>
+            <content src="html/676115_1_En_5_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+          <navPoint id="navpoint-72" playOrder="72">
+            <navLabel><text>Prompts: The Grammar of Conversation</text></navLabel>
+            <content src="html/676115_1_En_5_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+          <navPoint id="navpoint-73" playOrder="73">
+            <navLabel><text>Summary Table: Tools vs. Resources vs. Prompts</text></navLabel>
+            <content src="html/676115_1_En_5_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+          <navPoint id="navpoint-74" playOrder="74">
+            <navLabel><text>Overview of Tools, Resources, and Prompts</text></navLabel>
+            <content src="html/676115_1_En_5_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+          <navPoint id="navpoint-75" playOrder="75">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_5_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+          <navPoint id="navpoint-76" playOrder="76">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_5_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-77" playOrder="77">
+          <navLabel><text>6. Under the Hood: The Protocol Specification</text></navLabel>
+          <content src="html/676115_1_En_6_Chapter.xhtml"/>
+          <navPoint id="navpoint-78" playOrder="78">
+            <navLabel><text>The Transport Layer: How Messages Travel</text></navLabel>
+            <content src="html/676115_1_En_6_Chapter.xhtml#Sec1Heading"/>
+            <navPoint id="navpoint-79" playOrder="79">
+              <navLabel><text>1. Standard I/O (stdio)</text></navLabel>
+              <content src="html/676115_1_En_6_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+            <navPoint id="navpoint-80" playOrder="80">
+              <navLabel><text>2. Streamable HTTP</text></navLabel>
+              <content src="html/676115_1_En_6_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-81" playOrder="81">
+            <navLabel><text>The Message Format: The Anatomy of a Request</text></navLabel>
+            <content src="html/676115_1_En_6_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+          <navPoint id="navpoint-82" playOrder="82">
+            <navLabel><text>The Interaction Flow: A Step-by-Step Sequence</text></navLabel>
+            <content src="html/676115_1_En_6_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+          <navPoint id="navpoint-83" playOrder="83">
+            <navLabel><text>Error Handling and Timeouts</text></navLabel>
+            <content src="html/676115_1_En_6_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+          <navPoint id="navpoint-84" playOrder="84">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_6_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+          <navPoint id="navpoint-85" playOrder="85">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_6_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+      <navPoint id="navpoint-86" playOrder="86">
+        <navLabel><text>Part III: The Practitioners: Building with MCP</text></navLabel>
+        <content src="html/Part_3.xhtml"/>
+        <navPoint id="navpoint-87" playOrder="87">
+          <navLabel><text>7. For the Tool Provider: Creating an MCP Server</text></navLabel>
+          <content src="html/676115_1_En_7_Chapter.xhtml"/>
+          <navPoint id="navpoint-88" playOrder="88">
+            <navLabel><text>A Complete, End-to-End Guide to Building the Advanced MCP Server</text></navLabel>
+            <content src="html/676115_1_En_7_Chapter.xhtml#Sec1Heading"/>
+            <navPoint id="navpoint-89" playOrder="89">
+              <navLabel><text>Step 1: Environment Setup</text></navLabel>
+              <content src="html/676115_1_En_7_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+            <navPoint id="navpoint-90" playOrder="90">
+              <navLabel><text>Step 2: Create and Populate the Database</text></navLabel>
+              <content src="html/676115_1_En_7_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+            <navPoint id="navpoint-91" playOrder="91">
+              <navLabel><text>Step 3: The Server Foundation and Core Logic</text></navLabel>
+              <content src="html/676115_1_En_7_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+            <navPoint id="navpoint-92" playOrder="92">
+              <navLabel><text>Step 4: Building Rich, Discoverable Resources</text></navLabel>
+              <content src="html/676115_1_En_7_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+            <navPoint id="navpoint-93" playOrder="93">
+              <navLabel><text>Step 5: Implementing Prompts</text></navLabel>
+              <content src="html/676115_1_En_7_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+            <navPoint id="navpoint-94" playOrder="94">
+              <navLabel><text>Step 6: Advanced Tool Implementation</text></navLabel>
+              <content src="html/676115_1_En_7_Chapter.xhtml#Sec7Heading"/>
+              <navPoint id="navpoint-95" playOrder="95">
+                <navLabel><text>Tool 1: Listing Tables with Pagination</text></navLabel>
+                <content src="html/676115_1_En_7_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+              <navPoint id="navpoint-96" playOrder="96">
+                <navLabel><text>Tool 2: Creating a Table and Notifying the Client</text></navLabel>
+                <content src="html/676115_1_En_7_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+              <navPoint id="navpoint-97" playOrder="97">
+                <navLabel><text>Tool 3 and 4: The Admin/Modification Flow (Dynamic Capabilities and Advanced Notifications)</text></navLabel>
+                <content src="html/676115_1_En_7_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+              <navPoint id="navpoint-98" playOrder="98">
+                <navLabel><text>Tool 5: Interactive User Creation with Complex Elicitation</text></navLabel>
+                <content src="html/676115_1_En_7_Chapter.xhtml#Sec11Heading"/>
+</navPoint>
+</navPoint>
+            <navPoint id="navpoint-99" playOrder="99">
+              <navLabel><text>Step 7: Running the Server</text></navLabel>
+              <content src="html/676115_1_En_7_Chapter.xhtml#Sec12Heading"/>
+              <navPoint id="navpoint-100" playOrder="100">
+                <navLabel><text>Option 1: Running with stdio</text></navLabel>
+                <content src="html/676115_1_En_7_Chapter.xhtml#Sec13Heading"/>
+</navPoint>
+              <navPoint id="navpoint-101" playOrder="101">
+                <navLabel><text>Option 2: Running with StreamableHTTP</text></navLabel>
+                <content src="html/676115_1_En_7_Chapter.xhtml#Sec14Heading"/>
+</navPoint>
+</navPoint>
+            <navPoint id="navpoint-102" playOrder="102">
+              <navLabel><text>Step 8: Testing and Verification</text></navLabel>
+              <content src="html/676115_1_En_7_Chapter.xhtml#Sec15Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-103" playOrder="103">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_7_Chapter.xhtml#Sec16Heading"/>
+</navPoint>
+          <navPoint id="navpoint-104" playOrder="104">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_7_Chapter.xhtml#Sec17Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-105" playOrder="105">
+          <navLabel><text>8. For the AI Application Developer: Building an MCP Client</text></navLabel>
+          <content src="html/676115_1_En_8_Chapter.xhtml"/>
+          <navPoint id="navpoint-106" playOrder="106">
+            <navLabel><text>Step 1: Project Scaffolding and Environment Setup</text></navLabel>
+            <content src="html/676115_1_En_8_Chapter.xhtml#Sec1Heading"/>
+</navPoint>
+          <navPoint id="navpoint-107" playOrder="107">
+            <navLabel><text>Step 2: Defining Schemas and Initializing the Core Components</text></navLabel>
+            <content src="html/676115_1_En_8_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+          <navPoint id="navpoint-108" playOrder="108">
+            <navLabel><text>Step 3: The Bidirectional Contract-Handling Server-Initiated Communication</text></navLabel>
+            <content src="html/676115_1_En_8_Chapter.xhtml#Sec3Heading"/>
+            <navPoint id="navpoint-109" playOrder="109">
+              <navLabel><text>Handling Notifications</text></navLabel>
+              <content src="html/676115_1_En_8_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+            <navPoint id="navpoint-110" playOrder="110">
+              <navLabel><text>Responding to Server Requests</text></navLabel>
+              <content src="html/676115_1_En_8_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-111" playOrder="111">
+            <navLabel><text>Step 4: Orchestrating the Agent—The Manual Tool-Calling Loop</text></navLabel>
+            <content src="html/676115_1_En_8_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+          <navPoint id="navpoint-112" playOrder="112">
+            <navLabel><text>Step 5: Running the End-to-End System and a Guided Interaction</text></navLabel>
+            <content src="html/676115_1_En_8_Chapter.xhtml#Sec7Heading"/>
+            <navPoint id="navpoint-113" playOrder="113">
+              <navLabel><text>Interaction 1: Dynamic Capabilities</text></navLabel>
+              <content src="html/676115_1_En_8_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+            <navPoint id="navpoint-114" playOrder="114">
+              <navLabel><text>Interaction 2: Elicitation</text></navLabel>
+              <content src="html/676115_1_En_8_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+            <navPoint id="navpoint-115" playOrder="115">
+              <navLabel><text>Interaction 3: Resource Updates</text></navLabel>
+              <content src="html/676115_1_En_8_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-116" playOrder="116">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_8_Chapter.xhtml#Sec11Heading"/>
+</navPoint>
+          <navPoint id="navpoint-117" playOrder="117">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_8_Chapter.xhtml#Sec12Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+      <navPoint id="navpoint-118" playOrder="118">
+        <navLabel><text>Part IV: Security and Production Readiness</text></navLabel>
+        <content src="html/Part_4.xhtml"/>
+        <navPoint id="navpoint-119" playOrder="119">
+          <navLabel><text>9. The Agentic Threat Landscape</text></navLabel>
+          <content src="html/676115_1_En_9_Chapter.xhtml"/>
+          <navPoint id="navpoint-120" playOrder="120">
+            <navLabel><text>A New Paradigm, a New Attack Surface</text></navLabel>
+            <content src="html/676115_1_En_9_Chapter.xhtml#Sec1Heading"/>
+</navPoint>
+          <navPoint id="navpoint-121" playOrder="121">
+            <navLabel><text>The Lethal Trifecta: A Recipe for Disaster</text></navLabel>
+            <content src="html/676115_1_En_9_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+          <navPoint id="navpoint-122" playOrder="122">
+            <navLabel><text>Case Studies in Agentic Failure: Two Real-World Breaches</text></navLabel>
+            <content src="html/676115_1_En_9_Chapter.xhtml#Sec3Heading"/>
+            <navPoint id="navpoint-123" playOrder="123">
+              <navLabel><text>Case Study 1: The GitHub MCP Exploit (the Hijacked Agent)</text></navLabel>
+              <content src="html/676115_1_En_9_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+            <navPoint id="navpoint-124" playOrder="124">
+              <navLabel><text>Case Study 2: The Asana Data Leak (the Broken Wall)</text></navLabel>
+              <content src="html/676115_1_En_9_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-125" playOrder="125">
+            <navLabel><text>A New Framework: Securing Flows, Not Just Prompts</text></navLabel>
+            <content src="html/676115_1_En_9_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+          <navPoint id="navpoint-126" playOrder="126">
+            <navLabel><text>A Catalog of Agentic Threats</text></navLabel>
+            <content src="html/676115_1_En_9_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+          <navPoint id="navpoint-127" playOrder="127">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_9_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+          <navPoint id="navpoint-128" playOrder="128">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_9_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-129" playOrder="129">
+          <navLabel><text>10. Foundational Security: Authentication with OpenID Connect (OIDC)</text></navLabel>
+          <content src="html/676115_1_En_10_Chapter.xhtml"/>
+          <navPoint id="navpoint-130" playOrder="130">
+            <navLabel><text>The Architectural Pattern: The Three Roles of OAuth</text></navLabel>
+            <content src="html/676115_1_En_10_Chapter.xhtml#Sec1Heading"/>
+</navPoint>
+          <navPoint id="navpoint-131" playOrder="131">
+            <navLabel><text>Understanding OAuth 2.1 vs OpenID Connect (OIDC)</text></navLabel>
+            <content src="html/676115_1_En_10_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+          <navPoint id="navpoint-132" playOrder="132">
+            <navLabel><text>Step 1: Configuring the Google Cloud OAuth 2.1 Client for OIDC</text></navLabel>
+            <content src="html/676115_1_En_10_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+          <navPoint id="navpoint-133" playOrder="133">
+            <navLabel><text>Step 2: Building the Server-Side OAuth 2.1/OIDC Authentication Flow</text></navLabel>
+            <content src="html/676115_1_En_10_Chapter.xhtml#Sec4Heading"/>
+            <navPoint id="navpoint-134" playOrder="134">
+              <navLabel><text>2.1. Server and Session Setup</text></navLabel>
+              <content src="html/676115_1_En_10_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+            <navPoint id="navpoint-135" playOrder="135">
+              <navLabel><text>2.2. The /authorize and /callback Endpoints</text></navLabel>
+              <content src="html/676115_1_En_10_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+            <navPoint id="navpoint-136" playOrder="136">
+              <navLabel><text>2.3. The /token Endpoint and PKCE Validation</text></navLabel>
+              <content src="html/676115_1_En_10_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+            <navPoint id="navpoint-137" playOrder="137">
+              <navLabel><text>2.4. Protecting and Proxying the MCP Endpoint</text></navLabel>
+              <content src="html/676115_1_En_10_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-138" playOrder="138">
+            <navLabel><text>Step 3: Building the Advanced OAuth/OIDC Client</text></navLabel>
+            <content src="html/676115_1_En_10_Chapter.xhtml#Sec9Heading"/>
+            <navPoint id="navpoint-139" playOrder="139">
+              <navLabel><text>3.1. The HTTPCallbackOAuthMCPClient Class</text></navLabel>
+              <content src="html/676115_1_En_10_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-140" playOrder="140">
+            <navLabel><text>Running the End-to-End System: A Look at the Logs</text></navLabel>
+            <content src="html/676115_1_En_10_Chapter.xhtml#Sec11Heading"/>
+</navPoint>
+          <navPoint id="navpoint-141" playOrder="141">
+            <navLabel><text>Production Readiness: Analysis and Recommendations</text></navLabel>
+            <content src="html/676115_1_En_10_Chapter.xhtml#Sec12Heading"/>
+</navPoint>
+          <navPoint id="navpoint-142" playOrder="142">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_10_Chapter.xhtml#Sec13Heading"/>
+</navPoint>
+          <navPoint id="navpoint-143" playOrder="143">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_10_Chapter.xhtml#Sec14Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-144" playOrder="144">
+          <navLabel><text>11. Server-Side Hardening: Mitigating Common Vulnerabilities</text></navLabel>
+          <content src="html/676115_1_En_11_Chapter.xhtml"/>
+          <navPoint id="navpoint-145" playOrder="145">
+            <navLabel><text>Vulnerability 1: Excessive Permission Scope</text></navLabel>
+            <content src="html/676115_1_En_11_Chapter.xhtml#Sec1Heading"/>
+            <navPoint id="navpoint-146" playOrder="146">
+              <navLabel><text>The Fundamental Problem</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+            <navPoint id="navpoint-147" playOrder="147">
+              <navLabel><text>The Threat: The Valet with the Master Key</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+            <navPoint id="navpoint-148" playOrder="148">
+              <navLabel><text>Exploit 1: The Unconstrained Log Viewer</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+            <navPoint id="navpoint-149" playOrder="149">
+              <navLabel><text>Attack Vector 1—Implementation Bug (Path Traversal)</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+            <navPoint id="navpoint-150" playOrder="150">
+              <navLabel><text>The Attack</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+            <navPoint id="navpoint-151" playOrder="151">
+              <navLabel><text>Why This Happens</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+            <navPoint id="navpoint-152" playOrder="152">
+              <navLabel><text>Mitigation 1: Fix the Implementation Bug (Application-Level Defense)</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+            <navPoint id="navpoint-153" playOrder="153">
+              <navLabel><text>Why This Works</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+            <navPoint id="navpoint-154" playOrder="154">
+              <navLabel><text>The Hidden Problem: Architectural Flaw</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+            <navPoint id="navpoint-155" playOrder="155">
+              <navLabel><text>Mitigation 2: Fix the Architectural Flaw (Operating System-Level Defense)</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec11Heading"/>
+</navPoint>
+            <navPoint id="navpoint-156" playOrder="156">
+              <navLabel><text>Dockerfile (Minimal Hardening)</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec12Heading"/>
+</navPoint>
+            <navPoint id="navpoint-157" playOrder="157">
+              <navLabel><text>Docker Compose (Where the Security Happens)</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec13Heading"/>
+</navPoint>
+            <navPoint id="navpoint-158" playOrder="158">
+              <navLabel><text>What This Does</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec14Heading"/>
+</navPoint>
+            <navPoint id="navpoint-159" playOrder="159">
+              <navLabel><text>Proof It Works</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec15Heading"/>
+</navPoint>
+            <navPoint id="navpoint-160" playOrder="160">
+              <navLabel><text>Why Both Mitigations Are Required</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec16Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-161" playOrder="161">
+            <navLabel><text>Vulnerability 2: Malicious Code Execution</text></navLabel>
+            <content src="html/676115_1_En_11_Chapter.xhtml#Sec17Heading"/>
+            <navPoint id="navpoint-162" playOrder="162">
+              <navLabel><text>The Threat: The Unsandboxed Playground</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec18Heading"/>
+</navPoint>
+            <navPoint id="navpoint-163" playOrder="163">
+              <navLabel><text>The Exploit: The “Helpful” Report Generator</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec19Heading"/>
+</navPoint>
+            <navPoint id="navpoint-164" playOrder="164">
+              <navLabel><text>The Mitigation: Never eval( ), Use Safe Interpreters</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec20Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-165" playOrder="165">
+            <navLabel><text>Vulnerability 3: Command Injection</text></navLabel>
+            <content src="html/676115_1_En_11_Chapter.xhtml#Sec21Heading"/>
+            <navPoint id="navpoint-166" playOrder="166">
+              <navLabel><text>The Threat: The Unescaped String</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec22Heading"/>
+</navPoint>
+            <navPoint id="navpoint-167" playOrder="167">
+              <navLabel><text>The Exploit: The Insecure Diagnostic Tool</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec23Heading"/>
+</navPoint>
+            <navPoint id="navpoint-168" playOrder="168">
+              <navLabel><text>The Mitigation: Parameterized Execution</text></navLabel>
+              <content src="html/676115_1_En_11_Chapter.xhtml#Sec24Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-169" playOrder="169">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_11_Chapter.xhtml#Sec25Heading"/>
+</navPoint>
+          <navPoint id="navpoint-170" playOrder="170">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_11_Chapter.xhtml#Sec26Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-171" playOrder="171">
+          <navLabel><text>12. LLM-Centric Threats: Injection and Poisoning</text></navLabel>
+          <content src="html/676115_1_En_12_Chapter.xhtml"/>
+          <navPoint id="navpoint-172" playOrder="172">
+            <navLabel><text>Vulnerability 1: Prompt Injection (Direct and Indirect)</text></navLabel>
+            <content src="html/676115_1_En_12_Chapter.xhtml#Sec1Heading"/>
+            <navPoint id="navpoint-173" playOrder="173">
+              <navLabel><text>The Threat: The Deceitful Conversation</text></navLabel>
+              <content src="html/676115_1_En_12_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+            <navPoint id="navpoint-174" playOrder="174">
+              <navLabel><text>The Exploit: The Poisoned Document</text></navLabel>
+              <content src="html/676115_1_En_12_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+            <navPoint id="navpoint-175" playOrder="175">
+              <navLabel><text>The Mitigation: Data/Instruction Separation and Sanitization</text></navLabel>
+              <content src="html/676115_1_En_12_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-176" playOrder="176">
+            <navLabel><text>Vulnerability 2: Tool Poisoning</text></navLabel>
+            <content src="html/676115_1_En_12_Chapter.xhtml#Sec5Heading"/>
+            <navPoint id="navpoint-177" playOrder="177">
+              <navLabel><text>The Threat: The Deceptive Toolmaker</text></navLabel>
+              <content src="html/676115_1_En_12_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+            <navPoint id="navpoint-178" playOrder="178">
+              <navLabel><text>The Exploit: The Deceitful Calculator</text></navLabel>
+              <content src="html/676115_1_En_12_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+            <navPoint id="navpoint-179" playOrder="179">
+              <navLabel><text>The Mitigation: Host-Side Validation and Sandboxing</text></navLabel>
+              <content src="html/676115_1_En_12_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-180" playOrder="180">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_12_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+          <navPoint id="navpoint-181" playOrder="181">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_12_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-182" playOrder="182">
+          <navLabel><text>13. Ecosystem and Dynamic Threats</text></navLabel>
+          <content src="html/676115_1_En_13_Chapter.xhtml"/>
+          <navPoint id="navpoint-183" playOrder="183">
+            <navLabel><text>Vulnerability 1: Tool Shadowing (Tool Hijacking)</text></navLabel>
+            <content src="html/676115_1_En_13_Chapter.xhtml#Sec1Heading"/>
+            <navPoint id="navpoint-184" playOrder="184">
+              <navLabel><text>The Threat: The Fake Person in the Workshop</text></navLabel>
+              <content src="html/676115_1_En_13_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+            <navPoint id="navpoint-185" playOrder="185">
+              <navLabel><text>The Exploit: The Hijacked Email</text></navLabel>
+              <content src="html/676115_1_En_13_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+            <navPoint id="navpoint-186" playOrder="186">
+              <navLabel><text>The Mitigation: Namespacing, Prioritization, and Host-Level Defenses</text></navLabel>
+              <content src="html/676115_1_En_13_Chapter.xhtml#Sec4Heading"/>
+              <navPoint id="navpoint-187" playOrder="187">
+                <navLabel><text>1. For Server Developers: Use Namespacing</text></navLabel>
+                <content src="html/676115_1_En_13_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+              <navPoint id="navpoint-188" playOrder="188">
+                <navLabel><text>2. For Host Developers: The Critical Defense Layer</text></navLabel>
+                <content src="html/676115_1_En_13_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-189" playOrder="189">
+            <navLabel><text>Vulnerability 2: Rug Pull Attacks</text></navLabel>
+            <content src="html/676115_1_En_13_Chapter.xhtml#Sec7Heading"/>
+            <navPoint id="navpoint-190" playOrder="190">
+              <navLabel><text>The Threat: The Bait-and-Switch</text></navLabel>
+              <content src="html/676115_1_En_13_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+            <navPoint id="navpoint-191" playOrder="191">
+              <navLabel><text>The Exploit: The Weather Tool That Spies</text></navLabel>
+              <content src="html/676115_1_En_13_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+            <navPoint id="navpoint-192" playOrder="192">
+              <navLabel><text>The Mitigation: Immutable Definitions and Host-Level Auditing</text></navLabel>
+              <content src="html/676115_1_En_13_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-193" playOrder="193">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_13_Chapter.xhtml#Sec11Heading"/>
+</navPoint>
+          <navPoint id="navpoint-194" playOrder="194">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_13_Chapter.xhtml#Sec12Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+      <navPoint id="navpoint-195" playOrder="195">
+        <navLabel><text>Part V: The Playbook: A Real-World Case Study</text></navLabel>
+        <content src="html/Part_5.xhtml"/>
+        <navPoint id="navpoint-196" playOrder="196">
+          <navLabel><text>14. Deep Dive Case Study: Building an Agentic RAG System</text></navLabel>
+          <content src="html/676115_1_En_14_Chapter.xhtml"/>
+          <navPoint id="navpoint-197" playOrder="197">
+            <navLabel><text>Understanding RAG: Grounding LLMs in Reality</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec1Heading"/>
+            <navPoint id="navpoint-198" playOrder="198">
+              <navLabel><text>Agent vs. LLM vs. RAG</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+            <navPoint id="navpoint-199" playOrder="199">
+              <navLabel><text>The Limitation of Basic RAG</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+            <navPoint id="navpoint-200" playOrder="200">
+              <navLabel><text>The Next Evolution: Agentic RAG</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-201" playOrder="201">
+            <navLabel><text>The Architecture: A Secure, Multi-tool, Agentic System</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+          <navPoint id="navpoint-202" playOrder="202">
+            <navLabel><text>Agentic Design Patterns in Our System</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+          <navPoint id="navpoint-203" playOrder="203">
+            <navLabel><text>Building Blocks of Our AI Agent</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+          <navPoint id="navpoint-204" playOrder="204">
+            <navLabel><text>Tech Stack Analysis</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+          <navPoint id="navpoint-205" playOrder="205">
+            <navLabel><text>Implementation Phase 1: Infrastructure and Data Ingestion</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec9Heading"/>
+            <navPoint id="navpoint-206" playOrder="206">
+              <navLabel><text>Scrape the Documentation</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec10Heading"/>
+</navPoint>
+            <navPoint id="navpoint-207" playOrder="207">
+              <navLabel><text>Embedding and Upserting the Data</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec11Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-208" playOrder="208">
+            <navLabel><text>Implementation Phase 2: Building the Multi-tool MCP Server</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec12Heading"/>
+            <navPoint id="navpoint-209" playOrder="209">
+              <navLabel><text>Registering the Tools</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec13Heading"/>
+</navPoint>
+            <navPoint id="navpoint-210" playOrder="210">
+              <navLabel><text>Handling Tool Calls</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec14Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-211" playOrder="211">
+            <navLabel><text>Implementation Phase 3: Building the Agentic Client</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec15Heading"/>
+            <navPoint id="navpoint-212" playOrder="212">
+              <navLabel><text>The System Prompt</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec16Heading"/>
+</navPoint>
+            <navPoint id="navpoint-213" playOrder="213">
+              <navLabel><text>Processing User Input</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec17Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-214" playOrder="214">
+            <navLabel><text>Bringing It All Together: A Live Execution</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec18Heading"/>
+            <navPoint id="navpoint-215" playOrder="215">
+              <navLabel><text>Step 1: Setup and Data Ingestion</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec19Heading"/>
+</navPoint>
+            <navPoint id="navpoint-216" playOrder="216">
+              <navLabel><text>Step 2: Server and Client Initialization</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec20Heading"/>
+</navPoint>
+            <navPoint id="navpoint-217" playOrder="217">
+              <navLabel><text>Step 3: Interactive Session—The Agent in Action</text></navLabel>
+              <content src="html/676115_1_En_14_Chapter.xhtml#Sec21Heading"/>
+              <navPoint id="navpoint-218" playOrder="218">
+                <navLabel><text>Scenario A: Internal Knowledge Success</text></navLabel>
+                <content src="html/676115_1_En_14_Chapter.xhtml#Sec22Heading"/>
+</navPoint>
+              <navPoint id="navpoint-219" playOrder="219">
+                <navLabel><text>Scenario B: Web Search Fallback</text></navLabel>
+                <content src="html/676115_1_En_14_Chapter.xhtml#Sec23Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-220" playOrder="220">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec24Heading"/>
+</navPoint>
+          <navPoint id="navpoint-221" playOrder="221">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_14_Chapter.xhtml#Sec25Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+      <navPoint id="navpoint-222" playOrder="222">
+        <navLabel><text>Part VI: The Horizon: The Future of MCP</text></navLabel>
+        <content src="html/Part_6.xhtml"/>
+        <navPoint id="navpoint-223" playOrder="223">
+          <navLabel><text>15. Navigating the Ecosystem: Servers, Clients, and Registries</text></navLabel>
+          <content src="html/676115_1_En_15_Chapter.xhtml"/>
+          <navPoint id="navpoint-224" playOrder="224">
+            <navLabel><text>The Server Landscape and the Rise of Registries</text></navLabel>
+            <content src="html/676115_1_En_15_Chapter.xhtml#Sec1Heading"/>
+            <navPoint id="navpoint-225" playOrder="225">
+              <navLabel><text>The Official MCP Registry: An App Store for AI Tools</text></navLabel>
+              <content src="html/676115_1_En_15_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+            <navPoint id="navpoint-226" playOrder="226">
+              <navLabel><text>A Tour of the Server Ecosystem</text></navLabel>
+              <content src="html/676115_1_En_15_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-227" playOrder="227">
+            <navLabel><text>The Host and Client Landscape: Where the Magic Happens</text></navLabel>
+            <content src="html/676115_1_En_15_Chapter.xhtml#Sec4Heading"/>
+            <navPoint id="navpoint-228" playOrder="228">
+              <navLabel><text>1. The AI-Powered IDEs: The Developer’s Cockpit</text></navLabel>
+              <content src="html/676115_1_En_15_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+            <navPoint id="navpoint-229" playOrder="229">
+              <navLabel><text>2. The Conversational Powerhouses: Desktop Agents</text></navLabel>
+              <content src="html/676115_1_En_15_Chapter.xhtml#Sec6Heading"/>
+</navPoint>
+            <navPoint id="navpoint-230" playOrder="230">
+              <navLabel><text>3. The Headless and Terminal Clients: For the Power User</text></navLabel>
+              <content src="html/676115_1_En_15_Chapter.xhtml#Sec7Heading"/>
+</navPoint>
+</navPoint>
+          <navPoint id="navpoint-231" playOrder="231">
+            <navLabel><text>Chapter Summary</text></navLabel>
+            <content src="html/676115_1_En_15_Chapter.xhtml#Sec8Heading"/>
+</navPoint>
+          <navPoint id="navpoint-232" playOrder="232">
+            <navLabel><text>Key Takeaways</text></navLabel>
+            <content src="html/676115_1_En_15_Chapter.xhtml#Sec9Heading"/>
+</navPoint>
+</navPoint>
+        <navPoint id="navpoint-233" playOrder="233">
+          <navLabel><text>16. The Evolving Ecosystem and What’s Next</text></navLabel>
+          <content src="html/676115_1_En_16_Chapter.xhtml"/>
+          <navPoint id="navpoint-234" playOrder="234">
+            <navLabel><text>Introduction: From a Standard to an Ecosystem</text></navLabel>
+            <content src="html/676115_1_En_16_Chapter.xhtml#Sec1Heading"/>
+</navPoint>
+          <navPoint id="navpoint-235" playOrder="235">
+            <navLabel><text>The Path to a Formal Standard</text></navLabel>
+            <content src="html/676115_1_En_16_Chapter.xhtml#Sec2Heading"/>
+</navPoint>
+          <navPoint id="navpoint-236" playOrder="236">
+            <navLabel><text>The Growing Adoption: The Network Effect in Action</text></navLabel>
+            <content src="html/676115_1_En_16_Chapter.xhtml#Sec3Heading"/>
+</navPoint>
+          <navPoint id="navpoint-237" playOrder="237">
+            <navLabel><text>Emerging Patterns and Best Practices</text></navLabel>
+            <content src="html/676115_1_En_16_Chapter.xhtml#Sec4Heading"/>
+</navPoint>
+          <navPoint id="navpoint-238" playOrder="238">
+            <navLabel><text>Final Thoughts: Your Role in Building a Unified AI Future</text></navLabel>
+            <content src="html/676115_1_En_16_Chapter.xhtml#Sec5Heading"/>
+</navPoint>
+</navPoint>
+</navPoint>
+      <navPoint id="navpoint-239" playOrder="239">
+        <navLabel><text>Appendix A: MCP Resource Compendium</text></navLabel>
+        <content src="html/Backmatter_001.xhtml#Sec1Heading"/>
+        <navPoint id="navpoint-240" playOrder="240">
+          <navLabel><text>Official Protocol Resources</text></navLabel>
+          <content src="html/Backmatter_001.xhtml#Sec2Heading"/>
+</navPoint>
+        <navPoint id="navpoint-241" playOrder="241">
+          <navLabel><text>Official SDKs and Tools</text></navLabel>
+          <content src="html/Backmatter_001.xhtml#Sec3Heading"/>
+</navPoint>
+        <navPoint id="navpoint-242" playOrder="242">
+          <navLabel><text>Server Registries and Discovery Platforms</text></navLabel>
+          <content src="html/Backmatter_001.xhtml#Sec4Heading"/>
+</navPoint>
+        <navPoint id="navpoint-243" playOrder="243">
+          <navLabel><text>Popular MCP Host Applications</text></navLabel>
+          <content src="html/Backmatter_001.xhtml#Sec5Heading"/>
+</navPoint>
+        <navPoint id="navpoint-244" playOrder="244">
+          <navLabel><text>Security Tools and Resources</text></navLabel>
+          <content src="html/Backmatter_001.xhtml#Sec6Heading"/>
+</navPoint>
+</navPoint>
+      <navPoint id="navpoint-245" playOrder="245">
+        <navLabel><text>Appendix B: Glossary of Terms</text></navLabel>
+        <content src="html/Backmatter_002.xhtml#Sec7Heading"/>
+</navPoint>
+      <navPoint id="navpoint-246" playOrder="246">
+        <navLabel><text>Index</text></navLabel>
+        <content src="html/Backmatter_003.xhtml"/>
+</navPoint>
+  </navMap>
+</ncx>

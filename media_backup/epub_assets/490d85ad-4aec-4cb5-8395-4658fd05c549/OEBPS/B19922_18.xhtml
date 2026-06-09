@@ -1,0 +1,710 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-GB">
+	<head>
+		<title>B19922_18</title>
+		<link href="css/style-JRserifv6.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:c8ccfc40-76a9-4a04-b8f6-a8f601fe2ce2" name="Adept.expected.resource"/>
+	</head>
+	<body id="B19922_18">
+		<div id="_idContainer249">
+			<h1 class="chapter-number" id="_idParaDest-468"><a id="_idTextAnchor483"/>18</h1>
+			<h1 id="_idParaDest-469"><a id="_idTextAnchor484"/>Tackling Tricky Topics</h1>
+			<p>We explored MuleSoft’s range of hosting options in earlier chapters, including CloudHub, on-premises, hybrid, Runtime Fabric manager on VMs/bare-metal machines, and <span class="No-Break">Self-Managed Kubernetes.</span></p>
+			<p>The following topics will be covered in <span class="No-Break">this chapter:</span></p>
+			<ul>
+				<li>Considerations for choosing the right <span class="No-Break">deployment model</span></li>
+				<li>Resilient <span class="No-Break">API techniques</span></li>
+				<li><span class="No-Break">Anypoint CLI</span></li>
+				<li>Idempotent and <span class="No-Break">cache scope</span></li>
+				<li><span class="No-Break">Core components</span></li>
+				<li>Use cases for implementing the <span class="No-Break">platform architecture</span></li>
+			</ul>
+			<h1 id="_idParaDest-470"><a id="_idTextAnchor485"/>Considerations for choosing the right deployment model</h1>
+			<p>MuleSoft is a<a id="_idIndexMarker1327"/> very adaptable platform that offers a variety of deployment choices to host your network of apps. To ensure that your enterprise’s digital transition is smooth and error-free, you must assess the best <span class="No-Break">deployment model.</span></p>
+			<p>For businesses looking to host their network of apps, MuleSoft provides the following <span class="No-Break">deployment options:</span></p>
+			<ul>
+				<li><span class="No-Break">CloudHub 1.0</span></li>
+				<li><span class="No-Break">CloudHub 2.0</span></li>
+				<li>On-premises Mule Runtime (standalone <span class="No-Break">and hybrid)</span></li>
+				<li>Runtime Fabric manager on VMs/bare-metal machines, OpenShift, and <span class="No-Break">Self-Managed Kubernetes</span></li>
+			</ul>
+			<p>Selecting <a id="_idIndexMarker1328"/>a MuleSoft deployment strategy is based on several considerations, including data security, control over data, scalability, and particular business requirements. The following instances will show you when to choose each model. <em class="italic">Table 18.1</em> illustrates the differences and similarities across deployment choices with respect to platform capabilities, data and metadata storage, and platform maintenance <span class="No-Break">and upgrades.</span></p>
+			<table class="T---Table _idGenTablePara-1" id="table001-11">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p><span class="No-Break"><strong class="bold">Factors</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully cloud-hosted (control plane and runtime plane in </strong><span class="No-Break"><strong class="bold">the cloud)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully customer-hosted (control plane and runtime plane in on-premises </strong><span class="No-Break"><strong class="bold">or customer-hosted)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Hybrid (control plane in the cloud and runtime </strong><span class="No-Break"><strong class="bold">plane on-premises)</strong></span></p>
+						</td>
+					</tr>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p><span class="No-Break">Platform</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Anypoint Platform (<span class="No-Break">control plane)</span></p>
+							<p>CloudHub 1.0 and CloudHub 2.0 (<span class="No-Break">runtime plane)</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Anypoint <strong class="bold">Private Cloud Edition</strong> (<strong class="bold">PCE</strong>) (<span class="No-Break">control plane)</span></p>
+							<p>On-premises Mule Runtime (<span class="No-Break">runtime plane)</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Anypoint Platform (<span class="No-Break">control plane)</span></p>
+							<p>On-premises Mule runtime (runtime plane) or Runtime Fabric on Self-Managed Kubernetes, VMs/bare-metal, <span class="No-Break">and OpenShift</span></p>
+						</td>
+					</tr>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p>Data <span class="No-Break">and metadata</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Data and metadata will be in the <span class="No-Break">vendor’s infrastructure</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Data and metadata will be in the <span class="No-Break">customer’s infrastructure</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Only metadata will be in the <span class="No-Break">vendor’s infrastructure</span></p>
+						</td>
+					</tr>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p>Platform and upgrade <span class="No-Break">management</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Platform maintenance and upgrades will be managed by the <span class="No-Break">vendor (MuleSoft)</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>The customer is responsible for upgrades, patches, and platform maintenance for Mule runtime and <span class="No-Break">Anypoint PCE.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>The customer is responsible for upgrades, patches, and platform maintenance for Mule runtime and Anypoint Platform, and upgrades will be managed <span class="No-Break">by MuleSoft</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 18.1: MuleSoft deployment considerations (platform, data and metadata, and upgrade management)</p>
+			<p><em class="italic">Table 18.2</em> illustrates<a id="_idIndexMarker1329"/> the differences and similarities across deployment choices with respect to <span class="No-Break">network connectivity.</span></p>
+			<table class="T---Table _idGenTablePara-1" id="table002-8">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p><span class="No-Break"><strong class="bold">Factors</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully cloud-hosted (control plane and runtime plane in </strong><span class="No-Break"><strong class="bold">the cloud)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully customer-hosted (control plane and runtime plane in on-premises </strong><span class="No-Break"><strong class="bold">or customer-hosted)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Hybrid (control plane in the cloud and runtime </strong><span class="No-Break"><strong class="bold">plane on-premises)</strong></span></p>
+						</td>
+					</tr>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p>Network connectivity <span class="No-Break">options</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>CloudHub 1.0 supports Anypoint Virtual Private Cloud, which can connect to an on-premises data center or any cloud using VPN IPSec tunneling, VPC peering, AWS Direct Connect, or <span class="No-Break">Transit Gateway.</span></p>
+							<p>CloudHub 2.0 supports a private space that can connect to an on-premises data center or any cloud using VPN IPSec tunneling and <span class="No-Break">Transit Gateway.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Customers must manage the network connectivity between the Mule application and <span class="No-Break">other systems.</span></p>
+							<p>Customers must control the inbound and outbound traffic using a firewall or by implementing a VPN or any other connectivity options to connect to other data centers or <span class="No-Break">private clouds.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Customers must manage the network connectivity between the Mule application and <span class="No-Break">other systems.</span></p>
+							<p>Customers must control the inbound and outbound traffic using a firewall or by implementing a VPN or any other connectivity options to connect to other data centers or <span class="No-Break">private clouds.</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 18.2: MuleSoft deployment considerations (network connectivity)</p>
+			<p><em class="italic">Table 18.3</em> illustrates the differences and similarities across deployment choices with respect to <span class="No-Break">business continuity.</span></p>
+			<table class="T---Table _idGenTablePara-1" id="table003-7">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p><span class="No-Break"><strong class="bold">Factors</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully cloud-hosted (control plane and runtime plane in </strong><span class="No-Break"><strong class="bold">the cloud)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully customer-hosted (control plane and runtime plane in on-premises </strong><span class="No-Break"><strong class="bold">or customer-hosted)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Hybrid (control plane in the cloud and runtime </strong><span class="No-Break"><strong class="bold">plane on-premises)</strong></span></p>
+						</td>
+					</tr>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Business </strong><span class="No-Break"><strong class="bold">continuity</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Features such as high availability, fault tolerance, and intelligent healing are provided and managed <span class="No-Break">by MuleSoft.</span></p>
+							<p>Applications can be horizontally or vertically scaled by adding more instances (workers or replicas) or increasing the vCores or <span class="No-Break">replica size.</span></p>
+							<p>The scalability and high availability of Anypoint Platform are managed <span class="No-Break">by MuleSoft.</span></p>
+							<p>The customer is not responsible for managing any infrastructure for running the Mule applications <span class="No-Break">or proxies.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>The customer is responsible for high availability, fault tolerance, scalability, and <span class="No-Break">so on.</span></p>
+							<p>The customer is responsible for managing the infrastructure and networks for running the MuleSoft application and implementing the <span class="No-Break">Anypoint PCE.</span></p>
+							<p>MuleSoft will only provide Mule runtime for running the MuleSoft application and the setup for Anypoint PCE on the <span class="No-Break">customer’s infrastructure.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>The customer is responsible for managing the underlying infrastructure for running the Mule applications <span class="No-Break">or proxies.</span></p>
+							<p>Customers need to ensure the high availability and scalability of the nodes <span class="No-Break">or servers.</span></p>
+							<p>Applications can be scaled easily by increasing the number of replicas and the replica size on Runtime Fabric with <span class="No-Break">zero downtime.</span></p>
+							<p>Runtime Fabric provides the mechanism for intelligent healing and fault tolerance at the <span class="No-Break">application level.</span></p>
+							<p>Mule Runtime running on-premises must be deployed on multiple nodes in a cluster or group to ensure high availability. The scaling of nodes can only be done by adding extra nodes to the group <span class="No-Break">and server.</span></p>
+							<p>The customer is responsible for managing the underlying infrastructure <span class="No-Break">and networks.</span></p>
+							<p>Anypoint platform will be completely managed by MuleSoft. MuleSoft will ensure the availability and scalability of the <span class="No-Break">Anypoint platform.</span></p>
+							<p>It supports Anypoint clustering at the application level to ensure the availability of <span class="No-Break">the application.</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 18.3: MuleSoft deployment considerations (business continuity)</p>
+			<p><em class="italic">Table 18.4</em> illustrates the <a id="_idIndexMarker1330"/>differences and similarities across deployment choices with respect to the <span class="No-Break">load balancer.</span></p>
+			<table class="T---Table" id="table004-6">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="T---Table">
+						<td class="T---Table T---Header">
+							<p><span class="No-Break"><strong class="bold">Factors</strong></span></p>
+						</td>
+						<td class="T---Table T---Header">
+							<p><strong class="bold">Fully cloud-hosted (control plane and runtime plane in </strong><span class="No-Break"><strong class="bold">the cloud)</strong></span></p>
+						</td>
+						<td class="T---Table T---Header">
+							<p><strong class="bold">Fully customer-hosted (control plane and runtime plane in on-premises </strong><span class="No-Break"><strong class="bold">or customer-hosted)</strong></span></p>
+						</td>
+						<td class="T---Table T---Header">
+							<p><strong class="bold">Hybrid (control plane in the cloud and runtime </strong><span class="No-Break"><strong class="bold">plane on-premises)</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p>Business <span class="No-Break">continuity</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Features such as high availability, fault tolerance, and intelligent healing are provided and managed by MuleSoft. </p>
+							<p>Applications can be horizontally or vertically scaled by adding more instances (workers or replicas) or increasing the vCores or <span class="No-Break">replica size.</span></p>
+							<p>The scalability and high availability of Anypoint Platform are managed <span class="No-Break">by MuleSoft.</span></p>
+							<p>The customer is not responsible for managing any infrastructure for running the Mule applications <span class="No-Break">or proxies.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>The customer is responsible for high availability, fault tolerance, scalability, and <span class="No-Break">so on.</span></p>
+							<p>The customer is responsible for managing the infrastructure and networks for running the MuleSoft application and implementing the <span class="No-Break">Anypoint PCE.</span></p>
+							<p>MuleSoft will only provide Mule runtime for running the MuleSoft application and the setup for Anypoint PCE on the <span class="No-Break">customer's infrastructure.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>The customer is responsible for managing the underlying infrastructure for running the Mule applications or proxies. </p>
+							<p>Customers need to ensure the high availability and scalability of the nodes <span class="No-Break">or servers.</span></p>
+							<p>Applications can be scaled easily by increasing the number of replicas and the replica size on Runtime Fabric with zero downtime. </p>
+							<p>Runtime Fabric provides the mechanism for intelligent healing and fault tolerance at the <span class="No-Break">application level.</span></p>
+							<p>Mule Runtime running on-premises must be deployed on multiple nodes in a cluster or group to ensure high availability. The scaling of nodes can only be done by adding extra nodes to the group <span class="No-Break">and server.</span></p>
+							<p>The customer is responsible for managing the underlying infrastructure <span class="No-Break">and networks.</span></p>
+							<p>Anypoint platform will be completely managed by MuleSoft. MuleSoft will ensure the availability and scalability of the <span class="No-Break">Anypoint platform.</span></p>
+							<p>It supports Anypoint clustering at the application level to ensure the availability of <span class="No-Break">the application.</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 18.4: MuleSoft deployment considerations (load balancer)</p>
+			<p><em class="italic">Table 18.5</em> illustrates<a id="_idIndexMarker1331"/> the differences and similarities across deployment choices with respect to the time <span class="No-Break">to value.</span></p>
+			<table class="T---Table _idGenTablePara-1" id="table005-3">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p><span class="No-Break"><strong class="bold">Factors</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully cloud-hosted (control plane and runtime plane in </strong><span class="No-Break"><strong class="bold">the cloud)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully customer-hosted (control plane and runtime plane in on-premises </strong><span class="No-Break"><strong class="bold">or customer-hosted)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Hybrid (control plane in the cloud and runtime </strong><span class="No-Break"><strong class="bold">plane on-premises)</strong></span></p>
+						</td>
+					</tr>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p>Time <span class="No-Break">to value</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Requires a small amount of setup time and most things are readily available. You may have to configure the Anypoint VPC, VPN, and dedicated <span class="No-Break">load balancer.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Requires a lot of setup time. The infrastructure needs to be configured to run the Mule application and <span class="No-Break">Anypoint PCE.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Requires setting up the infrastructure for the <span class="No-Break">runtime plane</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 18.5: MuleSoft deployment considerations (Time to value)</p>
+			<p><em class="italic">Table 18.6</em> illustrates the differences and similarities across deployment choices with respect to monitoring <span class="No-Break">and logging.</span></p>
+			<table class="T---Table _idGenTablePara-1" id="table006-3">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="T---Table">
+						<td class="T---Table T---Header">
+							<p><span class="No-Break"><strong class="bold">Factors</strong></span></p>
+						</td>
+						<td class="T---Table T---Header">
+							<p><strong class="bold">Fully cloud-hosted (control plane and runtime plane in </strong><span class="No-Break"><strong class="bold">the cloud)</strong></span></p>
+						</td>
+						<td class="T---Table T---Header">
+							<p><strong class="bold">Fully customer-hosted (control plane and runtime plane in on-premises or </strong><span class="No-Break"><strong class="bold">customer-hosted)</strong></span></p>
+						</td>
+						<td class="T---Table T---Header">
+							<p><strong class="bold">Hybrid (control plane in the cloud and runtime </strong><span class="No-Break"><strong class="bold">plane on-premises)</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p>Monitoring and <span class="No-Break">logging</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>MuleSoft provides out-of-the-box monitoring that can be used to monitor Mule applications deployed to CloudHub 1.0 and <span class="No-Break">CloudHub 2.0.</span></p>
+							<p>CloudHub 1.0 also supports functional monitoring and allows you to set up alerts on <span class="No-Break">the applications.</span></p>
+							<p>Application logging is supported by CloudHub 1.0 and CloudHub 2.0. This is an out-of-the-box capability provided <span class="No-Break">by MuleSoft.</span></p>
+							<p>The Titanium license required or the Advance logging features like aggregates log files so you can manage, search for, filter, and analyze <span class="No-Break">your logs.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Third-party monitoring and logging tools are required to monitor applications deployed in the customer environment. Can be integrated with Splunk or ELK for logging <span class="No-Break">and monitoring.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>MuleSoft provides out-of-the-box monitoring that can be used to monitor the Mule applications and nodes running in <span class="No-Break">hybrid environments.</span></p>
+							<p>Third-party monitoring is required to monitor the infrastructure <span class="No-Break">and networks.</span></p>
+							<p>Third-party logging tools can be integrated into the hybrid environment. Can be integrated with Splunk or ELK for logging <span class="No-Break">and monitoring.</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 18.6: MuleSoft deployment considerations (monitoring and logging)</p>
+			<p><em class="italic">Table 18.7</em> illustrates the <a id="_idIndexMarker1332"/>differences and similarities across deployment choices with respect to <span class="No-Break">use cases.</span></p>
+			<table class="T---Table _idGenTablePara-1" id="table007-3">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p><span class="No-Break"><strong class="bold">Factors</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully cloud-hosted (control plane and runtime plane in </strong><span class="No-Break"><strong class="bold">the cloud)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Fully customer-hosted (control plane and runtime plane in on-premises </strong><span class="No-Break"><strong class="bold">or customer-hosted)</strong></span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p><strong class="bold">Hybrid (control plane in the cloud and runtime </strong><span class="No-Break"><strong class="bold">plane on-premises)</strong></span></p>
+						</td>
+					</tr>
+					<tr class="T---Table">
+						<td class="T---Table T---Body">
+							<p><span class="No-Break">Use cases</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>Small or medium-sized organizations that don’t have a team that manages <span class="No-Break">the infrastructure.</span></p>
+							<p>Your company is brand new and has never used cloud service <span class="No-Break">management before.</span></p>
+							<p>You have few applications and do not want to invest in a standalone <span class="No-Break">cloud infrastructure.</span></p>
+							<p>There are no laws or government regulations that apply <span class="No-Break">to data.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>You have a team that manages the entire infrastructure and has an obligation to move into <span class="No-Break">the cloud.</span></p>
+							<p>Your data/metadata should not leave <span class="No-Break">your organization.</span></p>
+						</td>
+						<td class="T---Table T---Body">
+							<p>You’re going to deploy more applications and you’re thinking it’s going to be expensive to use the <span class="No-Break">full cloud.</span></p>
+							<p>You plan to keep your existing infrastructure and gradually move toward a <span class="No-Break">cloud environment.</span></p>
+							<p>You’re thinking that a hybrid solution will cut costs and time to <span class="No-Break">build infrastructure.</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 18.7: MuleSoft deployment considerations (use cases)</p>
+			<p>We have <a id="_idIndexMarker1333"/>discussed the many factors to consider when selecting the best deployment option for your company. Depending on your organization’s needs and capabilities, CloudHub 1.0, 2.0, <strong class="bold">Runtime Fabric</strong> (<strong class="bold">RTF</strong>), or a<a id="_idIndexMarker1334"/> hybrid implementation may be the best option. To fully understand the benefits and drawbacks of each deployment model, it may be best to speak with MuleSoft or a reliable partner. The following are the deployment options provided by MuleSoft for hosting the applications <span class="No-Break">and proxies.</span></p>
+			<h2 id="_idParaDest-471"><a id="_idTextAnchor486"/>CloudHub 1.0</h2>
+			<p>MuleSoft’s <a id="_idIndexMarker1335"/>cloud-based <strong class="bold">integration platform as a service</strong> (<strong class="bold">iPaaS</strong>) is called <a id="_idIndexMarker1336"/>CloudHub 1.0. It is helpful in cases where the company lacks the infrastructure required for on-premises deployment or doesn’t want to. It has integrated load balancing, easy scalability, automatic updates, and instant deployment options. It does away with the need for hardware and software maintenance, but MuleSoft handles most of the <span class="No-Break">data control.</span></p>
+			<p>Assume that a retail company has just begun to increase its online presence. They want to seamlessly integrate the new e-commerce<a id="_idIndexMarker1337"/> platform with their current systems (such as order management, inventory, and <strong class="bold">customer relationship management</strong> (<strong class="bold">CRM</strong>)) without having<a id="_idIndexMarker1338"/> to deal with a lot of infrastructure management hassles. CloudHub 1.0 would be advantageous to this company. They wouldn’t need to spend money on new hardware or worry about software updates and maintenance with the CloudHub 1.0 model because the platform would take care of these things. Additionally, they would benefit from smooth scaling and integrated load balancing to adapt to changing demands, particularly during busy times of <span class="No-Break">the year.</span></p>
+			<h2 id="_idParaDest-472"><a id="_idTextAnchor487"/>CloudHub 2.0</h2>
+			<p>CloudHub 2.0 <a id="_idIndexMarker1339"/>adds more operational features to CloudHub 1.0, such as providing options for granular vCores size, improved load balancer strategies, and improved private space for hosting the application in the isolated and <span class="No-Break">virtual network.</span></p>
+			<p>Let’s take the example of an online media streaming provider that needs to continue providing fast and highly available services even when it grows and updates its software. Additionally, they want the ability to customize some operational settings to meet their own needs and the flexibility to do so. The service doesn’t want any lag or outage to occur because this can cause users to become dissatisfied and result in a loss <span class="No-Break">of subscribers.</span></p>
+			<p>CloudHub 2.0 would be advantageous to such a business. The scalability and zero-downtime updates of CloudHub 2.0 allow media services to manage their operations more effectively without compromising user experience. Additionally, the platform gives the business more control over data, enabling it to guarantee the security of sensitive <span class="No-Break">user information.</span></p>
+			<h2 id="_idParaDest-473"><a id="_idTextAnchor488"/>Runtime Fabric</h2>
+			<p>Anypoint RTF <a id="_idIndexMarker1340"/>is a container service. This is advantageous for businesses that need the freedom to integrate Mule apps and APIs into their own cloud-based managed infrastructure (such as AWS, Azure, or GCP) or on-site data center. Although it can be more infrastructure-demanding than other options, it has benefits such as more control over data and <span class="No-Break">system resources.</span></p>
+			<p>Imagine a financial institution that needs to integrate various services, such as CRM, payment systems, and account management. Given the delicate nature of its operations, it is required to abide by stringent privacy and data protection regulations. Furthermore, this bank must adhere to local regulatory requirements because it operates in multiple geographic regions. These specifications might dictate that the data must be located within a certain geographic region as opposed <span class="No-Break">to internationally.</span></p>
+			<p>The bank can<a id="_idIndexMarker1341"/> take advantage of Anypoint RTF in this challenging scenario. A banking institution can benefit from a hybrid application model by using RTF. It can use on-premises and different cloud deployment solutions to meet geo-compliant requirements and deploy applications and APIs within regulatory bounds. Furthermore, bank integration workflows processing financial data depend on high application performance and usability. RTF offers high availability, redundancy, and fault tolerance, ideal for these scenarios. Regardless of the deployment locations, the bank can also continuously operate and monitor systems while maintaining a high degree of security and infrastructure management. Anypoint RTF is therefore the best option in this kind <span class="No-Break">of setting.</span></p>
+			<h2 id="_idParaDest-474"><a id="_idTextAnchor489"/>On-premises Mule runtime</h2>
+			<p>On-premises Mule Runtime is <a id="_idIndexMarker1342"/>ideal for companies that need to tightly control their data, adhere to strict data regulations, or invest heavily in their <span class="No-Break">data centers.</span></p>
+			<p>Let us consider a <a id="_idIndexMarker1343"/>healthcare organization that needs to integrate its medical billing systems, <strong class="bold">laboratory information management systems</strong> (<strong class="bold">LIMS</strong>), and <strong class="bold">electronic medical records</strong> (<strong class="bold">EMR</strong>). Strict<a id="_idIndexMarker1344"/> laws such as HIPAA, which demand stringent data security and privacy, govern this healthcare organization. Furthermore, due to security or technological constraints, an organization may have legacy systems that are essential to daily operations but can only be accessed through the private network of <span class="No-Break">the organization.</span></p>
+			<p>In this scenario, Mule Runtime can be installed locally by the organization. They can securely integrate with their legacy systems and keep strict control over their data thanks to this implementation. Since data never leaves the company’s physical locations, security regulations are always followed. Furthermore, the healthcare company might have made significant investments in a private data center with suitable hardware. They could take advantage of their current infrastructure without switching to a cloud-based solution by using an on-premises Mule Runtime, which would lower the risks and expenses<a id="_idIndexMarker1345"/> associated with a <span class="No-Break">possible migration.</span></p>
+			<p>We’ve talked about some essential building blocks that can be applied to the creation and deployment of Mule APIs. This chapter will take us through a walk-through of Anypoint MQ in the <span class="No-Break">next section.</span></p>
+			<h1 id="_idParaDest-475"><a id="_idTextAnchor490"/>Anypoint CLI</h1>
+			<p>MuleSoft’s <a id="_idIndexMarker1346"/>Anypoint Platform offers a tool called Anypoint <strong class="bold">Command-Line Interface</strong> (<strong class="bold">CLI</strong>) that lets users conduct different operations on the platform without utilizing the Anypoint Platform’s user interface. Alternatively, you can use a terminal to manage your servers, apps, APIs, and other entities from the Anypoint Platform <span class="No-Break">web interface.</span></p>
+			<p>This can be helpful for users who prefer CLIs over graphical ones, as well as for automating tasks, scripting, and integrating with CI/CD tools. It facilitates the creation, management, and deletion of different Anypoint Platform resources, including servers, applications, APIs, and so forth. This<a id="_idIndexMarker1347"/> tool is written in Node.js and can be installed using <strong class="bold">Node Package Manager</strong> (<strong class="bold">npm</strong>). It allows users to perform tasks such as creating and managing applications, deploying APIs, manipulating environments, applying policies, <span class="No-Break">and more.</span></p>
+			<p>The following<a id="_idIndexMarker1348"/> are the key features of the <span class="No-Break">Anypoint CLI:</span></p>
+			<ul>
+				<li><strong class="bold">Manage Mule applications</strong>: You can enable, modify, or disable Mule applications in <span class="No-Break">different environments</span></li>
+				<li><strong class="bold">API management</strong>: Create and manage APIs, policies, <span class="No-Break">and proxies</span></li>
+				<li><strong class="bold">VPN management</strong>: You can edit or create <span class="No-Break">Anypoint VPNs</span></li>
+				<li><strong class="bold">Hybrid management</strong>: You can manage your hybrid servers directly from <span class="No-Break">the CLI</span></li>
+				<li><strong class="bold">Manage users and roles</strong>: You can manage users, roles, and access rights associated with <span class="No-Break">Anypoint Platform</span></li>
+				<li><strong class="bold">Integration with CI/CD tools</strong>: You can create scripts to integrate with various CI/CD tools for seamless deployment <span class="No-Break">and upgrades</span></li>
+			</ul>
+			<p>The Anypoint CLI tool is<a id="_idIndexMarker1349"/> especially useful when you want to automate specific tasks or for developers who want to integrate Anypoint Platform features into their existing development workflows. Therefore, it offers an alternative to the more traditional interaction with the platform through a browser and expands the options available to interact with <span class="No-Break">the platform.</span></p>
+			<h1 id="_idParaDest-476"><a id="_idTextAnchor491"/>Resilient API techniques</h1>
+			<p>Resilient APIs are<a id="_idIndexMarker1350"/> designed to cope gracefully with failures, whether they originate in the API itself, from dependent services, or due to external factors such as network problems or latency, API version mismatches, or other problems that may arise because of changes in the environment or unexpected <span class="No-Break">user behavior.</span></p>
+			<p>The following are the reasons that APIs must be resilient and continue <span class="No-Break">to operate.</span></p>
+			<ul>
+				<li><strong class="bold">Availability</strong>: APIs must be highly available and continue to operate in the event of any hardware or infrastructure failure. It is important for APIs to ensure <span class="No-Break">business continuity.</span></li>
+				<li><strong class="bold">Performance</strong>: By reducing the number of errors and interruptions, resilient APIs can help improve your applications’ performance. This will lead to improved user experience and <span class="No-Break">higher productivity.</span></li>
+				<li><strong class="bold">Scalability</strong>: By making your applications more resilient to load spikes and failures, resilient APIs can help to improve your application’s scalability. This may help you to handle more traffic and users without <span class="No-Break">affecting performance.</span></li>
+				<li><strong class="bold">Security</strong>: APIs must be resilient <a id="_idIndexMarker1351"/>against any security threats or attacks. This can include SQL or PHP injection, <strong class="bold">Distributed Denial of Service</strong> (<strong class="bold">DDoS</strong>), and <strong class="bold">Denial of Service</strong> (<strong class="bold">DoS</strong>). APIs must be protected<a id="_idIndexMarker1352"/> against <span class="No-Break">unauthorized access.</span></li>
+				<li><strong class="bold">Fault tolerance</strong>: APIs must be fault tolerant and be recovered automatically in the event of any failures or crashes. APIs must be able to heal automatically in case of any failures related to infrastructure, or <span class="No-Break">JVM crashes.</span></li>
+			</ul>
+			<p>The following are some techniques <a id="_idIndexMarker1353"/>that ensure that APIs are resilient and continue to operate in the event of <span class="No-Break">any failures:</span></p>
+			<ul>
+				<li><strong class="bold">Load balancing</strong>: Traffic coming to an API must be load-balanced across the multiple instances of APIs running on multiple servers. This will ensure that a single server doesn’t get overloaded, and it will improve API performance <span class="No-Break">and availability.</span></li>
+				<li><strong class="bold">Error handling and logging</strong>: APIs must handle errors gracefully and respond with the right error codes to the client. In the event of any errors, APIs must continue to operate and process further requests. It is also possible to track and record errors occurring in your APIs, which will help you debug, diagnose, and improve the performance and quality of your APIs through error handling <span class="No-Break">and logging.</span></li>
+				<li><strong class="bold">Failover</strong>: If the main server fails, resilient APIs can use a failover function to move to an alternative server. This should help to keep your applications up and running even if you are having trouble with one of <span class="No-Break">the servers.</span></li>
+				<li><strong class="bold">Designing robust API security</strong>: APIs must be secure to ensure that they are only accessible to the authorized client. APIs must be protected by implementing SSL or TLS. This will allow secure communication between client and server. API policies such as IP allowlists, blocklists, and other security policies can be applied to the API to ensure that requests are coming from <span class="No-Break">authorized clients.</span></li>
+				<li><strong class="bold">Designing for scalability and reliability</strong>: The ability of your APIs to handle increasing or varying loads and demands, and to recover from failures or interruptions, is the ability of your APIs to be resilient and reliable. If you are planning for scalability and reliability, it may be helpful to prevent errors such as interruptions, crashes, or data loss due to the lack of or instability of <span class="No-Break">available resources.</span></li>
+				<li><strong class="bold">Monitoring and alerts</strong>: To detect problems early, resilient APIs can be monitored. Before problems lead to outages or other disturbances, this can help you take corrective action. Monitoring will troubleshoot issues early, and issues can be fixed soon before<a id="_idIndexMarker1354"/> they become too big. To ensure that you receive alerts in case of any failure or increased CPU and memory usage, it is necessary to set them up on <span class="No-Break">your APIs.</span></li>
+				<li><strong class="bold">Implementing API governance</strong>: The practice of defining, implementing, and managing standards, policies, or processes that ensure your APIs are standardized, reliable, and safe is called API governance. In principle, API governance is a key component of a mature API management system and plays an essential role in ensuring that great APIs are created. MuleSoft provides API governance components that can be used to ensure the API specification is consistent and improve the overall quality of the APIs within <span class="No-Break">your organization.</span></li>
+			</ul>
+			<p>In this section, we saw a variety of techniques for API responsiveness. We will now examine a few use cases related to selecting a <span class="No-Break">deployment model.</span></p>
+			<h1 id="_idParaDest-477"><a id="_idTextAnchor492"/>Idempotent scope</h1>
+			<p>Idempotence<a id="_idIndexMarker1355"/> is a design pattern that detects and eliminates the processing of duplicate messages. Let’s look at an example that shows why the idempotent design pattern <span class="No-Break">is necessary.</span></p>
+			<p>When clients send requests to servers, they may not receive a response. Clients cannot tell whether the response has been lost or whether the server crashed before it could process the request. To ensure that their request is processed, clients must send the request again. If the server processes the request and then crashes, servers will receive duplicate requests from clients when they <span class="No-Break">try again.</span></p>
+			<p>To uniquely identify a client, each client is assigned a unique ID. Upon receiving a request, the server checks whether the request with that request number is already being handled by the same client. If the server finds a stored response, it sends the response to the client without reprocessing <span class="No-Break">the request.</span></p>
+			<p>MuleSoft provides an idempotent filter for handling this situation and preventing the processing of duplicate messages. An idempotent filter checks the unique ID of an incoming message. This ID can be any message attribute or can be calculated using a DataWeave expression. The filter then checks whether that ID has already been processed. If so, the message is discarded. Otherwise, the message may continue through the <span class="No-Break">Mule flow.</span></p>
+			<p>Processed <a id="_idIndexMarker1356"/>message IDs can be stored in several object pools by configuring an idempotent filter. This enables you to select the object storage option—such as a distributed cache, local database, or even cloud-based object store—that best meets <span class="No-Break">your requirements.</span></p>
+			<p><span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.1</em> illustrates how idempotent filters work in the <span class="No-Break">Mule flow.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer236">
+					<img alt="Figure 18.1: Idempotent filter" src="image/B19922_18_01.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.1: Idempotent filter</p>
+			<p>The order with the order ID 1001 in the preceding figure was received in the Mule flow and will be validated by an idempotent message validator to make sure that no duplicate orders are processed for a specific amount of time. The order ID will also be stored in the local database, distributed cache, or object store so that future incoming orders can be validated against the stored <span class="No-Break">order ID.</span></p>
+			<p>Order Id 1001 entered the Mule flow for the first time, and it will pass the idempotent message validator before being processed further. In this instance, no duplicates <span class="No-Break">were found.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer237">
+					<img alt="Figure 18.2: Idempotent filter (with a duplicate detected)" src="image/B19922_18_02.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.2: Idempotent filter (with a duplicate detected)</p>
+			<p>An idempotent <a id="_idIndexMarker1357"/>message validator will verify the order with order ID 1001 in the preceding figure, which was received in the Mule flow, to ensure that no duplicate orders are processed for a certain period. Order ID 1001 has already been received in this instance, and an error message (<strong class="source-inline">MULE:DUPLICATE_MESSAGE</strong>) will <span class="No-Break">be thrown.</span></p>
+			<h1 id="_idParaDest-478"><a id="_idTextAnchor493"/>Cache scope</h1>
+			<p>Cache scope <a id="_idIndexMarker1358"/>is another valuable component provided by MuleSoft that needs to be configured inside a Mule flow to store and reuse data that is regularly referred to. This will enhance the general overall performance of the software by decreasing the number of times operations <span class="No-Break">are executed.</span></p>
+			<p>The following figure<a id="_idIndexMarker1359"/> illustrates how caching works in a <span class="No-Break">Mule flow.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer238">
+					<img alt="Figure 18.3: Caching versus no caching" src="image/B19922_18_03.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.3: Caching versus no caching</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.3</em>, we<a id="_idIndexMarker1360"/> have one Mule flow without caching and one with caching. The Mule flow without caching will always connect to the database to retrieve the data for every request, whereas the Mule flow with caching will only connect to the database once during the first request<a id="_idIndexMarker1361"/> and retrieve the data, which it will store in the cache and respond to the client. Any subsequent requests will receive a copy of the data from the cache instead of connecting the database again <span class="No-Break">and again.</span></p>
+			<p>Caching is good for static data and data that changes infrequently, but it may be not suitable when data changes frequently and <span class="No-Break">is dynamic.</span></p>
+			<p>Let’s look at the <a id="_idIndexMarker1362"/>benefits <span class="No-Break">of caching:</span></p>
+			<ul>
+				<li>Using a cache reduces the network overhead by caching the data near the consumer, and it reduces the number of connections with the end systems such as databases and <span class="No-Break">web services.</span></li>
+				<li>Overall application response time will be improved as caching reduces the number of operations performed in the Mule flow and stores the operation and data transformation<a id="_idIndexMarker1363"/> data in the cache to be retrieved for <span class="No-Break">future requests.</span></li>
+				<li>The processing load on the Mule instance will be reduced, the overall application performance will be improved, and the speed of message processing within the Mule flow will be improved <span class="No-Break">as well.</span></li>
+				<li>Data will be available in the cache during network crashes. Your application may be unable to connect end systems to retrieve data; in such cases, caching can be used for storing and retrieving <span class="No-Break">the data.</span></li>
+			</ul>
+			<h1 id="_idParaDest-479"><a id="_idTextAnchor494"/>Core components</h1>
+			<p>MuleSoft <a id="_idIndexMarker1364"/>provides out-of-the-box components that can be used for routing, transforming, and processing incoming messages, and these components can be configured in the <span class="No-Break">Mule flow.</span></p>
+			<p><em class="italic">Table 18.8</em> illustrates the core component groups provided <span class="No-Break">by MuleSoft.</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table008-2">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="bold">Core </strong><span class="No-Break"><strong class="bold">component group</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Core components</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Batch</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Batch Job, Batch Step, <span class="No-Break">Batch Aggregator</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Batch components are used to process large volumes of data by automatically splitting the data sources and stores in persistent queues and <span class="No-Break">ensuring reliability.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Endpoints</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Scheduler</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Scheduler is a Mule source event that triggers the execution of a Mule flow based on the scheduler frequency or cron <span class="No-Break">expression defined.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Error Handling</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>On Error Propagate, On Error Continue, Error Handler, <span class="No-Break">Raise Error</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Error handling components allow you to handle errors during message processing in <span class="No-Break">Mule flows.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Flow Control</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Choice, Scatter-Gather, First Successful, <span class="No-Break">Round Robin</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Flow control components are used to route messages to one or multiple targets depending on certain conditions. This helps you to implement enterprise integration patterns such as content-based routing, scatter-gather, <span class="No-Break">and multicasting.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Transformers</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Set Variable, Remove Variable, <span class="No-Break">Set Payload</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>A transformer modifies or enhances a message payload or message header to get it ready for processing through a <span class="No-Break">Mule flow.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Scopes</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>All, Any, Async, Cache, Flow, For Each, Parallel For Each, Sub Flow, Try, <span class="No-Break">Until Successful</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The message processors known as scopes—sometimes called “wrappers”—appear as processing blocks when you first place them on the message <span class="No-Break">flow canvas.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Other Components</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Custom <a id="_idIndexMarker1365"/>Business Events, Dynamic Evaluate, Flow Reference, Idempotent Message Validator, Invalidate Cache, Invalidate Key, Logger, Parse Template, Set Transaction Id, <span class="No-Break">Transform Message</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Other valuable core components are used to transform messages, call other flows, validate data, and <span class="No-Break">cache data.</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 18.8: Core components</p>
+			<p>We have discussed a few core components. Now, we will discuss some more important core components that we frequently use in <span class="No-Break">Mule flows.</span></p>
+			<h2 id="_idParaDest-480"><a id="_idTextAnchor495"/>Choice router</h2>
+			<p>Messages are<a id="_idIndexMarker1366"/> dynamically routed through a flow by the Choice router <a id="_idIndexMarker1367"/>based on a set of DataWeave expressions that assess message content. Every expression has a distinct routing option attached to it. This is similar to <strong class="source-inline">if/then/else</strong> code blocks that exist in most <span class="No-Break">programming languages.</span></p>
+			<p>The Choice router only has one route that runs (that is, only the first expression that evaluates to <strong class="source-inline">true</strong> causes that route to run); the other routes are not checked. The default route is used if none of the expressions <span class="No-Break">are true.</span></p>
+			<p><span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.4</em> illustrates <a id="_idIndexMarker1368"/>how the Choice router works in a <span class="No-Break">Mule flow.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer239">
+					<img alt="Figure 18.4: Choice router" src="image/B19922_18_04.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.4: Choice router</p>
+			<p>The Choice router has a default route that runs when none of the expressions in the existing routes<a id="_idIndexMarker1369"/> are true, and one route option that runs when the configured DataWeave expression evaluates to <strong class="source-inline">true</strong>. When you need to evaluate multiple conditions and then perform different actions based on which condition is met, add <span class="No-Break">more routes.</span></p>
+			<h2 id="_idParaDest-481"><a id="_idTextAnchor496"/>Scatter-Gather router</h2>
+			<p>Mule events<a id="_idIndexMarker1370"/> are handled by a routing event processor<a id="_idIndexMarker1371"/> known as the Scatter-Gather component. Mule events are routed via multiple parallel processing routes composed of different event processors. Each route executes a sequence of event processors upon receiving a reference to the <span class="No-Break">Mule event.</span></p>
+			<p>Each of these routes has a separate thread for its event processors, and the resulting Mule event might be the same as the input one, or it could be a different one with different payloads, attributes, and variables. The Scatter-Gather component then combines the Mule events returned by each processing route to create a new Mule event, which is only passed to the next event processor after every route is <span class="No-Break">successfully completed.</span></p>
+			<p><span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.5</em> illustrates how<a id="_idIndexMarker1372"/> Scatter-Gather works in a <span class="No-Break">Mule flow.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer240">
+					<img alt="Figure 18.5: Scatter-Gather router" src="image/B19922_18_05.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.5: Scatter-Gather router</p>
+			<p>The Scatter-Gather component<a id="_idIndexMarker1373"/> routes a copy of the message to all the routes in parallel, which will improve the overall performance of the Mule application. Scatter-Gather components work with repeatable streams, but they don’t process <span class="No-Break">non-repeatable streams.</span></p>
+			<p>Any errors <a id="_idIndexMarker1374"/>that a route’s event processors may produce can be handled by using a <strong class="source-inline">Try</strong> scope in each route of a Scatter-Gather component. The Scatter-Gather component throws an error of the <strong class="source-inline">MULE:COMPOSITE_ROUTING</strong> type after each route is executed, if any have failed with an error. Event processing stops at the Scatter-Gather component in the flow. Rather, the flow diverges to your event processors that <span class="No-Break">handle errors.</span></p>
+			<p>We may have a situation where we want the output from a successful route even if other routes in Scatter-Gather components fail. In this case, you can place the individual route with a <strong class="source-inline">try-catch</strong> block with <strong class="source-inline">on error continue</strong> to ensure that we can get the aggregated output from the successful route and an error response from the <span class="No-Break">failed route.</span></p>
+			<h2 id="_idParaDest-482"><a id="_idTextAnchor497"/>Error handling</h2>
+			<p>MuleSoft <a id="_idIndexMarker1375"/>provides out-of-the-box error-handling components to <a id="_idIndexMarker1376"/>handle any kind of exception that occurs while executing the messages in a Mule flow. MuleSoft generates two types of errors, which are <span class="No-Break">described here.</span></p>
+			<h3>System errors</h3>
+			<p>System errors are <a id="_idIndexMarker1377"/>errors that occur at the system level or when a Mule event is not involved. System errors occur during application startup or when listeners cannot connect with the end systems. Such errors are not configurable or handled in the <span class="No-Break">Mule flow.</span></p>
+			<h3>Messaging errors</h3>
+			<p>Messaging errors <a id="_idIndexMarker1378"/>are errors that occur in the Mule flow during Mule events or message processing. Mule provides error components that can be configured in the Mule flow to handle any type of error, or we can rely on the default <span class="No-Break">error-handling mechanism.</span></p>
+			<p>It is recommended<a id="_idIndexMarker1379"/> to use error components (<strong class="source-inline">On Error</strong> components such as <strong class="source-inline">On Error Propagate</strong> and <strong class="source-inline">On Error Continue</strong>) instead of relying on the default <span class="No-Break">error-handling mechanism:</span></p>
+			<ul>
+				<li><strong class="source-inline">On Error Propagate</strong>: Within<a id="_idIndexMarker1380"/> the <strong class="source-inline">On Error Propagate</strong> block, <strong class="source-inline">On Error Propagate</strong> intercepts the error, processes the Mule flow, and returns the error response (status code <strong class="source-inline">500</strong>). The following figure illustrates how <strong class="source-inline">On Error Propagate</strong> works in a <span class="No-Break">Mule flow.</span></li>
+			</ul>
+			<div>
+				<div class="IMG---Figure" id="_idContainer241">
+					<img alt="Figure 18.6: On Error Propagate" src="image/B19922_18_06.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.6: On Error Propagate</p>
+			<ul>
+				<li><strong class="source-inline">On Error Continue</strong>: In <strong class="source-inline">On Error Continue</strong>, the error is caught, the Mule flow<a id="_idIndexMarker1381"/> is processed, and the success response (status code <strong class="source-inline">200</strong>) is returned. The following figure illustrates how <strong class="source-inline">On Error Continue</strong> works in a <span class="No-Break">Mule flow.</span></li>
+			</ul>
+			<div>
+				<div class="IMG---Figure" id="_idContainer242">
+					<img alt="Figure 18.7: On Error Continue" src="image/B19922_18_07.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.7: On Error Continue</p>
+			<ul>
+				<li><strong class="source-inline">Raise Error</strong> is a <a id="_idIndexMarker1382"/>core component that is used to raise errors with a custom description and a custom type in a Mule flow. This component can be used to raise the <span class="No-Break">following errors:</span></li>
+				<li>Core runtime errors, such as <strong class="source-inline">MULE:SECURITY</strong> <span class="No-Break">and </span><span class="No-Break"><strong class="source-inline">MULE:CONNECTIVITY</strong></span></li>
+				<li>Custom <span class="No-Break">error types</span></li>
+			</ul>
+			<p><span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.8</em> illustrates <a id="_idIndexMarker1383"/>how the <strong class="source-inline">Raise Error</strong> component can be configured and works in a <span class="No-Break">Mule flow.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer243">
+					<img alt="Figure 18.8: The Raise Error component" src="image/B19922_18_08.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.8: The Raise Error component</p>
+			<p>The process of managing exceptions and errors that arise during the execution of a Mule application at a central location is <a id="_idIndexMarker1384"/>known as <strong class="bold">global error handling</strong> in MuleSoft. It offers a method <a id="_idIndexMarker1385"/>for reliably capturing and managing errors across various integration flows <span class="No-Break">and components.</span></p>
+			<p>Error handlers, which are unique MuleSoft components that can be set to handle kinds of errors or exceptions, are commonly used to implement global error handling. These error handlers are called whenever an error arises inside the application and are defined at the <span class="No-Break">application level.</span></p>
+			<p>Please visit <a href="https://docs.mulesoft.com/mule-runtime/latest/error-handling">https://docs.mulesoft.com/mule-runtime/latest/error-handling</a> for further information on global <span class="No-Break">error handling.</span></p>
+			<p>As we’ve seen, MuleSoft offers several components to help handle errors in an efficient manner. As a best practice, we should always create a common error-handling framework using components provided by MuleSoft, and this common error-handling framework can be published to Anypoint Exchange and can be reused across multiple <span class="No-Break">Mule applications.</span></p>
+			<h2 id="_idParaDest-483"><a id="_idTextAnchor498"/>Transform Message</h2>
+			<p>The <strong class="source-inline">Transform Message</strong> component <a id="_idIndexMarker1386"/>allows <a id="_idIndexMarker1387"/>you to transform received input data. You can save the transformation explicitly in the DataWeave language or create it through the UI by dragging and <span class="No-Break">dropping elements.</span></p>
+			<p>We have seen MuleSoft’s basic building blocks and error-handling framework for building APIs and integrations. We will examine a few use cases for putting the platform architecture into practice in the <span class="No-Break">following section.</span></p>
+			<h1 id="_idParaDest-484"><a id="_idTextAnchor499"/>Use case 1</h1>
+			<p>J&amp;J Music aims<a id="_idIndexMarker1388"/> to enhance its online visibility by providing users with access to albums, songs, and additional information about the songs, such as song reviews and singers, among other things. Without having to worry about maintaining the infrastructure, they wish to integrate the current music management system on public clouds with CRM programs such as Salesforce. They intend to grow their business in the future, which means there’s a good chance that traffic will rise. As a result, they need a platform that is both highly available <span class="No-Break">and scalable.</span></p>
+			<p>The preceding <a id="_idIndexMarker1389"/>requirements make it clear that J&amp;J Music is searching for vendor-managed deployment options that guarantee scalability and business continuity. They also want to seamlessly integrate with their publicly accessible music management system and Salesforce CRM for customer management. We can use either CloudHub 1.0 or CloudHub 2.0 to accomplish this. What has been added to or improved in CloudHub 2.0 over CloudHub 1.0 has already been covered in an earlier section and in <a href="B19922_10.xhtml#_idTextAnchor228"><span class="No-Break"><em class="italic">Chapter 10</em></span></a><span class="No-Break">.</span></p>
+			<p>We will use CloudHub 1.0 as a MuleSoft application deployment option to carry out the requirement. CloudHub 2.0 can even meet <span class="No-Break">this requirement.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer244">
+					<img alt="Figure 18.9: CloudHub 1.0 implementation" src="image/B19922_18_09.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.9: CloudHub 1.0 implementation</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.9</em>, we can leverage the vanilla CloudHub 1.0 platform features provided by MuleSoft. We don’t need to configure any other extra components and are able to satisfy all the <span class="No-Break">customer requirements.</span></p>
+			<p>J&amp;J Music is extending the business and now they want to host all the APIs under a single domain and need to connect some of the resources located in the corporate data center or resources that are not <span class="No-Break">accessible publicly.</span></p>
+			<p>To achieve the new requirement, we need to configure Anypoint VPC and an Anypoint <strong class="bold">Dedicated Load Balancer</strong> (<strong class="bold">DLB</strong>) to <a id="_idIndexMarker1390"/>host all the APIs under a single domain. There is a need for Anypoint <strong class="bold">Virtual Private Network</strong> (<strong class="bold">VPN</strong>) to <a id="_idIndexMarker1391"/>connect resources located in the corporate data center, so they can be accessed from the application running on CloudHub 1.0. The following figure illustrates how we can leverage the Anypoint VPC, DLB, and VPN with <span class="No-Break">CloudHub 1.0.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer245">
+					<img alt="Figure 18.10: CloudHub 1.0 implementation with Anypoint VPC and VPN" src="image/B19922_18_10.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.10: CloudHub 1.0 implementation with Anypoint VPC and VPN</p>
+			<p>As <a id="_idIndexMarker1392"/>shown in <span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.10</em>, we have configured Anypoint VPC, DLB, and VPN. The DLB will allow the hosting of all the APIs under a single domain and Anypoint VPN will allow connection to the resources located in the corporate <span class="No-Break">data center.</span></p>
+			<p>J&amp;J Music can enable API management capabilities for the APIs running on CloudHub 1.0 as shown in <span class="No-Break"><em class="italic">Figure 18</em></span><span class="No-Break"><em class="italic">.11</em></span><span class="No-Break">.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer246">
+					<img alt="Figure 18.11: CloudHub 1.0 with API management" src="image/B19922_18_11.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.11: CloudHub 1.0 with API management</p>
+			<p>As <a id="_idIndexMarker1393"/>shown in <span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.11</em>, the API manager can be peered with APIs deployed to CloudHub 1.0 using API Autodiscovery. This will allow us to manage and secure <span class="No-Break">the APIs.</span></p>
+			<h1 id="_idParaDest-485"><a id="_idTextAnchor500"/>Use case 2</h1>
+			<p>Java is used to write J&amp;J Music’s APIs, which are hosted on-premises. To protect, manage, discover, and engage with the APIs, they are currently trying to activate API management features on the APIs. Additionally, they intend to gradually move every API to the cloud. MuleSoft is already the platform of choice for them to manage and implement <span class="No-Break">the APIs.</span></p>
+			<p>From the use case, J&amp;J Music wants to use Anypoint Platform to manage non-MuleSoft APIs. They also need to gradually migrate everything <span class="No-Break">to CloudHub.</span></p>
+			<p>There are multiple solutions that can be used to implement this <span class="No-Break">use case.</span></p>
+			<p>Hybrid implementation is an option (the control plane in Anypoint Platform and the runtime plane in the customer <span class="No-Break">data center).</span></p>
+			<p>We must set up an API proxy that will peer with Java APIs to enable API management to manage Java APIs. Although the on-premises Mule runtime will enable this API proxy to operate closer to customer Java APIs, it does not fully satisfy the client’s requirements as the client intends to migrate to the cloud soon. According to J&amp;J Music’s plan to migrate to the cloud, this solution will not be practical in the <span class="No-Break">long run.</span></p>
+			<p>To fully meet J&amp;J Music’s requirements, we have selected CloudHub 2.0 as our hosting solution. To connect the Java APIs running on-premises via an API proxy running on CloudHub 2.0, we will also need to configure the private space on CloudHub 2.0 and the Anypoint VPN. More information regarding CloudHub 2.0 was covered in <a href="B19922_10.xhtml#_idTextAnchor228"><span class="No-Break"><em class="italic">Chapter 10</em></span></a>. This option will be more adaptable and fit the needs and long-term goals of <span class="No-Break">the client.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer247">
+					<img alt="Figure 18.12: CloudHub 2.0 with API proxy" src="image/B19922_18_12.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.12: CloudHub 2.0 with API proxy</p>
+			<p><span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.12</em> shows what J&amp;J Music’s architecture will look like for managing the Java APIs using <span class="No-Break">Anypoint Platform.</span></p>
+			<p class="callout-heading">Note</p>
+			<p class="callout">Like CloudHub 2.0, CloudHub 1.0 can also be utilized in a <span class="No-Break">similar manner.</span></p>
+			<p class="callout">Flex Gateway can be used to manage Java APIs; <a href="B19922_15.xhtml#_idTextAnchor405"><span class="No-Break"><em class="italic">Chapter 15</em></span></a> has more information on Flex Gateway. AWS, Azure, Google, and other cloud platforms can be used to set up <span class="No-Break">Flex Gateway.</span></p>
+			<h1 id="_idParaDest-486"><a id="_idTextAnchor501"/>Use case 3</h1>
+			<p>J&amp;J Music desires to expand its business in a country with stricter laws and compliance requirements. The government of that country made cybersecurity, data protection, and privacy its top priorities through several laws and regulations. The rules of the country state that if you want to do business online, you must host your infrastructure there or use a cloud provider that gives you the option to host infrastructure there. Additionally, your data and metadata are not allowed to leave <span class="No-Break">the country.</span></p>
+			<p>Although MuleSoft’s control plane is situated in the US or the EU, it is not accessible in the country where we wish to grow our business and make our online presence possible. We are unable to manage the API life cycle in this scenario using Anypoint Platform. We must put into practice Anypoint PCE, which can be hosted in that country in a cloud computing environment or in the corporate <span class="No-Break">data center.</span></p>
+			<p>Customer-hosted Anypoint PCE will be used to manage the APIs, and customer-hosted Mule runtime will be used to execute <span class="No-Break">Mule applications.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer248">
+					<img alt="Figure 18.13: Anypoint PCE and customer-hosted Mule runtime" src="image/B19922_18_13.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 18.13: Anypoint PCE and customer-hosted Mule runtime</p>
+			<p><span class="No-Break"><em class="italic">Figure 18</em></span><em class="italic">.13</em> shows that the runtime plane and control plane are hosted in customer infrastructure. This will allow J&amp;J Music to be compliant with the laws and regulations defined by <span class="No-Break">the country.</span></p>
+			<p class="callout-heading">Note</p>
+			<p class="callout">On-premises Mule runtime can be implemented instead <span class="No-Break">of RTF.</span></p>
+			<p class="callout">If the cloud provider permits hosting the necessary infrastructure in that country, the control plane and runtime plane may be <span class="No-Break">hosted there.</span></p>
+			<h1 id="_idParaDest-487"><a id="_idTextAnchor502"/>Summary</h1>
+			<p>In this chapter, we talked about the main components provided by MuleSoft. We have also seen flexible API techniques in the design and development of resilient APIs. Anypoint CLI for managing the MuleSoft platform and APIs was also discussed, including how Anypoint CLI can be integrated with CI/CD for application deployment and automation. We also discussed things to consider when choosing the right deployment option to run a <span class="No-Break">MuleSoft application.</span></p>
+			<p>Thanks for taking the time to read this book. Your attention to this means a lot to me and is very much appreciated. <span class="No-Break">Thank you.</span></p>
+		</div>
+	</body>
+</html>

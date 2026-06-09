@@ -1,0 +1,125 @@
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="p9780138249595" version="3.0" xml:lang="en">
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+<dc:title>Software Architecture and Decision-Making</dc:title>
+<dc:creator>Srinath Perera;</dc:creator>
+<dc:date>2024</dc:date>
+<dc:identifier id="p9780138249595">9780138249595</dc:identifier>
+<dc:format>208 Pages</dc:format>
+<dc:type>Text</dc:type>
+<dc:language>eng</dc:language>
+<dc:rights>Copyright © 2024 Pearson Education, Inc.</dc:rights>
+<dc:publisher>Pearson Education (US)</dc:publisher>
+<meta property="dcterms:modified">2021-08-08T17:09:11Z</meta>
+<meta content="cover-image" name="cover"/>
+</metadata>
+<manifest>
+<item href="toc.ncx" id="ncxtoc" media-type="application/x-dtbncx+xml"/>
+<item href="9780138249595.css" id="css" media-type="text/css"/>
+<item href="graphics/9780138249595.jpg" id="cover-image" media-type="image/jpeg"/>
+<item href="graphics/49595.jpg" id="thumbnail" media-type="image/jpeg"/>
+<item href="nav.xhtml" id="nav" media-type="application/xhtml+xml" properties="nav"/>
+
+<item href="cover.xhtml" id="cover" media-type="application/xhtml+xml"/>
+<item href="pref00.xhtml" id="pref00" media-type="application/xhtml+xml"/>
+<item href="halftitle.xhtml" id="halftitle" media-type="application/xhtml+xml"/>
+<item href="title.xhtml" id="title" media-type="application/xhtml+xml"/>
+<item href="copyright.xhtml" id="copyright" media-type="application/xhtml+xml"/>
+<item href="pref01.xhtml" id="pref01" media-type="application/xhtml+xml"/>
+<item href="ded.xhtml" id="ded" media-type="application/xhtml+xml"/>
+<item href="toc.xhtml" id="toc" media-type="application/xhtml+xml"/>
+<item href="pref02.xhtml" id="pref02" media-type="application/xhtml+xml"/>
+<item href="ch01.xhtml" id="ch01" media-type="application/xhtml+xml"/>
+<item href="ch02.xhtml" id="ch02" media-type="application/xhtml+xml"/>
+<item href="ch03.xhtml" id="ch03" media-type="application/xhtml+xml"/>
+<item href="ch04.xhtml" id="ch04" media-type="application/xhtml+xml"/>
+<item href="ch05.xhtml" id="ch05" media-type="application/xhtml+xml"/>
+<item href="ch06.xhtml" id="ch06" media-type="application/xhtml+xml"/>
+<item href="ch07.xhtml" id="ch07" media-type="application/xhtml+xml"/>
+<item href="ch08.xhtml" id="ch08" media-type="application/xhtml+xml"/>
+<item href="ch09.xhtml" id="ch09" media-type="application/xhtml+xml"/>
+<item href="ch10.xhtml" id="ch10" media-type="application/xhtml+xml"/>
+<item href="ch11.xhtml" id="ch11" media-type="application/xhtml+xml"/>
+<item href="ch12.xhtml" id="ch12" media-type="application/xhtml+xml"/>
+<item href="ch13.xhtml" id="ch13" media-type="application/xhtml+xml"/>
+<item href="index.xhtml" id="index" media-type="application/xhtml+xml"/>
+<item href="bm01.xhtml" id="bm01" media-type="application/xhtml+xml"/>
+<item href="ch04_images.xhtml" id="ch04_images" media-type="application/xhtml+xml"/>
+<item href="ch11_images.xhtml" id="ch11_images" media-type="application/xhtml+xml"/>
+
+<item href="graphics/02fig01.jpg" id="a02fig01" media-type="image/jpeg"/>
+<item href="graphics/02fig02.jpg" id="a02fig02" media-type="image/jpeg"/>
+<item href="graphics/03fig01.jpg" id="a03fig01" media-type="image/jpeg"/>
+<item href="graphics/03fig02.jpg" id="a03fig02" media-type="image/jpeg"/>
+<item href="graphics/03fig03.jpg" id="a03fig03" media-type="image/jpeg"/>
+<item href="graphics/03fig04.jpg" id="a03fig04" media-type="image/jpeg"/>
+<item href="graphics/03fig05.jpg" id="a03fig05" media-type="image/jpeg"/>
+<item href="graphics/03un01.jpg" id="a03un01" media-type="image/jpeg"/>
+<item href="graphics/05fig01.jpg" id="a05fig01" media-type="image/jpeg"/>
+<item href="graphics/05fig02.jpg" id="a05fig02" media-type="image/jpeg"/>
+<item href="graphics/06fig01.jpg" id="a06fig01" media-type="image/jpeg"/>
+<item href="graphics/06fig02.jpg" id="a06fig02" media-type="image/jpeg"/>
+<item href="graphics/07fig01.jpg" id="a07fig01" media-type="image/jpeg"/>
+<item href="graphics/08fig01.jpg" id="a08fig01" media-type="image/jpeg"/>
+<item href="graphics/08fig02.jpg" id="a08fig02" media-type="image/jpeg"/>
+<item href="graphics/08fig03.jpg" id="a08fig03" media-type="image/jpeg"/>
+<item href="graphics/08fig04.jpg" id="a08fig04" media-type="image/jpeg"/>
+<item href="graphics/08fig05.jpg" id="a08fig05" media-type="image/jpeg"/>
+<item href="graphics/09fig01.jpg" id="a09fig01" media-type="image/jpeg"/>
+<item href="graphics/09fig02.jpg" id="a09fig02" media-type="image/jpeg"/>
+<item href="graphics/09fig03.jpg" id="a09fig03" media-type="image/jpeg"/>
+<item href="graphics/09fig04.jpg" id="a09fig04" media-type="image/jpeg"/>
+<item href="graphics/09fig05.jpg" id="a09fig05" media-type="image/jpeg"/>
+<item href="graphics/10fig01.jpg" id="a10fig01" media-type="image/jpeg"/>
+<item href="graphics/10fig02.jpg" id="a10fig02" media-type="image/jpeg"/>
+<item href="graphics/11fig01.jpg" id="a11fig01" media-type="image/jpeg"/>
+<item href="graphics/11fig02.jpg" id="a11fig02" media-type="image/jpeg"/>
+<item href="graphics/11fig03.jpg" id="a11fig03" media-type="image/jpeg"/>
+<item href="graphics/11fig04.jpg" id="a11fig04" media-type="image/jpeg"/>
+<item href="graphics/11fig05.jpg" id="a11fig05" media-type="image/jpeg"/>
+<item href="graphics/11fig06.jpg" id="a11fig06" media-type="image/jpeg"/>
+<item href="graphics/11fig07.jpg" id="a11fig07" media-type="image/jpeg"/>
+<item href="graphics/11fig08.jpg" id="a11fig08" media-type="image/jpeg"/>
+<item href="graphics/12fig01.jpg" id="a12fig01" media-type="image/jpeg"/>
+<item href="graphics/12fig02.jpg" id="a12fig02" media-type="image/jpeg"/>
+<item href="graphics/13fig01.jpg" id="a13fig01" media-type="image/jpeg"/>
+<item href="graphics/bm-01.jpg" id="abm-01" media-type="image/jpeg"/>
+<item href="graphics/e0110-01.jpg" id="ae0110-01" media-type="image/jpeg"/>
+<item href="graphics/f0055-01.jpg" id="af0055-01" media-type="image/jpeg"/>
+<item href="graphics/f0129-01.jpg" id="af0129-01" media-type="image/jpeg"/>
+<item href="graphics/pub.jpg" id="apub" media-type="image/jpeg"/>
+</manifest>
+
+<spine toc="ncxtoc">
+<itemref idref="cover"/>
+<itemref idref="pref00"/>
+<itemref idref="halftitle"/>
+<itemref idref="title"/>
+<itemref idref="copyright"/>
+<itemref idref="pref01"/>
+<itemref idref="ded"/>
+<itemref idref="toc"/>
+<itemref idref="pref02"/>
+<itemref idref="ch01"/>
+<itemref idref="ch02"/>
+<itemref idref="ch03"/>
+<itemref idref="ch04"/>
+<itemref idref="ch05"/>
+<itemref idref="ch06"/>
+<itemref idref="ch07"/>
+<itemref idref="ch08"/>
+<itemref idref="ch09"/>
+<itemref idref="ch10"/>
+<itemref idref="ch11"/>
+<itemref idref="ch12"/>
+<itemref idref="ch13"/>
+<itemref idref="index"/>
+<itemref idref="bm01"/>
+<itemref idref="ch04_images"/>
+<itemref idref="ch11_images"/>
+
+</spine>
+<guide>
+<reference href="pref00.xhtml#pref00" title="Start Here" type="text"/>
+<reference href="toc.xhtml#toc" title="Contents" type="toc"/>
+</guide>
+</package>

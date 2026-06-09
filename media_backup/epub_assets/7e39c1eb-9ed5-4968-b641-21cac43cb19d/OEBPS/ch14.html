@@ -1,0 +1,259 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Framework for Architecture Decision Making</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:0439a25f-2a75-4098-aebb-6db19e715d55" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 14. Framework for Architecture Decision Making" data-type="chapter" epub:type="chapter"><div class="chapter" id="ch14_framework_for_architecture_decision_making_1721833559924176">
+<h1><span class="label">Chapter 14. </span>Framework for Architecture <span class="keep-together">Decision Making</span></h1>
+
+<p>Effective architecture decisions are the heart and center of everything that enterprise architecture does. <a contenteditable="false" data-primary="architecture decisions" data-secondary="framework" data-type="indexterm" id="ix_arcdecfrm"/><a contenteditable="false" data-primary="architecture decision making, framework for" data-type="indexterm" id="ix_arcdecmk"/>After all, what is a strategy or an architecture if not the culmination of several architecture decisions?</p>
+
+<p>It is one thing for one team to make good architecture decisions. It is entirely another thing to accomplish this feat at scale—every team, across every organizational unit, making high-quality, consistent architecture decisions. Check out industry guidance from <a href="https://oreil.ly/RcWHX">AWS</a> and <a href="https://oreil.ly/8hsGx">GCP</a> for more perspectives on why architecture decision records are so important for an enterprise.</p>
+
+<p>To help solve the scaling challenge, this chapter covers a framework that equips decision making with clarity and transparency.</p>
+
+<p>Let’s start with the prerequisites required to apply this framework effectively.</p>
+
+<section data-pdf-bookmark="Building a Foundation for Architecture Decision Making" data-type="sect1"><div class="sect1" id="ch14_building_a_foundation_for_architecture_decision_ma_1721833559924230">
+<h1>Building a Foundation for Architecture Decision Making</h1>
+
+<p>Architecture decision making is a process.<a contenteditable="false" data-primary="architecture decision making, framework for" data-secondary="building a foundation" data-type="indexterm" id="ix_arcdecmkfnd"/> A very important process, but nonetheless, a process. <a contenteditable="false" data-primary="efficiency" data-secondary="process of architecture decision making" data-type="indexterm" id="id1354"/>A process’s efficiency depends on the tools that support it, the sequence and content of process steps, and the people executing it.</p>
+
+<p>Thus, first let’s take a look at the primary tool needed to support the framework for architecture decision making: the architecture decision registry.</p>
+
+<section class="pagebreak-before less_space" data-pdf-bookmark="Providing an Architecture Decision Registry" data-type="sect2"><div class="sect2" id="ch14_providing_an_architecture_decision_registry_1721833559924263">
+<h2>Providing an Architecture Decision Registry</h2>
+
+<p>While making the best choice<a contenteditable="false" data-primary="architecture decision making, framework for" data-secondary="building a foundation" data-tertiary="providing architecture decision registry" data-type="indexterm" id="id1355"/> under the <a contenteditable="false" data-primary="registry of architecture decisions" data-type="indexterm" id="id1356"/>circumstances is front and center in architecture decision making, architecture decisions also provide a historical record of the rationale behind them. This record enables any team member or stakeholder, including new ones, to understand what decisions were made and why. To get the most value out of this record, it is important for enterprise architecture to determine what repository solution fits their user needs the best.</p>
+
+<p>For instance, an organization that is used to software practices may prefer to maintain architecture decision records as markup files stored in the source code repositories, accessible from a developer portal.<a contenteditable="false" data-primary="repository for architecture decisions" data-type="indexterm" id="id1357"/><a contenteditable="false" data-primary="source code repositories, storing architecture decisions in" data-type="indexterm" id="id1358"/> An organization that is used to more traditional documentation may look for a knowledge base or wiki type solution.</p>
+
+<p>The key considerations that factor into the decision of solution selection for a repository include a few that were elaborated in Chapters <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch02.html#ch02_key_strategy_objectives_1721833215734460">2</a> and <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch04.html#ch04_embedded_and_accessible_1721833294242861">4</a> as being necessary for any architecture information:</p>
+
+<dl>
+	<dt>Accessibility</dt>
+	<dd>
+	<p>The repository must be easily available to all the end users that need to interact with the architecture decision record.<a contenteditable="false" data-primary="accessibility" data-secondary="of architecture decision repository" data-secondary-sortas="architecture" data-type="indexterm" id="id1359"/></p>
+	</dd>
+	<dt>Usability</dt>
+	<dd>
+	<p>The repository must be easily searchable for end users to find the specific records that are relevant to them.<a contenteditable="false" data-primary="usability" data-secondary="of architecture decision repository" data-secondary-sortas="architecture" data-type="indexterm" id="id1360"/></p>
+	</dd>
+	<dt>Auditability</dt>
+	<dd>
+	<p>As a historical record, the repository <a contenteditable="false" data-primary="auditability, architecture decision repository" data-type="indexterm" id="id1361"/>must preserve record immutability and provide an auditable record of approvals and timestamps.</p>
+	</dd>
+</dl>
+
+<p>Regardless of the specific solution used for the repository, architecture decision records should be immutable once approved to preserve an accurate historical record. That means that in the scenario that something changed and an architecture decision needs to be revisited, a new record should be created with the original one being preserved and deprecated.</p>
+
+<p>Speaking of creation and deprecation, that brings us to the next prerequisite: the process around lifecycle management.</p>
+</div></section>
+
+<section class="pagebreak-before less_space" data-pdf-bookmark="Managing the Architecture Decision Lifecycle" data-type="sect2"><div class="sect2" id="ch14_managing_the_architecture_decision_lifecycle_1721833559924293">
+<h2>Managing the Architecture Decision Lifecycle</h2>
+
+<p>All architecture information has some sort of lifecycle applied from cradle<a contenteditable="false" data-primary="architecture decision making, framework for" data-secondary="building a foundation" data-tertiary="managing architecture decision lifecycle" data-type="indexterm" id="id1362"/> to grave. <a data-type="xref" href="#ch14_figure_1_1721833559908903">Figure 14-1</a> shows the typical lifecycle of an architecture decision record.</p>
+
+<figure><div class="figure" id="ch14_figure_1_1721833559908903"><img src="assets/foea_1401.png"/>
+<h6><span class="label">Figure 14-1. </span>Lifecycle of an architecture decision record</h6>
+</div></figure>
+
+<p>The first <a contenteditable="false" data-primary="lifecycle of architecture decision records" data-type="indexterm" id="id1363"/>step is simply to start the architecture decision <a contenteditable="false" data-primary="drafts (architecture decision records)" data-type="indexterm" id="id1364"/>record as a <em>draft</em>, preferably using a standard template such as the one provided in <a data-type="xref" href="ch01.html#ch01_key_enterprise_architecture_concepts_1721832912892198">Chapter 1</a>. This is the shortest step, unless there is contention over who owns the decision to begin with.</p>
+
+<p>The second step is <a contenteditable="false" data-primary="in progress (architecture decision records)" data-type="indexterm" id="id1365"/>to move the record to <em>in progress</em>, which means adding to the architecture decision documentation with research, data, and feedback.</p>
+
+<p>There is a feedback loop between this step and the<a contenteditable="false" data-primary="review (architecture decision record)" data-type="indexterm" id="id1366"/> next one of <em>review</em>, due to the need to collaborate and iterate on the record based on input from others. This feedback loop can repeat as often as needed to cycle through all the stakeholders that are needed to consult on the decision.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>It is during this feedback loop that I recommend finding the stakeholders that are most likely to disagree with your recommendation. They are the ones that ultimately strengthen the decision because they allow you to understand their concerns and proactively assuage them or document the concerns as a risk. Getting alignment may require compromise and remembering that no decision is perfect, it just needs to be good enough based on the information that is known at the time that is captured as assumptions and implications. See Chapters <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch02.html#ch02_key_strategy_objectives_1721833215734460">2</a> and <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch03.html#ch03_shared_alignment_1721833262137786">3</a> for more on stakeholder <span class="keep-together">alignment.</span></p>
+</div>
+
+<p>The final<a contenteditable="false" data-primary="approved (architecture decision records)" data-type="indexterm" id="id1367"/> review is conducted by whomever has the authority to <em>approve </em>the decision. After approval, the decision is completed, until the time that something has changed that either invalidates it or requires a new decision. Either way, this decision’s last step is to <em>deprecate</em> in favor of a new decision; in fact, the link to the new one should be documented as well, in order to allow for traceability.<a contenteditable="false" data-primary="deprecated (architecture decision records)" data-type="indexterm" id="id1368"/></p>
+
+<p>The specific nature of who has approval authority and steps of approval depend on the architecture decision workflow, discussed in the next subsection.</p>
+</div></section>
+
+<section data-pdf-bookmark="Defining the Architecture Decision Workflow" data-type="sect2"><div class="sect2" id="ch14_defining_the_architecture_decision_workflow_1721833559924322">
+<h2>Defining the Architecture Decision Workflow</h2>
+
+<p>The architecture decision <em>workflow</em> is what governs the architecture decision-making process.<a contenteditable="false" data-primary="workflow (architecture decisions)" data-type="indexterm" id="id1369"/><a contenteditable="false" data-primary="architecture decision making, framework for" data-secondary="building a foundation" data-tertiary="defining architecture decision workflow" data-type="indexterm" id="id1370"/></p>
+
+<p>Since this process shows what leadership roles were involved, it directly affects how they are perceived and impacts perceptions around autonomy.<a contenteditable="false" data-primary="autonomy and empowerment" data-secondary="decision-making autonomy" data-type="indexterm" id="id1371"/></p>
+
+<p>For instance, an <a contenteditable="false" data-primary="autocratic culture" data-type="indexterm" id="id1372"/>autocratic culture would retain decision-making autonomy only at the most senior levels, resulting in teams needing to wait on others’ directions and acting as directed. In contrast, a culture that is based on empowerment would distribute decision-making autonomy.</p>
+
+<p>Can you guess which cultural philosophy I would prescribe? If you guessed the second one, you are right. I have found that autonomy coupled with right-sized governance works well to encourage the right decisions.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>The architecture decision-making process shines the light of truth on empowerment and autonomy; so, consider carefully what statement your decision workflow makes in terms of who is allowed to decide what.</p>
+</div>
+
+<p>To <a contenteditable="false" data-primary="volume and impact, degrees of architecture decision making based on" data-type="indexterm" id="id1373"/>determine that right-sized governance, it is <a contenteditable="false" data-primary="impact of architecture decisions" data-type="indexterm" id="id1374"/>first necessary to consider that architecture decisions are not homogenous. <a data-type="xref" href="#ch14_figure_2_1721833559908938">Figure 14-2</a> illustrates the degrees of architecture decisions and how they differ.</p>
+
+<figure><div class="figure" id="ch14_figure_2_1721833559908938"><img src="assets/foea_1402.png"/>
+<h6><span class="label">Figure 14-2. </span>Degrees of architecture decision making based on volume and impact</h6>
+</div></figure>
+
+<p>As shown in <a data-type="xref" href="#ch14_figure_2_1721833559908938">Figure 14-2</a>, there are three broad categories of decision <a contenteditable="false" data-primary="decision makers, categories of" data-type="indexterm" id="id1375"/>makers:</p>
+
+<dl>
+	<dt>Team</dt>
+	<dd>
+	<p>This is a <a contenteditable="false" data-primary="teams, volume and impact of decisions made by" data-type="indexterm" id="id1376"/>single project, product, platform, or application team.</p>
+	</dd>
+	<dt>Org unit</dt>
+	<dd>
+	<p>This is an<a contenteditable="false" data-primary="organizational units" data-secondary="volume and impact of decisions made by" data-type="indexterm" id="id1377"/> organizational unit, which may contain many teams.</p>
+	</dd>
+	<dt>Enterprise</dt>
+	<dd>
+	<p>This is the whole organization, which contains all of the organizational units and all of the teams.<a contenteditable="false" data-primary="enterprise, volume and impact of decisions made by" data-type="indexterm" id="id1378"/></p>
+	</dd>
+</dl>
+
+<p>The volume of decisions, indicating frequency and number, is highest at the team level and lowest at the enterprise level. Yet the impact of the decisions made greatly differs. Each decision maker can make a decision that impacts at any broader level.</p>
+
+<p>Teams typically make decisions that only impact themselves. These decisions usually pertain to specific application architecture details such as their high availability deployment architecture or choice of software language. Sometimes, though, their decisions can be more far-reaching. For instance, a team that decided to use an enterprise data warehouse service that pumps it full of data beyond initial projections may very quickly exceed the cost and performance that enterprise service was expecting to deliver. A team that decided to improve their own code quality may influence their org unit to define quality standards for their whole unit.<a contenteditable="false" data-primary="impact of architecture decisions" data-type="indexterm" id="id1379"/></p>
+
+<p>It is the potential impact of the decision that significantly influences the governance process and approval workflow. <a data-type="xref" href="#ch14_figure_3_1721833559908960">Figure 14-3</a> illustrates an architecture decision-making hierarchy that allows for decisions to be made at different levels based on differing impact.</p>
+
+<figure><div class="figure" id="ch14_figure_3_1721833559908960"><img src="assets/foea_1403.png"/>
+<h6><span class="label">Figure 14-3. </span>Hierarchy to support architecture decision making</h6>
+</div></figure>
+
+<p>As shown in <a data-type="xref" href="#ch14_figure_3_1721833559908960">Figure 14-3</a>, the team represents the local level. The team is the smallest atomic unit of decision making. <a contenteditable="false" data-primary="hierarchy supporting architecture decision making" data-type="indexterm" id="id1380"/>Dynamic, ad hoc, cross-functional working groups are a common structure to support multiple kinds of decision-making forums, and they are shown as well.</p>
+
+<p>The middle level is the most nebulous and depends on the specific <a contenteditable="false" data-primary="organizational unit forum" data-type="indexterm" id="id1381"/>organizational details. Essentially, this is where in the simplest form it is the main organizational units, such as lines of business. There may be horizontals at this level that stretch across the organizational unit, such as an architecture team or a somewhat centralized site reliability engineering function.</p>
+
+<p>The enterprise-level <a contenteditable="false" data-primary="enterprise-level forum" data-type="indexterm" id="id1382"/>forum is accountable <a contenteditable="false" data-primary="governance" data-secondary="enterprise architecture governance model with horizontals" data-type="indexterm" id="id1383"/>and responsible for enterprise-impactful decisions, such as a whole new enterprise technology standard.<a contenteditable="false" data-primary="cybersecurity" data-type="indexterm" id="id1384"/> These can also be viewed as horizontals that stretch across all organizational units in terms of their impacts, such as cybersecurity. <a data-type="xref" href="#ch14_figure_4_1721833559908979">Figure 14-4</a> expands on this notion to show how the enterprise architecture governance model needs to include multiple horizontals.</p>
+
+<figure><div class="figure" id="ch14_figure_4_1721833559908979"><img src="assets/foea_1404.png"/>
+<h6><span class="label">Figure 14-4. </span>Enterprise architecture governance model with horizontals</h6>
+</div></figure>
+
+<p>The Other label in <a data-type="xref" href="#ch14_figure_4_1721833559908979">Figure 14-4</a> is a placeholder for whatever other governance forums an organization may have that would need to provide transparency to the enterprise architecture decision-making forums, such as Procurement or Legal.</p>
+
+<p>Each entity in <a data-type="xref" href="#ch14_figure_3_1721833559908960">Figure 14-3</a>’s hierarchy has autonomy to make the decisions that are within their scope and impact. Entities on the left have broader scope and impact than entities on the right. Transparency must occur at all levels such that those on the left understand what decisions are made on the right, and vice versa.</p>
+
+<p>Once impact goes beyond a single entity’s impact, the decision is escalated to the broader entity for decision-making power. <a contenteditable="false" data-primary="impact of architecture decisions" data-secondary="going beyond single entity, escalation of decision" data-type="indexterm" id="id1385"/>For example, say a team or horizontal made a decision to use a new third-party vendor that required a whole new connectivity pattern. That decision would get escalated all the way to the enterprise level to ensure that the pattern is valid. On the other hand, if an organizational unit defined greater rigor around technology standards than the enterprise, that would not need any further escalation.</p>
+
+<p>All of these entities are made up of people who are conducting the architecture decision-making process. These people should be trained, which brings us to the last prerequisite: architecture decision training.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>Avoid prolonged stalemate by ensuring that each forum has a clear charter with an explicit purpose and chair. That allows the forum to be results-driven in making decisions rather than just having a lot of conversations.</p>
+</div>
+</div></section>
+
+<section data-pdf-bookmark="Offering Architecture Decision Training" data-type="sect2"><div class="sect2" id="ch14_offering_architecture_decision_training_1721833559924348">
+<h2>Offering Architecture Decision Training</h2>
+
+<p>Education is a great aid to empowerment and efficiency. <a contenteditable="false" data-primary="empowerment" data-secondary="education as great aid to" data-type="indexterm" id="id1386"/><a contenteditable="false" data-primary="efficiency" data-secondary="education as great aid to" data-type="indexterm" id="id1387"/><a contenteditable="false" data-primary="architecture decision making, framework for" data-secondary="building a foundation" data-tertiary="offering architecture decision training" data-type="indexterm" id="id1388"/><a contenteditable="false" data-primary="training" data-secondary="offering for architecture decisions" data-type="indexterm" id="id1389"/>Targeted training is recommended for roles<a contenteditable="false" data-primary="ECA (enterprise chief architect)" data-type="indexterm" id="id1390"/> like<a contenteditable="false" data-primary="enterprise chief architect (ECA)" data-type="indexterm" id="id1391"/> enterprise<a contenteditable="false" data-primary="DCA (divisional chief architect)" data-type="indexterm" id="id1392"/> chief architect (ECA), divisional<a contenteditable="false" data-primary="divisional chief architect (DCA)" data-type="indexterm" id="id1393"/> chief architect (DCA), solution architect (SA), and <a contenteditable="false" data-primary="application architects" data-type="indexterm" id="id1394"/>application architect (AA).<a contenteditable="false" data-primary="roles (enterprise architecture)" data-secondary="architecture decision-making hierarchy overlaid with" data-type="indexterm" id="id1395"/><a contenteditable="false" data-primary="solution architects" data-type="indexterm" id="id1396"/> These roles are regularly accountable and responsible for making architecture decisions and may also chair the decision-making forums, as shown in <a data-type="xref" href="#ch14_figure_5_1721833559908997">Figure 14-5</a>.</p>
+
+<figure><div class="figure" id="ch14_figure_5_1721833559908997"><img src="assets/foea_1405.png"/>
+<h6><span class="label">Figure 14-5. </span>Architecture decision-making hierarchy overlaid with specific architecture roles</h6>
+</div></figure>
+
+<p>In <a data-type="xref" href="#ch14_figure_5_1721833559908997">Figure 14-5</a>’s example, the ECA chairs the enterprise-level architecture forum, which includes representation from DCAs and also should include representation from other horizontal groups as illustrated in <a data-type="xref" href="#ch14_figure_4_1721833559908979">Figure 14-4</a>. Each DCA chairs a forum for their own organizational unit. SAs could then chair forums as needed for horizontals related to their architecture domain. Although a team doesn’t formally have a chair, <a data-type="xref" href="#ch14_figure_5_1721833559908997">Figure 14-5</a> shows the AA in that role to note that the AA is accountable for architecture decisions at this level, working in partnership with the team.<a contenteditable="false" data-primary="AAs" data-see="application architects" data-type="indexterm" id="id1397"/><a contenteditable="false" data-primary="SAs" data-see="solution architects" data-type="indexterm" id="id1398"/></p>
+
+<p>Depending on the nature of the forum, partners from business/product and technology groups would be included as stakeholders.<a contenteditable="false" data-primary="stakeholders" data-secondary="included in architecture decision forums" data-type="indexterm" id="id1399"/> The charter for the forum can further elaborate on the roles and responsibilities supporting that forum. In addition, there should be targeted training for partners who need to be involved both in making the decision and in executing against that decision. This training should be part of onboarding for those roles, or if there is no role-based training, part of general onboarding.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>Consider tailoring terms from architecture decisions to the broader technology decisions to appeal to business/product and technology partners in the training.</p>
+</div>
+
+<p>The enterprise architecture function should provide targeted training for all roles to effectively use these forums to identify impactful decisions that need escalation and to make decisions within their own purview. Training should also cover how to use the architecture decision template and repository, along with best <a contenteditable="false" data-primary="nonfunctional requirements (NFRs)" data-secondary="for architecture decisions" data-secondary-sortas="architecture" data-type="indexterm" id="id1400"/>practices to include considering nonfunctional requirements (NFRs) for a given decision type. (See <a data-type="xref" href="ch05.html#ch05_enable_and_enforce_1721833327743655">Chapter 5</a> for more details regarding NFRs in decision making.)</p>
+
+<p>With the prerequisites of tooling (accessible and usable repository), process (lightweight lifecycle and governance), and people (training) realized to build a solid foundation for architecture decision making, we are now ready to discuss the actual framework.<a contenteditable="false" data-primary="architecture decision making, framework for" data-secondary="building a foundation" data-startref="ix_arcdecmkfnd" data-type="indexterm" id="id1401"/></p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Framework for Architecture Decision Making" data-type="sect1"><div class="sect1" id="ch14_framework_for_architecture_decision_making_1721833559924378">
+<h1>Framework for Architecture Decision Making</h1>
+
+<p>The desired outcome<a contenteditable="false" data-primary="architecture decision making, framework for" data-secondary="phases in the framework" data-type="indexterm" id="id1402"/> of this framework is to scale throughout the entire enterprise to produce consistent, high-quality, transparent decisions.</p>
+
+<p>As illustrated in <a data-type="xref" href="#ch14_figure_6_1721833559909015">Figure 14-6</a>, this framework includes three phases that overlap and relate to each other in a continuous, integrated feedback loop:</p>
+
+<ol>
+	<li>
+	<p>Satisfy <a contenteditable="false" data-primary="prerequisites, satisfying in architecture decision-making framework" data-type="indexterm" id="id1403"/>prerequisites</p>
+	</li>
+	<li>
+	<p>Monitor execution</p>
+	</li>
+	<li>
+	<p>Evolve and enhance</p>
+	</li>
+</ol>
+
+<figure><div class="figure" id="ch14_figure_6_1721833559909015"><img src="assets/foea_1406.png"/>
+<h6><span class="label">Figure 14-6. </span>Architecture decision-making framework</h6>
+</div></figure>
+
+<p>The first step, satisfying prerequisites, was elaborated upon earlier in this chapter. So let’s move on to the second step: monitor execution.</p>
+
+<section data-pdf-bookmark="Monitor Execution" data-type="sect2"><div class="sect2" id="ch14_monitor_execution_1721833559924405">
+<h2>Monitor Execution</h2>
+
+<p>Each of the <a contenteditable="false" data-primary="architecture decision making, framework for" data-secondary="monitoring execution" data-type="indexterm" id="id1404"/>prerequisites needs to be monitored to ensure it’s effective. For instance:</p>
+
+<dl>
+	<dt>Architecture decision repository</dt>
+	<dd>
+	<p>Is the repository being<a contenteditable="false" data-primary="repository for architecture decisions" data-secondary="monitoring execution of" data-type="indexterm" id="id1405"/> used as intended, or are there grassroots alternatives being used to store decision records? Are users happy to use it?</p>
+	</dd>
+	<dt>Architecture decision lifecycle and workflow</dt>
+	<dd>
+	<p>What is the duration<a contenteditable="false" data-primary="lifecycle of architecture decision records" data-secondary="monitoring execution of" data-type="indexterm" id="id1406"/> of each stage—are there any bottlenecks? Are the feedback loops working as intended?</p>
+	</dd>
+	<dt>Architecture decision training</dt>
+	<dd>
+	<p>Is there coverage <a contenteditable="false" data-primary="training" data-secondary="offering for architecture decisions" data-tertiary="monitoring execution of" data-type="indexterm" id="id1407"/>for all roles involved in the decision-making processes? Are any refreshers needed?</p>
+	</dd>
+</dl>
+
+<p>In addition to monitoring the processes of making architecture decisions, you also need to monitor the effect of those architecture decisions once implemented. <a data-type="xref" href="#ch14_figure_7_1721833559909031">Figure 14-7</a> pictures the process associated with monitoring implementation.</p>
+
+<figure><div class="figure" id="ch14_figure_7_1721833559909031"><img src="assets/foea_1407.png"/>
+<h6><span class="label">Figure 14-7. </span>Monitoring implementation of architecture decisions</h6>
+</div></figure>
+
+<p>As shown in <a data-type="xref" href="#ch14_figure_7_1721833559909031">Figure 14-7</a>, once a decision is made, a change or many changes are implemented as a result of that decision. Once these changes are completed, alignment to the original decision needs to be validated, and a quick postmortem should be conducted to review the efficacy of the decision. Was it spot on? If not, why not?</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>Celebrate successes and treat failures as learning or growth opportunities.</p>
+</div>
+
+<p>Architecture fitness functions, defined by <a class="orm:hideurl" href="https://oreil.ly/EhLQA"><em>Building Evolutionary Architectures</em></a> by Neal Ford et al. (O’Reilly, 2017), have gained traction in recent years as a way to measure and validate alignment. <a contenteditable="false" data-primary="architecture fitness functions" data-type="indexterm" id="id1408"/>For instance, say you’re looking at an application architecture decision on solution selection for the database, because you were solving for specific data access, consistency, availability, and performance requirements. Once that database is implemented, over time you should be able to get measurements on its usage to validate whether or not it is meeting the requirements as intended.</p>
+
+<p>All of the insights gleaned from monitoring execution are input into the overarching phase of evolve and enhance, discussed next.</p>
+</div></section>
+
+<section data-pdf-bookmark="Evolve and Enhance" data-type="sect2"><div class="sect2" id="ch14_evolve_and_enhance_1721833559924430">
+<h2>Evolve and Enhance</h2>
+
+<p>Having devoted <a data-type="xref" href="ch11.html#ch11_evolution_over_frameworks_1721833492590746">Chapter 11</a> to evolution, it should come as no surprise that I have <a contenteditable="false" data-primary="architecture decision making, framework for" data-secondary="evolve and enhance" data-type="indexterm" id="id1409"/>found the ability<a contenteditable="false" data-primary="evolve and enhance (architecture decision-making framework)" data-type="indexterm" id="id1410"/> to evolve and enhance to be crucial to effective scaling in architecture decision-making practices. It takes time, repetition, and incentives to create new habits, and instilling architecture decision-making practices is no different.</p>
+
+<p>Any insights gleaned from monitoring execution should be fed right back into continuous improvement and the strategic OKRs that become a blueprint for effective enterprise architecture in your organization. In addition, these insights can be leveraged into the communication and marketing arm of enterprise architecture to provide customer-centric transparency.</p>
+
+<p>For instance, enterprise architecture tends to walk a fine line between bureaucracy and value-add. <a contenteditable="false" data-primary="bureaucracy and value-add, enterprise architecture walking fine line between" data-type="indexterm" id="id1411"/>Despite best intentions at establishing lightweight governance, imagine that the monitoring reveals that there are bottlenecks based on how a certain decision-making process is being run. Control the message and perception around this pain point to either acknowledge the pain point and show that it will be resolved, or explain why the pain point is necessary due to the risks involved that require such rigor.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Summary" data-type="sect1"><div class="sect1" id="ch14_summary_1721833559924454">
+<h1>Summary</h1>
+
+<p>When enterprise architecture flourishes, it enables great architecture decisions to be made. This means great architecture decisions that clear the way toward a grand future, a future that is defined by a clear and cogent architecture strategy that marries business goals with technology. And great decisions that meet business goals, make customers happy, reduce risk, proactively drive innovation, and bring people together to work toward shared outcomes.</p>
+
+<p>Architecture decision-making practices get better over time through practice and refinement. Do it, and do it again, and do it better than the time before. This chapter covered the prerequisites needed to build a solid foundation for architecture decision making through proper tools such as an architecture decision repository, streamlined processes around decision lifecycle management and right-sized governance, and strengthening people through training.</p>
+
+<p>Satisfying prerequisites was the first step in the framework for architecture decision making covered in this chapter. The second step was to monitor execution, both of the prerequisites and of the decisions themselves, as they undergo implementation. The third and final step was to evolve and enhance, in the spirit of continuous improvement, using the data-driven insights gleaned from monitoring execution.</p>
+
+<p>This was the last framework in this book. This book has aimed to provide you with the ability to establish an effective enterprise architecture practice, which is essential for a modern organization to thrive using technology to meet business outcomes. While it is my sincere hope that this book has provided helpful frameworks and guidance, effective enterprise architecture is not possible without strong enterprise architecture leadership and unyielding commitment from the senior leadership team to support enterprise architecture.<a contenteditable="false" data-primary="value of enterprise architecture" data-type="indexterm" id="id1412"/></p>
+
+<p>I can’t say this enough: enterprise architecture, being an enterprise-wide phenomenon, needs the backing of the enterprise, and an influential leader, to be successful. Apathy to enterprise architecture is destructive and must be countered with demonstrated value. Value is both tangible and intangible.</p>
+
+<p>The tangible piece is measurement and relevancy, which is why <a data-type="xref" href="ch01.html#ch01_key_enterprise_architecture_concepts_1721832912892198">Chapter 1</a> started with the value proposition using business terms, and <a data-type="xref" href="ch02.html#ch02_key_strategy_objectives_1721833215734460">Chapter 2</a> emphasized metrics. Know your <em>why</em> to inform your <em>what</em> and <em>how</em>, which takes the form of the strategy to establish enterprise architecture, first introduced in <a data-type="xref" href="ch02.html#ch02_key_strategy_objectives_1721833215734460">Chapter 2</a>, expanded in Chapters <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch03.html#ch03_shared_alignment_1721833262137786">3</a> through <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch06.html#ch06_proactive_and_reactive_1721833354118730">6</a>, and presented as a framework in <a data-type="xref" href="ch13.html#ch13_framework_to_define_enterprise_architecture_strate_1721833538401258">Chapter 13</a>. Inform your strategy through an assessment, as covered in <a data-type="xref" href="ch12.html#ch12_assessment_framework_1721833515685938">Chapter 12</a>.</p>
+
+<p>The intangible pieces of value in this context are perception and caring. Use the principles first introduced in <a data-type="xref" href="ch07.html#ch07_a_very_short_manifesto_for_effective_enterprise_ar_1721833382163372">Chapter 7</a> and elaborated upon in Chapters <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch08.html#ch08_contextual_understanding_over_siloed_decision_maki_1721833411109253">8</a> through <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch11.html#ch11_evolution_over_frameworks_1721833492590746">11</a> to establish a culture that values architecture and the architects who perform <span class="keep-together">architecture.</span></p>
+
+<p>It is this value that I prize so highly that I now leave you with. Value architecture. Value the practice, and more importantly, value the people.<a contenteditable="false" data-primary="architecture decision making, framework for" data-startref="ix_arcdecmk" data-type="indexterm" id="id1413"/><a contenteditable="false" data-primary="architecture decisions" data-secondary="framework" data-startref="ix_arcdecfrm" data-type="indexterm" id="id1414"/></p>
+</div></section>
+</div></section></body></html>

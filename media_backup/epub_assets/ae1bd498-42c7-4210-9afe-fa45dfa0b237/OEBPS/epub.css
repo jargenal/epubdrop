@@ -1,0 +1,287 @@
+body, td, th, div {
+	font-family: sans-serif;
+}
+
+body { 
+	font-weight: normal;
+}
+
+td, th {
+}
+
+p.paragraph_style {
+	margin: 10px;
+	line-height: 15px;
+        margin-left:-40px;
+        padding-left: 40px;
+        font-weight: normal;
+}
+a.paragraph_style {
+        font-weight: normal;
+}
+
+h2.paragraph_style {
+	margin: 10px;
+        z-index: 10000;
+	line-height: 15px;
+        margin-left:-40px;
+        padding-left: 40px;
+}
+
+h3.paragraph_style {
+	margin: 10px;
+        z-index: 10000;
+	line-height: 15px;
+        margin-left:-40px;
+        padding-left: 40px;
+}
+
+div.book_content {
+}
+
+#book-contents p {
+	z-index:100;
+}
+
+p {
+        z-index: 100;
+        margin-left:-40px;
+        padding-left: 40px;
+}
+
+li {
+	margin-left: 25px;
+}
+
+#page { 
+        padding: 15px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-bottom: 6px;
+	font-weight: bold;
+	clear: both;
+}
+
+p {
+	margin-bottom: 6px;
+	clear: both;
+}
+
+h1 {
+}	
+h2 {
+	color: rgb(255, 155, 47);
+}	
+h3 {
+	margin: 14px 0px 6px 0px;
+}	
+
+h4 {
+}
+
+
+div.informalfigure {
+	margin: 10px auto 10px auto;
+}
+
+div.informalfigure table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+span.bold, strong {
+	font-weight: bold;	
+}
+
+div.informaltable {
+	border-top: 0px;
+	border-bottom: 0px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-left: 0px;
+	border-right: 0px;
+	border-style: solid;
+	border-color: black;
+}
+
+div.informaltable table {
+	width:100%;
+	table-layout: fixed;
+	margin: 2em 0em;
+}
+
+div.toc {
+	display: none;
+}
+
+div.informaltable table {
+	border-width: 0px 1px 0px 1px;
+	border-spacing: 0px;
+	border-style: solid;
+	border-color: black black black black;
+	border-collapse: collapse;
+	background-color: white;
+}
+div.informaltable table th {
+	border-width: 1px 1px 1px 1px;
+	padding: 3px 3px 3px 3px;
+	border-style: solid solid solid solid;
+	border-color: black black black black;
+	background-color: white;
+}
+div.informaltable table td {
+	border-width: 1px 1px 1px 1px;
+	padding: 3px 3px 3px 3px;
+	border-style: solid solid solid solid;
+	border-color: black black black black;
+	background-color: white;
+}
+
+.book_title a {
+	color: black;
+}
+
+.author_name {
+	font-style: italic;
+}
+
+.mediaobject table {
+	margin: 0.5em 0px 1em 0px;
+}
+
+pre.programlisting {
+	color: blue;
+	clear: both;
+	display: block;
+	margin: 0.5em 2em; 
+	padding: 0.5em 2em;
+}
+pre.programlisting span.bold {
+	font-weight: bold;
+}
+
+code.literal {
+	color: blue;
+}
+
+div.mediaobject {
+	margin: 2em 0em;
+}
+
+div.note div.mediaobject {
+	margin: 0;
+}
+
+div.note p {
+	clear: none;
+}
+
+.packt {
+	background-image: url('/images/packt_icon.png');
+}
+
+div.section .title {
+	color: rgb(255, 155, 47);
+	font-weight: bold;
+}
+div.section div.section .title {
+	color: green;
+	font-weight: bold;
+}
+div.section div.section div.section .title {
+	color: green;
+	font-weight: bold;
+}
+div.section div.section div.section div.section .title {
+	color: green;
+	font-weight: bold;
+}
+div.section div.section div.section div.section div.section .title {
+	color: green;
+	font-weight: bold;
+}
+div.section div.section div.section div.section div.section div.section .title {
+	color: green;
+	font-weight: bold;
+}
+
+div.caption {
+	text-align: center;
+	margin-top: 2em;
+	margin-bottom: 1em;
+}
+
+div.preface p span.bold {
+	display: block;
+}
+
+div.preface pre span.bold {
+	display: inline;
+}
+
+div.preface div.section p span.bold {
+	display: inline;
+}
+
+div.section pre.programlisting span.bold {
+	float: left;
+	clear: left;
+}
+
+div.preface div.titlepage h2.title {
+	text-align: left;               /* should be center */
+}
+
+div.note {
+	border: 1px solid #999;
+	margin: 2em 0em;
+	padding: 1em 1em 1em 1em;
+}
+
+div.note div.mediaobject {
+	width: 80px;
+}
+
+ul, ol {
+	margin: 1em 0em;
+}
+
+div.blockquote blockquote {
+	text-align: center;
+	font-style: italic;
+	margin: 2em 0em;
+}
+
+div.mediaobject table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+pre.programlisting span.bold {
+	float: none;
+}
+
+div.note h3 {
+	display: none;
+}
+
+em {
+	font-style: italic;
+}
+
+div.x-form-element {
+	padding-bottom: 2px;
+}
+
+.w175 {
+	width: 175px;
+}
+
+div.sidebar {    
+        clear: both;
+        margin: 10px;
+        padding: 3px 10px 3px 10px;
+        border: 1px solid black;
+}
+

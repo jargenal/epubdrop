@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Question Everything</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 7. Question Everything" data-type="chapter" epub:type="chapter"><div class="chapter" id="QuestionEverything">
+<h1><span class="label">Chapter 7. </span>Question Everything</h1>
+
+
+<p class="subtitle"><em>Wer Nicht Fragt, Bleibt Dumm!</em></p>
+
+<figure class="informal"><div class="figure" id="Question_Everything">
+<img alt="The architect riddler" src="assets/SAEch_007.png"/>
+<h6>The architect riddler</h6>
+</div></figure>
+
+<p>It’s<a data-primary="software architects" data-secondary="ability to question everything" data-type="indexterm" id="SAquestion07"/><a data-primary="chief architects" data-secondary="asking the right questions" data-type="indexterm" id="CAquestion07"/> a common misconception that chief architects know everything better
+than “normal” architects—why else would they be the “chief”? Such
+thinking is actually pretty far from the truth. Hence, I often introduce
+myself as a person who knows the right questions to ask. Wrangling one
+more reference from the movie <em>The Matrix</em>, visiting the chief architect
+is a bit like visiting the Oracle: you won’t get a straight answer, but
+you will hear what you need to hear.</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Five Whys" data-type="sect1"><div class="sect1" id="idm45952855554232">
+<h1>Five Whys</h1>
+
+<p>Asking<a data-primary="five whys technique" data-type="indexterm" id="idm45952855552936"/><a data-primary="decision making" data-secondary="five whys approach to" data-type="indexterm" id="idm45952855552264"/><a data-primary="why, why analysis" data-type="indexterm" id="idm45952855551320"/> questions isn’t a new technique and has been widely publicized in
+the “five whys” approach devised by Sakichi Toyoda as part of the
+<a href="https://oreil.ly/h_aFt">Toyota Production System</a>. It’s a technique to get to the root cause of an
+issue by repeatedly asking why something happened. If your car doesn’t
+start, you should keep asking “why” to find out the starter doesn’t
+turn because the battery is dead because you left the lights on because
+the beeper that warns you of parking with your lights on didn’t sound
+because of an electronics problem. So, before you jump-start the
+car, you should fix the electronics to keep the problem from happening
+again. In Japanese the method is called <em>naze-naze-bunseki</em>
+(なぜなぜ分析), which roughly translates into
+“why, why analysis.” I therefore consider the “five whys” more of a guideline to not give up too early—you surely didn’t cheat if you identified the actual root cause with just four whys.</p>
+
+<p>The technique can be quite useful but requires discipline because
+people can be tempted to inject their own preferred solutions or
+assumptions into their answers. I have seen people conducting<a data-primary="root-cause analysis" data-type="indexterm" id="idm45952855547816"/> root-cause
+analysis on production outages repeatedly answer the second or third
+question with “because we don’t have sufficient monitoring” and the
+next one with “because we don’t have enough budget.” The equivalent
+answer from the car example would be “because the car is old.” That’s
+not root-cause analysis but opportunism or <em>excuse-ism</em>, a word that
+made it into the <a href="https://oreil.ly/CVz6U">Urban Dictionary</a>, but not yet into <em>Merriam-Webster</em>.</p>
+
+<p>Repeatedly asking questions can annoy people a bit, so it’s good
+to have the reference to the Toyota Production System handy to highlight
+that this is a widely adopted and useful technique and not you just
+being difficult. It’s also helpful to remind your counterparts that you
+are not challenging their work or competence, but that your job requires
+you to understand systems and problems in detail so that you can spot
+potential gaps or misalignments.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Whys Reveal Decisions and Assumptions" data-type="sect1"><div class="sect1" id="idm45952855543800">
+<h1>Whys Reveal Decisions and Assumptions</h1>
+
+<p>When<a data-primary="decision making" data-secondary="revealing assumptions and principles leading to" data-type="indexterm" id="idm45952855542488"/><a data-primary="assumptions" data-secondary="uncovering" data-type="indexterm" id="idm45952855541512"/><a data-primary="architecture reviews" data-type="indexterm" id="idm45952855540568"/> conducting architecture reviews, “why” is a useful question because it
+helps <em>draw attention to the decisions</em> (<a data-type="xref" href="ch08.html#IsThisArchitecture">Chapter 8</a>) that
+were made as well as the assumptions and principles that led to those
+decisions. Too often, results are presented as “god-given” facts that
+“fell from the sky” or wherever you believe the all-deciding divine
+creator (the <em>real</em> chief architect!) resides. Uncovering the assumptions
+that led to a decision can provide much insight and increase the value
+of an architecture review. An architecture review is not only looking to
+<span class="keep-together">validate</span> the results but also the thinking and decisions behind it all. To
+<span class="keep-together">emphasize</span> this fact one should request an architecture decision record<sup><a data-type="noteref" href="ch07.html#idm45952855536088" id="idm45952855536088-marker">1</a></sup> from any team submitting an architecture for review.</p>
+
+<p>Unstated assumptions can be the root of much evil if the environment has
+changed since the assumptions were made. For example, traditional IT
+shops often write elaborate graphical configuration tools that could be
+replaced with a few lines of code and a standard software development
+tool chain. Their decisions are based on the assumption that writing
+code is slow and error prone, which no longer holds universally true as
+we learn once we overcome our <em>fear of code</em> (<a data-type="xref" href="ch11.html#ConfigureThis">Chapter 11</a>). If
+you want to change the behavior of the organization, you often need to
+<em>identify and overcome outdated assumptions first</em> (<a data-type="xref" href="ch26.html#ReverseEngineering">Chapter 26</a>).</p>
+
+<p>Coming back to <em>The Matrix</em>, the explanation given by the Oracle—“You didn’t come here to make the choice, you’ve already made it. You’re here to try to understand <em>why</em> you made it”—could make a somewhat dramatic but very appropriate opening to an architecture review.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="A Workshop for Every Question" data-type="sect1"><div class="sect1" id="idm45952855528920">
+<h1>A Workshop for Every Question</h1>
+
+<p>A clear and present danger of asking questions in large organizations
+lies in the fact that people often don’t know, can’t express, or are
+unwilling to give the answer. Their counterproposal is usually to hold
+a meeting, most likely a very long one, which is labeled as
+“workshop,” with the purported goal of sharing and documenting the
+answer. In the actual workshop, though, it frequently turns out that the
+answer is unknown, leaving you with the job of answering your own
+questions. The team might also bring external support to defend against
+you asking too many undesired questions.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Asking questions in traditional organizations might not get you insights but defensiveness to cover up the lack of decision discipline.</p>
+</div>
+
+<p>Soon, your calendar will be full of workshop invitations, allowing teams
+to blame you for being the bottleneck that slows their progress because
+you aren’t available for their important meetings. And they aren’t even
+lying! Such organizational behavior is an example of <em>systems resisting change</em> (<a data-type="xref" href="ch10.html#Systems">Chapter 10</a>).</p>
+
+<p>If your goal is to not just review architecture proposals but also to
+change the behavior of the organization, you need to take up this
+challenge and change the system. For example, you can redefine the
+expectations for architecture documentation and obtain management buy-in
+for doing so; for example, to increase transparency. If satisfactory
+documentation isn’t produced before the meeting, the workshop must be
+canceled. If teams are unable to produce such <span class="keep-together">documentation,</span> you can
+offer them architects who perform this task on a project basis. The
+actual workshop becomes more effective when you moderate and work off a
+list of concrete questions. Cutting the scheduled time in half brings
+additional focus.</p>
+
+<p>On the upside, running architecture documentation workshops and <em>sketching bank robbers</em> (<a data-type="xref" href="ch24.html#DrawingBankRobbers">Chapter 24</a>) can give you an
+invaluable set of system documentation that you can later use as a
+reference. This effort requires <em>good writing skills</em> (<a data-type="xref" href="ch18.html#ExplainingStuff">Chapter 18</a>) and adequate staffing,
+which you can obtain only by taking the <em>architect elevator</em> (<a data-type="xref" href="ch01.html#ArchitectElevator">Chapter 1</a>) to the upper floors and
+clearly articulating the value of documenting system architectures. For
+example, such documents could allow faster staff ramp-up, reveal
+architectural inconsistencies, and allow rational, fact-based decision
+making, which in turn supports evolution toward a harmonized IT
+landscape. In top-down organizations, sometimes you need to lob things to
+the top so they can trickle back down.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="No Free Pass" data-type="sect1"><div class="sect1" id="idm45952855516440">
+<h1>No Free Pass</h1>
+
+<p>Occasionally, teams that are sent into architecture review would like to
+just obtain a “rubber stamp” for what they have done, and they aren’t
+excited about you asking any questions at all. These are often the same
+candidates who answer the “why” questions with “because we have no
+time” after they purposefully waited until the very last minute. For
+such cases, I have a stated principle of, “You can avoid my review, but
+you cannot get a free pass.” If management decides that no architecture
+review is needed because it doesn’t see architecture as a first-class
+citizen, I’d rather avoid the review altogether than hold a show trial.</p>
+
+<p>I see this as in line with my professional reputation: be tough but
+fair <span class="keep-together">and make</span> tasty hamburgers out of holy cows. My boss once summarized this <span class="keep-together">in a nice</span> compliment: she stated that she likes to have the architecture team <span class="keep-together">involved</span> because, “we have nothing to sell, no one can fool us, and we take the time to explain things well.” This would make a nice mandate for any architecture team.</p>
+
+<p>If you’re wondering about the meaning of the German subtitle of this <span class="keep-together">chapter,</span> it’s from the title song of the German version of <em>Sesame Street</em>, which <span class="keep-together">rhymes nicely</span> and goes "<em>Wieso, weshalb, warum, wer nicht fragt, bleibt dumm!</em>,” <span class="keep-together">which literally</span> translates into “why? who doesn’t ask, remains stupid!” Don’t remain stupid!<a data-primary="" data-startref="SAquestion07" data-type="indexterm" id="idm45952855508104"/><a data-primary="" data-startref="CAquestion07" data-type="indexterm" id="idm45952855507160"/></p>
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="idm45952855536088"><sup><a href="ch07.html#idm45952855536088-marker">1</a></sup> Michael Nygard, “Documenting Architecture Decisions,” Relevance, Nov. 15, 2011, <a href="https://oreil.ly/1sniB"><em class="hyperlink">https://oreil.ly/1sniB</em></a>.</p></div></div></section></body></html>

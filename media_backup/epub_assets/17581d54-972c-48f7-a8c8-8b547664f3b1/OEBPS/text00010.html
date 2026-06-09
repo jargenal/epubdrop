@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Distributed Data</title>
+<link rel="stylesheet" type="text/css" href="flow0001.css" />
+</head>
+<body data-type="book">
+<div data-type="part" data-pdf-bookmark="Part II. Distributed Data" id="part_distributed_data">
+<h1>
+<span class="label">Part II.</span>
+ Distributed Data</h1>
+<div class="partintro">
+<blockquote data-type="epigraph">
+<div>For a successful technology, reality must take precedence over public relations, for nature cannot be fooled.</div>
+<div data-type="attribution">Richard Feynman, <em>Rogers Commission Report</em>
+ (1986)</div>
+</blockquote>
+<p>In <a data-type="xref" href="text00005.html#part_foundations">Part I</a>
+ of this book, we discussed aspects of data systems that apply when data is stored on a single machine. Now, in <a data-type="xref" href="text00010.html#part_distributed_data">Part II</a>
+ , we move up a level and ask: what happens if multiple machines are involved in storage and retrieval of data?</p>
+<p><a data-type="indexterm" data-primary="distributed systems" data-secondary="reasons for using" id="idm140060722137040"></a>
+ <a data-type="indexterm" data-primary="replication" data-secondary="reasons for using" id="idm140060722135936"></a>
+ There are various reasons why you might want to distribute a database across multiple machines:</p>
+<div class="variable_list_term">Scalability</div>
+<blockquote class="variable_list_definition">
+<div>If your data volume, read load, or write load grows bigger than a single machine can handle, you can potentially spread the load across multiple machines.</div>
+</blockquote>
+<div class="variable_list_term">Fault tolerance/high availability</div>
+<blockquote class="variable_list_definition">
+<div>If your application needs to continue working even if one machine (or several machines, or the network, or an entire datacenter) goes down, you can use multiple machines to give you redundancy. When one fails, another one can take over.</div>
+</blockquote>
+<div class="variable_list_term">Latency</div>
+<blockquote class="variable_list_definition">
+<div><a data-type="indexterm" data-primary="geographically distributed datacenters" id="idm140060722130128"></a>
+ <a data-type="indexterm" data-primary="datacenters" data-secondary="geographically distributed" id="idm140060722129328"></a>
+ If you have users around the world, you might want to have servers at various locations worldwide so that each user can be served from a datacenter that is geographically close to them. That avoids the users having to wait for network packets to travel halfway around the world.</div>
+</blockquote>
+<div>
+<h1>Scaling to Higher Load</h1>
+<p><a data-type="indexterm" data-primary="scalability" data-secondary="scaling up versus scaling out" id="idm140060722126224"></a>
+ <a data-type="indexterm" data-primary="scaling up" id="idm140060722125120"></a>
+ <a data-type="indexterm" data-primary="shared-nothing architecture" data-seealso="replication" id="ix_sharednothing"></a>
+ <a data-type="indexterm" data-primary="shared-memory architecture" id="idm140060722122944"></a>
+ If all you need is to scale to higher load, the simplest approach is to buy a more powerful machine (sometimes called <em>vertical scaling</em>
+ or <em>scaling up</em>
+ ). Many CPUs, many RAM chips, and many disks can be joined together under one operating system, and a fast interconnect allows any CPU to access any part of the memory or disk. In this kind of <em>shared-memory architecture</em>
+ , all the components can be treated as a single machine [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Drepper2007wb_pt2-marker" href="text00010.html#Drepper2007wb_pt2">1</a>
+ ].<sup xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook">
+<a data-type="noteref" id="idm140060722118384-marker" href="text00010.html#idm140060722118384">i</a>
+</sup>
+</p>
+<p>The problem with a shared-memory approach is that the cost grows faster than linearly: a machine with twice as many CPUs, twice as much RAM, and twice as much disk capacity as another typically costs significantly more than twice as much. And due to bottlenecks, a machine twice the size cannot necessarily handle twice the load.</p>
+<p>A shared-memory architecture may offer limited fault tolerance — high-end machines have hot-swappable components (you can replace disks, memory modules, and even CPUs without shutting down the machines) — but it is definitely limited to a single geographic location.</p>
+<p><a data-type="indexterm" data-primary="shared-disk architecture" id="idm140060722113888"></a>
+ <a data-type="indexterm" data-primary="Network Attached Storage (NAS)" id="idm140060722113056"></a>
+ <a data-type="indexterm" data-primary="Storage Area Network (SAN)" id="idm140060722112208"></a>
+ Another approach is the <em>shared-disk architecture</em>
+ , which uses several machines with independent CPUs and RAM, but stores data on an array of disks that is shared between the machines, which are connected via a fast network.<sup xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook">
+<a data-type="noteref" id="idm140060722110736-marker" href="text00010.html#idm140060722110736">ii</a>
+</sup>
+ This architecture is used for some data warehousing workloads, but contention and the overhead of locking limit the scalability of the shared-disk approach [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Stopford2009wv-marker" href="text00010.html#Stopford2009wv">2</a>
+ ].</p>
+<div>
+<h2>Shared-Nothing Architectures</h2>
+<p><a data-type="indexterm" data-primary="scaling out" id="idm140060722105232"></a>
+ By contrast, <em>shared-nothing architectures</em>
+ [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="Stonebraker1986tq-marker" href="text00010.html#Stonebraker1986tq">3</a>
+ ] (sometimes called <em>horizontal scaling</em>
+ or <em>scaling out</em>
+ ) have gained a lot of popularity. In this approach, each machine or virtual machine running the database software is called a <em>node</em>
+ . Each node uses its CPUs, RAM, and disks independently. Any coordination between nodes is done at the software level, using a conventional network.</p>
+<p><a data-type="indexterm" data-primary="cloud computing" id="idm140060722099984"></a>
+ <a data-type="indexterm" data-primary="virtual machines" data-seealso="cloud computing" id="idm140060722099152"></a>
+ No special hardware is required by a shared-nothing system, so you can use whatever machines have the best price/performance ratio. You can potentially distribute data across multiple geographic regions, and thus reduce latency for users and potentially be able to survive the loss of an entire datacenter. With cloud deployments of virtual machines, you don’t need to be operating at Google scale: even for small companies, a multi-region distributed architecture is now feasible.</p>
+<p>In this part of the book, we focus on shared-nothing architectures — not because they are necessarily the best choice for every use case, but rather because they require the most caution from you, the application developer. If your data is distributed across multiple nodes, you need to be aware of the constraints and trade-offs that occur in such a distributed system — the database cannot magically hide these from you.</p>
+<p>While a distributed shared-nothing architecture has many advantages, it usually also incurs additional complexity for applications and sometimes limits the expressiveness of the data models you can use. In some cases, a simple single-threaded program can perform significantly better than a cluster with over 100 CPU cores [<a xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="noteref" id="McSherry2015vx_pt2-marker" href="text00010.html#McSherry2015vx_pt2">4</a>
+ ]. On the other hand, shared-nothing systems can be very powerful. The next few chapters go into details on the issues that arise when data is distributed. <a data-type="indexterm" data-primary="shared-nothing architecture" data-startref="ix_sharednothing" id="idm140060722093584"></a>
+</p>
+</div>
+<div>
+<h2>Replication Versus Partitioning</h2>
+<p><a data-type="indexterm" data-primary="replication" data-secondary="partitioning and" id="idm140060722091072"></a>
+ <a data-type="indexterm" data-primary="partitioning" data-secondary="replication and" id="idm140060722089936"></a>
+ There are two common ways data is distributed across multiple nodes:</p>
+<div class="variable_list_term">Replication</div>
+<blockquote class="variable_list_definition">
+<div>Keeping a copy of the same data on several different nodes, potentially in different locations. Replication provides redundancy: if some nodes are unavailable, the data can still be served from the remaining nodes. Replication can also help improve performance. We discuss replication in <a data-type="xref" href="text00011.html#ch_replication">Chapter 5</a>
+ .</div>
+</blockquote>
+<div class="variable_list_term">Partitioning</div>
+<blockquote class="variable_list_definition">
+<div>Splitting a big database into smaller subsets called <em>partitions</em>
+ so that different partitions can be assigned to different nodes (also known as <em>sharding</em>
+ ). We discuss partitioning in <a data-type="xref" href="text00012.html#ch_partitioning">Chapter 6</a>
+ .</div>
+</blockquote>
+<p>These are separate mechanisms, but they often go hand in hand, as illustrated in <a data-type="xref" href="text00010.html#fig_replication_partitioning">Figure II-1</a>
+ .</p>
+<figure>
+<div id="fig_replication_partitioning" class="figure"><img src="Image00040.gif" alt="ddia 08" hisrc="assets/ddia_08.png" />
+<h6>
+<span class="label">Figure II-1.</span>
+ A database split into two partitions, with two replicas per partition.</h6>
+</div>
+</figure>
+<p>With an understanding of those concepts, we can discuss the difficult trade-offs that you need to make in a distributed system. We’ll discuss <em>transactions</em>
+ in <a data-type="xref" href="text00013.html#ch_transactions">Chapter 7</a>
+ , as that will help you understand all the many things that can go wrong in a data system, and what you can do about them. We’ll conclude this part of the book by discussing the fundamental limitations of distributed systems in Chapters <a data-type="xref" data-xrefstyle="select:labelnumber" href="text00014.html#ch_distributed">8</a>
+ and <a data-type="xref" data-xrefstyle="select:labelnumber" href="text00015.html#ch_consistency">9</a>
+ .</p>
+<p>Later, in <a data-type="xref" href="text00016.html#part_systems">Part III</a>
+ of this book, we will discuss how you can take several (potentially distributed) datastores and integrate them into a larger system, satisfying the needs of a complex application. But first, let’s talk about distributed data.</p>
+</div>
+</div>
+</div>
+<div data-type="footnotes">
+<h5>Footnotes</h5>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="idm140060722118384">
+<sup>
+<a href="text00010.html#idm140060722118384-marker">i</a>
+</sup>
+ In a large machine, although any CPU can access any part of memory, some banks of memory are closer to one CPU than to others (this is called <em>nonuniform memory access</em>
+ , or NUMA [<a data-type="noteref" href="text00010.html#Drepper2007wb_pt2">1</a>
+ ]). To make efficient use of this architecture, the processing needs to be broken down so that each CPU mostly accesses memory that is nearby — which means that partitioning is still required, even when ostensibly running on one machine.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="idm140060722110736">
+<sup>
+<a href="text00010.html#idm140060722110736-marker">ii</a>
+</sup>
+ <em>Network Attached Storage</em>
+ (NAS) or <em>Storage Area Network</em>
+ (SAN).</p>
+</div>
+<div data-type="references">
+<h5>References</h5>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Drepper2007wb_pt2">[<a href="text00010.html#Drepper2007wb_pt2-marker">1</a>
+ ] Ulrich Drepper: “<a href="http://www.akkadia.org/drepper/cpumemory.pdf">What Every Programmer Should Know About Memory</a>
+ ,” <em>akkadia.org</em>
+ , November 21, 2007.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Stopford2009wv">[<a href="text00010.html#Stopford2009wv-marker">2</a>
+ ] Ben Stopford: “<a href="http://www.benstopford.com/2009/11/24/understanding-the-shared-nothing-architecture/">Shared Nothing vs. Shared Disk Architectures: An Independent View</a>
+ ,” <em>benstopford.com</em>
+ , November 24, 2009.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="Stonebraker1986tq">[<a href="text00010.html#Stonebraker1986tq-marker">3</a>
+ ] Michael Stonebraker: “<a href="http://db.cs.berkeley.edu/papers/hpts85-nothing.pdf">The Case for Shared Nothing</a>
+ ,” <em>IEEE Database Engineering Bulletin</em>
+ , volume 9, number 1, pages 4–9, March 1986.</p>
+<p xmlns:htmlbook="https://github.com/oreillymedia/HTMLBook" data-type="footnote" id="McSherry2015vx_pt2">[<a href="text00010.html#McSherry2015vx_pt2-marker">4</a>
+ ] Frank McSherry, Michael Isard, and Derek G. Murray: “<a href="http://www.frankmcsherry.org/assets/COST.pdf">Scalability! But at What COST?</a>
+ ,” at <em>15th USENIX Workshop on Hot Topics in Operating Systems</em>
+ (HotOS), May 2015.</p>
+</div>
+</div>
+</body>
+</html>

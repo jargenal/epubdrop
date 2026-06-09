@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos827825" class="calibre_2"><span class="calibre2"><span class="bold">Registries</span></span></p><p class="calibre_1">A container registry is simply a public or private area for the storage, and serving, of pre-built containers. <a></a>There are many options for a registry that can be used, and all the major cloud vendors have a hosted version of registries that can be made private for a specific organization. <a></a>In addition, there are many public hosted registries, such as the Docker Hub registry, that holds publicly available pre-built container files that have lots of common configurations ready to use. <a></a>Depending on the needs of an organization, any of these would work. <a></a>However, once the learning phase is completed, it's recommended that hosted private registries are always used. <a></a>In addition to being much more secure for private container images, if hosted in the cloud environment, this also provides close proximity to the orchestration service for a faster deployment pipeline.</p><p class="calibre_1">Registries play a critical role in the CI/CD pipelines that will be used for deployment of applications. <a></a>We have a simple pipeline where the developer checks code into the repository of choice (in this case, a GIT repository). <a></a>That push triggers a build using Jenkins, which will build the container, test the newly formed container using predefined scripts, and push that container to the registry service. <a></a>Once in the registry, the orchestration tool will trigger a pull from the registry that will take the new container and perform an update or deploy. <a></a>There are a few ways to achieve the final deployment: either a rolling update for zero downtime or a new deployment following the configuration requirements.</p><div class="mbp_pagebreak" id="calibre_pb_229"></div>
+</body></html>

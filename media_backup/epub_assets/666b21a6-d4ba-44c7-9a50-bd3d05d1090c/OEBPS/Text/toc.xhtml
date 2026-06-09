@@ -1,0 +1,889 @@
+<html lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>Solutions Architect’s Handbook_Third Edition</title>
+<!-- kobo-style -->
+
+</head>
+<body>
+<nav epub:type="toc" id="toc">
+<h2>Contents</h2>
+<ol>
+<li style="list-style-type: none;"><a href="Preface.xhtml#_idParaDest-6">Preface</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Preface.xhtml#_idParaDest-7">Who this book is for</a></li>
+<li style="list-style-type: none;"><a href="Preface.xhtml#_idParaDest-8">What this book covers</a></li>
+<li style="list-style-type: none;"><a href="Preface.xhtml#_idParaDest-9">To get the most out of this book</a>
+</li>
+<li style="list-style-type: none;"><a href="Preface.xhtml#_idParaDest-12">Get in touch</a></li>
+</ol>
+</li>
+<li value="1"><a href="Chapter_1.xhtml#_idParaDest-15">Solutions Architects in Organizations</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-16">What is solution architecture?</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-17">The benefits of solution architecture</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-18">The solutions architect’s role</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-19">Generalist solutions architect roles</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-20">Enterprise solutions architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-21">Application Architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-22">Cloud Architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-23">Architect Evangelist</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-24">Specialist solutions architect roles</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-25">Infrastructure Architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-26">Network Architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-27">Data Architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-28">ML Architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-29">GenAI architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-30">Security Architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-31">DevOps architect</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-32">Industry Architect</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-33">Understanding a solutions architect’s responsibilities</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-34">Analyze functional requirements (FRs)</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-35">Define NFRs</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-36">Understand and engage stakeholders</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-37">Understand architecture constraints</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-38">Make technology selections</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-39">Develop a POC and prototype</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-40">Solution design and delivery</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-41">Ensuring post-launch operability and maintenance</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-42">Solution scaling and technology evangelism</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-43">Solutions architect in an Agile organization</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-44">Common challenges in the solutions architect role</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-45">Career path and skill development for solutions architects</a></li>
+<li style="list-style-type: none;"><a href="Chapter_1.xhtml#_idParaDest-46">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_2.xhtml#_idParaDest-48">Principles of Solution Architecture Design</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-49">Building scalable architecture design</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-50">Scaling static content</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-51">Session management for application server scaling</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-52">Database scaling</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-53">Building elastic architecture</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-54">Building a highly available and resilient architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-55">Highly available architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-56">Resilient architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-57">Achieving redundancy</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-58">Addressing component failure</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-59">Making your architecture fault-tolerant </a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-60">Designing for performance</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-61">Creating immutable architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-62">Think loose coupling</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-63">Think service, not server</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-64">Think data-driven design</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-65">Adding security everywhere</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-66">Making applications usable and accessible</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-67">Achieving usability</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-68">Achieving accessibility</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-69">Building future-proof extendable and reusable architecture </a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-70">Ensuring architectural interoperability and portability</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-71">Making applications interoperable</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-72">Making applications portable</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-73">Applying automation everywhere</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-74">Plan for business continuity</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-75">Design for operation</a></li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-76">Overcoming architectural constraints</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-77">Taking the MVP approach</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_2.xhtml#_idParaDest-78">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_3.xhtml#_idParaDest-80">Cloud Migration and Cloud Architecture Design</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-81">Public, private, and hybrid clouds</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-82">Solution architecture in the public cloud</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-83">Public cloud architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-84">Popular public cloud providers</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-85">Cloud-native architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-86">Designing cloud-native architecture</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-87">Creating a cloud migration strategy</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-88">Lift and shift migration</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-89">Rehost</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-90">Replatform</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-91">Relocate</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-92">The cloud-native approach</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-93">Refactor</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-94">Repurchase</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-95">Retain or retire</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-96">Retain</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-97">Retire</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-98">Choosing a cloud migration strategy</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-99">Steps for cloud migration</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-100">Discovering your portfolio and workloads</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-101">Analyzing the information</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-102">Creating a migration plan</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-103">Designing the application</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-104">Executing application migration to the cloud</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-105">Data migration</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-106">Server migration</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-107">Integrating, validating, and cutover</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-108">Validation</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-109">Integration</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-110">The cutover process</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-111">Operating the cloud application</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-112">Application optimization in the cloud</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-113">Creating a hybrid cloud architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-114">Taking a multi-cloud approach</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-115">Implementing CloudOps</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-116">CloudOps pillars</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-117">Summary</a></li>
+<li style="list-style-type: none;"><a href="Chapter_3.xhtml#_idParaDest-118">Further reading</a></li>
+</ol>
+</li>
+<li><a href="Chapter_4.xhtml#_idParaDest-120">Solution Architecture Design Patterns</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-121">Building an n-tier layered architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-122">The web layer</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-123">The application layer</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-124">The database layer</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-125">Creating a multi-tenant SaaS-based architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-126">Understanding service-oriented architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-127">RESTful web service architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-128">Building a RESTful-architecture-based e-commerce website</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-129">Building a cache-based architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-130">Cache distribution pattern in a three-tier web architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-131">Rename distribution pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-132">Cache proxy pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-133">Rewrite proxy pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-134">App caching pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-135">Memcached versus Redis</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-136">Model-View-Controller (MVC) architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-137">Applying MVC to design an online bookstore </a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-138">Building Domain-Driven Design (DDD)</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-139">Understanding the circuit breaker pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-140">Implementing the bulkhead pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-141">Creating a floating IP pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-142">Deploying an application with a container</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-143">The benefit of containers</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-144">Container deployment</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-145">Building container-based architecture</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-146">Database handling in application architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-147">High-availability database pattern</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-148">Clean Architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-149">Avoiding anti-patterns in solution architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_4.xhtml#_idParaDest-150">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_5.xhtml#_idParaDest-152">Cloud-Native Architecture Design Patterns</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-153">What is cloud-native architecture?</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-154">Building serverless architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-155">Considerations for serverless architecture</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-156">Building stateless and stateful architectural designs</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-157">Stateful architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-158">Stateless architecture</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-159">Creating a microservice architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-160">Saga pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-161">Fan-out/fan-in pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-162">Service mesh pattern</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-163">Reactive architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-164">Building queue-based architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-165">Queuing chain pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-166">Job observer pattern</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-167">Pipes-and-Filters Architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-168">Creating Event-Driven Architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-169">Publisher/subscriber model</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-170">Event stream model</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-171">Backend for Frontend pattern</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-172">Cloud-native architecture anti-patterns</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-173">Single point of failure</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-174">Manual scaling</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-175">Tightly coupled services</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-176">Ignoring security best practices</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-177">Not monitoring or logging</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-178">Ignoring network latency</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-179">Lack of testing</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-180">Over-optimization</a></li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-181">Not considering costs</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_5.xhtml#_idParaDest-182">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_6.xhtml#_idParaDest-184">Performance Considerations</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-185">Design principles for high-performance architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-186">Reducing latency</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-187">Improving throughput</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-188">Handling concurrency</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-189">Applying caching</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-190">Technology selection for performance optimization</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-191">Making a computational choice</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-192">Working with containers</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-193">Going serverless</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-194">Making a storage choice</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-195">Working with block storage and storage area network</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-196">Working with file storage and network area storage</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-197">Working with object storage and cloud data storage</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-198">Storage for databases</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-199">Making a database choice</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-200">Online transactional processing</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-201">Nonrelational databases</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-202">Online analytical processing</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-203">Building a data search functionality</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-204">Improving network performance</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-205">Using edge computing</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-206">Defining a DNS routing strategy</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-207">Applying a load balancer</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-208">Applying auto-scaling</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-209">Performance considerations for mobile applications</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-210">Optimization of load times</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-211">Efficient use of resources</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-212">Responsive user interface (UI)</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-213">Network efficiency</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-214">Battery consumption</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-215">Cross-platform compatibility</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-216">User experience (UX) design</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-217">Effective data management</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-218">Testing and quality assurance</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-219">Performance testing</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-220">Types of performance testing</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-221">Managing performance monitoring</a></li>
+<li style="list-style-type: none;"><a href="Chapter_6.xhtml#_idParaDest-222">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_7.xhtml#_idParaDest-224">Security Considerations</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-225">Design principles for architectural security</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-226">Implementing authentication and authorization control</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-227">Applying security everywhere</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-228">Reducing the blast radius</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-229">Monitoring and auditing everything all the time</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-230">Automating everything</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-231">Protecting data</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-232">Responding to security incidents</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-233">Selecting technology for architectural security</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-234">User identity and access management</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-235">Federated identity management and single sign-on</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-236">Kerberos</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-237">Microsoft Active Directory</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-238">Security Assertion Markup Language</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-239">OAuth</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-240">JWT</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-241">Handling web security</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-242">Cyberattacks</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-243">Web security mitigation</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-244">Securing an application and its infrastructure</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-245">Application and operating system hardening</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-246">Software vulnerability mitigation and secure code</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-247">Network security</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-248">Intrusion detection system and intrusion prevention system</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-249">Data security</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-250">Data classification</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-251">Data encryption at rest</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-252">Data encryption in transit</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-253">Securing APIs</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-254">Security and compliance certifications</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-255">The cloud’s shared security responsibility model</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-256">Securing threat modeling</a></li>
+<li style="list-style-type: none;"><a href="Chapter_7.xhtml#_idParaDest-257">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_8.xhtml#_idParaDest-259">Architectural Reliability Considerations</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-260">Design principles for architectural reliability</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-261">Making systems self-healing by applying automation</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-262">Quality assurance</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-263">Creating a distributed system</a></li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-264">Monitoring and adding capacity</a></li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-265">Performing recovery validation</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-266">Technology selection for architectural reliability</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-267">Planning the RPO and RTO</a></li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-268">Replicating data</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-269">Synchronous versus asynchronous replication</a></li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-270">Replication methods</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-271">Planning disaster recovery</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-272">Backup and restore</a></li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-273">Pilot light</a></li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-274">Warm standby</a></li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-275">Multi-site</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-276">Applying best practices for DR</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-277">Improving reliability with the cloud</a></li>
+<li style="list-style-type: none;"><a href="Chapter_8.xhtml#_idParaDest-278">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_9.xhtml#_idParaDest-280">Operational Excellence Considerations</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-281">Design principles for operational excellence</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-282">Automating manual tasks</a></li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-283">Making incremental and reversible changes</a></li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-284">Predicting failures and responding</a></li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-285">Learning from mistakes and refining</a></li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-286">Keeping the operational runbook updated</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-287">Selecting technologies for operational excellence</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-288">Planning for operational excellence</a></li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-289">IT asset management</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-290">Configuration management</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-291">The functioning of operational excellence</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-292">Monitoring system health</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-293">Improving operational excellence</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-294">IT operations analytics</a></li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-295">Root Cause Analysis</a></li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-296">Auditing and reporting</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-297">Achieving operational excellence in the public cloud</a></li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-298">Driving efficiency with CloudOps</a></li>
+<li style="list-style-type: none;"><a href="Chapter_9.xhtml#_idParaDest-299">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_10.xhtml#_idParaDest-301">Cost Considerations</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-302">Design principles for cost optimization</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-303">Calculating the total cost of ownership</a></li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-304">Planning the budget and forecast</a></li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-305">Managing demand and service catalogs</a></li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-306">Keeping track of expenditure</a></li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-307">Continuous cost optimization</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-308">Understanding techniques for cost optimization</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-309">Reducing architectural complexity</a></li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-310">Increasing IT efficiency</a></li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-311">Applying standardization and governance</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-312">Resource cost tagging</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-313">Monitoring cost usage and reports</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-314">Driving cost optimization in the public cloud</a></li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-315">Green IT and its influence on cost considerations</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-316">Cost-effective and green application hosting on AWS</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_10.xhtml#_idParaDest-317">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_11.xhtml#_idParaDest-319">DevOps and Solution Architecture Framework</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-320">Introducing DevOps</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-321">Understanding the benefits of DevOps</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-322">Understanding the components of DevOps</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-323">Continuous integration/Continuous deployment</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-324">Continuous monitoring and improvement</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-325">Infrastructure as code</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-326">Configuration management</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-327">Introducing DevSecOps for Security</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-328">Combining DevSecOps and CI/CD</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-329">Implementing a CD strategy</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-330">In-place deployment</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-331">Rolling deployment</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-332">Blue-green deployment</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-333">Red-black deployment</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-334">Immutable deployment</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-335">Best practices for choosing the right deployment strategy</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-336">Implementing continuous testing in the CI/CD pipeline</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-337">A/B testing</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-338">Using DevOps tools for CI/CD</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-339">Code editor</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-340">Source code management</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-341">CI server</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-342">Code deployment</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-343">Code pipeline</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-344">Implementing DevOps best practices</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-345">Building DevOps and DevSecOps in the cloud</a></li>
+<li style="list-style-type: none;"><a href="Chapter_11.xhtml#_idParaDest-346">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_12.xhtml#_idParaDest-348">Data Engineering for Solution Architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-349">What is big data architecture?</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-350">Designing big data processing pipelines</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-351">Data ingestion, storage, processing, and analytics</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-352">Data ingestion</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-353">Technology choices for data ingestion</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-354">Ingesting data to the cloud</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-355">Storing data</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-356">Technology choices for data storage</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-357">Structured data stores</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-358">NoSQL databases</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-359">Search data stores</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-360">Unstructured data stores</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-361">Object storage</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-362">Vector Database (VectorDB)</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-363">Blockchain data stores</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-364">Streaming data stores</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-365">Data storage in the cloud</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-366">Processing data and performing analytics</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-367">Technology choices for data processing and analysis</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-368">Data processing in the cloud</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-369">Visualizing data</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-370">Technology choices for data visualization</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-371">Designing big data architectures</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-372">Data lake architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-373">Lakehouse architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-374">Data mesh architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-375">Streaming data architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-376">Choosing the right big data architecture </a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-377">Big data architecture best practices</a></li>
+<li style="list-style-type: none;"><a href="Chapter_12.xhtml#_idParaDest-378">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_13.xhtml#_idParaDest-380">Machine Learning Architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-381">What is machine learning?</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-382">Types of machine learning</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-383">Supervised learning</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-384">Unsupervised learning</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-385">Semi-supervised learning</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-386">Reinforcement learning</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-387">Self-supervised learning</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-388">Multi-instance learning</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-389">Working with data science and machine learning</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-390">Evaluating ML models—overfitting versus underfitting</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-391">Popular machine learning algorithms</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-392">Linear regression</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-393">Logistic regression</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-394">Decision trees</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-395">Random forests</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-396">K-Nearest Neighbours (k-NNs)</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-397">Support vector machines (SVMs)</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-398">Neural networks</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-399">K-means clustering</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-400">XGBoost</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-401">Popular machine learning tools and frameworks</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-402">Machine learning in the cloud</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-403">Building machine learning architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-404">Prepare and label</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-405">Select and build</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-406">Train and tune</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-407">Deploy and manage</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-408">ML reference architecture</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-409">Design principles for machine learning architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-410">Organizing the machine learning system into modules</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-411">Ensuring scalability</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-412">Ensuring reproducibility</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-413">Implementing data quality assurance</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-414">Ensuring flexibility</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-415">Ensuring robustness and reliability</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-416">Ensuring privacy and security</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-417">Ensuring efficiency</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-418">Ensuring interpretability</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-419">Implementing real-time capability</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-420">Ensuring fault tolerance</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-421">MLOps</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-422">MLOps principles</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-423">MLOps best practices</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-424">Deep learning</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-425">Deep learning in the real world</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-426">Healthcare: diagnosis and prognosis</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-427">Autonomous vehicles: navigation and safety</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-428">Manufacturing: quality control and predictive maintenance</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-429">NLP</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-430">Chatbots and virtual assistants</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-431">Sentiment analysis</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-432">Text summarization</a></li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-433">Machine translation</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_13.xhtml#_idParaDest-434">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_14.xhtml#_idParaDest-436">Generative AI Architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-437">What is generative AI?</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-438">Generative AI use cases</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-439">Customer experience transformation</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-440">Employee productivity enhancement</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-441">Optimizing business operations</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-442">The basic architecture of generative AI systems</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-443">Types of generative models</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-444">Generative Adversarial Networks (GANs)</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-445">Variational Autoencoders (VAEs)</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-446">Transformer-based generative models</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-447">Other important generative models</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-448">Importance of hyperparameter tuning and regularization in architectures</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-449">Hyperparameter tuning</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-450">Regularization</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-451">Popular generative AI FMs </a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-452">How to start with generative AI </a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-453">For end users</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-454">For builders</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-455">Using generative AI FMs in your applications with public cloud providers</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-456">Choosing the right FM</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-457">Preventing model hallucinations</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-458">Generative AI reference architecture for building a mortgage assistant app </a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-459">Challenges in implementing generative AI</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-460">Training stability issues</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-461">Mode collapse</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-462">Latent space interpolation challenges</a></li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-463">Ethical concerns and misuse</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_14.xhtml#_idParaDest-464">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_15.xhtml#_idParaDest-466">Rearchitecting Legacy Systems</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-467">Learning the challenges of legacy systems</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-468">Difficulty in keeping up with user demand</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-469">Higher cost of maintenance and updates</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-470">Shortage of skills and documentation</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-471">Vulnerability to corporate security issues</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-472">Incompatibility with other systems</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-473">Defining a strategy for system modernization</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-474">Assessment of a legacy application</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-475">Defining the modernization approach</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-476">Benefits of system modernization</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-477">Looking at legacy system modernization techniques</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-478">Encapsulation, rehosting, and replatforming</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-479">Refactoring and rearchitecting</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-480">Redesigning and replacing</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-481">Defining a cloud migration strategy for legacy systems</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-482">Documentation and support</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-483">Mainframe migration with the public cloud</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-484">Challenges of mainframe modernization</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-485">Migrating standalone applications</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-486">Migrating applications with shared code</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-487">Application decoupling using a standalone API</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-488">Application decoupling using a shared library</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-489">Application decoupling using message queues</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-490">Benefits of using the public cloud for mainframe modernization</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-491">Modernizing legacy code with generative AI</a></li>
+<li style="list-style-type: none;"><a href="Chapter_15.xhtml#_idParaDest-492">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_16.xhtml#_idParaDest-494">Solution Architecture Document</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-495">Purpose of the SAD</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-496">Views of the SAD</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-497">Structure of the SAD</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-498">Solution overview</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-499">Business context</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-500">Conceptual solution overview</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-501">Solution architecture</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-502">Information architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-503">Application architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-504">Data architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-505">Integration architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-506">Infrastructure architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-507">Security architecture</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-508">Solution implementation</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-509">Solution management</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-510">Appendix</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-511">Life cycle of the SAD</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-512">SAD best practices and common pitfalls</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-513">IT procurement documentation for a solution architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_16.xhtml#_idParaDest-514">Summary</a></li>
+</ol>
+</li>
+<li><a href="Chapter_17.xhtml#_idParaDest-516">Learning Soft Skills to Become a Better Solutions Architect</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-517">Importance of soft skills in solution architecture</a></li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-518">Acquiring pre-sales skills</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-519">Key skills</a></li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-520">Presenting to C-level executives</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-521">Taking ownership and accountability</a>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-522">Defining strategy execution with OKRs</a></li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-523">Thinking big</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-524">Being flexible and adaptable</a></li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-525">Design thinking</a></li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-526">Being a builder by engaging in coding hands-on</a></li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-527">Becoming better with continuous learning</a></li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-528">Being a mentor to others</a></li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-529">Becoming a technology evangelist and thought leader</a></li>
+<li style="list-style-type: none;"><a href="Chapter_17.xhtml#_idParaDest-530">Summary</a></li>
+</ol>
+</li>
+<li style="list-style-type: none;"><a href="Other_Books_You_May_Enjoy.xhtml#_idParaDest-533">Other Books You May Enjoy</a>
+</li>
+<li style="list-style-type: none;"><a href="Index.xhtml#_idParaDest-536">Index</a>
+</li>
+</ol>
+</nav>
+<nav epub:type="landmarks" hidden="" id="landmarks">
+<h1>Landmarks</h1>
+<ol style="list-style-type: none;">
+<li style="list-style-type: none;">
+<a epub:type="cover" href="cover.xhtml">Cover</a>
+</li>
+<li style="list-style-type: none;">
+<a epub:type="index" href="Index.xhtml#_idContainer267">Index</a>
+</li>
+</ol>
+</nav>
+</body>
+</html>

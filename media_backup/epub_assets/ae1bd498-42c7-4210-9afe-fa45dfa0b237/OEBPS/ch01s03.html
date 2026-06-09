@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Defining a folder structure for the OSB project</title><link rel="stylesheet" href="epub.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"/></head><body id="page"><div class="section" title="Defining a folder structure for the OSB project"><div class="titlepage"><div><div><h1 class="title"><a id="ch01lvl1sec03"/>Defining a folder structure for the OSB project</h1></div></div></div><p>After creating the empty OSB project, we will prepare a folder structure to be used to organize the project. OSB allows you to use folders to build-up a project structure which helps to better find the various artifacts inside the OSB project.<a id="id6" class="indexterm"/>
+</p><div class="section" title="Getting ready"><div class="titlepage"><div><div><h2 class="title"><a id="ch01lvl2sec05"/>Getting ready</h2></div></div></div><p>Make sure that the empty OSB project&#x2014;<code class="literal">basic-osb-service</code> from the previous recipe is available in the Eclipse OEPE. Also make sure that the<span class="strong"><strong> Oracle Service Bus perspective</strong></span> is active in Eclipse. The active perspective can be identified in the upper-right corner of the Eclipse window:<a id="id7" class="indexterm"/>
+</p><div class="mediaobject"><img src="graphics/4446_01_03.jpg" alt="Getting ready"/></div><p>To switch to another perspective, click on the<span class="strong"><strong> Window</strong></span> menu, select<span class="strong"><strong> Open Perspective</strong></span> |<span class="strong"><strong> Other</strong></span> and then select the<span class="strong"><strong> Oracle Service Bus</strong></span> in the list of perspectives.</p><p>If after a while a certain perspective gets messed up and some windows or views are missing, then the perspective can always be reset to the factory settings by clicking on the menu<span class="strong"><strong> Window</strong></span> |<span class="strong"><strong> Reset Perspective</strong></span> and then confirming the dialog with the<span class="strong"><strong> OK</strong></span> button.</p></div><div class="section" title="How to do it..."><div class="titlepage"><div><div><h2 class="title"><a id="ch01lvl2sec06"/>How to do it...</h2></div></div></div><p>In Eclipse OEPE, perform the following steps:<a id="id8" class="indexterm"/>
+</p><div class="orderedlist"><ol class="orderedlist"><li class="listitem">Right click on the<span class="strong"><strong> basic-osb-service</strong></span> project and select<span class="strong"><strong> New</strong></span> |<span class="strong"><strong> Folder</strong></span>.</li><li class="listitem">Enter<code class="literal"> proxy</code> in the<span class="strong"><strong> Folder name</strong></span> field:<div class="mediaobject"><img src="graphics/4446_01_04.jpg" alt="How to do it..."/></div></li><li class="listitem">Repeat these two steps for the folders<code class="literal"> business, wsdl, xsd</code>, and<code class="literal"> transformation</code>. These are the most common folders and they altogether form the basic OSB project structure used in this book.<a id="id9" class="indexterm"/></li></ol></div></div><div class="section" title="How it works..."><div class="titlepage"><div><div><h2 class="title"><a id="ch01lvl2sec07"/>How it works...</h2></div></div></div><p>Folders help to structure the projects and by that organize the different artifacts that we will create later. The folder structure will also be visible after the deployment of a project in the OSB console. So at runtime, if someone (that is, the administrator) needs to navigate to a certain artifact through the console, a clever folder structure can make life much easier.<a id="id10" class="indexterm"/>
+</p><p>The meaning of the folder structure that we will use in this book is listed in the following table:</p><div class="informaltable"><table border="1"><colgroup><col style="text-align: left"/><col style="text-align: left"/></colgroup><thead><tr><th style="text-align: left" valign="bottom">
+<p>Folder name</p>
+</th><th style="text-align: left" valign="bottom">
+<p>Used for organizing</p>
+</th></tr></thead><tbody><tr><td style="text-align: left" valign="top">
+<p>
+<code class="literal">business</code>
+</p>
+</td><td style="text-align: left" valign="top">
+<p>business services artifacts</p>
+</td></tr><tr><td style="text-align: left" valign="top">
+<p>
+<code class="literal">proxy</code>
+</p>
+</td><td style="text-align: left" valign="top">
+<p>proxy services artifacts</p>
+</td></tr><tr><td style="text-align: left" valign="top">
+<p>
+<code class="literal">wsdl</code>
+</p>
+</td><td style="text-align: left" valign="top">
+<p>SOAP-based web service interfaces</p>
+</td></tr><tr><td style="text-align: left" valign="top">
+<p>
+<code class="literal">xsd</code>
+</p>
+</td><td style="text-align: left" valign="top">
+<p>the XML schema files</p>
+</td></tr><tr><td style="text-align: left" valign="top">
+<p>
+<code class="literal">transformation</code>
+</p>
+</td><td style="text-align: left" valign="top">
+<p>Artifacts for doing data model transformations, such as XQuery and XSLT scripts</p>
+</td></tr></tbody></table></div><p>In some specific recipes, we will add some additional folders. The ones shown in this recipe just represent the most commonly used ones.<a id="id11" class="indexterm"/>
+</p></div></div></body></html>

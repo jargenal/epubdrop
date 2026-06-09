@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Hands-On Encryption with AWS KMS</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:e0000000-0000-0000-0000-000006723159" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Appendix C. Hands-On Encryption with AWS KMS" data-type="appendix" epub:type="appendix"><div class="appendix" id="hands-on_encryption_with_aws">
+<h1><span class="label">Appendix C. </span>Hands-On Encryption with AWS KMS</h1>
+<p><a contenteditable="false" data-primary="envelope encrypted data" data-secondary="about" data-type="indexterm" id="idm46523885946392"/><a contenteditable="false" data-primary="AWS KMS (AWS Key Management Service)" data-type="indexterm" id="kms_ab"/><a contenteditable="false" data-primary="encryption" data-secondary="KMS (AWS Key Management Service)" data-type="indexterm" id="enc_kmss"/><a data-type="xref" href="ch03.html#foundations_of_encryption">Chapter 3</a> talked about the importance of encryption for all the data that is stored on AWS. You can use AWS Key Management Service (KMS) to simplify the process of data encryption and to manage the encryption keys that are used to encrypt your data. In this appendix, I will give you a practical overview of the process and show you how you can encrypt your sensitive data on AWS using envelope encryption. As a reminder, envelope encryption is the process where you encrypt large amounts of data with an encryption key (called the <em>data key</em>) and then use AWS KMS to encrypt this data key using a key controlled by AWS Customer Master Key (CMK).</p>
+<p>In order to work with this example, you will need the following applications installed on your computer:</p>
+<ul>
+<li><p><a href="https://oreil.ly/SrihY">AWS Command Line Interface</a> (CLI)</p></li>
+<li><p><a href="https://oreil.ly/LJ1Ow">OpenSSL toolkit</a></p></li>
+</ul>
+<p>Once you have your CMK ready, let’s start using it to encrypt plaintext. In order to work with binary data, you need to encode your data with Base64. Base64 is a group of binary-to-text encoding schemes that represent binary data in an ASCII string format. Typically, Base64-encoding schemes are used when digital data needs to be encoded using algorithms that predominantly deal with text. In this way, the data will remain intact during the encryption and decryption process.</p>
+<section class="pagebreak-before less_space" data-pdf-bookmark="Basic Encryption Using the CMK" data-type="sect1"><div class="sect1" id="basic_encryption_using_the_cmk">
+<h1>Basic Encryption Using the CMK</h1>
+<p><a contenteditable="false" data-primary="CMK (custom master key)" data-secondary="encryption using" data-type="indexterm" id="idm46523885936472"/><a contenteditable="false" data-primary="encryption" data-secondary="using CMK" data-type="indexterm" id="idm46523885935144"/>To transmit a message, follow these steps:</p>
+<ol>
+<li><p>Create CMK on AWS. This will be the key that will be used to encrypt your data.</p></li>
+<li><p><a contenteditable="false" data-primary="Base64" data-type="indexterm" id="idm46523885938856"/>Encode your message with <a href="https://oreil.ly/oyTPr">Base64</a>. This common step in most encryption procedures ensures that binary data can be transported over channels without modification.</p></li>
+<li><p>Encrypt your message using the CMK by calling the <code>aws kms encrypt</code> command.</p></li>
+</ol>
+<p>As a reminder, the CMK is used to mainly encrypt your data key using envelope encryption. <a data-type="xref" href="#follow_the_wizard_to_generate_the_key_a">Figure C-1</a> shows how you can create a CMK using the AWS Management Console.</p>
+<figure><div class="figure" id="follow_the_wizard_to_generate_the_key_a">
+<img alt="" src="assets/smaa_ac01.png"/>
+<h6><span class="label">Figure C-1. </span>Follow the wizard to generate the key and grant relevant access to users</h6>
+</div></figure>
+<p>Next, Base64-encode your data:</p>
+<pre>$ echo &lt;plain text message&gt; | base64</pre>
+<p>Finally, encrypt using the CMK:</p>
+<pre>$ aws kms encrypt --plaintext $(echo &lt;plain text message&gt; | base64) --key-id
+  alias/worklaptop</pre>
+</div></section>
+<section class="pagebreak-before less_space" data-pdf-bookmark="Basic Decryption Using the CMK" data-type="sect1"><div class="sect1" id="basic_decryption_using_the_cmk">
+<h1>Basic Decryption Using the CMK</h1>
+<p><a contenteditable="false" data-primary="CMK (custom master key)" data-secondary="decryption using" data-type="indexterm" id="idm46523885924712"/><a contenteditable="false" data-primary="decryption" data-secondary="using CMK" data-type="indexterm" id="idm46523885922872"/>The decryption process is similar to the encryption process. You simply call the AWS KMS service with the ciphertext-blob that you wish to decrypt:</p>
+<pre>$ aws kms decrypt --ciphertext-blob
+"AQECAHjbw6xdyJKSCUiwAFsMp6vMYbXV2mHSY9cg2qHmkIZ2gwAAAGswaQYJKoZIhvcNAQcGoFwwWg
+IBADBVBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDFPI6F3UdqaYj6iBMwIBEIAoCz2LrUes+
+3SM70iFjgqAkxQoQYB/I617gN5zK4h/1aAp/ciweS8+5g==”</pre>
+</div></section>
+<section data-pdf-bookmark="Envelope Encryption Using the CMK" data-type="sect1"><div class="sect1" id="envelope_encryption_using_the_cmk">
+<h1>Envelope Encryption Using the CMK</h1>
+<p><a contenteditable="false" data-primary="CMK (custom master key)" data-secondary="envelope encryption using" data-type="indexterm" id="idm46523885918904"/><a contenteditable="false" data-primary="envelope encrypted data" data-secondary="using CMK" data-type="indexterm" id="idm46523885917320"/>As discussed in <a data-type="xref" href="ch03.html#foundations_of_encryption">Chapter 3</a>, basic encryption is great for payloads of small sizes. However, AWS KMS sets a limit of 4 KB on any data that can be encrypted using basic encryption. Hence, for the vast majority of your encryption needs, you would be using envelope encryption. As a reminder, envelope encryption is a three-step <span class="keep-together">process</span>:</p>
+<ol>
+<li><p>Create a master key. This master key can be used to encrypt or decrypt smaller payloads of data, which include data keys.</p></li>
+<li><p>Create data keys to encrypt or decrypt your actual plaintext data.</p></li>
+<li><p>Encrypt your data using the data key and encrypt your data key using the CMK. The encrypted data key can be stored alongside the ciphertext data, while the plaintext data key can be deleted.</p></li>
+</ol>
+<p>The only way to decrypt the ciphertext is by first decrypting the data key, which is not available to anyone except the third party that wants to decrypt it.</p>
+<p><a contenteditable="false" data-primary="AWS Console" data-type="indexterm" id="idm46523885912728"/>Creating a master key is identical to the first step in basic encryption given earlier. You can create a CMK either using the AWS CLI or within the AWS console.</p>
+<p>For generating data keys, AWS lets you make a single call to generate a data key. AWS will return the plaintext data key as well as the encrypted data key back to you. In this way, everything you need in the next step is made available to you:</p>
+<pre>$ aws kms generate-data-key --key-id alias/demo --key-spec AES_256
+{
+    "CiphertextBlob":
+    "AQEDAHjbw6xdyJKSCUiwAFsMp6vMYbXV2mHSY9cg2qHmkIZ2gwAAAH4wfAYJKoZIhvc
+    NAQcGoG8wbQIBADBoBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDD2ZhMHl8hgr2DP
+    AawIBEIA7Z14WGErIjA/T+qZi7cVsXIHeySa8FYSuox07nyHs7JO6g39jBo1XSWsVjSu
+    YL8paWRgqbFKcUQX482w=",
+    "Plaintext": "IyBK1p9nMFCFtwDT/PbFf3DjM/nRlUcw37MTb/+KYgs=",
+    "KeyId": "arn:aws:kms:us-east-1:248285616257:key/27d9aa85-f403-483e-
+    9239-da01d5be4842"
+}</pre>
+<p>You will be using the plaintext data key in the next step to encrypt the plaintext data. Remember, when AWS returns the key to you, it is Base64 encoded. In case your encryption algorithm expects a Base64-decoded plaintext data key, Base64 decodes this key before storing it:</p>
+<pre>$ echo teQj2q4G6CdDbLr+uoENkCef9y/ila6P6+rp9UbInmc= | base64
+  --decode &gt; plain-text-data-key.txt</pre>
+<p>You will also be storing the encrypted data key next to the ciphertext data. So it is best to save it in this step:</p>
+<pre>$ echo
+     "AQEDAHjbw6xdyJKSCUiwAFsMp6vMYbXV2mHSY9cg2qHmkIZ2gwAAAH4wfAYJKoZIhvc
+     NAQcGoG8wbQIBADBoBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDD2ZhMHl8hgr2DP
+     AawIBEIA7Z14WGErIjA/T+qZi7cVsXIHeySa8FYSuox07nyHs7JO6g39jBo1XSWsVjSu
+     YL8paWRgqbFKcUQX482w=" &gt; cipher-text-data-key.txt</pre>
+<p>In the final step, you can use the plaintext data key from the previous Step 2 and use the <a href="https://oreil.ly/878Ev">AES-256</a> algorithm to encrypt your data. If you use OpenSSL to encrypt, you can encrypt your plaintext and store it in a file called <em>enc.txt</em>:</p>
+<pre>$ openssl enc -e -aes256 -in &lt;plain text file&gt; -out cipher-text-data-blob.txt
+  -k plain-text-data-key.txt</pre>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>Once you are done with the encryption, you should delete your plaintext data key to make sure that the only way to decrypt this data (in the absence of the <em>plain-text-data-key.txt</em>) will be by first decrypting the <em>cipher-text-key.txt</em>:</p>
+<pre>$ rm ./plain-text-data-key.txt &amp;&amp; rm ./&lt;plain text file&gt;</pre>
+</div>
+
+</div></section>
+<section data-pdf-bookmark="Decrypting an Envelope Encrypted Message" data-type="sect1"><div class="sect1" id="decrypting_an_envelope_encrypted_messag">
+<h1>Decrypting an Envelope Encrypted Message</h1>
+<p><a contenteditable="false" data-primary="decryption" data-secondary="of envelope encrypted messages" data-type="indexterm" id="idm46523885898152"/><a contenteditable="false" data-primary="envelope encrypted data" data-secondary="decrypting messages with" data-type="indexterm" id="idm46523885896488"/>The decryption process is similar to the encryption process:</p>
+<ol>
+<li><p>Since the only place that has the key is your disk in an encrypted form, first you need to get the plaintext version of the data key.</p></li>
+<li><p>Use the plaintext version of this key to decrypt <em>cipher-text-data-blob.txt</em>.</p></li>
+</ol>
+<p>The plaintext data key can be obtained by decrypting <em>cipher-text-key.txt</em> using AWS KMS:</p>
+<pre>$ aws kms decrypt --ciphertext-blob $(cat ./cipher-text-data-key.txt)
+{
+    "KeyId":
+    "arn:aws:kms:us-east-1:248285616257:key/27d9aa85-f403-483e-9239
+      -da01d5be4842,
+    "Plaintext": "IyBK1p9nMFCFtwDT/PbFf3DjM/nRlUcw37MTb/+KYgs=",
+    "EncryptionAlgorithm": "SYMMETRIC_DEFAULT"
+}</pre>
+<p>As you might have guessed, the plaintext data key returned in this step is Base64 encoded, and if your decryption algorithm requires a Base64-decoded key, you may have to Base64-decode this key:</p>
+<pre>$ echo teQj2q4G6CdDbLr+uoENkCef9y/ila6P6+rp9UbInmc= | base64
+    --decode &gt; plain-text-data-key.txt</pre>
+<p><a contenteditable="false" data-primary="" data-startref="kms_ab" data-type="indexterm" id="idm46523885889720"/><a contenteditable="false" data-primary="" data-startref="enc_kmss" data-type="indexterm" id="idm46523885888472"/>Now you’ll use the plaintext data key to decrypt <em>cipher-text-data-blob.txt</em>. You have your ciphertext as well as the plaintext form of the key that is required to decrypt this text. So you can decrypt it using the OpenSSL toolkit, which you used to encrypt this text in the first place:</p>
+<pre>$ openssl enc -d -aes256 -in cipher-text-data-blob.txt -k ./plain-text-data-key.txt
+&lt;plain text data&gt;</pre>
+</div></section>
+</div></section></body></html>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos462668" class="calibre_2"><span class="calibre2"><span class="bold">Summary</span></span></p><p class="calibre_1">In this chapter, we discussed the boundary patterns of reactive, cloud-native systems. <a></a>Although we focus on asynchronous, event-driven inter-component communication, we ultimately need to implement synchronous communication at the boundaries where the system interacts with humans and external systems. <a></a>The API Gateway pattern provides a secure and scalable foundation for synchronous communication. <a></a>With the CQRS pattern, we leverage materialized views to decouple upstream dependencies in order to make the synchronous communication responsive, resilient, and elastic. <a></a>The offline-first database pattern allows some synchronous interactions to operate locally by storing event and materialized view data in local storage and synchronizing with the cloud to increase the availability of the system from the user's perspective. <a></a>The BFF is a higher-order pattern that pulls all these patterns together to create dedicated and self-sufficient components, which provide synchronous system boundaries to facilitate frontend features. <a></a>The BFF components, in turn, interact with the rest of the system asynchronously. <a></a>Finally, in the External Service Gateway pattern, we provide for bidirectional integration with other systems.</p><div class="mbp_pagebreak" id="calibre_pb_123"></div>
+</body></html>

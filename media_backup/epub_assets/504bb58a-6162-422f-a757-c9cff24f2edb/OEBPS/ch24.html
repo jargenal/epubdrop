@@ -1,0 +1,292 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Sketching Bank Robbers</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 24. Sketching Bank Robbers" data-type="chapter" epub:type="chapter"><div class="chapter" id="DrawingBankRobbers">
+<h1><span class="label">Chapter 24. </span>Sketching Bank Robbers</h1>
+
+
+<p class="subtitle">Architects as Police Sketch Artists</p>
+
+<figure class="informal"><div class="figure" id="bank_robbers">
+<img alt="That’s what he looked like!" src="assets/SAEch_024.png"/>
+<h6>That’s what he looked like!</h6>
+</div></figure>
+
+<p>With<a data-primary="communication" data-secondary="creating architecture sketches" data-type="indexterm" id="Csketch24"/><a data-primary="architecture sketches" data-type="indexterm" id="archsketch24"/> a demanding job like that of an architect in a large IT
+organization, it’s a healthy exercise to do more of those things you enjoy
+and fewer of those you don’t enjoy. Of course, this requires you to know
+what you truly enjoy (and truly despise) in the first place—a task that can be a little more challenging than it sounds,
+especially for left-brained IT architects. The latter is generally more
+easily answered: in my case it’s 8 a.m. meetings with no particular
+objective that end up in a monologue by the highest-paid person. The
+former usually takes a bit more reflection. Over the years, I have
+realized that one of my favorite work activities is to listen to system
+owners or solution architects describe their system, often in fragments,
+and to draw a cohesive picture for them. The most satisfying moment
+happens when they exclaim, “That’s exactly what it looks like,” without
+them having been able to draw the picture themselves. This exercise is
+also a great opportunity to learn about those system details that aren’t
+documented <span class="keep-together">anywhere.</span></p>
+
+<p>Asking people to tell you about their system so that you can draw it for them
+may remind you of the old joke that describes <em>consultants</em> (<a data-type="xref" href="ch38.html#Money">Chapter 38</a>) as those people who borrow your watch
+to tell you what time it is (and charge you a lot of money for it).
+Drawing expressive architecture diagrams, though, is a bit more involved
+than reading the time off a watch. It extracts people’s knowledge and
+presents it in a way that they weren’t able to create themselves.</p>
+
+<p>Being able to build a system doesn’t automatically mean the same person
+is gifted at representing it in an intuitive way. Therefore, helping
+such a person draw a picture of their system can be quite valuable. I
+liken this task to that of a police sketch artist.</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Everyone Saw the Perpetrator" data-type="sect1"><div class="sect1" id="idm45952854543112">
+<h1>Everyone Saw the Perpetrator</h1>
+
+<p>If a bank is robbed and you ask those people who saw the perpetrator to
+draw a picture, you’ll likely end up with stick figures or very rough
+sketches. In any case, you won’t get anything particularly useful even
+though the witnesses have a firsthand account of the person. Knowing
+something, being able to articulate it, and being able to draw it are
+three very different skills.</p>
+
+<p>That’s why a professional police sketch artist is usually brought in, especially in cases where security cameras could not get precise footage.
+The artist interviews the witnesses, asking them a series of questions
+that they can easily answer, such as “Was the person tall?” Based on
+the descriptions the artist draws the picture, frequently obtaining
+feedback from the witnesses. After initially giving trivial facts like
+“He was tall,” people end up confirming, “He looked just like that!”</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="A Police Sketch Artist" data-type="sect1"><div class="sect1" id="idm45952854540168">
+<h1>A Police Sketch Artist</h1>
+
+<p>A police sketch artist is a fairly specialized job whose education
+includes both art and human anatomy. For example, a police sketch artist
+will undergo training in dental and bone structure because they influence the
+appearance of the suspect. The same is true for <em>architecture artists</em>:
+they need to have a minimum level of artistic skill, probably not quite
+at the level of the criminal sketch artist, but they must also have the
+mental model and visual vocabulary to express architectural concepts.</p>
+
+<p>Interestingly, sketch artists break down the problem and work with
+well-known “patterns”: after initially asking very broad questions
+like “tell me about the person,” the artist will guide the witness
+with these typical patterns, for example, ethnicity, or defining features such
+as nose, eyes, or hair. To exaggerate, they won’t discover that the
+person had two ears, two eyes, and one nose (if they don’t, that’s
+certainly worth mentioning!), but they do drive toward discriminating and
+defining features, just like we do when we <em>try to tell whether something is architecture</em> (<a data-type="xref" href="ch08.html#IsThisArchitecture">Chapter 8</a>). In the world of
+IT, we would do the equivalent. For example, when looking at data
+storage, we’d ask if it’s an RDBMS or a NoSQL DB, perhaps a
+combination, whether it uses caching, replication, and so on.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Sketching Architectures" data-type="sect1"><div class="sect1" id="idm45952854535176">
+<h1>Sketching Architectures</h1>
+
+<p>When assuming the role of an “architecture sketch artist,” I tend to
+combine two different approaches:</p>
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="The System Metaphor" data-type="sect2"><div class="sect2" id="idm45952854533624">
+<h2>The System Metaphor</h2>
+
+<p>First, I look for noteworthy or defining features; for instance, for the <em>key decisions</em> (<a data-type="xref" href="ch08.html#IsThisArchitecture">Chapter 8</a>). Is it a pretty vanilla
+website for a customer to review information, like a <em>customer information portal</em>? Or, is it rather a new sales channel, or even a
+piece of a cross-channel strategy? Is it designed to handle tons of
+volume, or is it rather an experiment that will see little traffic but
+must evolve very quickly? Or, is it a spike to test out new technologies
+and the use case is secondary? After I have established this frame, I
+start filling in the details.</p>
+
+<p>I am a big fan of Kent Beck’s notion of a system metaphor that describes
+what kind of “thing” the system is. As Kent wisely states in <em>Extreme Programming Explained</em>:<sup><a data-type="noteref" href="ch24.html#idm45952854529064" id="idm45952854529064-marker">1</a></sup></p>
+<blockquote>
+<p>We need to emphasize the goal of architecture, which is to give everyone a coherent story within which to work, a story that can easily be shared by the business and technical folks. By asking for a metaphor we are likely to get an architecture that is easy to communicate and elaborate.</p>
+</blockquote>
+
+<p>In the same book, Kent also states that “Architecture is just as
+important in XP [Extreme Programming] projects as it is in any software
+project,” something to be kept in mind by folks who are <em>tempted to shun architecture because they are Agile</em> (<a data-type="xref" href="ch31.html#SlowChaos">Chapter 31</a>).</p>
+
+<p>Just like with <em>diagram-driven design</em> (<a data-type="xref" href="ch22.html#DiagramDrivenDesign">Chapter 22</a>),
+architecture sketching can also be a useful design technique. If the
+picture makes no sense (and the architecture sketch artist is talented),
+something might be inconsistent or wrong in the architecture.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Viewpoints" data-type="sect2"><div class="sect2" id="idm45952854522664">
+<h2>Viewpoints</h2>
+
+<p>As soon as I have a rough idea about the nature of the system, I let the
+metaphor drive which aspects or viewpoints to examine. This is where
+doing an <em>architecture sketch</em> differs from performing<a data-primary="architecture analysis" data-type="indexterm" id="idm45952854520776"/> an <em>architecture
+analysis</em>. An analysis typically walks through a fixed, structured set
+of aspects, as defined for example by methods such as
+<a href="https://c4model.com/">C4</a> or <a href="http://arc42.org/">arc42</a>. This is useful as
+a “checklist” to uncover missing aspects or gaps. In contrast, a
+police sketch artist doesn’t want to draw the details of a person’s
+trouser finishings (hemmed? cuffed?), but wants to highlight those
+characteristics that are unique or noteworthy. The same is true for the
+architecture sketch artist.</p>
+
+<p>Following a fixed set of viewpoints always runs the risk of becoming a
+paint-by-numbers exercise in which one fills in every section of a
+template, but <em>forgets to place an emphasis</em> (<a data-type="xref" href="ch21.html#EmphasisOverCompleteness">Chapter 21</a>) or omits critical points in the process. I therefore find the
+viewpoint descriptions in Nick Rozanski and Eoin Woods’s <em>Software Systems Architecture</em><sup><a data-type="noteref" href="ch24.html#idm45952854515336" id="idm45952854515336-marker">2</a></sup> useful because they don’t prescribe
+a fixed notation, but highlight concerns and pitfalls. Nick and Eoin
+also separate <em>perspectives</em> from <em>views</em>. When sketching an
+architecture, you are most likely interested in a specific perspective,
+such as performance and security, that spans multiple viewpoints; for
+example, a deployment or functional view.</p>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Visuals" data-type="sect1"><div class="sect1" id="idm45952854512344">
+<h1>Visuals</h1>
+
+<p>Each artist has their own style, and to some degree architecture
+sketches<a data-primary="visuals" data-secondary="and sketching architectures" data-type="indexterm" id="idm45952854510984"/> will also differ. I am not a big fan of molding all system
+documentation into a single notation because we are not creating a
+system specification (that’s in the code), but a sketch that gives
+humans a better vehicle to reason about the system. For me, it’s
+important that every visual feature of the notation has meaning in the
+context, or perspective, that we are analyzing. Otherwise, it’s just
+noise. Of course, the diagram must not only show the components <em>but also their relationships</em> (<a data-type="xref" href="ch23.html#DrawingTheLine">Chapter 23</a>).</p>
+
+<p>The best diagrams are rich in expressiveness but don’t require a legend
+because the notation is intuitive from the start, or because the viewer
+can learn the notation from simple examples and apply what they
+learned to more complex aspects of the diagram. This is very much how
+user interfaces work: no user wants to read a long manual, but they will use
+what they see to build a mental model and use it to set expectations for
+how more complex features should work. Why not think of a diagram as a
+user interface? You might feel that it lacks interactivity, and you are
+right, but viewers <em>navigate</em> complex diagrams very much like users
+navigate user interfaces.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Architecture Therapy" data-type="sect1"><div class="sect1" id="idm45952854506280">
+<h1>Architecture Therapy</h1>
+
+<p>Grady Booch drew analogies between having teams depicting their
+architecture and family therapy,<sup><a data-type="noteref" href="ch24.html#idm45952854504904" id="idm45952854504904-marker">3</a></sup> which asks children to draw
+a picture of their family in a method referred to as Kinetic Family
+Drawings (KFD). The drawings give therapists insight into the family
+dynamics, such as proximity, hierarchy, or behavioral patterns. I have
+experienced the same with development teams, so you shouldn’t outright
+discard their drawings as meaningless or incomplete, but derive insight
+into the team’s thinking and hierarchy from them: is the database in the
+middle of it all? Maybe the schema designer is calling the shots in the
+team (I know a case of that happening). Are there many boxes, but no
+lines? Probably the team’s thinking is focused on structural concerns
+but ignores system behavior. This is often the case when the architect
+is too far removed from code and operational aspects.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="That’s Wrong! Do It Again!" data-type="sect1"><div class="sect1" id="idm45952854502600">
+<h1>That’s Wrong! Do It Again!</h1>
+
+<p>A common situation when sketching an architecture for someone else is
+them stating, “This is wrong!” This is a good thing; it means that you
+discovered a mismatch between your and their understanding. If you
+hadn’t drawn it, you would have never realized. Also, if you assume you
+are a reasonable proxy for subsequent consumers of the diagram, you also
+saved them from the same misunderstanding. Therefore, sketching out
+architecture is almost always an iterative process. Bring an eraser.<a data-primary="" data-startref="Csketch24" data-type="indexterm" id="idm45952854500808"/><a data-primary="" data-startref="archsketch24" data-type="indexterm" id="idm45952854499864"/></p>
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="idm45952854529064"><sup><a href="ch24.html#idm45952854529064-marker">1</a></sup> Kent Beck, <em>Extreme Programming Explained: Embrace Change</em> (Boston: Addison-Wesley, 1999).</p><p data-type="footnote" id="idm45952854515336"><sup><a href="ch24.html#idm45952854515336-marker">2</a></sup> Nick Rozanski and Eoin Woods, <em>Software Systems Architecture: Working With Stakeholders Using Viewpoints and Perspectives</em>, 2nd ed. (Upper Saddle River, NJ: Addison-Wesley, 2011).</p><p data-type="footnote" id="idm45952854504904"><sup><a href="ch24.html#idm45952854504904-marker">3</a></sup> Grady Booch, “Draw Me a Picture,” <em>IEEE Software</em> 28, no. 1 (Jan./Feb. 2011).</p></div></div></section></body></html>

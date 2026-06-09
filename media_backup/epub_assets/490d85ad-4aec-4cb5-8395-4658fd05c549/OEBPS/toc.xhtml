@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+	<head>
+		<title>MuleSoft Platform Architect’s Guide</title>
+	</head>
+	<body>
+		<nav id="toc" epub:type="toc">
+		<h2>Contents</h2>
+			<ol>
+				<li><a href="B19922_FM.xhtml#_idParaDest-1">MuleSoft Platform Architect’s Guide</a></li>
+				<li><a href="B19922_FM.xhtml#_idParaDest-2">Contributors</a></li>
+				<li><a href="B19922_FM.xhtml#_idParaDest-3">About the authors</a></li>
+				<li><a href="B19922_FM.xhtml#_idParaDest-4">About the reviewers</a></li>
+				<li><a href="B19922_Preface.xhtml#_idParaDest-5">Preface</a>
+					<ol>
+						<li><a href="B19922_Preface.xhtml#_idParaDest-6">Who this book is for</a></li>
+						<li><a href="B19922_Preface.xhtml#_idParaDest-7">What this book covers</a></li>
+						<li><a href="B19922_Preface.xhtml#_idParaDest-8">To get the most out of this book</a></li>
+						<li><a href="B19922_Preface.xhtml#_idParaDest-9">Download the color images</a></li>
+						<li><a href="B19922_Preface.xhtml#_idParaDest-10">Conventions used</a></li>
+						<li><a href="B19922_Preface.xhtml#_idParaDest-11">Get in touch</a></li>
+						<li><a href="B19922_Preface.xhtml#_idParaDest-12">Share Your Thoughts</a></li>
+						<li><a href="B19922_Preface.xhtml#_idParaDest-13">Download a free PDF copy of this book</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_01.xhtml#_idParaDest-15">Chapter 1: What is the MuleSoft Platform?</a>
+					<ol>
+						<li><a href="B19922_01.xhtml#_idParaDest-16">Technical requirements</a></li>
+						<li><a href="B19922_01.xhtml#_idParaDest-17">What is MuleSoft and iPaaS?</a></li>
+						<li><a href="B19922_01.xhtml#_idParaDest-18">How have integration approaches evolved?</a>
+							<ol>
+								<li><a href="B19922_01.xhtml#_idParaDest-19">J&amp;J Music Store Use Case</a></li>
+								<li><a href="B19922_01.xhtml#_idParaDest-20">Point to Point</a></li>
+								<li><a href="B19922_01.xhtml#_idParaDest-21">Middleware and Remote Procedure Calls</a></li>
+								<li><a href="B19922_01.xhtml#_idParaDest-22">Enterprise Service Bus</a></li>
+								<li><a href="B19922_01.xhtml#_idParaDest-23">Service Oriented Architecture</a></li>
+								<li><a href="B19922_01.xhtml#_idParaDest-24">Representational State Transfer (REST Services)</a></li>
+								<li><a href="B19922_01.xhtml#_idParaDest-25">iPaaS</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_01.xhtml#_idParaDest-26">What is the modern challenge to integration?</a>
+							<ol>
+								<li><a href="B19922_01.xhtml#_idParaDest-27">Breaking the law is harder than you think</a></li>
+								<li><a href="B19922_01.xhtml#_idParaDest-28">Business innovation at the speed of technical debt</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_01.xhtml#_idParaDest-29">The Architectural capabilities of MuleSoft</a>
+							<ol>
+								<li><a href="B19922_01.xhtml#_idParaDest-30">Planes of operations</a></li>
+								<li><a href="B19922_01.xhtml#_idParaDest-31">Platform deployment options</a></li>
+								<li><a href="B19922_01.xhtml#_idParaDest-32">MuleSoft capabilities and components</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_01.xhtml#_idParaDest-33">Why are APIs so important in delivering modern integrations?</a></li>
+						<li><a href="B19922_01.xhtml#_idParaDest-34">Summary</a></li>
+						<li><a href="B19922_01.xhtml#_idParaDest-35">Questions</a></li>
+						<li><a href="B19922_01.xhtml#_idParaDest-36">Answers</a></li>
+						<li><a href="B19922_01.xhtml#_idParaDest-37">Further Reading</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_02.xhtml#_idParaDest-39">Chapter 2: Platform Foundation Components and the Underlying Architecture</a>
+					<ol>
+						<li><a href="B19922_02.xhtml#_idParaDest-40">Technical requirements</a></li>
+						<li><a href="B19922_02.xhtml#_idParaDest-41">The Anypoint control plane</a>
+							<ol>
+								<li><a href="B19922_02.xhtml#_idParaDest-42">Control plane hosting options</a></li>
+								<li><a href="B19922_02.xhtml#_idParaDest-43">Securing the Anypoint control plane</a></li>
+								<li><a href="B19922_02.xhtml#_idParaDest-44">Organizing the Anypoint control plane</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_02.xhtml#_idParaDest-45">The runtime plane overview</a>
+							<ol>
+								<li><a href="B19922_02.xhtml#_idParaDest-46">Runtime deployment options</a></li>
+								<li><a href="B19922_02.xhtml#_idParaDest-47">Runtime plane hosting</a></li>
+								<li><a href="B19922_02.xhtml#_idParaDest-48">Core components in the runtime plane</a></li>
+								<li><a href="B19922_02.xhtml#_idParaDest-49">Combining control plane hosts and runtime hosts</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_02.xhtml#_idParaDest-50">Anypoint Core Services</a>
+							<ol>
+								<li><a href="B19922_02.xhtml#_idParaDest-51">Management capability</a></li>
+								<li><a href="B19922_02.xhtml#_idParaDest-52">Design capability</a></li>
+								<li><a href="B19922_02.xhtml#_idParaDest-53">Discover Capability</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_02.xhtml#_idParaDest-54">Summary</a></li>
+						<li><a href="B19922_02.xhtml#_idParaDest-55">Questions</a></li>
+						<li><a href="B19922_02.xhtml#_idParaDest-56">Further reading</a></li>
+						<li><a href="B19922_02.xhtml#_idParaDest-57">Answers</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_03.xhtml#_idParaDest-59">Chapter 3: Leveraging Catalyst and the MuleSoft Knowledge Hub</a>
+					<ol>
+						<li><a href="B19922_03.xhtml#_idParaDest-60">Exploring Catalyst, its core principles, and its engagements</a>
+							<ol>
+								<li><a href="B19922_03.xhtml#_idParaDest-61">What is Catalyst?</a></li>
+								<li><a href="B19922_03.xhtml#_idParaDest-62">Catalyst’s foundation</a></li>
+								<li><a href="B19922_03.xhtml#_idParaDest-63">Playbook organization</a></li>
+								<li><a href="B19922_03.xhtml#_idParaDest-64">Catalyst engagements</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_03.xhtml#_idParaDest-65">Leveraging the Catalyst Knowledge Hub</a></li>
+						<li><a href="B19922_03.xhtml#_idParaDest-66">Finding value in a C4E</a>
+							<ol>
+								<li><a href="B19922_03.xhtml#_idParaDest-67">Team enablement</a></li>
+								<li><a href="B19922_03.xhtml#_idParaDest-68">Metrics and KPIs</a></li>
+								<li><a href="B19922_03.xhtml#_idParaDest-69">Staffing</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_03.xhtml#_idParaDest-70">Summary</a></li>
+						<li><a href="B19922_03.xhtml#_idParaDest-71">Questions</a></li>
+						<li><a href="B19922_03.xhtml#_idParaDest-72">Further reading</a></li>
+						<li><a href="B19922_03.xhtml#_idParaDest-73">Answers</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_04.xhtml#_idParaDest-75">Chapter 4: An Introduction to Application Networks</a>
+					<ol>
+						<li><a href="B19922_04.xhtml#_idParaDest-76">An introduction to MuleSoft application networks</a>
+							<ol>
+								<li><a href="B19922_04.xhtml#_idParaDest-77">What is an application network?</a></li>
+								<li><a href="B19922_04.xhtml#_idParaDest-78">Components and the importance of an application network</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_04.xhtml#_idParaDest-79">Building and implementing an application network</a>
+							<ol>
+								<li><a href="B19922_04.xhtml#_idParaDest-80">Planning the roadmap</a></li>
+								<li><a href="B19922_04.xhtml#_idParaDest-81">Designing and developing</a></li>
+								<li><a href="B19922_04.xhtml#_idParaDest-82">Managing and evangelizing reuse</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_04.xhtml#_idParaDest-83">The benefits and best practices of an application network</a>
+							<ol>
+								<li><a href="B19922_04.xhtml#_idParaDest-84">Benefits</a></li>
+								<li><a href="B19922_04.xhtml#_idParaDest-85">Best practices</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_04.xhtml#_idParaDest-86">Summary</a></li>
+						<li><a href="B19922_04.xhtml#_idParaDest-87">Questions</a></li>
+						<li><a href="B19922_04.xhtml#_idParaDest-88">Further reading</a></li>
+						<li><a href="B19922_04.xhtml#_idParaDest-89">Answers</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_05.xhtml#_idParaDest-91">Chapter 5: Speeding with Accelerators</a>
+					<ol>
+						<li><a href="B19922_05.xhtml#_idParaDest-92">Unpacking the accelerator building blocks</a>
+							<ol>
+								<li><a href="B19922_05.xhtml#_idParaDest-93">Pre-built APIs</a></li>
+								<li><a href="B19922_05.xhtml#_idParaDest-94">Connectors</a></li>
+								<li><a href="B19922_05.xhtml#_idParaDest-95">Templates</a></li>
+								<li><a href="B19922_05.xhtml#_idParaDest-96">Best practices</a></li>
+								<li><a href="B19922_05.xhtml#_idParaDest-97">Data mappings</a></li>
+								<li><a href="B19922_05.xhtml#_idParaDest-98">Endpoints</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_05.xhtml#_idParaDest-99">Customizing MuleSoft accelerators</a>
+							<ol>
+								<li><a href="B19922_05.xhtml#_idParaDest-100">Customizing the Accelerator for Retail – J&amp;J Music Store speeds up</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_05.xhtml#_idParaDest-101">Essential building blocks for MuleSoft accelerators</a></li>
+						<li><a href="B19922_05.xhtml#_idParaDest-102">The MuleSoft Catalyst GitHub repository</a></li>
+						<li><a href="B19922_05.xhtml#_idParaDest-103">Summary</a></li>
+						<li><a href="B19922_05.xhtml#_idParaDest-104">Further reading</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_06.xhtml#_idParaDest-106">Chapter 6: Aligning Desired Business Outcomes to Functional Requirements</a>
+					<ol>
+						<li><a href="B19922_06.xhtml#_idParaDest-107">Developing business outcomes and functional requirements</a></li>
+						<li><a href="B19922_06.xhtml#_idParaDest-108">Designing for communication</a></li>
+						<li><a href="B19922_06.xhtml#_idParaDest-109">EDM</a>
+							<ol>
+								<li><a href="B19922_06.xhtml#_idParaDest-110">Advantages of an EDM</a></li>
+								<li><a href="B19922_06.xhtml#_idParaDest-111">Disadvantages of EDMs</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_06.xhtml#_idParaDest-112">Bounded context data model</a>
+							<ol>
+								<li><a href="B19922_06.xhtml#_idParaDest-113">Advantages of the bounded context data model</a></li>
+								<li><a href="B19922_06.xhtml#_idParaDest-114">Disadvantages of the bounded context data model</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_06.xhtml#_idParaDest-115">Coarse-grained APIs</a>
+							<ol>
+								<li><a href="B19922_06.xhtml#_idParaDest-116">Advantages of coarse-grained APIs</a></li>
+								<li><a href="B19922_06.xhtml#_idParaDest-117">Disadvantages of coarse-grained APIs</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_06.xhtml#_idParaDest-118">Fine-grained APIs</a>
+							<ol>
+								<li><a href="B19922_06.xhtml#_idParaDest-119">Advantages of fine-grained APIs</a></li>
+								<li><a href="B19922_06.xhtml#_idParaDest-120">Disadvantages of fine-grained APIs</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_06.xhtml#_idParaDest-121">API concurrency</a></li>
+						<li><a href="B19922_06.xhtml#_idParaDest-122">HTTP verbs</a></li>
+						<li><a href="B19922_06.xhtml#_idParaDest-123">API callback</a></li>
+						<li><a href="B19922_06.xhtml#_idParaDest-124">Summary</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_07.xhtml#_idParaDest-126">Chapter 7: Microservices, Application Networks, EDA, and API-led Design</a>
+					<ol>
+						<li><a href="B19922_07.xhtml#_idParaDest-127">Monolithic architecture</a>
+							<ol>
+								<li><a href="B19922_07.xhtml#_idParaDest-128">Advantages of a monolithic architecture</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-129">Disadvantages of a monolithic architecture</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_07.xhtml#_idParaDest-130">Microservices architecture</a>
+							<ol>
+								<li><a href="B19922_07.xhtml#_idParaDest-131">Characteristics of microservices</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-132">Advantages of a microservices architecture</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-133">Disadvantages of a microservices architecture</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_07.xhtml#_idParaDest-134">Saga pattern</a>
+							<ol>
+								<li><a href="B19922_07.xhtml#_idParaDest-135">Saga choreography pattern</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-136">Saga orchestration pattern</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_07.xhtml#_idParaDest-137">The Competing Consumers pattern</a>
+							<ol>
+								<li><a href="B19922_07.xhtml#_idParaDest-138">Benefits of implementing the Competing Consumers pattern</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_07.xhtml#_idParaDest-139">Circuit Breaker pattern</a>
+							<ol>
+								<li><a href="B19922_07.xhtml#_idParaDest-140">Circuit Breaker states</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_07.xhtml#_idParaDest-141">Anypoint MQ</a>
+							<ol>
+								<li><a href="B19922_07.xhtml#_idParaDest-142">Message exchanges and queues</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-143">Cross-region failover for Anypoint MQ standard queues</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-144">Dead-letter queues</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-145">The Circuit Breaker pattern with Anypoint MQ</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_07.xhtml#_idParaDest-146">Event-driven architecture (EDA)</a>
+							<ol>
+								<li><a href="B19922_07.xhtml#_idParaDest-147">Benefits of EDA</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-148">Limitations of EDA</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_07.xhtml#_idParaDest-149">API-led connectivity and EDA together</a>
+							<ol>
+								<li><a href="B19922_07.xhtml#_idParaDest-150">Experience API</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-151">Process API</a></li>
+								<li><a href="B19922_07.xhtml#_idParaDest-152">System API</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_07.xhtml#_idParaDest-153">Application networks and composability</a></li>
+						<li><a href="B19922_07.xhtml#_idParaDest-154">Summary</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_08.xhtml#_idParaDest-156">Chapter 8: Non-Functional Requirements Influence in Shaping the API Architecture</a>
+					<ol>
+						<li><a href="B19922_08.xhtml#_idParaDest-157">Common non-functional requirements</a></li>
+						<li><a href="B19922_08.xhtml#_idParaDest-158">Meeting performance requirements in the platform</a>
+							<ol>
+								<li><a href="B19922_08.xhtml#_idParaDest-159">Response time</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-160">Throughput</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-161">Error rates</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-162">Availability</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-163">Latency</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-164">Scalability</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-165">Resource allocation</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-166">Performance testing</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-167">Performance monitoring</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-168">Load balancing</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-169">Application caching</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_08.xhtml#_idParaDest-170">API security</a></li>
+						<li><a href="B19922_08.xhtml#_idParaDest-171">Data security in motion or in transit</a>
+							<ol>
+								<li><a href="B19922_08.xhtml#_idParaDest-172">Data security at rest</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_08.xhtml#_idParaDest-173">Deployment strategies</a>
+							<ol>
+								<li><a href="B19922_08.xhtml#_idParaDest-174">Rolling update deployment</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-175">Blue-green deployment</a></li>
+								<li><a href="B19922_08.xhtml#_idParaDest-176">Canary deployment</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_08.xhtml#_idParaDest-177">Summary</a></li>
+						<li><a href="B19922_08.xhtml#_idParaDest-178">Further reading</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_09.xhtml#_idParaDest-180">Chapter 9: Hassle-free Deployment with Anypoint iPaaS (CloudHub 1.0)</a>
+					<ol>
+						<li><a href="B19922_09.xhtml#_idParaDest-181">Technical requirements</a></li>
+						<li><a href="B19922_09.xhtml#_idParaDest-182">What is CloudHub 1.0?</a>
+							<ol>
+								<li><a href="B19922_09.xhtml#_idParaDest-183">Workers and worker size</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-184">Shared load balancer</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-185">Region</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-186">DNS records</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-187">Intelligent healing (single-region disaster recovery)</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-188">Zero downtime updates</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-189">High availability</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-190">Scalability</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-191">Persistent Queues</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-192">Managing schedules</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-193">Object Store V2</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-194">Static IP address</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_09.xhtml#_idParaDest-195">Anypoint VPC</a>
+							<ol>
+								<li><a href="B19922_09.xhtml#_idParaDest-196">Anypoint VPC architecture</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-197">VPN IPsec tunnels</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-198">VPC peering</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_09.xhtml#_idParaDest-199">Transit Gateway Attachments</a></li>
+						<li><a href="B19922_09.xhtml#_idParaDest-200">AWS Direct Connect</a>
+							<ol>
+								<li><a href="B19922_09.xhtml#_idParaDest-201">Calculating a CIDR mask for Anypoint VPC</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_09.xhtml#_idParaDest-202">Anypoint dedicated load balancer</a>
+							<ol>
+								<li><a href="B19922_09.xhtml#_idParaDest-203">Allowlist CIDRs</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-204">SSL certificates</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-205">Mutual authentication</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-206">Dedicated load balancer sizing</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-207">Dedicated load balancer timeout</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-208">Dedicated load balancer mapping rules</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-209">HTTP inbound mode</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-210">Recommendations</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-211">Dedicated load balancers for public and private traffic</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_09.xhtml#_idParaDest-212">Different options for deploying a MuleSoft application to CloudHub 1.0 Runtime Manager</a>
+							<ol>
+								<li><a href="B19922_09.xhtml#_idParaDest-213">The Mule Maven plugin</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-214">Anypoint CLI</a></li>
+								<li><a href="B19922_09.xhtml#_idParaDest-215">CloudHub 1.0 API</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_09.xhtml#_idParaDest-216">Summary</a></li>
+						<li><a href="B19922_09.xhtml#_idParaDest-217">Further reading</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_10.xhtml#_idParaDest-219">Chapter 10: Hassle-Free Deployment with Anypoint iPaaS (CloudHub 2.0)</a>
+					<ol>
+						<li><a href="B19922_10.xhtml#_idParaDest-220">What is CloudHub 2.0?</a>
+							<ol>
+								<li><a href="B19922_10.xhtml#_idParaDest-221">Why CloudHub 2.0?</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-222">Replicas and replica size</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-223">Region</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-224">Clustering</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-225">High availability</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-226">Application isolation</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-227">Intelligent healing</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-228">Zero-downtime updates</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-229">Scalability</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-230">Supported Mule runtime</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-231">Granular vCore options</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-232">Object Store v2</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-233">Managing schedules</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-234">Last-mile security</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_10.xhtml#_idParaDest-235">Shared space</a></li>
+						<li><a href="B19922_10.xhtml#_idParaDest-236">Private space</a>
+							<ol>
+								<li><a href="B19922_10.xhtml#_idParaDest-237">AWS service role</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-238">Inbound and outbound traffic rules</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-239">TLS context and domains</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-240">Public and private endpoints</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-241">Ingress load balancer</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-242">HTTP requests</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-243">VPN connection</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-244">Transit gateways</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-245">Private space network architecture</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-246">Multiple environments in private spaces</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-247">Multiple domains in private spaces</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-248">Different options for deploying MuleSoft applications to CloudHub Runtime Manager</a></li>
+								<li><a href="B19922_10.xhtml#_idParaDest-249">Anypoint CLI</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_10.xhtml#_idParaDest-250">Technical enhancements from CloudHub 1.0 to 
+CloudHub 2.0</a></li>
+						<li><a href="B19922_10.xhtml#_idParaDest-251"> Summary</a></li>
+						<li><a href="B19922_10.xhtml#_idParaDest-252">Further reading</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_11.xhtml#_idParaDest-254">Chapter 11: Containerizing the Runtime Plane with Runtime Fabric</a>
+					<ol>
+						<li><a href="B19922_11.xhtml#_idParaDest-255">Technical requirements</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-256">Kubernetes architecture</a>
+							<ol>
+								<li><a href="B19922_11.xhtml#_idParaDest-257">Master node components</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-258">Worker node components</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_11.xhtml#_idParaDest-259">What is Runtime Fabric?</a>
+							<ol>
+								<li><a href="B19922_11.xhtml#_idParaDest-260">Runtime Fabric on bare-metal servers/VMs</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-261">Network architecture</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-262">Shared responsibility between the customer and MuleSoft</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-263">The concept of etcd in Runtime Fabric</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-264">Quorum management</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-265">Scalability</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-266">High availability</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-267">Fault tolerance</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-268">Inbound load balancer (ingress load balancer)</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-269">Anypoint Security</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-270">Application performance metrics</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-271">Internal load balancer performance metrics</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_11.xhtml#_idParaDest-272">Runtime Fabric on self-managed Kubernetes</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-273">Runtime Fabric architecture on EKS</a>
+							<ol>
+								<li><a href="B19922_11.xhtml#_idParaDest-274">Installing Runtime Fabric on self-managed Kubernetes</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-275">Shared responsibilities between the customer and MuleSoft</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-276">High availability and fault tolerance</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-277">Scalability</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-278">How will an application deployed to self-managed Kubernetes communicate with an external service for which IP whitelisting is required?</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-279">The difference between Runtime Fabric on self-managed Kubernetes and bare-metal/VMs</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_11.xhtml#_idParaDest-280">Tokenization services</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-281">Secrets Manager</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-282">CPU bursting in Runtime Fabric</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-283">Pod</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-284">Last-mile security</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-285">Internal service-to-service communication</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-286">Persistence Gateway with Runtime Fabric</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-287">Deployment strategy</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-288">Clustering</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-289">Backing up and restoring Runtime Fabric</a>
+							<ol>
+								<li><a href="B19922_11.xhtml#_idParaDest-290">When to use the backup and restore process</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-291">What’s backed up?</a></li>
+								<li><a href="B19922_11.xhtml#_idParaDest-292">Backing up and restoring</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_11.xhtml#_idParaDest-293">Different options for deploying a MuleSoft application to Runtime Fabric</a>
+							<ol>
+								<li><a href="B19922_11.xhtml#_idParaDest-294">The Mule Maven plugin</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_11.xhtml#_idParaDest-295">The benefits of Runtime Fabric</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-296">Runtime Fabric on Red Hat OpenShift</a></li>
+						<li><a href="B19922_11.xhtml#_idParaDest-297">Summary</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_12.xhtml#_idParaDest-299">Chapter 12: Deploying to Your Own Data Center</a>
+					<ol>
+						<li><a href="B19922_12.xhtml#_idParaDest-300">Technical requirements</a>
+							<ol>
+								<li><a href="B19922_12.xhtml#_idParaDest-301">Hardware requirements</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-302">Software requirements</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_12.xhtml#_idParaDest-303">Why an on-premises Mule runtime?</a>
+							<ol>
+								<li><a href="B19922_12.xhtml#_idParaDest-304">Running applications in an on-premises Mule runtime</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-305">High availability</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-306">Scalability</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-307">Load balancer</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_12.xhtml#_idParaDest-308">Anypoint clustering</a>
+							<ol>
+								<li><a href="B19922_12.xhtml#_idParaDest-309">Concurrency issues</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-310">Setting up Anypoint clustering manually</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-311">Setting up Anypoint clustering on Anypoint Platform</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-312">Persistent object store</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-313">Primary node and secondary nodes</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-314">VM queues in Anypoint clustering</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_12.xhtml#_idParaDest-315">Anypoint server group</a>
+							<ol>
+								<li><a href="B19922_12.xhtml#_idParaDest-316">Anypoint Platform Private Cloud Edition</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_12.xhtml#_idParaDest-317">Running on-premises Mule runtime use cases</a>
+							<ol>
+								<li><a href="B19922_12.xhtml#_idParaDest-318">Mule runtime plane on-premises and no control plane (standalone)</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-319">Mule runtime plane on-premises and control plane on Anypoint Platform (hybrid)</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-320">Mule runtime plane on-premises and control plane on Anypoint Platform PCE (fully on-premises)</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_12.xhtml#_idParaDest-321">Running multiple MuleSoft applications on a single port (Mule domain)</a>
+							<ol>
+								<li><a href="B19922_12.xhtml#_idParaDest-322">How to use a domain project in API-led connectivity architecture</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_12.xhtml#_idParaDest-323">Deploying a MuleSoft application on-premises using the Mule Maven plugin</a></li>
+						<li><a href="B19922_12.xhtml#_idParaDest-324">Deploying a MuleSoft application on-premises using the Anypoint Runtime Manager (ARM) REST API</a></li>
+						<li><a href="B19922_12.xhtml#_idParaDest-325">Deploying Mule for high availability and disaster recovery strategies</a>
+							<ol>
+								<li><a href="B19922_12.xhtml#_idParaDest-326">Cold standby</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-327">Warm standby</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-328">Hot standby – active-passive</a></li>
+								<li><a href="B19922_12.xhtml#_idParaDest-329">Active-active</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_12.xhtml#_idParaDest-330">Upgrading a Mule runtime or scaling the underlying infrastructure without any downtime</a></li>
+						<li><a href="B19922_12.xhtml#_idParaDest-331">Mule runtime on-premises security</a></li>
+						<li><a href="B19922_12.xhtml#_idParaDest-332">Summary</a></li>
+						<li><a href="B19922_12.xhtml#_idParaDest-333">Further reading</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_13.xhtml#_idParaDest-335">Chapter 13: Government Cloud and the EU Control Plane – Special Considerations</a>
+					<ol>
+						<li><a href="B19922_13.xhtml#_idParaDest-336">FedRAMP compliance</a></li>
+						<li><a href="B19922_13.xhtml#_idParaDest-337">What is MuleSoft Government Cloud?</a>
+							<ol>
+								<li><a href="B19922_13.xhtml#_idParaDest-338">Government Cloud considerations</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-339">Security in MuleSoft Government Cloud</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-340">Anypoint Virtual Private Cloud and Virtual Private Network in MuleSoft Government Cloud</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-341">A dedicated load balancer in MuleSoft Government Cloud</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-342">The MuleSoft Government Cloud control plane</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-343">The MuleSoft Government Cloud runtime plane</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-344">Standalone Mule support in MuleSoft Government Cloud</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-345">Deployment models for MuleSoft Government Cloud</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_13.xhtml#_idParaDest-346">The EU control plane</a>
+							<ol>
+								<li><a href="B19922_13.xhtml#_idParaDest-347">EU control plane considerations</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-348">Deploying applications to the EU control plane</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-349">Object Store in the EU control plane</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-350">Moving from the US control plane to the EU control plane</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-351">Anypoint VPC and VPN in the EU control plane</a></li>
+								<li><a href="B19922_13.xhtml#_idParaDest-352">Anypoint Dedicated Load Balancer (DLB) in the EU control plane</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_13.xhtml#_idParaDest-353">Summary</a></li>
+						<li><a href="B19922_13.xhtml#_idParaDest-354">Further reading</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_14.xhtml#_idParaDest-356">Chapter 14: Functional Monitoring, Alerts, and Operation Monitors</a>
+					<ol>
+						<li><a href="B19922_14.xhtml#_idParaDest-357">Why is API monitoring required?</a></li>
+						<li><a href="B19922_14.xhtml#_idParaDest-358">Anypoint Monitoring</a>
+							<ol>
+								<li><a href="B19922_14.xhtml#_idParaDest-359">The monitoring and analytics capabilities of Anypoint API Manager</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-360">Understanding Mule API analytics charts</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_14.xhtml#_idParaDest-361">API Manager alerts</a></li>
+						<li><a href="B19922_14.xhtml#_idParaDest-362">Understanding the Mule Analytics Event API</a>
+							<ol>
+								<li><a href="B19922_14.xhtml#_idParaDest-363">API reports</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_14.xhtml#_idParaDest-364">Understanding Anypoint Monitoring</a>
+							<ol>
+								<li><a href="B19922_14.xhtml#_idParaDest-365">Dashboards</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-366">Anypoint Monitoring event-driven alerts</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-367">Enabling Anypoint Monitoring for applications deployed to CloudHub</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-368">Enabling Anypoint Monitoring for applications deployed to CloudHub 2.0</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-369">Enabling Anypoint Monitoring for applications deployed to Runtime Fabric</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-370">Enabling Anypoint Monitoring for applications deployed in hybrid environments</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-371">Data retention policy and limits</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-372">Monitoring connectors</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-373">Server information for hybrid environments</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-374">Enabling alerts for hybrid environments with Runtime Manager</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-375">Enabling alerts for CloudHub with Runtime Manager</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-376">Enabling alerts for CloudHub 2.0 with Runtime Manager</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_14.xhtml#_idParaDest-377">Functional Monitoring</a>
+							<ol>
+								<li><a href="B19922_14.xhtml#_idParaDest-378">Monitoring the endpoints of public APIs</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-379">Monitoring the endpoints of private APIs</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_14.xhtml#_idParaDest-380">Why is logging important?</a>
+							<ol>
+								<li><a href="B19922_14.xhtml#_idParaDest-381">Logs in Anypoint Monitoring</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-382">Understanding logging with MuleSoft applications deployed to CloudHub</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-383">Understanding logging with MuleSoft applications deployed to CloudHub 2.0</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-384">Understanding logging with MuleSoft applications deployed to on-premises/hybrid environments</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-385">Understanding logging with MuleSoft applications deployed to Runtime Fabric on bare-metal systems/VMs</a></li>
+								<li><a href="B19922_14.xhtml#_idParaDest-386">JSON logging with a Mule application</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_14.xhtml#_idParaDest-387">Anypoint Visualizer</a></li>
+						<li><a href="B19922_14.xhtml#_idParaDest-388">Summary</a></li>
+						<li><a href="B19922_14.xhtml#_idParaDest-389">Further reading</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_15.xhtml#_idParaDest-391">Chapter 15: Controlling API Sprawl with Universal API Management</a>
+					<ol>
+						<li><a href="B19922_15.xhtml#_idParaDest-392">API sprawl</a></li>
+						<li><a href="B19922_15.xhtml#_idParaDest-393">How to prevent API sprawl</a></li>
+						<li><a href="B19922_15.xhtml#_idParaDest-394">Universal API management</a></li>
+						<li><a href="B19922_15.xhtml#_idParaDest-395">API management</a>
+							<ol>
+								<li><a href="B19922_15.xhtml#_idParaDest-396">The full API management life cycle</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_15.xhtml#_idParaDest-397">API gateway</a></li>
+						<li><a href="B19922_15.xhtml#_idParaDest-398">Mule Gateway</a>
+							<ol>
+								<li><a href="B19922_15.xhtml#_idParaDest-399">API proxies</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-400">When to use an API proxy</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-401">API proxies versus API autodiscovery</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_15.xhtml#_idParaDest-402">Anypoint Service Mesh</a>
+							<ol>
+								<li><a href="B19922_15.xhtml#_idParaDest-403">Benefits of Flex Gateway</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-404">Flex Gateway in Connected Mode</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-405">Flex Gateway in Local Mode</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-406">Flex Gateway deployment models</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-407">High availability and scalability with Flex Gateway</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-408">Routing in Flex Gateway</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-409">Flex Gateway in Centralized Mode</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-410">Flex Gateway in Decentralized Mode</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-411">Flex Gateway API policies</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-412">Flex Gateway versus Mule Gateway</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_15.xhtml#_idParaDest-413">Share and discover APIs using Anypoint Platform</a>
+							<ol>
+								<li><a href="B19922_15.xhtml#_idParaDest-414">Developer portal</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-415">ACM</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-416">API Experience Hub</a></li>
+								<li><a href="B19922_15.xhtml#_idParaDest-417">ACM versus API Experience Hub</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_15.xhtml#_idParaDest-418">API Analytics</a></li>
+						<li><a href="B19922_15.xhtml#_idParaDest-419">API policies</a></li>
+						<li><a href="B19922_15.xhtml#_idParaDest-420">API Governance</a>
+							<ol>
+								<li><a href="B19922_15.xhtml#_idParaDest-421">Implementing API Governance</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_15.xhtml#_idParaDest-422">Anypoint API Manager alerts</a></li>
+						<li><a href="B19922_15.xhtml#_idParaDest-423">API security threats</a>
+							<ol>
+								<li><a href="B19922_15.xhtml#_idParaDest-424">DoS</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_15.xhtml#_idParaDest-425">Summary</a></li>
+						<li><a href="B19922_15.xhtml#_idParaDest-426">References</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_16.xhtml#_idParaDest-428">Chapter 16: Addressing Non-Functional Requirements – from a Thought to an Operation</a>
+					<ol>
+						<li><a href="B19922_16.xhtml#_idParaDest-429">Prerequisites</a></li>
+						<li><a href="B19922_16.xhtml#_idParaDest-430">What are NFRs?</a></li>
+						<li><a href="B19922_16.xhtml#_idParaDest-431">High availability</a>
+							<ol>
+								<li><a href="B19922_16.xhtml#_idParaDest-432">High availability and fault tolerance with CloudHub 1.0</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-433">High availability and fault tolerance with CloudHub 2.0</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-434">High availability and fault tolerance with the on-premises Mule runtime</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-435">High availability and fault tolerance with Runtime Fabric (bare-metal servers/VMs)</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-436">High availability and fault tolerance with Runtime Fabric (self-managed Kubernetes)</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_16.xhtml#_idParaDest-437">Scalability</a>
+							<ol>
+								<li><a href="B19922_16.xhtml#_idParaDest-438">Scalability with CloudHub 1.0</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-439">Scalability with CloudHub 2.0</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-440">Scalability with Runtime Fabric (bare-metal servers/VMs)</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-441">Scalability with Runtime Fabric (self-managed Kubernetes)</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_16.xhtml#_idParaDest-442">DR</a>
+							<ol>
+								<li><a href="B19922_16.xhtml#_idParaDest-443">DR for CloudHub 1.0 (multi-region)</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-444">DR for CloudHub 2.0 (multi-region)</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-445">DR for the on-premises Mule runtime</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_16.xhtml#_idParaDest-446">vCores allocation and optimization</a>
+							<ol>
+								<li><a href="B19922_16.xhtml#_idParaDest-447">vCores optimization and allocation with CloudHub 1.0 and CloudHub 2.0</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-448">vCores optimization and allocation with the on-premises Mule runtime</a></li>
+								<li><a href="B19922_16.xhtml#_idParaDest-449">vCores optimization and allocation with Runtime Fabric</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_16.xhtml#_idParaDest-450">Summary</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_17.xhtml#_idParaDest-452">Chapter 17: Prepare for Success</a>
+					<ol>
+						<li><a href="B19922_17.xhtml#_idParaDest-453">MCPA – Level 1 certification</a>
+							<ol>
+								<li><a href="B19922_17.xhtml#_idParaDest-454">Format of the examination</a></li>
+								<li><a href="B19922_17.xhtml#_idParaDest-455">Validity</a></li>
+								<li><a href="B19922_17.xhtml#_idParaDest-456">MCPA – Level 1 Maintenance exam</a></li>
+								<li><a href="B19922_17.xhtml#_idParaDest-457">How to prepare for MCPA – Level 1</a></li>
+								<li><a href="B19922_17.xhtml#_idParaDest-458">Why take the MCPA – Level 1 exam?</a></li>
+								<li><a href="B19922_17.xhtml#_idParaDest-459">Who should take the MCPA – Level 1 exam?</a></li>
+								<li><a href="B19922_17.xhtml#_idParaDest-460">What topics are covered in the examination?</a></li>
+								<li><a href="B19922_17.xhtml#_idParaDest-461">Strategies for answering multiple-choice questions</a></li>
+								<li><a href="B19922_17.xhtml#_idParaDest-462">System requirements for the examination</a></li>
+								<li><a href="B19922_17.xhtml#_idParaDest-463">Exam day</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_17.xhtml#_idParaDest-464">Summary</a></li>
+						<li><a href="B19922_17.xhtml#_idParaDest-465">Questions</a></li>
+						<li><a href="B19922_17.xhtml#_idParaDest-466">Further reading</a></li>
+						<li><a href="B19922_17.xhtml#_idParaDest-467">Answers</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_18.xhtml#_idParaDest-469">Chapter 18: Tackling Tricky Topics</a>
+					<ol>
+						<li><a href="B19922_18.xhtml#_idParaDest-470">Considerations for choosing the right deployment model</a>
+							<ol>
+								<li><a href="B19922_18.xhtml#_idParaDest-471">CloudHub 1.0</a></li>
+								<li><a href="B19922_18.xhtml#_idParaDest-472">CloudHub 2.0</a></li>
+								<li><a href="B19922_18.xhtml#_idParaDest-473">Runtime Fabric</a></li>
+								<li><a href="B19922_18.xhtml#_idParaDest-474">On-premises Mule runtime</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_18.xhtml#_idParaDest-475">Anypoint CLI</a></li>
+						<li><a href="B19922_18.xhtml#_idParaDest-476">Resilient API techniques</a></li>
+						<li><a href="B19922_18.xhtml#_idParaDest-477">Idempotent scope</a></li>
+						<li><a href="B19922_18.xhtml#_idParaDest-478">Cache scope</a></li>
+						<li><a href="B19922_18.xhtml#_idParaDest-479">Core components</a>
+							<ol>
+								<li><a href="B19922_18.xhtml#_idParaDest-480">Choice router</a></li>
+								<li><a href="B19922_18.xhtml#_idParaDest-481">Scatter-Gather router</a></li>
+								<li><a href="B19922_18.xhtml#_idParaDest-482">Error handling</a></li>
+								<li><a href="B19922_18.xhtml#_idParaDest-483">Transform Message</a></li>
+							</ol>
+						</li>
+						<li><a href="B19922_18.xhtml#_idParaDest-484">Use case 1</a></li>
+						<li><a href="B19922_18.xhtml#_idParaDest-485">Use case 2</a></li>
+						<li><a href="B19922_18.xhtml#_idParaDest-486">Use case 3</a></li>
+						<li><a href="B19922_18.xhtml#_idParaDest-487">Summary</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_Index.xhtml#_idParaDest-488">Index</a>
+					<ol>
+						<li><a href="B19922_BM.xhtml#_idParaDest-489">Why subscribe?</a></li>
+					</ol>
+				</li>
+				<li><a href="B19922_BM.xhtml#_idParaDest-490">Other Books You May Enjoy</a>
+					<ol>
+						<li><a href="B19922_BM.xhtml#_idParaDest-491">Packt is searching for authors like you</a></li>
+						<li><a href="B19922_BM.xhtml#_idParaDest-492">Share Your Thoughts</a></li>
+						<li><a href="B19922_BM.xhtml#_idParaDest-493">Download a free PDF copy of this book</a></li>
+					</ol>
+				</li>
+			</ol>
+		</nav>
+		<nav epub:type="landmarks">
+		<h2>Landmarks</h2>
+			<ol>
+				<li><a epub:type="cover" href="cover.xhtml">Cover</a></li>
+				<li><a epub:type="toc" href="B19922_TOC_epub.xhtml#_idContainer002">Table of Contents</a></li>
+				<li><a epub:type="index" href="B19922_Index.xhtml#_idContainer250">Index</a></li>
+			</ol>
+		</nav>
+	</body>
+</html>

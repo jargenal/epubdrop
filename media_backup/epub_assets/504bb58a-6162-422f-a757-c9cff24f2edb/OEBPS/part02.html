@@ -1,0 +1,264 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Architecture</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><div data-pdf-bookmark="Part II. Architecture" data-type="part" epub:type="part" id="Architecture_pt2">
+<h1><span class="label">Part II. </span>Architecture</h1>
+
+
+<p>Defining architecture isn’t an easy task—there<a data-primary="architecture" data-secondary="defined" data-type="indexterm" id="idm45952855504136"/> appear to be almost as many definitions of IT architecture as there are practicing architects.</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Beyond Software Architecture" data-type="sect1"><div class="sect1" id="idm45952855502792">
+<h1>Beyond Software Architecture</h1>
+
+<p>Most software architecture definitions
+cite a system’s elements and components plus their interrelationships.
+In my view, this covers only one aspect of architecture. First, IT
+architecture is much more than software architecture: unless you
+outsourced all your IT infrastructure into the public cloud, you need to
+architect networks, datacenters, computing infrastructure, storage, and
+much more. And even if you did, you still need a deployment architecture, a data architecture, and a security architecture. Second, defining which “components” you are focusing on
+constitutes a significant aspect of architecture.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>A manager once stated that he can’t understand the
+many network issues despite all the network stuff “being there.” His
+view was a physical one: Ethernet cables plugged into servers and
+switches. The complexity of network architecture, however, lies in
+virtual network segregation, routing, address translation, and much
+more. Different stakeholders see different parts of the architecture.</p>
+</div>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Three Kinds of Architecture" data-type="sect1"><div class="sect1" id="idm45952855498728">
+<h1>Three Kinds of Architecture</h1>
+
+<p>When speaking about architecture, people routinely refer to three quite different concepts, all of which relate to IT but are very different in nature:</p>
+<ol>
+<li>
+<p>A system’s architecture, defined by its structure, as in "<em>microservices</em> <span class="keep-together"><em>architecture</em>"</span></p>
+</li>
+<li>
+<p>The act of defining a system’s structure, as in “the <em>architecture committee</em>"</p>
+</li>
+<li>
+<p>A team that is involved in defining architecture, as in “we’re setting up <em>enterprise architecture</em>"</p>
+</li>
+
+</ol>
+
+<p>So, while every system has an architecture, not every organization has an architecture (unit) and even if it does, they may not get much architecture done.</p>
+
+<p>To make things a little less confusing, when I mention “architecture,” I generally refer to a system’s properties. For organizational aspects, I speak about “architects”—it’s based on humans after all.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="There Always Is an Architecture" data-type="sect1"><div class="sect1" id="idm45952855490344">
+<h1>There Always Is an Architecture</h1>
+
+<p>When speaking about a system’s architecture, it’s worth pointing out that all systems have one. You can’t build anything out of several pieces that doesn’t have any structure. Even clumping everything together into a giant monolith is an architecture decision.
+Once we come to this realization, statements like “we don’t have time for architecture” aren’t particularly meaningful. It’s simply a matter of whether you consciously
+choose your architecture or whether you let it happen to you. History has shown that the latter approach invariably leads<a data-primary="Big Ball of Mud architecture" data-type="indexterm" id="idm45952855488472"/><a data-primary="shantytown architecture" data-type="indexterm" id="idm45952855487784"/> to the infamous <em>Big Ball of Mud</em><sup><a data-type="noteref" href="part02.html#idm45952855486664" id="idm45952855486664-marker">1</a></sup> architecture, also
+referred to as <em>shantytown</em>. Although that architecture does allow for
+rapid implementation without central planning or specialized skills, it also lacks critical infrastructure and doesn’t make for a great living environment. Fatalism isn’t a great enterprise architecture strategy, so I suggest you pick your architecture.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="The Value of Architecture" data-type="sect1"><div class="sect1" id="idm45952855483752">
+<h1>The Value of Architecture</h1>
+
+<p>Because<a data-primary="architecture" data-secondary="value of" data-type="indexterm" id="idm45952855482440"/> there always is an architecture, an organization should be clear
+on what it expects from setting up an architecture function. Setting up
+an architecture team and then not letting it do its job—for example,
+by routinely subjecting architecture decisions to management decisions—is actually worse than intentionally letting things drift into a Big Ball of Mud: you pretend to define your architecture, but in reality
+you don’t. Worse yet, good architects don’t want to be in a place where
+architecture is seen as a form of corporate entertainment. If you don’t
+take architecture seriously, you won’t be able to attract and retain
+serious architects.</p>
+
+<p>IT management often believes that “architecture” is a long-term
+investment that will only pay off far into the future. Although this is
+true for some aspects—for example, managed system evolution over time—architecture can also pay off in the short-term, such as when you can
+accommodate a customer requirement late in the development cycle, when
+you gain leverage in vendor negotiations because you avoided lock-in, or
+when you can easily migrate your systems to a new datacenter location.
+Good architecture can also make a team more productive by allowing
+concurrent development and testing of components. Generally, good
+architecture buys you flexibility. In a rapidly changing world, this
+seems like a smart investment.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Principles Drive Decisions" data-type="sect1"><div class="sect1" id="idm45952855479208">
+<h1>Principles Drive Decisions</h1>
+
+<p>Architecture<a data-primary="conceptual integrity" data-type="indexterm" id="idm45952855477896"/> is a matter of trade-offs: there rarely is one single “best” architecture. For example, the option to be able to move your application to the cloud likely increased cost and complexity. Architects therefore must take the context into consideration when making architectural decisions, because that context will help them weigh the trade-offs against one another.</p>
+
+<p>Architects should also strive for conceptual integrity, that is, uniformity across system designs. This is
+best accomplished by selecting a well-defined set of architecture
+principles that are consistently applied to architectural decisions.
+Deriving these principles from a declared architecture strategy assures
+that the decisions support the strategy.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Vertical Cohesion" data-type="sect1"><div class="sect1" id="idm45952855475608">
+<h1>Vertical Cohesion</h1>
+
+<p>A<a data-primary="vertical cohesion" data-type="indexterm" id="idm45952855474312"/> good architecture is not only consistent across systems but also
+considers all layers of a software and hardware stack. Investigating new
+types of scale-out compute hardware or software-defined networks is
+useful, but if all your applications are inflexible monoliths with
+hardcoded IP addresses, you gain little. Architects therefore not only
+need to <em>ride the elevator</em> (<a data-type="xref" href="ch01.html#ArchitectElevator">Chapter 1</a>) across the
+organization but also up and down the technology stack.</p>
+
+<p>Vertical cohesion doesn’t stop at technology, but also needs to
+consider the business architecture. For example, many IT decisions can’t
+be made by IT alone but require input from the business and an
+understanding of the business structure and context.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="less_space pagebreak-before" data-pdf-bookmark="Architecting the Real World" data-type="sect1"><div class="sect1" id="idm45952855470808">
+<h1>Architecting the Real World</h1>
+
+<p>The<a data-primary="architecture" data-secondary="skills needed to create sound" data-type="indexterm" id="idm45952855469208"/><a data-primary="software architects" data-secondary="skills needed to create sound architectures" data-type="indexterm" id="idm45952855468248"/> real world is full of architectures, not just building architectures but also cities, corporate organizations, or political systems. The real world must deal with many of the same issues faced by large enterprises: lack of central governance, difficult to reverse decisions, enormous complexity, constant evolution, slow feedback cycles. That’s why architects should walk through the world with open eyes, always looking to learn from the architectures they encounter.</p>
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Architecture in the Enterprise" data-type="sect2"><div class="sect2" id="idm45952855466504">
+<h2>Architecture in the Enterprise</h2>
+
+<p>When defining architecture in large organizations, architects need to
+know a lot more than how to draw UML diagrams. They need to be able to do the following, as well:</p>
+<dl>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch08.html#IsThisArchitecture">Chapter 8, <em>Is This Architecture?</em></a></dt>
+<dd>
+<p>Distinguish whether something is architecture in the first place.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch09.html#Options">Chapter 9, <em>Architecture Is Selling Options</em></a></dt>
+<dd>
+<p>Be able to sell options to the business.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch10.html#Systems">Chapter 10, <em>Every System Is Perfect…</em></a></dt>
+<dd>
+<p>Tackle complexity by thinking in systems.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch11.html#ConfigureThis">Chapter 11, <em>Code Fear Not!</em></a></dt>
+<dd>
+<p>Know that configuration isn’t better than coding.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch12.html#Zombies">Chapter 12, <em>If You Never Kill Anything, You Will Live Among Zombies</em></a></dt>
+<dd>
+<p>Hunt zombies so that they don’t have their brain eaten.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch13.html#AutomateEverything">Chapter 13, <em>Never Send a Human <span class="keep-together">to Do a Machine’s Job</span></em></a></dt>
+<dd>
+<p>Automate everything and make the rest self-service.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch14.html#SoftwareEatstheWorld">Chapter 14, <em>If Software Eats the World, Better Use Version Control!</em></a></dt>
+<dd>
+<p>Think like software developers as everything becomes software defined.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch15.html#A4Paper">Chapter 15, <em>A4 Paper Doesn’t <span class="keep-together">Stifle Creativity</span></em></a></dt>
+<dd>
+<p>Build platforms and set standards that don’t stifle creativity.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch16.html#WorldMap">Chapter 16, <em>The IT World Is Flat</em></a></dt>
+<dd>
+<p>Navigate their IT landscape with an undistorted world map.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch17.html#CoffeeShop">Chapter 17, <em>Your Coffee Shop Doesn’t <span class="keep-together">Use Two-Phase Commit</span></em></a></dt>
+<dd>
+<p>Gain architecture insights from waiting in line at the coffee shop.</p>
+</dd>
+</dl>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="idm45952855486664"><sup><a href="part02.html#idm45952855486664-marker">1</a></sup> Brian Foote and Joseph Yoder, “Big Ball of Mud,” Laputan.org, Nov. 21, 2012, <a href="http://www.laputan.org/mud"><em class="hyperlink">http://www.laputan.org/mud</em></a>.</p></div></div></body></html>

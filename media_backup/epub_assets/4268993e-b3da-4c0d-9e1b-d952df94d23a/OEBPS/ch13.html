@@ -1,0 +1,1098 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xml:lang="en"
+lang="en"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>Enabling Microservice Success</title>
+<link rel="stylesheet" type="text/css" href="override_v1.css"/>
+<link rel="stylesheet" type="text/css" href="epub.css"/>
+</head>
+<body>
+<div id="book-content">
+<div id="sbo-rt-content"><section data-type="chapter" epub:type="chapter" data-pdf-bookmark="Chapter 13. Running Your System in Production"><div class="chapter" id="chapter13">
+<h1><span class="label">Chapter 13. </span>Running Your System in Production</h1>
+
+
+<p>As I discussed in <a data-type="xref" href="ch08.html#chapter8">Chapter 8</a>, engineering teams have to get much more involved in running the services they build when they adopt a microservice architecture. If you are releasing multiple changes a day, handing releases and production support over to another team would slow you down too much.</p>
+
+<p>That means building systems differently, but it also means operating them in production: the focus of this chapter.</p>
+
+<p>Microservices bring particular operational challenges: they are distributed systems, with many parts, and what the system as a whole looks like will generally be very different from what it looked like six months ago. As a result, documentation struggles to keep up.</p>
+
+<p>I am going to start this chapter with an overview of these operational challenges, to set the context for the following sections that will provide ways to tackle them.</p>
+
+<p>That starts with observability. Operating <a data-type="indexterm" data-primary="observability" id="id1729"></a>microservices is made a lot easier if you have built observability into your services and the system, and we’ll go over how to do that effectively. You should also consider building your own utilities and tools to give further insights into your system or to help with fixing problems.</p>
+
+<p>Observability is about being able to infer what is going on in your system from the external outputs: logs, traces, metrics, etc. To successfully run your system in production, you <em>also</em> need to be able to work out when you have an issue. Easier said than done, because all the resilience you have built in means that the system can often be in a state of partial failure. Instances are down, but all the functionality is OK. I will cover how you can develop your ability to know that something is wrong.</p>
+
+<p class="less_space pagebreak-before">The sections following on from that discuss what to do after you’ve spotted an issue. The first response—contrary to the instincts of most engineers—should be mitigation. Scale up, failover, or (depending on the type of change) roll back. Then, you need to troubleshoot, to work out what has gone wrong and why. To do that, you need documentation of the key information—the stuff that doesn’t change too 
+<span class="keep-together">often—and</span> then standardized, accessible tooling that provides you with insights into your system health. This should focus on observability over monitoring, because most problems you’ll see in a well-built and resilient distributed system will be unexpected: you’ll need to be able to dig into what’s going on.</p>
+
+<p>Finally, we’ll discuss how getting into the practice of learning from incidents will pay off. This isn’t about trying to find out who caused a problem, because focusing on blame makes it much less likely you’ll <em>really</em> understand what people were thinking, and that’s what you should be aiming for. You can use naturally occurring incidents as a kind of chaos engineering. What happened, could you tell, what didn’t happen the way you expected, and what can you change so that you don’t see the same problem again?</p>
+
+<p>OK, let’s start with that overview of the characteristics of microservices that raise significant operational challenges.</p>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Operational Challenges of Microservices"><div class="sect1" id="id219">
+<h1>Operational Challenges of Microservices</h1>
+
+<p>Microservices are operationally complex. Adopting a microservice architecture shifts complexity from build <a data-type="indexterm" data-primary="operational challenges" id="id1730"></a>time to runtime. They are distributed systems, with many events crossing boundaries between services, meaning a lot more places where a request can fail or timeout.</p>
+
+<p>When things go wrong, it can be hard to work out why—or even where. Two similar requests can take very different paths through the system, via different instances of particular services. Failure anywhere along those paths can look pretty similar in terms of the alerts you see. This gets even harder to diagnose when services developed by multiple teams are involved in a particular business capability such as “publishing an article to our website.” Does anyone understand the full end-to-end flow?</p>
+
+<p>Our growing reliance on third parties to deliver capabilities and for infrastructure brings additional challenges. Could you tell if the problem was the network, or DNS, or a third party providing a specific capability? And what would you do once you’d worked that out?</p>
+
+<p>But beyond the number of services, the flakiness of calls over a network, and the involvement of SaaS solutions, there are a couple of other very specific challenges with operating microservices. These are:</p>
+<dl>
+<dt>Different technologies mean different support knowledge is needed</dt>
+<dd>
+<p>You have the flexibility to <a data-type="indexterm" data-primary="technologies" data-secondary="different, operational challenge" id="id1731"></a>use different technologies, but you need to be able to support all those technologies in production.</p>
+</dd>
+<dt>Ephemeral infrastructure</dt>
+<dd>
+<p>If every release involves new <a data-type="indexterm" data-primary="infrastructure" data-secondary="ephemeral" id="id1732"></a><a data-type="indexterm" data-primary="ephemeral infrastructure" id="id1733"></a>infrastructure, you can’t manually configure monitoring once and forget about it.</p>
+</dd>
+<dt>Rapid change</dt>
+<dd>
+<p>Microservices enable change, but <a data-type="indexterm" data-primary="change" data-secondary="rapid change" id="id1734"></a><a data-type="indexterm" data-primary="rapid change" id="id1735"></a>that means it’s hard to maintain an up-to-date model of your system either in your head or on paper.</p>
+</dd>
+<dt>Alert overload</dt>
+<dd>
+<p>You can get a cascade of <a data-type="indexterm" data-primary="alert overload" id="id1736"></a>alerts as each service is impacted by a failure of a service it depends on, making it hard to find where the underlying issue is.</p>
+</dd>
+<dt>Complex systems run in degraded mode</dt>
+<dd>
+<p>The resilience you have built in means <a data-type="indexterm" data-primary="degraded mode" id="id1737"></a>alerts for transient issues, and ones that aren’t impacting your customers, but that makes it harder to know when something is <em>really</em> going wrong.</p>
+</dd>
+</dl>
+
+<p>Let me expand on these.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Different Technologies Mean Different Support Knowledge Is Needed"><div class="sect2" id="id220">
+<h2>Different Technologies Mean Different Support Knowledge Is Needed</h2>
+
+<p>The freedom to choose different technologies <a data-type="indexterm" data-primary="different technologies" id="dftgc"></a><a data-type="indexterm" data-primary="technologies" data-secondary="different, operational challenge" id="tcgdfg"></a>for different parts of the system means you need to understand how to support and maintain all of those technologies in production. What does a failure look like? How do backups and restores work?</p>
+
+<p>You really don’t want to be working these things out in the middle of an incident. However, it happens.</p>
+<aside data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="id1738">
+<h1>Incident 1: 404 Page on the Website</h1>
+<p>About three years after the <em>FT</em> launched a new microservices-based website, we had a production issue where many people were getting a 404 page when they hit the site.</p>
+
+<p>We opened an incident and started investigating. Quite quickly, we realized that the problem was because of a redirect we had set up. There are lots of vanities and redirects set up on ft.com, because the URL format for pages on the site for a particular topic uses the unique identifier for that topic—for example, <a href="https://www.ft.com/stream/e58e66fe-7cc6-4382-b781-1161bae8b905" class="bare"><em class="hyperlink">https://www.ft.com/stream/e58e66fe-7cc6-4382-b781-1161bae8b905</em></a>  represents the page with stories on the “technology” topic, and the string of letters and numbers at the end is the unique identifier (in this case, a UUID). It gives a unique URL but it’s not easy for people to remember or share, so <a href="https://www.ft.com/technology" class="bare"><em class="hyperlink">https://www.ft.com/technology</em></a> sends you to the same page.</p>
+
+<p>There were over 70,000 vanities or redirects that had been set up by the time this incident happened, all managed by a microservice, the <code>URL Manager</code>.</p>
+
+<p>Someone had set up a redirect to a page that didn’t exist, from a page that already had other things redirecting to it. So there were chains of redirects all leading to the 404 page.</p>
+
+<p>We tried fixing things up using the <code>URL Manager</code> but nothing worked, we just got error messages when we tried to delete some redirects. So, we decided we should restore from a backup taken before the problem data had been set up.</p>
+
+<p>By this point we had several excellent developers from the ft.com team involved. And what we realized is that none of them had ever worked on the <code>URL Manager</code>, because it had been running unchanged for years without any issues.</p>
+
+<p>And it turns out, there was not a lot of useful information in the runbook. We didn’t know where the database was running. We weren’t sure how to restore from backup—there were no instructions—in fact, we weren’t even completely sure at first that a backup existed (it did!)</p>
+
+<p>In the end, we worked out a way to edit the redirects to fix the problem so we didn’t need to restore the database, but this incident illustrates a number of the operational challenges microservices can raise.</p>
+
+<p>You can have a service that no one has looked at for a couple of years—it’s just working fine. But then when something goes wrong, you are totally reliant on the documentation, monitoring, etc., being adequate.</p>
+
+<p>Using the right tool for the job is great, until you need to work out how <em>this</em> data store is backed up. Through this incident, we learned that the <code>URL Manager</code> used a data store that nothing else in the same part of the software estate did, meaning no one responding to the incident was familiar with it.</p>
+</div></aside>
+
+<p>Having active ownership of services with the teams that build services running them in production, as discussed in Chapters <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch08.html#chapter8">8</a> and <a data-type="xref" data-xrefstyle="select:labelnumber" href="ch09.html#chapter9">9</a>, is the way to tackle this challenge.</p>
+
+<p>It’s worth remembering, though, that it’s not just about the current technologies. You might have to track down an issue with a service that was written five years ago in a programming language <a data-type="indexterm" data-primary="technologies" data-secondary="different operational challenge" data-startref="tcgdfg" id="id1739"></a><a data-type="indexterm" data-primary="different technologies" data-startref="dftgc" id="id1740"></a>no longer actively used. That means you are very reliant on keeping documentation up-to-date, as discussed in <a data-type="xref" href="#maintaining_useful_documentation">“Maintaining Useful Documentation”</a>.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Ephemeral Infrastructure"><div class="sect2" id="id221">
+<h2>Ephemeral Infrastructure</h2>
+
+<p>Both the cloud and containers encourage <a data-type="indexterm" data-primary="infrastructure" data-secondary="ephemeral" id="id1741"></a><a data-type="indexterm" data-primary="ephemeral infrastructure" id="id1742"></a>an approach to deploying changes that treats infrastructure as ephemeral.</p>
+
+<p>You don’t release new code onto a server that’s been around for years. You spin up a new VM or deploy a new container image and get rid of the old one.</p>
+
+<p>That means you can’t manually set up monitoring of your VM once and then forget about it. You need to treat infrastructure as code, and include service discovery and observability configuration as part of that. When new infrastructure is spun up, it should automatically forward logs and metrics to the right place, and any monitoring solutions should be able to find and correctly identify services regardless of where they are currently running.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Rapid Change"><div class="sect2" id="id222">
+<h2>Rapid Change</h2>
+
+<p>Generally, with microservice architectures, things change a lot. That’s good: as already discussed, small <a data-type="indexterm" data-primary="change" data-secondary="rapid change" id="id1743"></a><a data-type="indexterm" data-primary="rapid change" id="id1744"></a>changes many times a day are much less risky. But it means that there is a good chance that any interesting event is being processed slightly differently now than it was when you looked at it six months ago, and no one will have told you about all the changes.</p>
+
+<p>This also means that it’s much harder to keep documentation up-to-date. Architecture diagrams have always had a tendency to reflect what the system looked like three months ago, but that is much more of an issue when so much of the architecture is now more visible in those diagrams—since we have separate services rather than separate packages.</p>
+
+<p>As @honest_update said on Twitter, “We replaced our monolith with micro services so that every outage could be more like a murder mystery.”<sup><a data-type="noteref" id="id1745-marker" href="ch13.html#id1745">1</a></sup></p>
+
+<p>You need to be able to dig into that mystery. That means being able to find relevant information, such as code changes that have recently gone live. It means having observability tools that let you ask questions about your services without having to first add new instrumentation. And finally, it means having ways to work out the current architecture of the system by looking at it. Being able to trace events will help with this. Diagrams still have a place, but they should be a starting point to help you find out where to look more closely at a system.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Alert Overload"><div class="sect2" id="id223">
+<h2>Alert Overload</h2>
+
+<p>It’s easy to get in trouble with <a data-type="indexterm" data-primary="alert overload" id="id1746"></a>alerting when you have a microservice architecture.</p>
+
+<p>As discussed in <a data-type="xref" href="ch02.html#chapter2">Chapter 2</a>, if there is a problem connecting to the database, you’d expect an alert from the service that calls it. But if there are other services that depend on <em>that</em> service, you may get alerts from those services too. This is a particular problem if your architecture has a fair number of synchronous calls.</p>
+
+<p>That means that when things go wrong, you can get so many alerts that your email or Slack channels become unusable. You need to be smart about your alerting so that you don’t spend hours checking stuff that isn’t important and miss the stuff that is. This means focusing on alerts that give you an understanding of the real impact on a user. I’ll talk about this in <a data-type="xref" href="#getting_alerting_right">“Getting Alerting Right”</a>.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Complex Systems Run in Degraded Mode"><div class="sect2" id="id224">
+<h2>Complex Systems Run in Degraded Mode</h2>
+
+<p>Distributed systems tend to run in <a data-type="indexterm" data-primary="degraded mode" id="id1747"></a>a state of partial failure: something somewhere is broken, but the built-in resilience may be stopping that from having an impact on your customers.</p>
+
+<p>This means you can have a lot of transient alerts, or ones that don’t indicate a real issue (for example, where one of two instances is down as part of a rolling update). That can mean alerts that everyone learns to ignore. Both too many alerts and alerts that get ignored are bad news. Again, we’ll return to this in <a data-type="xref" href="#getting_alerting_right">“Getting Alerting Right”</a>.</p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Building Observability In"><div class="sect1" id="building_observability_in">
+<h1>Building Observability In</h1>
+
+<p>The first step for dealing with the operational challenges I’ve just outlined is to build observability into your systems.</p>
+
+<p>Observability is about whether you <a data-type="indexterm" data-primary="observability" data-secondary="versus monitoring" data-secondary-sortas="monitoring" id="id1748"></a><a data-type="indexterm" data-primary="monitoring" data-secondary="versus observability" data-secondary-sortas="observability" id="id1749"></a>can infer what is going on in a system by looking at its external outputs. It differs from monitoring, which generally focuses on predefining the metrics of interest.<sup><a data-type="noteref" id="id1750-marker" href="ch13.html#id1750">2</a></sup></p>
+
+<p>In the days of the monolith at the <em>FT</em>, monitoring was one of the things that was set up by a separate operations team. It focused on the hosts—disk space, CPU load, memory usage—and the boundaries of the monolith, i.e., was ft.com up?</p>
+
+<p>As developers, we may have added some logging, although I didn’t do a lot of this, because generally when we had a report of an issue, I would attempt to reproduce locally, where I could run a fair facsimile of the monolith (same code, and a subset of the data) and do step-through debugging to inspect the running code. We did also output some metrics, although I am not sure I made much use of those once they were emitted.</p>
+
+<p>If I wanted to look at the logs in production, I could jump onto a couple of boxes and grep for the information. Once you had a hit on one instance, you knew that all the relevant logs would be on that box.</p>
+
+<p>In the world of microservices, things are different. The individual services are a lot more straightforward—the complexity is in the wiring. If a request fails, you have to understand which instances that request went through, and where it all went wrong. You can’t easily replicate that and there is little point in step-through debugging in most cases.</p>
+
+<p>This makes observability important in a microservice architecture precisely <em>because</em> you likely can’t replicate a production issue elsewhere. You need to be able to look at the outputs of an event, whether those are logs, metrics, or errors, and use those to guide you toward the answer.</p>
+
+<p>Another tool that lets you get a view of an event that is very useful in a microservice architecture is distributed tracing. While you <em>can</em> get a very basic idea of the path an event takes through your system by looking at logfiles that are tagged so you can identify each event, distributed tracing systems provide a far richer visualization of traces, with an event-first view of the information.<sup><a data-type="noteref" id="id1751-marker" href="ch13.html#id1751">3</a></sup></p>
+
+<p>In a distributed system, you need ways to aggregate the information from all those individual services and instances to be able to fully understand what is going on. That means forwarding your logs, metrics, traces, and errors to other systems and finding ways to link them together. Because of ephemeral infrastructure, you also need that forwarding to be configured automatically when spinning up a new server or deploying a new container image.</p>
+
+<p>The first thing to get right, though, is logging and log aggregation, so let’s start with that.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Logging"><div class="sect2" id="id225">
+<h2>Logging</h2>
+
+<p>Logging is pretty straightforward <a data-type="indexterm" data-primary="observability" data-secondary="logging and" id="obvggg"></a><a data-type="indexterm" data-primary="logging, observability and" id="ogogbv"></a>and is still a fundamental tool for understanding what is going on in a service. Essentially, you write text out to a file on the filesystem.</p>
+
+<p>When considering what to log, focus on what information you would need in order to be able to understand what was happening during the event being logged.</p>
+
+<p>First, that means being able to tie together all the logs that relate to a particular event. This can be done by outputting a correlation ID, and will be discussed in <a data-type="xref" href="#correlation">“Correlation”</a>.</p>
+
+<p>Then, you’ll need to know which application instances processed the event. This is useful in diagnosing issues that may not be affecting all the instances. To get this information, you’ll want to write out a log at the boundary of each service. For web services, this could be an HTTP request/response string.</p>
+
+<p>You will also want to write out key decisions for the processing of an event—for example, if the request failed validation, or the result of a calculation, or where a decision got made.</p>
+
+<p>Finally, write your logs out in structured format, <a data-type="indexterm" data-primary="logs" data-secondary="structured format" id="id1752"></a><a data-type="indexterm" data-primary="structured format, logs" id="id1753"></a>and use the same format everywhere. Otherwise, you can’t query across multiple services.</p>
+
+<p>By structured format, I mean something like JSON, although at a minimum, use key-value pairs rather than unstructured text. While this may make it harder for humans to read the logs, it makes it a lot easier for machines to parse them. And mostly, you will be looking at logs through an aggregation tool.</p>
+
+<p>Let’s look at an example log line and call out some aspects of the information you should include:</p>
+
+<pre data-type="programlisting" data-code-language="json"><code class="p">{</code><code class="w"></code>
+<code class="nt">"timestamp"</code><code class="p">:</code><code class="w"> </code><code class="s2">"2022-12-23T12:34:56Z"</code><code class="p">,</code><code class="w"></code>
+<code class="nt">"level"</code><code class="p">:</code><code class="w"> </code><code class="s2">"error"</code><code class="p">,</code><code class="w"></code>
+<code class="nt">"message"</code><code class="p">:</code><code class="w"> </code><code class="s2">"Article failed validation, no author information provided"</code><code class="p">,</code><code class="w"></code>
+<code class="nt">"article_id"</code><code class="p">:</code><code class="w"> </code><code class="s2">"4744cd87-8bbc-4910-9d33-be1a816f2b18"</code><code class="p">,</code><code class="w"></code>
+<code class="nt">"correlation_id"</code><code class="p">:</code><code class="w"> </code><code class="s2">"7d965d54-0b3f-47f7-a8a1-ae2c744248f0"</code><code class="p">,</code><code class="w"></code>
+<code class="nt">"system_code"</code><code class="p">:</code><code class="w"> </code><code class="s2">"article_publisher"</code><code class="w"></code>
+<code class="p">}</code><code class="w"></code></pre>
+
+<p>While a general log message is useful, specific fields make it easier to find relevant logs: here, you could easily retrieve all the logs for <code>article_publisher</code> service instances. Related to that, use consistent field names across all your services, i.e., always <code>system_code</code> rather than <code>system-code</code>, <code>systemCode</code>, or <code>service_identifier</code>. It lets you write queries across your estate and it’s much less confusing.</p>
+
+<p>The use of a JSON object means you can use specific value types, for example, a timestamp, boolean, or text. You can also nest sets of fields that are logically related—although I haven’t done that in this example.</p>
+
+<p>It’s also a good idea to output a timestamp field. Use a four-digit year and include a time zone; normally, I would use UTC. Output to the microsecond level: don’t 
+<span class="keep-together">truncate.</span></p>
+
+<p>Indicate the log level, i.e., does this represent an ERROR, or is it INFO-level logging? Don’t output DEBUG-level information—you will already have more logs than you know what to do with, don’t make it worse!</p>
+
+<p>Include the unique system code for the service, which should be the same as the one you use in your service catalog, and <a data-type="indexterm" data-primary="observability" data-secondary="logging and" data-startref="obvggg" id="id1754"></a><a data-type="indexterm" data-primary="logging, observability and" data-startref="ogogbv" id="id1755"></a>the correlation ID that identifies the event being logged.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Monitoring and Metrics"><div class="sect2" id="id226">
+<h2>Monitoring and Metrics</h2>
+
+<p>While observability—the ability to infer <a data-type="indexterm" data-primary="observability" data-secondary="metrics and" data-tertiary="USE" id="id1756"></a><a data-type="indexterm" data-primary="metrics" data-secondary="USE" id="id1757"></a><a data-type="indexterm" data-primary="USE metrics" id="id1758"></a>the system state from outputs—is important, there’s still a place for monitoring, where you output specific metrics of interest, in a microservices world.</p>
+
+<p>If you have hosts (and you may not), then monitor the CPU, memory, and disk space. Make sure you can tell if there is an unhealthy host and move the affected services somewhere else. <a href="https://oreil.ly/FSDEs">USE</a>, developed by Brendan Gregg, is a good framing, using:</p>
+<dl>
+<dt>Utilization</dt>
+<dd>
+<p>The percentage of time the resource was servicing work in a specified time period</p>
+</dd>
+<dt>Saturation</dt>
+<dd>
+<p>The degree to which the resource has extra work it can’t service: often this is measured as queue length at a specific time</p>
+</dd>
+<dt>Errors</dt>
+<dd>
+<p>The number of errors in a specified time period</p>
+</dd>
+</dl>
+
+<p>Another useful set of metrics, particularly relevant <a data-type="indexterm" data-primary="observability" data-secondary="metrics and" data-tertiary="RED" id="id1759"></a><a data-type="indexterm" data-primary="metrics" data-secondary="RED" id="id1760"></a><a data-type="indexterm" data-primary="RED metrics" id="id1761"></a>for requests to your web services and APIs, are the RED metrics:</p>
+<dl>
+<dt>Request</dt>
+<dd>
+<p>Requests per second.</p>
+</dd>
+<dt>Errors</dt>
+<dd>
+<p>Failed requests per second.</p>
+</dd>
+<dt>Duration</dt>
+<dd>
+<p>A distribution of how long requests take. Generally, looking at mean and 99th percentile, for example.</p>
+</dd>
+</dl>
+
+<p>This is a variant on Google’s Four Golden Signals—Google also includes saturation here, but I agree with  what Tom Wilkie wrote on the Weaveworks blog (sadly no longer online), where he said that saturation of a service is a more advanced thing to measure.</p>
+
+<p>RED matches the things I tend to monitor and, if you look back at <a data-type="xref" href="ch12.html#chapter12">Chapter 12</a>, it also matches common service level indicators. If you have worked out your service level objectives, you can set up monitoring so you’ll be told when the SLO is being breached.</p>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>When first moving to microservices, we would set up monitoring of these metrics for each of our services, and add alerting. What we found is that where you have synchronous calls between services, you’ll find a cascade of alerts, making it hard to find where you need to look.</p>
+
+<p>Better in my view to have alerts only at the layer closest to the customer, because that reflects the customer impact. Then, use all those metrics via dashboards to find the service that is struggling.</p>
+</div>
+
+<p>With metrics, you need to make sure you tag in <a data-type="indexterm" data-primary="alerts" data-secondary="from metrics" data-secondary-sortas="metrics" id="id1762"></a>a way that lets you sensibly aggregate them. You want to be able to link all the instances of a service together, even after a deploy means they are running in a new container or VM.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Log Aggregation"><div class="sect2" id="id227">
+<h2>Log Aggregation</h2>
+
+<p>You need to aggregate your logs <a data-type="indexterm" data-primary="observability" data-secondary="log aggregation" id="id1763"></a><a data-type="indexterm" data-primary="log aggregation, observability and" id="id1764"></a>to be able to work out what is going on in your system. Running a microservices-based system, I spent a <em>lot</em> of time in the log aggregation tool.</p>
+
+<p>Generally, microservices log to the filesystem using one of the many available logging libraries for the programming language (for example, log4j in Java). A local process then forwards those logs to a centralized data store, generally enriching them with additional metadata: for example, the AWS region or the instance ID (things that give you context of where the log was originally written).</p>
+
+<p>There are a couple of things to be aware of here.</p>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Timing issues"><div class="sect3" id="id228">
+<h3>Timing issues</h3>
+
+<p>If you are writing logs on different <a data-type="indexterm" data-primary="observability" data-secondary="log aggregation" data-tertiary="timing issues" id="id1765"></a><a data-type="indexterm" data-primary="log aggregation, observability and" data-secondary="timing issues" id="id1766"></a>servers, you can’t be sure that the servers have their clocks in sync. That means you might see logs out of order when you look at them in your log aggregation tool. It can be pretty confusing.</p>
+
+<p>If your system relies on accurate <a data-type="indexterm" data-primary="NTP (Network Time Protocol)" id="id1767"></a>timing between services, you can use public network time protocol (NTP) servers to synchronize your clocks, including ones such as Google NTP, that “smear” leap seconds to avoid large step changes. It is also a good idea to monitor clock skew so you know if your clocks are going out of sync.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Missing or delayed logs"><div class="sect3" id="id366">
+<h3>Missing or delayed logs</h3>
+
+<p>You can end up writing a lot <a data-type="indexterm" data-primary="observability" data-secondary="log aggregation" data-tertiary="missing logs" id="id1768"></a><a data-type="indexterm" data-primary="log aggregation, observability and" data-secondary="missing logs" id="id1769"></a><a data-type="indexterm" data-primary="observability" data-secondary="log aggregation" data-tertiary="delayed logs" id="id1770"></a><a data-type="indexterm" data-primary="log aggregation, observability and" data-secondary="delayed logs" id="id1771"></a>of logs if you log every call to a microservice. Apart from the scaling challenges and cost involved, this can also overload log forwarders and other processes. You may find logs get queued and when you have a spike in load, logs take longer to get into the log aggregation tooling.</p>
+
+<p>But logs can go missing too. We were bitten by configuration defaults in our content publishing platform. We logged to the local filesystem using systemd. The default configuration for this applies a 1,000-message limit within a 30-second period. With many containers running on the same VM, we exceeded this and it took us a while to even realize we weren’t seeing the whole picture.</p>
+
+<p>Missing logs are bad, but late logs can be just as much of an issue.</p>
+
+<p>If you set up an alert—for example, to look at the number of HTTP status code 500 errors in the last 5 minutes and fire if that goes over a threshold—if the logs are delayed by 10 minutes, your alert won’t fire, even though everything is going wrong.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Correlation"><div class="sect3" id="correlation">
+<h3>Correlation</h3>
+
+<p>You need a way to work out which logs <a data-type="indexterm" data-primary="observability" data-secondary="log aggregation" data-tertiary="correlation and" id="id1772"></a><a data-type="indexterm" data-primary="log aggregation, observability and" data-secondary="correlation and" id="id1773"></a><a data-type="indexterm" data-primary="correlation, logs" id="id1774"></a>are about the same event. This is where correlation IDs are vital.</p>
+
+<p>As an event enters your system, you generate a unique ID for it, and output that using a specific key on every log. If you call out to another system, you pass that correlation ID along in the request headers. Similarly, if you send a message, you include it.</p>
+
+<p>Most API gateways and proxies will automatically do this on ingress, OpenTelemetry provides SDKs for generating them (see <a data-type="xref" href="#open_telemetry">“OpenTelemetry”</a> for more on this topic), and many modern microservice frameworks will generate/propagate correlation IDs using those SDKs.</p>
+
+<p>Correlating all the logs for a particular event was incredibly useful. You can go a long way with log aggregation and correlation IDs—at the <em>FT</em> we didn’t add a tracing tool for the content publishing services; we were able to use the logs.<sup><a data-type="noteref" id="id1775-marker" href="ch13.html#id1775">4</a></sup></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Log volume"><div class="sect3" id="id367">
+<h3>Log volume</h3>
+
+<p>You can output a lot of logs with <a data-type="indexterm" data-primary="observability" data-secondary="log aggregation" data-tertiary="volume" id="id1776"></a><a data-type="indexterm" data-primary="log aggregation, observability and" data-secondary="volume" id="id1777"></a>microservices. If you have a set of calls between microservices and you log entry to each service, the numbers rack up. For example, I worked out we would see more than 20 log lines for each content publish event.</p>
+
+<p>The <em>FT</em> didn’t publish <em>that</em> many articles, but if you are logging at that level when people hit a page on your website, you can end up paying your vendor a large amount of money.</p>
+
+<p>There are ways to cut this volume down.</p>
+
+<p class="less_space pagebreak-before">One change that the content publishing team made—after feedback from the team that owned the vendor relationship for our log aggregation tool where they pointed out that we were generating a huge percentage of the logs—was to filter out logs for any healthcheck request before sending them to the log aggregation tool.</p>
+
+<p>The healthcheck endpoints got called from our monitoring systems very frequently. For some services it was 95% of the traffic. Removing these, for cases where the service was healthy, saved a lot of money and didn’t impact our ability to dig into what was going on in the service.</p>
+
+<p>You should always think about whether to sample logs, deciding to ingest a percentage, or logs that fit a particular profile.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>It’s pretty easy to set up queries in your log aggregation tool to keep track of metrics and alert if a service level is breached. Be careful if you are filtering out some logs that you don’t reduce your ability to know whether something is really wrong.</p>
+</div>
+
+<p>You also need to think about retention times. You probably don’t want to keep logs for ages, or at least not in your central log store, because that can be expensive.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Changing vendor"><div class="sect3" id="id368">
+<h3>Changing vendor</h3>
+
+<p>With a microservice architecture <a data-type="indexterm" data-primary="observability" data-secondary="log aggregation" data-tertiary="vendor changes" id="id1778"></a><a data-type="indexterm" data-primary="log aggregation, observability and" data-secondary="vendor changes" id="id1779"></a>and vendor-specific log forwarders, you face a tough challenge if you want to try out or migrate to another vendor. You have to replace one set of vendor-specific code with another that could work quite differently. This is a daunting challenge that can make you reluctant to switch.</p>
+
+<p>Thankfully, that challenge is being met through the OpenTelemetry initiative.</p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="OpenTelemetry"><div class="sect2" id="open_telemetry">
+<h2>OpenTelemetry</h2>
+
+<p>OpenTelemetry is an open source <a data-type="indexterm" data-primary="observability" data-secondary="OpenTelemetry" id="id1780"></a><a data-type="indexterm" data-primary="OpenTelemetry" id="id1781"></a>and vendor-neutral instrumentation framework.<sup><a data-type="noteref" id="id1782-marker" href="ch13.html#id1782">5</a></sup> OpenTelemetry libraries allow you to capture logs, metrics, traces, etc., and forward them to the backend of your choice. Importantly, you instrument your code once, and can change where you send your telemetry data if you need to switch providers.</p>
+
+<p>The Honeycomb blog has a nice step-by-step <a href="https://oreil.ly/t0uw4">example</a>, for tracing, of how you might switch provider.</p>
+
+<p>I wouldn’t consider a provider now who didn’t support OpenTelemetry (as with many things, we were too early at the <em>FT</em> to be able to benefit from this portability).</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Focus on Events"><div class="sect2" id="id231">
+<h2>Focus on Events</h2>
+<p class="fix_tracking">
+Although people tend to talk about logs, metrics, monitoring, and tracing as separate things, there’s quite a bit of overlap. What you’re actually observing are events, such as someone registering as a newspaper subscriber, or publishing an article. Hopefully, those events result in outputs that you can see, that help you work out what happened.</p>
+
+<p class="fix_tracking">
+At the <em>FT</em>, we built our first microservices before tools like Honeycomb or Lightstep—which are optimized to support the observability needs of microservices—existed. That meant the most useful way for me to see what had happened was via our log aggregation tool, because our logs were all sent to one place, and all the logs for the single event would have the same correlation ID. I could look at the logs and see if anything interesting stood out.
+</p>
+
+<p>Our<a data-type="indexterm" data-primary="observability" data-secondary="events" id="id1783"></a><a data-type="indexterm" data-primary="logging, observability and" data-secondary="events" id="id1784"></a><a data-type="indexterm" data-primary="Lightstep" id="id1785"></a><a data-type="indexterm" data-primary="Honeycomb" id="id1786"></a> logs had quite a bit of information in them and they were structured as key-value pairs. I could write queries in the log aggregation tool to find other logs with the same user ID, or the same article ID, for example.</p>
+
+<p>Our logs had relatively high dimensionality, meaning that there were many different keys you could use to look at the logs—for example, the IP address, user ID, user agent, HTTP response code, and many more.</p>
+
+<p>Many of these dimensions also had <a data-type="indexterm" data-primary="cardinality, high" id="id1787"></a>high cardinality. This relates to the number of possible values for a particular dimension. Something like an HTTP response code has a few dozen values. A user ID can have a cardinality of millions.<sup><a data-type="noteref" id="id1788-marker" href="ch13.html#id1788">6</a></sup></p>
+
+<p class="less_space3">Whatever your tooling, you want to be able to look at an event and slice it up according to any dimension. Choose a tool built for high-cardinality datasets. Older tools may not support that kind of slicing and dicing effectively.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Distributed Tracing"><div class="sect2" id="id232">
+<h2>Distributed Tracing</h2>
+
+<p>While you can use a log aggregation tool <a data-type="indexterm" data-primary="observability" data-secondary="distributed tracing and" id="id1789"></a><a data-type="indexterm" data-primary="distributed tracing" id="id1790"></a><a data-type="indexterm" data-primary="tracing, distributed" id="id1791"></a>and correlation IDs to trace a request through a system, true distributed tracing tools give you a richer and more intuitive interface where you can see the path that an event took through your stack. This will include whether there were any errors, and timings for each operation.</p>
+
+<p>You need to instrument your code and find a tracing tool that works for you. OpenTelemetry supports traces, and again, I wouldn’t choose a vendor or open source tool that doesn’t support the OpenTelemetry API. You want to be able to move to a new tool without lots of work, and you should also find it easier to instrument your services and components as many frameworks and databases support OpenTelemetry.<sup><a data-type="noteref" id="id1792-marker" href="ch13.html#id1792">7</a></sup></p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Archiving Observability Data"><div class="sect2" id="id233">
+<h2>Archiving Observability Data</h2>
+
+<p>Observability can be a balancing act. You <a data-type="indexterm" data-primary="observability" data-secondary="archiving observability data" id="id1793"></a><a data-type="indexterm" data-primary="events" id="id1794"></a>want to be able to investigate the state of your system through high-cardinality data but that can be very expensive, so you also need to think about sampling of events and setting short retention times. However, this can mean no access to logs for the issue you are investigating, because they were never shipped to the log aggregation tool or have been purged.</p>
+
+<p>If you have a data platform, where you send information about events into a pipeline that gets written to a data warehouse, you can also use this data when you need to dig into an issue that has actually been going on for months undetected.</p>
+
+<p>For example, <a href="https://oreil.ly/qnGaG">Monzo</a> has implemented an event pipeline called Firehouse that sends business-important events into BigQuery. This is widely used when investigating incidents and allows them to keep fine-grained application log data for no more than a couple of weeks.</p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Building Your Own Tools"><div class="sect1" id="id234">
+<h1>Building Your Own Tools</h1>
+
+<p>While observability helps with novel <a data-type="indexterm" data-primary="tools, custom" id="id1795"></a>issues, and monitoring helps with more predictable ones, there is a place for a third thing: building custom tools that use your understanding of your own systems to give insight into production issues.</p>
+
+<p>Synthetic monitoring, already <a data-type="indexterm" data-primary="synthetic monitoring" id="id1796"></a><a data-type="indexterm" data-primary="monitoring" data-secondary="synthetic" id="id1797"></a>discussed in <a data-type="xref" href="ch10.html#chapter10">Chapter 10</a> as a type of testing in production, is also very helpful when things go wrong. If you have a ton of alerts but the synthetic monitoring is still green, you can be a little more relaxed about whatever is happening.</p>
+
+<p>At the <em>FT</em>, we also built very specific tools that helped us to work out where the publishing of content had gone wrong.</p>
+
+<p>Publishing of content went across multiple teams and systems. We <a data-type="indexterm" data-primary="Content Doctor" id="id1798"></a><a data-type="indexterm" data-primary="List Doctor" id="id1799"></a><a data-type="indexterm" data-primary="tools, custom" data-secondary="Content Doctor" id="id1800"></a><a data-type="indexterm" data-primary="tools, custom" data-secondary="List Doctor" id="id1801"></a>had two tools—<code>Content Doctor</code> and <code>List Doctor</code>—that told us what was sick.</p>
+
+<p>Both of these tools could take a unique identifier for an article or a list of articles and check whether the version on the website was the same as the one coming out of the content API, and whether that was the same as the one most recently published from the editorial content management system.</p>
+
+<p>That allowed us to quickly identify where a publish had gone wrong when someone asked us why the changes they’d published weren’t on the website or when alerts fired, and escalate to the appropriate team.</p>
+
+<p>We also built tools to help us recover from this type of issue. Content publishing is idempotent, meaning you can republish without any side effects (as long as you make sure the version you are publishing is the latest version).</p>
+
+<p>We wrote tools that allowed us to republish a specific piece of content if we thought it hadn’t made it through the publishing flow.</p>
+
+<p>The website also cycled through all content, requesting the latest version from the content API, so that any inconsistencies got fixed up over time without requiring any manual actions. It feels a little hacky but it’s very effective!</p>
+<aside data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="id1802">
+<h1>Incident 2: Can’t Update Stories on the ft.com Home Page</h1>
+<p>Let me give an example of how the tools you have built or bought can help during an incident.</p>
+
+<p>Shortly after our new website and new content publishing platform both went live, we had reports from editors that they weren’t able to update the list of stories on the home page. It’s how a lot of people discover articles on the <em>FT</em>, so it’s important to be able to update it as the news agenda changes.</p>
+
+<p>Our first assumption was that we weren’t successfully publishing updates to the list.</p>
+
+<p><strong>Tool 1. Using our 
+<span class="plain"><code>List Doctor</code></span> tool</strong></p>
+
+<p>There were probably 10 microservices involved in going from an editor pressing “publish” and a list getting updated on the website, across three different development groups at the <em>FT</em>.</p>
+
+<p>Luckily, we could check the specific list for the home page and see at what point things were going wrong.</p>
+
+<p>We found that publishing wasn’t the issue. The failure was happening when the microservices on the website tried to read the list from the underlying content APIs. So now we at least knew which team needed to work on the issue. And in fact, we could see that all our APIs were flaky. The list one was just the most obvious.</p>
+
+<p>The APIs were intermittently erroring, and carried on like that for several hours while we investigated.</p>
+
+<p><strong>Tool 2. Change logging</strong></p>
+
+<p>We realized very early on that our graph database, Neo4j, was struggling, and using a large amount of CPU—so we checked our Change API to see if there had been any recent changes. We didn’t find <a data-type="indexterm" data-primary="tools, custom" data-secondary="change logging" id="id1803"></a>anything.</p>
+
+<p>There <em>had</em> been a recent change though, with a manual load of quite a large amount of data into Neo4j. The team knew about this because it had been communicated. We just didn’t see how it could be related.</p>
+
+<p>Knowing what has recently changed is important because often, a change is the reason for things going wrong. And it’s worth asking yourself the question: are we absolutely sure that change couldn’t have caused this issue?</p>
+
+<p><strong>Tool 3. Log aggregation</strong></p>
+
+<p>The next tool we turned to was our logging, digging into what was going on using the log aggregation tool.</p>
+
+<p>It turned out that a <em>tiny</em> percentage of queries being made to the database to retrieve information about authors of our articles had become enormously inefficient as a result of those recent changes we’d made to the data model that had involved loading a lot of additional nodes and relationships into the graph.</p>
+
+<p>We eventually found this through close analysis of the range of response times for those queries in our logging tool. Looking at graphs using data for the 99th percentile of responses wasn’t helping us; we had to look at max times. This was a real “gotcha” for me because generally you get a better feel for things by excluding the outliers. But here, the outliers were the crux of the problem.</p>
+
+<p>This particular incident was challenging, but the tools we had available to us gave us the insight to make progress on it. It’s a combination of tools and experience that gives you confidence to tackle this sort of issue.</p>
+</div></aside>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Spotting Issues"><div class="sect1" id="id369">
+<h1>Spotting Issues</h1>
+
+<p>Observability helps you to investigate what’s going on in your system, but how do you find out that something is wrong? You generally don’t want the answer to be “because our customers called us up.”<sup><a data-type="noteref" id="id1804-marker" href="ch13.html#id1804">8</a></sup></p>
+
+<p>You need to set up alerting, rather than having people watching dashboards, but getting that alerting right can be a challenge, because with microservices, you can end up with an overload of alerts whenever something goes wrong.</p>
+
+<p>You want to know when something is <em>really</em> wrong, which <a data-type="indexterm" data-primary="alerts" data-secondary="tied to business impact" id="id1805"></a>means having alerts that are tied to actual business impact.</p>
+
+<p>Then, you want easy ways to find out more: healthchecks can help here.</p>
+
+<p>Finally, you need to know what normal looks like. Do you have very few sales on a Sunday evening, or is this anomalously low? The example I always use from the <em>FT</em> is Christmas Day: there are likely to be very few articles published, compared to any normal weekday, but you don’t want that to result in an alert!</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Getting Alerting Right"><div class="sect2" id="getting_alerting_right">
+<h2>Getting Alerting Right</h2>
+
+<p>You want to monitor the health of all <a data-type="indexterm" data-primary="alerting" data-secondary="setup" id="id1806"></a>your instances of all your services, but if you alert for every failure, you can end up with large volumes of alerts that all represent the same underlying issue, i.e., you have a problem in one system and everything upstream of it is also alerting.</p>
+
+<p>There are two areas to focus on when setting up alerts.</p>
+
+<p>First, are you meeting your SLOs (as discussed in <a data-type="xref" href="ch12.html#service_level_objectives">“Service Level Objectives”</a>)? Good SLOs are focused on business capabilities—for example, “Are we publishing articles quickly enough?” Alerting when you are breaching an SLO (e.g., slow responses or too high an error rate) means you are focusing on the things you’ve agreed really matter.</p>
+
+<p>Second, focus on the experience your customers are having. For a website, that means monitoring the entry point of requests into your stack. Monitoring the entry points to your system, e.g., making a call to your website or to your API endpoints, using a website monitoring tool will tell you whether your customers can access your website. These tools can make globally distributed calls, meaning they can pick up issues that aren’t affecting all your customers. This may happen, for example, if people in the US are getting timeouts because a critical service has failed over to the Europe region.</p>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>Sometimes, you will get notified that your website is down when all your services seem fine, with the problem coming from DNS or your CDN. You may think that’s not your problem, but from the perspective of your users, they cannot tell the difference between an outage caused by you and one caused by some third party.</p>
+</div>
+
+<p>It does take work to find the right balance with alerting. Normally with microservices, you end up with too many alerts, and people are reluctant to remove any. A temporary silencing of particularly noisy alerts can be a good idea. You can decide to turn them off for a while, then assess whether this made it easier or harder to support your services.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Healthchecks"><div class="sect2" id="healthchecks">
+<h2>Healthchecks</h2>
+
+<p>Healthchecks provide a standardized <a data-type="indexterm" data-primary="alerting" data-secondary="healthchecks" id="ltrhkcc"></a><a data-type="indexterm" data-primary="healthchecks" data-secondary="alerting and" id="hthck"></a>format for every service to report its own health. Typically there are one or more dependency checks within the healthcheck: can the service query its database, or connect to a queue?</p>
+
+<p>Let me start with an example. The <em>FT’</em>s healthcheck standard defined a specific HTTPS endpoint for any web application for a healthcheck, on a standard URL path, and returning a standard JSON format that looked like this:</p>
+
+<pre data-type="programlisting" data-code-language="json"><code class="p">{</code><code class="w"></code>
+<code class="w">    </code><code class="nt">"schemaVersion"</code><code class="p">:</code><code class="w"> </code><code class="mi">1</code><code class="p">,</code><code class="w"></code>
+<code class="w">    </code><code class="nt">"systemCode"</code><code class="p">:</code><code class="w"> </code><code class="s2">"article_publisher"</code><code class="p">,</code><code class="w"></code>
+<code class="w">    </code><code class="nt">"name"</code><code class="p">:</code><code class="w"> </code><code class="s2">"ArticlePublisher"</code><code class="p">,</code><code class="w"></code>
+<code class="w">    </code><code class="nt">"description"</code><code class="p">:</code><code class="w"> </code><code class="s2">"Publishes/updates/deletes articles"</code><code class="p">,</code><code class="w"></code>
+<code class="w">    </code><code class="nt">"checks"</code><code class="p">:</code><code class="w"> </code><code class="p">[</code><code class="w"></code>
+<code class="w">        </code><code class="p">{</code><code class="w"></code>
+<code class="w">            </code><code class="nt">"lastUpdated"</code><code class="p">:</code><code class="w"> </code><code class="s2">"2016-10-29T16:17:382"</code><code class="p">,</code><code class="w"></code>
+<code class="w">            </code><code class="nt">"ok"</code><code class="p">:</code><code class="w"> </code><code class="kc">true</code><code class="p">,</code><code class="w"></code>
+<code class="w">            </code><code class="nt">"panicGuide"</code><code class="p">:</code><code class="w"> </code><code class="s2">"https://link_to_run_book"</code><code class="p">,</code><code class="w"></code>
+<code class="w">            </code><code class="nt">"name"</code><code class="p">:</code><code class="w"> </code><code class="s2">"Connectivity to content data store"</code><code class="p">,</code><code class="w"></code>
+<code class="w">            </code><code class="nt">"id"</code><code class="p">:</code><code class="w"> </code><code class="s2">"Connectivity to content data store"</code><code class="p">,</code><code class="w"></code>
+<code class="w">            </code><code class="nt">"severity"</code><code class="p">:</code><code class="w"> </code><code class="mi">1</code><code class="p">,</code><code class="w"></code>
+<code class="w">            </code><code class="nt">"businessImpact"</code><code class="p">:</code><code class="w"> </code><code class="s2">"Articles cannot be published"</code><code class="p">,</code><code class="w"></code>
+<code class="w">            </code><code class="nt">"technicalSummary"</code><code class="p">:</code><code class="w"></code>
+<code class="w">                </code><code class="s2">"Cannot connect to the content MongoDB cluster"</code><code class="w"></code>
+<code class="w">        </code><code class="p">}</code><code class="w"></code>
+<code class="w">    </code><code class="p">]</code><code class="w"></code>
+<code class="p">}</code><code class="w"></code></pre>
+
+<p>Let me explain some of the fields and why we built it this way:</p>
+<dl>
+<dt><code>schemaVersion</code></dt>
+<dd>
+<p>This was included to allow us to upgrade the healthcheck in a non-backwards compatible way, if we needed to.</p>
+</dd>
+<dt><code>systemCode</code>, <code>name</code>, <code>description</code></dt>
+<dd>
+<p>The unique service name, as stored in our system catalog, but also a friendly name and a description of what the service does, as context for humans reading this check.</p>
+</dd>
+<dt><code>checks</code></dt>
+<dd>
+<p>A list of checks, each containing:</p>
+
+<ul>
+<li>
+<p><code>lastUpdated</code>: a timestamp for when the check was last called</p>
+</li>
+<li>
+<p><code>ok</code>: true or false, indicating whether the check passed or not</p>
+</li>
+<li>
+<p><code>panicGuide</code>: a URL for the runbook, for finding detailed troubleshooting information</p>
+</li>
+<li>
+<p><code>name</code> and <code>id</code>: to uniquely identify the check</p>
+</li>
+<li>
+<p><code>severity</code>: how serious this check failing is—if the service has a fallback, or only some functions are affected, the severity would be lower than if the service cannot perform any of its functions</p>
+</li>
+<li>
+<p><code>businessImpact</code>: a business explanation of what this check failing would mean</p>
+</li>
+<li>
+<p><code>technicalSummary</code>: a technical explanation of what this check failing would mean</p>
+</li>
+</ul>
+</dd>
+</dl>
+
+<p>I want to note that healthchecks can have two audiences: machines, which use them to make decisions; and humans, who use them to understand what is going on. This leads me to a few recommendations.<sup><a data-type="noteref" id="id1807-marker" href="ch13.html#id1807">9</a></sup></p>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Aim for a realistic request, rather than a ping"><div class="sect3" id="id514">
+<h3>Aim for a realistic request, rather than a ping</h3>
+
+<p>A naive approach to healthchecks is to ping the dependency to check it is up. However, this doesn’t tell you whether the capability you need is available. For example, for a database, you want to know if you can run a query. A healthcheck that runs a simple, quick query is more likely to avoid the healthcheck saying things are fine when the database is up but is in fact so overloaded it is unhealthy.</p>
+
+<p>You should set a timeout, so that an unusually slow response also results in a failing healthcheck.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Return 200 regardless of whether checks pass"><div class="sect3" id="id515">
+<h3>Return 200 regardless of whether checks pass</h3>
+
+<p>For machines, the key information from a healthcheck is whether this service instance is itself unhealthy, in which case you won’t route traffic to it and might choose to restart it. However, there is quite a spectrum between “healthy” and “completely unhealthy,” and you don’t want to restart a service when a check failed because of a temporary network blip!</p>
+
+<p>At the <em>FT</em>, we returned status code 200 if the healthcheck returned a result, even if some or all of the checks contained in the result showed that there were problems. We treated services as unhealthy only if the call to the healthcheck failed to return a response at all.</p>
+
+<p>This turned out to be an excellent decision, because a common mistake with healthchecks is to tie the health of a service too closely to the health of its dependencies, causing a failure cascade.  A database fails, and so every service that uses that database will have a failing check. If the healthchecks for those services return an error code, you can get into a situation where all instances are marked as unhealthy, new replicas are spun up, but those are also unhealthy.</p>
+
+<p>You still want to know that there are checks failing; you just don’t want to have that kick off a lot of unnecessary service restarts.</p>
+
+<p>It’s better to have the service itself handle behavior when a dependency is unavailable, failing quickly with an error message when it can’t access its data store (see the discussion on <a data-type="xref" href="ch12.html#handling_cascading_failures">“Handling Cascading Failures”</a>).</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Use healthchecks in dashboards"><div class="sect3" id="id235">
+<h3>Use healthchecks in dashboards</h3>
+<p class="fix_tracking">
+Healthchecks were the basis for almost all our production monitoring of applications (as opposed to infrastructure) at the <em>FT</em>. This is where humans interacted with <span class="keep-together">healthchecks.</span></p>
+
+<p>We had<a data-type="indexterm" data-primary="dashboards, healthchecks" id="id1808"></a> dashboards that showed a tile for each service, showing overall health status. Where the service had any failed checks, the tile would show the number of failures out of the total, and the severity of the most serious failure (see <a data-type="xref" href="#figure13-1">Figure 13-1</a>).</p>
+
+<figure><div id="figure13-1" class="figure">
+<img src="assets/emss_1301.png" alt="A grid of tiles, with each tile showing service name, service level, and status. Failing services show the number of failed checks out of the total, and the severity of the failure." width="829" height="581"/>
+<h6><span class="label">Figure 13-1. </span>The 
+<span class="plain">FT</span>’s healthcheck-based dashboards, with two services that have some healthcheck failures. “Platinum” indicates that these are critical services.</h6>
+</div></figure>
+
+<p>Clicking on a tile would give you more details, including a link to the actual service’s healthcheck URL.</p>
+
+<p>Healthchecks would be called regularly to keep the dashboards up-to-date—for example, every five minutes. Owners of the service didn’t have to <em>run</em> the check every time the healthcheck endpoint was called; they could choose to cache results for a period of time. Given you don’t know how frequently a healthcheck will get called, caching can be a good move. It reduces traffic between services and minimizes the likelihood of false alarms from alerts due to transient errors (particularly if you don’t cache failed responses but instead<a data-type="indexterm" data-primary="dependencies" data-secondary="healthchecks" id="id1809"></a> retry).</p>
+
+<p class="less_space pagebreak-before">Largely, healthchecks test dependencies, which means that you can end up with a lot of tiles going red when there’s a problem in a downstream service. However, this reflects the reality: if that happens, you have a service that’s failing that has a lot of impact!</p>
+
+<p>If you have a resilient system and only one of two instances of a service is down, you shouldn’t get failing healthchecks from dependent services: they should have their requests routed to the instance that is up. See <a data-type="xref" href="#figure13-2">Figure 13-2</a> for a simple illustration of what I mean here. On the left is a system without redundancy. When service <em>A</em> is down, both <em>B</em> and <em>C</em> will have failing healthchecks. On the right, there are two instances of service <em>A</em>, and when one instance is down, requests will be routed by the load balancer to the other instance. Neither <em>B</em> nor <em>C</em> should have failing healthchecks.</p>
+
+<figure><div id="figure13-2" class="figure">
+<img src="assets/emss_1302.png" alt="Two sets of service calls from services B and C to service A." width="1145" height="737"/>
+<h6><span class="label">Figure 13-2. </span>Two systems made up of three services. One instance of service 
+<span class="plain">A</span> is down in both cases, with a different effect on healthchecks for calling services.</h6>
+</div></figure>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Be aware of related costs"><div class="sect3" id="id372">
+<h3>Be aware of related costs</h3>
+
+<p>Healthcheck calls can represent a high percentage of the traffic in your system. That means you need to be careful about costs associated with those calls. For example, if you log every request to a web service, you will probably want to filter out successful calls to a healthcheck when forwarding logs to your log aggregation service, because these calls will represent a large amount of your log volumes and they aren’t something you need to inspect.</p>
+
+<p>Filtering these out helps avoid unnecessary cost, but it also helps with observability. These calls can massively outnumber the business-related calls, meaning you constantly have to start by <a data-type="indexterm" data-primary="alerting" data-secondary="healthchecks" data-startref="ltrhkcc" id="id1810"></a><a data-type="indexterm" data-primary="healthchecks" data-secondary="alerting and" data-startref="hthck" id="id1811"></a>filtering them out when you are querying logs.</p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Monitoring Business Outcomes"><div class="sect2" id="mbo204">
+<h2>Monitoring Business Outcomes</h2>
+
+<p>I talked about synthetic monitoring in <a data-type="xref" href="ch10.html#mat104">“Monitoring as Testing”</a> as part of “monitoring as testing.” Running automated <a data-type="indexterm" data-primary="monitoring" data-secondary="synthetic" id="id1812"></a><a data-type="indexterm" data-primary="monitoring" data-secondary="business outcomes and" id="id1813"></a><a data-type="indexterm" data-primary="monitoring" data-secondary="semantic" id="id1814"></a><a data-type="indexterm" data-primary="semantic monitoring" id="id1815"></a>tests for key business capabilities is very effective at telling you when something is wrong. It is also great at telling you that things are broken when no user is actually currently doing anything: for newspapers, there aren’t many publishes at certain times of day, but it’s still good to know if things are broken. A nice side effect is that the synthetic publishes also avoid a common monitoring issue where you fire an alert when traffic is much less than expected for a particular day of the week. It’s almost bound to fire on bank holidays.</p>
+
+<p>Building on this idea of monitoring business outcomes, you can also do what I think of as semantic monitoring. You want to know whether <em>real</em> activity is working in 
+<span class="keep-together">production.</span></p>
+
+<p>For example, our editorial team was inventive; journalists often used our software to do something we had totally not expected or allowed for. They were used to finding workarounds to get things from our monolithic content management system through and showing as they liked on the website. If they could find a way, they would do it.</p>
+<p class="fix_tracking">
+That meant it was good to keep an eye on publishes in production and whether they were successful. Which of course means you need to understand what “successful” means.</p>
+
+<p>We had a distributed multiregion system with multiple data stores. Whenever an article was published, we would update MongoDB, Neo4j, Elastic Search, and S3 in both the EU and the US. And this was not done within a transaction so there was no way to roll back on error—so a publish could result in an inconsistent state.</p>
+
+<p>We wanted to know whether a piece of content got <em>completely</em> successfully published. So we built a service that validated for success in publishing for every publish event, the <code>Publish Monitor</code>, shown in <a data-type="xref" href="#figure13-3">Figure 13-3</a>.</p>
+
+<p>The <code>Publish Monitor</code> registered to be notified about any new publish events coming into the stack. And then it checked all the possible endpoints, in both the EU and the US regions.</p>
+
+<p>If any part failed to be updated within two minutes, there was an alert and we could follow a manual process to republish. This was safe because publishing is idempotent: you can do it multiple times and end up in the same state.</p>
+
+<p>We monitored this service exactly as any other service—the healthcheck returning healthy here means “did every real publish event reach all the necessary places within two minutes?”</p>
+
+<figure><div id="figure13-3" class="figure">
+<img src="assets/emss_1303.png" alt="An architecture diagram that shows the monitor listening for publishing notifications and querying multiple endpoints across two AWS regions" width="1259" height="805"/>
+<h6><span class="label">Figure 13-3. </span>The 
+<span class="plain">FT</span>’s 
+<span class="plain"><code>Publish Monitor</code></span> service architecture. The 
+<span class="plain"><code>Publish Monitor</code></span> subscribes to publish notifications and then calls every API endpoint across multiple regions to make sure the article made it to every data store.</h6>
+</div></figure>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Understanding What Normal Looks Like"><div class="sect2" id="id516">
+<h2>Understanding What Normal Looks Like</h2>
+
+<p>You will struggle to spot issues if you don’t know what normal operation of your system looks like. This includes what kind of load you have and how it varies over time, the percentage of errors, and how long requests normally take to process. Being familiar with what your graphs and metrics look like will help you identify when things are definitely going wrong.</p>
+
+<p>This is where chaos engineering, discussed in <a data-type="xref" href="ch12.html#chapter12">Chapter 12</a>, can pay off. You don’t just test your resilience, you also get to know what things look like in normal state, and when part of your system is down, or slow.</p>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Mitigation"><div class="sect1" id="id237">
+<h1>Mitigation</h1>
+
+<p>Once you know something is wrong, you should aim for mitigation as soon as possible. You don’t actually need to <a data-type="indexterm" data-primary="mitigation" id="id1816"></a>understand what went wrong to be able to take actions that are pretty low risk and might fix the issue.</p>
+
+<p class="less_space pagebreak-before">I mentioned this in <a data-type="xref" href="ch08.html#chapter8">Chapter 8</a> so I will just briefly repeat here that the following could help:</p>
+<dl>
+<dt>Fail over to a different region</dt>
+<dd>
+<p>If you are seeing errors in one region, fail over to the other.</p>
+</dd>
+<dt>Scale up</dt>
+<dd>
+<p>Take pressure off your systems. If there is a load spike, scaling up should help, and scaling up for a few hours is not likely to be super costly.</p>
+</dd>
+<dt>Roll back any change that just went live</dt>
+<dd>
+<p>If it doesn’t fix the problem, at least that means you’ve ruled it out as the cause. There is a caveat here, though, which is that rolling back a change that has affected data can be tricky. This is where teams doing the releases for their own services is important: you should be able to make an assessment of whether a roll back is sensible or safe.<sup><a data-type="noteref" id="id1817-marker" href="ch13.html#id1817">10</a></sup></p>
+</dd>
+</dl>
+
+<p>To be able to use these mitigations safely, you should automate them as much as possible. Ideally, you make a decision and click a button in your CI tool, your platform, or your cloud provider dashboard. You don’t want to be trying to do these mitigations manually, under stress.</p>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Troubleshooting"><div class="sect1" id="id517">
+<h1>Troubleshooting</h1>
+
+<p>The last thing you want to be doing when the website is on fire is working out who can grant you access to a particular tool, or asking around to find out who just released a code change to production.</p>
+
+<p>There are lots of things you can put in place that will make troubleshooting a lot 
+<span class="keep-together">easier.</span></p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Maintaining Useful Documentation"><div class="sect2" id="maintaining_useful_documentation">
+<h2>Maintaining Useful Documentation</h2>
+
+<p>Keeping documentation up-to-date has <a data-type="indexterm" data-primary="troubleshooting" data-secondary="documentation" id="tbsdc"></a><a data-type="indexterm" data-primary="documentation" data-secondary="troubleshooting and" id="dcmtbst"></a>always been a challenge: writing documentation in the first place is a task few engineers really like doing, and it’s easy to miss that you need to update documentation as a result of making changes to code. It’s worse when change happens so frequently. So, what helps?</p>
+
+<p>First off, focus on the most important information. Make sure that services have runbooks, with the information people would want to know if they got called up because things are broken.</p>
+
+<p>That starts with “who knows about this service?”: which team, and how to contact them. It should include where the code lives, and where to find observability tools that will help you understand what’s going on. Mitigation steps, such as how to fail over, are also important. A troubleshooting section is good, but there is always a danger of documenting the way the service broke last time.</p>
+
+<p>The problem is that, while it’s easy to pick up on information that’s missing from a runbook, it’s harder to find where the information is incorrect, and it’s precisely that information that can lead to wasted time when problems hit.</p>
+
+<p>There were two quite different approaches that we took at the <em>FT</em> in an attempt to make sure runbook information stayed up-to-date.</p>
+<p class="fix_tracking">
+First, as mentioned in <a data-type="xref" href="ch07.html#chapter7">Chapter 7</a>, we created a tool called SOS, which scored the information available in each runbook. This had a real impact on incomplete runbooks, because it showed people what data mattered, and how they compared to others in terms of runbook completeness. It also gave everyone a template of what a good runbook looked like: the information to add, and which information was most important.</p>
+
+<p>Something<a data-type="indexterm" data-primary="SOS (System Operability Score)" id="id1818"></a> like SOS works up to a point. Once your runbooks exist and are largely filled out, the challenge is to make sure the information stays up-to-date, and that’s harder to check automatically. So, as mentioned in <a data-type="xref" href="ch11.html#chapter11">Chapter 11</a>, we scheduled manual reviews annually for our critical services, with the last review date stored in the runbook so you could see how long ago this information was validated. These reviews were done by our first-line operations team, focusing on the information they would need if there was a problem, in order to triage or mitigate the issue (i.e., steps that didn’t involve digging into code).</p>
+<aside data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="id1819">
+<h1>Keeping Runbook Information Near the Code</h1>
+<p>I want to mention some additional work relating to runbooks even though in the end it wasn’t completely successful.</p>
+
+<p>We had a theory that keeping the runbook information with the code for each service would make it more likely that teams would check it when making code changes, so we designed a way to maintain runbook information in Markdown inside a Git repository, updating on release of that code to production (so that code and documentation changed at the same time, another desirable outcome).</p>
+
+<p>For more details see the <a href="https://oreil.ly/N-nyy">blog post</a> written by my former colleague Rhys.</p>
+
+<p>Ultimately, I don’t think it completely worked, for a number of reasons but mostly around not being frictionless enough: if it’s fiddly and sometimes goes wrong, people won’t integrate a new tool. This happened despite an approach that did user research throughout.</p>
+
+<p class="less_space pagebreak-before">We should have opted for a simpler approach to remind people that updating runbooks should be part of your standard development cycle. For example (as Rhys suggested in the blog post), automating adding a runbook maintenance checklist to each pull request.</p>
+</div></aside>
+
+<p>If you can’t catch when runbooks have gone out of date at the point it happens, there are a couple of other things you can do.</p>
+
+<p>First, make sure you include looking at the accuracy of the runbook every time you have an incident. Even if the next incident is different, you often find certain services have more incidents, just because of their complexity or importance. Focusing on getting those runbooks right is worth it.</p>
+
+<p>Additionally, try to use the runbook as a jumping off point to places where the information <em>will</em> be correct—for example, a query that takes you directly to view recent logs for this service; or tracing tools <a data-type="indexterm" data-primary="troubleshooting" data-secondary="documentation" data-startref="tbsdc" id="id1820"></a><a data-type="indexterm" data-primary="documentation" data-secondary="troubleshooting and" data-startref="dcmtbst" id="id1821"></a>that show you what services call it, and what services it depends on.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Knowing What’s Changed"><div class="sect2" id="id373">
+<h2>Knowing What’s Changed</h2>
+
+<p>I’ve spoken elsewhere in the book about <a data-type="indexterm" data-primary="troubleshooting" data-secondary="changes and" id="id1822"></a><a data-type="indexterm" data-primary="Change API" data-secondary="troubleshooting and" id="id1823"></a>the value of a Change API that can be notified for all sorts of changes. At the <em>FT</em>, we integrated the Change API into deployment pipelines to automatically get rich information about changes, including who kicked it off and the Git commit ID.</p>
+
+<p>Once you have the change information captured, you can output it in a number of ways. We posted production changes into a Slack channel: very useful as a first place to look when things seemed to be going south in production. People are reluctant to roll back a release before they feel they understand what’s gone wrong, but knowing that there was a code release just before alerts fired is very helpful in identifying where to focus investigations.</p>
+
+<p>Of course, there are other changes that cause incidents. Would you know if you got a sudden increase in traffic? Business events can have an impact: at a newspaper, that can be a push notification going out about a specific news event. Marketing activity and email newsletters can have similar impacts. It is well worth finding a way to predict where you are going to see a change in user behavior as a result of business events, and it can stop your site from falling over at the worst possible time, i.e., when you’ve just invited everyone to come to it.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" class="less_space pagebreak-before" data-pdf-bookmark="Problems with External Systems"><div class="sect2" id="id239">
+<h2>Problems with External Systems</h2>
+
+<p>Where you have external systems <a data-type="indexterm" data-primary="troubleshooting" data-secondary="external systems' problems" id="id1824"></a><a data-type="indexterm" data-primary="external systems, troubleshooting and" id="id1825"></a>that offer critical functionality, make sure you know if there is a problem with those systems.</p>
+
+<p>At a minimum, that means subscribing to the status pages for those external systems, so you know when there is an acknowledged issue.</p>
+
+<p>You should also check connections as part of service healthchecks, so your alerting will tell you when a service can’t retrieve results from an external system, in all likelihood before a status page gets updated.</p>
+
+<p>Finally, make sure you know who to contact in the event of an issue. I have been through a number of production incidents out of hours where it turned out no one knew how to raise an incident with that particular third party.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Tooling Characteristics"><div class="sect2" id="id374">
+<h2>Tooling Characteristics</h2>
+
+<p>When you are trying to fix a production <a data-type="indexterm" data-primary="tooling" data-secondary="troubleshooting and" id="tltbsgt"></a><a data-type="indexterm" data-primary="troubleshooting" data-secondary="tooling and" id="trbttl"></a>issue, you want to spend your time understanding the issue, not trying to work out where logs are for this service, or waiting for someone to grant you access to the metrics server.</p>
+
+<p>I’ve tended to find dashboards help most in working out which service or services to focus my attention on: they are great at showing load, duration, error percentage—the metrics that matter.</p>
+
+<p>When I’m trying to see what’s actually gone wrong, the tools I’ve tended to find most useful have had a few things in common.</p>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Real-time, aggregated data"><div class="sect3" id="id518">
+<h3>Real-time, aggregated data</h3>
+
+<p>The best tools show you real-time data across the whole of your systems. This means you need to standardize your tooling: teams don’t get to choose an alternative, because you lose the ability to look at flows that span services from different teams—but also because you do not want to be trying to work out where the logs are for this one service in the middle of an incident.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Easy to access"><div class="sect3" id="id519">
+<h3>Easy to access</h3>
+
+<p>All your engineers should be given access to the tools used to troubleshoot systems, as part of the onboarding process.</p>
+
+<p>You might need to restrict access to some data—for example, if you have PII in logs you might restrict who can view those logs—but in general, anyone who might be involved in supporting a system in production should have access to the tooling.</p>
+
+<p>You also want people to get comfortable with those tools, and this is something chaos engineering and other drills can help with.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect3" data-pdf-bookmark="Support investigation"><div class="sect3" id="id375">
+<h3>Support investigation</h3>
+
+<p>You want to be able to create your own queries to generate a subset of logs or a graph, and to then be able to share a link to that view.</p>
+
+<p>The tooling will of course only work if you have built observability into all the services you build, as discussed<a data-type="indexterm" data-primary="tooling" data-secondary="troubleshooting and" data-startref="tltbsgt" id="id1826"></a><a data-type="indexterm" data-primary="troubleshooting" data-secondary="tooling and" data-startref="trbttl" id="id1827"></a> in <a data-type="xref" href="#building_observability_in">“Building Observability In”</a>.</p>
+</div></section>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Learning from Incidents"><div class="sect1" id="id520">
+<h1>Learning from Incidents</h1>
+
+<p>Although I covered learning from incidents from a people and process angle in <a data-type="xref" href="ch08.html#chapter8">Chapter 8</a>, I want to touch on it again, specifically from the point of view of improving your ability to support your systems in production.</p>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>A reminder: to learn from incidents, with the aim of continuously improving your response, you need a blameless culture, where people feel safe to share what they were thinking and doing, as discussed in <a data-type="xref" href="ch08.html#blameless_culture">“Blameless Culture”</a>.</p>
+</div>
+
+<p>It’s easy to focus your attention only on what went wrong, and the actions taken to mitigate the issue and restore the system. But it is also good to look at how you found out that something had gone wrong, and how easy your tools were to use during the incident.</p>
+
+<p>Start with the alerts or monitoring that flagged this up—or the lack of them. Is the message on the alert clear? Did it point you to the right place? Was the documentation you found up-to-date?</p>
+
+<p>Could you tell whether the system was under load, or that a change had just been deployed?</p>
+
+<p>My experience is that in a well-designed, resilient system, when things do go wrong, it’s generally in an unexpected way and quite often involves a couple of issues coinciding. Fix the problem, but also take the chance to do a bit of tidying up.</p>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="What to Do If You’re Struggling"><div class="sect1" id="id521">
+<h1>What to Do If You’re Struggling</h1>
+
+<p>If you can’t tell what’s going on in production, the first thing to sort out is a central log aggregation store, instrumentation of your services to ship logs there, and outputting correlation IDs and system codes into all your logs. Agree on standard logging libraries that teams can use that provide a common structured log format. What this gives you is the ability to look at an individual event within your system.</p>
+
+<p>Then, look at monitoring of your services. Can you tell whether a server is healthy? Can you tell whether a service is? As with many things, start with your critical 
+<span class="keep-together">systems.</span> Create dashboards for the key monitoring metrics (USE and RED), and set up alerts for your critical service level objectives. Focus on business outcomes: alert when requests are taking too long, or too many are failing.</p>
+
+<p>Create runbooks, even if they contain minimal information to start with,  so you know what services you have and which teams own them. Then, starting with the most critical services, add troubleshooting information.</p>
+
+<p>Log changes made in production somewhere, somehow, so that when things go wrong it is simple for anyone to see whether code changed recently.</p>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="In Summary"><div class="sect1" id="id522">
+<h1>In Summary</h1>
+
+<p>Microservices can be hard to operate. You will probably have more technologies to keep on top of; change is so rapid that keeping documentation up-to-date is hard; and you will probably see large numbers of alerts, some of which are for transient issues.</p>
+
+<p>You need to tame your alerts so that you know when something is <em>actually</em> wrong, and you can do that through a focus on monitoring business outcomes.</p>
+
+<p>Once you know about a problem, you need to troubleshoot and for that you need good runbooks that point you to the right places to look, a record of what’s changed, and observability built into your services from the start.</p>
+
+<p>Observability is about whether you can infer what is going on in a system by looking at its external outputs. Logs, traces, and metrics are all just aspects of an event going through your system. Make sure you have some way to look at those events.</p>
+
+<p>Thankfully, there is some good tooling out there and some emerging standards such as OpenTelemetry that mean you can get observability by instrumenting your code now, and likely won’t have to do that again if you want to change provider.</p>
+</div></section>
+<div data-type="footnotes"><p data-type="footnote" id="id1745"><sup><a href="ch13.html#id1745-marker">1</a></sup> <a href="https://oreil.ly/v9mug">Tweet from Honest Update</a>, October 2015.</p><p data-type="footnote" id="id1750"><sup><a href="ch13.html#id1750-marker">2</a></sup> For a detailed introduction to observability engineering, see Charity Majors et al., <a href="https://learning.oreilly.com/library/view/observability-engineering/9781492076438/" class="orm:hideurl"><em>Observability Engineering: Achieving Production Excellence</em></a> (Sebastopol: O’Reilly, 2022).</p><p data-type="footnote" id="id1751"><sup><a href="ch13.html#id1751-marker">3</a></sup> You can and should think of both logs and traces as views of an event, which is what you are really interested in. Glen Mailer expands on this in his talk, <a href="https://oreil.ly/xtz1z">“An Observable Service with No Logs”</a>.</p><p data-type="footnote" id="id1775"><sup><a href="ch13.html#id1775-marker">4</a></sup> At least for the first few years when I was part of that team.</p><p data-type="footnote" id="id1782"><sup><a href="ch13.html#id1782-marker">5</a></sup> See <a href="https://oreil.ly/mtFym">“What Is OpenTelemetry?”</a></p><p data-type="footnote" id="id1788"><sup><a href="ch13.html#id1788-marker">6</a></sup> Honeycomb has done a lot to popularize the idea of observability versus monitoring and the importance of support for high cardinality. Its <a href="https://oreil.ly/mS4f3">documentation</a> explains high cardinality well.</p><p data-type="footnote" id="id1792"><sup><a href="ch13.html#id1792-marker">7</a></sup> See the OpenTelemetry documentation on <a href="https://oreil.ly/K64Ul">“Traces”</a>.</p><p data-type="footnote" id="id1804"><sup><a href="ch13.html#id1804-marker">8</a></sup> Although this can be a really effective backup, particularly if you have a smallish number of users, a good communication channel for them to quickly raise problems, and a reputation for responding and helping.</p><p data-type="footnote" id="id1807"><sup><a href="ch13.html#id1807-marker">9</a></sup> See <a href="https://oreil.ly/nYUPE">“Health Checks and Graceful Degradation in Distributed Systems”</a> by Cindy Sridharan for another angle on healthchecks.</p><p data-type="footnote" id="id1817"><sup><a href="ch13.html#id1817-marker">10</a></sup> Daniel Bryant reminded me that Knight Capital’s <a href="https://oreil.ly/BJnpM">catastrophic software incident</a> was made a <em>lot</em> worse by rolling back a change without really understanding what was going on.</p></div></div></section></div>
+</div>
+</body>
+</html>

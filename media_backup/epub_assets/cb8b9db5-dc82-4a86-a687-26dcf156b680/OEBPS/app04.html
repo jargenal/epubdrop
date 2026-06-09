@@ -1,0 +1,98 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>A Hands-On Example of Applying the Principle of Least Privilege</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:e0000000-0000-0000-0000-000006723159" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Appendix D. A Hands-On Example of Applying the Principle of Least Privilege" data-type="appendix" epub:type="appendix"><div class="appendix" id="hands-on_example_of_applyi">
+<h1><span class="label">Appendix D. </span>A Hands-On Example of Applying the Principle of Least Privilege</h1>
+<p><a contenteditable="false" data-primary="PoLP (principle of least privilege)" data-secondary="applying" data-type="indexterm" id="polp_app"/><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="policies" data-type="indexterm" id="iam_pol"/><a contenteditable="false" data-primary="policies" data-secondary="IAM (identity and access management)" data-type="indexterm" id="pol_iam"/>In this appendix, I will try to show you a hands-on example of how security professionals can apply the principle of least privilege (PoLP) to create Identity and Access Management (IAM) policies on AWS. <a data-type="xref" href="ch02.html#authorization_and_authentication_basics">Chapter 2</a> talked about PoLP at length, but as a reminder, the purpose of PoLP is to ensure that each principal (an AWS user or AWS role) within an organization gets only the bare minimum access privileges they need in order to perform their job and nothing more. Access is controlled on AWS using IAM policies. Each IAM policy in an account should serve a specific purpose and exist independently of the principal to which it is attached.</p>
+<p>Let us consider a typical organization that has many departments. For the sake of this example, I want to allow employees of the finance department to gain access to objects in a certain Amazon Simple Storage Service (Amazon S3) bucket within the organization’s account. As a responsible security administrator, I want to make sure that I apply the PoLP while defining access policies for the principals (users or roles) within my organization.</p>
+<p>Hence, in order to secure access, I will enforce the following conditions:</p>
+<ul>
+<li><p>The principal who this policy is attached to should have the AWS tag <em>department</em> set to <em>finance</em>. In other words, I want to make sure that the principal (the user or role who attempts to gain access to these objects) belongs to the finance <span class="keep-together">department</span>.</p></li>
+<li><p class="pagebreak-before less_space">Multifactor authentication (MFA) should be enabled on the account of the principal before they can gain access to any kind of data. This will prevent imposters from fooling the authentication system and stealing financial details.</p></li>
+<li><p>Objects must be accessed only over a “secure transport” (HTTPS connection).</p></li>
+</ul>
+<section data-pdf-bookmark="Step 1: Create an AWS IAM Policy for Your Task" data-type="sect1"><div class="sect1" id="step_one_create_an_aws_iam_policy_for_y">
+<h1>Step 1: Create an AWS IAM Policy for Your Task</h1>
+<p>For the purpose of this appendix, I will be creating an access policy using the AWS visual editor, which can be launched by going to the Identity and Access Management page and clicking “Create policy,” as seen in <a data-type="xref" href="#the_first_step_toward_creating_a_policy">Figure D-1</a>.</p>
+<figure><div class="figure" id="the_first_step_toward_creating_a_policy">
+<img alt="" src="assets/smaa_ad01.png"/>
+<h6><span class="label">Figure D-1. </span>The first step toward creating a policy is to open the visual editor in the Policies tab on the Identity and Access Management (IAM) page.</h6>
+</div></figure>
+<p>Once you are in the visual editor for creating the IAM policy, you can start defining your IAM policy. Upon framing the policy, you can attach it to a principal in the account. This will grant them (the principal) qualified access to AWS resources. Recall from <a data-type="xref" href="ch02.html#authorization_and_authentication_basics">Chapter 2</a> that an IAM policy is a collection of statements that allow or deny access to resources. So the next step is to start defining each of the individual statements within the policy.</p>
+</div></section>
+<section data-pdf-bookmark="Step 2: Define the Service, Actions, and Effect Parameters of an IAM Policy" data-type="sect1"><div class="sect1" id="step_two_defining_the_servicecomma_acti">
+<h1>Step 2: Define the Service, Actions, and Effect Parameters of an IAM Policy</h1>
+<p>You can then define your policy statements one by one in the wizard by selecting the service you wish to specify (allow or deny) access to (in this case, AWS S3) and then selecting the action you wish to specify access to. You may also import existing policy statements from AWS-managed policies, as elaborated further. This step is illustrated in <a data-type="xref" href="#you_could_either_import_policy_statemen">Figure D-2</a>.</p>
+<figure><div class="figure" id="you_could_either_import_policy_statemen">
+<img alt="" src="assets/smaa_ad02.png"/>
+<h6><span class="label">Figure D-2. </span>You could select whether to import policy statements from an AWS-managed policy (1) and then customize as necessary. Or you could specify your statements by selecting the service and action that you wish to control access to (2) and then selecting whether you wish to grant or deny access (3).</h6>
+</div></figure>
+<p>If you already have an AWS-managed policy that fits your application use case, you can automatically import the policy statements from that AWS-managed policy and work off the boilerplate, as seen in <a data-type="xref" href="#if_you_import_an_aws-managed_policycomm">Figure D-3</a>.</p>
+<figure><div class="figure" id="if_you_import_an_aws-managed_policycomm">
+<img alt="" src="assets/smaa_ad03.png"/>
+<h6><span class="label">Figure D-3. </span>If you import an AWS-managed policy, AWS will import the common policy statements for you so you can sharpen the security controls around a baseline policy.</h6>
+</div></figure>
+</div></section>
+<section data-pdf-bookmark="Step 3: Define the Resource" data-type="sect1"><div class="sect1" id="step_three_defining_the_resource">
+<h1>Step 3: Define the Resource</h1>
+<p><a contenteditable="false" data-primary="resources" data-type="indexterm" id="idm46523885852632"/>Though it is tempting to provide access to all resources that match the service you define in Step 2, based on PoLP, it is best to qualify access only to the resources that you want to grant access to. This can be done by explicitly specifying the resource in the “Resources” section of the wizard, as shown in <a data-type="xref" href="#adding_a_resource_ensures_that_least_pr">Figure D-4</a>.</p>
+<figure><div class="figure" id="adding_a_resource_ensures_that_least_pr">
+<img alt="" src="assets/smaa_ad04.png"/>
+<h6><span class="label">Figure D-4. </span>Adding a resource ensures that least privilege is applied to all the statements in your policy.</h6>
+</div></figure>
+</div></section>
+<section data-pdf-bookmark="Step 4: Request Conditions" data-type="sect1"><div class="sect1" id="step_four_request_conditions">
+<h1>Step 4: Request Conditions</h1>
+<p><a contenteditable="false" data-primary="request conditions" data-type="indexterm" id="idm46523885849240"/>One of the most powerful tools that AWS provides you with is the ability to add conditions to your access control policies. By applying these conditions, you are ensuring that you can take the context of a request into account when deciding whether to grant (or deny) access. These conditions are specified on the policy in <a data-type="xref" href="#iam_conditions_are_a_strong_way_of_enab">Figure D-5</a>.</p>
+<figure><div class="figure" id="iam_conditions_are_a_strong_way_of_enab">
+<img alt="" src="assets/smaa_ad05.png"/>
+<h6><span class="label">Figure D-5. </span>IAM conditions are a strong way of enabling or disabling fine-grained access to your resources. In this case, I am forcing the principal to have MFA, have a tag {department: finance}, and use a secure transport while accessing this resource.</h6>
+</div></figure>
+<p>As you can see in <a data-type="xref" href="#iam_conditions_are_a_strong_way_of_enab">Figure D-5</a>, you can conditionally allow or block access in two ways:</p>
+<ul>
+<li><p>Specify your condition within the statement that allows access to the resource.</p></li>
+<li><p>Create another statement that denies access to any request that does not satisfy the condition.</p></li>
+</ul>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>Because statements that explicitly deny access tend to trump statements that allow access, in my personal experience, it is best to add multiple statements with a “deny” clause in order to evaluate conditional logic.</p>
+</div>
+<p>There are many powerful conditions that are available in AWS to make it possible to sharpen the access control mechanisms for just about every use case you can imagine. A list of all the conditions can be found in an AWS article on <a href="https://oreil.ly/UK1hJ">context keys</a>.</p>
+</div></section>
+<section data-pdf-bookmark="Step 5: Confirm the Resulting Policy" data-type="sect1"><div class="sect1" id="step_five_confirm_the_resulting_policy">
+<h1>Step 5: Confirm the Resulting Policy</h1>
+<p>You can confirm the resulting policy that you created using Steps 1–4 by going into the JSON tab of the policy and checking the statements within the policy. <a data-type="xref" href="#you_can_always_switch_to_the_json_tab_t">Figure D-6</a> shows the JSON summary of all the statements that we have created until now.</p>
+<figure><div class="figure" id="you_can_always_switch_to_the_json_tab_t">
+<img alt="" src="assets/smaa_ad06.png"/>
+<h6><span class="label">Figure D-6. </span>You can always switch to the JSON tab to check the result of the AWS Visual IAM Policy editor.</h6>
+</div></figure>
+</div></section>
+<section data-pdf-bookmark="Step 6: Save the Policy" data-type="sect1"><div class="sect1" id="step_six_save_the_policy">
+<h1>Step 6: Save the Policy</h1>
+<p>Once you have confirmed that your policy statements match your expectations, you can save your policy within your AWS account as a customer-managed policy, as shown in <a data-type="xref" href="#as_mentioned_in_chapter_twocomma_a_poli">Figure D-7</a>.</p>
+<figure><div class="figure" id="as_mentioned_in_chapter_twocomma_a_poli">
+<img alt="" src="assets/smaa_ad07.png"/>
+<h6><span class="label">Figure D-7. </span>As mentioned in <a data-type="xref" href="ch02.html#authorization_and_authentication_basics">Chapter 2</a>, a policy is a standalone control and can exist independently of a principal.</h6>
+</div></figure>
+<div data-type="tip"><h6>Tip</h6>
+
+<p>Be sure to use descriptive names to save your policies. In large organizations, a planned reuse of IAM policies can help in maintaining scalability.</p>
+</div>
+</div></section>
+<section data-pdf-bookmark="Step 7: Attach the Policy to a Principal" data-type="sect1"><div class="sect1" id="step_seven_attach_the_policy_to_a_princ">
+<h1>Step 7: Attach the Policy to a Principal</h1>
+<p>Each time a new employee joins your finance department, you can attach this policy to the employee to grant them access to the S3 bucket. <a data-type="xref" href="#you_can_attach_policies_to_users_or_rol">Figure D-8</a> shows an example of an IAM policy getting attached to a user named “gaurav.”</p>
+<figure><div class="figure" id="you_can_attach_policies_to_users_or_rol">
+<img alt="" src="assets/smaa_ad08.png"/>
+<h6><span class="label">Figure D-8. </span>You can attach policies to users or roles by entering the Identity and Access Management page, then the “Add permissions” wizard on your desired user in the Users tab (<em>or</em> going into the “Attach policies” wizard on your desired role in the Roles tab).</h6>
+</div></figure>
+</div></section>
+<section data-pdf-bookmark="Summary" data-type="sect1"><div class="sect1" id="summary-id000015">
+<h1>Summary</h1>
+<p>This appendix showed you how you can use the AWS visual IAM policy editor to create strong and focused AWS policies that provide granular and precise control against unauthorized access. Your IAM policy can contain multiple statements that ensure that PoLP is applied while granting access to your resources. To further fine-tune access control, you can use IAM policy conditions to ensure compliance with various security policy requirements within your organization.</p>
+<p><a contenteditable="false" data-primary="" data-startref="polp_app" data-type="indexterm" id="idm46523885813624"/><a contenteditable="false" data-primary="" data-startref="iam_pol" data-type="indexterm" id="idm46523885811192"/><a contenteditable="false" data-primary="" data-startref="pol_iam" data-type="indexterm" id="idm46523885809736"/>You can use statements and conditions to make sure of the following:</p>
+<ul>
+<li><p>Only the right set of principals are granted access to the resources.</p></li>
+<li><p>The access is granted only under the right circumstances by examining the context of the request.</p></li>
+<li><p>Access is explicitly denied when some required security conditions are not satisfied while requesting access.</p></li>
+</ul>
+</div></section>
+</div></section></body></html>

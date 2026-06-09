@@ -1,0 +1,308 @@
+@font-face
+{
+	font-family: "Charis";
+	src: url(fonts/CharisSILR.ttf);
+	font-style: normal;
+	font-weight: normal;
+}
+@font-face
+{
+	font-family: "Charis";
+	src: url(fonts/CharisSILB.ttf);
+	font-style: normal;
+	font-weight: bold;
+}
+@font-face
+{
+	font-family: "Charis";
+	src: url(fonts/CharisSILI.ttf);
+	font-style: italic;
+	font-weight: normal;
+}
+@font-face
+{
+	font-family: "Charis";
+	src: url(fonts/CharisSILBI.ttf);
+	font-style: italic;
+	font-weight: bold;
+}
+body
+{
+    font-family: "Times New Roman",serif;
+}
+.copyright
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    text-indent: 0.01em;
+}
+.subtitle
+{
+    font-family: "Times New Roman",serif;
+    font-size: 120%;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+.h1
+{
+    font-family: "Times New Roman",serif;
+    font-size: 180%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+.h2
+{
+    font-family: "Times New Roman",serif;
+    font-size: 160%;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+.h3
+{
+    font-family: "Times New Roman",serif;
+    font-size: 140%;
+    margin-top: 1.2em;
+    margin-bottom: 1em;
+    text-indent: 0.01em;
+}
+.h4
+{
+    font-family: "Times New Roman",serif;
+    font-size: 120%;
+    margin-top: 1em;
+    margin-bottom: .5em;
+    text-indent: 0.01em;
+}
+.h5
+{
+    font-family: "Times New Roman",serif;
+    font-size: 110%;
+    margin-top: .8em;
+    margin-bottom: .5em;
+    text-indent: 0.01em;
+}
+.TOC-chaptitle
+{
+    font-family: "Times New Roman",serif;
+    margin-top: 1em;
+    margin-bottom: .6em;
+    text-align: center;
+}
+.author
+{
+    font-family: "Times New Roman",serif;
+    font-size: 120%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    text-align: center;
+}
+.attribution
+{
+    font-family: "Times New Roman",serif;
+    text-align: right;
+    margin-right: 4em;
+    margin-top: 1em;
+}
+.caption
+{
+    margin-top: .5em;
+    margin-bottom: .5em;
+    text-align: center;
+}
+.dedication
+{
+    font-family: "Times New Roman",serif;
+    margin-left: 1em;
+    margin-top: 5em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+.blockquote
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .3em;
+    margin-bottom: .3em;
+    margin-left: 2em;
+    margin-right: 3em;
+    text-indent: 0.01em;
+}
+.image
+{
+    margin-top: .5em;
+    margin-bottom: .5em;
+    text-align: center;
+}
+.image1
+{
+    margin-top: .5em;
+    margin-bottom: .5em;
+    text-indent: 0.01em;
+}
+.center
+{
+    margin-top: .4em;
+    margin-bottom: .4em;
+    text-align: center;
+}
+.halftitle
+{
+    font-size: 120%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    text-align: center;
+    page-break-before: right;
+}
+.endnote
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .5em;
+    margin-bottom: .4em;
+    text-indent: -13pt;
+}
+.indent
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    text-indent: 1.2em;
+}
+.noindent
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    text-indent: 0.01em;
+}
+.indenthanging1
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .5em;
+    margin-bottom: .4em;
+    text-indent: -13pt;
+}
+.indenthanginga
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .6em;
+    margin-bottom: .5em;
+    text-indent: -13pt;
+}
+.indenthangingb
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .6em;
+    margin-bottom: .5em;
+    text-indent: -13pt;
+}
+.nltable
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .3em;
+    margin-right: .6em;
+    margin-left: .6em;
+    margin-bottom: .3em;
+    text-indent: 0.01em;
+}
+.nltable1
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .3em;
+    margin-right: .6em;
+    margin-left: .2em;
+    margin-bottom: .3em;
+    text-indent: 0.01em;
+}
+.publisher
+{
+    font-family: "Times New Roman",serif;
+    margin-top: 5.5em;
+    text-align: center;
+}
+.table
+{
+    font-family: "Times New Roman",serif;
+    margin-bottom: .3em;
+    margin-top: .3em;
+    margin-left: .2em;
+    text-indent: 0.01em;
+}
+span.endnoteref
+{
+    font-family: "Times New Roman",serif;
+    vertical-align: super;
+}
+span.weblink
+{
+    font-family: "Courier New",serif;
+    text-decoration: underline;
+}
+span.underline
+{
+    font-family: "Times New Roman",serif;
+    text-decoration: underline;
+}
+.indexmain
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .3em;
+    margin-bottom: .3em;
+    text-indent: 0.01em;
+}
+.indexmain1
+{
+    font-family: "Times New Roman",serif;
+    margin-top: 1.2em;
+    margin-bottom: .3em;
+    text-indent: 0.01em;
+}
+.indexsub
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .3em;
+    margin-bottom: .3em;
+    text-indent: 1.2em;
+}
+.border-bottom
+{
+    border-bottom: .1em solid #000000;
+}
+.border-bottom1
+{
+    border-bottom: .01em solid #000000;
+}
+.bgcolor
+{
+    background-color: #e6e6e6;
+}
+.abstract
+{
+        margin-top: .3em;
+        margin-bottom: .3em;
+        margin-left: 5em;
+        margin-right: 5em;
+        text-align: center;
+        background-color: #e6e6e6;
+}
+.abstract1
+{
+        margin-left: 5em;
+        margin-right: 5em;
+        text-align: center;
+}
+.speak
+{
+    font-family: "Times New Roman",serif;
+    margin-top: .6em;
+    margin-bottom: .5em;
+    margin-left: 4em;
+    text-indent: -2em;
+}
+svg
+{
+    height: 98%;
+    width: 100%;
+}

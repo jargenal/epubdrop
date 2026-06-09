@@ -1,0 +1,638 @@
+<?xml version="1.0"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="en">
+<head>
+<meta name="dtb:uid" content="9780138249595"/>
+<meta name="dtb:depth" content="1"/>
+<meta name="dtb:totalPageCount" content="208"/>
+<meta name="dtb:maxPageNumber" content="208"/>
+</head>
+<docTitle>
+<text>Software Architecture and Decision-Making: Leveraging Leadership, Technology, and Product Management to Build Great Products</text>
+</docTitle>
+<navMap>
+<navPoint id="nav-1" playOrder="1">
+<navLabel>
+<text>Cover Page</text>
+</navLabel>
+<content src="cover.xhtml"/>
+</navPoint>
+<navPoint id="nav-2" playOrder="2">
+<navLabel>
+<text>About This eBook</text>
+</navLabel>
+<content src="pref00.xhtml#pref00"/>
+</navPoint>
+<navPoint id="nav-3" playOrder="3">
+<navLabel>
+<text>Halftitle Page</text>
+</navLabel>
+<content src="halftitle.xhtml"/>
+</navPoint>
+<navPoint id="nav-4" playOrder="4">
+<navLabel>
+<text>Title Page</text>
+</navLabel>
+<content src="title.xhtml"/>
+</navPoint>
+<navPoint id="nav-5" playOrder="5">
+<navLabel>
+<text>Copyright Page</text>
+</navLabel>
+<content src="copyright.xhtml"/>
+</navPoint>
+<navPoint id="nav-6" playOrder="6">
+<navLabel>
+<text>Pearson&#8217;s Commitment to Diversity, Equity, and Inclusion</text>
+</navLabel>
+<content src="pref01.xhtml#pref01"/>
+</navPoint>
+<navPoint id="nav-7" playOrder="7">
+<navLabel>
+<text>Dedication Page</text>
+</navLabel>
+<content src="ded.xhtml#ded"/>
+</navPoint>
+<navPoint id="nav-8" playOrder="8">
+<navLabel>
+<text>Contents</text>
+</navLabel>
+<content src="toc.xhtml#toc"/>
+</navPoint>
+<navPoint id="nav-9" playOrder="9">
+<navLabel>
+<text>About the Author</text>
+</navLabel>
+<content src="pref02.xhtml#pref02"/>
+</navPoint>
+<navPoint id="nav-10" playOrder="10">
+<navLabel>
+<text>1. Introduction to Software Leadership</text>
+</navLabel>
+<content src="ch01.xhtml#ch01"/>
+<navPoint id="nav-11" playOrder="11">
+<navLabel>
+<text>Role of Judgment</text>
+</navLabel>
+<content src="ch01.xhtml#ch01lev1sec01"/>
+</navPoint>
+<navPoint id="nav-12" playOrder="12">
+<navLabel>
+<text>Goal of This Book</text>
+</navLabel>
+<content src="ch01.xhtml#ch01lev1sec02"/>
+</navPoint>
+<navPoint id="nav-13" playOrder="13">
+<navLabel>
+<text>Part I: Introduction</text>
+</navLabel>
+<content src="ch01.xhtml#ch01lev1sec03"/>
+</navPoint>
+<navPoint id="nav-14" playOrder="14">
+<navLabel>
+<text>Part II: Essential Background</text>
+</navLabel>
+<content src="ch01.xhtml#ch01lev1sec04"/>
+</navPoint>
+<navPoint id="nav-15" playOrder="15">
+<navLabel>
+<text>Part III: System Design</text>
+</navLabel>
+<content src="ch01.xhtml#ch01lev1sec05"/>
+</navPoint>
+<navPoint id="nav-16" playOrder="16">
+<navLabel>
+<text>Part IV: Putting Everything Together</text>
+</navLabel>
+<content src="ch01.xhtml#ch01lev1sec06"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-17" playOrder="17">
+<navLabel>
+<text>2. Understanding Systems, Design, and Architecture</text>
+</navLabel>
+<content src="ch02.xhtml#ch02"/>
+<navPoint id="nav-18" playOrder="18">
+<navLabel>
+<text>What Is Software Architecture?</text>
+</navLabel>
+<content src="ch02.xhtml#ch02lev1sec01"/>
+</navPoint>
+<navPoint id="nav-19" playOrder="19">
+<navLabel>
+<text>How to Design a System</text>
+</navLabel>
+<content src="ch02.xhtml#ch02lev1sec02"/>
+</navPoint>
+<navPoint id="nav-20" playOrder="20">
+<navLabel>
+<text>Five Questions</text>
+</navLabel>
+<content src="ch02.xhtml#ch02lev1sec03"/>
+</navPoint>
+<navPoint id="nav-21" playOrder="21">
+<navLabel>
+<text>Seven Principles: The Overarching Concepts</text>
+</navLabel>
+<content src="ch02.xhtml#ch02lev1sec04"/>
+</navPoint>
+<navPoint id="nav-22" playOrder="22">
+<navLabel>
+<text>Designing for an Online Bookstore</text>
+</navLabel>
+<content src="ch02.xhtml#ch02lev1sec05"/>
+</navPoint>
+<navPoint id="nav-23" playOrder="23">
+<navLabel>
+<text>Designing for the Cloud</text>
+</navLabel>
+<content src="ch02.xhtml#ch02lev1sec06"/>
+</navPoint>
+<navPoint id="nav-24" playOrder="24">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch02.xhtml#ch02lev1sec07"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-25" playOrder="25">
+<navLabel>
+<text>3. Mental Models for Understanding and Explaining System Performance</text>
+</navLabel>
+<content src="ch03.xhtml#ch03"/>
+<navPoint id="nav-26" playOrder="26">
+<navLabel>
+<text>A Computer System</text>
+</navLabel>
+<content src="ch03.xhtml#ch03lev1sec01"/>
+</navPoint>
+<navPoint id="nav-27" playOrder="27">
+<navLabel>
+<text>Models for Performance</text>
+</navLabel>
+<content src="ch03.xhtml#ch03lev1sec02"/>
+</navPoint>
+<navPoint id="nav-28" playOrder="28">
+<navLabel>
+<text>Optimization Techniques</text>
+</navLabel>
+<content src="ch03.xhtml#ch03lev1sec03"/>
+</navPoint>
+<navPoint id="nav-29" playOrder="29">
+<navLabel>
+<text>Intuitive Feel for Performance</text>
+</navLabel>
+<content src="ch03.xhtml#ch03lev1sec04"/>
+</navPoint>
+<navPoint id="nav-30" playOrder="30">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch03.xhtml#ch03lev1sec05"/>
+</navPoint>
+<navPoint id="nav-31" playOrder="31">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch03.xhtml#ch03lev1sec06"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-32" playOrder="32">
+<navLabel>
+<text>4. Understanding User Experience (UX)</text>
+</navLabel>
+<content src="ch04.xhtml#ch04"/>
+<navPoint id="nav-33" playOrder="33">
+<navLabel>
+<text>General UX Concepts for Architects</text>
+</navLabel>
+<content src="ch04.xhtml#ch04lev1sec01"/>
+</navPoint>
+<navPoint id="nav-34" playOrder="34">
+<navLabel>
+<text>UX Design for Configurations</text>
+</navLabel>
+<content src="ch04.xhtml#ch04lev1sec02"/>
+</navPoint>
+<navPoint id="nav-35" playOrder="35">
+<navLabel>
+<text>UX Design for APIs</text>
+</navLabel>
+<content src="ch04.xhtml#ch04lev1sec03"/>
+</navPoint>
+<navPoint id="nav-36" playOrder="36">
+<navLabel>
+<text>UX Design for Extensions</text>
+</navLabel>
+<content src="ch04.xhtml#ch04lev1sec04"/>
+</navPoint>
+<navPoint id="nav-37" playOrder="37">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch04.xhtml#ch04lev1sec05"/>
+</navPoint>
+<navPoint id="nav-38" playOrder="38">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch04.xhtml#ch04lev1sec06"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-39" playOrder="39">
+<navLabel>
+<text>5. Macro Architecture: Introduction</text>
+</navLabel>
+<content src="ch05.xhtml#ch05"/>
+<navPoint id="nav-40" playOrder="40">
+<navLabel>
+<text>History of Macro Architecture</text>
+</navLabel>
+<content src="ch05.xhtml#ch05lev1sec01"/>
+</navPoint>
+<navPoint id="nav-41" playOrder="41">
+<navLabel>
+<text>Modern Architectures</text>
+</navLabel>
+<content src="ch05.xhtml#ch05lev1sec02"/>
+</navPoint>
+<navPoint id="nav-42" playOrder="42">
+<navLabel>
+<text>Macro Architectural Building Blocks</text>
+</navLabel>
+<content src="ch05.xhtml#ch05lev1sec03"/>
+</navPoint>
+<navPoint id="nav-43" playOrder="43">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch05.xhtml#ch05lev1sec04"/>
+</navPoint>
+<navPoint id="nav-44" playOrder="44">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch05.xhtml#ch05lev1sec05"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-45" playOrder="45">
+<navLabel>
+<text>6. Macro Architecture: Coordination</text>
+</navLabel>
+<content src="ch06.xhtml#ch06"/>
+<navPoint id="nav-46" playOrder="46">
+<navLabel>
+<text>Approach 1: Drive Flow from Client</text>
+</navLabel>
+<content src="ch06.xhtml#ch06lev1sec01"/>
+</navPoint>
+<navPoint id="nav-47" playOrder="47">
+<navLabel>
+<text>Approach 2: Use Another Service</text>
+</navLabel>
+<content src="ch06.xhtml#ch06lev1sec02"/>
+</navPoint>
+<navPoint id="nav-48" playOrder="48">
+<navLabel>
+<text>Approach 3: Use Centralized Middleware</text>
+</navLabel>
+<content src="ch06.xhtml#ch06lev1sec03"/>
+</navPoint>
+<navPoint id="nav-49" playOrder="49">
+<navLabel>
+<text>Approach 4: Implement Choreography</text>
+</navLabel>
+<content src="ch06.xhtml#ch06lev1sec04"/>
+</navPoint>
+<navPoint id="nav-50" playOrder="50">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch06.xhtml#ch06lev1sec05"/>
+</navPoint>
+<navPoint id="nav-51" playOrder="51">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch06.xhtml#ch06lev1sec06"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-52" playOrder="52">
+<navLabel>
+<text>7. Macro Architecture: Preserving Consistency of State</text>
+</navLabel>
+<content src="ch07.xhtml#ch07"/>
+<navPoint id="nav-53" playOrder="53">
+<navLabel>
+<text>Why Transactions?</text>
+</navLabel>
+<content src="ch07.xhtml#ch07lev1sec01"/>
+</navPoint>
+<navPoint id="nav-54" playOrder="54">
+<navLabel>
+<text>Why Do We Need to Go Beyond Transactions?</text>
+</navLabel>
+<content src="ch07.xhtml#ch07lev1sec02"/>
+</navPoint>
+<navPoint id="nav-55" playOrder="55">
+<navLabel>
+<text>Going Beyond Transactions</text>
+</navLabel>
+<content src="ch07.xhtml#ch07lev1sec03"/>
+</navPoint>
+<navPoint id="nav-56" playOrder="56">
+<navLabel>
+<text>Best Practices</text>
+</navLabel>
+<content src="ch07.xhtml#ch07lev1sec04"/>
+</navPoint>
+<navPoint id="nav-57" playOrder="57">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch07.xhtml#ch07lev1sec05"/>
+</navPoint>
+<navPoint id="nav-58" playOrder="58">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch07.xhtml#ch07lev1sec06"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-59" playOrder="59">
+<navLabel>
+<text>8. Macro Architecture: Handling Security</text>
+</navLabel>
+<content src="ch08.xhtml#ch08"/>
+<navPoint id="nav-60" playOrder="60">
+<navLabel>
+<text>User Management</text>
+</navLabel>
+<content src="ch08.xhtml#ch08lev1sec01"/>
+</navPoint>
+<navPoint id="nav-61" playOrder="61">
+<navLabel>
+<text>Interaction Security</text>
+</navLabel>
+<content src="ch08.xhtml#ch08lev1sec02"/>
+</navPoint>
+<navPoint id="nav-62" playOrder="62">
+<navLabel>
+<text>Storage, GDPR, and Other Regulations</text>
+</navLabel>
+<content src="ch08.xhtml#ch08lev1sec03"/>
+</navPoint>
+<navPoint id="nav-63" playOrder="63">
+<navLabel>
+<text>Security Strategy and Advice</text>
+</navLabel>
+<content src="ch08.xhtml#ch08lev1sec04"/>
+</navPoint>
+<navPoint id="nav-64" playOrder="64">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch08.xhtml#ch08lev1sec05"/>
+</navPoint>
+<navPoint id="nav-65" playOrder="65">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch08.xhtml#ch08lev1sec06"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-66" playOrder="66">
+<navLabel>
+<text>9. Macro Architecture: Handling High Availability and Scale</text>
+</navLabel>
+<content src="ch09.xhtml#ch09"/>
+<navPoint id="nav-67" playOrder="67">
+<navLabel>
+<text>Adding High Availability</text>
+</navLabel>
+<content src="ch09.xhtml#ch09lev1sec01"/>
+</navPoint>
+<navPoint id="nav-68" playOrder="68">
+<navLabel>
+<text>Understanding Scalability</text>
+</navLabel>
+<content src="ch09.xhtml#ch09lev1sec02"/>
+</navPoint>
+<navPoint id="nav-69" playOrder="69">
+<navLabel>
+<text>Scaling for a Modern Architecture: Base Solution</text>
+</navLabel>
+<content src="ch09.xhtml#ch09lev1sec03"/>
+</navPoint>
+<navPoint id="nav-70" playOrder="70">
+<navLabel>
+<text>Scaling: The Tools of Trade</text>
+</navLabel>
+<content src="ch09.xhtml#ch09lev1sec04"/>
+</navPoint>
+<navPoint id="nav-71" playOrder="71">
+<navLabel>
+<text>Building Scalable Systems</text>
+</navLabel>
+<content src="ch09.xhtml#ch09lev1sec05"/>
+</navPoint>
+<navPoint id="nav-72" playOrder="72">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch09.xhtml#ch09lev1sec06"/>
+</navPoint>
+<navPoint id="nav-73" playOrder="73">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch09.xhtml#ch09lev1sec07"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-74" playOrder="74">
+<navLabel>
+<text>10. Macro Architecture: Microservices Considerations</text>
+</navLabel>
+<content src="ch10.xhtml#ch10"/>
+<navPoint id="nav-75" playOrder="75">
+<navLabel>
+<text>Decision 1: Handling Shared Database(s)</text>
+</navLabel>
+<content src="ch10.xhtml#ch10lev1sec01"/>
+</navPoint>
+<navPoint id="nav-76" playOrder="76">
+<navLabel>
+<text>Decision 2: Securing Microservices</text>
+</navLabel>
+<content src="ch10.xhtml#ch10lev1sec02"/>
+</navPoint>
+<navPoint id="nav-77" playOrder="77">
+<navLabel>
+<text>Decision 3: Coordinating Microservices</text>
+</navLabel>
+<content src="ch10.xhtml#ch10lev1sec03"/>
+</navPoint>
+<navPoint id="nav-78" playOrder="78">
+<navLabel>
+<text>Decision 4: Avoiding Dependency Hell</text>
+</navLabel>
+<content src="ch10.xhtml#ch10lev1sec04"/>
+</navPoint>
+<navPoint id="nav-79" playOrder="79">
+<navLabel>
+<text>Loosely Coupled, Repository-Based Teams as an Alternative to Microservices</text>
+</navLabel>
+<content src="ch10.xhtml#ch10lev1sec05"/>
+</navPoint>
+<navPoint id="nav-80" playOrder="80">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch10.xhtml#ch10lev1sec06"/>
+</navPoint>
+<navPoint id="nav-81" playOrder="81">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch10.xhtml#ch10lev1sec07"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-82" playOrder="82">
+<navLabel>
+<text>11. Server Architectures</text>
+</navLabel>
+<content src="ch11.xhtml#ch11"/>
+<navPoint id="nav-83" playOrder="83">
+<navLabel>
+<text>Writing a Service</text>
+</navLabel>
+<content src="ch11.xhtml#ch11lev1sec01"/>
+</navPoint>
+<navPoint id="nav-84" playOrder="84">
+<navLabel>
+<text>Understanding Best Practices for Writing a Service</text>
+</navLabel>
+<content src="ch11.xhtml#ch11lev1sec02"/>
+</navPoint>
+<navPoint id="nav-85" playOrder="85">
+<navLabel>
+<text>Understanding Advanced Techniques</text>
+</navLabel>
+<content src="ch11.xhtml#ch11lev1sec03"/>
+</navPoint>
+<navPoint id="nav-86" playOrder="86">
+<navLabel>
+<text>Using These Techniques in Practice</text>
+</navLabel>
+<content src="ch11.xhtml#ch11lev1sec04"/>
+</navPoint>
+<navPoint id="nav-87" playOrder="87">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch11.xhtml#ch11lev1sec05"/>
+</navPoint>
+<navPoint id="nav-88" playOrder="88">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch11.xhtml#ch11lev1sec06"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-89" playOrder="89">
+<navLabel>
+<text>12. Building Stable Systems</text>
+</navLabel>
+<content src="ch12.xhtml#ch12"/>
+<navPoint id="nav-90" playOrder="90">
+<navLabel>
+<text>Why Do Systems Fail, and What Can We Do About Them?</text>
+</navLabel>
+<content src="ch12.xhtml#ch12lev1sec01"/>
+</navPoint>
+<navPoint id="nav-91" playOrder="91">
+<navLabel>
+<text>How to Handle Known Errors</text>
+</navLabel>
+<content src="ch12.xhtml#ch12lev1sec02"/>
+</navPoint>
+<navPoint id="nav-92" playOrder="92">
+<navLabel>
+<text>Common Bugs</text>
+</navLabel>
+<content src="ch12.xhtml#ch12lev1sec03"/>
+</navPoint>
+<navPoint id="nav-93" playOrder="93">
+<navLabel>
+<text>How to Handle Unknown Errors</text>
+</navLabel>
+<content src="ch12.xhtml#ch12lev1sec04"/>
+</navPoint>
+<navPoint id="nav-94" playOrder="94">
+<navLabel>
+<text>Graceful Degradation</text>
+</navLabel>
+<content src="ch12.xhtml#ch12lev1sec05"/>
+</navPoint>
+<navPoint id="nav-95" playOrder="95">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch12.xhtml#ch12lev1sec06"/>
+</navPoint>
+<navPoint id="nav-96" playOrder="96">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch12.xhtml#ch12lev1sec07"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-97" playOrder="97">
+<navLabel>
+<text>13. Building and Evolving the Systems</text>
+</navLabel>
+<content src="ch13.xhtml#ch13"/>
+<navPoint id="nav-98" playOrder="98">
+<navLabel>
+<text>Getting Your Hands Dirty</text>
+</navLabel>
+<content src="ch13.xhtml#ch13lev1sec01"/>
+</navPoint>
+<navPoint id="nav-99" playOrder="99">
+<navLabel>
+<text>Communicating the Design</text>
+</navLabel>
+<content src="ch13.xhtml#ch13lev1sec02"/>
+</navPoint>
+<navPoint id="nav-100" playOrder="100">
+<navLabel>
+<text>Evolving the System: How to Learn from Your Users and Improve the System</text>
+</navLabel>
+<content src="ch13.xhtml#ch13lev1sec03"/>
+</navPoint>
+<navPoint id="nav-101" playOrder="101">
+<navLabel>
+<text>Leadership Considerations</text>
+</navLabel>
+<content src="ch13.xhtml#ch13lev1sec04"/>
+</navPoint>
+<navPoint id="nav-102" playOrder="102">
+<navLabel>
+<text>Summary</text>
+</navLabel>
+<content src="ch13.xhtml#ch13lev1sec05"/>
+</navPoint>
+</navPoint>
+<navPoint id="nav-103" playOrder="103">
+<navLabel>
+<text>Index</text>
+</navLabel>
+<content src="index.xhtml#index"/>
+</navPoint>
+<navPoint id="nav-104" playOrder="104">
+<navLabel>
+<text>Code Snippets</text>
+</navLabel>
+<content src="ch04_images.xhtml#ch04_images"/>
+</navPoint>
+</navMap>
+</ncx>

@@ -1,0 +1,256 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Tangible Direction over Stale Documentation</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:0439a25f-2a75-4098-aebb-6db19e715d55" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 9. Tangible Direction over Stale Documentation" data-type="chapter" epub:type="chapter"><div class="chapter" id="ch09_tangible_direction_over_stale_documentation_1721833436950596">
+<h1><span class="label">Chapter 9. </span>Tangible Direction over <span class="keep-together">Stale Documentation</span></h1>
+
+<p>The second enterprise architecture principle in the very short manifesto for effective enterprise architecture is <em>tangible direction over stale documentation</em>.<a contenteditable="false" data-primary="tangible direction over stale documentation" data-type="indexterm" id="ix_tandir"/><a contenteditable="false" data-primary="principles for effective enterprise architecture" data-secondary="tangible direction over stale documentation" data-type="indexterm" id="ix_prinEEAtandir"/></p>
+
+<p><em>Tangible</em> in the context of this principle is referring to the metaphorical meaning of having a measurable value rather than the literal meaning of being perceptible by touch. <em>Measurable value</em> in the context of architecture output is synonymous with business value. The architectural direction must have a clear association with business value to be effective. This association is what transforms documentation, a typical vehicle of delivering architectural direction, into tangible direction.</p>
+
+<p>Documentation <a contenteditable="false" data-primary="documentation" data-secondary="done well, benefits of" data-type="indexterm" id="id1098"/>done well can provide several benefits:</p>
+
+<dl>
+	<dt>Enable collaboration and communication</dt>
+	<dd>
+	<p>Documents and diagrams help focus conversations and accelerate getting people on the same page to talk through problem-solving.<a contenteditable="false" data-primary="communication" data-secondary="enabled by good documentation" data-type="indexterm" id="id1099"/><a contenteditable="false" data-primary="collaboration" data-secondary="enabled by good documentation" data-type="indexterm" id="id1100"/> In addition, documentation preserves a historical record that can help teams avoid rehashing the same topic over and over again. It is typically easier to react to something tangible that is written down and/or visualized than talked about in the abstract.</p>
+	</dd>
+	<dt>Provide clarity</dt>
+	<dd>
+	<p>Clear documentation and diagrams facilitate efficient and effective understanding of a technology solution, an architecture domain, or interactions across domains. Clarity reduces operational inefficiency that occurs from misunderstanding or misalignment.</p>
+	</dd>
+	<dt>Identify risk-based insights</dt>
+	<dd>
+	<p>Clear documents allow for identifying <a contenteditable="false" data-primary="risks" data-secondary="good documentation identifying" data-type="indexterm" id="id1101"/>areas of risk to mitigate them and enable comparison to established patterns. For example, examining a deployment <span class="keep-together">architecture</span> allows the reviewer to discover whether or not horizontal scaling is possible, and whether or not there are single points of failure that introduce resiliency and reliability risk.<a contenteditable="false" data-primary="business value" data-secondary="associating with architecture documents" data-type="indexterm" id="id1102"/><a contenteditable="false" data-primary="documentation" data-secondary="associating business value with architecture documents" data-type="indexterm" id="id1103"/></p>
+	</dd>
+</dl>
+
+<p>Every architecture document described in <a data-type="xref" href="ch02.html#ch02_key_strategy_objectives_1721833215734460">Chapter 2</a> should have an associated business value, as shown in <a data-type="xref" href="#ch09_table_1_1721833436940777">Table 9-1</a>.</p>
+
+<table id="ch09_table_1_1721833436940777">
+	<caption><span class="label">Table 9-1. </span>Example of associating business value with an architecture document</caption>
+	<thead>
+		<tr>
+			<th>Architecture document</th>
+			<th>Possible business value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p>Architecture principles</p>
+			</td>
+			<td>
+			<p>X% increased productivity due to consistent and sustainable decision making</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Architecture standards</p>
+			</td>
+			<td>
+			<p>X% reduction in arbitrary uniqueness, thereby enabling Y% cost savings</p>
+
+			<p>Z% increased productivity due to conformance and avoidance of compliance issues</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Architecture frameworks</p>
+			</td>
+			<td>
+			<p>X% increased productivity due to clear guidelines</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Architecture patterns / best practices</p>
+			</td>
+			<td>
+			<p>X% increased productivity due to reuse</p>
+
+			<p>Y% cost savings due to avoiding compliance issues</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Architecture diagrams</p>
+			</td>
+			<td>
+			<p>Depends on the problem being solved as depicted in the diagram—for example, X% cost savings or Y% improvement in risk and compliance posture</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Architecture metrics</p>
+			</td>
+			<td>
+			<p>X% increase in operational efficiency based on data insights</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>As <a data-type="xref" href="ch06.html#ch06_proactive_and_reactive_1721833354118730">Chapter 6</a> discussed, architecture strategy is another key architectural output that uses documentation. <a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="use of documentation" data-type="indexterm" id="id1104"/><a contenteditable="false" data-primary="documentation" data-secondary="architecture strategy using" data-type="indexterm" id="id1105"/>It can be very difficult to quantify the impact of an architecture strategy, especially when it can take years to deliver against the direction set out in the strategy. <a contenteditable="false" data-primary="problems" data-secondary="sizing" data-type="indexterm" id="id1106"/>To help overcome this challenge, I recommend getting into the habit of sizing the problem that is being solved by the strategy. If you can size the problem—by understanding who or what is impacted, to what degree, and what is being impeded or lost—then you can say that the strategy will provide quantifiable benefits for solving it.</p>
+
+<p>For example, an architectural serverless strategy could solve a problem around maintaining nonserverless infrastructure and frequent disruptions from needing to patch vulnerabilities, which relates to total cost of ownership and productivity. There could be a one-time trade-off of migration or conversion cost to reach a serverless state for existing systems, but overall the strategic benefit adds up over time. Incremental milestones could be defined to show progress against achieving these benefits.</p>
+
+<p>The rest of this chapter is devoted to concepts that allow for tangible direction to be defined and accepted.</p>
+
+<section data-pdf-bookmark="The Importance of Experimentation" data-type="sect1"><div class="sect1" id="ch09_the_importance_of_experimentation_1721833436950689">
+<h1>The Importance of Experimentation</h1>
+
+<p>One pitfall of architecture is being too theoretical or abstract to be understandable, and therefore being unable to provide tangible direction. <a contenteditable="false" data-primary="tangible direction over stale documentation" data-secondary="importance of experimentation" data-type="indexterm" id="id1107"/><a contenteditable="false" data-primary="experimentation, importance of" data-type="indexterm" id="id1108"/>Architecture assertions need to be grounded in technical fact for many reasons, including getting alignment based on trust and confidence that the architecture direction is correct.</p>
+
+<p>One popular method to yield technical facts is experimentation. <em>Experimentation</em> can take the form of proof of <a contenteditable="false" data-primary="proof of concept" data-type="indexterm" id="id1109"/>concepts or pilots to prove out the ideas in the architecture. <a contenteditable="false" data-primary="pilots" data-type="indexterm" id="id1110"/>For example, if the architecture direction is to use serverless technology because it will save labor and time, then conduct an experiment to prove that that is in fact the outcome of using serverless technology, and that it is in fact possible to use serverless technology in the current systems. It is likely that there will be lessons learned from such experiments that will strengthen the overall strategy for how to achieve serverless at scale.</p>
+
+<p>Another method is to review proven industry case studies and demonstrations and use these as proof for an architecture recommendation. <a contenteditable="false" data-primary="case studies" data-secondary="proven industry case studies, using as proof for architecture recommendation" data-type="indexterm" id="id1111"/>This method is not necessarily enough on its own. Experimentation in your own organization’s environment is more definitive proof that an architectural direction is correct.</p>
+
+<p>It is not always possible to experiment to prove out every architecture decision. While it is advisable to experiment with significantly impactful decisions, where experimentation is not possible due to constraints such as time, progress can still be made as long as calculated risks are accepted and potential failure is tolerated as an opportunity to learn and course correct. This ability to accept risk and tolerate failure is a cultural trait.</p>
+</div></section>
+
+<section data-pdf-bookmark="Documentation Standards" data-type="sect1"><div class="sect1" id="ch09_documentation_standards_1721833436950739">
+<h1>Documentation Standards</h1>
+
+<p>You’ll<a contenteditable="false" data-primary="documentation" data-secondary="standards for" data-type="indexterm" id="id1112"/> notice that <a contenteditable="false" data-primary="tangible direction over stale documentation" data-secondary="documentation standards" data-type="indexterm" id="id1113"/>I qualified the benefits of documentation with the statement of documentation <em>done well</em>. <a data-type="xref" href="ch04.html#ch04_embedded_and_accessible_1721833294242861">Chapter 4</a> already elaborated on the knowledge management and usability aspects of documentation done well. This section elaborates on documentation standards, which define guidelines that allow for common and consistent communications through diagrams.<a contenteditable="false" data-primary="diagrams (architecture)" data-secondary="documentation standards for" data-type="indexterm" id="id1114"/></p>
+
+<p>Such standards or guidelines should cover the following elements of a diagram:</p>
+
+<dl>
+	<dt>Symbology</dt>
+	<dd>
+	<p>What do all the symbols used in a diagram represent? <a contenteditable="false" data-primary="symbols in diagrams" data-type="indexterm" id="id1115"/>For example, an arrow: is the arrow documenting a data flow, a network interaction, an ontology, or something else? Is there any meaningful difference between a solid or dashed line used for the arrow? Or how about the type of arrowhead? Is there a specific iconography used? For example, cloud providers such as Amazon Web Services (AWS) provide their own iconography for architecture diagrams.</p>
+	</dd>
+	<dt>Colors</dt>
+	<dd>
+	<p>Keeping accessibility in mind, define consistent aesthetics and purposes.<a contenteditable="false" data-primary="colors in diagrams" data-type="indexterm" id="id1116"/> Try not to deviate from societal norms to avoid cognitive dissonance. For example, red usually means bad or high risk, yellow indicates medium bad or medium risk, and green means good or low risk.</p>
+	</dd>
+	<dt>Granularity</dt>
+	<dd>
+	<p>Decide on the level of detail for each diagram type and be consistent.<a contenteditable="false" data-primary="granularity of diagrams" data-type="indexterm" id="id1117"/> For instance, if a diagram gets too cluttered and is hard to follow, it is likely trying to cram too much information into one visual and should be decomposed. A diagram should be intuitive and speak for itself.</p>
+	</dd>
+</dl>
+
+<p>See examples such as the <a href="https://c4model.com">C4 model</a> for already defined standards. <a contenteditable="false" data-primary="views (architecture)" data-type="indexterm" id="id1118"/><a contenteditable="false" data-primary="architectural views" data-type="indexterm" id="id1119"/>Let’s look at examples of common architectural views. <a data-type="xref" href="#ch09_figure_1_1721833436933727">Figure 9-1</a> illustrates a generic layered hierarchy view, used to show how capabilities or systems are composable. <a data-type="xref" href="#ch09_figure_2_1721833436933799">Figure 9-2</a> illustrates an ontology or interaction view, used to show how systems relate to one other.<a contenteditable="false" data-primary="sequence view" data-type="indexterm" id="id1120"/><a contenteditable="false" data-primary="deployments" data-secondary="deployment view" data-type="indexterm" id="id1121"/><a contenteditable="false" data-primary="layered hierarchy view" data-type="indexterm" id="id1122"/><a contenteditable="false" data-primary="ontology or interaction view" data-type="indexterm" id="id1123"/> Relationships can represent flows including but not limited to data, network, or dependencies. <a data-type="xref" href="#ch09_figure_3_1721833436933849">Figure 9-3</a> is a generic example of a deployment view, which ideally would use the industry standard iconography. <a data-type="xref" href="#ch09_figure_4_1721833436933870">Figure 9-4</a> illustrates sequence views, which show step-by-step interactions between systems and/or users.</p>
+
+<figure><div class="figure" id="ch09_figure_1_1721833436933727"><img alt="" src="assets/foea_0901.png"/>
+<h6><span class="label">Figure 9-1. </span>Example of a layered hierarchy view</h6>
+</div></figure>
+
+<figure><div class="figure" id="ch09_figure_2_1721833436933799"><img alt="" src="assets/foea_0902.png"/>
+<h6><span class="label">Figure 9-2. </span>Example of an ontology or an interaction view</h6>
+</div></figure>
+
+<figure><div class="figure" id="ch09_figure_3_1721833436933849"><img alt="" src="assets/foea_0903.png"/>
+<h6><span class="label">Figure 9-3. </span>Example of a deployment view</h6>
+</div></figure>
+
+<figure><div class="figure" id="ch09_figure_4_1721833436933870"><img alt="" src="assets/foea_0904.png"/>
+<h6><span class="label">Figure 9-4. </span>Example of a sequence view</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="Documentation as Code" data-type="sect1"><div class="sect1" id="ch09_documentation_as_code_1721833436950808">
+<h1>Documentation as Code</h1>
+
+<p>There are modeling languages for architecture diagrams such as <a href="https://uml.org">Unified Modeling Language (UML)</a>, <a href="https://plantuml.com">PlantUML</a>, <a href="https://oreil.ly/9R6FZ">ArchiMate</a>, <a href="https://sysml.org">Systems Modeling Language (SysML)</a>, and <a href="http://www.bpmn.org">Business Process Model and Notation (BPMN)</a>. <a contenteditable="false" data-primary="documentation" data-secondary="as code" data-secondary-sortas="code" data-type="indexterm" id="id1124"/>These<a contenteditable="false" data-primary="tangible direction over stale documentation" data-secondary="documentation as code" data-type="indexterm" id="id1125"/> modeling languages provide a common, and usually simple, way to describe architectural characteristics of technology solutions and software. <a contenteditable="false" data-primary="BPMN (Business Process Model and Notation)" data-type="indexterm" id="id1126"/><a contenteditable="false" data-primary="Business Process Model and Notation (BPMN)" data-type="indexterm" id="id1127"/><a contenteditable="false" data-primary="Systems Modeling Language (SysML)" data-type="indexterm" id="id1128"/><a contenteditable="false" data-primary="ArchiMate" data-type="indexterm" id="id1129"/><a contenteditable="false" data-primary="PlantUML" data-type="indexterm" id="id1130"/><a contenteditable="false" data-primary="Unified Modeling Language (UML)" data-type="indexterm" id="id1131"/>In addition, modeling languages are essentially ways to output a diagram through code. As a result, this code can be managed similarly to traditional software code, supporting updates and enabling workflows as needed based on updates and reviews.</p>
+
+<p>To overcome stale documentation, establishing<a contenteditable="false" data-primary="documentation" data-secondary="overcoming stale documentation" data-type="indexterm" id="id1132"/> update and maintenance mechanisms that are low effort and responsive to proactive triggers is key. Otherwise, the use of the diagrams in business processes such as architecture decisioning and incident management is suspect.<a contenteditable="false" data-primary="diagrams (architecture)" data-secondary="updating and maintaining" data-type="indexterm" id="id1133"/></p>
+
+<p>For example, let’s say an architect defined a sequence diagram that described the integration between two systems to support a workflow. Wouldn’t it be great if as soon as any elements in that diagram change in real-life implementation, the diagram was also updated? One way to ensure that this happens is to include diagrams as part of release packages, such that when change impact analysis occurs naturally as part of release management, any impacted diagrams are also updated. Essentially, diagrams need to be considered as living documents.</p>
+
+<p>Another practical way that works well to keep diagrams up to date is to autogenerate them. This is not possible for every diagram, but it is possible for diagrams such as interaction views and deployment architectures. This method may still require some human oversight and judgment, but it reduces the manual effort that it takes to create and maintain the diagram.</p>
+
+<p>A more novel idea is to make architecture diagrams queryable through code such that you can add a rules engine to glean insights.<a contenteditable="false" data-primary="queryable architecture diagrams" data-type="indexterm" id="id1134"/> For example, let’s say you have a dependency diagram that is queryable. Queries can be built that allow you to identify the blast radius of any given dependency and therefore measure the risk and impact of that dependency failing. As another example, imagine that a context view that describes how a system interacts with other systems is queryable. A rules engine could identify whether or not integration patterns are being followed by querying those interactions.</p>
+</div></section>
+
+<section data-pdf-bookmark="Case Studies" data-type="sect1"><div class="sect1" id="ch09_case_studies_1721833436950890">
+<h1>Case Studies</h1>
+
+<p>This section examines a few<a contenteditable="false" data-primary="case studies" data-secondary="in tangible direction over stale documentation" data-type="indexterm" id="ix_csstdytandir"/> anecdotal case studies and <a contenteditable="false" data-primary="tangible direction over stale documentation" data-secondary="case studies" data-type="indexterm" id="ix_tandirCS"/>studies the themes that they present.</p>
+
+<section data-pdf-bookmark="The Archaeological Architect" data-type="sect2"><div class="sect2" id="ch09_the_archaeological_architect_1721833436950927">
+<h2>The Archaeological Architect</h2>
+
+<p>Archie was an architect who worked at EA Example Company. <a contenteditable="false" data-primary="case studies" data-secondary="in tangible direction over stale documentation" data-tertiary="archaeological architect" data-type="indexterm" id="id1135"/><a contenteditable="false" data-primary="archaeological architect case study" data-type="indexterm" id="id1136"/>Archie worked closely with a software engineering delivery team to understand their software products. He documented the current state of the software product using diagrams such as interaction views and sequence views with lengthy explanations. EA Example Company had a culture of frequent releases, and this team was no exception, releasing nearly every single week. Archie found that much of his time was consumed just keeping the current-state documentation up to date. The software engineering team did not include Archie in any decision making for new capabilities.</p>
+
+<p>What happened here?</p>
+
+<p>Archie is an example of the <em>archaeological architect</em>, someone stuck in documenting the current state and who spends more time updating the current state than they do in figuring out the future or target state. Although understanding the current state is important, architecture needs to be future facing and proactive. By only documenting what was or had already happened, Archie was adding limited value.</p>
+
+<p>Key takeaways are summarized as follows.</p>
+
+<p><em>Do:</em></p>
+
+<ul>
+	<li>
+	<p>Be selective in what is documented.</p>
+	</li>
+	<li>
+	<p>Maintain documentation so that it doesn’t get stale.</p>
+	</li>
+</ul>
+
+<p><em>Don’t</em>:</p>
+
+<ul>
+	<li>
+	<p>Only document the current state.</p>
+	</li>
+	<li>
+	<p>Rely on manual effort to keep documentation up to date.</p>
+	</li>
+</ul>
+</div></section>
+
+<section data-pdf-bookmark="The Ambitious Architect" data-type="sect2"><div class="sect2" id="ch09_the_ambitious_architect_1721833436950963">
+<h2>The Ambitious Architect</h2>
+
+<p>Amber was another architect who worked for EA Example Company. <a contenteditable="false" data-primary="case studies" data-secondary="in tangible direction over stale documentation" data-tertiary="ambitious architect" data-type="indexterm" id="id1137"/><a contenteditable="false" data-primary="ambitious architect case study" data-type="indexterm" id="id1138"/>Amber also worked closely with a software engineering team, and she took the time to build a relationship with the product and engineering leads to understand what problems they were facing with their software. She then worked with the team to document their current system architecture and coupled that with the understanding of their problems to put together another diagram with a couple of key changes as a proposal for an aspirational future system architecture. She reviewed the proposal with the team, and they discussed the recommended changes and identified constraints. They deliberated about the constraints to figure out which ones were truly constraints and which ones could be lifted, and then they settled on implementing the changes. She also gained consensus from the product lead to include documentation review as part of their definition of <em>done</em> for both feature delivery and product planning. This allowed for the whole team to feel a sense of ownership of their documentation, and for frequent review and incorporation of documentation into product decision <span class="keep-together">making.</span></p>
+
+<p>What happened here?</p>
+
+<p>This example details the <em>ambitious architect</em>, someone who focuses documentation on problem-solving, particularly to define the future.<a contenteditable="false" data-primary="future, not limiting to present constraints" data-type="indexterm" id="id1139"/> <a contenteditable="false" data-primary="problem solving" data-secondary="documentation focused on" data-type="indexterm" id="id1140"/><a contenteditable="false" data-primary="documentation" data-secondary="focused on problem-solving" data-type="indexterm" id="id1141"/>Doing so allows for architecture to be proactive and strategic, to determine what is feasible and what is a constraint, and to define a tangible plan of action to overcome any challenges standing in the way of achieving the future state. The ambitious architect has ambitions to help the team use technology to solve future needs, not just the current-state deliberations.</p>
+
+<p>Key takeaways are summarized as follows.</p>
+
+<p><em>Do:</em></p>
+
+<ul>
+	<li>
+	<p>Build a coalition of relationships with product and engineering teams to define value in documentation.</p>
+	</li>
+	<li>
+	<p>Use documentation to define future state based on current-state understanding.</p>
+	</li>
+	<li>
+	<p>Associate future-state architecture with business value.</p>
+	</li>
+</ul>
+
+<p><em>Don’t</em>:</p>
+
+<ul>
+	<li>
+	<p>Limit the future to today’s constraints.</p>
+	</li>
+</ul>
+
+<p>As demonstrated by these anecdotal case studies, it is better to be an ambitious architect, seeking tangible direction for an aspirational future, than an archaeological architect who limits themselves to the current state.<a contenteditable="false" data-primary="case studies" data-secondary="in tangible direction over stale documentation" data-startref="ix_csstdytandir" data-type="indexterm" id="id1142"/><a contenteditable="false" data-primary="tangible direction over stale documentation" data-secondary="case studies" data-startref="ix_tandirCS" data-type="indexterm" id="id1143"/></p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Summary" data-type="sect1"><div class="sect1" id="ch09_summary_1721833436950995">
+<h1>Summary</h1>
+
+<p>Documentation is necessary and critical to providing a clear understanding of an architecture. This chapter discussed the second recommended enterprise architecture principle, <em>tangible direction over stale documentation</em>, to highlight the need to make documentation as effective as possible.</p>
+
+<p><em>Tangible direction</em> means that the<a contenteditable="false" data-primary="tangible direction, defined" data-type="indexterm" id="id1144"/> architecture decision and strategy have a clear associated business value and are grounded in technical fact versus theory. In addition, it is helpful for documentation to adhere to standards for consistent understanding and reduced cognitive load such as symbology, colors, and granularity.</p>
+
+<p>Keeping documentation<a contenteditable="false" data-primary="documentation" data-secondary="keeping up to date" data-type="indexterm" id="id1145"/> up to date so that it is not stale is a challenge that can be overcome in a variety of ways, such as defining and executing an update process, using automation to generate diagrams, and making diagrams queryable to allow for rules to prompt an update.<a contenteditable="false" data-primary="automation" data-secondary="using to generate diagrams" data-type="indexterm" id="id1146"/></p>
+
+<p>Ambitious architects understand how to use documentation to further their aspirations to achieve future-state architecture. Archaeological architects, on the other hand, spend too much time and effort on the current state without providing direction on the future.</p>
+
+<p>Thus, documentation is extremely important and adds value, but not if it is allowed to get stale, and not if it doesn’t provide tangible direction to achieve a business-beneficial future state.</p>
+
+<p>A business-beneficial future state is also characterized by being secure and compliant. The next chapter dives into the third principle of the very short manifesto for effective enterprise architecture to achieve this characteristic.<a contenteditable="false" data-primary="tangible direction over stale documentation" data-startref="ix_tandir" data-type="indexterm" id="id1147"/><a contenteditable="false" data-primary="principles for effective enterprise architecture" data-secondary="tangible direction over stale documentation" data-startref="ix_prinEEAtandir" data-type="indexterm" id="id1148"/></p>
+</div></section>
+</div></section></body></html>

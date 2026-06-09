@@ -1,0 +1,695 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Security at Rest</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:e0000000-0000-0000-0000-000006723159" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 4. Security at Rest" data-type="chapter" epub:type="chapter"><div class="chapter" id="security_at_rest">
+<h1><span class="label">Chapter 4. </span>Security at Rest</h1>
+
+<p><a contenteditable="false" data-primary="SPOF (single point of failure)" data-type="indexterm" id="idm46523889500200"/><a contenteditable="false" data-primary="security at rest" data-secondary="about" data-type="indexterm" id="idm46523889491496"/><a contenteditable="false" data-primary="security at rest" data-type="indexterm" id="sec_ch"/><a contenteditable="false" data-primary="monolithic model" data-type="indexterm" id="idm46523889496504"/>When it comes to microservices, a lot of literature in the industry is focused on the design and development of the mechanisms that provide computing services to the end user. Despite this, it is widely known that microservices require us to fundamentally change the way we think about storage. Microservices are typically expected to be self-contained. This applies not only to their logic but also to their data storage mechanism. Unlike monoliths, where centralizing storage in a nonredundant manner is the guiding principle, microservices require architects to think of decentralization. In a real microservice environment, data is a first-class citizen and is to be treated in a similar way to any computing service. Microservice architects <a href="https://oreil.ly/x6ulL">encourage</a> data localization, in which data is kept close to the service that needs it, so the system can become less reliant on external databases. By avoiding shared and centralized databases, a microservice environment works only with the data available within the bounded context, thus ensuring autonomy and scale at the same time. Additionally, such a distributed storage design reduces the possibility of storage mechanisms becoming the “single points of failure (SPOFs).”</p>
+
+<p><a contenteditable="false" data-primary="IBM/Ponemon Institute" data-type="indexterm" id="idm46523889494552"/><a contenteditable="false" data-primary="polyglot persistence" data-type="indexterm" id="idm46523889481848"/>Security-wise, storing data can be very costly if you examine the risks involved. IBM and the Ponemon Institute publish an <a href="https://oreil.ly/MlRMe">annual report</a> detailing the average cost of a data breach for companies throughout the world, and as you can imagine, there are high costs associated with each breach. The average cost of a data breach, per this report, is $3.86 million. This is even higher if you are in a highly regulated industry where there may be regulatory or financial repercussions to data breaches. Thus, the microservice approach of <a href="https://oreil.ly/uanEe">polyglot</a><a href="https://oreil.ly/Z2xIu"> persistence</a> (using multiple data storage mechanisms) requires special attention to detail when it comes to security at rest.</p>
+
+<p>Microservice architectures generally result in the creation of a collection of distributed storage mechanisms. These different storage objects are loosely coupled with one another, much like the microservices themselves. It is common for these <span class="keep-together">distributed</span> storages to follow the rules of the bounded contexts in which they reside. <a data-type="xref" href="#in_contrast_to_monoliths_where_data_is">Figure 4-1</a> illustrates a sample domain-driven setup with distributed persistent storages that reside within the bounded contexts of the services.</p>
+
+<figure><div class="figure" id="in_contrast_to_monoliths_where_data_is"><img alt="" src="assets/smaa_0401.png"/>
+<h6><span class="label">Figure 4-1. </span>In contrast to monoliths where data is created and stored from one <span class="keep-together">application,</span> microservices are fragmented, resulting in data that needs to be logically separated from one another, to conform to different data protection policies across the <span class="keep-together">organization.</span></h6>
+</div></figure>
+
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p><a contenteditable="false" data-primary="BLOB (binary large object)" data-type="indexterm" id="idm46523889475864"/><a contenteditable="false" data-primary="RDBMS (relational database management system)" data-type="indexterm" id="idm46523889474680"/><a contenteditable="false" data-primary="NoSQL" data-type="indexterm" id="idm46523889473256"/><a contenteditable="false" data-primary="storage" data-type="indexterm" id="idm46523889472120"/>“Storage” could mean anything from a database system, application events, flat files, media objects, cached data, binary large objects (blobs), as well as container images. In fact, most microservice environments <a href="https://oreil.ly/xMVm4">tend to use polyglot persistence</a> since each domain may have a different requirement out of its data storage platform. Some services may benefit from a NoSQL database, while some others may prefer to use a relational database management system (RDBMS). A distributed and localized storage mechanism ensures that you can use the best tool for the job.</p>
+</div>
+
+<p>In this chapter, I will focus primarily on the security at rest for microservices.</p>
+<p class="pagebreak-before less_space">As I have mentioned in the previous chapters, security around data can be achieved through two ways:</p>
+
+<ul>
+	<li>
+	<p>Preventing access to this data for unauthorized users through access control</p>
+	</li>
+	<li>
+	<p>Encrypting this data so unauthorized exposure of data will not be readable</p>
+	</li>
+</ul>
+
+<p>To secure a storage mechanism, the first task is to identify the permissions and security policies that govern access to it. In creating these policies, the principle of least privilege (PoLP) that I discussed in <a data-type="xref" href="ch02.html#authorization_and_authentication_basics">Chapter 2</a> is a good rule of thumb. To implement PoLP, AWS allows the use of identity and access management (IAM) policies for all of its cloud storage offerings, and I will use them often in this chapter.</p>
+
+<p><a contenteditable="false" data-primary="PoLP (principle of least privilege)" data-secondary="about" data-type="indexterm" id="idm46523889468648"/>Domain-driven environments, as opposed to traditional monoliths, have the natural advantage of being easy to secure using PoLP since data and business units are segregated already and hence access control can be streamlined.</p>
+
+<p>Apart from access control, the data that is stored on AWS should also be encrypted. Encrypting this data provides an added layer of protection from unauthorized access, in addition to any existing access control that is added through IAM policies. Once the data is encrypted, it is important to control access to the encryption keys. On AWS, virtually all encryption can be handled by the AWS Key Management Servive (KMS) that I covered in depth in <a data-type="xref" href="ch03.html#foundations_of_encryption">Chapter 3</a>.</p>
+
+<section data-pdf-bookmark="Data Classification Basics" data-type="sect1"><div class="sect1" id="data_classification_basics">
+<h1>Data Classification Basics</h1>
+
+<p><a contenteditable="false" data-primary="data classification" data-type="indexterm" id="idm46523889459480"/><a contenteditable="false" data-primary="IBM/Ponemon Institute" data-type="indexterm" id="idm46523889457656"/><a contenteditable="false" data-primary="Cost of a Data Breach Report" data-type="indexterm" id="idm46523889456536"/><a contenteditable="false" data-primary="PII (personally identifiable data)" data-type="indexterm" id="idm46523889455384"/>Although every manager likes to claim that all customer data should be protected, let’s be honest: not all data is the same. There is an inherent hierarchy in terms of the sensitivity and importance of data. For example, personally identifiable data (PII), which can be used to identify the customers is more sensitive and has to be protected with more powerful controls than anonymized machine learning training data. In terms of the records that carry the biggest price tag when compromised, customer PII is the costliest (at $150), according to the IBM/Ponemon <em>Cost of a Data Breach Report</em>. Data classification is the step in security management that helps administrators in identifying, labeling, and realigning the organization’s security to position itself to fulfill the needs of the sensitivity of the data. In this process, data types and sensitivity levels are identified, along with the likely consequences of compromise, loss, or misuse of the data.</p>
+
+<p><a contenteditable="false" data-primary="US National Classification Scheme" data-type="indexterm" id="idm46523889453544"/><a contenteditable="false" data-primary="Official data" data-type="indexterm" id="idm46523889443688"/><a contenteditable="false" data-primary="Secret data" data-type="indexterm" id="idm46523889452488"/><a contenteditable="false" data-primary="security at rest" data-secondary="data classification" data-type="indexterm" id="idm46523889451400"/><a contenteditable="false" data-primary="Top Secret data" data-type="indexterm" id="idm46523889449480"/><a contenteditable="false" data-primary="executive orders" data-type="indexterm" id="idm46523889448392"/>It has been empirically <a href="https://oreil.ly/QKzpF">proven</a> that organizations that adopt strong data classification policies are better positioned to ward off potential threats. Government organizations have also prescribed various data classification levels <span class="keep-together">in the</span> past. For example, the US National Classification Scheme based on <a href="https://oreil.ly/DLoFu">Executive Order 12356</a> recognizes three data classifications: <span class="keep-together">Confidential</span>, Secret, and Top Secret. The UK government also has three <a href="https://oreil.ly/K3Dnw">classifications</a>: Official, Secret, and Top Secret.</p>
+
+<p><a contenteditable="false" data-primary="data center" data-type="indexterm" id="idm46523889441624"/>Each class of data may have a different security requirement while storing it. More importantly, the access that employees have may be different and hence, the data <span class="keep-together">classification</span> may dictate the identity management and access control structure within your organization. In my experience, companies have adopted innovative ways to systematically classify the resources that store sensitive data in physical data centers. Several companies implemented color coding of servers indicating the type of data that could be stored on each server. Other companies separated the servers that carried sensitive data and kept them in a separate location where only privileged employees had access.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p><a contenteditable="false" data-primary="data storage" data-type="indexterm" id="idm46523889438360"/>When I say “data storage,” I mean intentional as well as unintentional persistence of data. Intentional persistence is the data that you wish to persist in an object store or a database. Unintentional persistence includes data that is persisted as a result of runtime operations such as log files, memory dumps, backups, and so forth. In my experience, many administrators tend to overlook unintentional persistence when they try to frame their data storage policy.</p>
+</div>
+
+<p>On AWS, data can be classified by using AWS tags that I briefly talked about in <span class="keep-together"><a data-type="xref" href="ch02.html#authorization_and_authentication_basics">Chapter 2</a>.</span> AWS tags allow you to assign metadata to your cloud resources so the <span class="keep-together">administrators</span> will be aware of the type of data these resources store. Using these tags, conditional logic can be applied to access control to enforce security clearance checks while granting access. For compliance validation, AWS tags can also help identify <span class="keep-together">and track</span> resources that contain sensitive data. From a security perspective, you should tag each and every resource within your account, especially if it stores sensitive data.</p>
+</div></section>
+
+<section data-pdf-bookmark="Recap of Envelope Encryption Using KMS" data-type="sect1"><div class="sect1" id="recap_of_envelope_encryption_using_kms">
+<h1>Recap of Envelope Encryption Using KMS</h1>
+
+<p><a contenteditable="false" data-primary="envelope encrypted data" data-secondary="using KMS" data-type="indexterm" id="idm46523889431752"/><a contenteditable="false" data-primary="KMS (key management service)" data-secondary="envelope encryption" data-type="indexterm" id="idm46523889435272"/><a contenteditable="false" data-primary="security at rest" data-secondary="envelope encryption using KMS" data-type="indexterm" id="idm46523889433880"/>Envelope encryption is the tool that AWS uses frequently for encrypting all the data that is stored at rest. I have already talked in depth (<a data-type="xref" href="ch03.html#foundations_of_encryption">Chapter 3</a>) about how AWS KMS works, along with envelope encryption. But for those who need a refresher, here is a quick recap.</p>
+
+<p>In basic encryption, whenever plaintext data needs to be encrypted, you can use the AWS-256 algorithm, which requires a data key as the input. This encrypted data (also known as the ciphertext) can be decrypted, accessed, and read by a recipient as long as they are in possession of the data key that was used to encrypt this data in the first place. Envelope encryption takes this process a step further. In envelope encryption, the data key that is used to encrypt the plaintext is further encrypted using a different key known as a customer master key (CMK).</p>
+
+<p>Upon encryption, the ciphertext data and the ciphertext data key are stored together, while the plaintext data key is deleted. Access is restricted to the CMK and is provided only to the intended recipient of this data.</p>
+
+<p><a data-type="xref" href="#envelope_encrypted_data_contains_blobs">Figure 4-2</a> illustrates blocks of data that are stored using envelope encryption.</p>
+
+<figure><div class="figure" id="envelope_encrypted_data_contains_blobs"><img alt="" src="assets/smaa_0402.png"/>
+<h6><span class="label">Figure 4-2. </span>Envelope encrypted data contains blobs containing data that is encrypted using a data key along with the encrypted data key that is encrypted using the CMK.</h6>
+</div></figure>
+
+<p>To read the envelope encrypted data, the reader first has to use the CMK to decrypt the encrypted data key and obtain the plaintext data key. With this data key, the reader can then decrypt the encrypted data blobs and obtain the original plaintext data that was encrypted. Thus, the intended recipient can decrypt the data as long as they have access to the CMK.</p>
+
+<p>Almost every encrypted data storage system on AWS will have three common themes:</p>
+
+<ul>
+	<li>
+	<p>The CMK that you trust is securely stored away from unauthorized access, either on your own servers, on AWS KMS, or inside a hardware security module (HSM).</p>
+	</li>
+	<li>
+	<p><a contenteditable="false" data-primary="AES-256 encryption algorithm" data-type="indexterm" id="idm46523889412808"/>You trust the encryption <a href="https://oreil.ly/ii9Pv">algorithm</a> to be unbreakable. In most of the AWS examples, AES-256 is generally considered to be a secure <span class="keep-together">algorithm</span>.</p>
+	</li>
+	<li>
+	<p class="pagebreak-before less_space">There is a process of encrypting data. This may include encrypting data on the servers or enabling clients to encrypt this data before sending it to AWS. This process also specifies policies for how the data key is cached on the client side. Different storage systems on AWS use a different caching policy for data keys, which I will be discussing in detail in this chapter.</p>
+	</li>
+</ul>
+</div></section>
+
+<section data-pdf-bookmark="AWS Simple Storage Service" data-type="sect1"><div class="sect1" id="aws_simple_storage_service_left_parenth">
+<h1>AWS Simple Storage Service</h1>
+
+<p><a contenteditable="false" data-primary="Amazon S3/AWS S3 (Simple Storage Service)" data-secondary="about" data-type="indexterm" id="idm46523889409304"/><a contenteditable="false" data-primary="security at rest" data-secondary="Amazon S3 (AWS Simple Storage Service)" data-type="indexterm" id="sar_sss"/>In AWS Simple Storage Servive or Amazon Simple Storage Service (S3), storage “objects” are stored inside buckets. The most important responsibility of every security professional in the S3 environment lies in applying the PoLP to all objects and buckets within S3 that originate from different microservices. This means that only the users and resources that are required to access these objects should be allowed access.</p>
+
+<p>Since AWS S3 is a managed service, any data that is stored in S3 may share its physical resources with other cloud customers. Hence, to protect your sensitive data, AWS gives you two options, which should be used together for any secure storage system:</p>
+
+<ul>
+	<li>
+	<p><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="principal-based policies" data-type="indexterm" id="idm46523889399608"/><a contenteditable="false" data-primary="principal-based policies" data-type="indexterm" id="idm46523889404792"/>AWS IAM policies (specifically IAM principal-based policies and AWS S3 resource-based bucket policies), which I mentioned in <a data-type="xref" href="ch02.html#authorization_and_authentication_basics">Chapter 2</a>, can be used to control access to these resources and ensure that the PoLP is applied.</p>
+	</li>
+	<li>
+	<p>AWS KMS can be used to encrypt the objects that are stored inside AWS S3 buckets. This ensures that only principals with access to the encryption key used to encrypt this data can read these objects.</p>
+	</li>
+</ul>
+
+<p>Encryption and access control play an equally important role in maintaining the security of data; both methods should be employed to protect it from unauthorized access. <a data-type="xref" href="#security_professionals_can_employ_aws_i">Figure 4-3</a> shows how you can leverage AWS KMS and AWS IAM policies to protect your data.</p>
+
+<figure><div class="figure" id="security_professionals_can_employ_aws_i"><img alt="" src="assets/smaa_0403.png"/>
+<h6><span class="label">Figure 4-3. </span>Security professionals can employ AWS IAM policies to restrict access to the data inside AWS S3 buckets along with using AWS KMS envelope encryption for the data that is stored in these buckets. A good and secure solution effectively employs encryption and authorization to deter any unauthorized access.</h6>
+</div></figure>
+
+<section data-pdf-bookmark="Encryption on AWS S3" data-type="sect2"><div class="sect2" id="encryption_on_aws_sthree">
+<h2>Encryption on AWS S3</h2>
+
+<p><a contenteditable="false" data-primary="Amazon S3/AWS S3 (Simple Storage Service)" data-secondary="encryption on" data-type="indexterm" id="ama_sss"/><a contenteditable="false" data-primary="encryption" data-secondary="on AWS S3" data-type="indexterm" id="enc_ama"/>I will first talk about the techniques that you can use for encrypting data objects. There are four ways you can encrypt data objects on AWS S3. Each of these ways provides some flexibility and convenience to end users and hence, you can choose any of these methods that suit the needs of your organization. They are:</p>
+
+<ul>
+	<li>
+	<p>AWS server-side encryption (AWS SSE-S3—AWS-managed keys)</p>
+	</li>
+	<li>
+	<p>AWS server-side encryption KMS (AWS SSE-KMS—customer-managed keys)</p>
+	</li>
+	<li>
+	<p><a contenteditable="false" data-primary="AWS SSE-C (server-side encryption with customer-provided keys)" data-type="indexterm" id="idm46523889386408"/>AWS server-side encryption with customer-provided keys (AWS SSE-C—customer-provided keys)</p>
+	</li>
+	<li>
+	<p>AWS S3 client-side encryption (encrypting data on the client before sending it over to AWS S3)</p>
+	</li>
+</ul>
+
+<p><a data-type="xref" href="#you_can_decide_which_encryption_you_wan">Figure 4-4</a> shows a handy flowchart that can help you determine the type of encryption you need for your organization’s needs.</p>
+
+<figure><div class="figure" id="you_can_decide_which_encryption_you_wan"><img alt="" src="assets/smaa_0404.png"/>
+<h6><span class="label">Figure 4-4. </span>You can decide which encryption you want by answering the questions in this chart.</h6>
+</div></figure>
+
+<p>All of the encryption choices can use AWS KMS to achieve encryption on AWS. Hence, a deep and fundamental understanding of AWS KMS can go a long way in understanding the process of encryption on AWS S3.</p>
+
+<section data-pdf-bookmark="AWS SSE-S3 (AWS-managed keys)" data-type="sect3"><div class="sect3" id="aws_sse-sthree_left_parenthesisaws-mana">
+<h3>AWS SSE-S3 (AWS-managed keys)</h3>
+
+<p><a contenteditable="false" data-primary="AWS S3-SSE (managed server-side encryption for S3)" data-type="indexterm" id="idm46523889377768"/><a contenteditable="false" data-primary="Lifecycle" data-type="indexterm" id="idm46523889376408"/>This is the default mode of encrypting data objects inside AWS S3. For organizations that need very basic object encryption without wishing to control the lifecycle of the CMK that was used to encrypt the data items, AWS SSE-S3 provides a quick and easy way of introducing encryption on AWS. The biggest advantage of using AWS SSE-S3 is the ease of use and simplicity that it provides to cloud users.</p>
+
+<p>AWS SSE-S3 can be enabled on a per bucket level on the AWS Management Console, as seen in <a data-type="xref" href="#all_objects_stored_inside_a_bucket_can">Figure 4-5</a>.</p>
+
+<figure><div class="figure" id="all_objects_stored_inside_a_bucket_can"><img alt="" src="assets/smaa_0405.png"/>
+<h6><span class="label">Figure 4-5. </span>All objects stored inside a bucket can be encrypted by default using AWS SSE-S3 in the “Default encryption” option and selecting “Server-side encryption.”</h6>
+</div></figure>
+
+<p>Once enabled, AWS encrypts all the objects inside this bucket using a data key. This data key is then encrypted using AWS KMS and a CMK that is maintained, protected, and rotated for you by AWS.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>Due to the presence of AWS SSE-S3, the amount of investment required to enable encryption for objects in AWS S3 is now extremely low. Although not ideal (since you completely trust AWS with your key and the encryption process), the ability to enable encryption by the push of a button should nudge all users to encrypt all of their storage objects. I don’t know a single reason why objects on AWS S3 shouldn’t be encrypted.</p>
+</div>
+
+<p>Of course, for those interested in more control, there are other ways of encrypting objects that are stored on AWS S3.</p>
+</div></section>
+
+<section data-pdf-bookmark="AWS SSE-KMS" data-type="sect3"><div class="sect3" id="aws_sse-kms">
+<h3>AWS SSE-KMS</h3>
+
+<p><a contenteditable="false" data-primary="AWS SSE-KMS (server-side encryption KMS)" data-type="indexterm" id="idm46523889370520"/>Users who prefer a more flexible encryption process than AWS SSE-S3 can use AWS KMS more explicitly for encryption. You can use a KMS key that you control on AWS KMS. This way, you can also be in charge of the lifecycle of the key that is used to encrypt data objects on AWS.</p>
+
+<p>The encryption can be enabled on individual objects or enabled by default for <span class="keep-together">each object</span> in the bucket, similar to how AWS SSE-S3 was enabled in <a data-type="xref" href="#all_objects_stored_inside_a_bucket_can">Figure 4-5</a>. <a data-type="xref" href="#aws_sse-kms_can_be_enabled_through_the">Figure 4-6</a> shows how AWS SSE-KMS can be enabled as the default option for <span class="keep-together">buckets.</span></p>
+
+<figure><div class="figure" id="aws_sse-kms_can_be_enabled_through_the"><img alt="" src="assets/smaa_0406.png"/>
+<h6><span class="label">Figure 4-6. </span>AWS SSE-KMS can be enabled through the management console by providing the ARN of the KMS key that you want your objects to be encrypted with.</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="AWS SSE-C (client-provided key)" data-type="sect3"><div class="sect3" id="aws_sse_client-provided_key_left_parent">
+<h3>AWS SSE-C (client-provided key)</h3>
+
+<p><a contenteditable="false" data-primary="AWS SSE client-provided key (AWS SSE-C)" data-type="indexterm" id="idm46523889357368"/><a contenteditable="false" data-primary="AWS SSE-C (server-side encryption with customer-provided keys)" data-type="indexterm" id="idm46523889355672"/>The final type of server-side encryption on AWS S3 is the AWS SSE-C. In this encryption process, the control over the encryption process is shifted even more to the end user. Instead of pointing AWS S3 to use an encryption key that is present on AWS KMS, you can include the encryption key within your <code>PutObject</code> request and instruct AWS S3 to encrypt the object using the key that you provide. This same key has to be provided during the <code>GetObject</code> operation in order to decrypt and retrieve the object. AWS S3 will use the key you provide, encrypt the object, and store it on AWS S3, then delete the key permanently. This way, you can have complete flexibility in controlling access to and securing the decryption key for the objects that are stored on AWS. At the same time, the encryption process takes place entirely on AWS S3 and hence, you need not maintain encryption or decryption code within your services.</p>
+
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p><a contenteditable="false" data-primary="AWS SSE-C (server-side encryption with customer-provided keys)" data-type="indexterm" id="idm46523889353880"/>AWS SSE-C only encrypts the S3 object but not the metadata associated with the object.</p>
+</div>
+</div></section>
+
+<section data-pdf-bookmark="AWS client-side encryption" data-type="sect3"><div class="sect3" id="aws_client-side_encryption">
+<h3>AWS client-side encryption</h3>
+
+<p><a contenteditable="false" data-primary="client-side encryption" data-type="indexterm" id="idm46523889350408"/><a contenteditable="false" data-primary="encryption" data-secondary="client-side" data-type="indexterm" id="idm46523889347640"/><a contenteditable="false" data-primary="" data-startref="ama_sss" data-type="indexterm" id="idm46523889346392"/><a contenteditable="false" data-primary="" data-startref="enc_ama" data-type="indexterm" id="idm46523889345032"/><a contenteditable="false" data-primary="AWS client-side encryption" data-type="indexterm" id="idm46523889343080"/><a contenteditable="false" data-primary="SDK (software development kit)" data-type="indexterm" id="idm46523889341960"/>AWS provides many different options for encrypting data after it has been uploaded to AWS S3, but you may prefer to encrypt data within your application even before it is transferred to AWS. Client-side encryption is the act of encrypting data before sending it to Amazon S3 and can be used for such use cases. In client-side encryption, you manage the CMK that you want to encrypt the data with. You can then use some of the client-side software development kit (SDK) to encrypt the data within your application and send this data to AWS to store it on the cloud. From the AWS point of view, this client-encrypted data is no different from any other data that it stores. You can then optionally also enable server-side encryption if you desire. This way, client-side encryption can offer an additional layer of protection against potential threats. More information on client-side encryption can be found at <a href="https://oreil.ly/C9fWo">Amazon</a>.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Access Control on Amazon S3 Through S3 Bucket Policies" data-type="sect2"><div class="sect2" id="access_control_on_aws_sthree_through_st">
+<h2>Access Control on Amazon S3 Through S3 Bucket Policies</h2>
+
+<p><a contenteditable="false" data-primary="authorization and authentication" data-secondary="on AWS S3" data-type="indexterm" id="idm46523889338552"/><a contenteditable="false" data-primary="Amazon S3/AWS S3 (Simple Storage Service)" data-secondary="access control on" data-type="indexterm" id="idm46523889336696"/><a contenteditable="false" data-primary="bucket policies (S3)" data-type="indexterm" id="idm46523889335288"/>As I discussed in <a data-type="xref" href="ch02.html#authorization_and_authentication_basics">Chapter 2</a>, resource-based policies restrict access to AWS resources and can be applied to <a href="https://oreil.ly/fp485">certain resources</a>. On AWS S3, these resource-based policies are called <em>bucket policies</em>. These policies answer the question, Which principals are allowed to access the objects inside these S3 buckets and under which conditions should this access be permitted or denied? Bucket policies can be added on the AWS Management Console, as seen in <a data-type="xref" href="#bucket_policies_can_be_added_to_aws_sth">Figure 4-7</a>.</p>
+
+<figure><div class="figure" id="bucket_policies_can_be_added_to_aws_sth"><img alt="" src="assets/smaa_0407.png"/>
+<h6><span class="label">Figure 4-7. </span>Bucket policies can be added to AWS S3 buckets by going to the Permissions tab on the AWS web console.</h6>
+</div></figure>
+
+<p>AWS also provides some great <a href="https://oreil.ly/kOaw4">documentation</a> on AWS bucket policies. The following two policies are examples of ways you can secure your S3 buckets.</p>
+
+<section data-pdf-bookmark="Example 1: Enforce server-side encryption on all objects" data-type="sect3"><div class="sect3" id="example_one_enforce_server-side_encrypt">
+<h3>Example 1: Enforce server-side encryption on all objects</h3>
+
+<p><a contenteditable="false" data-primary="encryption" data-secondary="server-side" data-type="indexterm" id="idm46523889330008"/><a contenteditable="false" data-primary="server-side encryption" data-type="indexterm" id="idm46523889323272"/>As a security administrator, you can deny unencrypted uploads to your bucket by adding an IAM policy such as recommended by <a href="https://oreil.ly/5ryzQ">AWS</a>.</p>
+
+<pre>
+{
+      "Sid": "DenyUnencryptedObjectUploads",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::awsexamplebucket1/*",
+      "Condition": {
+        "Null": {
+          "s3:x-amz-server-side-encryption": "true"
+        }
+      }
+    }</pre>
+
+<p>The <code>Condition</code> statement in this block is what makes this policy effective.</p>
+</div></section>
+
+<section data-pdf-bookmark="Example 2: Require users to have MFA while interacting with AWS S3" data-type="sect3"><div class="sect3" id="example_two_require_users_to_have_mfa_w">
+<h3>Example 2: Require users to have MFA while interacting with AWS S3</h3>
+
+<p><a contenteditable="false" data-primary="MFA (multifactor authentication)" data-secondary="Amazon S3 and" data-type="indexterm" id="idm46523889318056"/>Another commonly used bucket policy is to enforce a multifactor authentication (MFA) requirement for any request that wants to interact with objects in the bucket:</p>
+
+<pre>
+{
+    "Version": "2012-10-17",
+    "Id": "123",
+    "Statement": [
+      {
+        "Sid": "",
+        "Effect": "Deny",
+        "Principal": "*",
+        "Action": "s3:*",
+        "Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/taxdocuments/*",
+        "Condition": { "Null": { "aws:MultiFactorAuthAge": true }}
+      }
+    ]
+ }</pre>
+
+<p><a data-type="xref" href="app04.html#hands-on_example_of_applyi">Appendix D</a> provides a hands-on tutorial that cloud security professionals can use to apply PoLP to their S3 buckets.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Amazon GuardDuty" data-type="sect2"><div class="sect2" id="aws_guardduty">
+<h2>Amazon GuardDuty</h2>
+
+<p><a contenteditable="false" data-primary="Amazon GuardDuty" data-type="indexterm" id="idm46523889312712"/><a contenteditable="false" data-primary="AWS GuardDuty" data-type="indexterm" id="idm46523889311032"/>Using Amazon GuardDuty, you can continuously monitor for threats and unauthorized behavior to protect your data stored in Amazon S3. Using machine learning, anomaly detection, and threat intelligence integrated into it, AWS GuardDuty <span class="keep-together">identifies</span> and prioritizes potential threats. AWS CloudTrail and virtual private cloud (VPC) flow logs, as well as DNS logs, are among GuardDuty’s data sources. GuardDuty detects threats as well as sends out an automated response, speeding remediation and recovery times.</p>
+
+<p>GuardDuty monitors threats to your Amazon S3 site by looking at CloudTrail <span class="keep-together">S3 management</span> events and CloudTrail management events. Data that GuardDuty <span class="keep-together">customers</span> generate, such as findings, gets encrypted while at rest using AWS KMS with AWS master keys (CMK), which is secured under AWS Shared Responsibility Model (SRM).</p>
+</div></section>
+
+<section data-pdf-bookmark="Nonrepudiation Using Glacier Vault Lock" data-type="sect2"><div class="sect2" id="nonrepudiation_using_glacier_vault_lock">
+<h2>Nonrepudiation Using Glacier Vault Lock</h2>
+
+<p><a contenteditable="false" data-primary="Glacier Vault Lock" data-type="indexterm" id="idm46523889307336"/><a contenteditable="false" data-primary="nonrepudiation, using Glacier Vault Lock" data-type="indexterm" id="idm46523889303336"/><a contenteditable="false" data-primary="SOR (system of record)" data-type="indexterm" id="idm46523889302232"/>In order to maintain compliance, it is sometimes necessary to have a <em>system of record (SOR)</em> that is the authoritative data source for a given piece of information. This SOR is not just for internal consumers but also for external parties such as law enforcement authorities or compliance auditors to inspect in case of discrepancies. As a result, this SOR should be something that external agencies should be able to trust and use as evidence in case of discrepancies where your organization may have a conflict of interest. Thus, a certification of the integrity of the data by a third party may be important in such a situation.</p>
+
+<p><a contenteditable="false" data-primary="WORM (write once read many)" data-type="indexterm" id="idm46523889300792"/>With AWS Glacier Vault Lock, data can be stored in a way that can be certified for regulatory purposes for its integrity and authenticity. At the heart of this integrity process is the Glacier Vault Lock policy that controls how the data is stored and what access controls the organization has over their own data. Vault policies can have <span class="keep-together">controls</span> such as write once read many (WORM), which prevents future changes to the data that is stored. Once the policy has been locked, it cannot be changed.</p>
+
+<p>You can use the AWS S3 Glacier bucket to store the data and lock the bucket to demonstrate to any regulatory body that may decide to audit you that the data has never been altered.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>In contrast to a vault access policy, a vault lock policy may be locked to prevent further changes to your vault, ensuring compliance for the vault.</p>
+</div>
+
+<p>To initiate a vault lock, you need to perform two <a href="https://oreil.ly/kF6E8">steps</a>:</p>
+
+<ol>
+	<li>
+	<p>Attach a vault lock policy to your vault that will set the lock to an in-progress state, returning a lock ID. The lock will expire after 24 hours if the policy has not been validated.</p>
+	</li>
+	<li>
+	<p>If you are not satisfied with the results of the process, you can restart the lock process from scratch during the 24-hour validation period.</p>
+	</li>
+</ol>
+
+<div data-type="tip"><h6>Tip</h6>
+<p><a contenteditable="false" data-primary="" data-startref="sar_sss" data-type="indexterm" id="idm46523889296264"/><a contenteditable="false" data-primary="SEC Rule 17a-4" data-type="indexterm" id="idm46523889289272"/><a contenteditable="false" data-primary="HIPAA" data-type="indexterm" id="idm46523889288088"/>Vault lock policies can help you comply with regulatory frameworks such as SEC Rule 17a-4 and HIPAA.</p>
+</div>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Security at Rest for Compute Services" data-type="sect1"><div class="sect1" id="security_at_rest_for_compute_services">
+<h1>Security at Rest for Compute Services</h1>
+
+<p><a contenteditable="false" data-primary="compute services, security at rest for" data-type="indexterm" id="cs_sr"/><a contenteditable="false" data-primary="security at rest" data-secondary="for compute services" data-type="indexterm" id="sr_cs"/>In this section, I will talk about how you can secure the services that are responsible for running your microservices. Before I talk about securing microservices at rest, I will briefly discuss what a typical development process looks like in a typical microservice shop.</p>
+
+<p>Depending on development practices, there may be certain changes in specific steps, but overall, the flow looks something like what is illustrated in <a data-type="xref" href="#the_various_steps_that_code_flows_throu">Figure 4-8</a>.</p>
+
+<ol>
+	<li>
+	<p><a contenteditable="false" data-primary="TypeScript" data-type="indexterm" id="idm46523889281624"/>Developers typically write code in a language of their choice. This may be Java, Python, Go, TypeScript, or any language of choice.</p>
+
+	<p><em>Security risk</em>: attackers may be able to exploit any code-level vulnerabilities or inject insecure libraries at the code level, and thus jeopardize the security posture of your entire application.</p>
+	</li>
+	<li>
+	<p><a contenteditable="false" data-primary="AWS EBS (Elastic Block Store)" data-type="indexterm" id="idm46523889276056"/><a contenteditable="false" data-primary="CICD (continuous integration continuous delivery)" data-type="indexterm" id="idm46523889274584"/>If you want to run this code on a typical containerized environment such as on a Kubernetes cluster, you compile this code on a continuous integration continuous delivery (CICD) pipeline and perform various steps on it until it turns into a containerized image. This CICD pipeline may use a storage system to hold persistent data such as libraries, configuration files, and more. If it runs on an AWS Elastic Cloud Compute (EC2) instance, an AWS <em>Elastic Block Store (EBS)</em> volume will generally hold such data.</p>
+
+	<p><em>Security risk</em>: the EBS volumes that are used to build the image may be hijacked and used against your build process to inject vulnerabilities into the application or leak out sensitive code.</p>
+	</li>
+	<li>
+	<p>Once you have a containerized image such as a Docker image, you typically store this image on a Docker repository. You have many options here to store this image. AWS provides you with AWS Elastoc Container Registry (ECR) where you can store a Docker image.</p>
+
+	<p><em>Security risk</em>: an unsecured storage of built images may result in allowing malicious actors to tamper with built container images and inject malicious code inside these containers. Alternatively, code can be leaked out of an unsecured container storage.</p>
+	</li>
+	<li>
+	<p><a contenteditable="false" data-primary="Docker image" data-type="indexterm" id="idm46523889271496"/>The Docker image from Step 2 can now be promoted to various environments of your choice. This way, you can have the same image running in your production environment as your staging environment. If you use Amazon EKS to run a Kubernetes cluster, and if you have your nodes running on AWS EC2, you may pull the image out of the ECR registry and promote it to the EC2 nodes. Similar to the CICD pipelines in Step 2, these nodes may employ EBS volumes to store persistent data. Security professionals may need to secure these EBS volumes.</p>
+
+	<p><em>Security risk</em>: Although the containers run on the Kubernetes nodes, they may use EBS volumes to store persistent data. Very similar to Step 2, malicious actors who gain unauthorized access to these EBS volumes could manipulate the data stored on these volumes or leak out sensitive data to other external entities.</p>
+	</li>
+	<li>
+	<p><a contenteditable="false" data-primary="AWS Lambda" data-secondary="running code on" data-type="indexterm" id="idm46523889268072"/>Alternatively, if you decide to run your code on AWS Lambda, you may deploy the code directly onto AWS Lambda and not have to worry about Steps 2–3.</p>
+
+	<p><em>Security risk</em>: on AWS Lambda, you are not supposed to have long-term storage. However, the environment variables that your functions need may be stored on AWS and may need to be secured.</p>
+	</li>
+</ol>
+
+<p>All microservice shops follow some variant of this flow, as seen in <a data-type="xref" href="#the_various_steps_that_code_flows_throu">Figure 4-8</a>.</p>
+
+<figure><div class="figure" id="the_various_steps_that_code_flows_throu"><img alt="" src="assets/smaa_0408.png"/>
+<h6><span class="label">Figure 4-8. </span>The various steps that code flows through before running on a microservice environment.</h6>
+</div></figure>
+
+<p>In the following section, I’ll discuss the different security tools you have at your disposal to keep this data safe.</p>
+
+<section data-pdf-bookmark="Static Code Analysis Using AWS CodeGuru" data-type="sect2"><div class="sect2" id="static_code_analysis_using_aws_codeguru">
+<h2>Static Code Analysis Using AWS CodeGuru</h2>
+
+<p><a contenteditable="false" data-primary="static code analysis, using AWS CodeGuru" data-type="indexterm" id="idm46523889258584"/><a contenteditable="false" data-primary="AWS CodeGuru, static code analysis using" data-type="indexterm" id="idm46523889255320"/>Static code analysis is an up-and-coming branch in the field of computer security. Until recently, most static code analysis was difficult to perform, primarily due to the nondeterministic nature of computer languages. However, with the advent of AI and machine learning, security tools that end up identifying security vulnerabilities in code are only getting more accurate over time.</p>
+
+<p>AWS provides users with <em>AWS CodeGuru</em>, which uses machine learning and AI to perform various types of analysis on your code. AWS CodeGuru then compares your code with its sample repositories and uses machine learning to identify security-related issues as well as other best practices in code. This analysis includes identifying possible resource leaks, exploits, and vulnerabilities with your code.</p>
+
+<p><a contenteditable="false" data-primary="Codebase" data-type="indexterm" id="idm46523889246968"/><a contenteditable="false" data-primary="Lifecycle" data-type="indexterm" id="idm46523889252168"/>Static code analysis ensures that any problems with your codebase are identified early on in their lifecycle before they are shipped to production. <a data-type="xref" href="#static_code_analysis_can_be_enabled_on">Figure 4-9</a> shows a sample code where AWS CodeGuru recommended code-level changes.</p>
+
+<figure><div class="figure" id="static_code_analysis_can_be_enabled_on"><img alt="" src="assets/smaa_0409.png"/>
+<h6><span class="label">Figure 4-9. </span>Static code analysis can be enabled on existing repositories to identify Java code-related issues as well as security vulnerabilities.</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="AWS Elastic Container Registry" data-type="sect2"><div class="sect2" id="aws_elastic_container_registry_left_par">
+<h2>AWS Elastic Container Registry</h2>
+
+<p><a contenteditable="false" data-primary="authorization and authentication" data-secondary="on AWS ECR (Elastic Container Registry)" data-type="indexterm" id="idm46523889245288"/><a contenteditable="false" data-primary="AWS ECR (Elastic Container Registry)" data-type="indexterm" id="ecr_ab"/>AWS ECR is the repository that AWS provides you with for storing built containers to house your microservices. This way, you can build microservices using Docker and promote these images to other environments. These images are provided with secure storage throughout their life. Using AWS ECR for storing containers offers multiple advantages, and I will highlight three of the most important reasons why AWS ECR is best suited for the job.</p>
+
+<section data-pdf-bookmark="Access control" data-type="sect3"><div class="sect3" id="access_control">
+<h3>Access control</h3>
+
+<p>AWS allows for the use of IAM policies to control access to the AWS ECR repositories. This way, the various contexts within your organization can be segregated using the PoLP to decide which containers can be accessed by the various entities within your organization. You can use identity-based policies as well as resource-based policies to control access.</p>
+
+<p>AWS maintains a <a href="https://oreil.ly/b4LJr">list</a> of various IAM policies that you can apply to your ECR repositories. Here is a sample IAM policy that allows the user to list and manage images in an ECR repository:</p>
+
+<pre>
+{
+   "Version":"2012-10-17",
+   "Statement":[
+      {
+         "Sid":"ListImagesInRepository",
+         "Effect":"Allow",
+         "Action":[
+            "ecr:ListImages"
+         ],
+         "Resource":"arn:aws:ecr:us-east-1:123456789012:repository/my-repo"
+      },
+      {
+         "Sid":"GetAuthorizationToken",
+         "Effect":"Allow",
+         "Action":[
+            "ecr:GetAuthorizationToken"
+         ],
+         "Resource":"*"
+      },
+      {
+         "Sid":"ManageRepositoryContents",
+         "Effect":"Allow",
+         "Action":[
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:GetRepositoryPolicy",
+                "ecr:DescribeRepositories",
+                "ecr:ListImages",
+                "ecr:DescribeImages",
+                "ecr:BatchGetImage",
+                "ecr:InitiateLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:CompleteLayerUpload",
+                "ecr:PutImage"
+         ],
+         "Resource":"arn:aws:ecr:us-east-1:123456789012:repository/my-repo"
+      }
+   ]
+}</pre>
+
+<p>Alternatively, if you want to allow users to get read-only access to all images, you can use the <a href="https://oreil.ly/sKeIo">managed AWS policies</a> in order to achieve a similar goal.</p>
+</div></section>
+
+<section data-pdf-bookmark="Encryption at rest" data-type="sect3"><div class="sect3" id="encryption_at_rest">
+<h3>Encryption at rest</h3>
+
+<p><a contenteditable="false" data-primary="encryption at rest" data-type="indexterm" id="idm46523889238664"/>AWS ECR is backed by AWS S3, which also allows images to be encrypted at rest using very similar techniques to AWS S3. <a data-type="xref" href="#images_within_aws_ecr_are_encrypted_usi">Figure 4-10</a> illustrates how your containers are protected in AWS ECR using AWS KMS. KMS grants are created each time you need to allow access to the image.</p>
+
+<figure><div class="figure" id="images_within_aws_ecr_are_encrypted_usi"><img alt="" src="assets/smaa_0410.png"/>
+<h6><span class="label">Figure 4-10. </span>Images within AWS ECR are encrypted using AWS KMS.</h6>
+</div></figure>
+
+<p>You can enable encryption for container storage in AWS ECR through the AWS Management Console, as seen in <a data-type="xref" href="#kms_encryption_can_be_enabled_for_aws_e">Figure 4-11</a>.</p>
+
+<figure><div class="figure" id="kms_encryption_can_be_enabled_for_aws_e"><img alt="" src="assets/smaa_0411.png"/>
+<h6><span class="label">Figure 4-11. </span>KMS encryption can be enabled for AWS ECR by enabling the “Customize encryption settings” box and choosing the KMS CMK you wish to use.</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="Image Common Vulnerability and Exposure scanning" data-type="sect3"><div class="sect3" id="image_common_vulnerability_and_exposure">
+<h3>Image Common Vulnerability and Exposure scanning</h3>
+
+<p><a contenteditable="false" data-primary="CVE (Common Vulnerability and Exposure)" data-type="indexterm" id="idm46523889224264"/>AWS ECR provides the ability to scan containers for common vulnerabilities using the open source <a href="https://github.com/quay/clair">clair project</a>. This scanning ensures that the containers are protected from malware. <a contenteditable="false" data-primary="" data-startref="ecr_ab" data-type="indexterm" id="idm46523889220792"/>You can either enable common vulnerability and exposure (CVE) scanning by default for every container that is uploaded to AWS ECR or manually scan each container image on ECR. <a data-type="xref" href="#cve_can_be_enabled_by_default_on_every">Figure 4-12</a> shows how you can enable CVE for all images.</p>
+
+<figure><div class="figure" id="cve_can_be_enabled_by_default_on_every"><img alt="" src="assets/smaa_0412.png"/>
+<h6><span class="label">Figure 4-12. </span>CVE can be enabled by default on every image that is pushed to ECR.</h6>
+</div></figure>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="AWS Lambda" data-type="sect2"><div class="sect2" id="aws_lambda">
+<h2>AWS Lambda</h2>
+
+<p><a contenteditable="false" data-primary="AWS Lambda" data-secondary="environment variables" data-type="indexterm" id="idm46523889214824"/><a contenteditable="false" data-primary="environment variables, encrypting" data-type="indexterm" id="idm46523889213016"/>Although AWS Lambda should not be used for long-term storage, sometimes the input variables that are provided to Lambda functions as <em>environment variables</em> may contain sensitive data. Storing this data on the cloud without encrypting may result in a not-so-ideal security situation. Hence, AWS allows you to automatically encrypt the environment variables that are stored for AWS Lambda functions.</p>
+
+<p>There are two ways you can encrypt environment variables:</p>
+
+<ul>
+	<li>
+	<p>Encryption using CMK</p>
+	</li>
+	<li>
+	<p>Encryption using external helpers</p>
+	</li>
+</ul>
+
+<section data-pdf-bookmark="Encryption using CMK" data-type="sect3"><div class="sect3" id="encryption_using_cmk">
+<h3>Encryption using CMK</h3>
+
+<p><a contenteditable="false" data-primary="Lifecycle" data-type="indexterm" id="idm46523889206776"/><a contenteditable="false" data-primary="CMK (custom master key)" data-secondary="encrypting environment variables using" data-type="indexterm" id="idm46523889205496"/>Just like AWS S3 and AWS ECR, environment variables can be encrypted on the server side. You can either allow AWS to handle the encryption for you by using the AWS-owned CMK or manage the permissions and the lifecycle around the CMK by providing a reference to an existing CMK. You can then secure this CMK using the PoLP.</p>
+</div></section>
+
+<section data-pdf-bookmark="Encryption using helpers" data-type="sect3"><div class="sect3" id="encryption_using_helpers">
+<h3>Encryption using helpers</h3>
+
+<p><a contenteditable="false" data-primary="helpers, encrypting environment variables using" data-type="indexterm" id="idm46523889202872"/><a contenteditable="false" data-primary="AWS Console" data-type="indexterm" id="idm46523889201032"/>Encryption helpers add an extra layer of protection to your environment variables by encrypting the variables on the command side before adding them to the Lambda. This will ensure that the variables are not visible in their unencrypted form on the AWS console.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="AWS Elastic Block Store" data-type="sect2"><div class="sect2" id="elastic_block_store_left_parenthesisebs">
+<h2>AWS Elastic Block Store</h2>
+
+<p><a contenteditable="false" data-primary="AWS EBS (Elastic Block Store)" data-type="indexterm" id="idm46523889198056"/>Finally, if you run your services on EC2 (either directly or using Amazon Elastic Kubernetes Service [EKS] with EC2 as the worker nodes), AWS KMS can be used to encrypt the backing EBS volumes that back these EC2 instances. As seen in <a data-type="xref" href="#ectwo_instances_decrypt_the_data_key_th">Figure 4-13</a>, the data key for the EBS volume is cached for the purpose of speed and reliability.</p>
+
+<figure><div class="figure" id="ectwo_instances_decrypt_the_data_key_th"><img alt="" src="assets/smaa_0413.png"/>
+<h6><span class="label">Figure 4-13. </span>EC2 instances decrypt the data key that is used for decrypting EBS volumes by making requests to AWS KMS. Once decrypted, EC2 instances retain the unencrypted data key in their cache for as long as the instance is running.</h6>
+</div></figure>
+
+<p>Since the data key is cached inside the EC2 instance, once an instance is attached to the volume, it is able to access the data from the EBS volume without making requests to the KMS-based CMK. Every time the instance is terminated, the instance may need to make a new request to the CMK in order to reattach to the EBS volume.</p>
+</div></section>
+
+<section data-pdf-bookmark="Tying It All Together" data-type="sect2"><div class="sect2" id="tying_it_all_together">
+<h2>Tying It All Together</h2>
+
+<p>Now that I’ve explained why security at rest is important, let’s discuss how AWS tools can help protect your microservice code:</p>
+
+<ol>
+	<li>
+	<p>For code-level vulnerabilities and resource leaks, AWS CodeGuru helps in running through the code and performing static code analysis.</p>
+	</li>
+	<li>
+	<p>AWS KMS can help in encrypting EBS volumes (either using AWS managed/owned keys or customer managed CMKs), resulting in a secure build process.</p>
+	</li>
+	<li>
+	<p>IAM policies can be used to control access to AWS ECR. The containers on ECR can also be encrypted using server-side encryption. Finally, you can use CVE image scanners to scan containers that are stored on AWS ECR for common <span class="keep-together">vulnerabilities</span>.</p>
+	</li>
+	<li>
+	<p><a contenteditable="false" data-primary="" data-startref="cs_sr" data-type="indexterm" id="idm46523889187000"/><a contenteditable="false" data-primary="" data-startref="sr_cs" data-type="indexterm" id="idm46523889183448"/>EBS volumes that are used by Kubernetes nodes can also be encrypted on AWS using KMS and thus be protected from unauthorized access.</p>
+	</li>
+	<li>
+	<p>Finally, the environment variables that are provided to AWS Lambdas can also be encrypted using either CMK or encryption helpers.</p>
+	</li>
+</ol>
+
+<p><a data-type="xref" href="#for_all_the_steps_i_outlined_in_figure">Figure 4-14</a> points out the various controls that AWS provides us with in order to increase the security for all the steps outlined in <a data-type="xref" href="#the_various_steps_that_code_flows_throu">Figure 4-8</a>.</p>
+
+<figure><div class="figure" id="for_all_the_steps_i_outlined_in_figure"><img alt="" src="assets/smaa_0414.png"/>
+<h6><span class="label">Figure 4-14. </span>For all the steps I outlined in <a data-type="xref" href="#the_various_steps_that_code_flows_throu">Figure 4-8</a>, AWS provides us with controls that can help in reducing the exposure to potential threats.</h6>
+</div></figure>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Microservice Database Systems" data-type="sect1"><div class="sect1" id="microservice_database_systems">
+<h1>Microservice Database Systems</h1>
+
+<p><a contenteditable="false" data-primary="security at rest" data-secondary="microservice database systems" data-type="indexterm" id="sr_mds"/><a contenteditable="false" data-primary="microservice database systems" data-secondary="about" data-type="indexterm" id="idm46523889171704"/>After I’ve explained the different compute services on AWS, I’ll discuss the types <span class="keep-together">of storage</span> options you have for your microservices and how AWS protects your <span class="keep-together">sensitive data</span>.</p>
+
+<p><a contenteditable="false" data-primary="NoSQL" data-type="indexterm" id="idm46523889170488"/><a contenteditable="false" data-primary="datastore" data-type="indexterm" id="idm46523889166984"/>I have already talked about the possibility of polyglot persistence mechanisms in microservice systems. <a data-type="xref" href="#three_different_domains_with_different">Figure 4-15</a> shows a typical microservice-based organization where services are segregated by their functional domains. Each of these domains represents a wider bounded context. Each service talks to a datastore within its bounded context and not to any external datastore. As a result, depending on the needs of the domain, each bounded context may choose to use a different kind of a database.</p>
+
+<figure><div class="figure" id="three_different_domains_with_different"><img alt="" src="assets/smaa_0415.png"/>
+<h6><span class="label">Figure 4-15. </span>Three different domains with different needs may choose to go for different types of databases. Domain A may need relational data and hence might choose AWS Relational Database Service (RDS) as its datastore. Domain B may prefer to store <span class="keep-together">its data</span> in a NoSQL DynamoDb datastore, while Domain C may store its data in <span class="keep-together">AWS S3 buckets.</span></h6>
+</div></figure>
+
+<section data-pdf-bookmark="AWS DynamoDB" data-type="sect2"><div class="sect2" id="aws_dynamodb">
+<h2>AWS DynamoDB</h2>
+
+<p><a contenteditable="false" data-primary="DynamoDB" data-type="indexterm" id="db_ab"/><a contenteditable="false" data-primary="microservice database systems" data-secondary="AWS DynamoDB" data-type="indexterm" id="mds_ab"/>AWS DynamoDB is a serverless, fully managed NoSQL database system that can be used for data storage in various applications.</p>
+
+<section data-pdf-bookmark="Access control on AWS DynamoDB" data-type="sect3"><div class="sect3" id="access_control_on_aws_dynamodb">
+<h3>Access control on AWS DynamoDB</h3>
+
+<p><a contenteditable="false" data-primary="authorization and authentication" data-secondary="on AWS DynamoDB" data-type="indexterm" id="idm46523889154584"/>AWS DynamoDB supports IAM policies just like any other resource on AWS. Using AWS DynamoDB, however, gives you control over who can access what part (row or column or both) of the database and when. The conditions section of an IAM policy gives you fine-grained control of permissions. Let me go through an example to illustrate my point.</p>
+
+<p>Consider an organization that stores employee information in a DynamoDB table. Each row contains a variety of information about each employee. This may include their name, state, country, salary, and Social Security number. You might have two types of users that may access this information:</p>
+
+<ul>
+	<li>
+	<p>User: this may be a regular employee who may need to access their own row to change or update their address in the system. However, they may not access their salary or Social Security number for security purposes.</p>
+	</li>
+	<li>
+	<p>Admin: this is a more powerful user who may need full access to the entire table.</p>
+	</li>
+</ul>
+
+<p>The primary key for fetching each row can be the Username.</p>
+
+<p><a data-type="xref" href="#quotation_markuser_-_gauravquotation_ma">Figure 4-16</a> shows the employee table that can contain the employee information.</p>
+
+<figure><div class="figure" id="quotation_markuser_-_gauravquotation_ma"><img alt="" src="assets/smaa_0416.png"/>
+<h6><span class="label">Figure 4-16. </span>“User - Gaurav” may only access and edit the row that has the username Gaurav and may only access the Username, City, State, and Country columns, as highlighted.</h6>
+</div></figure>
+
+<p>So for IAM user Gaurav, you want to allow:</p>
+
+<ul>
+	<li>
+	<p><code>GetItem</code> and <code>UpdateItem</code> access</p>
+	</li>
+	<li>
+	<p>Access to specific attributes (Username, City, State, and Country)</p>
+	</li>
+	<li>
+	<p>Access for only the rows where the username is Gaurav</p>
+	</li>
+</ul>
+
+<p>The IAM policy you can use for such a situation is shown in <a data-type="xref" href="#this_is_the_iam_policy_that_when_applie">Figure 4-17</a>.</p>
+
+<figure><div class="figure" id="this_is_the_iam_policy_that_when_applie"><img alt="" src="assets/smaa_0417.png"/>
+<h6><span class="label">Figure 4-17. </span>This is the IAM policy that when applied to user Gaurav will result in satisfying our requirement. 1, 2, 3A, and 3B identify the sections of the IAM policy that help in fine-tuning the permission policy.</h6>
+</div></figure>
+
+<p>As seen in <a data-type="xref" href="#this_is_the_iam_policy_that_when_applie">Figure 4-17</a>, you can use certain policy elements to fine-tune the <span class="keep-together">IAM policy</span>:</p>
+
+<ol>
+	<li>
+	<p>To start, you can apply PoLP to the operations you want to allow.</p>
+	</li>
+	<li>
+	<p>The condition key <code>LeadingKeys</code> can be used to specify the key that should be checked for while applying the policy. In this example, any row that has the key <code>Gaurav</code> will be accessible to the user Gaurav. You can alternatively change the hard-coded name “Gaurav” to <code>${www.amazon.com:user_id}</code> if you want to direct AWS to allow the currently authenticated user to access a column with their own name, as highlighted in an <a href="https://oreil.ly/UBBlb">AWS article</a>.</p>
+	</li>
+	<li>
+	<p>3A and 3B will specify which attributes are accessible. Since I specify <span class="keep-together"><code>SPECIFIC_ATTRIBUTES</code></span> (3B) in the statement, only the requests that select a specific subset of the attributes specified in 3A will be allowed to proceed, while any privilege escalation will be denied.</p>
+	</li>
+</ol>
+
+<p>AWS maintains a <a href="https://oreil.ly/MLK7h">list</a> of various conditions that you can use to fine-tune such access to AWS DynamoDB. With an effective use of key conditions, you can hide data from various users and thus follow the PoLP on DynamoDB.</p>
+</div></section>
+
+<section data-pdf-bookmark="Encryption on DynamoDB" data-type="sect3"><div class="sect3" id="encryption_on_dynamodb">
+<h3>Encryption on DynamoDB</h3>
+
+<p><a contenteditable="false" data-primary="encryption" data-secondary="on DynamoDB" data-type="indexterm" id="idm46523889126168"/>DynamoDB offers an easy-to-integrate encryption process to its users in addition <span class="keep-together">to access</span> control. DynamoDB has server-side encryption by default, and it cannot be disabled. DynamoDB uses envelope encryption to encrypt all items that are stored on the table. AWS uses AES-256 symmetric encryption for encrypting all data <span class="keep-together">in DynamoDB.</span></p>
+
+<p><a contenteditable="false" data-primary="DEK (data encryption key)" data-type="indexterm" id="idm46523889121016"/><a contenteditable="false" data-primary="cached table key" data-type="indexterm" id="idm46523889119672"/>Each item in a DynamoDB table is encrypted using a <em>data encryption key (DEK)</em>. This DEK is then encrypted using a <em>table key</em>. There is one table key per table. Each table key can decrypt multiple DEKs. And finally, this table key is encrypted using a CMK. <a data-type="xref" href="#aws_dynamodb_uses_a_three-step_envelope">Figure 4-18</a> illustrates this flow.</p>
+
+<figure><div class="figure" id="aws_dynamodb_uses_a_three-step_envelope"><img alt="" src="assets/smaa_0418.png"/>
+<h6><span class="label">Figure 4-18. </span>AWS DynamoDB uses a three-step envelope encryption process where 1) a CMK is used to encrypt a table key, then 2) the table key is used to encrypt DEKs, and then 3) the keys are used to encrypt items inside DynamoDB.</h6>
+</div></figure>
+
+<p>Each time a client wishes to read data from the table, the client first has to make a request to KMS and decrypt the table key using KMS. If the client is authorized to decrypt the table key, DynamoDB then decrypts and caches it on behalf of the client. This table key can then be used to decrypt each DEK and thus decrypt individual items out of DynamoDB. This way, the clients don’t have to make repeated requests to KMS and thus save on KMS fees.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>The table key in DynamoDb is cached per connection for five minutes. A cached table key avoids repeated calls to AWS KMS and thus results in faster performance and lower costs. To make most use of the caching capability of KMS, using clients that can pool database connections can result in better performance and lower costs.</p>
+</div>
+
+<p>Now that I have talked about how AWS KMS can be used for encrypting data on DynamoDB, I will introduce you to the three options you have for using KMS. These options are similar to those you had on AWS S3:</p>
+
+<ul>
+	<li>
+	<p>AWS owned CMK</p>
+	</li>
+	<li>
+	<p>Customer owned CMK</p>
+	</li>
+	<li>
+	<p>Customer managed CMK</p>
+	</li>
+</ul>
+
+<p>As seen in <a data-type="xref" href="#you_can_select_the_type_of_cmk_you_woul">Figure 4-19</a>, the type of CMK can be selected through the AWS Management Console:</p>
+
+<dl>
+	<dt>AWS owned CMK</dt>
+
+	<dd><a contenteditable="false" data-primary="CMK (custom master key)" data-secondary="AWS owned" data-type="indexterm" id="idm46523889104760"/>This is the default option on AWS. An AWS owned CMK is a shared CMK that is used by AWS to encrypt the table key on your account. These keys do not show up on your account. AWS manages and handles all activity related to the CMK. This CMK is not under your control, and you cannot track or audit any access to this CMK. No additional charge is required for encrypting data using an AWS owned CMK.</dd>
+
+	<dt>KMS–Customer managed CMK</dt>
+
+	<dd><a contenteditable="false" data-primary="Lifecycle" data-type="indexterm" id="idm46523889102584"/><a contenteditable="false" data-primary="CMK (custom master key)" data-secondary="KMS-customer managed" data-type="indexterm" id="idm46523889101288"/>This is the most flexible option for use with AWS DynamoDB. These keys are completely managed by the customer, and AWS does not control or manage the lifecycle of these keys. While creating a table, you can specify the AWS KMS CMK that you would like to use as the CMK for the table. You can optionally rotate the keys every year.</dd>
+
+	<dt>KMS–AWS managed CMK</dt>
+
+	<dd><a contenteditable="false" data-primary="" data-startref="db_ab" data-type="indexterm" id="idm46523889095560"/><a contenteditable="false" data-primary="" data-startref="mds_ab" data-type="indexterm" id="idm46523889093928"/><a contenteditable="false" data-primary="CMK (custom master key)" data-secondary="KMS-AWS managed" data-type="indexterm" id="idm46523889098664"/>AWS managed CMKs are keys that are in your account and managed on your behalf by AWS. As a result, you get more control over the keys and you can audit and monitor access to these keys. AWS, on the other hand, handles the security of the infrastructure that backs these keys and rotates these keys periodically. AWS managed keys do, however, incur the routine KMS charges for encryption and decryption.</dd>
+</dl>
+<figure><div class="figure" id="you_can_select_the_type_of_cmk_you_woul"><img alt="" src="assets/smaa_0419.png"/>
+<h6><span class="label">Figure 4-19. </span>You can select the type of CMK you would like to use for encryption at rest on DynamoDB.</h6>
+</div></figure>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Amazon Aurora Relational Data Service" data-type="sect2"><div class="sect2" id="amazon_aurora_relational_data_service">
+<h2>Amazon Aurora Relational Data Service</h2>
+
+<p><a contenteditable="false" data-primary="Amazon Aurora Relational Database Service" data-type="indexterm" id="idm46523889090856"/><a contenteditable="false" data-primary="microservice database systems" data-secondary="Amazon Aurora Relational Data Service" data-type="indexterm" id="idm46523889089160"/><a contenteditable="false" data-primary="MySQL" data-type="indexterm" id="idm46523889087768"/><a contenteditable="false" data-primary="PostgreSQL" data-type="indexterm" id="idm46523889086216"/><a contenteditable="false" data-primary="RDBMS (relational database management system)" data-type="indexterm" id="idm46523889085064"/>Amazon Aurora is another popular data storage system that is used on AWS. Aurora provides drop-in replacement for popular RDBMS engines such as PostgreSQL and MySQL. Similar to AWS DynamoDB, Aurora databases also can be secured from unauthorized access in two ways:</p>
+
+<ul>
+	<li>
+	<p>Using <a href="https://oreil.ly/7h0RN">authentication</a> to prevent unauthorized access. This can be further divided into two categories of authentication:</p>
+		<ul>
+			<li><p><a contenteditable="false" data-primary="IAM database authentication" data-type="indexterm" id="idm46523889082072"/><a contenteditable="false" data-primary="password authentication" data-type="indexterm" id="idm46523889079032"/><em>IAM database authentication</em>: this uses AWS IAM in order to authorize each request.</p>
+			</li>
+			<li><p><em>Password authentication</em>: this uses the traditional password-based approach toward authenticating against Aurora.</p></li>
+			</ul>
+	</li>
+	<li>
+	<p>Using encryption to protect the data.</p>
+	</li>
+</ul>
+
+<p>As seen in <a data-type="xref" href="#you_can_specify_your_choice_of_authenti">Figure 4-20</a>, you can decide on the type of authentication option you want to use while creating your database.</p>
+
+<figure><div class="figure" id="you_can_specify_your_choice_of_authenti"><img alt="" src="assets/smaa_0420.png"/>
+<h6><span class="label">Figure 4-20. </span>You can specify your choice of authentication during database creation.</h6>
+</div></figure>
+
+<section data-pdf-bookmark="IAM authentication on Amazon Aurora" data-type="sect3"><div class="sect3" id="iam_authentication_on_amazon_aurora">
+<h3>IAM authentication on Amazon Aurora</h3>
+
+<p><a contenteditable="false" data-primary="AWS SigV4 (Signature Version 4)" data-type="indexterm" id="idm46523889070488"/><a contenteditable="false" data-primary="IAM (identity and access management)" data-secondary="authentication on Amazon Aurora" data-type="indexterm" id="idm46523889069224"/>In IAM authentication, instead of using a password to authenticate against the database, you create an authentication token that you include with your database request. These tokens can be generated outside the database using AWS Signature Version 4 (SigV4) and can be used in place of regular authentication.</p>
+
+<p>The biggest advantage that IAM authentication provides you with is that your identities within the database are synced with your identities within your AWS account. This stops you from proliferating identities across your resources.</p>
+
+<p>However, IAM authentication has its limitations. There might be a limitation on how many connections a DB cluster can have per second, depending on its DB instance class and your workload. Hence, AWS recommends that IAM authentication be used only for temporary personal access to databases.</p>
+</div></section>
+
+<section data-pdf-bookmark="Password authentication" data-type="sect3"><div class="sect3" id="password_authentication">
+<h3>Password authentication</h3>
+
+<p><a contenteditable="false" data-primary="MySQL" data-type="indexterm" id="idm46523889067288"/><a contenteditable="false" data-primary="PostgreSQL" data-type="indexterm" id="idm46523889065928"/><a contenteditable="false" data-primary="password authentication" data-type="indexterm" id="idm46523889064744"/>Password authentication is the traditional type of authentication. In this case, every connection to the database has to be initiated with the traditional username and password. Each user and role on the database has to be created by an admin user that exists on the database. The passwords are generally text strings that each calling entity has to remember and enter while establishing the connection. You create users with SQL statements such as CREATE USER for <a href="https://oreil.ly/rCYXp">MySQL</a> or <a href="https://oreil.ly/aKxk3"><span class="keep-together">PostgreSQL</span></a>.</p>
+</div></section>
+
+<section data-pdf-bookmark="Encryption on Amazon Aurora" data-type="sect3"><div class="sect3" id="encryption_on_amazon_aurora">
+<h3>Encryption on Amazon Aurora</h3>
+
+<p><a contenteditable="false" data-primary="encryption" data-secondary="on Amazon Aurora" data-type="indexterm" id="idm46523889057512"/>Similarly to AWS DynamoDB and AWS S3, all data stored on Amazon Aurora can be encrypted using a CMK. Enabling encryption is extremely easy in Aurora, as seen in <a data-type="xref" href="#you_can_enable_encryption_by_simply_che">Figure 4-21</a>.</p>
+
+<figure><div class="figure" id="you_can_enable_encryption_by_simply_che"><img alt="" src="assets/smaa_0421.png"/>
+<h6><span class="label">Figure 4-21. </span>You can enable encryption by simply checking the box titled “Enable encryption” while creating your database. You can also choose the CMK you would like to use for encrypting your database.</h6>
+</div></figure>
+
+<p><a contenteditable="false" data-primary="" data-startref="sr_mds" data-type="indexterm" id="idm46523889049160"/>You can either use the AWS managed key to encrypt the database or provide an existing CMK you can control using KMS. The trade-offs of using a customer managed CMK versus using an AWS managed CMK are similar to those when using AWS DynamoDB or using AWS S3.</p>
+</div></section>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Media Sanitization and Data Deletion" data-type="sect1"><div class="sect1" id="media_sanitization_and_data_deletion">
+<h1>Media Sanitization and Data Deletion</h1>
+
+<p><a contenteditable="false" data-primary="media sanitization" data-type="indexterm" id="idm46523889048216"/><a contenteditable="false" data-primary="security at rest" data-secondary="media sanitization" data-type="indexterm" id="idm46523889047032"/><a contenteditable="false" data-primary="security at rest" data-secondary="data deletion" data-type="indexterm" id="idm46523889045352"/><a contenteditable="false" data-primary="data deletion" data-type="indexterm" id="idm46523889043928"/><a contenteditable="false" data-primary="data center" data-type="indexterm" id="idm46523889042856"/>Disposal of data is an often overlooked aspect of data protection that security professionals have to account for. In physical data centers, after a server has been decommissioned, IT professionals have to perform certain activities (which I will elaborate later) on this server before it can be reused for any other activities. These activities will depend on the class of data that was originally stored on this server. These may include, but are not limited to, zeroing of all your data, reformatting your data, and so forth.</p>
+<p>If your hardware stored top secret data, you may have to securely wipe the data from this hardware before you can use it for storing nonconfidential data. This process is called <em>media sanitization</em>. Failure to do so may make the data vulnerable to potentially unauthorized applications that may be able to gain access to these data hashes.</p>
+
+<p><a contenteditable="false" data-primary="AWS DocumentDB" data-type="indexterm" id="idm46523889041000"/><a contenteditable="false" data-primary="DocumentDB" data-type="indexterm" id="idm46523889039688"/><a contenteditable="false" data-primary="NIST-800-88 standards" data-type="indexterm" id="idm46523889037800"/>On cloud systems, you may not have complete control over the process of commissioning and decommissioning servers. This problem may be especially more pronounced in microservice architectures where it is common to spin up new projections or take them down.</p>
+<p>To begin with, I would like to remind you that any sensitive data in any of your storage volumes must always be encrypted at rest. This at least lessens the probability of a data leak. On its end, AWS assumes the responsibility of sanitizing underlying storage mediums on your behalf, for all of its persistent storage layers, including EBS-backed storage volumes (for example, Amazon Aurora, EC2, and DocumentDB), AWS sanitizes media for you as prescribed by the <a href="https://oreil.ly/4heHR">NIST-800-88</a> standards. AWS guarantees that storage volumes used by you will be sanitized and securely wiped prior to being made available to the next customer. This form of media sanitization makes AWS volumes compliant with most regulatory standards in the industry.</p>
+
+<p>However, if you work in a highly regulated industry where data encryption and the guarantee that AWS provides for media sanitization are not sufficient, you can make use of third-party media sanitization tools to securely wipe your storage volumes before decommissioning them.</p>
+</div></section>
+
+<section data-pdf-bookmark="Summary" data-type="sect1"><div class="sect1" id="summary-id000007">
+<h1>Summary</h1>
+
+<p>This chapter has dealt mostly with data storage on AWS. I started off by making a case for security around data storage, access control, and encryption. Most storage mechanisms on AWS can be protected using two ways. First, you can prevent unauthorized access to your sensitive data using AWS IAM policies. Second, you can encrypt the data and secure the encryption key, thus adding an extra layer of security on top of your data protection mechanism.</p>
+
+<p><a contenteditable="false" data-primary="" data-startref="sec_ch" data-type="indexterm" id="idm46523889035432"/>Since microservice environments generally result in polyglot persistence mechanisms, the onus is on security professionals to ensure that each of these services pay special attention to the security policies around each data storage and apply the PoLP on all the storage mechanisms.</p>
+</div></section>
+</div></section></body></html>

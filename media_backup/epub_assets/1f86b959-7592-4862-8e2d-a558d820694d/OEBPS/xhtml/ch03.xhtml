@@ -1,0 +1,296 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>3. Mental Models for Understanding and Explaining System Performance</title>
+<link href="9780138249595.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:5cddacd8-016d-40ae-8bbb-614b0314c95e" name="Adept.expected.resource"/>
+</head>
+<body>
+<section epub:type="chapter">
+<h2 class="h2" id="ch03"><span epub:type="pagebreak" id="page_31"/><span class="big">3</span></h2>
+<h2 class="h2a">Mental Models for Understanding and Explaining System Performance</h2>
+<p class="noindent">Performance is an inseparable factor in software architecture. It dictates the limits of possibilities when creating the system. On the one hand, we try to design systems that are easy to understand, learn, and change. On the other hand, we have to meet performance targets, which forces us to use more complex and exotic techniques, increasing the complexity of the design. Architects must learn to master the balance between the two.</p>
+<p class="noindent">It is useful to define <em>business performance</em> as the average output per unit cost incurred over time. For example, if you represent a company, the business performance can be described as the amount of money you make per unit of money spent on a computer system, including the cost of programmers, project management, and software licenses. This definition lets us approach performance holistically.</p>
+<p class="noindent">Architects should design to maximize business performance in the long run. This is why we do not code everything in assembly. For software architectures, we should consider the time to market, the skill levels of the team, and our potential returns and user expectations.</p>
+<p class="noindent">It is much easier to be a great architect if you have an intuitive feel for the system’s performance. This chapter aims to give you that understanding. To have an intuitive feel for the performance, we need to have some mental models (simply a representation of how something works) about the computer while it is working.</p>
+<p class="noindent">One common belief about computer performance is that the CPU limits its capabilities. If this is true, then if we write each part of the program as optimally as possible, it should run optimally. To do so, we can find where the most time is spent using a CPU profiler and improve the code to minimize this limitation.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_32"/>You have likely encountered a program that refuses to run any faster, although the host computer does not use much CPU or memory while running the program. You have tuned, profiled, and even begged to no avail. This phenomenon gives us an insight into the limits of performance on a computer.</p>
+<p class="noindent">If our applications can keep up with the expected load, all is well; otherwise, we tune the system. We start with a CPU profile, inspect database calls (e.g., review the slow query log) and memory, and tune thread pools, among other checks.</p>
+<p class="noindent">The 80/20 rule for programs facilitates tuning. This rule states that in a system a few code segments run most of the time. Hence, we can improve performance by finding and fixing hot spots and resource hogs. These improvements can make systems go significantly faster, even as much as several times faster. We tune iteratively, finding bottlenecks and fixing them until we reach the point where significant improvements are no longer possible.</p>
+<p class="noindent">Sometimes the system lags behind the expected limits even after tuning while the machine is lightly loaded (e.g., 60% CPU usage). Understanding why this is so is the key to understanding computer performance.</p>
+<p class="noindent">This chapter describes eight mental models that help us think about and understand performance, which facilitates our knowledge of why the system is not using any leftover CPU. Furthermore, we see that most performance limitations stem from the architecture, and these models can also be used to make architecture choices at design time.</p>
+<p class="noindent">The next section provides some background about computer systems. In the section following that one, we introduce six models, which we call six micro models. Two additional models to optimize for throughput and performance are also introduced in this chapter. The following chapters present more detail about these last two models. The remaining sections in this chapter discuss specific optimization techniques.</p>
+<p class="noindent">This chapter is more detailed and technical compared to the other chapters. These specifics are crucial, and they aren’t widely covered in other books. If you’re initially seeking a broader understanding, you could briefly go through this chapter, but I recommend revisiting it to grasp the finer points eventually.</p>
+<section>
+<h3 class="h3" id="ch03lev1sec01">A Computer System</h3>
+<p class="noindent">A computer consists of many kinds of resources, which we use to run applications, and applications help us attain some goals. The operating system (OS) manages the first three resources here:</p>
+<ul class="bull">
+<li><p class="bullet"><strong>CPU:</strong> Our code uses the CPU through OS processes (or threads) that support time-sharing. Current computers have many CPUs, and it is possible to pin a process to a CPU, thus giving it exclusive access.</p></li>
+<li><p class="bullet"><span epub:type="pagebreak" id="page_33"/><strong>Memory:</strong> Our code allocates memory and uses it, although some program languages take over memory management by supporting garbage collection (GC). This usage, however, adds a GC overhead. A cache hierarchy fronts memory and reduces memory access latency.</p></li>
+<li><p class="bullet"><strong>Network and disk:</strong> Our code accesses network and disk resources via the OS’s I/O interfaces. Both resources have the same limitations: input/output operations per second (IOPS) and bandwidth.</p></li>
+<li><p class="bullet"><strong>Other resources (often called <em>soft resources</em>)<em>:</em></strong> Among examples are database connection pools, object pools, locks, and queues.</p></li>
+</ul>
+<p class="noindent">Our code uses the first three resources exclusively. The OS lets us share resources either by time-sharing or partitioning the resource.</p>
+<p class="noindent">I use the term <em>application</em> (or <em>app</em>) to describe a program running in a computer system. An application is a collection of tasks using a subset of resources.</p>
+<p class="noindent">In the following discussion, we focus on the server’s performance because most software architectures are exclusively built on servers. However, we can use the same techniques and concepts with other systems such as desktop applications, daemons, and batch tasks.</p>
+</section>
+<section>
+<h3 class="h3" id="ch03lev1sec02">Models for Performance</h3>
+<p class="noindent">This chapter introduces several models for thinking about performance. Mental models are simple representations of how something works, and you can find examples of mental models at <a href="https://fs.blog/mental-models/">https://fs.blog/mental-models/</a>. This book introduces additional new mental models targeting system performance.</p>
+<p class="noindent">Let’s start with the main idea, explain it via an analogy, and then discuss the models in detail.</p>
+<p class="noindent">Consider a hotel buffet that has soups, the main course, and desserts. Let’s assume that the output is the number of people served per hour. We observe that when the output is highest, some parts (e.g., dessert first and soup later) may be idling. Bottlenecks cause this observation, where the most constrained resource decides performance. For example, the article “Big List of Common Bottlenecks” provides a list of common bottlenecks that we see in systems.<sup><a href="#ch03fn1" id="ich03fn1">1</a></sup></p>
+<p class="footnote"><a href="#ich03fn1" id="ch03fn1">1</a>. <a href="http://highscalability.com/blog/2012/5/16/big-list-of-20-common-bottlenecks.html">http://highscalability.com/blog/2012/5/16/big-list-of-20-common-bottlenecks.html</a></p>
+<p class="noindent">If we want to maximize the number of meals served, we can get the best performance by using the “computer” as fully and effectively as possible, which we do by removing bottlenecks. This is the key idea behind Brendan Gregg’s talk, “CPU Utilization Is Wrong,” at the 16th annual Southern California Linux Expo.<sup><a href="#ch03fn2" id="ich03fn2">2</a></sup> The seventh model describes this for maximum throughput.</p>
+<p class="footnote"><a href="#ich03fn2" id="ch03fn2">2</a>. <a href="https://opensource.com/article/18/4/cpu-utilization-wrong">https://opensource.com/article/18/4/cpu-utilization-wrong</a></p>
+<p class="noindent"><span epub:type="pagebreak" id="page_34"/>Often, latency (the time it takes to serve a meal in the restaurant, for example) also matters. If I have to wait three hours to get my meal, it’s unlikely I will return. Our software also needs to operate within latency limits. The eighth model explains this scenario.</p>
+<p class="noindent">The models, described next, give us insight into how computers work. The first six models are behavioral micro models of performance.</p>
+<section>
+<h4 class="h4" id="ch03lev2sec01">Model 1: Cost of Switching to the Kernel Mode from the User Mode</h4>
+<p class="noindent">A computer OS has two modes: user and kernel. The code we write runs in user mode, but the privileged operations such as performing input/output, accessing memory, and changing kernel data structures run in kernel mode. Every time an application enters kernel mode, a context switch occurs, which adds nonessential costs to the system, such as time to save the stack and to rest the cache. To improve performance, we need to reduce the number of system calls.</p>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec02">Model 2: Operations Hierarchy</h4>
+<p class="noindent">A computer execution performs a wide range of operations, ranging from cache access, memory access, and disk and network operations. <a href="ch03.xhtml#ch03fig01">Figure 3.1</a> shows the costs of those operations (based on Jeff Dean’s talk, “Designs, Lessons and Advice from Building Large Distributed Systems”).<sup><a href="#ch03fn3" id="ich03fn3">3</a></sup> This list is a bit older, but it is still good enough to make a point. Let’s call this our <em>operations hierarchy</em>.</p>
+<p class="footnote"><a href="#ich03fn3" id="ch03fn3">3</a>. <a href="http://www.cs.cornell.edu/projects/ladis2009/talks/dean-keynote-ladis2009.pdf">http://www.cs.cornell.edu/projects/ladis2009/talks/dean-keynote-ladis2009.pdf</a></p>
+<figure class="figure" id="ch03fig01">
+<img alt="Images" src="graphics/03fig01.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 3.1</strong></p>
+<p class="title-f1">Operations hierarchy and associated costs.</p>
+</figcaption>
+</figure>
+<p class="noindent"><span epub:type="pagebreak" id="page_35"/>As <a href="ch03.xhtml#ch03fig01">Figure 3.1</a> depicts, faster operations proceed at thousands to a million times faster than slower operations. This means that sometimes we are justified in doing more work to avoid slower operations. For example, if we can stop a single I/O operation, we can afford to do 5,000 memory operations in its place.</p>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec03">Model 3: Context Switching Overhead</h4>
+<p class="noindent">To create an illusion of multitasking, the OS preempts current processes once it has run for a while. This leads to a <em>context switch</em>, which creates three adverse outcomes:</p>
+<ul class="bull">
+<li><p class="bullet">Switching processes adds an overhead cost of about 5–7 microseconds.<sup><a href="#ch03fn4" id="ich03fn4">4</a></sup></p>
+<p class="footnote"><a href="#ich03fn4" id="ch03fn4">4</a>. <a href="https://stackoverflow.com/questions/21887797/what-is-the-overhead-of-a-context-switch">https://stackoverflow.com/questions/21887797/what-is-the-overhead-of-a-context-switch</a></p></li>
+<li><p class="bullet">When a process comes back, it loses data in the cache.</p></li>
+<li><p class="bullet">The time to finish the task increases due to interleaving with other processes.</p></li>
+</ul>
+<p class="noindent">As the number of threads increases, these overhead costs increase.<sup><a href="#ch03fn5" id="ich03fn5">5</a></sup> Therefore, if you have thousands of threads, the system wastes a significant amount of time doing context switching. We call this <em>thrashing</em> when the cost becomes excessive.</p>
+<p class="footnote"><a href="#ich03fn5" id="ch03fn5">5</a>. <a href="https://en.wikipedia.org/wiki/Completely_Fair_Scheduler">https://en.wikipedia.org/wiki/Completely_Fair_Scheduler</a></p>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec04">Model 4: Amdahl’s Law</h4>
+<p class="noindent">Amdahl’s law describes the limit imposed on concurrent processing due to synchronization.<sup><a href="#ch03fn6" id="ich03fn6">6</a></sup> We use multiple threads or processes in a system to get things done faster (e.g., achieve a speedup). We define speedup as follows:</p>
+<p class="footnote"><a href="#ich03fn6" id="ch03fn6">6</a>. <a href="https://en.wikipedia.org/wiki/Amdahl%27s_law">https://en.wikipedia.org/wiki/Amdahl%27s_law</a></p>
+<span epub:type="pagebreak" id="page_36"/>
+<p class="noindent"><img alt="Images" src="graphics/03un01.jpg"/></p>
+<p class="noindent"><a href="ch03.xhtml#ch03fig02">Figure 3.2</a> depicts Amdhal’s law. It provides an upper bound for speedup when we perform a task using <em>n</em> parallel executions.</p>
+<span epub:type="pagebreak" id="page_37"/>
+<figure class="figure" id="ch03fig02">
+<img alt="Images" src="graphics/03fig02.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 3.2</strong></p>
+<p class="title-f1">Speedup and Amdahl’s law.</p>
+</figcaption>
+</figure>
+<p class="noindent">For example, if you have an exclusive lock covering all the programs, only one thread runs, irrespective of the other code. If you have a lock covering 50% of the program, then the maximum speedup possible is twice as fast, regardless of the number of threads in the system. Amdahl’s law suggests that the best solution is <em>not</em> to use blocking synchronization at all.</p>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec05">Model 5: Universal Scalability Law (USL)</h4>
+<p class="noindent">Universal Scalability Law says that actual speedup is even worse than Amdahl’s law due to shared variables. USL defines a new parameter coherency, which is the overhead added by communication between multiple processes, threads, or nodes.</p>
+<p class="noindent"><a href="ch03.xhtml#ch03fig03">Figure 3.3</a> shows both Amdahl’s law and USL. Here, the line on the top shows speedup with a 0.01 sequential part, and the USL line shows speedup with a 0.01 sequential part and 0.001 coherency. You can see that the speedup allowed by USL is even smaller and more drastically limiting (50 times speedup with 100 processes or 80 times speedup with 400 processes). This means that we should also minimize shared variables among processes, threads, or nodes that force interprocess communication.</p>
+<figure class="figure" id="ch03fig03">
+<img alt="Images" src="graphics/03fig03.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 3.3</strong></p>
+<p class="title-f1">Speedup and the Universal Scalability Law (USL) compared to Amdahl’s.</p>
+</figcaption>
+</figure>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec06">Model 6: Latency and Utilization Trade-offs</h4>
+<p class="noindent">Only a single thread can use the most resources at a given time, which forces threads to wait and take turns. As the utilization of the system increases, the processes have to wait longer on average for resources to become available. This wait increases the latency that users experience. Because most applications must respond within latency bounds, they can’t afford to utilize the system entirely. We can explain this model formally using queueing theory.<sup><a href="#ch03fn7" id="ich03fn7">7</a></sup></p>
+<p class="footnote"><a href="#ich03fn7" id="ch03fn7">7</a>. <a href="https://en.wikipedia.org/wiki/Queueing_theory">https://en.wikipedia.org/wiki/Queueing_theory</a></p>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec07">Model 7: Designing for Throughput with the Maximal Useful Utilization (MUU) Model</h4>
+<p class="noindent">A given system attains maximum throughput when we meet the following conditions:</p>
+<ul class="bull">
+<li><p class="bullet">Each sequential task is implemented optimally (we can fix this via profiling).</p></li>
+<li><p class="bullet">Nonessential tasks are minimal (e.g., GC, context switching, communication overhead, and cache misses).</p></li>
+<li><p class="bullet">Use the most limiting resource maximally</p></li>
+</ul>
+<p class="noindent"><span epub:type="pagebreak" id="page_38"/>Tasks are assigned to threads and other resources such that the resource in most demand is used to do the most important work. Typically, we do this by keeping the utilization of the most restrictive resource highest, the next restrictive resource next highest, and so on.</p>
+<p class="noindent">The first two conditions are self-explanatory. However, the third one needs some explanation. The third condition describes how to allocate resources optimally. It says idling computing resources is a waste, just like a grounded plane is a waste in the eyes of airline companies. If a computer resource is assigned to a thread or process exclusively but not used, it is wasted. For example, if we assign employees in our restaurant to specific tables when some tables are not in use, the associated employees idle.</p>
+<p class="noindent">Exclusive resources force threads to wait for each other and take turns. Correct order and timing significantly affect the performance of systems. For example, the CPU is often the most critical resource because all programs use the CPU. If we assign programs directly to the CPU, a blocked thread or a processor can choke and idle the CPU. Hence, the OS undergoes time-sharing to reduce the probability. Even then, the system wastes the CPU when there is no active process for every CPU core. For instance, if you have an eight-thread program running on an eight-core machine while blocking I/O operations, most cores will idle because most threads are waiting for I/O most of the time.</p>
+<p class="noindent">Such waste happens when many processes are blocked or waiting. We can add more threads, hoping that at least a few of them will be ready at a given time. However, adding more threads increases the context switch overhead (nonessential work) and resets most caches. Now we have a trade-off of waste due to idleness versus context switches. One corollary of this model is that when the CPU is the limiting resource, we should reduce blocking and the number of threads as much as possible.</p>
+<p class="noindent">The CPU is not always the most restrictive resource, however. For example, the CPU may have to wait until data arrives in the system, in which case, the disk may be the most restrictive resource. In such cases, we need to optimize for the disk by caching or prefetching data (in effect, giving up memory and CPU to optimize disk reads).</p>
+<p class="noindent">A program has many data, control, and resource dependencies. Hence, it is often not possible to use all the resources. We get the best performance by maximizing the utilization of the most restrictive resource. The thread model decides where and when a given resource is used and, consequently, its utilization. Because the thread model is hard to change without a rewrite, we should address this issue at design time.</p>
+<p class="noindent">Note that the following performance model is defined only for throughput. For servers, we need to consider latency as well, which we discuss later (in model 8).</p>
+<p class="noindent">This MUU model applies to single-node applications as well as to distributed applications. In the latter case, we count communication overheads as nonessential tasks. We can explain most performance advice and best practices using the three conditions previously mentioned.</p>
+<p class="noindent">Coming back to MUU, due to the bottlenecks and sixth model (latency and utilization trade-offs), an application running in four to eight or more cores is rarely able to attain full utilization for those cores. Hence, the best we can do is to use the most limiting resource maximally.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_39"/>In <a href="ch07.xhtml#ch07">Chapter 7</a>, we apply these mental models to different types of use cases to understand their performance behaviors and to discuss how to improve performance. It is worth noting, however, that most performance limitations stem from the architecture, and most of the techniques need significant code changes. In the next section, we discuss adding latency limits to the MUU. After that, we explore how to use the models to optimize performance.</p>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec08">Model 8: Adding Latency Limits</h4>
+<p class="noindent">In the previous section, we focused on maximizing throughput, which we can attain by maximizing useful resource optimization as per the MUU model. Yet latency is also a key consideration for applications where users wait for results. Furthermore, in some applications, such as stock-trading and real-time applications, the primary goal is low latency rather than high throughput.</p>
+<p class="noindent">According to the sixth micro model, latency and utilization are a trade-off. As <a href="ch03.xhtml#ch03fig04">Figure 3.4</a> shows, when utilization goes up, latency increases exponentially. This increase happens because when we utilize a computer fully, there have to be work tasks ready for each worker thread, which means work tasks need to wait for the worker threads, which leads to higher latency.</p>
+<figure class="figure" id="ch03fig04">
+<img alt="Images" src="graphics/03fig04.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 3.4</strong></p>
+<p class="title-f1">Relationship of utilization to latency.</p>
+</figcaption>
+</figure>
+<p class="noindent">As mentioned, higher throughput needs higher utilization. Therefore, we can say that high throughput and low latencies are a trade-off.</p>
+<p class="noindent">Most real-world applications seek to get maximum throughput within a given latency limit. For example, a server specification might say requests should be processed within 100ms, and a server implementation seeks to get maximum throughput within those limits.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_40"/>Latency, however, follows a long-tail distribution, so it is tough to keep all latencies strictly below a given limit. In practice, we define the latency in terms of a percentile (e.g., requirements may ask for the 99th percentile to be kept less than 100ms).</p>
+<p class="noindent">To control latencies, we can pick an operational point within given latency limits. For example, look at the arrival rate versus latency graph in <a href="ch03.xhtml#ch03fig05">Figure 3.5</a>.</p>
+<figure class="figure" id="ch03fig05">
+<img alt="Images" src="graphics/03fig05.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 3.5</strong></p>
+<p class="title-f1">Relationship of latency vs. arrival rate.</p>
+</figcaption>
+</figure>
+<p class="noindent">In <a href="ch03.xhtml#ch03fig05">Figure 3.5</a>, the items I1, I2, and I3 correspond to different implementations of the given system. A given implementation can provide different latency-throughput combinations for different arrival rates. As <a href="ch03.xhtml#ch03fig05">Figure 3.5</a> illustrates, given an implementation, we therefore can pick the operational point based on required latency limits by controlling the arrival rate. (Mathematically speaking, because latency is a convex function, it is straightforward to find the optimal arrival rate by trial and error.) Because at a steady state, the arrival rate would be equivalent to throughput, this also decides throughput. If we require higher throughput, we need to either improve the implementation (e.g., I3 is better than I2) or run multiple copies of the system for scale.</p>
+<p class="noindent">We control the arrival rate by monitoring and refusing requests that exceed the arrival rate. In practice, either the system notifies users and asks them to try later, or it starts a new server and diverts the requests to the new server. This is called <em>admission control</em>, and we discuss it in <a href="ch12.xhtml#ch12">Chapter 12</a>. We do, however, revisit the topic again under latency optimization techniques later in this chapter.</p>
+<p class="noindent">We call latencies that deviate significantly from the norms <em>tail latencies</em>, which are usually all values higher than the percentiles P99 or P99.9. We can’t use the approaches we discussed to improve tail latencies, which are caused by events that are different from the norm, such as GC, a burst of requests, and resource sharing with other processes. To handle tail latencies, <span epub:type="pagebreak" id="page_41"/>we need to identify each and then eliminate them. Although effective, the techniques to handle tail latencies are expensive, waste resources, and add more complexity. We should therefore design systems for strong latency guarantees only when necessary.</p>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch03lev1sec03">Optimization Techniques</h3>
+<p class="noindent">When we have an initial version of the system, we can use optimization techniques to get better performance. These techniques may include increasing throughput, reducing latency, or making the system work with fewer resources.</p>
+<p class="noindent">To optimize, we need to decide where the bottlenecks are. Bottlenecks usually come in one of three forms:</p>
+<ul class="bull">
+<li><p class="bullet">One of the resources (e.g., CPU, I/O, or memory) is the bottleneck.</p></li>
+<li><p class="bullet">Thread models are causing critical resources to be idle.</p></li>
+<li><p class="bullet">Resources are wasted on nonessential tasks (e.g., context switches, GC).</p></li>
+</ul>
+<p class="noindent">The first step is to use the system and programming language telemetry to figure out the primary bottleneck. This step includes looking at CPU, memory, and network data in the system as well as looking at thread profiles, locking profilers, and so on in the profiler. Brendan Gregg’s USE method is one approach to finding the bottleneck.<sup><a href="#ch03fn8" id="ich03fn8">8</a></sup></p>
+<p class="footnote"><a href="#ich03fn8" id="ch03fn8">8</a>. <a href="https://www.brendangregg.com/usemethod.html">https://www.brendangregg.com/usemethod.html</a></p>
+<p class="noindent">The next step is to fix the bottleneck because there is little to be gained by optimizing nonbottleneck areas. We can fix the bottleneck in two primary ways:</p>
+<ul class="bull">
+<li><p class="bullet">Trading a nonbottleneck resource for a bottleneck resource</p></li>
+<li><p class="bullet">Knowing how the system works</p></li>
+</ul>
+<p class="noindent">Let’s look at a few examples for the first approach, where a cache gives up memory and CPU to reduce I/O and latency. The process of forecasting and prefetching required data gives up the CPU to save I/O and latency. Cassandra’s SSTables trade CPU and memory for I/O performance by only recording change events on disk and reconstructing the state in memory to serve read requests.<sup><a href="#ch03fn9" id="ich03fn9">9</a></sup></p>
+<p class="footnote"><a href="#ich03fn9" id="ch03fn9">9</a>. <a href="http://distributeddatastore.blogspot.com/2013/08/cassandra-sstable-storage-format.html">http://distributeddatastore.blogspot.com/2013/08/cassandra-sstable-storage-format.html</a></p>
+<p class="noindent">The second way is to know how the system works to improve performance, where the required knowledge often comes from performance mental models. Among examples are caching or buffering (the operations hierarchy model), decomposing tasks to multiple threads or consolidating tasks to a single thread (Amdahl’s law and USL models), and prefetching to avoid waits (Amdahl’s law). The following sections explore common techniques to optimize CPU, I/O, memory, and latency.</p>
+<section>
+<h4 class="h4" id="ch03lev2sec09"><span epub:type="pagebreak" id="page_42"/>CPU Optimization Techniques</h4>
+<p class="noindent">We can work with individual tasks, memory, and core utilization to optimize the CPU. We dive into the details of each technique next.</p>
+<section>
+<h5 class="h5" id="ch03lev3sec01">Optimize Individual Tasks</h5>
+<p class="noindent">First, we optimize individual tasks, which we can handle by finding hot spots using a profiler and by eliminating or improving them. We can get further improvements by using better algorithms, programming languages close to the hardware (e.g., assembly language), or specialized hardware such as GPUs (Graphics Processing Units) and field-programmable gate arrays (FPGAs).</p>
+</section>
+<section>
+<h5 class="h5" id="ch03lev3sec02">Optimize Memory</h5>
+<p class="noindent">Second, we can ensure memory is not getting in the way by optimizing a cache. You can find more details about this approach in the section on memory optimization techniques later in this chapter.</p>
+</section>
+<section>
+<h5 class="h5" id="ch03lev3sec03">Maximize CPU Utilization</h5>
+<p class="noindent">Third, we want to maximize CPU core utilization while doing useful work. CPU core utilization may suffer due to blocking threads or an imbalance in task allocation to threads. In the earlier section about the MUU model, we discussed how to handle blocking tasks in detail.</p>
+<p class="noindent">We can handle task imbalance by decomposing the work into smaller tasks and distributing them among many threads. However, as discussed regarding Amdahl’s law and USL (models 4 and 5), when we decompose tasks, we have to minimize the synchronization and shared variables, which limits speedup. We can favorably decompose some tasks. For example, we can’t make Fibonacci series calculations run faster than the serial version.</p>
+<p class="noindent">Task decomposition is complicated and studied in detail under the field of parallel computing.<sup><a href="#ch03fn10" id="ich03fn10">10</a></sup> In some cases, we don’t know the complexity of the task a priori; then utilization suffers. In those cases, we have to either delay the work assignments or readjust them while the program is running. We usually handle this issue with a shared job queue from which threads take work after finishing the current task or using <em>work stealing</em>. With work stealing, idling threads borrow work from neighboring threads.<sup><a href="#ch03fn11" id="ich03fn11">11</a></sup></p>
+<p class="footnote"><a href="#ich03fn10" id="ch03fn10">10</a>. <a href="https://en.wikipedia.org/wiki/Parallel_computing">https://en.wikipedia.org/wiki/Parallel_computing</a></p>
+<p class="footnote"><a href="#ich03fn11" id="ch03fn11">11</a>. See Robert D. Blumofe, “Scheduling Multithreaded Computations by Work Stealing,” <em>Journal of the ACM</em>, vol. 46, no. 5, <a href="https://doi.org/10.1145/324133.324234">https://doi.org/10.1145/324133.324234</a>.</p>
+</section>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec10"><span epub:type="pagebreak" id="page_43"/>I/O Optimization Techniques</h4>
+<p class="noindent">I/O is thousands to a million times slower than other operations, which justifies going to great lengths to avoid this type of work. The following sections describe several techniques that we can use to optimize I/O.</p>
+<section>
+<h5 class="h5" id="ch03lev3sec04">Avoid I/O</h5>
+<p class="noindent">If at all possible, avoid I/O operations. There are several ways to do this. The easiest is to use a cache, which holds often-used data in memory and avoids I/O. However, it is hard to predict the required data early on, so we need to carefully tune the cache.</p>
+<p class="noindent">We can also use a <em>bloom filter</em>, which is a probabilistic hashmap that can remember large amounts of data using a small space.<sup><a href="#ch03fn12" id="ich03fn12">12</a></sup> When queried, if the bloom filter says a key does not exist, it is always correct. When the bloom filter says yes, it does exist, it is only correct with a high probability. By fronting data in the disk with a bloom filter, we can reduce I/O by avoiding queries for things that are not in the store. If you must use I/O, do it in an asynchronous style. This approach reduces its downside due to blocking.</p>
+<p class="footnote"><a href="#ich03fn12" id="ch03fn12">12</a>. <a href="https://highlyscalable.wordpress.com/2012/05/01/probabilistic-structures-web-analytics-data-mining/">https://highlyscalable.wordpress.com/2012/05/01/probabilistic-structures-web-analytics-data-mining/</a></p>
+</section>
+<section>
+<h5 class="h5" id="ch03lev3sec05">Buffering</h5>
+<p class="noindent">I/O happens as blocks, and the cost of reading and writing each block is about the same; for example, the Linux default buffer size is 8KB. Whether you write 1KB or 8KB, the cost is about the same. We can save a lot by buffering the writes (Java-buffered streams do this automatically). If you are implementing buffering yourself, you can use the disrupter pattern, which buffers data without waiting.<sup><a href="#ch03fn13" id="ich03fn13">13</a></sup> We look at this pattern in <a href="ch11.xhtml#ch11">Chapter 11</a>.</p>
+<p class="footnote"><a href="#ich03fn13" id="ch03fn13">13</a>. <a href="https://stackoverflow.com/questions/6559308/how-does-lmaxs-disruptor-pattern-work">https://stackoverflow.com/questions/6559308/how-does-lmaxs-disruptor-pattern-work</a></p>
+</section>
+<section>
+<h5 class="h5" id="ch03lev3sec06">Send Early, Receive Late, Don’t Ask but Tell</h5>
+<p class="noindent">If data to be processed comes through I/O, slow I/O decelerates CPU processing. To minimize the effects of slow I/O, Message Passing Interface (MPI) programming uses the maximum “Send Early, Receive Late, Don’t Ask but Tell.” By proactively sending data and using the data as late as possible, we maximize the chance that the data has already arrived before it’s needed, which increases the performance of the system. (We can also use the same maxim in our code.)</p>
+</section>
+<section>
+<h5 class="h5" id="ch03lev3sec07">Prefetching</h5>
+<p class="noindent">Another idea is <em>prefetching</em>, which predicts the data required for processing and starts the I/O operation early, usually in a different thread to maximize the chance that data is ready when needed. <span epub:type="pagebreak" id="page_44"/>For example, when you start typing in the search box, Google guesses your query and prefetches results from the server to reduce latency.</p>
+</section>
+<section>
+<h5 class="h5" id="ch03lev3sec08">Append-Only Processing</h5>
+<p class="noindent">While writing and reading to the disk, appends and sequential reads are much faster than random access operations. The reason is that sequential operations avoid disk rotational delay, which is the time for the sector containing the block to rotate and align with the header, adding significant delays to disk latency. With solid-state drives (SSDs), the difference is reduced but still present.<sup><a href="#ch03fn14" id="ich03fn14">14</a></sup> We can therefore improve I/O performance if we convert all reads and writes to sequential reads and writes as much as possible.</p>
+<p class="footnote"><a href="#ich03fn14" id="ch03fn14">14</a>. <a href="https://www.quora.com/Do-append-only-DB-log-structures-benefit-from-Flash-memory-and-SSDs">https://www.quora.com/Do-append-only-DB-log-structures-benefit-from-Flash-memory-and-SSDs</a></p>
+<p class="noindent">Some use cases, such as Kafka programs, naturally support append-only processing.<sup><a href="#ch03fn15" id="ich03fn15">15</a></sup> A similar optimization is still possible for other use cases as well. For example, Cassandra remembers data via a changelog, which supports sequential reads and writes, while using an in-memory table called an SS table to calculate the most recent snapshot of the data to support random reads.</p>
+<p class="footnote"><a href="#ich03fn15" id="ch03fn15">15</a>. See “Here’s What Makes Kafka So Fast” at <a href="https://medium.freecodecamp.org/what-makes-apache-kafka-so-fast-a8d4f94ab145">https://medium.freecodecamp.org/what-makes-apache-kafka-so-fast-a8d4f94ab145</a> for a detailed discussion.</p>
+</section>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec11">Memory Optimization Techniques</h4>
+<p class="noindent">Memory-bound behavior can occur in several ways. Next, let’s look at two such techniques.</p>
+<section>
+<h5 class="h5" id="ch03lev3sec09">Too Many Cache Misses</h5>
+<p class="noindent">Frequently used variables, written or read across many threads, trigger a cache miss, forcing subsequent reads of any of the variables to load the value from memory. This is about 100 times slower than reading data from the cache. Such cache misses can be expensive, and if they become the bottleneck, we call it the <em>memory wall</em>. For example, “An Analysis of Web Servers Architectures Performances on Commodity Multicores” by Sylvain Genevès shows that the load on memory increases with the number of cores saturating at eight cores.<sup><a href="#ch03fn16" id="ich03fn16">16</a></sup></p>
+<p class="footnote"><a href="#ich03fn16" id="ch03fn16">16</a>. <a href="https://hal.inria.fr/hal-00674475/document">https://hal.inria.fr/hal-00674475/document</a></p>
+<p class="noindent">Cache misses are handled by reducing shared variables among multiple processes and then optimizing cache behavior. For example, in his talk “Adventures with Concurrent Programming in Java: A Quest for Predictable Latency,” Martin Thomson describes in detail how they optimized the cache misses using Disruptor.<sup><a href="#ch03fn17" id="ich03fn17">17</a></sup> The alternative is to do all communications between processes explicitly via message passing or a queue.</p>
+<p class="footnote"><a href="#ich03fn17" id="ch03fn17">17</a>. <a href="https://www.youtube.com/watch?v=rKMTsJxYK30">https://www.youtube.com/watch?v=rKMTsJxYK30</a></p>
+</section>
+<section>
+<h5 class="h5" id="ch03lev3sec10"><span epub:type="pagebreak" id="page_45"/>Not Enough Memory</h5>
+<p class="noindent">If the system operates at the edge of available memory, most memory operations such as GC and allocations become expensive. We can address this issue by either adding more memory, optimizing the memory, or moving some of the data to disk.</p>
+<p class="noindent">Optimizing memory may include new algorithms and data structures, freeing up data early and optimizing allocations. State-of-the-art profilers have several views that help us with memory optimizations. Also, GC overhead can become excessive when the system creates too many objects or the object graphs are too complicated, which we can analyze using the object allocations view of the profiler. We can fix this issue by simplifying long-living data structures or taking over GC by using off-heap memory allocation.<sup><a href="#ch03fn18" id="ich03fn18">18</a></sup></p>
+<p class="footnote"><a href="#ich03fn18" id="ch03fn18">18</a>. <a href="https://dzone.com/articles/heap-vs-heap-memory-usage">https://dzone.com/articles/heap-vs-heap-memory-usage</a></p>
+<p class="noindent">The high-level idea behind moving some data to disk involves transferring infrequently used data. The MIT Advanced Data Structures course has several lectures on persistent data structures, which provide examples of moving data to disk.<sup><a href="#ch03fn19" id="ich03fn19">19</a></sup></p>
+<p class="footnote"><a href="#ich03fn19" id="ch03fn19">19</a>. <a href="https://ocw.mit.edu/courses/6-851-advanced-data-structures-spring-2012/video_galleries/lecture-videos/">https://ocw.mit.edu/courses/6-851-advanced-data-structures-spring-2012/video_galleries/lecture-videos/</a></p>
+</section>
+</section>
+<section>
+<h4 class="h4" id="ch03lev2sec12">Latency Optimization Techniques</h4>
+<p class="noindent">Latency or response time, the time from receiving the request to providing a response, is an odd one compared to other resources. We could argue it is not a resource but rather a measurement. However, when our primary focus is latency, looking at it as a resource and budgeting for it make sense.</p>
+<p class="noindent">For example, if a service call must finish within 100ms, we can budget each part of the code to respond within a given time period. In general, we can break the system into multiple parts in the pipeline and specify the latency limits for each part while monitoring the queue lengths. Next, let’s look at the three primary methods to reduce latency.</p>
+<section>
+<h5 class="h5" id="ch03lev3sec11">Do Work in Parallel</h5>
+<p class="noindent">If we can do work in parallel, we can reduce latency. It is worth noting that gains diminish quickly if work tasks are dependent on each other (Amdahl’s law). One common use of this model is to push some work (e.g., I/O) to a different thread and respond to the user right away (a.k.a. asynchronous processing).</p>
+</section>
+<section>
+<h5 class="h5" id="ch03lev3sec12">Reduce I/O</h5>
+<p class="noindent">I/O is often thousands of times slower than memory operations (the operations hierarchy model). Reducing or eliminating I/O (e.g., using caching or prefetching) can improve latency significantly. <span epub:type="pagebreak" id="page_46"/>It is hard to hit the tens-of-a-microsecond range without eliminating I/O or pushing I/O to a different thread.</p>
+</section>
+<section>
+<h5 class="h5" id="ch03lev3sec13">Admission Control</h5>
+<p class="noindent">As discussed earlier regarding performance model 8, we can control latencies by monitoring queue lengths. We know from the queuing theory that latencies highly correlate with queue lengths. Therefore, we can control the average latency by monitoring queue lengths and applying back pressure to limit the intake of new requests.</p>
+</section>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch03lev1sec04">Intuitive Feel for Performance</h3>
+<p class="noindent">Although architects would run tests to verify their systems, it is possible to explore only some designs but not all. Given a target system, architects need to pick one to two potential architectures using an understanding of architecture models, technologies, performance models, and design concepts, which they can optimize further.</p>
+<p class="noindent">The first step is to use the knowledge about macro- and micro-level architectures to develop architectures, as we discuss in <a href="ch05.xhtml#ch05">Chapters 5</a>–<a href="ch10.xhtml#ch10">10</a>. To build an intuitive feel for the performance, we need to understand each architecture and choice using the eight performance models. Also, you need to do the same with any architecture case studies (e.g., <a href="http://highscalability.com">http://highscalability.com</a>). This exercise will deepen your understanding.</p>
+<p class="noindent">The second most important aspect is the real-life experience in solving performance problems. Take part in solving them when you can and talk to the people who have solved these problems and understand their root cause if this happens outside your team.</p>
+<p class="noindent">This book also discusses ideas for default choices when designing (e.g., how to implement a default service or default thread model). Understand the limits of the default choice and use defaults whenever possible. For example, a typical service can provide a latency range from a few milliseconds to hundreds of milliseconds; anything more than a second is usually high. A service provides throughput from tens to thousands of messages per second, while throughput beyond a few thousands requires careful handling. Understand the complex architecture choices in terms of variations from the default and the advantages and disadvantages of those choices. This book aims to explain those choices as much as possible.</p>
+<p class="noindent">Finally, the intuitive feel is practitioner knowledge and best imported in terms of mentors or apprenticeship models. Seek out and work with people who have that understanding and talk to them to comprehend deeply.</p>
+</section>
+<section>
+<h3 class="h3" id="ch03lev1sec05">Leadership Considerations</h3>
+<p class="noindent">Performance is a key factor in designing software systems. We need to think about performance alongside the leadership factors we talked about in <a href="ch02.xhtml#ch02">Chapter 2</a>.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_47"/>First, when planning a system, we need to decide whether performance is something we can fix later or something we need to tackle immediately. Here are some questions and principles to help us decide:</p>
+<ul class="bull">
+<li><p class="bullet">When is the best time to market? (<a href="ch01.xhtml#ch01">Chapter 1</a>, question 1)</p></li>
+<li><p class="bullet">What is the skill level of the team? (<a href="ch01.xhtml#ch01">Chapter 1</a>, question 2)</p></li>
+<li><p class="bullet">What is our system’s performance sensitivity (<a href="ch01.xhtml#ch01">Chapter 1</a>, question 3)</p></li>
+<li><p class="bullet">When can we rewrite the system? (<a href="ch01.xhtml#ch01">Chapter 1</a>, question 4)</p></li>
+<li><p class="bullet">Does performance affect the users? (<a href="ch01.xhtml#ch01">Chapter 1</a>, principle 3)</p></li>
+</ul>
+<p class="noindent">When we are considering performance, the overall system design (macro architecture) is often more critical than specific service-level details. The reason is that it’s usually easier to change service-level factors later. By the time we reach a point where we can redo the system, we can tackle both macro- and service-level performance issues. Therefore, we can put off performance concerns more easily than user experience (UX) worries.</p>
+<p class="noindent">If we need to focus on performance immediately, it often indicates a tough issue (<a href="ch01.xhtml#ch01">Chapter 1</a>, question 5). In this case, we should use principles 5 and 6 from <a href="ch01.xhtml#ch01">Chapter 1</a>: take time to design elements that are hard to change, but implement these changes slowly and eliminate uncertainties.</p>
+<p class="noindent">Moreover, decisions related to performance often involve a big-picture view and carry risks. As leaders, we need to make these decisions and shoulder these risks (<a href="ch01.xhtml#ch01">Chapter 1</a>, principle 4).</p>
+<p class="noindent">A gut feeling for performance is crucial for most architectural decisions. You can develop this by working closely with performance experts over time.</p>
+</section>
+<section>
+<h3 class="h3" id="ch03lev1sec06">Summary</h3>
+<p class="noindent">Performance is an inseparable factor in software architecture, and it dictates the limits of possibilities while designing the system.</p>
+<p class="noindent">To have an intuitive feel for the performance, we need to have a mental model (simply a representation of how something works) about the computer as it performs its work. Most performance limitations stem from the architecture, and we can use the eight models to make architectural choices at design time. Often an ideal design is impossible or requires complex programming, so our design needs to balance many aspects.</p>
+<p class="noindent">We can use the models presented in this chapter to optimize systems for CPU, memory, and performance. These models will help you think about and understand performance. For example, they will help you answer why the system is not using the leftover CPU. We also need to balance performance against other considerations. For example, when we look at throughput via MUU, the ideal system design includes operations that never block or wait (any blocking operation is handled asynchronously); operations are assigned to the same <span epub:type="pagebreak" id="page_48"/>number of threads as the number of cores. However, often this ideal design is impossible or requires complex programming, so our design needs to balance many aspects.</p>
+<p class="noindent">These performance models are tools that we can use in design while crafting the architecture. We can use the models in this chapter to optimize systems for CPU, memory, and performance. The performance models, however, differ from performance analysis models because the former methods focus on the architecture rather than finding the bottlenecks. (See, for example, the Utilization Saturation and Errors [USE] method offered by Brendan Gregg at <a href="https://www.brendangregg.com/usemethod.html">https://www.brendangregg.com/usemethod.html</a>.)</p>
+<p class="noindent">It is apparent from those performance analysis models that much of the performance depends on your architecture, especially the thread model, which is hard to fix later. Hence, these performance models are not only tools for understanding performance, but tools that we can use in design while crafting the architecture. We see further applications of these models throughout the book, especially in <a href="ch11.xhtml#ch11">Chapter 11</a>.</p>
+<p class="noindent">We need to combine our understanding of performance with leadership considerations from <a href="ch01.xhtml#ch01">Chapter 1</a> to find the design decisions that maximize our chance of success. Now we’re ready to think about what users need from our system. In the next chapter, we dive into UX to better understand what this effort involves.</p>
+</section>
+</section>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>1. Introduction to Software Leadership</title>
+<link href="9780138249595.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:5cddacd8-016d-40ae-8bbb-614b0314c95e" name="Adept.expected.resource"/>
+</head>
+<body>
+<section epub:type="chapter">
+<h2 class="h2" id="ch01"><span epub:type="pagebreak" id="page_1"/><span class="big">1</span></h2>
+<h2 class="h2a">Introduction to Software Leadership</h2>
+<p class="noindent">When we are developing software systems, our goal is to build systems that meet quality standards and that provide the highest return on investment (ROI) in the long run or in a predefined time horizon. This, in turn, becomes the goal of software architecture, which is the blueprint for building software systems.</p>
+<p class="noindent">Here, ROI is not just about being economical. If spending more on the product results in more revenue, consider that a good ROI. On the other hand, shoddy design leads to numerous changes later, ultimately costing a lot more. Good software architecture balances both extremes and maximizes ROI.</p>
+<p class="noindent">Architectural design includes many things—for example, finding the right abstractions, deciding which features to include, determining the depth of each feature, setting quality of service (QOS) parameters, establishing the degree of flexibility, timing, and user experience.</p>
+<section>
+<h3 class="h3" id="ch01lev1sec01">Role of Judgment</h3>
+<p class="noindent">As software architects, we learn about abstractions, architecture styles, and patterns. We study their pros and cons, which one to use in a given situation, and how to compose them with an awareness of pitfalls, negative examples, and use cases. However, many errors are made not because we do not understand these things. Most design mistakes are caused by a lack of judgment, not by a lack of knowledge.</p>
+<p class="noindent">Here, <em>judgment</em> refers to the ability to make considered decisions or arrive at sensible conclusions optimizing for the most important outcome.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_2"/>I have seen this outcome again and again in my 20 years of architecting systems. Here are the common mistakes I’ve found:</p>
+<ul class="bull">
+<li><p class="bullet">Trying to incorporate too many features required by the user’s journey</p></li>
+<li><p class="bullet">Making the design too flexible or too consistent, which impacts future changes</p></li>
+<li><p class="bullet">Limiting depth, which significantly affects user experience (UX)</p></li>
+<li><p class="bullet">Solving useless problems for the end user</p></li>
+<li><p class="bullet">Inadequately focusing on the user’s journey and experience</p></li>
+<li><p class="bullet">Missing delivery timetables</p></li>
+</ul>
+<p class="noindent">We make most of these mistakes because we do not know about the future, about the users who will use the system, and about how the system works at the edge of its capabilities. Here, I see the need for judgment. I see leadership challenges, not technical challenges!</p>
+<p class="noindent">Let’s explore what I mean by that.</p>
+<p class="noindent">To me, leadership is about managing uncertainty, bringing order to chaos, providing hope for a better future, and progressing toward that future. Consider the following:</p>
+<p class="bq"><em>A leader is a dealer in hope. —Napoleon Bonaparte</em></p>
+<p class="noindent">This is not to say leaders must be omniscient and always know what the future will bring, but they should have a <em>vision</em> of the future; they should manage uncertainty in such a way that minimizes risk. Leaders should communicate their vision and its implementation to others and shepherd them toward that vision.</p>
+<p class="noindent">Let me repeat the same statement from an architect’s point of view. It is not to say software architects must be omniscient and always know how a system will be used and what it should have, but they should have a vision of the overall solution. They should manage uncertainty in such a way that minimizes risk. Leaders should communicate their vision and implementation to the team and guide them toward building the system and then operating it.</p>
+<p class="noindent">I am not saying that knowledge is not important for an architect. It is. However, judgment plays a key role too. Sadly, knowledge is commonplace, whereas judgment is not.</p>
+<p class="noindent">I have seen a lot of good books and articles about software architectural concepts: Bob Martin’s books, Gregor Hohpe’s books, and Martin Fowler’s blogs, to name a few. Yet, they focus mainly on knowledge and less on judgment.</p>
+<p class="noindent">I have also seen a lot of good books on leadership: <em>The Hard Things About Hard Things</em> by Ben Horowitz, <em>Trillion Dollar Coach</em> by Eric Schmidt et al., <em>Team of Teams: New Rules of Engagement for a Complex World</em> by Stanley McChrystal, <em>Good Strategy, Bad Strategy</em> by Richard Rumelt, and other books by Jocko Willink, to name a few. They discuss judgment but only at a general level, not at a technical level. There is a gap between good leadership and good software architectural judgment.</p>
+</section>
+<section>
+<h3 class="h3" id="ch01lev1sec02"><span epub:type="pagebreak" id="page_3"/>Goal of This Book</h3>
+<p class="noindent">This book discusses the gap between the two—leadership and software architectural judgment. It describes software leadership and how we can use it to the best advantage when building our systems. As mentioned, my experience shows that many of our architectural mistakes come from the gap between knowledge and judgment.</p>
+<p class="noindent">This is not a book about how to manage your team, nor is it a book about engineering management or about HR and how to build the team. It’s also not a book about strategy. Further, this book does not cover how to create a vision. You must have a vision—your own or one shared by your cofounders or executive board members. Although there is a lot written about vision, I am not sure it can be explained sufficiently.</p>
+<p class="noindent">This is a technical book, so it is a book about technical judgment. It explains principles and concepts I believe a senior architect must understand deeply and discusses how to employ those principles to manage uncertainty. This is a book about how technical leaders/architects should think and how to oversee their product by managing uncertainty.</p>
+<p class="noindent">For example, one thesis of this book is to <em>think deeply but implement slowly</em>. Another example is that leaders must define the scope, taking up the yoke of uncertainty without passing it down to coworkers. Questions and principles discussed in this book help us manage uncertainty and provide a framework for making decisions.</p>
+<p class="noindent">Is this book useful if you are not in charge? I think it is. People follow whoever offers to handle uncertainty in order to progress. Good architects start to play the role years before they are given the title. The more knowledgeable you are, the better chance you’ll have if you do choose to lead. Take the initiative; help your leader and deliver. You will find you own more and more. Titles will follow.</p>
+<p class="noindent">If you believe someone plays that role better than you, by all means, follow, question, and learn from them! In this case, there is a lot you can do to help the leader, using what we discuss in the book. Your turn will follow.</p>
+<p class="noindent">This book draws examples from many role models who exemplify technical leadership. I name two specifically: Kelly Johnson, who designed aircraft like the U-2 and the Blackbird SR-71, and the Wright brothers, Orville and Wilbur, whom we all know. These leaders showed a kind of deep technical control that made systems that seemed to be impossible possible, while utilizing limited resources. Granted, there are many software leaders like Jeff Dean of Google, whom I hold in the same esteem, but they are contemporaries, and their methods are not yet published as books. This fact forces me to choose the previously mentioned models for the book.</p>
+<p class="noindent">As we all know, the Wright brothers built the first powered airplane with sustained and controlled flight. They had no college education and owned and operated a bicycle shop. They competed against well-funded professionals and yet went on to win. Granted, there were many aircraft designs before the Wright brothers, but they were the first to get all the parameters of the design right. The Wright brothers showed great judgment by building a glider, <span epub:type="pagebreak" id="page_4"/>learning how to control it, learning to tweak it, and then adding propellers and engines, which gradually evolved their gilder into an aircraft. Figuring out the right parameters is a lesson we all can use. The Wright brothers had an intuitive feel to the design, which they acquired over the years. They later achieved both fame and fortune.</p>
+<p class="noindent">Kelly Johnson was the aircraft designer for the Lockheed U-2, the SR-71 Blackbird, and 40 other aircrafts. The Blackbird is invisible to radar, can outrun missiles, and has never been shot down in 20+ years of service. It was the first production aircraft to exceed Mach 3 (three times the speed of sound). Kelly also built the first fighter capable of Mach 2 and the first fighter to exceed 400 mph. His U-2 craft reached and sustained altitudes of 70,000 feet.<sup><a href="#ch01fn1" id="ich01fn1">1</a></sup> He could take an impossible goal, break it into doable tasks, demand excellence, and then make everything work. Kelly was known to finish projects early and under budget, returning money to the government. His boss reportedly said, “That damned Swede can actually see air,” referring to Kelly’s intuitive feel to the design.<sup><a href="#ch01fn2" id="ich01fn2">2</a></sup></p>
+<p class="footnote"><a href="#ich01fn1" id="ch01fn1">1</a>. <a href="https://en.wikipedia.org/wiki/Lockheed_U-2">https://en.wikipedia.org/wiki/Lockheed_U-2</a></p>
+<p class="footnote"><a href="#ich01fn2" id="ch01fn2">2</a>. <a href="https://en.wikipedia.org/wiki/Kelly_Johnson_(engineer)">https://en.wikipedia.org/wiki/Kelly_Johnson_(engineer)</a></p>
+<p class="noindent">The terms <em>architecture</em> and <em>design</em> are often used interchangeably, although design is a full detailed blueprint (e.g., class diagrams and sequence diagrams), whereas architecture is the high-level conceptual view (e.g., component view and component-level sequence diagram). We focus on the high-level view; hence, I use the term <em>architecture</em> throughout.</p>
+<p class="noindent">We can use the three layers of architecture of The Open Group Architecture Framework (TOGAF) to pinpoint topics we focus on in this book:</p>
+<ul class="bull">
+<li><p class="bullet">The business architecture layer sketches out the business operations and shows how various components work together to propel the business’s workings.</p></li>
+<li><p class="bullet">The information systems architecture layer splits into two parts: data and application architecture. Data architecture centers around categorizing different data types and highlighting their connections. On the other hand, application architecture identifies unique system parts, such as services, and clarifies their interaction within the system.</p></li>
+<li><p class="bullet">The technology architecture layer describes the specifically chosen technologies. They include elements like software standards, software packages used, hardware, networks, and the fine details of security.</p></li>
+</ul>
+<p class="noindent">The core focus of this book rests on the information system architecture. Nonetheless, we may discuss technology architecture if the choice of technology significantly impacts our discussion.</p>
+<p class="noindent">The connection between business architecture and information system architecture is more intricate. The design of the information system architecture heavily depends on various business considerations. These factors include not only the business architecture but also elements like project schedules, the skills of the team, and the challenges from competitors. Although these considerations are not usually included in the business architecture in <span epub:type="pagebreak" id="page_5"/>frameworks like TOGAF, they do influence the implementation of the architecture and the strategic course of the organization. Together, these are referred to as the “business context.” A main challenge in system architecture is to keep this business context in mind when making technology decisions. Ensuring this is a responsibility that falls to leadership. A key goal of the five questions we discuss in this book is to ensure we maintain this business context.</p>
+<p class="noindent">There are two prominent approaches to system architecture:</p>
+<ul class="bull">
+<li><p class="bullet">Waterfall</p></li>
+<li><p class="bullet">Agile</p></li>
+</ul>
+<p class="noindent">The <em>waterfall</em> approach is based on the premise that it’s feasible to identify the system’s requirements in full detail beforehand. Therefore, this approach suggests thorough planning followed by execution. An example of this approach can be seen in the TOGAF architecture design model (ADM), which demonstrates how to capture requirements accurately and develop them. In addition, groups like the Object Management Group (OMG) and International Organization for Standardization (ISO) offer standards supporting similar conceptual models.</p>
+<p class="noindent">On the other hand, iterative approaches, like <em>agile</em>, focus on quickly rolling out a version and collaborating with users to refine requirements and construct a system that can genuinely benefit the user.</p>
+<p class="noindent">When pitting these two approaches against each other, I lean toward agile. Efforts have been made to blend iterative features with models like ADM, but in practice, it’s often too complicated to maintain the rapid pace needed for iterative models (usually one- to two-week iterations). With large organizations and complex projects, more central planning could be justified, though, even after working with hundreds of enterprise companies, including Fortune 500 firms, I have yet to see such a project deliver exceptional results.</p>
+<p class="noindent">Many software processes, such as TOGAF ADM, standards, and reference architectures, are grounded in the waterfall model and aim to capture the requirements precisely. While valuable lessons can be learned from TOGAF, OMG, and ISO, they operate under the assumption that requirements can be largely defined beforehand and will only undergo gradual changes. In contrast, I believe our experiences have proven otherwise. I endorse a more interactive or agile approach where requirements are kept simpler and informal, continuously improving in short iterations, while learning from users.</p>
+<p class="noindent">At a broader design level, I favor breaking the system into loosely connected subsystems (each potentially interacting with users and providing value), defining APIs between them, and then operating them independently with high-level oversight to connect the dots.</p>
+<p class="noindent">While architects may find utility in TOGAF and similar models, I hesitate to recommend them in this book. This is an opinion formed from my experiences.</p>
+<p class="noindent">The focus of this book is on agile approaches. So, before we dive into the book, it is useful to understand the typical roles in a software project. Product managers, with the help of <span epub:type="pagebreak" id="page_6"/>business stakeholders, UX designers, and architects, decide what to build. Architects work with engineering managers and the team to build the product. The product manager then works with everyone to ensure the required quality (demanding excellence).</p>
+<p class="noindent">The scope of the architect’s role might change, based on where the work takes place. For example, in a startup, architects might handle product management, deciding the features to build, whereas in a large company, architects might be disconnected from the requirement specifications. However, in an era when we are moving away from the waterfall approach to the iterative, agile software development approach, responsibilities are being shared, and these roles are merging. For example, I believe architects should work hand in hand with product managers when deciding which features to include, when to include them, and when defining UX, demanding excellence from the team.</p>
+<p class="noindent">This book is segmented into four parts. Although the book focuses on judgment, knowledge is just as important. Parts II and III delve into the topic of knowledge, while exploring how we can judge its use.</p>
+</section>
+<section>
+<h3 class="h3" id="ch01lev1sec03">Part I: Introduction</h3>
+<p class="noindent">In Part I, <a href="ch02.xhtml#ch02">Chapter 2</a> discusses software architecture, uncertainty, and judgment. It identifies five questions and seven principles to help us handle uncertainty:</p>
+<p class="noindent">The five questions are</p>
+<p class="ul-noindent">When is the best time to market?</p>
+<p class="ul-noindent">What is the skill level of the team?</p>
+<p class="ul-noindent">What is our system’s performance sensitivity?</p>
+<p class="ul-noindent">When can we rewrite the system?</p>
+<p class="ul-noindent">What are the hard problems?</p>
+<p class="noindent">The seven principles are</p>
+<p class="ul-noindent">Drive everything from the user’s journey.</p>
+<p class="ul-noindent">Use an iterative thin slice strategy.</p>
+<p class="ul-noindent">On each iteration, add the most value for the least effort to support more users.</p>
+<p class="ul-noindent">Make decisions and absorb the risks.</p>
+<p class="ul-noindent">Design deeply things that are hard to change but implement them slowly.</p>
+<p class="ul-noindent">Eliminate the unknowns and learn from the evidence by working on hard problems early and in parallel.</p>
+<p class="ul-noindent">Understand the trade-offs between coherence and flexibility in the software architecture.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_7"/>As we explore in detail in <a href="ch02.xhtml#ch02">Chapter 2</a>, these five questions and seven principles address each of the common architectural mistakes we often make.</p>
+</section>
+<section>
+<h3 class="h3" id="ch01lev1sec04">Part II: Essential Background</h3>
+<p class="noindent">In Part II, we dig into two performance and user experience (UX) areas, which, in my opinion, are not well understood by many architects. First is system performance, which decides what is and what is not feasible in our architectures. The second is UX, which often decides user adoption—thus, the system’s destiny.</p>
+<p class="noindent"><a href="ch03.xhtml#ch03">Chapter 3</a> is more detailed and technical compared to the other chapters. These specifics are crucial, and they aren’t widely covered in other books. If you’re initially seeking a broader understanding, you could briefly go through <a href="ch03.xhtml#ch03">Chapter 3</a>, but I recommend revisiting it to grasp the finer points eventually.</p>
+<p class="noindent"><a href="ch04.xhtml#ch04">Chapter 4</a> emphasizes the importance of UX principles and persuades you to bring UX expertise into the team early on and listen to those experts’ advice. Additionally, I want to stress the importance of UX for APIs, configurations, and extensions.</p>
+</section>
+<section>
+<h3 class="h3" id="ch01lev1sec05">Part III: System Design</h3>
+<p class="noindent">Part III focuses on how to build a system or an application. We discuss two levels: the macro level, where we compose services into a coherent architecture, and the micro level, where we learn how to build good services.</p>
+<p class="noindent">In this part, whenever possible, we explain a default architectural choice that works most of the time and more complex ones, discussing how to choose the right one for your company. This discussion includes anti-patterns and common mistakes. It talks about these technical ideas that I believe are critical:</p>
+<p class="noindent">Understanding macro architecture is described in</p>
+<p class="ul-noindent"><a href="ch05.xhtml#ch05">Chapter 5</a>: Introduction</p>
+<p class="ul-noindent"><a href="ch06.xhtml#ch06">Chapter 6</a>: Coordination</p>
+<p class="ul-noindent"><a href="ch07.xhtml#ch07">Chapter 7</a>: Preserving Consistency of State</p>
+<p class="ul-noindent"><a href="ch08.xhtml#ch08">Chapter 8</a>: Handling Security</p>
+<p class="ul-noindent"><a href="ch09.xhtml#ch09">Chapter 9</a>: Handling HA and Scale</p>
+<p class="ul-noindent"><a href="ch10.xhtml#ch10">Chapter 10</a>: Microservices Considerations</p>
+<p class="noindent">Writing a good usable service is described in <a href="ch11.xhtml#ch11">Chapter 11</a>.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_8"/>Building stable systems is described in <a href="ch12.xhtml#ch12">Chapter 12</a>.</p>
+<p class="noindent">I dedicate a separate chapter to microservices considerations, instead of dispersing them in <a href="ch06.xhtml#ch06">Chapters 6</a>, <a href="ch07.xhtml#ch07">7</a>, and <a href="ch08.xhtml#ch08">8</a>. I believe this approach makes it easier to grasp the whole concept as a combined entity rather than understanding the parts separately.</p>
+<p class="noindent">I explain each technical decision based on the applicable five questions and seven principles.</p>
+</section>
+<section>
+<h3 class="h3" id="ch01lev1sec06">Part IV: Putting Everything Together</h3>
+<p class="noindent">Part IV includes only <a href="ch13.xhtml#ch13">Chapter 13</a>, which discusses how everything comes together. This chapter focuses on establishing a fast feedback cycle, removing anything that slows developers down from completing iterations, receiving feedback, and learning. This chapter urges leaders to ensure developers can do their jobs efficiently, while getting personally involved to solve any issues that hold the developers back.</p>
+</section>
+</section>
+</body>
+</html>

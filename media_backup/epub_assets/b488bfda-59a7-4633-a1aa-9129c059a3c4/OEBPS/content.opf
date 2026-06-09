@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package prefix="ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/" unique-identifier="bookid" version="3.0" xmlns="http://www.idpf.org/2007/opf">
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+<meta content="Adobe InDesign 19.0" name="generator"/>
+<meta content="Cover.png" name="cover"/>
+<meta property="ibooks:specified-fonts">true</meta>
+<dc:title>Cloud Solution Architects Career Masterplan	</dc:title>
+<dc:creator>Rick Weyenberg and Kyle Burns</dc:creator>
+<dc:description>Learn to analyze and mitigate risks in your software projects</dc:description>
+<dc:publisher>Packt Publishing Pvt Ltd</dc:publisher>
+<dc:date>2024-02-22</dc:date>
+<dc:language>en-GB</dc:language>
+<dc:language>en-US</dc:language>
+<meta property="dcterms:modified">2024-02-23T07:31:58Z</meta>
+<dc:identifier id="bookid" xmlns:dc="http://purl.org/dc/elements/1.1/">978-1-80512-971-4</dc:identifier></metadata>
+<manifest>
+<item href="cover.xhtml" id="cover" media-type="application/xhtml+xml"/>
+<item href="B20872_FM.xhtml" id="B20872_FM" media-type="application/xhtml+xml"/>
+<item href="B20872_TOC_ePub.xhtml" id="B20872_TOC_ePub" media-type="application/xhtml+xml"/>
+<item href="B20872_Preface.xhtml" id="B20872_Preface" media-type="application/xhtml+xml"/>
+<item href="B20872_Part_1.xhtml" id="B20872_Part_1" media-type="application/xhtml+xml"/>
+<item href="B20872_01.xhtml" id="B20872_01" media-type="application/xhtml+xml"/>
+<item href="B20872_02.xhtml" id="B20872_02" media-type="application/xhtml+xml"/>
+<item href="B20872_Part_2.xhtml" id="B20872_Part_2" media-type="application/xhtml+xml"/>
+<item href="B20872_03.xhtml" id="B20872_03" media-type="application/xhtml+xml"/>
+<item href="B20872_04.xhtml" id="B20872_04" media-type="application/xhtml+xml"/>
+<item href="B20872_05.xhtml" id="B20872_05" media-type="application/xhtml+xml"/>
+<item href="B20872_Part_3.xhtml" id="B20872_Part_3" media-type="application/xhtml+xml"/>
+<item href="B20872_06.xhtml" id="B20872_06" media-type="application/xhtml+xml"/>
+<item href="B20872_07.xhtml" id="B20872_07" media-type="application/xhtml+xml"/>
+<item href="B20872_08.xhtml" id="B20872_08" media-type="application/xhtml+xml"/>
+<item href="B20872_Index.xhtml" id="B20872_Index" media-type="application/xhtml+xml"/>
+<item href="B20872_BM.xhtml" id="B20872_BM" media-type="application/xhtml+xml"/>
+<item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml"/>
+<item href="toc.xhtml" id="toc" media-type="application/xhtml+xml" properties="nav"/>
+<item href="css/style-JRserifv6.css" id="style-JRserifv6.css" media-type="text/css"/>
+<item href="image/B20872_01_1.jpg" id="B20872_01_1.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_01_2.jpg" id="B20872_01_2.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_01_3.jpg" id="B20872_01_3.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_01_4.jpg" id="B20872_01_4.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_01_5.jpg" id="B20872_01_5.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_01_6.jpg" id="B20872_01_6.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_01_7.jpg" id="B20872_01_7.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_02_1.jpg" id="B20872_02_1.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_02_2.jpg" id="B20872_02_2.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_02_3.jpg" id="B20872_02_3.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_02_4.jpg" id="B20872_02_4.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_02_5.jpg" id="B20872_02_5.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_02_6.jpg" id="B20872_02_6.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_03_01.jpg" id="B20872_03_01.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_04_1.jpg" id="B20872_04_1.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_04_2.jpg" id="B20872_04_2.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_05_01.jpg" id="B20872_05_01.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_05_02.jpg" id="B20872_05_02.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_05_03.jpg" id="B20872_05_03.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_06_01.jpg" id="B20872_06_01.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_06_02.jpg" id="B20872_06_02.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_06_03.jpg" id="B20872_06_03.jpg" media-type="image/jpeg"/>
+<item href="image/B20872_QR_Free_PDF.jpg" id="B20872_QR_Free_PDF.jpg" media-type="image/jpeg"/>
+<item href="image/Cover.png" id="Cover.png" media-type="image/png" properties="cover-image"/>
+<item href="image/Microsoft_Power_Platform_Solution_Architect%27s_Handbook.jpg" id="Microsoft_Power_Platform_Solution_Architect-s_Handbook.jpg" media-type="image/jpeg"/>
+<item href="image/Multi_Cloud_Strategy.jpg" id="Multi_Cloud_Strategy.jpg" media-type="image/jpeg"/>
+<item href="image/Packt_Logo-01.png" id="Packt_Logo-01.png" media-type="image/png"/>
+<item href="image/Packt_Logo-011.png" id="Packt_Logo-011.png" media-type="image/png"/>
+<item href="Fonts/CourierStd.otf" id="CourierStd.otf" media-type="font/otf"/>
+<item href="Fonts/CourierStd-Bold.otf" id="CourierStd-Bold.otf" media-type="font/otf"/>
+<item href="Fonts/MinionPro-Bold.otf" id="MinionPro-Bold.otf" media-type="font/otf"/>
+<item href="Fonts/MinionPro-BoldIt.otf" id="MinionPro-BoldIt.otf" media-type="font/otf"/>
+<item href="Fonts/MinionPro-It.otf" id="MinionPro-It.otf" media-type="font/otf"/>
+<item href="Fonts/MinionPro-Regular.otf" id="MinionPro-Regular.otf" media-type="font/otf"/>
+<item href="Fonts/MyriadPro-Light.otf" id="MyriadPro-Light.otf" media-type="font/otf"/>
+<item href="Fonts/MyriadPro-Regular.otf" id="MyriadPro-Regular.otf" media-type="font/otf"/>
+<item href="Fonts/MyriadPro-Semibold.otf" id="MyriadPro-Semibold.otf" media-type="font/otf"/>
+<item href="Fonts/MyriadPro-SemiboldIt.otf" id="MyriadPro-SemiboldIt.otf" media-type="font/otf"/>
+</manifest>
+<spine toc="ncx">
+<itemref idref="cover" linear="no"/>
+<itemref idref="B20872_FM"/>
+<itemref idref="B20872_TOC_ePub"/>
+<itemref idref="B20872_Preface"/>
+<itemref idref="B20872_Part_1"/>
+<itemref idref="B20872_01"/>
+<itemref idref="B20872_02"/>
+<itemref idref="B20872_Part_2"/>
+<itemref idref="B20872_03"/>
+<itemref idref="B20872_04"/>
+<itemref idref="B20872_05"/>
+<itemref idref="B20872_Part_3"/>
+<itemref idref="B20872_06"/>
+<itemref idref="B20872_07"/>
+<itemref idref="B20872_08"/>
+<itemref idref="B20872_Index"/>
+<itemref idref="B20872_BM"/>
+</spine>
+<guide>
+<reference href="cover.xhtml" title="Cover" type="cover"/>
+<reference href="B20872_TOC_ePub.xhtml#_idContainer002" title="Table of Contents" type="toc"/>
+</guide>
+</package>

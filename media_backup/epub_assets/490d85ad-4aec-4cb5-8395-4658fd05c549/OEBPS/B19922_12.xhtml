@@ -1,0 +1,1419 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-GB">
+	<head>
+		<title>B19922_12</title>
+		<link href="css/style-JRserifv6.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:c8ccfc40-76a9-4a04-b8f6-a8f601fe2ce2" name="Adept.expected.resource"/>
+	</head>
+	<body id="B19922_12">
+		<div id="_idContainer164">
+			<h1 class="chapter-number" id="_idParaDest-298"><a id="_idTextAnchor309"/>12</h1>
+			<h1 id="_idParaDest-299"><a id="_idTextAnchor310"/>Deploying to Your Own Data Center</h1>
+			<p>In this chapter, we will discuss how to run, manage, and deploy the MuleSoft application in your own data center. We will also be looking at the different features and capabilities provided by the Mule runtime when running the MuleSoft application in your own data center, as well as different platform architecture approaches for running and deploying the application on an on-premises <span class="No-Break">Mule runtime.</span></p>
+			<p>In this chapter, we are going to cover the following list <span class="No-Break">of topics:</span></p>
+			<ul>
+				<li>Hardware and software requirements for setting up the Mule <span class="No-Break">runtime on-premises</span></li>
+				<li>Managing the Mule server from the <span class="No-Break">control plane</span></li>
+				<li>Anypoint Private <span class="No-Break">Cloud Edition</span></li>
+				<li>Anypoint clustering and <span class="No-Break">server groups</span></li>
+				<li>High availability and <span class="No-Break">disaster recovery</span></li>
+				<li>What are the different ways a Mule runtime can be <span class="No-Break">set up?</span></li>
+			</ul>
+			<h1 id="_idParaDest-300"><a id="_idTextAnchor311"/>Technical requirements</h1>
+			<ul>
+				<li>Access to Anypoint Platform – a 30-day-free-trial account can be created <span class="No-Break">here: </span><a href="https://anypoint.mulesoft.com/login/signup"><span class="No-Break">https://anypoint.mulesoft.com/login/signup</span></a></li>
+				<li>Download MuleSoft Anypoint Studio (<span class="No-Break">visit </span><a href="https://www.mulesoft.com/lp/dl/anypoint-mule-studio"><span class="No-Break">https://www.mulesoft.com/lp/dl/anypoint-mule-studio</span></a><span class="No-Break">)</span></li>
+			</ul>
+			<h2 id="_idParaDest-301"><a id="_idTextAnchor312"/>Hardware requirements</h2>
+			<p>The following are the minimum requirements for running the MuleSoft application on a Mule runtime, but you can scale depending on the latency and <span class="No-Break">performance requirements:</span></p>
+			<ul>
+				<li>2 GHz CPU or 1 virtual CPU in <span class="No-Break">virtualized environments</span></li>
+				<li>1 GB <span class="No-Break">of RAM</span></li>
+				<li>4 GB <span class="No-Break">of storage</span></li>
+			</ul>
+			<p>MuleSoft supports x64 and x86 architectures but does not yet <span class="No-Break">support ARM.</span></p>
+			<h2 id="_idParaDest-302"><a id="_idTextAnchor313"/>Software requirements</h2>
+			<p>MuleSoft can run on any operating system that is enabled with the <strong class="bold">Java Runtime Engine</strong> (<strong class="bold">JRE</strong>) from the <span class="No-Break">supported JDK.</span></p>
+			<h1 id="_idParaDest-303"><a id="_idTextAnchor314"/>Why an on-premises Mule runtime?</h1>
+			<p>An on-premises Mule runtime <a id="_idIndexMarker884"/>is widely used by organizations that have a requirement for a high level of privacy and security where they don’t allow the setting up of anything outside their organization’s data center. In such cases, you can leverage an on-premises <span class="No-Break">Mule runtime.</span></p>
+			<p>With an on-premises Mule runtime, you have complete control over the runtime plane and underlying infrastructure for running the Mule application. You are completely responsible for managing the underlying infrastructure, networks, load balancers, and <span class="No-Break">so on.</span></p>
+			<p>Let’s understand the responsibilities of both MuleSoft and the customer when you choose an on-premises <span class="No-Break">Mule runtime:</span></p>
+			<ul>
+				<li>The customer is responsible for setting up and configuring the Mule runtime as the customer has full control over the <span class="No-Break">on-premises instance.</span></li>
+				<li>The Mule runtime will be provided <span class="No-Break">by MuleSoft.</span></li>
+				<li>The customer is responsible for managing and configuring the underlying infrastructure, load balancers, server security, networks, and <span class="No-Break">so on.</span></li>
+				<li>The runtime plane will be managed by the customer and the control plane will be managed by MuleSoft. Anypoint Platform can be the control plane if you are not going with<a id="_idIndexMarker885"/> Anypoint Platform <strong class="bold">Private Cloud Edition</strong> (<strong class="bold">PCE</strong>). With Anypoint Platform PCE, you can set up the control plane in your own <span class="No-Break">data center.</span></li>
+			</ul>
+			<h2 id="_idParaDest-304"><a id="_idTextAnchor315"/>Running applications in an on-premises Mule runtime</h2>
+			<p>The following <a id="_idIndexMarker886"/>are the considerations for running a Mule application in an on-premises <span class="No-Break">Mule runtime:</span></p>
+			<ul>
+				<li>An on-premises Mule runtime allows you to run multiple applications within a single <span class="No-Break">Mule runtime.</span></li>
+				<li>You can deploy multiple versions of applications in the same <span class="No-Break">Mule runtime.</span></li>
+				<li>The Mule runtime allows you to share configurations across multiple applications <span class="No-Break">using domains.</span></li>
+				<li>The runtime supports clustering, which allows you to group servers together to form a cluster that can act as a <span class="No-Break">single unit.</span></li>
+				<li>To load balance the HTTP workloads between multiple instances of applications, there is a need for an external <span class="No-Break">load balancer.</span></li>
+				<li>The runtime supports server groups for running applications in distributed mode, but applications are completely isolated from each other. This is useful when you want to deploy applications on <span class="No-Break">all servers.</span></li>
+			</ul>
+			<p>Let’s talk about how to achieve <span class="No-Break">non-functional requirements.</span></p>
+			<h2 id="_idParaDest-305"><a id="_idTextAnchor316"/>High availability</h2>
+			<p>Clustering the <a id="_idIndexMarker887"/>Mule runtime ensures high availability by default. If any servers in the cluster are unavailable due to planned downtime or failure, then other nodes in the cluster will continue processing existing events or messages. We will discuss Anypoint clustering further later in <span class="No-Break">this chapter.</span></p>
+			<h2 id="_idParaDest-306"><a id="_idTextAnchor317"/>Scalability</h2>
+			<p>An on-premises<a id="_idIndexMarker888"/> Mule runtime can be scaled horizontally as well as vertically. To implement horizontal scaling, more servers with a Mule runtime can be added to or removed from the cluster or group. Adding more servers to the existing cluster or group will automatically deploy all the applications that are available on existing servers in the cluster or group to the newly <span class="No-Break">added server.</span></p>
+			<p>Vertical scaling can be achieved by adding more computing power to the existing server, such as RAM <span class="No-Break">and storage.</span></p>
+			<h2 id="_idParaDest-307"><a id="_idTextAnchor318"/>Load balancer</h2>
+			<p>To<a id="_idIndexMarker889"/> enable HTTP workloads, an external load balancer needs to be set up in front of a group or cluster of servers. This will ensure that requests are load balanced across all the servers behind the load balancer. It will improve the performance and enable high availability for <span class="No-Break">HTTP workloads.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer142">
+					<img alt="Figure 12.1: On-premises Mule runtime HTTP load balancing" src="image/B19922_12_1.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.1: On-premises Mule runtime HTTP load balancing</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.1</em>, we have three servers with a Mule runtime, and they have been load balanced using an <a id="_idIndexMarker890"/>external load balancer for <span class="No-Break">HTTP workloads.</span></p>
+			<p>In this section, we have gone through the various features of an on-premises Mule runtime, such as high availability, scalability, and <span class="No-Break">load balancing.</span></p>
+			<p>In the next sections, we will go through various important concepts of the on-premises Mule runtime, such as Anypoint clustering, server groups, and <span class="No-Break">domain projects.</span></p>
+			<h1 id="_idParaDest-308"><a id="_idTextAnchor319"/>Anypoint clustering</h1>
+			<p>Anypoint clustering<a id="_idIndexMarker891"/> refers to a group of Mule runtimes set up on servers that act as a single unit. In Anypoint clustering, all the Mule runtimes in the cluster communicate with each other and share their status and information via a distributed shared memory grid. Anypoint clustering <span class="No-Break">uses Hazelcast.</span></p>
+			<p>There is an open source in-memory data grid<a id="_idIndexMarker892"/> called Hazelcast. It offers distributed in-memory computing that is elastically scalable, which is widely acknowledged as the quickest and most scalable method for enhancing <span class="No-Break">application performance.</span></p>
+			<p>The <a id="_idIndexMarker893"/>Mule Hazelcast server implements a customized version of the Hazelcast distribution that is<a id="_idIndexMarker894"/> tailored to the requirements of the Mule runtime. This customized implementation does not modify the Hazelcast behavior in any way. It simply implements the basic configuration that the Mule runtime requires, plus the default logging configuration <span class="No-Break">using Log4j.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer143">
+					<img alt="Figure 12.2: On-premises Mule runtime with Anypoint clustering" src="image/B19922_12_2.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.2: On-premises Mule runtime with Anypoint clustering</p>
+			<p>The following are the <a id="_idIndexMarker895"/>benefits of implementing clustering for the on-premises <span class="No-Break">Mule runtime:</span></p>
+			<ul>
+				<li>Anypoint clustering distributes traffic among the nodes in the cluster, and this improves the overall performance of <span class="No-Break">the application</span></li>
+				<li>Horizontal scaling can be achieved easily by adding additional nodes to the cluster, and it automatically deploys all the applications that are available on the existing nodes in the cluster on the <span class="No-Break">new node</span></li>
+				<li>Anypoint clustering supports the automatic coordination of access to resources by the Mule runtime, such as files, databases, <span class="No-Break">and FTP</span></li>
+				<li>It improves the overall performance of the application, uses automatic failover, and supports high availability to ensure <span class="No-Break">business continuity</span></li>
+			</ul>
+			<p>Anypoint clustering supports two different types of clustering that can be leveraged depending on your organization’s <span class="No-Break">network settings:</span></p>
+			<ul>
+				<li><strong class="bold">Unicast clustering</strong>: In<a id="_idIndexMarker896"/> unicast clustering, you <a id="_idIndexMarker897"/>need to configure the IP address of the nodes in the cluster to establish communication between nodes. In unicast clustering, ports start from <strong class="source-inline">5701</strong> and it auto-increments from that port in sequence to establish the communication <span class="No-Break">between nodes.</span></li>
+				<li><strong class="bold">Multicast clustering</strong>: In multicast clustering, you <a id="_idIndexMarker898"/>don’t have <a id="_idIndexMarker899"/>to configure the IP address of nodes in the cluster explicitly as it automatically detects other servers in the cluster and enables communication between them. To implement multicast clustering, additional network privileges are needed and you need to contact the network administrator to ensure that multicast clustering is supported in your organization’s network. Multicast clustering must be enabled on the IP address <strong class="source-inline">224.2.2.3</strong> and UDP port <strong class="source-inline">54327</strong> to implement it. In multicast clustering, all nodes in one cluster must be in the same network segment. Adding new nodes to the cluster or removing existing nodes from the cluster doesn’t require restarting <span class="No-Break">the cluster.</span></li>
+			</ul>
+			<h2 id="_idParaDest-309"><a id="_idTextAnchor320"/>Concurrency issues</h2>
+			<p>Anypoint <a id="_idIndexMarker900"/>clustering solves concurrency issues such as <span class="No-Break">the following:</span></p>
+			<ul>
+				<li><strong class="bold">File-based connector</strong>: All Mule instances will access the same folders, and this leads to duplicate file processing or may lead to a processing failure if a file is modified or deleted by another <span class="No-Break">Mule application.</span></li>
+				<li><strong class="bold">JMS topics</strong>: All Mule instances listening to the topic will get the same copy of the message, and this leads to the duplication of <span class="No-Break">message processing.</span></li>
+				<li><strong class="bold">JMS request/reply queues</strong>: All the Mule instances might be listening to the same response queue. There might be a chance that the response obtained by a Mule instance is not correlated with the request that it sent and that may lead to an incorrect response <span class="No-Break">or timeout.</span></li>
+			</ul>
+			<p>There are many<a id="_idIndexMarker901"/> other concurrency issues that can be caused by the Salesforce Streaming API, multicast connector, and so on that can be solved by enabling <span class="No-Break">Anypoint clustering.</span></p>
+			<h2 id="_idParaDest-310"><a id="_idTextAnchor321"/>Setting up Anypoint clustering manually</h2>
+			<p>Anypoint clustering<a id="_idIndexMarker902"/> allows you to cluster servers without registering on Anypoint Platform by adding <strong class="source-inline">mule-cluster.propert<a id="_idTextAnchor322"/>ies</strong> to <strong class="source-inline">$MULE_HOME/.mule</strong> on all the servers with the <span class="No-Break">following properties:</span></p>
+			<pre class="source-code">
+<strong class="source-inline">...</strong>
+<strong class="source-inline">mule.cluster.nodes=192.168.11.22,192.168.11.23,192.168.11.24</strong>
+<strong class="source-inline">mule.cluster.multicastenabled=false</strong>
+<strong class="source-inline">mule.clusterId=&lt;ClusterId&gt;</strong>
+<strong class="source-inline">mule.clusterNodeId=&lt;ClusterNodeID&gt;</strong>
+<strong class="source-inline">...</strong></pre>			<p>The following are the cluster <a id="_idIndexMarker903"/>configuration properties that can be added to <strong class="source-inline">mule-cluster.properties</strong> <span class="No-Break">in </span><span class="No-Break"><strong class="source-inline">$MULE_HOME/.mule</strong></span><span class="No-Break">:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table001-6">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Property Name</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Required</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Comments</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.clusterId</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Unique identifier for the cluster. It can be any <span class="No-Break">alphanumeric string.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.clusterNodeId</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Unique ID of the node within <span class="No-Break">the cluster.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.clusterSize</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The number of nodes that belong to <span class="No-Break">the cluster.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>It can be any integer between 1 and the number of nodes in <span class="No-Break">the cluster.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.networkinterfaces</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Comma-separated list of interfaces for use by Hazelcast. Wildcards <span class="No-Break">are supported.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p> <span class="No-Break">192.168.2.*,192.168.99.99</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.nodes</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The nodes that belong to the cluster, in the <span class="No-Break">form </span><span class="No-Break"><strong class="source-inline">&lt;host:port&gt;</strong></span><span class="No-Break">.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>For example, <strong class="source-inline">172.16.9.24:9000</strong>. Specifying just one IP address enables the server to join <span class="No-Break">the cluster.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.quorumsize</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Enables you<a id="_idIndexMarker904"/> to define the minimum number of machines required in a cluster to remain in an <span class="No-Break">operational state.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.multicastenabled</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>(Boolean) Enable/disable multicast. Set to<strong class="source-inline"> false</strong> if using fixed IP addresses for cluster node discovery (see the <span class="No-Break"><strong class="source-inline">mule.cluster.nodes</strong></span><span class="No-Break"> option).</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>If set to <strong class="source-inline">true</strong>, do not set IP addresses <span class="No-Break">in </span><span class="No-Break"><strong class="source-inline">mule.cluster.nodes</strong></span><span class="No-Break">.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.multicastgroup</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Multicast group IP address <span class="No-Break">to use.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.multicastport</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Multicast port number <span class="No-Break">to use.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.jdbcstoreurl</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The JDBC URL for connection to <span class="No-Break">the database.</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Required only when storing <span class="No-Break">persistent data.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.jdbcstoreusername</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Database username.</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Required only when storing <span class="No-Break">persistent data.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.jdbcstorepassword</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Database <span class="No-Break">user password.</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Required only when storing <span class="No-Break">persistent data.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.jdbcstoredriver</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>JDBC Driver <span class="No-Break">class name.</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Required only when storing <span class="No-Break">persistent data.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.jdbcstorequerystrategy</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>SQL dialect for <a id="_idIndexMarker905"/>accessing the stored <span class="No-Break">object data.</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Required only when storing persistent data. This property can take three different values: <strong class="source-inline">mssql</strong>, <strong class="source-inline">mysql</strong>, <span class="No-Break">and </span><span class="No-Break"><strong class="source-inline">postgresql</strong></span><span class="No-Break">.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.jmxenabled</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>(Boolean) <span class="No-Break">Enable/disable monitoring.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">mule.cluster.listenersenabled</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>(Boolean) Enable/disable <span class="No-Break">membership listener.</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style"/>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 12.1: Anypoint cluster configuration properties</p>
+			<h3>Quorum Management in Anypoint clustering</h3>
+			<p>When you set up <a id="_idIndexMarker906"/>Anypoint clustering manually, Quorum Management <a id="_idIndexMarker907"/>allows you to define the minimum number of nodes in the cluster required for the cluster to be in an operational state. The minimum number of nodes in the cluster for Quorum Management can be defined by adding properties (<strong class="source-inline">mule.cluster.quorumsize</strong>) in <strong class="source-inline">mule-cluster.properties</strong> <span class="No-Break">in </span><span class="No-Break"><strong class="source-inline">$MULE_HO<a id="_idTextAnchor323"/>ME/.mule</strong></span><span class="No-Break">.</span></p>
+			<p>Setting the minimum quorum size allows you to achieve better consistency and protect the cluster in case of the unexpected loss of nodes from the cluster. For example, say you have set<a id="_idIndexMarker908"/> up a cluster of seven nodes. You have set a minimum quorum size of five nodes, which means for the cluster to be operational, a minimum of five nodes must be active in <span class="No-Break">the cluster.</span></p>
+			<p>A quorum cluster <a id="_idIndexMarker909"/>is only applicable to components using Object Store. Whenever <strong class="source-inline">QuorumException</strong> occurs, it is important to catch it and perform appropriate actions, such as retrying the message, stopping the process, sending the email, or logging the error details. If the number of servers in the cluster is less than the quorum size, the operation will be rejected, and it will <span class="No-Break">throw </span><span class="No-Break"><strong class="source-inline">QuorumException</strong></span><span class="No-Break">.</span></p>
+			<h2 id="_idParaDest-311"><a id="_idTextAnchor324"/>Setting up Anypoint clustering on Anypoint Platform</h2>
+			<p>In this <a id="_idIndexMarker910"/>case, Anypoint Platform will act as a control plane and Anypoint clustering can be easily set up from the Runtime Manager console without doing any manual steps. To set up Anypoint clustering, servers must be registered on Anypoint Platform. Now, you can easily create clusters from Anypoint Platform and add all the required servers to be part of the cluster. While creating Anypoint clusters, you can choose the type of clustering you want to set up and it will automatically create <strong class="source-inline">mule-cluster.properties</strong> in <strong class="source-inline">$MULE<a id="_idTextAnchor325"/>_HOME/.mule</strong> on all the nodes in the cluster with all the <span class="No-Break">required properties.</span></p>
+			<p>Make sure the Mule runtime version is the same across all the nodes in <span class="No-Break">the cluster.</span></p>
+			<h2 id="_idParaDest-312"><a id="_idTextAnchor326"/>Persistent object store</h2>
+			<p>By default, Anypoint clustering<a id="_idIndexMarker911"/> is non-persistent (transient). Data stored in an object store and VM queues will be lost when the application or the Mule runtime is restarted. But MuleSoft provides an option where you can set up persistent Anypoint clustering by using a JDBC database. This JDBC database will be shared across all the nodes in the cluster. This data will persist if the application or Mule runtime is restarted. The following is a list of JDBC <span class="No-Break">databases supported:</span></p>
+			<ul>
+				<li><span class="No-Break">MySQL 5.5+</span></li>
+				<li><span class="No-Break">PostgreSQL 9</span></li>
+				<li>Microsoft SQL <span class="No-Break">Server 2014</span></li>
+			</ul>
+			<p>To<a id="_idIndexMarker912"/> enable an object store, you need to add the following properties to <strong class="source-inline">mule-cluster.properties</strong> in <strong class="source-inline">$MULE_HOME/.mule</strong> on all the servers in <span class="No-Break">the cluster:</span></p>
+			<p><strong class="source-inline">mule.cluster.jdbcstoreurl</strong>: JDBC URL <span class="No-Break">connection string</span></p>
+			<p><strong class="source-inline">mule.cluster.jdbcstoreusername</strong>: <span class="No-Break">Database username</span></p>
+			<p><strong class="source-inline">mule.cluster.jdbcstorepassword</strong>: Database <span class="No-Break">user password</span></p>
+			<p><strong class="source-inline">mule.cluster.jdbcstoredriver</strong>: JDBC Driver <span class="No-Break">class name</span></p>
+			<p><strong class="source-inline">mule.cluster.jdbcstorequerystrategy</strong>: <span class="No-Break">SQL dialect</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer144">
+					<img alt="Figure 12.3: Anypoint clustering" src="image/B19922_12_3.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.3: Anypoint clustering</p>
+			<h2 id="_idParaDest-313"><a id="_idTextAnchor327"/>Primary node and secondary nodes</h2>
+			<p>Anypoint <a id="_idIndexMarker913"/>clustering has the concept of a primary node and secondary nodes, where one of the nodes in the cluster is the primary node and the other nodes in the cluster are secondary nodes. In the event of a primary node failure, one of the secondary nodes will become the <span class="No-Break">primary node.</span></p>
+			<p>Whenever an application deployed to the cluster has a scheduler component, scheduler polling only works in the <span class="No-Break">primary node.</span></p>
+			<p>For other sources or listeners, if you want the primary node to listen to messages, there is the <strong class="source-inline">primaryNodeOnly=true</strong> attribute, which can be configured during <span class="No-Break">connector configuration:</span></p>
+			<pre class="source-code">
+&lt;flow name="jmsListener_flow"&gt;
+    &lt;jms:listener config-ref="jmsConfig" destination="listen-queue"    primaryNodeOnly="true"/&gt;
+    &lt;logger message="#[payload]"/&gt;
+&lt;/flow&gt;</pre>			<p>In the preceding connector configuration of a JMS listener, the message will only be picked up by the primary node. This configuration can be handy when you are using topics because it has properties to deliver the message to all listeners. With the <strong class="source-inline">primaryNodeOnly=true</strong> property, it will ensure that the message is delivered to the topic listener on the <span class="No-Break">primary node.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer145">
+					<img alt="Figure 12.4: JMS topic listener (primaryNodeOnly=false)" src="image/B19922_12_4.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.4: JMS topic listener (primaryNodeOnly=false)</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.4</em>, which depicts the JMS topic listener, <strong class="source-inline">primaryNodeOnly=false</strong> means the same<a id="_idIndexMarker914"/> message in the topic will be delivered to all the active topic listeners in the cluster. So, it will lead to the processing of the same message multiple times. A topic has a property to deliver a message to all the <span class="No-Break">active listeners.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer146">
+					<img alt="Figure 12.5: JMS topic listener (primaryNodeOnly=true)" src="image/B19922_12_5.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.5: JMS topic listener (primaryNodeOnly=true)</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.5</em>, which depicts the JMS topic listener, <strong class="source-inline">primaryNodeOnly=true</strong> means a message in the topic will be delivered to one topic listener on the primary node in the cluster. In the event of primary node failures, one of the secondary nodes will become the primary and continue to process messages from <span class="No-Break">the topic.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer147">
+					<img alt="Figure 12.6: JMS queue listener (primaryNodeOnly=false)" src="image/B19922_12_6.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.6: JMS queue listener (primaryNodeOnly=false)</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.6</em>, which depicts the JMS queue listener, <strong class="source-inline">primaryNodeOnly=false</strong> means messages <a id="_idIndexMarker915"/>will be load balanced among all the nodes in the cluster, but no messages will be delivered to multiple nodes in the cluster. Queues have a property that means messages will be delivered to one of the active queue listeners in a round-robin fashion, and it provides load balancing of messages among the multiple nodes in <span class="No-Break">the cluster.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer148">
+					<img alt="Figure 12.7: JMS queue listener (primaryNodeOnly=true)" src="image/B19922_12_7.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.7: JMS queue listener (primaryNodeOnly=true)</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.7</em>, which<a id="_idIndexMarker916"/> depicts the JMS queue listener, <strong class="source-inline">primaryNodeOnly=true</strong> means messages in the queue will be delivered to one queue listener on the primary node in the cluster. In the event of primary node failures, one of the secondary nodes will become the primary and continue to process messages from <span class="No-Break">the queue.</span></p>
+			<p>Let’s understand how to implement the Competing Queue Consumer pattern with Anypoint clustering. The Competing Queue Consumer pattern enables the parallel processing of messages by multiple consumers from the same channel. Multiple consumers can listen to the same queue to process messages <span class="No-Break">in parallel.</span></p>
+			<p>There is a use case where messages are sent to the queue by producers at a very high rate – higher than the rate at which messages are consumed by the consumer. To ensure the messages are processed at a fast rate, we may require more instances of consumers who can consume the messages in parallel from the queue. We can scale up by adding more consumers (queue listeners) to increase the message consumption rate, and this way, traffic is distributed among the multiple <span class="No-Break">queue listeners.</span></p>
+			<p>In Anypoint clustering, this pattern can be implemented by having multiple nodes in a cluster with <strong class="source-inline">primaryNodeOnly=false</strong>. This will ensure that all nodes with a queue listener are listening to the queue and messages will be read from the listeners in parallel, and that is how it will improve the <span class="No-Break">overall performance.</span></p>
+			<p>The Competing Queue Consumer pattern provides the following list <span class="No-Break">of benefits:</span></p>
+			<ul>
+				<li><strong class="bold">Scalability</strong>: Consumers can be added or removed depending on the rate at which messages<a id="_idIndexMarker917"/> are published by the publisher. By increasing the number of consumers, messages will be distributed among the consumers to ensure the messages are processed independently and at a <span class="No-Break">faster rate.</span></li>
+				<li><strong class="bold">High availability</strong>: Multiple consumers listen to the same queue. If one of the consumers crashes or shuts down, there are other consumers that will continue to process <span class="No-Break">the messages.</span></li>
+				<li><strong class="bold">Reliability and resilience</strong>: If message processing fails on one of the nodes, the message will be delivered back to the queue, ensuring it can <span class="No-Break">be reprocessed.</span></li>
+			</ul>
+			<h2 id="_idParaDest-314"><a id="_idTextAnchor328"/>VM queues in Anypoint clustering</h2>
+			<p>VM queues<a id="_idIndexMarker918"/> can be used to load balance requests between clusters. For example, your application contains a sequence of child flows, and the <a id="_idIndexMarker919"/>cluster can assign each successive child flow to the Mule runtime that is free and less busy in the cluster. A message entering the cluster can be processed by multiple nodes as it passes through VM endpoints, as shown in the <a id="_idIndexMarker920"/><span class="No-Break">following figure:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer149">
+					<img alt="Figure 12.8: Three-node cluster" src="image/B19922_12_8.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.8: Three-node cluster</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.8</em>, we have deployed an application that has four flows, and each flow communicates via <span class="No-Break">VM queues:</span></p>
+			<ul>
+				<li>Flow 1 on node 1 receives and processes the message and sends it to the <span class="No-Break">VM queue</span></li>
+				<li>Flow 2 on node 2 is available and reads the message from the VM queue, completes the processing, and publishes it to the <span class="No-Break">VM queue</span></li>
+				<li>Flow 3 on node 3 is available and reads the message from the VM queue, completes the processing, and publishes it to the <span class="No-Break">VM queue</span></li>
+				<li>Flow 4 on node 1 is available, reads the message from the VM queue, and completes <span class="No-Break">the processing</span></li>
+			</ul>
+			<h1 id="_idParaDest-315"><a id="_idTextAnchor329"/>Anypoint server group</h1>
+			<p>An Anypoint server group<a id="_idIndexMarker921"/> is a group of servers that acts as a single deployment target for deploying an application, so you don’t have to deploy the application on each server individually. For example, when you want to deploy an application, you just need to select the server group as the target, and it will deploy the application to all the servers in <span class="No-Break">the group.</span></p>
+			<p>Servers added to the server group are isolated from each other and they don’t share status. To distribute an HTTP workload, you can use a load balancer, which can distribute traffic among the servers in the <span class="No-Break">server group.</span></p>
+			<p class="IMG---Figure"> </p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer150">
+					<img alt="Figure 12.9: Anypoint server group" src="image/B19922_12_9.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.9: Anypoint server group</p>
+			<p>To enable a server group, make sure all nodes have the same version of the Mule runtime, and nodes must be registered on Anypoint Platform. Server groups are not suitable whenever there are concurrency issues, such as a topic listener on both nodes receiving the same message, ending up duplicating the processing <span class="No-Break">of messages.</span></p>
+			<p>We <a id="_idIndexMarker922"/>have just learned about Anypoint clustering and server groups, which can be implemented with an on-premises Mule runtime. We have also seen how to register servers in Anypoint Platform, which are managed by MuleSoft, as well as creating server groups or clusters from <span class="No-Break">Anypoint Platform.</span></p>
+			<p>The following is a <a id="_idIndexMarker923"/>comparison between Anypoint server groups <span class="No-Break">and clustering:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table002-4">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Comparison Factors</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">Anypoint </strong><span class="No-Break"><strong class="bold">Server Group</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Anypoint Clustering</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Required third-party load balancer for <span class="No-Break">HTTP traffic</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Avoid <span class="No-Break">concurrency issues</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Nodes are aware of each other, share common information, and synchronize <span class="No-Break">their statuses</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Improves application performance by dividing the workload between nodes in <span class="No-Break">the cluster</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Nodes are independent and isolated from <span class="No-Break">each other</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>All nodes must have the same version of the Mule runtime in the group <span class="No-Break">or cluster</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Automatic coordination of access to resources, such as files, databases, and <span class="No-Break">FTP sources</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Automatic load balancing of processing within a cluster <span class="No-Break">or group</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 12.2: Anypoint clustering versus server groups</p>
+			<p>In the next section, we<a id="_idIndexMarker924"/> will be talking about Anypoint Platform PCE, which can be set up in an on-premises data center to manage clusters, server groups, <span class="No-Break">and servers.</span></p>
+			<h2 id="_idParaDest-316"><a id="_idTextAnchor330"/>Anypoint Platform Private Cloud Edition</h2>
+			<p>With<a id="_idIndexMarker925"/> Anypoint Platform PCE, you can set up an Anypoint Platform control plane within your own data center, and it allows you to manage, run, or deploy a MuleSoft application on your local servers using your organization’s security policies <span class="No-Break">and compliance.</span></p>
+			<p>For example, there is a requirement where you want the MuleSoft control plane and data plane within your own data center and don’t want to interact with external systems or public internet connectivity. In such cases, you can run the Anypoint Platform software locally within your own data center using Anypoint <span class="No-Break">Platform PCE.</span></p>
+			<p>All security and other policies are available locally and can easily be applied to an application from Anypoint Platform PCE located within your own <span class="No-Break">data center.</span></p>
+			<p>The following are components <a id="_idIndexMarker926"/>included with Anypoint <span class="No-Break">Platform PCE:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table003-4">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Component</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Included</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Not Included</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Anypoint <span class="No-Break">Runtime Manager</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Enables you to track and manage your deployed <span class="No-Break">Mule applications.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Runtime Fabric management (including Security Edge <span class="No-Break">and tokenization)</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Automates the deployment and orchestration of customer-hosted Mule applications and <span class="No-Break">API gateways.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Anypoint <span class="No-Break">API Manager</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Enables you to manage your <span class="No-Break">registered APIs.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Secrets Manager</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Stores and manages secrets for supported Anypoint <span class="No-Break">Platform services.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Anypoint Exchange</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Enables your organization to share various assets for reuse across <span class="No-Break">integration projects.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Access Management</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Enables you to create your Anypoint Platform account or configure an externally <span class="No-Break">federated identity.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Anypoint Design Center, excluding <span class="No-Break">Flow Designer</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Enables you to create API specifications in several modeling languages and to create RAML <span class="No-Break">API fragments.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Anypoint Analytics – <span class="No-Break">Insights</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Provides in-depth visibility into business transactions and events on your Mule apps deployed to CloudHub and <span class="No-Break">on-premises servers.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Anypoint Analytics – <span class="No-Break">Anypoint Visualizer</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Enables you to explore your application network via an application <span class="No-Break">network graph.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Anypoint Analytics – <span class="No-Break">API</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Provides insight into how your APIs are being used and how they <span class="No-Break">are performing.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Anypoint Monitoring</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>Provides visibility into integrations, Mule flows, and components in your <span class="No-Break">application network.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Object Store</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Object Store v2 allows CloudHub applications to store data and states across batch processes, Mule components, and applications, either from within an application or by using the Object Store <span class="No-Break">REST API.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Anypoint MQ</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>A multi-tenant cloud messaging service that enables you to perform advanced asynchronous messaging scenarios between <span class="No-Break">tenant applications.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">API Testing</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style">
+							<p>X</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Provides a testing framework that enables you to easily build automated tests for your integrations <span class="No-Break">and APIs.</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 12.3: Anypoint Platform PCE components (Source: MuleSoft official documentation: https://docs.mulesoft.com/)</p>
+			<p>Anypoint Platform<a id="_idIndexMarker927"/> PCE supports <strong class="source-inline">4-Node</strong> and <strong class="source-inline">7-Node</strong> configurations to ensure high availability and stable performance. <strong class="source-inline">4-Node</strong> configuration is the smallest configuration supported by Anypoint Platform PCE. This is the minimum number of nodes required to ensure high availability <span class="No-Break">and failover.</span></p>
+			<p><span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.10</em> refers to the control plane and data plane running an on-premises data center with Anypoint clustering enabled between <span class="No-Break">the servers.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer151">
+					<img alt="Figure 12.10: Anypoint control plane and runtime plane on-premises data center with Anypoint clustering" src="image/B19922_12_10.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.10: Anypoint control plane and runtime plane on-premises data center with Anypoint clustering</p>
+			<h1 id="_idParaDest-317"><a id="_idTextAnchor331"/>Running on-premises Mule runtime use cases</h1>
+			<p>A Mule runtime <a id="_idIndexMarker928"/>can be set up on a single node or multiple nodes on-premises. Running a Mule runtime on a single node is not recommended if you are looking for better performance, high availability, and <span class="No-Break">business continuity.</span></p>
+			<p>There are multiple ways you can set up the <span class="No-Break">Mule runtime:</span></p>
+			<ul>
+				<li>Runtime plane on-premises and no <span class="No-Break">control plane</span></li>
+				<li>Runtime plane on-premises and control plane on <span class="No-Break">Anypoint Platform</span></li>
+				<li>Runtime plane on-premises and control plane on Anypoint Platform PCE (<span class="No-Break">fully on-premises)</span></li>
+			</ul>
+			<h2 id="_idParaDest-318"><a id="_idTextAnchor332"/>Mule runtime plane on-premises and no control plane (standalone)</h2>
+			<p>In this approach, the<a id="_idIndexMarker929"/> Mule runtime will be set up on-premises without registering the server to Anypoint Platform. This means we don’t have a control plane to manage the Mule runtime. With this approach, we will not be able to apply any API policies and cannot leverage Anypoint Monitoring for the application deployed to the Mule runtime on-premises. It is possible to cluster the servers using a manual approach, as discussed earlier in <span class="No-Break">this chapter.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer152">
+					<img alt="Figure 12.11: Mule runtime plane on-premises and no control plane (standalone)" src="image/B19922_12_11.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.11: Mule runtime plane on-premises and no control plane (standalone)</p>
+			<p>The preceding <a id="_idIndexMarker930"/>architecture shows manual clustering on a runtime plane without registering the server to the control plane on <span class="No-Break">Anypoint Platform.</span></p>
+			<h2 id="_idParaDest-319"><a id="_idTextAnchor333"/>Mule runtime plane on-premises and control plane on Anypoint Platform (hybrid)</h2>
+			<p>In this approach, the<a id="_idIndexMarker931"/> Mule runtime will be set up on-premises and all the servers will be registered on Anypoint Platform. The Anypoint Platform control plane is outside the firewall of the organization, and there is a need to allow communication between the on-premises servers and the control plane on Anypoint Platform. The on-premises servers will send metadata to the control plane, and this will generate metrics on the control plane such as CPU utilization and memory utilization. With the control plane, you can manage the on-premises servers, such as by starting and stopping the Mule runtime and application and viewing the status of <span class="No-Break">the servers.</span></p>
+			<p>The following figure shows how a Mule runtime on-premises will communicate with the control plane on <span class="No-Break">Anypoint Platform.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer153">
+					<img alt="Figure 12.12: Mule runtime plane on-premises and control plane on Anypoint Platform (hybrid)" src="image/B19922_12_12.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.12: Mule runtime plane on-premises and control plane on Anypoint Platform (hybrid)</p>
+			<p>We have discussed <a id="_idIndexMarker932"/>Anypoint clustering, and it is possible to cluster all servers to act as a single unit. It can be easily done from Runtime Manager in Anypoint Platform. <span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.12</em> shows a Mule Runtime setup with Anypoint clustering with a control plane. With this approach, metadata will leave the organization’s data center to generate metrics such as CPU and memory utilization and manage the clusters, servers, and <span class="No-Break">server groups.</span></p>
+			<h2 id="_idParaDest-320"><a id="_idTextAnchor334"/>Mule runtime plane on-premises and control plane on Anypoint Platform PCE (fully on-premises)</h2>
+			<p>With this approach, you <a id="_idIndexMarker933"/>have the runtime plane and control plane both located in your own data center. We discussed Anypoint Platform PCE earlier, which is available locally, and an application deployed to an on-premises Mule runtime can connect to Anypoint Platform PCE without any public internet connectivity. The following are a few capabilities provided by Anypoint <span class="No-Break">Platform PCE:</span></p>
+			<ul>
+				<li>Anypoint Platform PCE supports using Runtime Manager to manage applications deployed to an on-premises Mule runtime and set up Anypoint clustering, server groups, and <span class="No-Break">so on</span></li>
+				<li>Anypoint Platform PCE supports using API Manager to manage the life cycle of APIs deployed to an on-premises Mule runtime, such as applying API policies and managing <span class="No-Break">API instances</span></li>
+				<li>Anypoint Platform PCE<a id="_idIndexMarker934"/> supports Anypoint Monitoring and <span class="No-Break">Anypoint Visualizer</span></li>
+			</ul>
+			<div>
+				<div class="IMG---Figure" id="_idContainer154">
+					<img alt="Figure 12.13: Mule runtime plane on-premises and control plane on Anypoint Platform (hybrid)" src="image/B19922_12_13.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.13: Mule runtime plane on-premises and control plane on Anypoint Platform (hybrid)</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.13</em>, you can see both the control plane and runtime plane located in the same data center and there is no need for public internet connectivity to establish the communication between the control and runtime planes. With this approach, you need to manage the whole infrastructure networks for the control and runtime planes as both are in your own data center. This solution is mostly used when your organization has strict compliance and security requirements that mean they cannot use a <span class="No-Break">cloud-based solution.</span></p>
+			<p>This approach <a id="_idIndexMarker935"/>can be useful when your organization has a strict compliance policy where your data or metadata must not leave your organization’s data center that is hosted on-premises and you have a strong team for managing underlying infrastructure <span class="No-Break">and networks.</span></p>
+			<h1 id="_idParaDest-321"><a id="_idTextAnchor335"/>Running multiple MuleSoft applications on a single port (Mule domain)</h1>
+			<p>A Mule domain<a id="_idIndexMarker936"/> allows you to share resources among applications deployed on an on-premises Mule runtime. You may have to share the connector configuration, shared properties, and error handlers among the multiple applications, and domain projects are the only way to share resources <span class="No-Break">among applications.</span></p>
+			<p>When <a id="_idIndexMarker937"/>deploying Mule on-premises, you can specify global configurations such as default error handling, shared properties, scheduler pools, and connector configuration to be shared across all applications deployed on the same domains. To use Mule, you need to create a domain and then link to it from every application. This means that each app now assigned to your Mule domain will have access to shared resources in <span class="No-Break">that domain.</span></p>
+			<p>Domain usage significantly improves performance when you’re deploying multiple services to the same Mule on-premises runtime engine. Since domains provide a central point for all shared resources, they make the class-loading process faster, especially since the domain dependencies defined in <strong class="source-inline">POM.xml</strong> are also shared within the <span class="No-Break">domain apps.</span></p>
+			<p>The following are the shared configuration can be part of the <span class="No-Break">domain project:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer155">
+					<img alt="Figure 12.14: Domain project" src="image/B19922_12_14.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.14: Domain project</p>
+			<p>Let’s <a id="_idIndexMarker938"/>consider deploying applications <a id="_idIndexMarker939"/>on an on-premises Mule runtime that has an HTTP listener. Each application must be deployed on a different port, and they must not overlap with other applications’ ports. This adds the complexity of managing multiple ports. To solve this problem, we can use a domain project by adding an HTTP listener connection configuration on any port (for example, <strong class="source-inline">8081</strong>). An application can reference the domain project and refer to the HTTP listener configuration from the domain project. This way, all the applications can refer to the domain project and the HTTP listener configuration – you don’t have to configure a separate port for each project, and you can easily refer to the connector configuration from the <span class="No-Break">domain project.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer156">
+					<img alt="Figure 12.15: Running MuleSoft applications on a single port using a domain project" src="image/B19922_12_15.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.15: Running MuleSoft applications on a single port using a domain project</p>
+			<p>In the <a id="_idIndexMarker940"/>preceding diagram, each application deployed to the Mule runtime refers to the domain project to use the HTTP listener connector configuration, so the applications can run on a single <span class="No-Break">port, </span><span class="No-Break"><strong class="source-inline">8081</strong></span><span class="No-Break">.</span></p>
+			<h2 id="_idParaDest-322"><a id="_idTextAnchor336"/>How to use a domain project in API-led connectivity architecture</h2>
+			<p>As we are<a id="_idIndexMarker941"/> aware, there are three layers in API-led connectivity: the experience API, the process API, and the system API. We usually have a requirement not to expose the system and process APIs externally and only the experience API can be called by <span class="No-Break">external consumers.</span></p>
+			<p>To achieve this, we will use three domain projects: <strong class="source-inline">exp-domain-project-8081</strong>, <strong class="source-inline">prc-domain-project-8082</strong>, and <strong class="source-inline">sys-domain-project-8083</strong>. Each domain project will have an HTTP listener connector configuration with a different port, as shown in the <span class="No-Break">following table.</span></p>
+			<table class="No-Table-Style" id="table004-3">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Layer</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Domain Project</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">HTTP Listener Configuration – </strong><span class="No-Break"><strong class="bold">Port</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Load Balancer</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Experience API</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">exp-domain-project-8081</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">8081</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>External <span class="No-Break">load balancer</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Process API</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">prc-domain-project-8082</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">8082</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Internal load <span class="No-Break">balancer (optional)</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">System API</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">sys-domain-project-8083</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">8083</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Internal load <span class="No-Break">balancer (optional)</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 12.4: Domain project configuration</p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer157">
+					<img alt="Figure 12.16: Domain project with API-led connectivity" src="image/B19922_12_16.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.16: Domain project with API-led connectivity</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 12</em></span><em class="italic">.16</em>, the<a id="_idIndexMarker942"/> experience API running on port <strong class="source-inline">8081</strong> is exposed to the external load balancer, whereas the system and process APIs can be exposed to the internal load balancer, so the experience API can communicate with the process API using an internal URL and the process API can communicate with the system API using an internal URL. If an internal load balancer has been set up in front of the process API and the system API, then an internal load balancer can be used for <span class="No-Break">internal communication.</span></p>
+			<h1 id="_idParaDest-323"><a id="_idTextAnchor337"/>Deploying a MuleSoft application on-premises using the Mule Maven plugin</h1>
+			<p>The Mule Maven plugin is <a id="_idIndexMarker943"/>an important Maven plugin for deploying, un-deploying, and packaging MuleSoft applications on-premises. Let’s discuss the <a id="_idIndexMarker944"/>Mule Maven plugin some more. The following plugin can be configured in <strong class="source-inline">POM.xml</strong> of your application with all the attributes that are required for deploying and running the <span class="No-Break">application on-premises:</span></p>
+			<pre class="source-code">
+&lt;plugin&gt;
+  &lt;groupId&gt;org.mule.tools.maven&lt;/groupId&gt;
+  &lt;artifactId&gt;mule-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;3.8.6&lt;/version&gt;
+  &lt;extensions&gt;true&lt;/extensions&gt;
+  &lt;configuration&gt;
+    &lt;standaloneDeployment&gt;
+      &lt;muleHome&gt;${mule.home }&lt;/muleHome&gt;
+      &lt;muleVersion&gt;${app.runtime}&lt;/muleVersion&gt;
+    &lt;/standaloneDeployment&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</pre>			<p>In the preceding Mule Maven plugin, values defined under <strong class="source-inline">${}</strong> are the parameters that you can pass with the <strong class="source-inline">mule deploy</strong> command <span class="No-Break">as follows:</span><a id="_idTextAnchor338"/></p>
+			<pre class="console">
+mule deploy –DmuleDeploy -Dapp.runtime=4.3.0 -Dmule.home=/opt/mule/bin</pre>			<p>The following are the attributes that can be configured on the Mule Maven plugin while deploying an<a id="_idIndexMarker945"/> <span class="No-Break">application on-premises:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table005-2">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Parameter</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Required</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">standaloneDeployment</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Top-level element.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">applicationName</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the application name to use <span class="No-Break">during deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">muleVersion</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The Mule version running in your local machine instance. If this value does not match the Mule version running in your deployment target, the plugin raises an exception. The Mule Maven plugin does not download a Mule runtime engine if these values <span class="No-Break">don’t match.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">muleHome</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The location of the Mule instance in your <span class="No-Break">local machine.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">deploymentTimeout</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The allowed elapsed time, in milliseconds, between the start of the deployment process and the confirmation that the artifact has been deployed. The default value <span class="No-Break">is 1,000,000.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">skip</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>When set to <strong class="source-inline">true,</strong> skips the plugin deployment goal. Its default value <span class="No-Break">is false.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 12.5: Mule Maven plugin attributes</p>
+			<p>The Mule Maven <a id="_idIndexMarker946"/>plugin supports <strong class="bold">Anypoint Runtime Manager</strong> (<strong class="bold">ARM</strong>) deployment to deploy applications on the target, such as servers, clusters, or server groups registered on Anypoint Platform. The following plugin can be configured in <strong class="source-inline">POM.xml</strong> of your application with all the attributes that are required for<a id="_idIndexMarker947"/> deploying and running the application <span class="No-Break">using ARM:</span></p>
+			<pre class="source-code">
+&lt;plugin&gt;
+  &lt;groupId&gt;org.mule.tools.maven&lt;/groupId&gt;
+  &lt;artifactId&gt;mule-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;3.7.1&lt;/version&gt;
+  &lt;extensions&gt;true&lt;/extensions&gt;
+  &lt;configuration&gt;
+    &lt;armDeployment&gt;
+      &lt;muleVersion&gt;${app.runtime}&lt;/muleVersion&gt;
+      &lt;uri&gt;https://anypoint.mulesoft.com&lt;/uri&gt;
+      &lt;target&gt;${target}&lt;/target&gt;
+      &lt;targetType&gt;${target.type}&lt;/targetType&gt;
+      &lt;username&gt;${username}&lt;/username&gt;
+      &lt;password&gt;${password}&lt;/password&gt;
+      &lt;environment&gt;${environment}&lt;/environment&gt;
+      &lt;properties&gt;
+        &lt;key&gt;value&lt;/key&gt;
+      &lt;/properties&gt;
+    &lt;/armDeployment&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</pre>			<p>In the<a id="_idIndexMarker948"/> preceding Mule Maven plugin, values defined under <strong class="source-inline">${}</strong> are the parameters that you can pass with the <strong class="source-inline">mule deploy</strong> command <span class="No-Break">as follows:</span></p>
+			<pre class="console">
+mule deploy –DmuleDeploy -Dapp.runtime=4.3.0 -Dtarget=test-cluster -Dtarget.type=cluster -Dusername=Anypoint_Username -Dpassword=Anypoint_Password -Denvironment=Sandbox</pre>			<p>The following <a id="_idIndexMarker949"/>are the attributes that can be configured on the Mule Maven plugin while deploying applications <span class="No-Break">using ARM.</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table006-2">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Parameter</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Required</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">armDeployment</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Top-level element.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">applicationName</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the application name to use <span class="No-Break">during deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">muleVersion</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The Mule version required for your application to run in your <span class="No-Break">deployment target.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">uri</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The Anypoint <span class="No-Break">Platform URI.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">target</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The name of the server where your Mule instances <span class="No-Break">are installed.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">targetType</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The type of target to which you are deploying. Valid values are <strong class="source-inline">cluster</strong>, <strong class="source-inline">server</strong>, <span class="No-Break">and </span><span class="No-Break"><strong class="source-inline">serverGroup</strong></span><span class="No-Break">.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">username</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Your username for the server where your Mule instances <span class="No-Break">are installed.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Anypoint Platform credentials to <span class="No-Break">log in</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">password</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Your password for the server where your Mule instances <span class="No-Break">are installed.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Anypoint Platform credentials to <span class="No-Break">log in</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">environment</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The<a id="_idIndexMarker950"/> environment name for the server where your Mule instances are installed. This value must match any environment configured in your Runtime <span class="No-Break">Manager account.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">businessGroup</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The business group path of <span class="No-Break">the deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">businessGroupId</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The business group ID of <span class="No-Break">the deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">deploymentTimeout</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The allowed elapsed time, in milliseconds, between the start of the deployment process and the confirmation that the artifact has been deployed. The default value <span class="No-Break">is 1000000.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">server</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The <a id="_idIndexMarker951"/>Maven server with Anypoint Platform credentials. This is only needed if you want to use your credentials stored in your Maven <strong class="source-inline">settings.xml</strong> file. This is not the Mule <span class="No-Break">server name.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">properties</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Top-level element.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">skip</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>When set to true, skips the plugin deployment goal. Its default value <span class="No-Break">is false.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">skipDeploymentVerification</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>When set to true, skips the status verification of your deployed app. Its default value <span class="No-Break">is false.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">authToken</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the authorization token to access the platform. You can use this authentication method instead of setting a username <span class="No-Break">and password.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using an Authorization token to <span class="No-Break">log in</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">connectedAppClientId</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the Connected Apps <span class="No-Break"><strong class="source-inline">clientID</strong></span><span class="No-Break"> value.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Connected Apps credentials to <span class="No-Break">log in</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">connectedAppClientSecret</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the Connected Apps <span class="No-Break">secret key.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Connected Apps credentials to <span class="No-Break">log in</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">connectedAppGrantType</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the <a id="_idIndexMarker952"/>only <a id="_idIndexMarker953"/>supported connection <span class="No-Break">type: </span><span class="No-Break"><strong class="source-inline">client_credentials</strong></span><span class="No-Break">.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Connected Apps credentials to <span class="No-Break">log in</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 12.6: Mule Maven plugin attributes while deploying with ARM</p>
+			<p>Here are the<a id="_idIndexMarker954"/> commands to deploy and undeploy <span class="No-Break">an application:</span></p>
+			<pre class="console">
+mvn clean deploy –DmuleDeploy (deploy application on-premises)
+mvn mule:undeploy (undeploy application from on-premises)</pre>			<h1 id="_idParaDest-324"><a id="_idTextAnchor339"/>Deploying a MuleSoft application on-premises using the Anypoint Runtime Manager (ARM) REST API</h1>
+			<p>MuleSoft <a id="_idIndexMarker955"/>provides the ARM API for deploying applications on cluster or server groups or servers registered<a id="_idIndexMarker956"/> on Anypoint Platform. It also provides endpoints for managing servers, clusters, and server groups and supports many other operations via the ARM REST API. Here is the full list of <span class="No-Break">operations: </span><a href="https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/arm-rest-services/"><span class="No-Break">https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/arm-rest-services/</span></a><span class="No-Break">.</span></p>
+			<p>The following table showcases deploying an application to the target using the <span class="No-Break">ARM API:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table007-2">
+				<colgroup>
+					<col/>
+					<col/>
+				</colgroup>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Method</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">POST</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">API endpoint</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<pre class="console">
+<a href="https://anypoint.mulesoft.com/hybrid/api/v1/applications">https://anypoint.mulesoft.com/hybrid/api/v1/applications</a></pre>						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Request body</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<pre class="source-code">
+{
+
+  "applicationSource": {
+
+    "source": "EXCHANGE",
+
+    "groupId": "com.mulesoft.hybrid",
+
+    "artifactId": "platformApp",
+
+    "version": "0.0.1"
+
+  },
+
+  "targetId": 101,
+
+  "artifactName": "test-app"
+
+}</pre>						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Authentication</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>OAuth 2.0 (Connected Apps or Anypoint username <span class="No-Break">and password)</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Header</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">X-ANYPNT-ORG-ID</strong> (organization ID of Anypoint Platform), <strong class="source-inline">X-ANYPNT-ENV-ID</strong> (environment ID of Anypoint Platform), and <span class="No-Break"><strong class="source-inline">Content-Type</strong></span><span class="No-Break"> (</span><span class="No-Break"><strong class="source-inline">application/json</strong></span><span class="No-Break">)</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 12.7: ARM API</p>
+			<p>More<a id="_idIndexMarker957"/> details on the ARM API <a id="_idIndexMarker958"/>can be found on the Anypoint developer portal. Here is the <span class="No-Break">link: </span><a href="https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/arm-rest-services/minor/1.0/console/method/%231517/"><span class="No-Break">https://anypoint.mulesoft.com/exchange/portals/anypoint-platform/f1e97bc6-315a-4490-82a7-23abe036327a.anypoint-platform/arm-rest-services/minor/1.0/console/method/%231517/</span></a></p>
+			<h1 id="_idParaDest-325"><a id="_idTextAnchor340"/>Deploying Mule for high availability and disaster recovery strategies</h1>
+			<p>The <a id="_idIndexMarker959"/>downtime of an application can occur at any time. It could be planned due to the maintenance of the application and infrastructure, or it could be unplanned due to JVM failures or crashes, hardware failures, or network issues. Due to the global shift toward e-commerce, businesses want their applications to run with 100% uptime, be highly available, and be able to recover quickly from any disaster without having an impact on <span class="No-Break">the business.</span></p>
+			<p>There are various ways to address high availability and disaster recovery strategies, and one method is Anypoint clustering, providing basic failover, which we already discussed earlier in this chapter. With Anypoint clustering, in the event of the primary node failing, the secondary node becomes the primary node to resume <span class="No-Break">the processing.</span></p>
+			<p>MuleSoft provides four options for implementing <span class="No-Break">high availability:</span></p>
+			<ul>
+				<li><span class="No-Break">Cold standby</span></li>
+				<li><span class="No-Break">Warm standby</span></li>
+				<li>Hot standby – <span class="No-Break">active-passive</span></li>
+				<li><span class="No-Break">Active-active</span></li>
+			</ul>
+			<h2 id="_idParaDest-326"><a id="_idTextAnchor341"/>Cold standby</h2>
+			<p>In the <a id="_idIndexMarker960"/>cold standby approach, one or more operating systems are not running. This is basically a backup of the production environment or virtual machines. In the event of any outages being detected, the backup operating system and Mule runtime are started. Some downtime will occur while starting the backup operating system and Mule runtime and redirecting traffic to <span class="No-Break">the backup.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer158">
+					<img alt="Figure 12.17: Cold standby" src="image/B19922_12_17.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.17: Cold standby</p>
+			<h2 id="_idParaDest-327"><a id="_idTextAnchor342"/>Warm standby</h2>
+			<p>In <a id="_idIndexMarker961"/>the warm standby approach, the backup operating system is running but the Mule runtime is not running. In the event of any outages being detected, the backup Mule runtime is started. A little downtime can occur while starting the runtime and redirecting traffic to <span class="No-Break">the backup.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer159">
+					<img alt="Figure 12.18: Warm standby" src="image/B19922_12_18.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.18: Warm standby</p>
+			<h2 id="_idParaDest-328"><a id="_idTextAnchor343"/>Hot standby – active-passive</h2>
+			<p>In this approach, the <a id="_idIndexMarker962"/>backup Mule runtime and operating system are operational and running. However, they are not processing any requests. In the event of any outages being detected, the backup will start processing the requests. Minimal downtime can occur when redirecting traffic to <span class="No-Break">the backup.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer160">
+					<img alt="Figure 12.19: Hot standby – active-passive" src="image/B19922_12_19.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.19: Hot standby – active-passive</p>
+			<h2 id="_idParaDest-329"><a id="_idTextAnchor344"/>Active-active</h2>
+			<p>In this approach, the<a id="_idIndexMarker963"/> backup Mule runtime and operating system are operational and running. Environments are clustered and a load balancer routes the traffic to all the environments. There is no downtime with <span class="No-Break">this approach.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer161">
+					<img alt="Figure 12.20: Active-active" src="image/B19922_12_20.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.20: Active-active</p>
+			<p>It is also possible to load balance a single-cluster environment, and it will ensure zero downtime of the service. To implement this approach, the network latency between environments must be less than <span class="No-Break">10 milliseconds.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer162">
+					<img alt="Figure 12.21: Active-active – single-cluster" src="image/B19922_12_21.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.21: Active-active – single-cluster</p>
+			<h1 id="_idParaDest-330"><a id="_idTextAnchor345"/>Upgrading a Mule runtime or scaling the underlying infrastructure without any downtime</h1>
+			<p>We <a id="_idIndexMarker964"/>generally have requirements to upgrade a Mule runtime or make hardware changes such as increasing the memory or storage, and these things<a id="_idIndexMarker965"/> must be achieved with zero downtime to ensure business continuity. It is also important to ensure the stability of the Mule runtime after an upgrade or making hardware changes. The current Mule runtime can be considered as a baseline production environment, and a new environment is created when the runtime configuration changes and hardware <span class="No-Break">is upgraded.</span></p>
+			<p>To gain confidence in the new environment, we will use the canary deployment approach, where we will send a small amount of traffic to the new environment and the rest of the traffic to the baseline environment. Slowly, we will increase the traffic to the new environment as we gain confidence on the newly <span class="No-Break">deployed application.</span></p>
+			<p>Once 100% of the traffic is being routed to the new environment, the baseline environment will be terminated, and the new environment will become the baseline production environment. The following is an illustration of how traffic can increase slowly in a new <a id="_idIndexMarker966"/>environment, eventually terminating the <span class="No-Break">old environment.</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer163">
+					<img alt="Figure 12.22: Upgrading a Mule runtime or scaling the underlying infrastructure without any downtime" src="image/B19922_12_22.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 12.22: Upgrading a Mule runtime or scaling the underlying infrastructure without any downtime</p>
+			<p>In this approach, temporary <a id="_idIndexMarker967"/>costs can be incurred for running the extra instance (this may be for a few minutes, hours, <span class="No-Break">or days).</span></p>
+			<h1 id="_idParaDest-331"><a id="_idTextAnchor346"/>Mule runtime on-premises security</h1>
+			<p>Security is<a id="_idIndexMarker968"/> critical for any business to ensure that information stored and retrieved via software applications is secure and protected, and it must be <a id="_idIndexMarker969"/>secured from unauthorized users. Information such as credit card details and Social Security numbers should be accessed in a secure way to perform any transaction, and it must only be accessible to legitimate or <span class="No-Break">authorized users.</span></p>
+			<p>The Mule runtime provides various tools for <span class="No-Break">implementing security:</span></p>
+			<ul>
+				<li>A cryptography module for encrypting and decrypting data. Supported strategies are JCE, PGP, and XML to encrypt and <span class="No-Break">sign data.</span></li>
+				<li>Secure configuration properties for storing credentials or sensitive data in a properties file in <span class="No-Break">encrypted form.</span></li>
+				<li>Enabling a FIPS 140-2 <span class="No-Break">certified environment</span></li>
+				<li>Out-of-the-box API policies such as JWT validation tokens, client credentials enforcement<a id="_idIndexMarker970"/> policy, and other security policies that can be enabled on APIs for authorization <span class="No-Break">and authentication.</span></li>
+				<li>TLS security configuration – a Mule application can be secured in transit by configuring TLS. TLS 1.1 and TLS 1.2 <span class="No-Break">are supported.</span></li>
+				<li>Spring Security for enabling basic authentication or basic authentication with an <span class="No-Break">LDAP provider.</span></li>
+			</ul>
+			<h1 id="_idParaDest-332"><a id="_idTextAnchor347"/>Summary</h1>
+			<p>In this chapter, our understanding has expanded regarding the attributes and functionalities of the on-premises Mule runtime. Moreover, we have explored important topics such as Anypoint clustering, server groups, domain projects, and non-functional prerequisites such as high availability, scalability, and load balancing. Additionally, we have explored subjects such as upgrading the Mule runtime, implementing security measures, and disaster recovery alternatives. Looking ahead, the forthcoming chapter will concentrate on Government Cloud and EU Control Plane, with a specific focus on distinctive factors to be taken <span class="No-Break">into account.</span></p>
+			<h1 id="_idParaDest-333"><a id="_idTextAnchor348"/>Further reading</h1>
+			<ul>
+				<li>Anypoint Platform PCE supported <span class="No-Break">configurations: </span><a href="https://docs.mulesoft.com/private-cloud/3.2/supported-cluster-config"><span class="No-Break">https://docs.mulesoft.com/private-cloud/3.2/supported-cluster-config</span></a></li>
+				<li>FIPS 140-2 compliance <span class="No-Break">support: </span><a href="https://docs.mulesoft.com/mule-runtime/4.5/fips-140-2-compliance-support"><span class="No-Break">https://docs.mulesoft.com/mule-runtime/4.5/fips-140-2-compliance-support</span></a></li>
+				<li><span class="No-Break">Security: </span><a href="https://docs.mulesoft.com/mule-runtime/4.5/securing"><span class="No-Break">https://docs.mulesoft.com/mule-runtime/4.5/securing</span></a></li>
+				<li><span class="No-Break">Clustering: </span><a href="https://docs.mulesoft.com/runtime-manager/cluster-about"><span class="No-Break">https://docs.mulesoft.com/runtime-manager/cluster-about</span></a></li>
+				<li>A few tables in this chapter have been taken from the MuleSoft official <span class="No-Break">documentation: </span><a href="https://docs.mulesoft.com/"><span class="No-Break">https://docs.mulesoft.com/</span></a></li>
+			</ul>
+		</div>
+	</body>
+</html>

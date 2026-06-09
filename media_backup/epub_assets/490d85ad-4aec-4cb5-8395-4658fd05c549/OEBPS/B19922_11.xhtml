@@ -1,0 +1,1280 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-GB">
+	<head>
+		<title>B19922_11</title>
+		<link href="css/style-JRserifv6.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:c8ccfc40-76a9-4a04-b8f6-a8f601fe2ce2" name="Adept.expected.resource"/>
+	</head>
+	<body id="B19922_11">
+		<div class="Content" id="_idContainer141">
+			<h1 class="chapter-number" id="_idParaDest-253"><a id="_idTextAnchor263"/>11</h1>
+			<h1 id="_idParaDest-254"><a id="_idTextAnchor264"/>Containerizing the Runtime Plane with Runtime Fabric</h1>
+			<p>In this chapter, we will discuss how to run and manage the MuleSoft application in a Kubernetes-based containerized environment. MuleSoft provides Runtime Fabric on bare-metal servers/<strong class="bold">virtual machines</strong> (<strong class="bold">VMs</strong>) and Runtime Fabric on self-managed Kubernetes so that you can manage and run a MuleSoft application in <span class="No-Break">containerized environments.</span></p>
+			<p>In this chapter, we will be covering the <span class="No-Break">following topics:</span></p>
+			<ul>
+				<li>Kubernetes architecture and <span class="No-Break">its components</span></li>
+				<li>Runtime Fabric on <span class="No-Break">bare-metal servers/VMs</span></li>
+				<li>Runtime Fabric on <span class="No-Break">self-managed Kubernetes</span></li>
+				<li>Runtime Fabric on Red <span class="No-Break">Hat OpenShift</span></li>
+				<li><span class="No-Break">Anypoint Security</span></li>
+			</ul>
+			<h1 id="_idParaDest-255"><a id="_idTextAnchor265"/>Technical requirements</h1>
+			<p>For this chapter, you’ll require <span class="No-Break">the following:</span></p>
+			<ul>
+				<li>Enterprise Anypoint Platform access with Runtime Fabric enabled for <span class="No-Break">your organization.</span></li>
+				<li>A Runtime Fabric setup <span class="No-Break">license key.</span></li>
+				<li>EKS/GKE/AKS in case you’re planning to set up Runtime Fabric on <span class="No-Break">self-managed Kubernetes.</span></li>
+				<li>VMs/bare-metal server to fulfill all the prerequisites. A link for this can be found in the <em class="italic">Further reading</em> section at the end of <span class="No-Break">this chapter.</span></li>
+				<li>Red Hat OpenShift in case you’re planning to set up Runtime Fabric <span class="No-Break">on OpenShift.</span></li>
+			</ul>
+			<h1 id="_idParaDest-256"><a id="_idTextAnchor266"/>Kubernetes architecture</h1>
+			<p>First, we’ll discuss<a id="_idIndexMarker775"/> the high-level architecture of a Kubernetes cluster before looking at Runtime Fabric, which is provided by MuleSoft. Kubernetes clusters follow the master-slave architecture for running a containerized application and are faster and more lightweight compared to applications deployed on VMs. They are also easily manageable <span class="No-Break">and scalable.</span></p>
+			<p>Kubernetes comprises master nodes and worker nodes to run application workloads and manage container orchestration. The master node is generally the decision-maker and manages the Kubernetes cluster. It is the entry point for any administrative tasks, and you can easily communicate with the master node via APIs, the CLI, or the Kubernetes GUI. To ensure the high availability and fault tolerance of the architecture, there must be more than one master node in <span class="No-Break">the cluster.</span></p>
+			<h2 id="_idParaDest-257"><a id="_idTextAnchor267"/>Master node components</h2>
+			<p>Master nodes comprise<a id="_idIndexMarker776"/> the <span class="No-Break">following components:</span></p>
+			<ul>
+				<li><strong class="bold">kube-apiserver</strong>: The<a id="_idIndexMarker777"/> API server performs all the administrative tasks on the master node. The user can interact with the API server via an HTTP REST call, at which point the API server validates and executes the request. The client can interact with the API server to leverage the <span class="No-Break">Kubernetes functionality.</span></li>
+				<li><strong class="bold">Etcd</strong>: etcd is a<a id="_idIndexMarker778"/> highly available and distributed key-value store that’s used for storing all cluster data, such as the current state, desired state, resource configurations, and runtime data. etcd is used by the Kubernetes cluster to store all the configuration data, its state (current and desired state of the cluster), and metadata. etcd is written <span class="No-Break">in Golang.</span></li>
+				<li><strong class="bold">kube-scheduler</strong>: The<a id="_idIndexMarker779"/> scheduler watches for newly created Pods with no assigned worker node and selects the node for the Pod. Simply put, the scheduler decides which node container will be deployed, depending on the <span class="No-Break">available resources.</span></li>
+				<li><strong class="bold">Controller manager</strong>: The <a id="_idIndexMarker780"/>controller manager<a id="_idIndexMarker781"/> is responsible for managing various controllers that continuously watch the state of clusters and ensure the current state<a id="_idIndexMarker782"/> of the cluster is close to the desired state. Various controllers <span class="No-Break">are available:</span><ul><li><strong class="bold">Node controller</strong>: The<a id="_idIndexMarker783"/> node controller is responsible for onboarding new nodes to the cluster and managing the desired state of the nodes. It handles situations where the node becomes unavailable to keep the <span class="No-Break">application running.</span></li><li><strong class="bold">Replica controller</strong>: The<a id="_idIndexMarker784"/> replica controller monitors the replica sets and ensures the desired number of Pods is available in the replica set. If a Pod crashes or dies, it will create a new Pod automatically. It will always ensure that the desired number of Pods, or at least one Pod, is up <span class="No-Break">and running.</span></li><li><strong class="bold">Deployment controller</strong>: The<a id="_idIndexMarker785"/> deployment controller manages the deployment of the application. It ensures that the pod runs at a desired number of replicas and also ensures that unhealthy replicas get replaced with new, healthy replicas. This will guarantee that at least one instance of your application is maintained to <span class="No-Break">serve requests.</span></li><li><strong class="bold">Job controller</strong>: The<a id="_idIndexMarker786"/> job controller communicates with the API server to remove or add new Pods and doesn’t run a job itself. A job is a Kubernetes task that runs on one or more Pods to carry out a task and <span class="No-Break">then terminates:</span></li></ul></li>
+			</ul>
+			<div>
+				<div class="IMG---Figure" id="_idContainer115">
+					<img alt="Figure 11.1﻿ - Kubernetes master node" src="image/B19922_11_01.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.1 - Kubernetes master node</p>
+			<p><span class="No-Break"><em class="italic">Figure 11</em></span><em class="italic">.1</em> depicts the<a id="_idIndexMarker787"/> components of the master node in the Kubernetes <span class="No-Break">control plane.</span></p>
+			<h2 id="_idParaDest-258"><a id="_idTextAnchor268"/>Worker node components</h2>
+			<p>There will always <a id="_idIndexMarker788"/>be more than one <a id="_idIndexMarker789"/>worker node in the cluster to ensure its high availability and fault tolerance. Worker nodes are responsible for running the containerized application. They comprise the <span class="No-Break">following components:</span></p>
+			<ul>
+				<li><strong class="bold">kube-proxy</strong>: This is <a id="_idIndexMarker790"/>a network proxy that runs on each worker node of the cluster. kube-proxy manages network rules on the nodes, and these network rules allow your Pods to communicate with a network session inside or outside of <span class="No-Break">your cluster.</span></li>
+				<li><strong class="bold">kubelet</strong>: kubelet<a id="_idIndexMarker791"/> runs on each worker node to communicate with master nodes in the cluster. It is responsible for managing how Pods are deployed to the Kubernetes cluster. It receives commands from the API server and instructs the container to start <span class="No-Break">or stop.</span></li>
+				<li><strong class="bold">Container runtime</strong>: The<a id="_idIndexMarker792"/> container runtime is responsible for running and managing your application in <span class="No-Break">the Pod.</span></li>
+			</ul>
+			<p><span class="No-Break"><em class="italic">Figure 11</em></span><em class="italic">.2</em> depicts <a id="_idIndexMarker793"/>the components in the <span class="No-Break">worker node:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer116">
+					<img alt="Figure 11.2﻿ - Kubernetes worker nodes" src="image/B19922_11_02.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.2 - Kubernetes worker nodes</p>
+			<p><span class="No-Break"><em class="italic">Figure 11</em></span><em class="italic">.3</em> depicts the complete <span class="No-Break">Kubernetes architecture:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer117">
+					<img alt="Figure 11.3 - Kubernetes architecture" src="image/B19922_11_03.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.3 - Kubernetes architecture</p>
+			<p>In this section, we<a id="_idIndexMarker794"/> looked at Kubernetes architecture. The next section describes Runtime Fabric. Runtime Fabric runs on top of Kubernetes and is a service that’s provided by MuleSoft for running Mule applications <span class="No-Break">and proxies.</span></p>
+			<h1 id="_idParaDest-259"><a id="_idTextAnchor269"/>What is Runtime Fabric?</h1>
+			<p>Runtime Fabric is a<a id="_idIndexMarker795"/> container service that’s built on top of Kubernetes by MuleSoft to run and manage MuleSoft applications on the cloud (Azure/AWS/Google) and in <a id="_idIndexMarker796"/>on-premises data centers. Runtime Fabric can be set up on bare-metal servers/VMs, self-managed<a id="_idIndexMarker797"/> Kubernetes (such as <strong class="bold">Azure Kubernetes </strong>Service (<strong class="bold">AKS</strong>), <strong class="bold">Elastic Kubernetes Service</strong> (<strong class="bold">EKS</strong>), or <strong class="bold">Google Kubernetes Engine</strong> (<strong class="bold">GKE</strong>)), and<a id="_idIndexMarker798"/> Red <span class="No-Break">Hat OpenShift.</span></p>
+			<p>When we set up Runtime Fabric on self-managed Kubernetes, bare-metal servers/VMs, or Red Hat OpenShift, there is a difference in the customer’s and MuleSoft’s responsibilities for managing Runtime Fabric. In the following sections, we will understand which responsibilities belong to MuleSoft and which belong to the customer when Runtime Fabric is set up in any of the instances <span class="No-Break">mentioned previously.</span></p>
+			<h2 id="_idParaDest-260"><a id="_idTextAnchor270"/>Runtime Fabric on bare-metal servers/VMs</h2>
+			<p>Runtime Fabric on bare-metal servers/VMs <a id="_idIndexMarker799"/>comprises a set of VMs for the cluster. Each VM can be served as a controller node or <span class="No-Break">worker node.</span></p>
+			<p>A controller node is a dedicated VM for operating Runtime Fabric and includes an orchestration service, an internal load balancer, and services that allow you to monitor the cluster from Anypoint Platform (the control plane). A worker node is a dedicated VM for running the Mule application and <span class="No-Break">API gateway.</span></p>
+			<p>The following is the typical architecture of Runtime Fabric in a development environment with one controller node and two <span class="No-Break">worker nodes:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer118">
+					<img alt="Figure 11.4 - Runtime Fabric architecture (development environment)" src="image/B19922_11_04.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.4 - Runtime Fabric architecture (development environment)</p>
+			<p>The <a id="_idIndexMarker800"/>following is the typical architecture of Runtime Fabric in a production environment, which provides high availability and fault tolerance. The Runtime Fabric architecture has three controllers and three workers. The three controller nodes enable fault tolerance if one controller <span class="No-Break">is lost:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer119">
+					<img alt="Figure 11.5 - Runtime Fabric architecture (production environment)" src="image/B19922_11_05.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.5 - Runtime Fabric architecture (production environment)</p>
+			<p>To provide<a id="_idIndexMarker801"/> further fault tolerance if two controller nodes are lost, a total of five controllers should be set up. This configuration can be set up for a production environment. For a development environment, you can set up one controller node and two worker nodes. Communication between Anypoint Platform and an agent on the controller node is always outbound. The agent is always available on the controller and the controller only runs an internal load balancer. The Mule application is deployed on the worker. Multiple replicas of the application can be run across the worker nodes. The maximum number of control nodes in a cluster is 5 and the maximum number of worker nodes in a cluster is 16. For a development environment, we can use one, three, or five control nodes. For a production environment, we can use three or five <span class="No-Break">control nodes.</span></p>
+			<h2 id="_idParaDest-261"><a id="_idTextAnchor271"/>Network architecture</h2>
+			<p>A <a id="_idIndexMarker802"/>TCP load balancer is <a id="_idIndexMarker803"/>used to load balance requests within an internal load balancer on each controller node. The internal load balancer distributes traffic among the replicas of the application running on the worker nodes. An external client can send requests to the TCP load balancer via a <span class="No-Break">public domain:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer120">
+					<img alt="Figure 11.6 - Runtime Fabric network architecture" src="image/B19922_11_06.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.6 - Runtime Fabric network architecture</p>
+			<p><span class="No-Break"><em class="italic">Figure 11</em></span><em class="italic">.6</em> depicts the network architecture of <span class="No-Break">Runtime Fabric.</span></p>
+			<h2 id="_idParaDest-262"><a id="_idTextAnchor272"/>Shared responsibility between the customer and MuleSoft</h2>
+			<p>It is critical<a id="_idIndexMarker804"/> to understand what the customer’s and MuleSoft’s responsibilities will be in terms of managing Runtime Fabric. The following diagram depicts the customer’s and <span class="No-Break">MuleSoft’s responsibilities:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer121">
+					<img alt="Figure 11.7 - Shared responsibility model" src="image/B19922_11_07.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.7 - Shared responsibility model</p>
+			<p><span class="No-Break"><em class="italic">Figure 11</em></span><em class="italic">.7</em> depicts Runtime Fabric’s shared responsibility model between MuleSoft <span class="No-Break">and Customer.</span></p>
+			<p>It is the customer’s responsibility to manage infrastructure components such as the disk, storage, VMs, network ports, synchronization of system times across all the VMs, and server patching. It is MuleSoft’s responsibility to manage the Mule runtime, Runtime Fabric-related components, and Runtime <span class="No-Break">Fabric appliances.</span></p>
+			<h2 id="_idParaDest-263"><a id="_idTextAnchor273"/>The concept of etcd in Runtime Fabric</h2>
+			<p><strong class="bold">etcd</strong> is a <a id="_idIndexMarker805"/>reliable <a id="_idIndexMarker806"/>and distributed key-value pair data store. It<a id="_idIndexMarker807"/> maintains the cluster configuration data, the current state, and the metadata associated with it. <strong class="source-inline">etcd</strong> is available on all the controller nodes of Runtime Fabric and copies the same data across all the <span class="No-Break">controller nodes:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer122">
+					<img alt="Figure 11.8 - etcd configuration" src="image/B19922_11_08.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.8 - etcd configuration</p>
+			<p>Runtime Fabric <a id="_idIndexMarker808"/>information is stored in JSON or YAML format. <strong class="source-inline">etcd</strong> will ensure that there is consistent information across all the nodes and that the same<a id="_idIndexMarker809"/> information will be available, no matter from which node you are accessing the information. The controller generally writes or reads into <strong class="source-inline">etcd</strong> files. Reading is an easy operation as the same copy of <strong class="source-inline">etcd</strong> is available on all the <span class="No-Break">controller nodes.</span></p>
+			<p>Writing is a complex operation. For example, if you get multiple requests to write to <strong class="source-inline">etcd</strong> at the same time, which request will go through? Not all controllers perform the write operation in the etcd cluster; only one controller node will perform the write operation, and that is known as a leader node. Other nodes in the cluster are known as follower nodes. In the <strong class="source-inline">etcd</strong> cluster, one of the nodes will be elected as a leader among them and the rest will <span class="No-Break">be followers.</span></p>
+			<p>If any controller node receives a write request, it will be forwarded to the leader node, and the leader node will perform a write operation to <strong class="source-inline">etcd</strong>. After that, it will ensure that followers receive the same copy of the data. This process will be marked as complete by the leader when it receives confirmation from all <span class="No-Break">the followers.</span></p>
+			<h2 id="_idParaDest-264"><a id="_idTextAnchor274"/>Quorum management</h2>
+			<p>One of the key ideas in figuring out how many controller nodes the Runtime Fabric cluster needs to operate correctly and successfully write to the <strong class="source-inline">etcd</strong> file is <span class="No-Break">quorum management.</span></p>
+			<p>Quorum management<a id="_idIndexMarker810"/> is the minimum number of nodes required in the cluster to perform the write operation in <strong class="source-inline">etcd</strong> and function properly. The formula for calculating the quorum is <strong class="source-inline">floor (n/2) + 1</strong>, where <strong class="source-inline">n</strong> is the number of controller nodes in the cluster. Let’s calculate the quorum and understand how it fits into the Runtime <span class="No-Break">Fabric architecture:</span></p>
+			<ul>
+				<li>When we have one controller node, the quorum will be <strong class="source-inline">floor (1/2) + 1 = 1</strong>. This means that when the control node goes down, the whole system will be down. This configuration is only okay for a <span class="No-Break">development environment.</span></li>
+				<li>When we have two controller nodes, the quorum will be <strong class="source-inline">floor (2/2) + 1 = 2</strong>. This means that when one controller goes down, there is still one controller node available and the quorum is 2. In this case, there will be no fault tolerance and the write operation will not be performed. This means a controller with one node and a controller with two nodes provide similar availability of the cluster. So, there is no point in having a cluster with <span class="No-Break">two nodes.</span></li>
+				<li>When we have three controller nodes, the quorum will be <strong class="source-inline">floor (3/2) + 1 = 2</strong>. This means that when one controller goes down, there are still two controller nodes available and the quorum is 2. In this case, there will be two controller nodes available, as well as the quorum. In this case, we can afford to have one controller node unavailable, and we’ll still have two controller nodes to keep doing <span class="No-Break">the work.</span></li>
+				<li>When we have four controller nodes, the quorum will be <strong class="source-inline">floor (4/2) + 1 = 3</strong>. This means that when one controller goes down, there are three controller nodes available and the quorum is 3. This means the cluster will keep working. However, if we lose one more controller, there will be two controller nodes available, and the quorum will be 3. This means that a controller with three nodes and a controller with four nodes provide similar availability of the cluster. There is no point in having a cluster with <span class="No-Break">four nodes.</span></li>
+				<li>When we have five controller nodes, the quorum will be <strong class="source-inline">floor (5/2) + 1 = 3</strong>. This means that when one controller goes down, there are controller nodes available and the quorum is 3. This means that the cluster will keep working. However, if we lose one more controller, there will be three controller nodes available, and the quorum will be 3. In this case, there will be three controller nodes available, as well as the quorum. In this case, we can afford for two controller nodes to be unavailable as we’ll still have three controller nodes to keep doing <span class="No-Break">the work.</span></li>
+			</ul>
+			<p>Generally, it is <a id="_idIndexMarker811"/>recommended to set up an odd number of controller nodes (that is, one, three, or five) in the cluster. The following table illustrates the fault tolerance that’s provided by a specific number of <span class="No-Break">controller nodes:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table001-5">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="bold">Number of </strong><span class="No-Break"><strong class="bold">Controller Nodes</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Quorum</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Fault Tolerance</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>1</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>1</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>0</p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>2</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>2</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>0</p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>3</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>2</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>1</p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>4</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>3</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>1</p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>5</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>3</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>2</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 11.1 - Quorum and fault tolerance association</p>
+			<h2 id="_idParaDest-265"><a id="_idTextAnchor275"/>Scalability</h2>
+			<p>Scaling<a id="_idIndexMarker812"/> can be achieved at the infrastructure level and the <span class="No-Break">application level.</span></p>
+			<p>Horizontal scaling can be done in <span class="No-Break">two ways:</span></p>
+			<ul>
+				<li>Add or remove a controller or worker node in the Runtime <span class="No-Break">Fabric cluster</span></li>
+				<li>Add or remove replicas of <span class="No-Break">the application</span></li>
+			</ul>
+			<p>Vertical scaling <a id="_idIndexMarker813"/>can be done in <span class="No-Break">two ways:</span></p>
+			<ul>
+				<li>Increase or decrease the computing resources, such as memory or CPU, on the nodes (controller and worker) in <span class="No-Break">the cluster</span></li>
+				<li>Increase or decrease the CPU resources (reserved CPU or CPU limit) on the replicas of <span class="No-Break">the application</span></li>
+			</ul>
+			<h2 id="_idParaDest-266"><a id="_idTextAnchor276"/>High availability</h2>
+			<p>High availability in <a id="_idIndexMarker814"/>Runtime Fabric can be achieved by running multiple controller and worker nodes, as we discussed previously, in the Runtime <span class="No-Break">Fabric architecture.</span></p>
+			<p>To run the application in high-availability mode, deploy more than one replica of the application. This will ensure the high availability of <span class="No-Break">the application.</span></p>
+			<h2 id="_idParaDest-267"><a id="_idTextAnchor277"/>Fault tolerance</h2>
+			<p>An application <a id="_idIndexMarker815"/>that’s deployed to Runtime Fabric is fault tolerant by default. Consider a case where you have deployed one or more replicas of the application. If one of the replicas crashes due to JVM failures or is unavailable due to a node going down, this unhealthy replica will be replaced with a new replica on another node or the same node if it is available. We previously covered the Kubernetes architecture, where there is a controller that ensures the desired state of <span class="No-Break">the cluster.</span></p>
+			<h2 id="_idParaDest-268"><a id="_idTextAnchor278"/>Inbound load balancer (ingress load balancer)</h2>
+			<p>An<a id="_idIndexMarker816"/> inbound load balancer is available on all the controller nodes that distribute traffic to replicas of the application in the worker node. By default, inbound traffic is disabled to avoid unnecessary consumption of resources. It can be enabled from Anypoint Runtime Manager. This load balancer is responsible for TLS termination, and the number of resources required to scale the load balancer is dependent on the number of incoming requests and the size of the payload for <span class="No-Break">each request.</span></p>
+			<p>The internal load balancer can be configured in shared mode or <span class="No-Break">dedicated mode:</span></p>
+			<ul>
+				<li><strong class="bold">Shared mode</strong> allows <a id="_idIndexMarker817"/>you to specify the CPU cores and amount of memory for the internal load balancer. Shared mode is the default setting and it is distributed among all the <span class="No-Break">control nodes.</span></li>
+				<li><strong class="bold">Dedicated mode</strong> doesn’t <a id="_idIndexMarker818"/>allow you to specify CPU cores and the amount of memory for the internal load balancer, but it uses all the resources dedicated to the internal load balancer. In this mode, the internal load balancer is deployed to the dedicated internal load <span class="No-Break">balancer nodes.</span></li>
+			</ul>
+			<p>The <a id="_idIndexMarker819"/>internal load balancer’s sizing depends on the response time latency, number of requests, and <span class="No-Break">payload size:</span></p>
+			<ul>
+				<li>0.5 GB is the default internal load balancer size, which can handle up to 500 <span class="No-Break">active connections</span></li>
+				<li>1.5 GB can handle more than 500 active connections and is needed when security policies <span class="No-Break">are enabled</span></li>
+			</ul>
+			<p>The inbound load balancer <a id="_idIndexMarker820"/>can define how traffic will be accepted from the client and forwarded to the application running in <span class="No-Break">Runtime Fabric:</span></p>
+			<ul>
+				<li><strong class="bold">Accept HTTPS requests</strong>: Accept only traffic on the HTTPS protocol and drop all inbound <span class="No-Break">HTTP traffic:</span><ul><li><strong class="bold">Redirect HTTP to HTTPS</strong>: Accept traffic on HTTPS and send traffic to Runtime Fabric on HTTP. Respond with 302 to redirect traffic on HTTPS on port 443 in case traffic is coming <span class="No-Break">on HTTP.</span></li><li><strong class="bold">Accept HTTP request</strong>: Accept traffic on HTTPS and send the request to Runtime Fabric on HTTP <span class="No-Break">port 80.</span></li><li><strong class="bold">Drop HTTP request</strong>: Accept traffic on HTTPS. Traffic sent to Runtime Fabric on HTTP will be ignored <span class="No-Break">or dropped.</span></li></ul></li>
+				<li><strong class="bold">Accept HTTP requests only</strong>: Accept traffic on HTTP. This is not a secure way to allow traffic <span class="No-Break">on HTTP.</span></li>
+			</ul>
+			<h2 id="_idParaDest-269"><a id="_idTextAnchor279"/>Anypoint Security</h2>
+			<p>Anypoint Security<a id="_idIndexMarker821"/> enables you to apply security at the edge to secure application networks by enforcing policies and proxying all the inbound and outbound connections to mitigate any risks or threats. Various edge policies can be applied in front of Runtime Fabric to protect the application network from <span class="No-Break">external threats:</span></p>
+			<ul>
+				<li><strong class="bold">Denial of Service (DoS) policy</strong>: This<a id="_idIndexMarker822"/> policy ensures that traffic will only be accepted from legitimate sources and prevents attackers from flooding your application network with requests. DoS means sending the request continuously with a large payload to your application network to consume the server resources and bandwidth of <span class="No-Break">the network.</span></li>
+				<li><strong class="bold">IP Allowlist policy</strong>: As its <a id="_idIndexMarker823"/>name suggests, the IP Allowlist policy will allow traffic to an application network from the IP addresses that have been allowed in the policy, and traffic coming from the IP addresses that are not in the allowlist will <span class="No-Break">be dropped.</span></li>
+				<li><strong class="bold">HTTP limit policy</strong>: This<a id="_idIndexMarker824"/> policy allows you to configure the size of the payload and the <a id="_idIndexMarker825"/>number of headers that are allowed on the application network. Attackers will try to send a large payload to consume server resources, causing DoS, and consume the network bandwidth, which leads to the degradation of the server’s performance. With an HTTP policy, you can control the size of <span class="No-Break">incoming messages.</span></li>
+				<li><strong class="bold">Web Application Firewall (WAF) policy</strong>: A WAF policy will protect request and response traffic<a id="_idIndexMarker826"/> to provide security at the web <span class="No-Break">application level.</span></li>
+			</ul>
+			<h2 id="_idParaDest-270"><a id="_idTextAnchor280"/>Application performance metrics</h2>
+			<p>The<a id="_idIndexMarker827"/> following figure represents the application performance of a Mule application for different vCPU cores on a simple 10 <span class="No-Break">KB payload:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer123">
+					<img alt="Figure 11.9 - Runtime Fabric application performance metrics" src="image/B19922_11_09.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.9 - Runtime Fabric application performance metrics</p>
+			<h2 id="_idParaDest-271"><a id="_idTextAnchor281"/>Internal load balancer performance metrics</h2>
+			<p>The <a id="_idIndexMarker828"/>following figure represents the performance of the internal load balancer on the controller node on AWS EC2 <span class="No-Break">M4 instances:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer124">
+					<img alt="Figure 11.10 - Internal load balancer performance metrics" src="image/B19922_11_10.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.10 - Internal load balancer performance metrics</p>
+			<p>The preceding application and load balancer performance metrics were taken from the official MuleSoft <span class="No-Break">documentation (</span><a href="https://docs.mulesoft.com/runtime-fabric/1.13/deploy-resource-allocation"><span class="No-Break">https://docs.mulesoft.com/runtime-fabric/1.13/deploy-resource-allocation</span></a><span class="No-Break">).</span></p>
+			<p>With that, we’ve covered the architecture of Runtime Fabric on bare-metal servers and VMs. Next, we’ll look at the architecture of Runtime Fabric on <span class="No-Break">self-managed Kubernetes.</span></p>
+			<h1 id="_idParaDest-272"><a id="_idTextAnchor282"/>Runtime Fabric on self-managed Kubernetes</h1>
+			<p>MuleSoft provides<a id="_idIndexMarker829"/> the option to set up Runtime Fabric on self-managed Kubernetes (EKS/AKS/GKE). Runtime Fabric on self-managed Kubernetes allows you to deploy and manage Mule applications and API proxies to a Kubernetes cluster that has been created, configured, and managed by you. This option<a id="_idIndexMarker830"/> allows you to <strong class="bold">Bring Your Own Kubernetes</strong> (<strong class="bold">BYOK</strong>); MuleSoft will provide Runtime Fabric services, the Mule runtime, and other components required to run the applications. In this section, we are going to discuss how EKS on AWS can be leveraged to run Runtime Fabric. However, before we do that, we need to understand the EKS architecture and <span class="No-Break">its capabilities.</span></p>
+			<p><span class="No-Break">EKS architecture</span></p>
+			<p>EKS is a <a id="_idIndexMarker831"/>fully managed service from AWS that provides Kubernetes to run workloads and manage the Kubernetes <span class="No-Break">control plane.</span></p>
+			<p>Control of EKS is fully managed by AWS, and AWS is responsible for the availability, scalability, fault tolerance, and durability of the Kubernetes control plane. The control plane generally hosts the controller nodes in the AWS-managed <strong class="bold">Virtual Private Cloud</strong> (<strong class="bold">VPC</strong>). The<a id="_idIndexMarker832"/> Kubernetes control plane communicates with the worker nodes in the cluster via the EKS-managed <strong class="bold">Elastic Network Interface</strong> (<strong class="bold">ENI</strong>). ENI is<a id="_idIndexMarker833"/> in multiple Availability Zones to provide fault-tolerant and <span class="No-Break">high-availability architecture.</span></p>
+			<p>ENI is the virtual bridge that connects instances within an AWS virtual private cloud to the networks to allow secure inbound and <span class="No-Break">outbound traffic.</span></p>
+			<p>The following is the typical EKS architecture you can set up. However, it is not necessary to use a similar architecture; it will vary depending on your <span class="No-Break">organization’s requirements:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer125">
+					<img alt="Figure 11.11 - Elastic Kubernetes architecture for Runtime Fabric" src="image/B19922_11_11.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.11 - Elastic Kubernetes architecture for Runtime Fabric</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 11</em></span><em class="italic">.11</em>, we<a id="_idIndexMarker834"/> have chosen the region where we need to set up the Kubernetes cluster. We have set up VPC in that region, which has three subnets, <span class="No-Break">as follows:</span></p>
+			<ul>
+				<li><strong class="bold">Private subnet</strong>: This is <a id="_idIndexMarker835"/>the subnet where the worker node (AWS EC2 instances) will be hosted, and the worker node will be spun up across all the Availability Zones to provide high availability and fault tolerance. The worker node’s size is decided depending on your <span class="No-Break">application workload.</span></li>
+				<li><strong class="bold">Firewall subnet</strong>: This <a id="_idIndexMarker836"/>subnet will restrict the egress (outbound) traffic from the private subnet. By default, all outbound traffic will be allowed from the private subnet if you have associated the NAT gateway with the private subnet. If you have requirements specifying that you can connect to a few applications available on the internet, in such cases, you can allow those application domains or IP addresses in the firewall policies of the firewall subnet. This means you are not allowing all traffic from the private subnet toward the internet. The firewall subnet is optional and it mostly allows you to define stateful and <span class="No-Break">stateless rules.</span></li>
+				<li><strong class="bold">Public subnet</strong>: This <a id="_idIndexMarker837"/>subnet is associated with the internet gateway and allows ingress (inbound) and egress (outbound) traffic to and from the internet. The NAT gateway will be set up in the public subnet to allow only egress (outbound) traffic from the private subnet toward <span class="No-Break">the internet.</span></li>
+			</ul>
+			<p>Each subnet<a id="_idIndexMarker838"/> is spun up across all the Availability Zones to ensure scalable, highly available, and fault-tolerant architecture. The route table associated with each subnet is used to define the rules where the traffic will be directed from <span class="No-Break">the subnet.</span></p>
+			<p>With EKS set up, the Kubernetes control plane (controller nodes) is automatically set up in the AWS-managed VPC. It is managed by AWS and takes care of scaling, high availability, fault tolerance, and more. It also enables EKS-managed ENI across the Availability Zones to establish communication between the control plane and worker nodes in the <span class="No-Break">Kubernetes cluster.</span></p>
+			<p>A bastion host can be set up in the public subnet to connect the worker nodes in the <span class="No-Break">private subnet.</span></p>
+			<p>Data stored on <strong class="source-inline">etcd</strong> is encrypted using <a id="_idIndexMarker839"/>Amazon’s <strong class="bold">Key Management Service</strong> (<strong class="bold">KMS</strong>). Controller nodes are distributed among the various Availability Zones and traffic is <a id="_idIndexMarker840"/>distributed by <strong class="bold">Elastic Load </strong><span class="No-Break"><strong class="bold">Balancer</strong></span><span class="No-Break"> (</span><span class="No-Break"><strong class="bold">ELB</strong></span><span class="No-Break">).</span></p>
+			<h1 id="_idParaDest-273"><a id="_idTextAnchor283"/>Runtime Fabric architecture on EKS</h1>
+			<p>Let’s take a look at <a id="_idIndexMarker841"/>the Runtime Fabric on self-managed Kubernetes architecture. This architecture and how its many components interact and coordinate are shown in the <span class="No-Break">following figure:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer126">
+					<img alt="Figure 11.12 - Runtime Fabric architecture on EKS (self-managed Kubernetes)" src="image/B19922_11_12.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.12 - Runtime Fabric architecture on EKS (self-managed Kubernetes)</p>
+			<p><span class="No-Break"><em class="italic">Figure 11</em></span><em class="italic">.12</em> shows various components and how they interact with <span class="No-Break">each other:</span></p>
+			<ul>
+				<li>The Persistence Gateway is responsible for storing object store data in a persistent data store. The application must be clustered to share the data, such as in an object store or VM queues across the replicas. The Persistence Gateway will ensure that this data doesn’t vanish if the application restarts or is deployed and recovers from <span class="No-Break">any crashes.</span></li>
+				<li>The Docker Pod is the worker node that’s responsible for pulling the specific version of the Mule runtime from the Mule <span class="No-Break">Docker registry.</span></li>
+				<li>The log forwarder agent will forward logs to external systems, such as Splunk, CloudWatch, ELK, or <span class="No-Break">Anypoint Monitoring.</span></li>
+				<li>Two <a id="_idIndexMarker842"/>kinds of clustering can be achieved: at the infrastructure level and application level. Infrastructure clustering involves groups of nodes that work together in the cluster to run the MuleSoft applications and ensure the high availability, scalability, and fault tolerance of <span class="No-Break">the architecture.</span></li>
+				<li>Application clustering can be enabled when we are deploying more than one replica of the application, and this can be enabled during application deployment. This will improve application performance and allow data to be shared across the replicas of <span class="No-Break">the application.</span></li>
+				<li>Replicas of applications deployed on Runtime Fabric are fault tolerant. They are recovered automatically after the JVM crashes or a worker node <span class="No-Break">is down.</span></li>
+				<li>Auto-scaling is supported by adding a worker node to the auto-scaling group. It can scale depending on whether the memory and CPU usage exceeds the <span class="No-Break">configured value.</span></li>
+			</ul>
+			<h2 id="_idParaDest-274"><a id="_idTextAnchor284"/>Installing Runtime Fabric on self-managed Kubernetes</h2>
+			<p>Runtime Fabric <a id="_idIndexMarker843"/>can be set up on self-managed Kubernetes using the <strong class="source-inline">rtfctl</strong> or <span class="No-Break"><strong class="source-inline">helm</strong></span><span class="No-Break"> utility.</span></p>
+			<p>Here is the official MuleSoft documentation for installing Runtime Fabric on self-managed Kubernetes using <strong class="source-inline">rtfctl</strong> <span class="No-Break">or </span><span class="No-Break"><strong class="source-inline">helm</strong></span><span class="No-Break">:</span></p>
+			<ul>
+				<li><span class="No-Break"><strong class="source-inline">rtfctl</strong></span><span class="No-Break">: </span><a href="B19922_11.xhtml#_idTextAnchor306"><span class="No-Break">https://docs.mulesoft.com/runtime-fabric/1.13/install-self-managed</span></a></li>
+				<li><span class="No-Break"><strong class="source-inline">helm</strong></span><span class="No-Break">: </span><a href="B19922_11.xhtml#_idTextAnchor304"><span class="No-Break">https://docs.mulesoft.com/runtime-fabric/1.13/install-helm</span></a></li>
+			</ul>
+			<h2 id="_idParaDest-275"><a id="_idTextAnchor285"/>Shared responsibilities between the customer and MuleSoft</h2>
+			<p>It is critical <a id="_idIndexMarker844"/>to understand what the customer’s and MuleSoft’s responsibilities will be in terms of managing Runtime Fabric on self-managed Kubernetes. The following diagram depicts the customer’s and <span class="No-Break">MuleSoft’s responsibilities:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer127">
+					<img alt="Figure 11.13 - Shared responsibility model" src="image/B19922_11_13.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.13 - Shared responsibility model</p>
+			<p>MuleSoft provides Runtime Fabric services, the Mule runtime, and other components for deploying and running Mule applications on <span class="No-Break">self-managed Kubernetes.</span></p>
+			<p>The customer will be responsible for managing the Mule application, infrastructure, Kubernetes, networks, load balancers, monitoring and logging to external platforms, and <span class="No-Break">so on.</span></p>
+			<p><span class="No-Break">Ingress</span></p>
+			<p>Runtime Fabric <a id="_idIndexMarker845"/>allows you to specify a custom ingress configuration for ingress using a resource template. In a resource template, you can define the annotation, class name, and HTTP and HTTPS routing rules. Ingress is responsible for TLS termination and tunneling, load balancing, and routing. The ingress controller can be an NGINX ingress controller, AWS load balancer controller, and <span class="No-Break">so on:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer128">
+					<img alt="Figure 11.14 - Ingress-managed load balancer" src="image/B19922_11_14.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.14 - Ingress-managed load balancer</p>
+			<p class="callout-heading">Note</p>
+			<p class="callout">The following documentation explains how you can configure ingress on Runtime Fabric on self-managed <span class="No-Break">Kubernetes: </span><a href="B19922_11.xhtml#_idTextAnchor303"><span class="No-Break">https://developer.mulesoft.com/tutorials-and-howtos/runtime-fabric/runtime-fabric-aws-elastic-kubernetes-service/</span></a><span class="No-Break">.</span></p>
+			<h2 id="_idParaDest-276"><a id="_idTextAnchor286"/>High availability and fault tolerance</h2>
+			<p>Whenever you set up <a id="_idIndexMarker846"/>Runtime Fabric on self-managed Kubernetes, the control plane is completely managed by the cloud provider, and it is highly available to ensure business continuity and performance. A minimum of three worker nodes should be set up, as per the quorum, to ensure fault-tolerant and highly available architecture. An application can be highly available by deploying multiple replicas and <span class="No-Break">clusters together.</span></p>
+			<p>An application that’s deployed to Runtime Fabric on self-managed Kubernetes is fault tolerant and will automatically recover from any failures or worker nodes that <span class="No-Break">go down.</span></p>
+			<h2 id="_idParaDest-277"><a id="_idTextAnchor287"/>Scalability</h2>
+			<p>The control <a id="_idIndexMarker847"/>plane scalability of self-managed Kubernetes is managed by the cloud provider. Worker nodes can be scaled horizontally by adding or removing the nodes and can be scaled vertically by adding or removing computing resources such as CPU <span class="No-Break">or memory.</span></p>
+			<p>A worker node can be added to an auto-scaling group to auto-scale in case memory or CPU usage increases <span class="No-Break">or decreases.</span></p>
+			<p>An application that’s been deployed to Runtime Fabric on self-managed Kubernetes can be scaled horizontally by adding or removing the replicas and scaled vertically by increasing or decreasing the replica size. Auto-scaling is not supported for the application, but it can be scaled from the Runtime Manager UI, the Mule Maven plugin, or the Platform API with <span class="No-Break">zero downtime.</span></p>
+			<h2 id="_idParaDest-278"><a id="_idTextAnchor288"/>How will an application deployed to self-managed Kubernetes communicate with an external service for which IP whitelisting is required?</h2>
+			<p>You may come<a id="_idIndexMarker848"/> across a situation where your application must communicate with external services. To establish a successful connection with external services, your application’s IP address must be whitelisted on the <span class="No-Break">external services.</span></p>
+			<p>Here, we will consider applications that have been deployed to AWS EKS to communicate with an external service where IP whitelisting is <span class="No-Break">a must.</span></p>
+			<h3>Scenario 1 – worker nodes running in the public subnet</h3>
+			<p>In this case, a worker node is running in the public subnet, which means the worker node will get the public IP address and a Pod will be allocated an IP address from the public subnet <span class="No-Break">IP range.</span></p>
+			<p>A Pod can communicate with external services using the public IP of the worker node as the Pod’s IP address will be SNATed with the worker node IP address. You just need to provide the public IP address of all the worker nodes in the cluster to be whitelisted for successful communication between the Pod running on the worker node and external services. <strong class="bold">SNAT</strong> stands for <strong class="bold">source network </strong><span class="No-Break"><strong class="bold">address translation</strong></span><span class="No-Break">:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer129">
+					<img alt="Figure 11.15 - Worker node running in the public subnet" src="image/B19922_11_15.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.15 - Worker node running in the public subnet</p>
+			<h3>Scenario 2 – worker nodes running in the private subnet</h3>
+			<p>In this case, worker <a id="_idIndexMarker849"/>nodes are running in the private subnet, which means the worker will only get a private IP address, and worker nodes can communicate with the outside world using the <span class="No-Break">NAT gateway.</span></p>
+			<p>The Pod IP address will be SNATed with the NAT gateway’s public IP address to communicate with the external service; only the NAT gateway’s IP address needs to be whitelisted in the external system to establish successful communication between the Pod and the external application via the NAT gateway in a <span class="No-Break">public subnet:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer130">
+					<img alt="Figure 11.16 - Worker nodes running in the private subnet" src="image/B19922_11_16.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.16 - Worker nodes running in the private subnet</p>
+			<p>Simply put, Pods <a id="_idIndexMarker850"/>communicate with the external application through <span class="No-Break">service abstraction.</span></p>
+			<h2 id="_idParaDest-279"><a id="_idTextAnchor289"/>The difference between Runtime Fabric on self-managed Kubernetes and bare-metal/VMs</h2>
+			<p>The <a id="_idIndexMarker851"/>differences between Runtime Fabric on bare-metal/VMs and Runtime Fabric on self-managed Kubernetes are illustrated in the <span class="No-Break">following table:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table002-3">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Attributes</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">Runtime </strong><span class="No-Break"><strong class="bold">Fabric (Bare-Metal/VMs)</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">Runtime </strong><span class="No-Break"><strong class="bold">Fabric (EKS/AKS/GKE)</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Kubernetes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">MuleSoft-provided</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">BYOK.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Ingress</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Included</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Not included.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">OpsCenter UI</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Included</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Not included.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Node Type</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Bare-metal <span class="No-Break">or VMs</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>VM-based instances are supported. Fargate is <span class="No-Break">not supported.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Last <span class="No-Break">Mile Security</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Supported</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Supported.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Tokenization Service</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Supported</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Supported.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Anypoint Clustering</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Supported</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Supported.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Persistence Gateway</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Supported</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Supported.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Anypoint Security</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Supported</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Not supported.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Runtime <span class="No-Break">Fabric Services</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Included</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Included.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Mule Runtime</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Included</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Included.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Maximum Number of <span class="No-Break">Business Group</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">50</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">50.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Maximum Number of <span class="No-Break">Worker Nodes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">16</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">30.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Replicas <span class="No-Break">Per Application</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>8</p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">8.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Replica Per <span class="No-Break">Worker Node</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">40</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">40.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Maximum Number of <span class="No-Break">Controller Nodes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>5</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Self-managed <span class="No-Break">controller nodes.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Kapacitor Alerts</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Included</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Not included.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Installation Options</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>VMs or <span class="No-Break">bare-metal server</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>EKS, <span class="No-Break">GKE, AKS.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Controller <span class="No-Break">Node Accessibility</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Can access <span class="No-Break">controller node</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Not accessible.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Maximum Number of Environments Associated Per Runtime <span class="No-Break">Fabric Cluster</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">50</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">100.</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Docker</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">MuleSoft-provided</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">Bring Your Own </strong><span class="No-Break"><strong class="bold">Docker</strong></span><span class="No-Break"> (</span><span class="No-Break"><strong class="bold">BYOD</strong></span><span class="No-Break">).</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Application Port</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">8081</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">8081.</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 11.2 - The difference between Runtime Fabric on self-managed Kubernetes and bare-metal/VMs</p>
+			<p>Now that we’ve <a id="_idIndexMarker852"/>covered the architectural differences between Runtime Fabric on self-managed Kubernetes and bare-metal/VMs, let’s look at a few helpful services that can be used to manage and execute <span class="No-Break">Runtime Fabric.</span></p>
+			<p><span class="No-Break">rtfctl</span></p>
+			<p><strong class="source-inline">rtfctl</strong> is a <a id="_idIndexMarker853"/>utility that’s provided by MuleSoft for installing and managing Runtime Fabric from a local machine, bastion host, or any computer. This <strong class="source-inline">rtfctl</strong> utility is available for Runtime Fabric on bare-metal servers/VMs and <span class="No-Break">self-managed Kubernetes.</span></p>
+			<p class="callout-heading">Note</p>
+			<p class="callout">The following documentation from MuleSoft explains how to install and <span class="No-Break">use </span><span class="No-Break"><strong class="source-inline">rtfctl</strong></span><span class="No-Break">:</span></p>
+			<p class="callout"><a href="B19922_11.xhtml#_idTextAnchor302"><span class="No-Break">https://docs.mulesoft.com/runtime-fabric/2.3/install-rtfctl</span></a><span class="No-Break">.</span></p>
+			<h1 id="_idParaDest-280"><a id="_idTextAnchor290"/>Tokenization services</h1>
+			<p>A tokenization service <a id="_idIndexMarker854"/>allows you to protect sensitive data. For example, let’s say an incoming message contains sensitive data such as credit card numbers or Social Security numbers. This data can be tokenized using a tokenization service. MuleSoft provides a tokenization and detokenization policy that can be configured at the API <span class="No-Break">gateway level.</span></p>
+			<p>To enable a tokenization and detokenization policy in API Manager, you should deploy a tokenization service in <span class="No-Break">Runtime Fabric.</span></p>
+			<p>The following diagram shows how to tokenize sensitive data such as Social <span class="No-Break">Security numbers:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer131">
+					<img alt="Figure 11.17 - Tokenziation with Runtime Fabric" src="image/B19922_11_17.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.17 - Tokenziation with Runtime Fabric</p>
+			<p>The following diagram <a id="_idIndexMarker855"/>shows how to detokenize the data that was tokenized in the <span class="No-Break">preceding example:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer132">
+					<img alt="Figure 11.18 - Detokenziation with Runtime Fabric" src="image/B19922_11_18.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.18 - Detokenziation with Runtime Fabric</p>
+			<h1 id="_idParaDest-281"><a id="_idTextAnchor291"/>Secrets Manager</h1>
+			<p>Anypoint Security <a id="_idIndexMarker856"/>provides Secrets Manager so that you can store secrets, TLS, key stores, and trust stores that can be used by your deployments. Secrets Manager supports the TLS context for Runtime <span class="No-Break">Fabric ingress.</span></p>
+			<h1 id="_idParaDest-282"><a id="_idTextAnchor292"/>CPU bursting in Runtime Fabric</h1>
+			<p>Runtime Fabric CPU bursting<a id="_idIndexMarker857"/> is a concept based on Kubernetes CPU bursting technology. Whenever we deploy the application to Runtime Fabric, we need to allocate the correct resources, such as vCPU and memory, to the application to ensure that it can handle the <span class="No-Break">required workloads.</span></p>
+			<p>When we deployed the application to Runtime Fabric, it deployed in the isolated Pod. Each replica of the application runs in a separate Pod. Each replica has its own Mule runtime, and resources such as vCPU and memory need to be allocated for each replica. We also need to determine the number of replicas that need to be created <span class="No-Break">during deployment.</span></p>
+			<p>We need to allocate the following resources for the replica while deploying <span class="No-Break">the application:</span></p>
+			<ul>
+				<li><strong class="bold">Reserved CPU</strong>: Guaranteed vCPU that’s available for the replica of <span class="No-Break">the application.</span></li>
+				<li><strong class="bold">CPU limit</strong>: The maximum CPU that can be used by the replica of the application (the level to which the CPU <span class="No-Break">can burst).</span></li>
+				<li><strong class="bold">Memory</strong>: The amount of memory that can be used by the replica of the application (in GiB). The minimum memory that can be allocated to the replica of an application is 0.7 GiB on Mule 4 and 0.5 GiB on <span class="No-Break">Mule 3.</span></li>
+			</ul>
+			<p>Whenever the amount of reserved CPU and CPU limit are equal, it means the CPU is allocated to the replica in the guaranteed model. This will ensure the consistent performance of <span class="No-Break">the application.</span></p>
+			<p>If the CPU limit that’s allocated to the replica is greater than the reserved CPU, it means CPU bursting has been activated and a replica of the application is ready to consume more CPU if the application is overloaded with requests. This CPU will be taken from spare CPU resources available on the <span class="No-Break">worker nodes.</span></p>
+			<p>When you are <a id="_idIndexMarker858"/>using CPU bursting, the minimum reserved CPU must be 0.02 vCPUs and the minimum CPU limit must be 0.07 vCPUs. An application with high workloads may require additional CPU capacity to perform better. If the application’s deployment fails when using the minimum CPU limit, then increase the CPU limit and redeploy <span class="No-Break">the application.</span></p>
+			<p>For applications with critical performance requirements, never utilize vCPU bursts as it doesn’t guarantee burst vCPU will be available as and when needed. In such a case, go with the guaranteed CPU model, where you can keep the reserved CPU equal to the <span class="No-Break">CPU limit.</span></p>
+			<p>You need to ensure that you don’t consume more CPU than what you have paid for, even if you are using CPU bursting. Check out <a href="B19922_11.xhtml#_idTextAnchor301">https://docs.mulesoft.com/runtime-fabric/1.8/deploy-resource-allocation#cpu-and-licensed-cores</a> for <span class="No-Break">more details.</span></p>
+			<p>The CPU limit is bound to the upper limit of the number of CPU cores provided on the worker nodes, which means the CPU limit that’s provided to replicas should not exceed the CPU cores of <span class="No-Break">worker nodes.</span></p>
+			<p>The following diagram illustrates how CPU bursting works during application overload, as well as the number of requests, and then goes back to normal once the number of requests reduces or goes back <span class="No-Break">to normal:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer133">
+					<img alt="Figure 11.19 - CPU bursting" src="image/B19922_11_19.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.19 - CPU bursting</p>
+			<p>The <a id="_idIndexMarker859"/>CPU limit is not always guaranteed but it can burst to a defined limit if, and only if, a spare CPU is available; other replicas of the application that are deployed might also be competing for the unallocated CPU on the <span class="No-Break">worker node.</span></p>
+			<p>Runtime Fabric runs a few services on the worker nodes that consume CPU between 0.3 to 0.5 vCPUs <span class="No-Break">by default.</span></p>
+			<p>For example, let’s say you have three worker nodes, and each worker node has two vCPUs, which means a total of six vCPUs in the cluster. A minimum of 0.3 vCPUs will be used by worker nodes for other processes, which means a total of 0.9 vCPUs is reserved for worker nodes and the remaining 5.1 vCPUs are available <span class="No-Break">for use.</span></p>
+			<h1 id="_idParaDest-283"><a id="_idTextAnchor293"/>Pod</h1>
+			<p>A Pod<a id="_idIndexMarker860"/> can hold one or more applications in the Kubernetes cluster. A Pod is ephemeral; if Pod execution fails, Kubernetes will automatically create a replica of the Pod to replace unhealthy instances. Runtime Fabric Pods can consist of only one MuleSoft application. Deploying more than one application in a Pod is not allowed. The following diagram <a id="_idIndexMarker861"/>shows how a Pod can be set up in <span class="No-Break">Runtime Fabric:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer134">
+					<img alt="Figure 11.20 - Runtime Fabric Pod" src="image/B19922_11_20.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.20 - Runtime Fabric Pod</p>
+			<h1 id="_idParaDest-284"><a id="_idTextAnchor294"/>Last-mile security</h1>
+			<p>Last-mile security <a id="_idIndexMarker862"/>allows you to enable HTTP traffic between the edge and your application on Runtime Fabric. An application that’s been deployed on Runtime Fabric always listens on port 8081; no other ports are supported. To enable last-mile security, you need to configure a TLS context with a server keystore on the HTTPS listener of the application that’s been deployed to Runtime Fabric with the HTTPS protocol and enable last-mile security in the<strong class="bold"> Ingress</strong> tab of the application settings in <span class="No-Break">Runtime Manager:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer135">
+					<img alt="Figure 11.21 - Last-mile security" src="image/B19922_11_21.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.21 - Last-mile security</p>
+			<h1 id="_idParaDest-285"><a id="_idTextAnchor295"/>Internal service-to-service communication</h1>
+			<p>DNS is <a id="_idIndexMarker863"/>created for each application that’s deployed to the cluster in the <strong class="source-inline">cluster.local</strong> domain. The fully qualified domain name <span class="No-Break">is </span><span class="No-Break"><strong class="source-inline">&lt;service&gt;.&lt;namespace&gt;.svc.cluster.local</strong></span><span class="No-Break">.</span></p>
+			<p>For example, the <strong class="source-inline">invoice-sys-api</strong> application is deployed to the Runtime Fabric cluster listening on port 8081 using the HTTPS protocol. The domain will be <strong class="source-inline">invoice-sys-api.e893e8e9-f802-4346-9dd8-ce958efb1979.svc.cluster.local</strong>, where <strong class="source-inline">invoice-sys-api</strong> is the application name and <strong class="source-inline">e893e8e9-f802-4346-9dd8-ce958efb1979</strong> is the namespace of <span class="No-Break">Runtime Fabric:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer136">
+					<img alt="Figure 11.22 - Internal service-to-service communication" src="image/B19922_11_22.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.22 - Internal service-to-service communication</p>
+			<h1 id="_idParaDest-286"><a id="_idTextAnchor296"/>Persistence Gateway with Runtime Fabric</h1>
+			<p>The<a id="_idIndexMarker864"/> Persistence Gateway allows the MuleSoft application to store and share the data across the multiple replicas deployed to Runtime Fabric. With the Persistence Gateway, data will not be lost in the case of an application restart <span class="No-Break">or redeployment:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer137">
+					<img alt="Figure 11.23 - Persistence Gateway with Runtime Fabric" src="image/B19922_11_23.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.23 - Persistence Gateway with Runtime Fabric</p>
+			<p>Always deploy multiple replicas of the Persistence Gateway to ensure high availability and scalability. PostgreSQL databases are the only databases that are supported by the Persistence<a id="_idIndexMarker865"/> Gateway on <span class="No-Break">Runtime fabric.</span></p>
+			<h1 id="_idParaDest-287"><a id="_idTextAnchor297"/>Deployment strategy</h1>
+			<p>Two types of <a id="_idIndexMarker866"/>deployment strategy are supported on <span class="No-Break">Runtime Fabric:</span></p>
+			<ul>
+				<li><span class="No-Break">Rolling Update</span></li>
+				<li><span class="No-Break">Recreate</span></li>
+			</ul>
+			<p>Rolling Update allows you to redeploy the application with zero downtime. An existing replica of the application is available until a new replica of the application is deployed and the client can continue to send the request. Once a new replica has been successfully deployed, the old replica <span class="No-Break">is terminated.</span></p>
+			<p>The following diagram depicts how rolling <span class="No-Break">updates work:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer138">
+					<img alt="Figure 11.24 - Rolling Update deployment strategy" src="image/B19922_11_24.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.24 - Rolling Update deployment strategy</p>
+			<p>Recreate will terminate the existing replica of the application and then deploy a new replica of<a id="_idIndexMarker867"/> the application. The application will not be available during <span class="No-Break">the deployment.</span></p>
+			<p>The following diagram depicts how <span class="No-Break">Recreate works:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer139">
+					<img alt="Figure 11.25 - Recreate deployment strategy" src="image/B19922_11_25.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.25 - Recreate deployment strategy</p>
+			<h1 id="_idParaDest-288"><a id="_idTextAnchor298"/>Clustering</h1>
+			<p>To enable clustering for<a id="_idIndexMarker868"/> an application that’s been deployed to Runtime Fabric, there must be a minimum of two replicas. Clustering can be enabled from the Runtime Manager UI or can be specified in the Mule Maven plugin when you’re deploying <span class="No-Break">the application.</span></p>
+			<p>Deploying replicas <span class="No-Break">across nodes</span></p>
+			<p>This<a id="_idIndexMarker869"/> option ensures that an application with multiple replicas is deployed across the nodes in the cluster. This option can be enabled from the Runtime Manager UI or can be specified in the Mule Maven plugin when you’re deploying <span class="No-Break">the application.</span></p>
+			<h1 id="_idParaDest-289"><a id="_idTextAnchor299"/>Backing up and restoring Runtime Fabric</h1>
+			<p>It is critical to back <a id="_idIndexMarker870"/>up the Runtime Fabric cluster so that it can be restored in the event of any failures. Data in Runtime Fabric is distributed across the <span class="No-Break">Kubernetes cluster.</span></p>
+			<p>It is important to preserve the application that’s been deployed to Runtime Fabric in the event of any failures so that it can restore all the applications, its configuration, and <span class="No-Break">its state:</span></p>
+			<ul>
+				<li>Always store a backup in external storage that is outside <span class="No-Break">Runtime Fabric</span></li>
+				<li>It is a best practice to back up Runtime Fabric <span class="No-Break">every hour</span></li>
+			</ul>
+			<h2 id="_idParaDest-290"><a id="_idTextAnchor300"/>When to use the backup and restore process</h2>
+			<p>There are a <a id="_idIndexMarker871"/>few use cases where the backup and restore process can <span class="No-Break">be used:</span></p>
+			<ul>
+				<li>During the hardware upgrade of Runtime Fabric, where you can add more computing resources and migrate to the new <span class="No-Break">operating system</span></li>
+				<li>Migrating Runtime Fabric from on-premises to the cloud or one cloud provider <span class="No-Break">to another</span></li>
+				<li>Migrating Runtime Fabric from one data center <span class="No-Break">to another</span></li>
+				<li>Adding more nodes to scale the Runtime <span class="No-Break">Fabric cluster</span></li>
+				<li>When you’re failing over the cluster in the event of <span class="No-Break">disaster recovery</span></li>
+			</ul>
+			<h2 id="_idParaDest-291"><a id="_idTextAnchor301"/>What’s backed up?</h2>
+			<p>Runtime Fabric <a id="_idIndexMarker872"/>backs up services and components related to the Runtime Fabric cluster, but it doesn’t back up anything related to the Anypoint Platform cluster. The following is a list of things that are <span class="No-Break">backed up:</span></p>
+			<ul>
+				<li>Application details, including replica sets, Pods, application metadata, and properties configured in the Runtime <span class="No-Break">Manager UI</span></li>
+				<li>All data in Runtime Fabric and applications, which includes ingress, secrets, role and cluster bindings, services and service accounts, <span class="No-Break">and deployments</span></li>
+				<li>The<a id="_idIndexMarker873"/> current <strong class="source-inline">rtfctl</strong> version running on the Runtime <span class="No-Break">Fabric cluster</span></li>
+				<li>The current agent version on the Runtime <span class="No-Break">Fabric cluster</span></li>
+				<li>Data related to the MuleSoft configurations, such as object store, Anypoint Monitoring, and external <span class="No-Break">load forwarders</span></li>
+				<li>Controller and worker <span class="No-Break">node configuration</span></li>
+			</ul>
+			<h2 id="_idParaDest-292"><a id="_idTextAnchor302"/>Backing up and restoring</h2>
+			<p>The <a id="_idIndexMarker874"/>backup and restore process is simple via <strong class="source-inline">rtfctl</strong>. Just by executing a single-line command, you can back up and restore <span class="No-Break">Runtime Fabric.</span></p>
+			<p>To back up Runtime Fabric, use the <span class="No-Break">following command:</span></p>
+			<pre class="console">
+./rtfctl backup &lt;path_to_store_backup&gt;</pre>			<p>To restore Runtime Fabric, use the <span class="No-Break">following command:</span></p>
+			<pre class="console">
+./rtfctl restore &lt;path_to_backup_store&gt;</pre>			<h1 id="_idParaDest-293"><a id="_idTextAnchor303"/>Different options for deploying a MuleSoft application to Runtime Fabric</h1>
+			<p>MuleSoft<a id="_idIndexMarker875"/> provides multiple ways of deploying an application to Runtime Fabric. Every option can be integrated with a CI/CD pipeline so that a MuleSoft application can be automatically deployed to Runtime Fabric. Let’s explore all the options that can be used to deploy applications <span class="No-Break">to CloudHub.</span></p>
+			<h2 id="_idParaDest-294"><a id="_idTextAnchor304"/>The Mule Maven plugin</h2>
+			<p>The<a id="_idIndexMarker876"/> Mule Maven plugin is an important Maven plugin for deploying, undeploying, and packaging MuleSoft applications into Runtime Fabric. Let’s discuss it further. The following Mule Maven plugin can be configured in the <strong class="source-inline">POM.xml</strong> file of your application with all the attributes that are needed to deploy and run the application in <span class="No-Break">Runtime Fabric:</span></p>
+			<pre class="source-code">
+&lt;plugin&gt;
+  &lt;groupId&gt;org.mule.tools.maven&lt;/groupId&gt;
+  &lt;artifactId&gt;mule-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;3.8.6&lt;/version&gt;
+  &lt;extensions&gt;true&lt;/extensions&gt;
+  &lt;configuration&gt;
+    &lt;runtimeFabricDeployment&gt;
+      &lt;uri&gt;<a href="B19922_11.xhtml#_idTextAnchor300">https://anypoint.mulesoft.com&lt;/uri&gt;</a>
+      &lt;muleVersion&gt;${app.runtime}&lt;/muleVersion&gt;
+      &lt;username&gt;${username}&lt;/username&gt;
+      &lt;password&gt;${password}&lt;/password&gt;
+      &lt;applicationName&gt;${app.name}&lt;/applicationName&gt;
+      &lt;target&gt;rtf&lt;/target&gt;
+      &lt;environment&gt;${environment}&lt;/environment&gt;
+      &lt;provider&gt;MC&lt;/provider&gt;
+      &lt;replicas&gt;${replicas}&lt;/replicas&gt;
+      &lt;properties&gt;
+        &lt;key&gt;value&lt;/key&gt;
+      &lt;/properties&gt;
+      &lt;deploymentSettings&gt;
+        &lt;enforceDeployingReplicasAcrossNodes&gt;false         &lt;/enforceDeployingReplicasAcrossNodes&gt;
+        &lt;updateStrategy&gt;recreate&lt;/updateStrategy&gt;
+        &lt;clustered&gt;false&lt;/clustered&gt;
+        &lt;forwardSslSession&gt;false&lt;/forwardSslSession&gt;
+        &lt;lastMileSecurity&gt;false&lt;/lastMileSecurity&gt;
+        &lt;resources&gt;
+          &lt;cpu&gt;
+            &lt;reserved&gt;${reserved.cpu}&lt;/reserved&gt;
+            &lt;limit&gt;${cpu.limit}&lt;/limit&gt;
+          &lt;/cpu&gt;
+          &lt;memory&gt;
+            &lt;reserved&gt;${reserved.memory}&lt;/reserved&gt;
+          &lt;/memory&gt;
+        &lt;/resources&gt;
+        &lt;<a href="B19922_11.xhtml#_idTextAnchor299">http&gt;</a>
+          &lt;inbound&gt;
+            &lt;publicUrl&gt;${public.url}&lt;/publicUrl&gt;
+          &lt;/inbound&gt;
+        &lt;/<a href="B19922_11.xhtml#_idTextAnchor298">http&gt;</a>
+      &lt;/deploymentSettings&gt;
+    &lt;/runtimeFabricDeployment&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</pre>			<p>In the preceding Mule Maven plugin configuration, values defined under <strong class="source-inline">${}</strong> are the parameters that you can pass with the mule deploy command, <a id="_idTextAnchor305"/>as <span class="No-Break">shown here:</span></p>
+			<pre class="console">
+mule deploy –DmuleDeploy -Dapp.runtime=4.3.0 -Dusername=anypointusername –Dpassword=password -Dapp.name=music-api-dev –Denvironment=Sandbox –Dreserved.cpu=20M -Dcpu.limit=1500M -Dreserved.memory=700Mi -Dpublic.url=https://api-dev.domainnanme.com</pre>			<p>The<a id="_idIndexMarker877"/> following attributes can be configured in the Mule Maven plugin while deploying an application to <span class="No-Break">Runtime Fabric:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table003-3">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Parameter</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Required</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">Default </strong><span class="No-Break"><strong class="bold">Value/Example</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">runtimeFabricDeployment</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Top-level element.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">uri</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Your Anypoint <span class="No-Break">Platform URI.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">muleVersion</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The Mule runtime engine version to run in your Runtime <span class="No-Break">Fabric instance.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">username</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Your Anypoint <span class="No-Break">Platform username.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Anypoint Platform credentials to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">password</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Your Anypoint <span class="No-Break">Platform password.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Anypoint Platform credentials to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">applicationName</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The application name that’s displayed in Runtime Manager after the <span class="No-Break">app deploys.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">target</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The Runtime Fabric target name to deploy <span class="No-Break">the app.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">provider</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Set to MC, for <span class="No-Break">Runtime Fabric.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">environment</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Target Anypoint <span class="No-Break">Platform environment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">replicas</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This specifies the number of replicas, or instances, of the Mule application to deploy. The maximum number of replicas per application <span class="No-Break">is 8.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">businessGroup</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The business group path of <span class="No-Break">the deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">businessGroupId</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The business group ID of <span class="No-Break">the deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">deploymentTimeout</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The allowed elapsed time, in milliseconds, between the start of the deployment process and the confirmation that the artifact has <span class="No-Break">been deployed.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">1000000</strong></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">server</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Maven server with Anypoint <span class="No-Break">Platform credentials.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">properties</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Top-level element.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">secureProperties</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p> <span class="No-Break">Top-level element.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">skip</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>When set to true, it skips the plugin <span class="No-Break">deployment goal.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">skipDeploymentVerification</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>When set to true, it skips the status verification of your <span class="No-Break">deployed app.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">authToken</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the authorization token to access the platform. You can use this authentication method instead of setting the username <span class="No-Break">and password.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using an authorization token to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">connectedAppClientId</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the connected app client <span class="No-Break">ID value.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Connected Apps credentials to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">connectedAppClientSecret</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the connected app <span class="No-Break">secret key.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Connected Apps credentials to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">connectedAppGrantType</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the only supported connection <span class="No-Break">type: </span><span class="No-Break"><strong class="source-inline">client_credentials</strong></span><span class="No-Break">.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Connected Apps credentials to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">deploymentSettings</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The deployment setting is defined in the <span class="No-Break">following table.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 11.3 - Mule Maven Plugin attributes</p>
+			<p>There are a<a id="_idIndexMarker878"/> few other parameters that can be passed under <strong class="bold">deploymentSettings</strong>, as <span class="No-Break">shown here:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table004-2">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Parameter</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Example</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">enforceDeployingReplicasAcrossNodes</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Enforces the deployment of replicas across different nodes. The default value <span class="No-Break">is </span><span class="No-Break"><strong class="source-inline">false</strong></span><span class="No-Break">.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<pre class="source-code">
+&lt;deploymentSettings&gt;
+
+    &lt;enforceDeployingReplicasAcrossNodes&gt;false     &lt;/enforceDeployingReplicasAcrossNodes&gt;
+
+&lt;/deploymentSettings&gt;</pre>						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">updateStrategy</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">The updat</span>
+eStrategy value can be recreate <span class="No-Break">or rolling.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<pre class="source-code">
+&lt;deploymentSettings&gt;
+
+  &lt;updateStrategy&gt;recreate&lt;/updateStrategy&gt;
+
+&lt;/deploymentSettings&gt;</pre>						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">clustered</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Enables clustering across two or more replicas of the application. The default value <span class="No-Break">is </span><span class="No-Break"><strong class="source-inline">false</strong></span><span class="No-Break">.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<pre class="source-code">
+&lt;deploymentSettings&gt;
+
+    &lt;clustered&gt;true&lt;/clustered&gt;
+
+&lt;/deploymentSettings&gt;</pre>						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p class="Basic-Paragraph"><strong class="source-inline">http</strong></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>URL of the deployed <span class="No-Break">application.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<pre class="source-code">
+&lt;deploymentSettings&gt;
+
+  &lt;http&gt;
+
+    &lt;inbound&gt;
+
+      &lt;publicUrl&gt;https://api-dev.domainname.      com&lt;/publicUrl&gt;
+
+    &lt;/inbound&gt;
+
+  &lt;/http&gt;
+
+&lt;/deploymentSettings&gt;</pre>						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 11.4 - Deployment settings attributes</p>
+			<p>The<a id="_idIndexMarker879"/> following commands can be used to deploy and undeploy <span class="No-Break">an application:</span></p>
+			<ul>
+				<li><strong class="source-inline">mvn clean deploy –DmuleDeploy</strong> (deploys the application to <span class="No-Break">Runtime Fabric)</span></li>
+				<li><strong class="source-inline">mvn mule:undeploy</strong> (undeploys the application from <span class="No-Break">Runtime Fabric)</span></li>
+			</ul>
+			<p>The Mule Maven plugin <a id="_idIndexMarker880"/>can use one of the following authentication mechanisms to deploy applications to <span class="No-Break">Runtime Fabric:</span></p>
+			<ul>
+				<li>Anypoint Platform username <span class="No-Break">and password</span></li>
+				<li><span class="No-Break">Server</span></li>
+				<li>Anypoint <span class="No-Break">connected app</span></li>
+				<li><span class="No-Break">Auth token</span></li>
+			</ul>
+			<p>It is possible to deploy a MuleSoft application from the Runtime Manager UI of <span class="No-Break">Anypoint Platform.</span></p>
+			<h1 id="_idParaDest-295"><a id="_idTextAnchor306"/>The benefits of Runtime Fabric</h1>
+			<p>The <a id="_idIndexMarker881"/>following benefits are provided by <span class="No-Break">Runtime Fabric:</span></p>
+			<ul>
+				<li>Runtime Fabric allows you to run a MuleSoft application in <span class="No-Break">lightweight containers.</span></li>
+				<li>Runtime Fabric can be set up on EKS, AKS, GKE, Red Hat OpenShift, and bare-metal servers/VMs on-premises or in <span class="No-Break">any cloud.</span></li>
+				<li>Multiple versions of the Mule runtime are supported in the same <span class="No-Break">Runtime Fabric.</span></li>
+				<li>It supports zero-downtime deployments <span class="No-Break">or updates.</span></li>
+				<li>The minimum replica size supported on Runtime Fabric is <span class="No-Break">0.02 vCores.</span></li>
+				<li>It provides container-based application isolation. Each container is independent of <span class="No-Break">each other.</span></li>
+				<li>It supports features such as high availability, fault tolerance, scalability, and automatic recovery <span class="No-Break">of replicas.</span></li>
+				<li>Hazelcast-based clustering is supported to store and share data <span class="No-Break">across replicas.</span></li>
+				<li>Each application can be scaled independently of others and each application can be deployed on a different <span class="No-Break">replica size.</span></li>
+			</ul>
+			<h1 id="_idParaDest-296"><a id="_idTextAnchor307"/>Runtime Fabric on Red Hat OpenShift</h1>
+			<p>Previously, we <a id="_idIndexMarker882"/>saw that Runtime Fabric can be installed on VMs/bare-metal servers and self-managed Kubernetes (EKS/AKS/GKE). Runtime Fabric can be also set up on Red Hat OpenShift as a Kubernetes (K8s) operator. Runtime Fabric as a Kubernetes operator can be set up on the <span class="No-Break">following platforms:</span></p>
+			<ul>
+				<li>Red Hat OpenShift Service <span class="No-Break">on AWS</span></li>
+				<li>Microsoft Azure Red <span class="No-Break">Hat OpenShift</span></li>
+				<li>Red Hat <span class="No-Break">OpenShift Dedicated</span></li>
+				<li>Red Hat OpenShift on <span class="No-Break">IBM Cloud</span></li>
+				<li>Self-managed Red Hat OpenShift editions (Performance Plus, OCP, and <span class="No-Break">Kubernetes Engine)</span></li>
+			</ul>
+			<p>We won’t <a id="_idIndexMarker883"/>do a deep dive into the Runtime Fabric architecture as a Kubernetes operator in Red Hat OpenShift, but if you plan to install Red Hat OpenShift Runtime Fabric services, it supports the <span class="No-Break">aforementioned platforms.</span></p>
+			<p>The following is a high-level architecture for setting up Runtime Fabric on Red <span class="No-Break">Hat OpenShift:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer140">
+					<img alt="Figure 11.26 - Runtime fabric on Red Hat OpenShift" src="image/B19922_11_26.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 11.26 - Runtime fabric on Red Hat OpenShift</p>
+			<p>For more details on Runtime Fabric on Red Hat OpenShift, refer to the link provided in the <em class="italic">Further </em><span class="No-Break"><em class="italic">reading</em></span><span class="No-Break"> section.</span></p>
+			<h1 id="_idParaDest-297"><a id="_idTextAnchor308"/>Summary</h1>
+			<p>This chapter described the functionality provided by Runtime Fabric and how it can be used with VM/bare-metal servers, self-managed Kubernetes, and Red Hat OpenShift. We also covered various components, such as ingress, last-mile security, tokenization services, deployment strategies, zero downtime deployments, and non-functional requirements such as scalability, fault tolerance, and high availability. In the next chapter, we will explain how to set up the Mule runtime in your data center so that you can run <span class="No-Break">Mule applications.</span></p>
+			<p><span class="No-Break">Further reading</span></p>
+			<p>To learn more about the topics that were covered in this chapter, take a look at the <span class="No-Break">following resources:</span></p>
+			<ul>
+				<li><em class="italic">Runtime Fabric </em><span class="No-Break"><em class="italic">overview</em></span><span class="No-Break">: </span><a href="B19922_11.xhtml#_idTextAnchor263"><span class="No-Break">https://docs.mulesoft.com/runtime-fabric/latest</span></a></li>
+				<li><em class="italic">Runtime Fabric prerequisites (</em><span class="No-Break"><em class="italic">bare-metal/VMs)</em></span><span class="No-Break">: </span><a href="B19922_11.xhtml#_idTextAnchor263"><span class="No-Break">https://docs.mulesoft.com/runtime-fabric/1.13/install-prereqs</span></a></li>
+				<li><em class="italic">Runtime Fabric license key </em><span class="No-Break"><em class="italic">installation</em></span><span class="No-Break">: </span><a href="B19922_11.xhtml#_idTextAnchor263"><span class="No-Break">https://docs.mulesoft.com/runtime-fabric/1.13/install-manual</span></a></li>
+				<li><em class="italic">Persistence </em><span class="No-Break"><em class="italic">Gateway</em></span><span class="No-Break">: </span><a href="B19922_11.xhtml#_idTextAnchor308"><span class="No-Break">https://docs.mulesoft.com/runtime-fabric/2.3/persistence-gateway</span></a></li>
+				<li><em class="italic">Runtime Fabric on Red Hat </em><span class="No-Break"><em class="italic">OpenShift</em></span><span class="No-Break">: </span><a href="B19922_11.xhtml#_idTextAnchor297"><span class="No-Break">https://docs.mulesoft.com/runtime-fabric/latest/install-openshift</span></a></li>
+			</ul>
+		</div>
+	</body>
+</html>

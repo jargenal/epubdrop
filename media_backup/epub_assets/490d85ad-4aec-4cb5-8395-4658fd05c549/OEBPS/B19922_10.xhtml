@@ -1,0 +1,1578 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-GB">
+	<head>
+		<title>B19922_10</title>
+		<link href="css/style-JRserifv6.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:c8ccfc40-76a9-4a04-b8f6-a8f601fe2ce2" name="Adept.expected.resource"/>
+	</head>
+	<body id="B19922_10">
+		<div id="_idContainer114">
+			<h1 class="chapter-number" id="_idParaDest-218"><a id="_idTextAnchor228"/>10</h1>
+			<h1 id="_idParaDest-219"><a id="_idTextAnchor229"/>Hassle-Free Deployment with Anypoint iPaaS (CloudHub 2.0)</h1>
+			<p>In <a href="B19922_09.xhtml#_idTextAnchor179"><span class="No-Break"><em class="italic">Chapter 9</em></span></a>, we learned about the capabilities and features of CloudHub 1.0. In this chapter, we will learn about the architectural capabilities provided by CloudHub 2.0 for managing MuleSoft applications. It will also cover how CloudHub 2.0 differs from <span class="No-Break">CloudHub 1.0.</span></p>
+			<p>In this chapter, we will cover the <span class="No-Break">following topics:</span></p>
+			<ul>
+				<li>What is <span class="No-Break">CloudHub 2.0?</span></li>
+				<li>What are the different capabilities provided by <span class="No-Break">CloudHub 2.0?</span></li>
+				<li>Architectural capabilities of <span class="No-Break">CloudHub 2.0</span></li>
+				<li>Networking and hosting options such as private space and <span class="No-Break">shared space</span></li>
+				<li>High availability, scalability, fault tolerance, and disaster recovery with <span class="No-Break">CloudHub 2.0</span></li>
+			</ul>
+			<h1 id="_idParaDest-220"><a id="_idTextAnchor230"/>What is CloudHub 2.0?</h1>
+			<p>We learned about CloudHub 1.0 in <a href="B19922_09.xhtml#_idTextAnchor179"><span class="No-Break"><em class="italic">Chapter 9</em></span></a>. In this chapter, we will be learning about another hosting option (i.e., CloudHub 2.0) provided by MuleSoft for running the application independently <span class="No-Break">and securely.</span></p>
+			<p>CloudHub 2.0 is a <a id="_idIndexMarker705"/>cloud-based <strong class="bold">integration platform as a service</strong> (<strong class="bold">iPaaS</strong>) similar<a id="_idIndexMarker706"/> to CloudHub 1.0. It is a managed, multi-tenant service and is located globally over 12 regions for running the MuleSoft application in a containerized environment based <span class="No-Break">on Kubernetes.</span></p>
+			<p>CloudHub 2.0 is elastic in nature; it can be scaled on demand. You can start with smaller workloads that can be scaled up as and when required. This can be achieved without experiencing any downtime in the applications <span class="No-Break">or APIs.</span></p>
+			<h2 id="_idParaDest-221"><a id="_idTextAnchor231"/>Why CloudHub 2.0?</h2>
+			<p>There are various<a id="_idIndexMarker707"/> reasons for choosing CloudHub 2.0, and those reasons are listed <span class="No-Break">as follows:</span></p>
+			<ul>
+				<li>CloudHub 2.0 uses a Kubernetes-based architecture that allows you to achieve container-based application isolation. Each application deployed to CloudHub 2.0 runs in a separate container and is independent <span class="No-Break">of others.</span></li>
+				<li>It simplifies the network to enable connectivity <a id="_idIndexMarker708"/>with on-premises data centers, <strong class="bold">Amazon Virtual Private Cloud</strong> (<strong class="bold">VPC</strong>), and other clouds<a id="_idIndexMarker709"/> such<a id="_idIndexMarker710"/> as <strong class="bold">Azure</strong> or <strong class="bold">Google Cloud </strong><span class="No-Break"><strong class="bold">Platform</strong></span><span class="No-Break"> (</span><span class="No-Break"><strong class="bold">GCP</strong></span><span class="No-Break">).</span></li>
+				<li>It supports inbound firewall rules as well as outbound firewall rules and you can set up a maximum of 80 inbound and 80 outbound firewall rules per private space. It provides better <span class="No-Break">firewall controls.</span></li>
+				<li>It provides out-of-the-box security that allows all internal services to communicate with each other securely and secures sensitive data with <span class="No-Break">encrypted secrets.</span></li>
+				<li>It supports multiple public endpoints for a single application deployed to <span class="No-Break">CloudHub 2.0.</span></li>
+				<li>It supports an out-of-the-box ingress load balancer that routes the traffic to the application deployed to CloudHub 2.0. The ingress load balancer auto scales depending on <span class="No-Break">the workload.</span></li>
+				<li>It has a dynamically scalable infrastructure with built-in services to support <span class="No-Break">high volumes.</span></li>
+			</ul>
+			<p>The following is a list<a id="_idIndexMarker711"/> of capabilities provided by <span class="No-Break">CloudHub 2.0:</span></p>
+			<ul>
+				<li>It can be deployed in a private or <span class="No-Break">shared space.</span></li>
+				<li>It provides container-based <span class="No-Break">application isolation.</span></li>
+				<li>It is available in 12 <span class="No-Break">regions, globally.</span></li>
+				<li>It can be deployed on multiple replicas to enable high availability and <span class="No-Break">fault tolerance.</span></li>
+				<li>It has <a id="_idIndexMarker712"/>more granular virtual core (vCore) options; four vCores per replica is the maximum that can <span class="No-Break">be allocated.</span></li>
+				<li>It can be deployed in clustered mode; a minimum of two replicas are required <span class="No-Break">for clustering.</span></li>
+				<li>It has support for both the rolling update and recreate <span class="No-Break">deployment model.</span></li>
+				<li>Horizontal scaling is achieved by increasing the number of replicas, and vertical scaling is achieved by increasing the number of vCores. The ingress load balancer scales automatically depending on <span class="No-Break">the workload.</span></li>
+				<li>It supports features such as intelligent healing and <span class="No-Break">zero-downtime updates.</span></li>
+				<li>It stores up to 200 MB of log data per configuration or stores it for up to 30 days, whichever limit is <span class="No-Break">reached first.</span></li>
+			</ul>
+			<p>Let’s discuss a few of the features provided by CloudHub 2.0 in <span class="No-Break">more detail.</span></p>
+			<h2 id="_idParaDest-222"><a id="_idTextAnchor232"/>Replicas and replica size</h2>
+			<p>A replica is a<a id="_idIndexMarker713"/> dedicated instance in which you can run the MuleSoft application in the containerized environment. Replica size is the amount of memory and storage configured on the application during deployment. It is available in various sizes, as <span class="No-Break">listed here:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table001-4">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">vCore size</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">Total </strong><span class="No-Break"><strong class="bold">memory (GB)</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">Heap </strong><span class="No-Break"><strong class="bold">memory (GB)</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Storage (GB)</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">0.1</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">1.2</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">0.6</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>8</p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">0.2</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>2</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>1</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>8</p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">0.5</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">2.6</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">1.3</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">10</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>1</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>4</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>2</p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">12</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">1.5</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>6</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>3</p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">20</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>2</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>8</p>
+						</td>
+						<td class="No-Table-Style">
+							<p>4</p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">20</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">2.5</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">9.5</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">4.75</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">20</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>3</p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">11</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">5.5</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">20</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">3.5</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">13</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">6.5</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">20</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>4</p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">15</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">7.5</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">20</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.1 - Replica sizes</p>
+			<p>Replicas with <a id="_idIndexMarker714"/>fewer than one vCore provide limited CPU and I/O for small workloads. To handle larger workloads with consistent performance, use a higher number of vCores in <span class="No-Break">the application.</span></p>
+			<h2 id="_idParaDest-223"><a id="_idTextAnchor233"/>Region</h2>
+			<p>CloudHub 2.0 <a id="_idIndexMarker715"/>currently allows you to deploy the application across 12 regions globally. Organizations can deploy the application in the CloudHub 2.0 region that is near their corporate data center <span class="No-Break">or systems.</span></p>
+			<p>These are the DNS records for the US region <span class="No-Break">control plane:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table002-2">
+				<colgroup>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Region</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">DNS record</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>US East (<span class="No-Break">N. Virginia)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.usa-e1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>US <span class="No-Break">East (Ohio)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.usa-e2.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>US West (<span class="No-Break">N. California)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.usa-w1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>US <span class="No-Break">West (Oregon)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.usa-w2.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Canada (Central)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;..can-c1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>South America (<span class="No-Break">Sao Paulo)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.bra-s1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Asia <span class="No-Break">Pacific (Singapore)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.sgp-s1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Asia <span class="No-Break">Pacific (Sydney)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.aus-s1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p>Asia <span class="No-Break">Pacific (Tokyo)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.jpn-e1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">EU (Ireland)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.irl-e1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">EU (Frankfurt)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.deu-c1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">EU (London)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.gbr-e1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.2 - CloudHub 2.0 regions</p>
+			<p>This is the <a id="_idIndexMarker716"/>DNS record for the US government region <span class="No-Break">control plane:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table003-2">
+				<colgroup>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold" lang="en-US" xml:lang="en-US">Region</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold" lang="en-US" xml:lang="en-US">DNS record</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span lang="en-US" xml:lang="en-US">US </span><span class="No-Break" lang="en-US" xml:lang="en-US">Gov West</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.usg-w1.gov.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.3 - CloudHub 2.0 US government region</p>
+			<p>These are the DNS records for the EU region <span class="No-Break">control plane:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table004-1">
+				<colgroup>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Region</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">DNS record</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">EU (Ireland)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.irl-e1.eu1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break">EU (Frankfurt)</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">appName&gt;-&lt;uniqId&gt;.&lt;shard&gt;.deu-c1.eu1.cloudhub.io</strong></span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.4 - CloudHub 2.0 EU control plane regions</p>
+			<p>In these records, <strong class="source-inline">uniq-id</strong> is a 6-digit value appended to the app name to ensure uniqueness, such as <strong class="source-inline">b9cdfr</strong>, and <strong class="source-inline">shard</strong> is a 6-digit value associated with the private space that the app is deployed to, such as <strong class="source-inline">p7oprc</strong>. However, for a shared space, <strong class="source-inline">shard</strong> will be a six-digit value followed by a hyphen (<strong class="source-inline">-</strong>) and number, <span class="No-Break">e.g., </span><span class="No-Break"><strong class="source-inline">r7oprb-2</strong></span><span class="No-Break">.</span></p>
+			<h2 id="_idParaDest-224"><a id="_idTextAnchor234"/>Clustering</h2>
+			<p>CloudHub 2.0 supports <a id="_idIndexMarker717"/>clustering and provides scalability, workload distribution, and reliability. An application deployed on more than one replica allows us to enable clustering while deploying the application to CloudHub 2.0. With clustering enabled, replicas for the same application can share the Object Store and VM queues, and <a id="_idIndexMarker718"/>replicas can share the data within the same application. A minimum of two replicas are required to enable clustering <span class="No-Break">between replicas:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer093">
+					<img alt="Figure 10.1﻿ - Anypoint clustering in CloudHub 2.0" src="image/B19922_10__1.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.1 - Anypoint clustering in CloudHub 2.0</p>
+			<h2 id="_idParaDest-225"><a id="_idTextAnchor235"/>High availability</h2>
+			<p>CloudHub 2.0 <a id="_idIndexMarker719"/>allows you to deploy the highly available application and ensure business continuity. Deploying an application on more than one replica will create multiple instances of the application, and that will ensure the high availability of the application in the event of one or more replicas crashing <span class="No-Break">or failing.</span></p>
+			<h2 id="_idParaDest-226"><a id="_idTextAnchor236"/>Application isolation</h2>
+			<p>CloudHub 2.0 provides<a id="_idIndexMarker720"/> application isolation by deploying the application into separate containers. Each replica of the application will be run in a separate container. This will ensure an issue in one replica will not impact other replicas and that all replicas are independent of <span class="No-Break">each other.</span></p>
+			<h2 id="_idParaDest-227"><a id="_idTextAnchor237"/>Intelligent healing</h2>
+			<p>An application<a id="_idIndexMarker721"/> deployed to CloudHub 2.0 may fail due to an underlying hardware failure; in such a case, the replica automatically recovers as it supports self-healing mechanisms. If a replica crashes due to code issues or memory issues, the platform will automatically identify the issue and redeploy the <span class="No-Break">replica automatically.</span></p>
+			<h2 id="_idParaDest-228"><a id="_idTextAnchor238"/>Zero-downtime updates</h2>
+			<p>CloudHub 2.0 supports <a id="_idIndexMarker722"/>two types of deployment models—rolling update <span class="No-Break">and recreate:</span></p>
+			<ul>
+				<li>The rolling update model allows you to deploy the application with zero downtime by updating <span class="No-Break">replicas incrementally</span></li>
+				<li>The recreate deployment model terminates the old replica first and then deploys a <span class="No-Break">new replica</span></li>
+				<li>The rolling update model ensures that the old application replica is available until a new application <span class="No-Break">is redeployed</span></li>
+				<li>The recreate model is faster than the rolling update one and it can be used when you can deploy an application with downtime or deploy a <span class="No-Break">new application</span></li>
+			</ul>
+			<h2 id="_idParaDest-229"><a id="_idTextAnchor239"/>Scalability</h2>
+			<p>The<a id="_idIndexMarker723"/> ingress load balancer at the front of the application auto-scales depending on the application workloads and it is a completely managed service. An application running in CloudHub 2.0 can be scaled horizontally and vertically by increasing the number of workers and worker <span class="No-Break">size, respectively.</span></p>
+			<h2 id="_idParaDest-230"><a id="_idTextAnchor240"/>Supported Mule runtime</h2>
+			<p>The Mule runtime<a id="_idIndexMarker724"/> engine allows you to run MuleSoft applications and supports domains and policies. CloudHub 2.0 supports Mule runtime engine versions 4.3x through 4.4x. Mule 3.x is not supported. During application deployment on CloudHub 2.0, it automatically pulls the selected version of the Docker image from <span class="No-Break">the repository.</span></p>
+			<h2 id="_idParaDest-231"><a id="_idTextAnchor241"/>Granular vCore options</h2>
+			<p>CloudHub 2.0 <a id="_idIndexMarker725"/>supports configuring granular vCores while deploying applications. The minimum number of vCores that can be allocated to a replica is 0.1 and the maximum number is 4. Other vCore sizes that can be allocated to the replicas are 0.2, 0.5, 1, 1.5, 2, 2.5, 3, <span class="No-Break">and 3.5.</span></p>
+			<h2 id="_idParaDest-232"><a id="_idTextAnchor242"/>Object Store v2</h2>
+			<p>Object Store v2 allows<a id="_idIndexMarker726"/> the application deployed to CloudHub 2.0 to store data and share the state of batch processes, Mule applications, and components within the application or by using the Object Store REST API. The following is a list of features provided by Object <span class="No-Break">Store v2:</span></p>
+			<ul>
+				<li>It will be in the same region as <span class="No-Break">your worker.</span></li>
+				<li>It allows an unlimited number of entries. There are no restrictions on the total size of the <span class="No-Break">Object Store.</span></li>
+				<li>Each entry stores a single value in a key-value pair up to 10 MB (Base64 encoded) <span class="No-Break">in size.</span></li>
+				<li>It is available in all regions and <span class="No-Break">availability zones.</span></li>
+				<li>It provides a MuleSoft Object Store Connector for retrieving and <span class="No-Break">storing data.</span></li>
+				<li>The Object Store REST API v2 can be used by external applications to access object stores available in other <span class="No-Break">MuleSoft applications.</span></li>
+				<li>The Object Store REST API v2 supports connected apps to authenticate with Anypoint Platform <span class="No-Break">using APIs.</span></li>
+			</ul>
+			<div>
+				<div class="IMG---Figure" id="_idContainer094">
+					<img alt="Figure 10.2﻿ - Accessing Object Store v2 between CloudHub 2.0 and on-premises Mule Runtime" src="image/B19922_10__2.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.2 - Accessing Object Store v2 between CloudHub 2.0 and on-premises Mule Runtime</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 10</em></span><em class="italic">.2</em>, a <a id="_idIndexMarker727"/>MuleSoft application with an Object Store v2 deployed to CloudHub 2.0 can use the Object Store Connector component to store and retrieve <span class="No-Break">the data.</span></p>
+			<p>Applications deployed to the on-premises Mule runtime, or any external application, can access the Object Store using REST <span class="No-Break">APIs v2.</span></p>
+			<h2 id="_idParaDest-233"><a id="_idTextAnchor243"/>Managing schedules</h2>
+			<p>CloudHub 2.0 allows<a id="_idIndexMarker728"/> you to manage and view the scheduler components that are configured within the Mule flow of the deployed application. From Runtime Manager, use the <strong class="bold">Schedule</strong> tab in the application to view the frequency of the scheduler, change the frequency of the scheduler, or enable/disable the scheduler without changing or redeploying the <span class="No-Break">running application.</span></p>
+			<p>Various other tasks can be performed from the <strong class="bold">Schedule</strong> tab, <span class="No-Break">as follows:</span></p>
+			<ul>
+				<li>You can trigger the job at any time irrespective of what schedule has been set up on the application or without modifying <span class="No-Break">the scheduler</span></li>
+				<li>Disable the scheduler in case of any maintenance in the underlying system that the scheduler application <span class="No-Break">is connecting</span></li>
+				<li>Schedulers can be updated at any time without modifying or redeploying <span class="No-Break">the application</span></li>
+			</ul>
+			<p><span class="No-Break"><em class="italic">Figure 10</em></span><em class="italic">.3</em> shows<a id="_idIndexMarker729"/> how to update the scheduler in the CloudHub 2.0 <span class="No-Break">application settings:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer095">
+					<img alt="Figure 10.3﻿ - Managing the scheduler for CloudHub 2.0 application" src="image/B19922_10__3.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.3 - Managing the scheduler for CloudHub 2.0 application</p>
+			<h2 id="_idParaDest-234"><a id="_idTextAnchor244"/>Last-mile security</h2>
+			<p>An application <a id="_idIndexMarker730"/>deployed within a shared space supports last-mile security. Last-mile security enables traffic between ingress and the application deployed on worker nodes over HTTPS. An application deployed to CloudHub 2.0 supports a single listener port for HTTP traffic, that is, 8081 for both an HTTP and HTTPS workload. That option can be enabled on the Runtime Manager console under the <span class="No-Break">Ingress tab:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer096">
+					<img alt="Figure 10.4﻿ - Last-mile security in CloudHub 2.0" src="image/B19922_10__4.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.4 - Last-mile security in CloudHub 2.0</p>
+			<p> <span class="No-Break"><em class="italic">Figure 10</em></span><em class="italic">.5</em> shows<a id="_idIndexMarker731"/> how to enable last-mile security in the Runtime Manager for the application deployed to <span class="No-Break">CloudHub 2.0:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer097">
+					<img alt="Figure 10.5﻿ - Enabling last-mile security for applications in CloudHub 2.0" src="image/B19922_10__5.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.5 - Enabling last-mile security for applications in CloudHub 2.0</p>
+			<p>CloudHub 2.0 <a id="_idIndexMarker732"/>supports shared spaces and private spaces for deploying and running MuleSoft applications in a containerized environment. Let’s explore the shared and <span class="No-Break">private spaces.</span></p>
+			<h1 id="_idParaDest-235"><a id="_idTextAnchor245"/>Shared space</h1>
+			<p>A<a id="_idIndexMarker733"/> shared space<a id="_idIndexMarker734"/> enables you to run the Mule instance in a multitenant environment. CloudHub 2.0 provides one shared space in each region to deploy your <span class="No-Break">MuleSoft application.</span></p>
+			<p>This is when to use a <span class="No-Break">shared space:</span></p>
+			<ul>
+				<li>You don’t have a requirement to use a vanity domain and can continue to <span class="No-Break">use cloudhub.io</span></li>
+				<li>You are not required to use custom certificates and <span class="No-Break">custom domains</span></li>
+				<li>You don’t want to access resources, services, or databases located in the on-premises data center or the <span class="No-Break">private/public cloud</span></li>
+				<li>You don’t have the requirement of running the application in isolation from the <span class="No-Break">public cloud</span></li>
+			</ul>
+			<p>You should not use a shared space if any of the following applies <span class="No-Break">to you:</span></p>
+			<ul>
+				<li>You want to run your application in a single-tenant environment or <span class="No-Break">isolated mode</span></li>
+				<li>You are required to use a <span class="No-Break">vanity domain</span></li>
+				<li>You need <span class="No-Break">custom certificates</span></li>
+				<li>You <a id="_idIndexMarker735"/>need <span class="No-Break">private endpoints</span></li>
+				<li>You need to connect to the resources, services, or databases located in the on-premises data center or the <span class="No-Break">private/public cloud</span></li>
+			</ul>
+			<p><span class="No-Break"><em class="italic">Figure 10</em></span><em class="italic">.6</em> shows the<a id="_idIndexMarker736"/> high-level architecture of the <span class="No-Break">shared space:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer098">
+					<img alt="Figure 10.6﻿ - High-level shared space architecture" src="image/B19922_10__6.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.6 - High-level shared space architecture</p>
+			<h1 id="_idParaDest-236"><a id="_idTextAnchor246"/>Private space</h1>
+			<p>Private space is a<a id="_idIndexMarker737"/> virtual, private, and isolated space in CloudHub 2.0 to run your MuleSoft application. You can create multiple private spaces in single or multiple regions in CloudHub 2.0 for single or multiple business groups. A range of allowable IP addresses for the apps in your private space <span class="No-Break">is required.</span></p>
+			<p>This is when to<a id="_idIndexMarker738"/> use a <span class="No-Break">private space:</span></p>
+			<ul>
+				<li>You want to connect one or more resources, services, or databases located in the on-premises data center or the private/public cloud. You can use the Anypoint VPN or transit gateway; however, there is no support for AWS Direct Connect and VPC peering in <span class="No-Break">CloudHub 2.0.</span></li>
+				<li>You want to enable private endpoints to accept traffic from <span class="No-Break">private locations.</span></li>
+				<li>You want to configure custom certificates and your own <span class="No-Break">vanity domains.</span></li>
+				<li>You want to <a id="_idIndexMarker739"/>configure inbound as well as outbound <span class="No-Break">firewall rules.</span></li>
+			</ul>
+			<div>
+				<div class="IMG---Figure" id="_idContainer099">
+					<img alt="Figure 10.7﻿ - High-level private space architecture" src="image/B19922_10__7.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.7 - High-level private space architecture</p>
+			<p>You need a CIDR mask to create a private space, and we can use the same logic from <a href="B19922_09.xhtml#_idTextAnchor179"><span class="No-Break"><em class="italic">Chapter 9</em></span></a><em class="italic"> </em>for calculating the CIDR block. Once the private space is created, it will provide the following <a id="_idIndexMarker740"/>information shown in <span class="No-Break"><em class="italic">Figure 10</em></span><span class="No-Break"><em class="italic">.8</em></span><span class="No-Break">:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer100">
+					<img alt="Figure 10.8﻿ - Private space details" src="image/B19922_10__8.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.8 - Private space details</p>
+			<p>Let’s look at<a id="_idIndexMarker741"/> attributes in more detail shown in <span class="No-Break"><em class="italic">Figure 10</em></span><span class="No-Break"><em class="italic">.8</em></span><span class="No-Break">:</span></p>
+			<ul>
+				<li><strong class="bold">Region</strong>: This is the region in which the private space <span class="No-Break">is created.</span></li>
+				<li><strong class="bold">CIDR block</strong>: This is the IP range that was provided while creating the <span class="No-Break">private space.</span></li>
+				<li><strong class="bold">Internal DNS servers</strong>: Internal DNS servers allow you to do host and IP <span class="No-Break">address mapping.</span></li>
+				<li><strong class="bold">Public DNS target and Private DNS target</strong>: It will provide two domains by default; one is for public traffic and the other for internal traffic. The public domain can be used by applications to accept traffic from external clients, whereas the private domain can be used to accept traffic within the private network, VPN, or <span class="No-Break">transit gateway.</span></li>
+				<li><strong class="bold">Inbound Static IPs and Outbound Static IPs</strong>: In CloudHub 2.0, inbound as well as outbound static IPs will be allocated at the private space level, not the application level. Inbound static IPs are allocated to your public domain, and you can use them to map more public domains. Outbound static IPs allocated to the private space can be useful when an application deployed to the private space wants to communicate with any external systems, such as SFTP, where IP whitelisting is needed to enable the communication. In such cases, all outbound static IPs can be whitelisted on external systems. The number of inbound IP addresses <a id="_idIndexMarker742"/>assigned depends on the number of availability zones in the region. For example, if the <strong class="source-inline">usa-east-1 region</strong> has three availability zones, then three inbound and three outbound static IP addresses will <span class="No-Break">be allocated.</span></li>
+				<li><strong class="bold">Route Table</strong>: <strong class="bold">Route Table</strong> allows you to configure routes to determine where traffic will be directed from private space. <span class="No-Break"><em class="italic">Figure 10</em></span><em class="italic">.9</em> shows the default route <a id="_idIndexMarker743"/>that will be added while creating a <span class="No-Break">private space:</span></li>
+			</ul>
+			<div>
+				<div class="IMG---Figure" id="_idContainer101">
+					<img alt="Figure 10.9﻿ - Route table for a private space" src="image/B19922_10__9.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.9 - Route table for a private space</p>
+			<p>The preceding figure shows that traffic within the local network is allowed, as well as traffic to the internet. If <a id="_idIndexMarker744"/>you want to disable traffic over the internet, just remove the <strong class="source-inline">0.0.0.0/0</strong> route that is accessible via Internet Gateway, but note that API Manager, Anypoint MQ, and Object Store require internet access from the private space. You can add more accessible <a id="_idIndexMarker745"/>subnet routes to the Route Table or remove the routes from the Route Table if you no longer want the subnet to be accessible through transit gateway or <span class="No-Break">VPN connections.</span></p>
+			<h2 id="_idParaDest-237"><a id="_idTextAnchor247"/>AWS service role</h2>
+			<p>A <a id="_idIndexMarker746"/>service role is a position that an AWS service takes on to carry out tasks <span class="No-Break">for you.</span></p>
+			<p>You can link <strong class="bold">identity and access management</strong> (<strong class="bold">IAM</strong>) roles to your private space if you have them set up in AWS. The IAM position in AWS grants the private space access to resources and permissions. To set up this function on AWS, do <span class="No-Break">the following:</span></p>
+			<ul>
+				<li>Make use of the distinct AWS IAM role name that Anypoint <span class="No-Break">Platform generated.</span></li>
+				<li>Utilise the organization ID of the company that set up the <span class="No-Break">private area.</span></li>
+				<li>This feature requires outgoing traffic on port 443 to <span class="No-Break">be enabled.</span></li>
+			</ul>
+			<h2 id="_idParaDest-238"><a id="_idTextAnchor248"/>Inbound and outbound traffic rules</h2>
+			<p>CloudHub 2.0 <a id="_idIndexMarker747"/>allows you to configure inbound and outbound traffic rules in the private space. The following figure shows the default inbound and outbound rules available in the <span class="No-Break">private space:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer102">
+					<img alt="Figure 10.10﻿ - Inbound and outbound firewall rules for a private space" src="image/B19922_10__10.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.10 - Inbound and outbound firewall rules for a private space</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 10</em></span><em class="italic">.10</em>, we<a id="_idIndexMarker748"/> can see that inbound traffic is allowed on HTTP and HTTPS from anywhere. If you want the private space to only accept traffic on HTTPS, remove the rule that accepts <span class="No-Break">HTTP traffic.</span></p>
+			<p>If you want to accept HTTPS traffic from the internal network, change <strong class="bold">Source</strong> to <strong class="bold">Local</strong> <strong class="bold">private network</strong>, as shown in the <span class="No-Break">following figure:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer103">
+					<img alt="Figure 10.11﻿ - Configuring the inbound firewall rule for a private space" src="image/B19922_10__11.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.11 - Configuring the inbound firewall rule for a private space</p>
+			<p>A private space allows you to add new inbound firewall rules or modify existing inbound firewall rules, depending on your requirements. You can add up to 80 inbound <span class="No-Break">firewall rules.</span></p>
+			<p>Outbound traffic<a id="_idIndexMarker749"/> decides how an application deployed to the private space will communicate with the external services. By default, it allows TCP connection over port 0 to 65535 and HTTPS connection over <span class="No-Break">port 443.</span></p>
+			<p>A private space allows you to add new outbound firewall rules or modify the existing outbound firewall rules depending on the requirements. You can add up to 80 outbound <span class="No-Break">firewall rules.</span></p>
+			<p>If you want TCP and HTTPS to only communicate with local services within your network, change <strong class="bold">Source</strong> from <strong class="bold">Anywhere</strong> to <strong class="bold">Local private network</strong>, as shown in the <span class="No-Break">following figure:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer104">
+					<img alt="Figure 10.12﻿ - Configuring the outbound firewall rule for a private space" src="image/B19922_10__12.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.12 - Configuring the outbound firewall rule for a private space</p>
+			<h2 id="_idParaDest-239"><a id="_idTextAnchor249"/>TLS context and domains</h2>
+			<p>Private spaces, by <a id="_idIndexMarker750"/>default, provide TLS contexts with one public and one private domain. If you are looking to configure additional TLS contexts to support a custom domain, it is possible to create additional TLS contexts by uploading a domain certificate in PEM or <span class="No-Break">JKS format:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer105">
+					<img alt="Figure 10.13﻿ - Configuring TLS context for a private space" src="image/B19922_10__13.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.13 - Configuring TLS context for a private space</p>
+			<h2 id="_idParaDest-240"><a id="_idTextAnchor250"/>Public and private endpoints</h2>
+			<p>CloudHub 2.0 creates <a id="_idIndexMarker751"/>two endpoints by default when an application is deployed. One is a public endpoint and the other is a private endpoint. Public endpoints can accept traffic from external clients, whereas private endpoints accept traffic from private networks, VPNs, or transit gateways. Multiple public endpoints are supported, and you need to configure the TLS context in the private space settings to enable multiple public endpoints on applications. To disable traffic from external clients, you need to delete the public endpoints from the application deployed to <span class="No-Break">CloudHub 2.0</span></p>
+			<h2 id="_idParaDest-241"><a id="_idTextAnchor251"/>Ingress load balancer</h2>
+			<p>CloudHub 2.0 supports<a id="_idIndexMarker752"/> an ingress load balancer to route traffic to applications deployed in private spaces and shared spaces. The ingress load balancer automatically scales depending on the number of inbound requests coming to it or the traffic load. Private spaces allow you to download <a id="_idIndexMarker753"/>logs to the ingress load balancer whenever required for troubleshooting. The default read/response timeout for the ingress load balancer is 300 seconds and it can be increased or decreased depending on <span class="No-Break">the requirements.</span></p>
+			<p>The default log level is <strong class="bold">Error</strong>, but it supports other log levels such as <strong class="bold">Debug</strong>, <strong class="bold">Trace</strong>, <span class="No-Break">and </span><span class="No-Break"><strong class="bold">Info</strong></span><span class="No-Break">.</span></p>
+			<h2 id="_idParaDest-242"><a id="_idTextAnchor252"/>HTTP requests</h2>
+			<p>HTTP requests <a id="_idIndexMarker754"/>CloudHub 2.0:HTTP requests” define how requests are handled by the ingress load balancer. There are three ways in which traffic will be handled. They are <span class="No-Break">as follows:</span></p>
+			<ul>
+				<li><strong class="bold">Redirect to HTTPS</strong>: Redirect incoming HTTP requests to the same URL using the <span class="No-Break">HTTPS protocol</span></li>
+				<li><strong class="bold">Accept HTTP</strong>: Allow incoming requests on the default SSL endpoint using the <span class="No-Break">HTTP protocol</span></li>
+				<li><strong class="bold">Drop HTTP</strong>: Drop the HTTP request silently and accept only traffic <span class="No-Break">on HTTPS</span></li>
+			</ul>
+			<p><span class="No-Break"><em class="italic">Figure 10</em></span><em class="italic">.14</em> shows how to configure the HTTP requests, response timeout, and log downloads for the ingress load balancer in the <span class="No-Break">private space:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer106">
+					<img alt="Figure 10.14﻿ - Configuring HTTP requests for a private space" src="image/B19922_10__14.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.14 - Configuring HTTP requests for a private space</p>
+			<h2 id="_idParaDest-243"><a id="_idTextAnchor253"/>VPN connection</h2>
+			<p>To connect a<a id="_idIndexMarker755"/> private space to the external network, a VPN connection can be established between them that includes an on-premises data center. It will create a secure and highly available connection between the private space and on-premises <span class="No-Break">data center:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer107">
+					<img alt="Figure 10.15﻿ - VPN IPSec tunnel for a private space" src="image/B19922_10__15.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.15 - VPN IPSec tunnel for a private space</p>
+			<h3>VPN high availability</h3>
+			<p>A private space<a id="_idIndexMarker756"/> allows you to create a second VPN connection if you have created only one VPN connection, and this is known as a redundant VPN. It is strongly recommended to create a redundant VPN as it will ensure high availability and will inherit some of the settings from the initial VPN, such as the routing type, ASN, and <span class="No-Break">so on.</span></p>
+			<p>It is recommended to have two VPN connections to the customer gateway in case of any updates on one VPN connection or any failures. In such cases, the other VPN connection will ensure connectivity between the Anypoint Platform and the on-premises <span class="No-Break">data center:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer108">
+					<img alt="Figure 10.16﻿ - VPN high availability" src="image/B19922_10__16.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.16 - VPN high availability</p>
+			<p>In the preceding architecture, the VPN is configured in such a way that it will be used in the following order in the event of <span class="No-Break">any failures:</span></p>
+			<ol>
+				<li><span class="No-Break">VPN-1 Tunnel-1</span></li>
+				<li><span class="No-Break">VPN-1 Tunnel-2</span></li>
+				<li><span class="No-Break">VPN-2 Tunnel-1</span></li>
+				<li><span class="No-Break">VPN-2 Tunnel-2</span></li>
+			</ol>
+			<p>This is <a id="_idIndexMarker757"/>configured as an automatic failover to the other VPN tunnel or connection in the event of any failures. This VPN solution will be resilient and robust. Dynamic routing can help in advertising the route from VPN-1 to VPN-2 automatically, and it also supports static routing where VPN-2 will be on standby mode in the event that <span class="No-Break">VPN-1 fails.</span></p>
+			<h2 id="_idParaDest-244"><a id="_idTextAnchor254"/>Transit gateways</h2>
+			<p>AWS Transit Gateway is<a id="_idIndexMarker758"/> like a router that helps you to simplify the network configuration and allows you to connect private spaces in AWS or Anypoint Platform, establishing the VPN connection toward on-premises or the Azure cloud or any third-party private network in a <span class="No-Break">secure manner.</span></p>
+			<p>CloudHub 2.0 allows you to attach multiple transit gateways in your organization, depending on the number of transit gateway license entitlements for <span class="No-Break">your organization:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer109">
+					<img alt="Figure 10.17﻿ - Transit Gateway attachments" src="image/B19922_10__17.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.17 - Transit Gateway attachments</p>
+			<p>In <span class="No-Break"><em class="italic">Figure 10</em></span><em class="italic">.17</em>, we are connecting the private space to the on-premises data center via AWS Transit Gateway by creating a transit gateway attachment in <span class="No-Break">Anypoint Platform.</span></p>
+			<h2 id="_idParaDest-245"><a id="_idTextAnchor255"/>Private space network architecture</h2>
+			<p>The<a id="_idIndexMarker759"/> following figure shows how applications deployed in the private space can communicate with the services or applications in the external or local network or over the internet. As we have discussed, local services can communicate with applications deployed in the private space via private endpoints, and external clients can communicate using public endpoints. You can configure public and private endpoints while deploying the application to the <span class="No-Break">private space:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer110">
+					<img alt="Figure 10.18﻿ - Private space network architecture" src="image/B19922_10__18.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.18 - Private space network architecture</p>
+			<p>If you need to have a custom domain, you need to create a TLS context in the private space and add a domain certificate in JKS or PEM format. In the following figure, we have custom private (<strong class="source-inline">internal-api.domainname.com</strong>) and public (<strong class="source-inline">api.domainname.com</strong>) domains. To enable traffic to reach the application deployed in the private space over the custom domains, create a CNAME record in the vanity domain pointing to your private space <strong class="bold">fully qualified domain </strong><span class="No-Break"><strong class="bold">name</strong></span><span class="No-Break"> (</span><span class="No-Break"><strong class="bold">FQDN</strong></span><span class="No-Break">):</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table005-1">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="bold">Custom </strong><span class="No-Break"><strong class="bold">domain (CNAME)</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">FQDN (</strong><span class="No-Break"><strong class="bold">A record)</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Domain type</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">internal-api.domainname.com</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">internal-&lt;shard&gt;.usa-e2.cloudhub.io</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Private</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">api.domainname.com</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">&lt;</strong><span class="No-Break"><strong class="source-inline">shard&gt;.usa-e2.cloudhub.io</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Public</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.5 - CNAME ⇔ A record mapping</p>
+			<p>The <a id="_idIndexMarker760"/>private space will validate incoming requests against the inbound firewall rules, and all outgoing requests going from the private space will be validated by outbound <span class="No-Break">firewall rules.</span></p>
+			<h2 id="_idParaDest-246"><a id="_idTextAnchor256"/>Multiple environments in private spaces</h2>
+			<p>Private space<a id="_idIndexMarker761"/> allows you to map a sandbox or production environment in the business group and its <span class="No-Break">child group:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer111">
+					<img alt="Figure 10.19﻿ - Mapping multiple environments for a private space" src="image/B19922_10__19.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.19 - Mapping multiple environments for a private space</p>
+			<p>If you want to map the production and sandbox environments with the same private space, you can choose <strong class="bold">Any environment</strong>. However, it is recommended to have a separate private space for the sandbox and <span class="No-Break">production environment.</span></p>
+			<h2 id="_idParaDest-247"><a id="_idTextAnchor257"/>Multiple domains in private spaces</h2>
+			<p>Private space<a id="_idIndexMarker762"/> allows you to create multiple TLS contexts to support multiple domains. For example, the sandbox is mapped to one private space having two environments: development <span class="No-Break">and QA.</span></p>
+			<p>In such cases, we can configure two TLS contexts with the domain <strong class="source-inline">api-dev.domainname.com</strong> for the development environment and <strong class="source-inline">api-uat.domainname.com</strong> for the uat environment, as shown in <span class="No-Break"><em class="italic">Table 10.6</em></span><span class="No-Break">.</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table006-1">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">CNAME</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">Private space – public domain target (</strong><span class="No-Break"><strong class="bold">A record)</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Environment</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Domain type</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<h3><strong class="source-inline">api-dev.domainname.com</strong></h3>
+						</td>
+						<td class="No-Table-Style">
+							<h3><strong class="source-inline">&lt;shard&gt;.usa-e2.cloudhub.io</strong></h3>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Development</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Public</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<h3><strong class="source-inline">api-qa.domainname.com</strong></h3>
+						</td>
+						<td class="No-Table-Style">
+							<h3><strong class="source-inline">&lt;shard&gt;.usa-e2.cloudhub.io</strong></h3>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">QA</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Public</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.6 - CNAME ⇔ A record mapping for multiple environments</p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer112">
+					<img alt="Figure ﻿10.20﻿ - TLS context for a private space" src="image/B19922_10__20.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.20 - TLS context for a private space</p>
+			<p>We have<a id="_idIndexMarker763"/> three TLS contexts. One is the default TLS context that was created automatically while creating the private space. Then, we have two more TLS contexts for the development and <span class="No-Break">QA environments.</span></p>
+			<p>Now, whenever we deploy an application to the development environment, we can select the host (<a href="https://api-dev.domainname.com">https://api-dev.domainname.com</a>) under the <strong class="bold">Ingress</strong> tab that is related to development, and whenever we deploy an application to the QA environment, we can select the host (<strong class="source-inline">https://api-qa.domainname.com</strong>) under the <strong class="bold">Ingress</strong> tab that is related <span class="No-Break">to QA:</span></p>
+			<div>
+				<div class="IMG---Figure" id="_idContainer113">
+					<img alt="Figure ﻿10.21﻿ - Application endpoints for a private space" src="image/B19922_10__21.jpg"/>
+				</div>
+			</div>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Figure 10.21 - Application endpoints for a private space</p>
+			<h2 id="_idParaDest-248"><a id="_idTextAnchor258"/>Different options for deploying MuleSoft applications to CloudHub Runtime Manager</h2>
+			<p>MuleSoft <a id="_idIndexMarker764"/>provides multiple ways of deploying applications to CloudHub, and all options can be used to integrate with the CI/CD pipeline for the automatic deployment of MuleSoft applications to CloudHub. Let’s explore all the options that can be used to deploy applications <span class="No-Break">to CloudHub.</span></p>
+			<h3>Mule Maven plugin</h3>
+			<p>The Mule Maven plugin<a id="_idIndexMarker765"/> is one of the important Maven plugins for deploying, un-deploying, and packaging MuleSoft applications into CloudHub 2.0. Let’s discuss the Mule Maven plugin in more detail. The following plugin can be configured in the <strong class="source-inline">POM.xml</strong> file of your application with all the required attributes that are needed for deploying and running the application <span class="No-Break">in CloudHub:</span></p>
+			<pre class="source-code">
+&lt;plugin&gt;
+  &lt;groupId&gt;org.mule.tools.maven&lt;/groupId&gt;
+  &lt;artifactId&gt;mule-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;3.8.6&lt;/version&gt;
+  &lt;extensions&gt;true&lt;/extensions&gt;
+  &lt;configuration&gt;
+    &lt;cloudhub2Deployment&gt;
+      &lt;uri&gt;https://anypoint.mulesoft.com&lt;/uri&gt;
+      &lt;provider&gt;MC&lt;/provider&gt;
+      &lt;environment&gt;${environment}&lt;/environment&gt;
+      &lt;target&gt;${target}&lt;/target&gt;
+      &lt;muleVersion&gt;${app.runtime}&lt;/muleVersion&gt;
+      &lt;username&gt;${anypoint.username}&lt;/username&gt;
+      &lt;password&gt;${anypoint.password}&lt;/password&gt;
+      &lt;applicationName&gt;${application.name}&lt;/applicationName&gt;
+      &lt;replicas&gt;${replicas}&lt;/replicas&gt;
+      &lt;vCores&gt;${replicaSize}&lt;/vCores&gt;
+      &lt;deploymentSettings&gt;
+        &lt;http&gt;
+          &lt;inbound&gt;
+            &lt;publicUrl&gt;${publicURL}&lt;/publicUrl&gt;
+            &lt;forwardSslSession&gt;true&lt;/forwardSslSession&gt;
+            &lt;lastMileSecurity&gt;true&lt;/lastMileSecurity&gt;
+          &lt;/inbound&gt;
+        &lt;/http&gt;
+      &lt;/deploymentSettings&gt;
+    &lt;/cloudhub2Deployment&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</pre>			<p>In the <a id="_idIndexMarker766"/>preceding Mule Maven plugin, the values defined with <strong class="source-inline">${}</strong> are the parameters that you can pass from the <strong class="source-inline">mule deploy</strong> command, as <span class="No-Break">shown here:</span></p>
+			<pre class="console">
+mule deploy –DmuleDeploy -Dapp.runtime=4.4.0 -Danypoint.username=anypointusername –Danypoint.password=password -Dapplication.name=music-api-dev –Denvironment=Sandbox –Dworkers=1 –DworkerType=MICRO -Dreplica=1 -DreplicaSize=0.1 -DpublicUrl=https://api-dev.domainname.com -Dtarget=jj-dev-ps</pre>			<p>The following table shows the attributes that can be configured on the Mule Maven Plugin while deploying the application <span class="No-Break">to CloudHub:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table007-1">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Parameter</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Required</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Default value/</strong></span><strong class="bold">
+</strong><span class="No-Break"><strong class="bold">example</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">cloudhub2 Deployment</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the <span class="No-Break">top-level element.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">uri</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is your Anypoint <span class="No-Break">Platform URI.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><a href="https://anypoint.mulesoft.com"><span class="No-Break">https://anypoint.mulesoft.com</span></a></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">muleVersion</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the Mule runtime engine version to run in your CloudHub <span class="No-Break">2.0 instance</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">e.g., 4.3.0</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">username</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is your Anypoint <span class="No-Break">Platform username.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Yes (only when using Anypoint Platform <span class="No-Break">credentials)</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">password</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is your Anypoint <span class="No-Break">Platform password.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Yes (only when using Anypoint Platform <span class="No-Break">credentials)</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">application Name</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the title of the application to be implemented in the <span class="No-Break">Runtime Manager.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">e.g., </span><span class="No-Break"><strong class="source-inline">invoice-api-dev</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">scopeLogging Configurations</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the package of the logging library to use. <strong class="source-inline">logLevel</strong>: is the log level. Allowed values are <strong class="source-inline">NONE</strong>, <strong class="source-inline">ERROR</strong>, <strong class="source-inline">WARN</strong>, <strong class="source-inline">INFO</strong>, <strong class="source-inline">DEBUG</strong>, <span class="No-Break">and </span><span class="No-Break"><strong class="source-inline">TRACE</strong></span><span class="No-Break">.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">target</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the target where the application is to be deployed. It can be a shared or a <span class="No-Break">private space.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">provider</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Set to MC for <span class="No-Break">CloudHub 2.0.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">MC</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">environment</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the CloudHub 2.0 environment where applications are to <span class="No-Break">be deployed.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">replicas</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the number of replicas to be created <span class="No-Break">for applications.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">Yes</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">vCores</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the size of the replica, and the allowed values are 0.1, 0.2, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, <span class="No-Break">and 4.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">0.1</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">businessGroup</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the business group path of <span class="No-Break">the deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">businessGroupId</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the business group ID of <span class="No-Break">the deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">deployment Timeout</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the permitted duration, measured in milliseconds, for the deployment process. This refers to the time between the commencement of deployment and the confirmation of successful <span class="No-Break">artifact deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">10,00,000.00</span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">server</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The Maven server is integrated with the Anypoint Platform credentials. The server’s ID can be found in the <strong class="source-inline">settings.xml</strong> file, which is linked to a user’s Anypoint username <span class="No-Break">and password.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">properties</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Properties can be passed to set during <span class="No-Break">application deployment.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">secure Properties</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Secure properties can be passed to set during <span class="No-Break">application deployment.</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">skip</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>When set to <strong class="source-inline">true</strong>, it skips the plugin <span class="No-Break">deployment goal.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">false</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">skipDeployment Verification</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>When set to true, it skips the status verification of your <span class="No-Break">deployed app.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break">No</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">false</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">authToken</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the authorization token to access <span class="No-Break">the platform.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using an authorization token to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">connectedApp ClientId</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the Connected App <span class="No-Break">clientID</span><span class="No-Break"> value.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using onnected App redentials to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">connectedApp ClientSecret</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the Connected App <span class="No-Break">secret key.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using onnected App redentials to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">connectedApp GrantType</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specifies the only supported connection <span class="No-Break">type: </span><span class="No-Break"><strong class="source-inline">client_credentials</strong></span><span class="No-Break">.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Only when using Connected App redentials to <span class="No-Break">log in</span></p>
+						</td>
+						<td class="No-Table-Style"/>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.7 - Mule Maven plugin attributes</p>
+			<p>A few other<a id="_idIndexMarker767"/> parameters that can be passed under <strong class="bold">deploymentSettings</strong> are <span class="No-Break">listed next:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table008-1">
+				<colgroup>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Paramter</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">enforce Deploying</strong></span><strong class="source-inline">
+</strong><span class="No-Break"><strong class="source-inline">Replicas AcrossNodes</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This setting ensures that replicas are deployed across distinct nodes with the default value being set <span class="No-Break">to false.</span></p>
+							<pre class="source-code">
+&lt;deploymentSettings&gt;
+
+  &lt;enforceDeployingReplicasAcrossNodes&gt;false   &lt;/enforceDeployingReplicasAcrossNodes&gt;
+
+&lt;/deploymentSettings&gt;</pre>						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">updateStrategy</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The value of <strong class="source-inline">updateStrategy</strong> can either be <strong class="source-inline">recreate</strong> <span class="No-Break">or </span><span class="No-Break"><strong class="source-inline">rolling</strong></span><span class="No-Break">.</span></p>
+							<pre class="source-code">
+&lt;deploymentSettings&gt;
+
+  &lt;updateStrategy&gt;recreate&lt;/updateStrategy&gt;
+
+&lt;/deploymentSettings&gt;</pre>						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">clustered</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This setting allows for clustering to be enabled across multiple replicas of the application. By default, it is set <span class="No-Break">to </span><span class="No-Break"><strong class="source-inline">false</strong></span><span class="No-Break">.</span></p>
+							<pre class="source-code">
+&lt;deploymentSettings&gt;
+
+    &lt;clustered&gt;true&lt;/clustered&gt;
+
+&lt;/deploymentSettings&gt;</pre>						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">http</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="bold">Public URL</strong>: This refers to the web address of the <span class="No-Break">deployed application.</span></p>
+							<p><strong class="bold">Last-mile security</strong>: By enabling this feature, HTTPS connections will be forwarded and decrypted by <span class="No-Break">the application.</span></p>
+							<p><strong class="bold">Forward SSL Session</strong>: When set to true, this option enables SSL forwarding during a session. The default value <span class="No-Break">is </span><span class="No-Break"><strong class="source-inline">false</strong></span><span class="No-Break">.</span></p>
+							<pre class="source-code">
+&lt;deploymentSettings&gt;
+
+  &lt;http&gt;
+
+    &lt;inbound&gt;
+
+      &lt;publicUrl&gt;https://myapp.anypoint.com       &lt;/publicUrl&gt;
+
+      &lt;lastMileSecurity&gt;true&lt;/lastMileSecurity&gt;
+
+      &lt;forwardSslSession&gt;true&lt;/forwardSslSession&gt;
+
+    &lt;/inbound&gt;
+
+  &lt;/http&gt;
+
+&lt;/deploymentSettings&gt;</pre>						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="source-inline">generateDefault PublicUrl</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>CloudHub 2.0 will generate a public URL for the deployed application when the <strong class="source-inline">set to true</strong> option <span class="No-Break">is selected.</span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.8 - Mule Maven Plugin deployment settings parameter</p>
+			<p>The following<a id="_idIndexMarker768"/> commands are used to deploy and undeploy <span class="No-Break">the application:</span></p>
+			<pre class="console">
+mvn clean deploy –DmuleDeploy (deploy the application to CloudHub 2.0)
+mvn mule:undeploy (undeploy the application from CloudHub 2.0)</pre>			<p>The Mule Maven plugin can use one of the following authentication mechanisms to deploy applications <span class="No-Break">to CloudHub:</span></p>
+			<ul>
+				<li>Anypoint Platform username <span class="No-Break">and password</span></li>
+				<li><span class="No-Break">Server</span></li>
+				<li>Anypoint <span class="No-Break">connected app</span></li>
+				<li><span class="No-Break">Authorization token</span></li>
+			</ul>
+			<h2 id="_idParaDest-249"><a id="_idTextAnchor259"/>Anypoint CLI</h2>
+			<p>The Anypoint CLI <a id="_idIndexMarker769"/>can also be used to deploy, undeploy, or redeploy MuleSoft applications to CloudHub 2.0. The Anypoint CLI is a scripting and command-line tool for Anypoint Platform. The Anypoint CLI is capable of managing various features of Anypoint Platform, such as CloudHub 1.0, CloudHub 2.0, API governance, Anypoint dedicated load balancers, Anypoint VPC, Exchange, Design Center, API Manager, and so on. To use the Anypoint CLI, you need to set up an npm package for it. Here is the documentation from MuleSoft to set up the <span class="No-Break">Anypoint CLI:</span></p>
+			<p><a href="https://docs.mulesoft.com/anypoint-cli/4.x/install"><span class="No-Break">https://docs.mulesoft.com/anypoint-cli/4.x/install</span></a></p>
+			<p>The Anypoint CLI can use one of the following authentication mechanisms to manage <span class="No-Break">Anypoint Platform:</span></p>
+			<ul>
+				<li>Anypoint Platform username <span class="No-Break">and password</span></li>
+				<li>Client ID and <span class="No-Break">client secret</span></li>
+				<li>Bearer token (command <span class="No-Break">line only)</span></li>
+			</ul>
+			<p>A list of commands for managing CloudHub can be found in the MuleSoft <span class="No-Break">documentation here:</span></p>
+			<p><a href="https://docs.mulesoft.com/anypoint-cli/4.x/cloudhub2-apps"><span class="No-Break">https://docs.mulesoft.com/anypoint-cli/4.x/cloudhub2-apps</span></a></p>
+			<p>The following command can be used to deploy applications to <span class="No-Break">CloudHub 2.0:</span></p>
+			<pre class="console">
+runtime-mgr:application:deploy &lt;appID&gt; &lt;deploymentTargetID&gt; &lt;runtimeVersion&gt; &lt;artifactID&gt; [flags]</pre>			<p>You can deploy the application mentioned in the app ID to the deployment target using the <span class="No-Break">following values:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table009-1">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Value</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Example</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">artifactId</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>The application’s Artifact ID was sourced from <span class="No-Break">the exchange.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">artifactId mule-error-plugin</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">deployment TargetId</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Identify the <span class="No-Break">deployment target.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">deploymentTargetId cloudhub-us-east-2</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">name</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>Specify the name of the application that needs to be deployed on <span class="No-Break">CloudHub 2.0.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">name testcloudhubapp</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">runtimeVersion</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the required runtime version for the deployment of <span class="No-Break">the application.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">runtimeVersion 4.3.0</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">secureProperty</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This sets an <span class="No-Break">encrypted property</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">secureProperty secureTestProperty:true</strong></span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.9 - Anypoint CLI application deployment values</p>
+			<p>Flags that can<a id="_idIndexMarker770"/> be passed with the <strong class="source-inline">runtime-mgr</strong> deployment command are listed <span class="No-Break">as follows:</span></p>
+			<table class="No-Table-Style _idGenTablePara-1" id="table010-1">
+				<colgroup>
+					<col/>
+					<col/>
+					<col/>
+				</colgroup>
+				<thead>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Flag</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Description</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><span class="No-Break"><strong class="bold">Example</strong></span></p>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">assetVersion</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the asset version in <span class="No-Break">the exchange.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">assetVersion 3.0.5</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--[</strong><span class="No-Break"><strong class="source-inline">no-]clustered</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This enables the utilization of clustered nodes, necessitating a minimum of <span class="No-Break">two replicas</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">no-clustered</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--[</strong><span class="No-Break"><strong class="source-inline">no-]disableAmLogForwarding</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This disables application logs forwarding to <span class="No-Break">Anypoint Monitoring.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">disableAmLogForwarding</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--[</strong><span class="No-Break"><strong class="source-inline">no-]forwardSslSession</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This enables SSL <span class="No-Break">session forwarding.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">no-forwardSslSession</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">groupId</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the group ID of the asset <span class="No-Break">to deploy.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">groupId org.mule.test</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--[</strong><span class="No-Break"><strong class="source-inline">no-]lastMileSecurity</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This enables <span class="No-Break">last-mile security.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">no-lastMileSecurity</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--[</strong><span class="No-Break"><strong class="source-inline">no-]objectStoreV2</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This enables Object <span class="No-Break">Store v2.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">no-objectStoreV2</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">pathRewrite</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This provides the anticipated base path for the HTTP listener within <span class="No-Break">your application.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">pathRewrite /http://localhost:8000</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">property</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This sets <span class="No-Break">a property.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">property testproperty:true</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">propertiesFile</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>All properties are substituted with values from a <span class="No-Break">designated file.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">propertiesFile /Users/mule/Documents/dev-properties.txt</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">publicEndpoints</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This provides access points accessible through the <span class="No-Break">worldwide web.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">publicEndpoints my-superapp-example:/status?limit=50</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">replicas</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the quantity of replicas to <span class="No-Break">be deployed.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">replicas 3</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">replicaSize</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This is the size of replicas <span class="No-Break">in vCores.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">replicaSize 0.1</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">scopeLoggingConfig</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This defines <span class="No-Break">scope logging.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">scopeLoggingConfig testscope1:WARN,</strong></span><strong class="source-inline">
+</strong><span class="No-Break"><strong class="source-inline">testscope2:DEBUG</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">scopeLoggingConfig File</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This uploads a file to define <span class="No-Break">scope logging.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">scopeLoggingConfigFile /Users/mule/Documents/cert.txt</strong></span></p>
+						</td>
+					</tr>
+					<tr class="No-Table-Style">
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">updateStrategy</strong></span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p>This updates the <span class="No-Break">strategy used.</span></p>
+						</td>
+						<td class="No-Table-Style">
+							<p><strong class="source-inline">--</strong><span class="No-Break"><strong class="source-inline">updateStrategy recreate</strong></span></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="IMG---Caption" lang="en-US" xml:lang="en-US">Table 10.10 - Anypoint CLI application deployment flags</p>
+			<h1 id="_idParaDest-250"><a id="_idTextAnchor260"/>Technical enhancements from CloudHub 1.0 to 
+CloudHub 2.0</h1>
+			<ul>
+				<li>Allows you<a id="_idIndexMarker771"/> to configure the clustering for deployments with more than <span class="No-Break">one replica.</span></li>
+				<li>Allows for application deployment using containers to control resource usage, guarantee application availability, and <span class="No-Break">facilitate scalability.</span></li>
+				<li>Allows AWS service role for resources <span class="No-Break">access control.</span></li>
+				<li>Granular vCore allocation options—CloudHub 2.0 supports deploying applications on <span class="No-Break">granular vCores.</span></li>
+				<li>Allows you to configure more than one private or <span class="No-Break">public endpoint.</span></li>
+				<li>Allows you to download ingress self-service logs. This can be accessed via private space. Titanium users can access logs via Anypoint <span class="No-Break">Monitoring also.</span></li>
+				<li>Support for inbound and outbound <span class="No-Break">firewall rules.</span></li>
+				<li>In <a id="_idIndexMarker772"/>CloudHub 1.0 applications, names must be unique for each control plane, whereas in CloudHub 2.0, application names must be unique per <span class="No-Break">private space.</span></li>
+				<li>VPC peering and AWS Direct Connect are deprecated in CloudHub 2.0. Transit Gateway can be leveraged instead of VPC peering and AWS <span class="No-Break">Direct Connect.</span></li>
+				<li>HTTP and HTTPS traffic uses <span class="No-Break">port 8081.</span></li>
+				<li>You can associate a private space with multiple environments based on the type of the environment, such as a sandbox and production. This is not possible in the Anypoint Virtual Private cloud where you have to associate each individual environment to the Anypoint Virtual <span class="No-Break">Private cloud.</span></li>
+				<li>By default, VPN is enabled with high availability in <span class="No-Break">CloudHub 2.0.</span></li>
+				<li>CloudHub 1.0 application workers and CloudHub 2.0 application replicas with the same vCore sizes may show a difference in performance metrics and they cannot <span class="No-Break">be compared.</span></li>
+			</ul>
+			<p>The following are <a id="_idIndexMarker773"/>functions or features not supported by the <span class="No-Break">CloudHub 2.0:</span></p>
+			<ul>
+				<li>Mule versions prior <span class="No-Break">to 4.3.0</span></li>
+				<li><span class="No-Break">CloudHub Connector</span></li>
+				<li>TLS 1.0 is not supported. Use TLS 1.2 or <span class="No-Break">TLS 1.3</span></li>
+				<li>Creating <span class="No-Break">custom notifications</span></li>
+				<li>Anypoint <span class="No-Break">Functional Monitoring</span></li>
+				<li>Persistent <a id="_idIndexMarker774"/>queues; use Anypoint MQ for persistent queues and other <span class="No-Break">queue management</span></li>
+			</ul>
+			<h1 id="_idParaDest-251"><a id="_idTextAnchor261"/> Summary</h1>
+			<p>In this chapter, the provided capabilities and features of CloudHub 2.0 have been explored, highlighting its differences from CloudHub 1.0. The discussion has encompassed various features such as high availability, fault-tolerance, and a scalable architecture, all supported by <span class="No-Break">CloudHub 2.0.</span></p>
+			<p>Furthermore, the utilization of both Shared and Private spaces in CloudHub 2.0 for running MuleSoft applications has been demonstrated. Additionally, the deployment of MuleSoft applications in the CloudHub 2.0 environment has been explained, utilizing tools such as the Mule Maven Plugin and <span class="No-Break">Anypoint CLI.</span></p>
+			<p>The upcoming chapter will delve into the Runtime fabric manager, which operates on self-managed Kubernetes and baremetal servers. This manager can be leveraged to run MuleSoft applications in a containerized environment based <span class="No-Break">on Kubernetes.</span></p>
+			<h1 id="_idParaDest-252"><a id="_idTextAnchor262"/>Further reading</h1>
+			<p>The CloudHub 2.0 reference list includes the <span class="No-Break">following sources:</span></p>
+			<ul>
+				<li>MuleSoft <span class="No-Break">documentation: </span><a href="https://docs.mulesoft.com/cloudhub-2/ch2-architecture"><span class="No-Break">https://docs.mulesoft.com/cloudhub-2/ch2-architecture</span></a></li>
+				<li>YouTube <span class="No-Break">series: </span><a href="https://youtube.com/playlist?list=PL5GwZHHgKcuDaUnFQymi85AbUVbvJBtsA&amp;si=GvCy64jOsw3PoYT4"><span class="No-Break">https://youtube.com/playlist?list=PL5GwZHHgKcuDaUn</span>
+<span class="No-Break">FQymi85AbUVbvJBtsA&amp;si=GvCy64jOsw3PoYT4</span></a></li>
+				<li>A few tables in this chapter referenced from MuleSoft official <span class="No-Break">documentation: </span><a href="https://docs.mulesoft.com/"><span class="No-Break">https://docs.mulesoft.com/</span></a></li>
+			</ul>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,347 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>If You Never Kill Anything, You Will Live Among Zombies</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 12. If You Never Kill Anything, You Will Live Among Zombies" data-type="chapter" epub:type="chapter"><div class="chapter" id="Zombies">
+<h1><span class="label">Chapter 12. </span>If You Never Kill Anything, You Will Live Among Zombies</h1>
+
+
+<p class="subtitle">And They Will Eat Your Brain</p>
+
+<figure class="informal"><div class="figure" id="zombies_co">
+<img alt="The night of the living legacy systems" src="assets/SAEch_013.png"/>
+<h6>The night of the living legacy systems</h6>
+</div></figure>
+
+<p>Corporate<a data-primary="resistance to change" data-secondary="legacy systems" data-type="indexterm" id="RTClegacy13"/><a data-primary="legacy systems" data-secondary="drawbacks of" data-type="indexterm" id="idm45952856004648"/> IT lives among zombies: old systems that are half alive and
+have everyone in fear of going anywhere near them. They are also tough
+to kill completely. Worse yet, they eat IT staff’s brains. It’s like
+<em>Shaun of the Dead</em> minus the funny parts.</p>
+
+<p>Despite being a reality in corporate IT, living legacy systems are
+becoming more difficult to justify in a world that’s changing faster and
+faster. It’s time to put some zombies to rest.</p>
+
+
+
+
+
+
+<section data-pdf-bookmark="Legacy" data-type="sect1"><div class="sect1" id="idm45952856002120">
+<h1>Legacy</h1>
+
+<p>Legacy systems are built on outdated technology and are often poorly
+documented but (ostensibly) still perform important business functions.
+In many cases, the exact scope of the function they perform is not
+completely known. Ironically, most legacy systems generate a lot of
+revenue because otherwise they would have been killed a long time ago.</p>
+<div class="astronaut" data-type="note" epub:type="note"><h6>Note</h6>
+<p>When discussing what sets modern “digital”
+companies apart from traditional ones, “lack of legacy” regularly
+comes up as a key factor.</p>
+</div>
+
+<p>Systems fall into the state of legacy because technology moves faster
+than the business: life insurance systems often must maintain data and
+functionality for decades, rendering much of the technology used to
+build the system obsolete. With a bit of luck, the systems don’t have to
+be updated anymore, so IT might be inclined to “simply let it run,”
+following the popular advice to “never touch a running system.”
+Unfortunately, changing regulations or security vulnerabilities in old
+versions of the application or the underlying software stack are likely
+to interfere with such an approach.</p>
+
+<p>Traditional IT sometimes justifies their zombies with having to support
+the business: how can you shut down a system that may be needed by the
+business? They also feel that digital companies don’t have such problems
+because they are too young to have accumulated legacy. 150 Google
+developers attending Mike Feathers’s talk about <em>Working Effectively with Legacy Code</em><sup><a data-type="noteref" href="ch12.html#idm45952855996808" id="idm45952855996808-marker">1</a></sup> might make us question this
+assumption. Because Google’s systems evolve rapidly, they also
+accumulate legacy more quickly than traditional IT. So it’s not that
+they have been blessed with not having legacy, they must have found a
+better way of dealing with it.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Fear of Change" data-type="sect1"><div class="sect1" id="idm45952855995016">
+<h1>Fear of Change</h1>
+
+<p>Systems<a data-primary="legacy systems" data-secondary="fear of change and" data-type="indexterm" id="idm45952855993720"/> become legacy zombies by not evolving with the technology. This
+happens in classic IT largely because <em>change is seen as a risk</em> (<a data-type="xref" href="ch26.html#ReverseEngineering">Chapter 26</a>). Once again: “never touch a running system.”
+System releases are based on extensive, often manual test cycles that
+can last months, making updates or changes a costly endeavor. Worse yet,
+there’s no “business case” for updating the system technology. This
+widespread logic is about as sound as considering changing the oil in
+your car a waste of money—after all, the car still runs if you don’t.
+And it even makes your quarterly profit statement look a little better;
+that is, until the engine seizes.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Slogans like “Never touch a running system” reflect the belief that change bears risk.</p>
+</div>
+
+<p>A team from Credit Suisse described how to counterbalance this trap in
+its aptly titled book <em>Managed Evolution</em>.<sup><a data-type="noteref" href="ch12.html#idm45952855988248" id="idm45952855988248-marker">2</a></sup> The key driver for managed evolution is to maintain
+agility in a system. A system that no one wants to touch has no agility
+at all: it can’t be changed. In a very static business and technology
+environment, this might not be all that terrible, but that’s not the
+environment we live in <span class="keep-together">anymore!</span></p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>In today’s environment, the inability to change a
+system becomes a major liability for IT and the business.</p>
+</div>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Hoping for the Best Isn’t a Strategy" data-type="sect1"><div class="sect1" id="idm45952855984312">
+<h1>Hoping for the Best Isn’t a Strategy</h1>
+
+<p>Most<a data-primary="mean time between failures (MTBF)" data-type="indexterm" id="idm45952855983000"/><a data-primary="legacy systems" data-secondary="MTBF versus MTTR" data-type="indexterm" id="idm45952855982312"/> things are the way they are for a reason. This is also true for the
+fear of change in corporate IT. These organizations typically lack the
+tools, processes, and skills to closely observe production metrics and
+to rapidly deploy fixes in case something goes awry. They hence try to
+test for all scenarios before deploying and then running the application
+more or less “blind,” hoping that nothing breaks. This behavior looks
+to maximize MTBF—the <em>mean time between failures</em>.</p>
+
+<p>While increasing the time between failures is a worthwhile
+approach, focusing on MTBF alone has two major downsides. First, it
+slows down hardware provisioning and software deployment due to
+excessive up-front testing. It also leads to a situation where the
+response to an actual failure becomes “this wasn’t supposed to
+happen.” It’s unlikely that those are the words you want to hear from
+an operations team.</p>
+
+<p>Such<a data-primary="mean time to recovery (MTTR)" data-type="indexterm" id="idm45952855979016"/> teams often ignore the other side of the equation:
+the <em>mean time to recovery</em> (MTTR). This metric indicates how quickly a system
+can recover from an error. Modern teams look at both aspects. As an
+analogy, you’d want to use fire-retardant materials but also a fire
+brigade that can be onsite in a few minutes. The top benchmark for
+incident response time I observed was at a large chemical factory where
+the fire brigade would be at the incident site in 45 seconds (!).
+Airports generally achieve two to three minutes.<sup><a data-type="noteref" href="ch12.html#idm45952855977240" id="idm45952855977240-marker">3</a></sup></p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>Traditional organizations “hope for the best” by
+relying on ways to maximize MTBF, whereas modern organizations also
+“prepare for the worst” by minimizing MTTR.</p>
+</div>
+
+<p>Reducing MTTR involves very different mechanisms such as high system
+transparency, version control, and automation. In fact, reducing MTTR is
+such a game changer for IT organizations that it’s one of the four
+software delivery performance measures used by the authors of the book
+<em>Accelerate</em>.<sup><a data-type="noteref" href="ch12.html#idm45952855972776" id="idm45952855972776-marker">4</a></sup></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Version Upgrades" data-type="sect1"><div class="sect1" id="idm45952855971304">
+<h1>Version Upgrades</h1>
+
+<p>The<a data-primary="legacy systems" data-secondary="version upgrades" data-type="indexterm" id="idm45952855970008"/><a data-primary="version upgrades" data-type="indexterm" id="idm45952855969064"/><a data-primary="upgrades" data-type="indexterm" id="idm45952855968392"/> zombie problem is not limited to systems written in PL/1 running on
+an IBM/360, though. Often updating basic runtime infrastructures like
+application servers, JDK versions, browsers, or operating systems scare
+the living daylights out of IT, causing version updates to be deferred
+until the vendor ceases support. The natural reaction then is to pay the
+vendor for extended support to avoid the horror scenario of having to
+migrate your software to a new version.</p>
+
+<p>Often the inability to migrate cascades across multiple layers of the
+software stack: one cannot upgrade to a newer JDK because it doesn’t run
+on the current application server version, which can’t be updated
+because it requires a new <span class="keep-together">version</span> of the operating system, which
+deprecates some library or feature the software depends on.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>I have seen IT shops that are stuck on Internet Explorer 6 because their software utilizes a proprietary feature not present in later versions.</p>
+</div>
+
+<p>Looking at the user interfaces of most corporate applications, you would find
+it difficult to imagine that they eked out every little bit of browser
+capability. They surely would have been better off not depending on such
+a peculiar feature and instead being able to benefit from browser
+evolution. Such a line of thought requires a conscious trade-off between optimizing for the short term versus <em>assuring long-term velocity</em> (<a data-type="xref" href="ch03.html#ArchitectsFirstDerivative">Chapter 3</a>).</p>
+
+<p>Ironically, IT’s widespread <em>fear of code</em> (<a data-type="xref" href="ch11.html#ConfigureThis">Chapter 11</a>) leads it down a dark and narrow road toward heavily customized frameworks. Version upgrades
+become very difficult and expensive to make, and another zombie grows.
+Anyone who has done an SAP upgrade can relate.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Run Versus Change" data-type="sect1"><div class="sect1" id="idm45952855959672">
+<h1>Run Versus Change</h1>
+
+<p>The<a data-primary="legacy systems" data-secondary="separation of operating code versus development  code" data-type="indexterm" id="idm45952855958376"/><a data-primary="run versus change" data-type="indexterm" id="idm45952855957400"/> fear of change is even encoded in many IT organizations that
+separate “run” (operating) from “change” (development), establishing
+that running software doesn’t imply change. Rather, it’s the opposite of
+change, which is done by application development—those guys who
+produce the flaky code IT is afraid of. Structuring IT teams this way
+will guarantee that systems will age and become legacy because no change
+could be applied to them.</p>
+
+<p>You might think that by not changing running systems, IT can keep the
+operational cost low. Ironically, the opposite is true: many IT
+departments spend more than half of their IT budget on “run” and
+“maintenance,” leaving only a fraction of the budget for “change”
+that can support the evolving demands of the business. That’s because
+running and supporting legacy applications is expensive: operational
+processes are often manual; the software may not be stable,
+necessitating constant attention; the software may not scale well,
+requiring the procurement of expensive hardware; lack of documentation
+means time-consuming trial-and-error troubleshooting in case of
+problems. These are reasons why legacy systems tie up valuable IT
+resources and skills, effectively devouring the brains of IT that could
+be applied to more useful tasks; for example, delivering features to the
+business.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Planned Obsolescence" data-type="sect1"><div class="sect1" id="idm45952855954488">
+<h1>Planned Obsolescence</h1>
+
+<p>When<a data-primary="obsolescence, planned" data-type="indexterm" id="idm45952855953192"/><a data-primary="legacy systems" data-secondary="planned obsolescence" data-type="indexterm" id="idm45952855952520"/><a data-primary="planned obsolescence" data-type="indexterm" id="idm45952855951576"/> selecting a product or conducting a request for proposal (RFP),
+classic IT tends to compile a list containing dozens or hundreds of
+features or capabilities that a candidate product has to offer. Often,
+these lists are created by external consultants unaware of the business
+need or the company’s IT strategy. However, they can produce very long
+lists, and longer appears to be better to some IT staff, whose main
+motivation lies in demonstrating that the selection was <span class="keep-together">“thorough.”</span></p>
+
+<p>To cite another car analogy, this is a bit like evaluating a car by
+having an endless list of more or less (ir)relevant features like “must
+have a 12V lighter outlet,” “speedometer goes above 200 km/h,” “can
+turn the front wheels,” and then scoring a BMW versus a Mercedes for these.
+How likely this is to steer (pun intended) you toward the car you will
+enjoy the most is questionable at best.</p>
+
+<p>One item routinely missing from such “features” lists is planned
+obsolescence: how easy is it to replace the system? Can the data be
+exported in a well-defined format? Can business logic be extracted and
+reused in a replacement system to avoid vendor lock-in? During the new
+product selection honeymoon, this can feel like discussing a
+prenup<sup><a data-type="noteref" href="ch12.html#idm45952855948104" id="idm45952855948104-marker">5</a></sup> before the wedding—who likes to think
+about parting ways when you are about to embark on a lifelong journey?
+In the case of an IT system, you better hope the journey isn’t lifelong;
+systems are meant to come and go. So better to have a prenup in place
+than being held hostage by the system (or vendor) you are trying to part
+with.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="If It Hurts, Do It More Often" data-type="sect1"><div class="sect1" id="idm45952855946680">
+<h1>If It Hurts, Do It More Often</h1>
+
+<p>How<a data-primary="legacy systems" data-secondary="embracing change" data-type="indexterm" id="idm45952855945368"/><a data-primary="resistance to change" data-secondary="embracing change" data-type="indexterm" id="idm45952855944424"/> do you break out of the “change is bad” cycle? As mentioned
+earlier, without proper instrumentation and automation, making changes is
+not only scary but indeed risky. The reluctance to upgrade or migrate
+software is similar to the reluctance to build and test software often.
+Martin Fowler issued the best advice to break this cycle: “If it hurts,
+do it more often.” Behind the provocative name sits the insight that
+deferring a painful task generally makes it disproportionately more
+painful: if you haven’t built your source code in months, it’s
+guaranteed not to go smoothly. Likewise, if the application server your software is running on is three versions behind, you’ll have the migration from hell.</p>
+
+<p>Performing such tasks more frequently provides a forcing function to
+automate some of the processes; for example, with automated builds or test
+suites. Dealing with migration problems will also become routine. This
+is the reason emergency workers train regularly; otherwise, they’ll
+freak out in case of an actual emergency and won’t be effective. Of
+course, training takes time and energy. But what’s the alternative?</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Culture of Change" data-type="sect1"><div class="sect1" id="idm45952855941432">
+<h1>Culture of Change</h1>
+
+<p>Digital<a data-primary="culture of change" data-type="indexterm" id="idm45952855940136"/><a data-primary="change, culture of" data-type="indexterm" id="idm45952855939464"/><a data-primary="change, culture of" data-see="also resistance to change; transformation" data-type="indexterm" id="idm45952855938792"/><a data-primary="legacy systems" data-secondary="culture of change" data-type="indexterm" id="idm45952855937816"/><a data-primary="resistance to change" data-secondary="culture of change" data-type="indexterm" id="idm45952855936872"/> companies also have to deal with change and obsolescence.</p>
+<div class="astronaut" data-type="note" epub:type="note"><h6>Note</h6>
+<p>The going joke at Google was that every API had two versions: the obsolete
+one and the not-yet-quite-ready one. Actually, it wasn’t a joke, but
+pretty close to <span class="keep-together">reality.</span></p>
+</div>
+
+<p>Dealing with constant change is painful at times—every
+piece of code you write could break at any time because of changes in
+its dependencies. But living this culture of change allows Google to <em>keep up the pace</em> (<a data-type="xref" href="ch35.html#EconomiesOfSpeed">Chapter 35</a>), which is the most important of
+today’s IT capabilities. Sadly, it’s rarely listed as a performance
+indicator for project teams. Even Shaun knows that zombies can’t run fast.<a data-primary="" data-startref="RTClegacy13" data-type="indexterm" id="idm45952855931512"/></p>
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="idm45952855996808"><sup><a href="ch12.html#idm45952855996808-marker">1</a></sup> Michael Feathers, <em>Working Effectively with Legacy Code</em> (Upper Saddle River, NJ: Prentice Hall, 2004).</p><p data-type="footnote" id="idm45952855988248"><sup><a href="ch12.html#idm45952855988248-marker">2</a></sup> Stephan Murer and Bruno Bonati, <em>Managed Evolution: A Strategy for Very Large Information Systems</em> (Berlin: Springer, 2011).</p><p data-type="footnote" id="idm45952855977240"><sup><a href="ch12.html#idm45952855977240-marker">3</a></sup> Wikipedia, “Airport crash tender,” <a href="https://oreil.ly/e4DNF"><em class="hyperlink">https://oreil.ly/e4DNF</em></a>.</p><p data-type="footnote" id="idm45952855972776"><sup><a href="ch12.html#idm45952855972776-marker">4</a></sup> Nicole Forsgren, Jez Humble, and Gene Kim, <em>Accelerate: The Science of Lean Software and DevOps: Building and Scaling High Performing Technology Organizations</em> (Portland, OR: IT Revolution, 2018).</p><p data-type="footnote" id="idm45952855948104"><sup><a href="ch12.html#idm45952855948104-marker">5</a></sup> A prenuptial agreement often clarifies asset division in case of a divorce.</p></div></div></section></body></html>

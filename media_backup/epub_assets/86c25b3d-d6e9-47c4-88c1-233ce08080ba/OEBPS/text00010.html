@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Chapter 3. Strategic Design with Subdomains</title>
+<link rel="stylesheet" type="text/css" href="flow0001.css" />
+</head>
+<body>
+<h2 id="ch03"><a id="page_45"></a>
+Chapter 3. Strategic Design with Subdomains</h2>
+<div class="image"><img src="Image00043.jpg" alt="Image" />
+</div>
+<p class="noindent">When you work on a DDD project, there are always multiple <em>Bounded Contexts</em>
+ in play. One of the <em>Bounded Contexts</em>
+ will be the <em>Core Domain</em>
+, and there will also be various <em>Subdomains</em>
+ in other <em>Bounded Contexts.</em>
+ In the previous chapter you saw the importance of dividing different models by their specific <em>Ubiquitous Language</em>
+ and forming multiple <em>Bounded Contexts</em>
+. There are six <em>Bounded Contexts</em>
+ and six <em>Subdomains</em>
+ in the preceding diagram. Because DDD strategic design was used, the teams achieved the most optimal modeling composition: one <em>Subdomain</em>
+ per <em>Bounded Context</em>
+, and one <em>Bounded Context</em>
+ per <em>Subdomain.</em>
+ In other words, the <em>Agile Project Management Core</em>
+ is both one clean <em>Bounded Context</em>
+ and one clean <em>Subdomain.</em>
+ In some situations, there may be <a id="page_46"></a>
+multiple <em>Subdomains</em>
+ in one <em>Bounded Context</em>
+, but that doesn&#8217;t achieve the most optimal modeling outcome.</p>
+<div class="heading">
+<h3 id="ch03lev1sec1">What Is a Subdomain?</h3>
+<p class="noindent">Simply stated, a <em>Subdomain</em>
+ is a sub-part of your overall business domain. You can think of a <em>Subdomain</em>
+ as representing a single, logical domain model. Most business domains are usually too large and complex to reason about as a whole, so we generally concern ourselves only with the <em>Subdomains</em>
+ that we must use within a single project. <em>Subdomains</em>
+ can be used to logically break up your whole business domain so that you can understand your <em>problem space</em>
+ on a large, complex project.</p>
+</div>
+<p class="indent">Another way to think of a <em>Subdomain</em>
+ is that it is a clear area of expertise, assuming that it is responsible for providing a solution to a core area of your business. This implies that the particular <em>Subdomain</em>
+ will have one or more <em>Domain Experts</em>
+ who understand very well the aspects of the business that a specific <em>Subdomain</em>
+ facilitates. The <em>Subdomain</em>
+ also has greater or lesser strategic significance to your business.</p>
+<p class="indent">If DDD had been used to develop it, the <em>Subdomain</em>
+ would have been implemented as a clean <em>Bounded Context.</em>
+ The <em>Domain Experts</em>
+ who specialize in that particular area of the business would have been members of the team that developed the <em>Bounded Context.</em>
+ Although using DDD to develop a clean <em>Bounded Context</em>
+ is the optimal choice, sometimes we can only wish that had been the case.</p>
+<div class="heading">
+<h3 id="ch03lev1sec2">Types of Subdomains</h3>
+<p class="noindent">There are three primary types of <em>Subdomains</em>
+ within a project:</p>
+</div>
+<p class="indenthangingB">&#8226; <em>Core Domain:</em>
+ This is where you are making a strategic investment in a single, well-defined domain model, committing significant resources for carefully crafting your <em>Ubiquitous Language</em>
+ in an explicit <em>Bounded Context.</em>
+ This is very high on your organization&#8217;s <a id="page_47"></a>
+list of projects because it will distinguish it from all competitors. Since your organization can&#8217;t be distinguished in everything that it does, your <em>Core Domain</em>
+ demarcates where it must excel. Achieving the level of deep learning and understanding required to make such a determination requires commitment, collaboration, and experimentation. It&#8217;s where the organization needs to invest most liberally in software. I provide the means to accelerate and manage such projects efficiently and effectively later in this book.</p>
+<p class="indenthangingB">&#8226; <em>Supporting Subdomain:</em>
+ This is a modeling situation that calls for custom development, because an off-the-shelf solution doesn&#8217;t exist. However, you will still not make the kind of investment that you have made for your <em>Core Domain.</em>
+ You may want to consider outsourcing this kind of <em>Bounded Context</em>
+ to avoid mistaking it for something strategically distinguishing, and thus investing heavily in it. This is still an important software model, because your <em>Core Domain</em>
+ cannot be successful without it.</p>
+<p class="indenthangingB">&#8226; <em>Generic Subdomain:</em>
+ This kind of solution may be available for purchase off the shelf but may also be outsourced or even developed in house by a team that doesn&#8217;t have the kind of elite developers that you assign to your <em>Core Domain</em>
+ or even a lesser <em>Supporting Subdomain.</em>
+ Be careful not to mistake a <em>Generic Subdomain</em>
+ for a <em>Core Domain.</em>
+ You don&#8217;t want to make that kind of investment here.</p>
+<p class="noindent">When discussing a project where DDD is being employed, we are most likely discussing a <em>Core Domain.</em>
+</p>
+<div class="heading">
+<h3 id="ch03lev1sec3">Dealing with Complexity</h3>
+<p class="noindent">Some of the system boundaries within a business domain will very likely be legacy systems, perhaps those that your organization has created or those that have been purchased through software licensing. At this point you may not be able to do much about improving those legacy systems, but you still need to reason about them when they have an impact on your <em>Core Domain</em>
+ project. To do so, use <em>Subdomains</em>
+ as a tool for discussing your <em>problem space.</em>
+</p>
+</div>
+<div class="image"><a id="page_48"></a>
+<img src="Image00044.jpg" alt="Image" />
+</div>
+<p class="indent">Unfortunately, but true all the same, some legacy systems are so counter to the DDD way of designing with <em>Bounded Contexts</em>
+ that you might even refer to them as <em>unbounded</em>
+ legacy systems. That&#8217;s because such a legacy system is what I&#8217;ve already referred to as a <em>Big Ball of Mud.</em>
+ In reality the one system is full of multiple tangled models that should have been separately designed and implemented but were jumbled together into one very complex and intertwined mess.</p>
+<div class="image"><img src="Image00045.jpg" alt="Image" />
+</div>
+<p class="indent">Stated another way, when we are discussing a legacy system there are probably some, even many, <em>logical</em>
+ domain models that exist inside that one legacy system. Think of each of those logical domain models as a <a id="page_49"></a>
+<em>Subdomain.</em>
+ In the diagram, each logical <em>Subdomain</em>
+ in the unbounded legacy monolithic <em>Big Ball of Mud</em>
+ is marked off by a dashed box. There are five logical models or <em>Subdomains.</em>
+ Treating the logical <em>Subdomains</em>
+ as such helps us grapple with the complexity of large systems. This makes a lot of sense because it allows us to treat the <em>problem space</em>
+ as if it had been developed using DDD and multiple <em>Bounded Contexts.</em>
+</p>
+<p class="indent">The legacy system seems less monolithic and muddy if we imagine separate <em>Ubiquitous Languages</em>
+, at least for the sake of understanding how we must integrate with it. Thinking about and discussing such legacy systems using <em>Subdomains</em>
+ helps us cope with the harsh realities of a large entangled model. And as we reason using this tool, we can determine the <em>Subdomains</em>
+ that are more valuable to the business and necessary for our project, and those that can be relegated to lesser status.</p>
+<p class="indent">With that in mind, you can even show the <em>Core Domain</em>
+ that you are working on, or are about to work on, right in the same simple diagram. This will help you understand the associations and dependencies between <em>Subdomains.</em>
+ But I will save the details of that discussion for <em>Context Mapping.</em>
+</p>
+<div class="image"><img src="Image00046.jpg" alt="Image" />
+</div>
+<p class="indent">When using DDD, a <em>Bounded Context</em>
+ should align one-to-one (1:1) with a single <em>Subdomain.</em>
+ That is, when using DDD, if there is one <em>Bounded Context</em>
+, there is, as a goal, one <em>Subdomain</em>
+ model in that <em>Bounded Context.</em>
+ It may not always be possible or practical to achieve, but where possible it is important to design in that way. This will keep your <em>Bounded Contexts</em>
+ clean and focused on the core strategic initiative.</p>
+<p class="indent"><a id="page_50"></a>
+If you must create a second model in the same <em>Bounded Context</em>
+ (within your <em>Core Domain</em>
+), you should segregate the secondary model from your <em>Core Domain</em>
+ using a completely separate <em>Module</em>
+ <a href="text00015.html#ref_05">[IDDD]</a>
+. (A DDD <em>Module</em>
+ is basically a package in Scala and Java, and a namespace in F# and C#.) This makes a clear linguistic statement that one model is core and the other is merely supporting. This particular use of segregating a <em>Subdomain</em>
+ is one that you would employ in your <em>solution space.</em>
+</p>
+<div class="heading">
+<h3 id="ch03lev1sec4">Summary</h3>
+<p class="noindent">In summary you have learned:</p>
+</div>
+<p class="indenthangingB">&#8226; What <em>Subdomains</em>
+ are and how they are used, both in the <em>problem space</em>
+ and in the <em>solution space</em>
+</p>
+<p class="indenthangingB">&#8226; The difference between a <em>Core Domain</em>
+, a <em>Supporting Subdomain</em>
+, and a <em>Generic Subdomain</em>
+</p>
+<p class="indenthangingB">&#8226; How you can make use of <em>Subdomains</em>
+ while reasoning about integration with a <em>Big Ball of Mud</em>
+ legacy system</p>
+<p class="indenthangingB">&#8226; The importance of aligning your DDD <em>Bounded Context</em>
+ one-to-one with a single <em>Subdomain</em>
+</p>
+<p class="indenthangingB">&#8226; How you should segregate a <em>Supporting Subdomain</em>
+ model from your <em>Core Domain</em>
+ model using a DDD <em>Module</em>
+ when it is impractical to separate the two in different <em>Bounded Contexts</em>
+</p>
+<p class="noindent">For exhaustive coverage of <em>Subdomains</em>
+, see <a href="text00009.html#ch02">Chapter 2</a>
+ of <em>Implementing Domain-Driven Design</em>
+ <a href="text00015.html#ref_05">[IDDD]</a>
+.</p>
+</body>
+</html>

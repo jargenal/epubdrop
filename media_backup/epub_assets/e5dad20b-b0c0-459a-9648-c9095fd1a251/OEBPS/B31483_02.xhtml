@@ -1,0 +1,4048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xml:lang="en-GB" xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+ <head>
+  <title>
+   B31483_02
+  </title>
+  <link href="css/explorer-css-sk.css" rel="stylesheet" type="text/css"/>
+  <!-- kobo-style -->
+  <style id="koboSpanStyle" type="text/css" xmlns="http://www.w3.org/1999/xhtml">
+   .koboSpan { -webkit-text-combine: inherit; }
+  </style>
+ </head>
+ <body id="B31483_02">
+  <div id="_idContainer034">
+   <h1 class="chapter-number" id="_idParaDest-39">
+    <a id="_idTextAnchor038">
+    </a>
+    <span class="koboSpan" id="kobo.1.1" xmlns="http://www.w3.org/1999/xhtml">
+     2
+    </span>
+   </h1>
+   <h1 id="_idParaDest-40">
+    <a id="_idTextAnchor039">
+    </a>
+    <span class="koboSpan" id="kobo.2.1" xmlns="http://www.w3.org/1999/xhtml">
+     Principles of Agentic Systems
+    </span>
+   </h1>
+   <p>
+    <a id="_idTextAnchor040">
+    </a>
+    <span class="koboSpan" id="kobo.3.1" xmlns="http://www.w3.org/1999/xhtml">
+     In the previous chapter, we introduced the basics of generative AI, learned about types of generative AI models, and briefly discussed LLM-powered AI agents.
+    </span>
+    <span class="koboSpan" id="kobo.3.2" xmlns="http://www.w3.org/1999/xhtml">
+     In this chapter, we will discuss the basic principles of agentic systems, starting with a brief discussion about the concept of agency and autonomy, followed by a discussion about intelligent agents and their characteristics.
+    </span>
+    <span class="koboSpan" id="kobo.3.3" xmlns="http://www.w3.org/1999/xhtml">
+     We will also discuss various agentic system architectures as well as multi-agent systems through the lens of the travel booking assistant example that we discussed in the
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.4.1" xmlns="http://www.w3.org/1999/xhtml">
+      previous chapter.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.5.1" xmlns="http://www.w3.org/1999/xhtml">
+     The main topics discussed in this chapter are
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.6.1" xmlns="http://www.w3.org/1999/xhtml">
+      as follows:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <span class="koboSpan" id="kobo.7.1" xmlns="http://www.w3.org/1999/xhtml">
+      Understanding self-governance, agency,
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.8.1" xmlns="http://www.w3.org/1999/xhtml">
+       and autonomy
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.9.1" xmlns="http://www.w3.org/1999/xhtml">
+      Reviewing intelligent agents and
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.10.1" xmlns="http://www.w3.org/1999/xhtml">
+       their characteristics
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.11.1" xmlns="http://www.w3.org/1999/xhtml">
+      Exploring the architecture of
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.12.1" xmlns="http://www.w3.org/1999/xhtml">
+       agentic systems
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.13.1" xmlns="http://www.w3.org/1999/xhtml">
+      Understanding
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.14.1" xmlns="http://www.w3.org/1999/xhtml">
+       multi-agent systems
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.15.1" xmlns="http://www.w3.org/1999/xhtml">
+     By the end of this chapter, you will have an overview of the basics of intelligent agents and the most critical aspects of agentic system architecture that must be considered while building an intelligent
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.16.1" xmlns="http://www.w3.org/1999/xhtml">
+      agentic system.
+     </span>
+    </span>
+   </p>
+   <h1 id="_idParaDest-41">
+    <a id="_idTextAnchor041">
+    </a>
+    <span class="koboSpan" id="kobo.17.1" xmlns="http://www.w3.org/1999/xhtml">
+     Technical requirements
+    </span>
+   </h1>
+   <p>
+    <span class="koboSpan" id="kobo.18.1" xmlns="http://www.w3.org/1999/xhtml">
+     You can find the code files for this chapter at
+    </span>
+    <a href="https://github.com/PacktPublishing/Building-Agentic-AI-Systems">
+     <span class="koboSpan" id="kobo.19.1" xmlns="http://www.w3.org/1999/xhtml">
+      https://github.com/PacktPublishing/Building-Agentic-AI-Systems
+     </span>
+    </a>
+    <span class="koboSpan" id="kobo.20.1" xmlns="http://www.w3.org/1999/xhtml">
+     and follow the README file in the repository to set up your
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.21.1" xmlns="http://www.w3.org/1999/xhtml">
+      development environment.
+     </span>
+    </span>
+   </p>
+   <h1 id="_idParaDest-42">
+    <a id="_idTextAnchor042">
+    </a>
+    <span class="koboSpan" id="kobo.22.1" xmlns="http://www.w3.org/1999/xhtml">
+     Understanding self-governance, agency, and autonomy
+    </span>
+   </h1>
+   <p>
+    <span class="koboSpan" id="kobo.23.1" xmlns="http://www.w3.org/1999/xhtml">
+     The captivating aspect of
+    </span>
+    <strong class="bold">
+     <span class="koboSpan" id="kobo.24.1" xmlns="http://www.w3.org/1999/xhtml">
+      agentic systems
+     </span>
+    </strong>
+    <span class="koboSpan" id="kobo.25.1" xmlns="http://www.w3.org/1999/xhtml">
+     lies in the intricate decision-making processes they employ, which provide valuable insights into how choices are optimized within specific contexts.
+    </span>
+    <span class="koboSpan" id="kobo.25.2" xmlns="http://www.w3.org/1999/xhtml">
+     These systems often challenge our conventional understanding of accountability
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.26.1" xmlns="http://www.w3.org/1999/xhtml">
+      and responsibility.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.27.1" xmlns="http://www.w3.org/1999/xhtml">
+     Agentic systems act as the driving force behind innovation and technological advancements in various fields, including robotics, AI, and systems engineering.
+    </span>
+    <span class="koboSpan" id="kobo.27.2" xmlns="http://www.w3.org/1999/xhtml">
+     The development and deployment of these systems have catalyzed the exploration and creation of new forms of automation and intelligent behaviors.
+    </span>
+    <span class="koboSpan" id="kobo.27.3" xmlns="http://www.w3.org/1999/xhtml">
+     Let’s discuss some of the areas where agentic systems are
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.28.1" xmlns="http://www.w3.org/1999/xhtml">
+      making headway:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.29.1" xmlns="http://www.w3.org/1999/xhtml">
+       Robotics
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.30.1" xmlns="http://www.w3.org/1999/xhtml">
+      : In the field of robotics, agentic systems have paved the way for the design and
+     </span>
+     <a id="_idIndexMarker085">
+     </a>
+     <span class="koboSpan" id="kobo.31.1" xmlns="http://www.w3.org/1999/xhtml">
+      implementation of autonomous robots capable of navigating complex environments, performing intricate tasks, and adapting to changing conditions.
+     </span>
+     <span class="koboSpan" id="kobo.31.2" xmlns="http://www.w3.org/1999/xhtml">
+      These robots, equipped with decision-making capabilities and agency, have found applications in areas such as manufacturing, exploration, search and rescue operations, and healthcare.
+     </span>
+     <span class="koboSpan" id="kobo.31.3" xmlns="http://www.w3.org/1999/xhtml">
+      For instance, robots with agentic behavior can autonomously navigate through disaster zones, assess potential risks, and make decisions to assist in rescue efforts, demonstrating intelligent and
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.32.1" xmlns="http://www.w3.org/1999/xhtml">
+       adaptive behavior.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.33.1" xmlns="http://www.w3.org/1999/xhtml">
+       AI
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.34.1" xmlns="http://www.w3.org/1999/xhtml">
+      : In AI, agentic systems have been instrumental in the development of intelligent
+     </span>
+     <a id="_idIndexMarker086">
+     </a>
+     <span class="koboSpan" id="kobo.35.1" xmlns="http://www.w3.org/1999/xhtml">
+      agents and decision support systems.
+     </span>
+     <span class="koboSpan" id="kobo.35.2" xmlns="http://www.w3.org/1999/xhtml">
+      These systems leverage advanced algorithms, machine learning techniques, and knowledge representation methods to analyze data, reason about complex scenarios, and provide intelligent recommendations or automated decision-making capabilities.
+     </span>
+     <span class="koboSpan" id="kobo.35.3" xmlns="http://www.w3.org/1999/xhtml">
+      Agentic AI systems have been applied in domains such as finance, healthcare, transportation, and marketing, enabling more efficient and effective
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.36.1" xmlns="http://www.w3.org/1999/xhtml">
+       decision-making processes.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.37.1" xmlns="http://www.w3.org/1999/xhtml">
+       Systems engineering
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.38.1" xmlns="http://www.w3.org/1999/xhtml">
+      : In the
+     </span>
+     <a id="_idIndexMarker087">
+     </a>
+     <span class="koboSpan" id="kobo.39.1" xmlns="http://www.w3.org/1999/xhtml">
+      field of systems engineering, agentic systems have facilitated the design and implementation of complex, distributed, and adaptive systems.
+     </span>
+     <span class="koboSpan" id="kobo.39.2" xmlns="http://www.w3.org/1999/xhtml">
+      These systems often consist of multiple interacting components or subsystems, each exhibiting agentic behavior and decision-making capabilities.
+     </span>
+     <span class="koboSpan" id="kobo.39.3" xmlns="http://www.w3.org/1999/xhtml">
+      Such systems are found in areas such as power
+     </span>
+     <a id="_idIndexMarker088">
+     </a>
+     <span class="koboSpan" id="kobo.40.1" xmlns="http://www.w3.org/1999/xhtml">
+      grids, transportation networks, and cyber-physical systems, where intelligent and autonomous decision-making is crucial for efficient operation, resource allocation, and
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.41.1" xmlns="http://www.w3.org/1999/xhtml">
+       fault tolerance.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.42.1" xmlns="http://www.w3.org/1999/xhtml">
+     Central to the idea of agentic systems are the concepts of self-governance, agency, and autonomy.
+    </span>
+    <span class="koboSpan" id="kobo.42.2" xmlns="http://www.w3.org/1999/xhtml">
+     Let’s discuss each of these concepts in the subsequent sections to understand what they are and explore the critical role they play within an agentic
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.43.1" xmlns="http://www.w3.org/1999/xhtml">
+      system architectu
+     </span>
+     <a id="_idTextAnchor043">
+     </a>
+     <span class="koboSpan" id="kobo.44.1" xmlns="http://www.w3.org/1999/xhtml">
+      re.
+     </span>
+    </span>
+   </p>
+   <h2 id="_idParaDest-43">
+    <a id="_idTextAnchor044">
+    </a>
+    <span class="koboSpan" id="kobo.45.1" xmlns="http://www.w3.org/1999/xhtml">
+     Self-governance
+    </span>
+   </h2>
+   <p>
+    <span class="koboSpan" id="kobo.46.1" xmlns="http://www.w3.org/1999/xhtml">
+     Agentic systems are artificial and human systems that possess self-governance, adaptability, and interaction.
+    </span>
+    <span class="koboSpan" id="kobo.46.2" xmlns="http://www.w3.org/1999/xhtml">
+     Self-governance refers to the ability of a system or entity to govern
+    </span>
+    <a id="_idIndexMarker089">
+    </a>
+    <span class="koboSpan" id="kobo.47.1" xmlns="http://www.w3.org/1999/xhtml">
+     or control itself autonomously, without external direction or control.
+    </span>
+    <span class="koboSpan" id="kobo.47.2" xmlns="http://www.w3.org/1999/xhtml">
+     In the context of agentic systems, self-governance implies that the system can make its own decisions, set its own goals, and regulate its behavior based on its internal rules, models, and decision-making algorithms.
+    </span>
+    <span class="koboSpan" id="kobo.47.3" xmlns="http://www.w3.org/1999/xhtml">
+     Basically, they operate according to their rules and internal states, and execute a change of behavior, if necessary, due to a change of the environment or the objectives.
+    </span>
+    <span class="koboSpan" id="kobo.47.4" xmlns="http://www.w3.org/1999/xhtml">
+     Such systems interact with the environment or other systems in a way that is meaningful to them and, through these interactions,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.48.1" xmlns="http://www.w3.org/1999/xhtml">
+      become influenced.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.49.1" xmlns="http://www.w3.org/1999/xhtml">
+     Some key
+    </span>
+    <a id="_idIndexMarker090">
+    </a>
+    <span class="koboSpan" id="kobo.50.1" xmlns="http://www.w3.org/1999/xhtml">
+     aspects of self-governance in agentic systems are
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.51.1" xmlns="http://www.w3.org/1999/xhtml">
+      as follows:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.52.1" xmlns="http://www.w3.org/1999/xhtml">
+       Self-organization
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.53.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The ability to organize and structure its own internal processes, resources, and behavior without
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.54.1" xmlns="http://www.w3.org/1999/xhtml">
+       external intervention
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.55.1" xmlns="http://www.w3.org/1999/xhtml">
+       Self-regulation
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.56.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The capability to monitor and adjust its own actions and outputs based on feedback from the environment or internal states, to ensure it operates within desired parameters
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.57.1" xmlns="http://www.w3.org/1999/xhtml">
+       or constraints
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.58.1" xmlns="http://www.w3.org/1999/xhtml">
+       Self-adaptation
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.59.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The ability to modify its behavior, strategies, or decision-making processes in response to changes in the environment or its own internal conditions, to achieve its goals
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.60.1" xmlns="http://www.w3.org/1999/xhtml">
+       more effectively
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.61.1" xmlns="http://www.w3.org/1999/xhtml">
+       Self-optimization
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.62.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The ability to continuously improve its performance, efficiency, or decision-making capabilities through learning, experience, or
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.63.1" xmlns="http://www.w3.org/1999/xhtml">
+       evolutionary processes
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.64.1" xmlns="http://www.w3.org/1999/xhtml">
+       Self-determination
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.65.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The ability to set its own objectives, priorities, and courses of action based on its internal decision-making processes, without being entirely controlled by
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.66.1" xmlns="http://www.w3.org/1999/xhtml">
+       external forces
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.67.1" xmlns="http://www.w3.org/1999/xhtml">
+     Self-governance
+    </span>
+    <a id="_idIndexMarker091">
+    </a>
+    <span class="koboSpan" id="kobo.68.1" xmlns="http://www.w3.org/1999/xhtml">
+     in agentic systems is often enabled by the integration of various technologies, frameworks, and methodologies such as machine learning, knowledge representation, reasoning, and decision-making algorithms.
+    </span>
+    <span class="koboSpan" id="kobo.68.2" xmlns="http://www.w3.org/1999/xhtml">
+     These allow the system to process information, learn from data and experiences, and make autonomous decisions based on its acquired knowledge and the
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.69.1" xmlns="http://www.w3.org/1999/xhtml">
+      current co
+     </span>
+     <a id="_idTextAnchor045">
+     </a>
+     <span class="koboSpan" id="kobo.70.1" xmlns="http://www.w3.org/1999/xhtml">
+      ntext.
+     </span>
+    </span>
+   </p>
+   <h2 id="_idParaDest-44">
+    <a id="_idTextAnchor046">
+    </a>
+    <span class="koboSpan" id="kobo.71.1" xmlns="http://www.w3.org/1999/xhtml">
+     Agency
+    </span>
+   </h2>
+   <p>
+    <span class="koboSpan" id="kobo.72.1" xmlns="http://www.w3.org/1999/xhtml">
+     Agency is
+    </span>
+    <a id="_idIndexMarker092">
+    </a>
+    <span class="koboSpan" id="kobo.73.1" xmlns="http://www.w3.org/1999/xhtml">
+     described as the capability of an individual, or any other entity, to act independently and make choices.
+    </span>
+    <span class="koboSpan" id="kobo.73.2" xmlns="http://www.w3.org/1999/xhtml">
+     In the context of human and artificial systems, agency encompasses the following
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.74.1" xmlns="http://www.w3.org/1999/xhtml">
+      key elements:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.75.1" xmlns="http://www.w3.org/1999/xhtml">
+       Decisional authority
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.76.1" xmlns="http://www.w3.org/1999/xhtml">
+      : This refers to the power or ability to act and perform actions
+     </span>
+     <a id="_idIndexMarker093">
+     </a>
+     <span class="koboSpan" id="kobo.77.1" xmlns="http://www.w3.org/1999/xhtml">
+      according to a chosen alternative or course of action.
+     </span>
+     <span class="koboSpan" id="kobo.77.2" xmlns="http://www.w3.org/1999/xhtml">
+      Systems with agency possess the autonomy to evaluate different options and select the most appropriate action based on their internal decision-making processes, rather than being solely driven by external forces or
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.78.1" xmlns="http://www.w3.org/1999/xhtml">
+       predetermined rules.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.79.1" xmlns="http://www.w3.org/1999/xhtml">
+       Intentionality
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.80.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Agency implies the existence of intentions, goals, or objectives that guide the actions and behavior of the system.
+     </span>
+     <span class="koboSpan" id="kobo.80.2" xmlns="http://www.w3.org/1999/xhtml">
+      Agentic systems are not merely reactive; they have a sense of purpose and can pursue specific objectives, adjusting their actions and strategies as necessary to achieve
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.81.1" xmlns="http://www.w3.org/1999/xhtml">
+       those goals.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.82.1" xmlns="http://www.w3.org/1999/xhtml">
+       Responsibility
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.83.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Agency is closely tied to the concept of responsibility, which is the answerability or accountability for the outcomes and consequences of one’s actions.
+     </span>
+     <span class="koboSpan" id="kobo.83.2" xmlns="http://www.w3.org/1999/xhtml">
+      Systems with agency are considered responsible for their decisions and the impact of their actions on the environment or other entities they
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.84.1" xmlns="http://www.w3.org/1999/xhtml">
+       interact with.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.85.1" xmlns="http://www.w3.org/1999/xhtml">
+     In most cases, AI agency involves the system’s ability to make decisions autonomously based on its internal programs, models, and the data it processes.
+    </span>
+    <span class="koboSpan" id="kobo.85.2" xmlns="http://www.w3.org/1999/xhtml">
+     These decisions can have a significant impact on the functioning of the system itself or its interactions with
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.86.1" xmlns="http://www.w3.org/1999/xhtml">
+      the environment.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.87.1" xmlns="http://www.w3.org/1999/xhtml">
+     Let’s go back to our travel booking assistant example from the previous chapter, which is responsible
+    </span>
+    <a id="_idIndexMarker094">
+    </a>
+    <span class="koboSpan" id="kobo.88.1" xmlns="http://www.w3.org/1999/xhtml">
+     for booking flight tickets and perhaps even making hotel reservations.
+    </span>
+    <span class="koboSpan" id="kobo.88.2" xmlns="http://www.w3.org/1999/xhtml">
+     In this case, the system would exhibit agency by analyzing various factors, such as the availability of flights between two cities, the price of the tickets, and any other restrictions given by the user such as preferred seat class and so on, and then making decisions on how to optimally look for flights and hotels that meet those criteria so that it minimizes the overall cost of travel for the customer.
+    </span>
+    <span class="koboSpan" id="kobo.88.3" xmlns="http://www.w3.org/1999/xhtml">
+     The system would be responsible for the outcome of its decisions, which would impact the overall travel plan and the cost of travel for
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.89.1" xmlns="http://www.w3.org/1999/xhtml">
+      the customer.
+     </span>
+    </span>
+   </p>
+   <h2 id="_idParaDest-45">
+    <a id="_idTextAnchor047">
+    </a>
+    <span class="koboSpan" id="kobo.90.1" xmlns="http://www.w3.org/1999/xhtml">
+     Autonomy
+    </span>
+   </h2>
+   <p>
+    <span class="koboSpan" id="kobo.91.1" xmlns="http://www.w3.org/1999/xhtml">
+     Autonomy is
+    </span>
+    <a id="_idIndexMarker095">
+    </a>
+    <span class="koboSpan" id="kobo.92.1" xmlns="http://www.w3.org/1999/xhtml">
+     closely related to the concept of agency but focuses more specifically on the degree of independence an entity or system possesses.
+    </span>
+    <span class="koboSpan" id="kobo.92.2" xmlns="http://www.w3.org/1999/xhtml">
+     It can be broken down into
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.93.1" xmlns="http://www.w3.org/1999/xhtml">
+      several aspects:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.94.1" xmlns="http://www.w3.org/1999/xhtml">
+       Operational autonomy
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.95.1" xmlns="http://www.w3.org/1999/xhtml">
+      : This refers to the ability of a system to perform a specific
+     </span>
+     <a id="_idIndexMarker096">
+     </a>
+     <span class="koboSpan" id="kobo.96.1" xmlns="http://www.w3.org/1999/xhtml">
+      task or set of tasks without direct human intervention or control.
+     </span>
+     <span class="koboSpan" id="kobo.96.2" xmlns="http://www.w3.org/1999/xhtml">
+      A system with operational autonomy can execute its functions independently, relying on its own internal processes, decision-making algorithms, and environmental
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.97.1" xmlns="http://www.w3.org/1999/xhtml">
+       sensing capabilities.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.98.1" xmlns="http://www.w3.org/1999/xhtml">
+       Functional autonomy
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.99.1" xmlns="http://www.w3.org/1999/xhtml">
+      : This aspect of autonomy involves the system’s ability to make
+     </span>
+     <a id="_idIndexMarker097">
+     </a>
+     <span class="koboSpan" id="kobo.100.1" xmlns="http://www.w3.org/1999/xhtml">
+      choices and take action to achieve set targets or objectives, modulated by the environment or context in which it operates.
+     </span>
+     <span class="koboSpan" id="kobo.100.2" xmlns="http://www.w3.org/1999/xhtml">
+      Functionally autonomous systems can adapt their behavior and decision-making processes in response to changing conditions or stimuli, enabling them to pursue their goals
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.101.1" xmlns="http://www.w3.org/1999/xhtml">
+       more effectively.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.102.1" xmlns="http://www.w3.org/1999/xhtml">
+       Hierarchical autonomy
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.103.1" xmlns="http://www.w3.org/1999/xhtml">
+      : This aspect relates to the amount of decisional authority
+     </span>
+     <a id="_idIndexMarker098">
+     </a>
+     <span class="koboSpan" id="kobo.104.1" xmlns="http://www.w3.org/1999/xhtml">
+      or decision-making power awarded to a system within a larger framework or organizational structure.
+     </span>
+     <span class="koboSpan" id="kobo.104.2" xmlns="http://www.w3.org/1999/xhtml">
+      Systems with higher hierarchical autonomy have greater latitude in making decisions that impact their subsystems or broader operations, while systems with lower hierarchical autonomy may have more constraints or oversight from
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.105.1" xmlns="http://www.w3.org/1999/xhtml">
+       higher-level entities.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.106.1" xmlns="http://www.w3.org/1999/xhtml">
+     In AI and robotics, autonomy is a key concept that refers to the extent to which a system can perform tasks and make decisions without the need for continuous
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.107.1" xmlns="http://www.w3.org/1999/xhtml">
+      human intervention.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.108.1" xmlns="http://www.w3.org/1999/xhtml">
+     In our travel
+    </span>
+    <a id="_idIndexMarker099">
+    </a>
+    <span class="koboSpan" id="kobo.109.1" xmlns="http://www.w3.org/1999/xhtml">
+     booking assistant example, the system would have operational autonomy to carry out tasks such as booking flights or hotels, managing reminders, and retrieving travel information with little or no human input.
+    </span>
+    <span class="koboSpan" id="kobo.109.2" xmlns="http://www.w3.org/1999/xhtml">
+     It would also possess functional autonomy, allowing it to interpret user commands, adapt to individual preferences, and make decisions that align with the user’s goals and context.
+    </span>
+    <span class="koboSpan" id="kobo.109.3" xmlns="http://www.w3.org/1999/xhtml">
+     The level of hierarchical autonomy granted to such a system might depend on factors such as user privacy preferences or the system’s access to sensitive data
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.110.1" xmlns="http://www.w3.org/1999/xhtml">
+      and resources.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.111.1" xmlns="http://www.w3.org/1999/xhtml">
+     Note that autonomy in AI and robotic systems does not necessarily imply a complete absence of human oversight or control.
+    </span>
+    <span class="koboSpan" id="kobo.111.2" xmlns="http://www.w3.org/1999/xhtml">
+     Often, these systems operate within well-defined boundaries and constraints set by their designers or operators, while still exhibiting a significant degree of autonomy.
+    </span>
+    <span class="koboSpan" id="kobo.111.3" xmlns="http://www.w3.org/1999/xhtml">
+     In our travel booking example, the chatbot requests additional information, such as travel dates, locations, name, and address, from the user to make flight bookings.
+    </span>
+    <span class="koboSpan" id="kobo.111.4" xmlns="http://www.w3.org/1999/xhtml">
+     It then cross-references this data with available flights, suggesting options that match the user’s preferences.
+    </span>
+    <span class="koboSpan" id="kobo.111.5" xmlns="http://www.w3.org/1999/xhtml">
+     If any detail is missing or unclear, the chatbot prompts the user for clarification, ensuring accuracy while still operating autonomously within the boundaries set by
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.112.1" xmlns="http://www.w3.org/1999/xhtml">
+      its programming.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.113.1" xmlns="http://www.w3.org/1999/xhtml">
+     The concepts of self-governance, agency, and autonomy in AI systems are often accompanied by ethical considerations, particularly regarding the level of autonomy granted to these systems and the potential risks and implications of their decisions.
+    </span>
+    <span class="koboSpan" id="kobo.113.2" xmlns="http://www.w3.org/1999/xhtml">
+     As AI systems become more advanced and capable of independent decision-making, ensuring their alignment with human values and ethical principles
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.114.1" xmlns="http://www.w3.org/1999/xhtml">
+      becomes crucial.
+     </span>
+    </span>
+   </p>
+   <h2 id="_idParaDest-46">
+    <a id="_idTextAnchor048">
+    </a>
+    <span class="koboSpan" id="kobo.115.1" xmlns="http://www.w3.org/1999/xhtml">
+     Example of agency and autonomy in agents
+    </span>
+   </h2>
+   <p>
+    <span class="koboSpan" id="kobo.116.1" xmlns="http://www.w3.org/1999/xhtml">
+     Let’s illustrate the concept of agency and autonomy with a simple algorithm for the travel
+    </span>
+    <a id="_idIndexMarker100">
+    </a>
+    <span class="koboSpan" id="kobo.117.1" xmlns="http://www.w3.org/1999/xhtml">
+     booking assistant.
+    </span>
+    <span class="koboSpan" id="kobo.117.2" xmlns="http://www.w3.org/1999/xhtml">
+     Note that this algorithm doesn’t necessarily use AI just yet, but it would help understand the concepts.
+    </span>
+    <span class="koboSpan" id="kobo.117.3" xmlns="http://www.w3.org/1999/xhtml">
+     Our travel
+    </span>
+    <a id="_idIndexMarker101">
+    </a>
+    <span class="koboSpan" id="kobo.118.1" xmlns="http://www.w3.org/1999/xhtml">
+     booking assistant algorithm may look
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.119.1" xmlns="http://www.w3.org/1999/xhtml">
+      as follows.
+     </span>
+    </span>
+   </p>
+   <p class="callout-heading">
+    <span class="koboSpan" id="kobo.120.1" xmlns="http://www.w3.org/1999/xhtml">
+     Algorithm 1: Travel booking assistant algorithm with agency and autonomy
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.121.1" xmlns="http://www.w3.org/1999/xhtml">
+     Require: Agent
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.122.1" xmlns="http://www.w3.org/1999/xhtml">
+      name N
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.123.1" xmlns="http://www.w3.org/1999/xhtml">
+     Ensure: Initialized TravelAgent object A with agency
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.124.1" xmlns="http://www.w3.org/1999/xhtml">
+      and autonomy
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.125.1" xmlns="http://www.w3.org/1999/xhtml">
+     1: Initialize A ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.126.1" xmlns="http://www.w3.org/1999/xhtml">
+      CreateTravelAgent(N)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.127.1" xmlns="http://www.w3.org/1999/xhtml">
+     2: Initialize A.goals ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.128.1" xmlns="http://www.w3.org/1999/xhtml">
+      empty list
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.129.1" xmlns="http://www.w3.org/1999/xhtml">
+     3: Initialize A.knowledge_base ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.130.1" xmlns="http://www.w3.org/1999/xhtml">
+      empty dictionary
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.131.1" xmlns="http://www.w3.org/1999/xhtml">
+     // Agency: Ability to act on behalf of
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.132.1" xmlns="http://www.w3.org/1999/xhtml">
+      a user
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.133.1" xmlns="http://www.w3.org/1999/xhtml">
+     4:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.134.1" xmlns="http://www.w3.org/1999/xhtml">
+      function SetGoal(G)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.135.1" xmlns="http://www.w3.org/1999/xhtml">
+     5: A.goals.Append(G)  // Agency:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.136.1" xmlns="http://www.w3.org/1999/xhtml">
+      Defining objectives
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.137.1" xmlns="http://www.w3.org/1999/xhtml">
+     6: function
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.138.1" xmlns="http://www.w3.org/1999/xhtml">
+      UpdateKnowledge(K, V)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.139.1" xmlns="http://www.w3.org/1999/xhtml">
+     7: A.knowledge_base[K] ← V  // Agency: Acquiring information from an API,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.140.1" xmlns="http://www.w3.org/1999/xhtml">
+      and scoring
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.141.1" xmlns="http://www.w3.org/1999/xhtml">
+     // Autonomy: Ability to
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.142.1" xmlns="http://www.w3.org/1999/xhtml">
+      operate independently
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.143.1" xmlns="http://www.w3.org/1999/xhtml">
+     8:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.144.1" xmlns="http://www.w3.org/1999/xhtml">
+      function MakeDecision(Options)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.145.1" xmlns="http://www.w3.org/1999/xhtml">
+     9: best_option ← max(Options, key =score)  // Autonomy:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.146.1" xmlns="http://www.w3.org/1999/xhtml">
+      Independent decision-making
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.147.1" xmlns="http://www.w3.org/1999/xhtml">
+     10:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.148.1" xmlns="http://www.w3.org/1999/xhtml">
+      return best_option
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.149.1" xmlns="http://www.w3.org/1999/xhtml">
+     11: function
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.150.1" xmlns="http://www.w3.org/1999/xhtml">
+      BookTravel(Departure, Destination)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.151.1" xmlns="http://www.w3.org/1999/xhtml">
+     12: Output “Agent A.name
+    </span>
+    <a id="_idIndexMarker102">
+    </a>
+    <span class="koboSpan" id="kobo.152.1" xmlns="http://www.w3.org/1999/xhtml">
+     is booking travel
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.153.1" xmlns="http://www.w3.org/1999/xhtml">
+      to Destination”
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.154.1" xmlns="http://www.w3.org/1999/xhtml">
+     // Agency: Execute
+    </span>
+    <a id="_idIndexMarker103">
+    </a>
+    <span class="koboSpan" id="kobo.155.1" xmlns="http://www.w3.org/1999/xhtml">
+     action on behalf
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.156.1" xmlns="http://www.w3.org/1999/xhtml">
+      of user
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.157.1" xmlns="http://www.w3.org/1999/xhtml">
+     13: SetGoal(“Book flight from Departure
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.158.1" xmlns="http://www.w3.org/1999/xhtml">
+      to Destination”)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.159.1" xmlns="http://www.w3.org/1999/xhtml">
+     14:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.160.1" xmlns="http://www.w3.org/1999/xhtml">
+      UpdateKnowledge({Departure, Destination})
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.161.1" xmlns="http://www.w3.org/1999/xhtml">
+     // Autonomy: Book travel independently by finding
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.162.1" xmlns="http://www.w3.org/1999/xhtml">
+      best flight
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.163.1" xmlns="http://www.w3.org/1999/xhtml">
+      15: MakeDecision()
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.164.1" xmlns="http://www.w3.org/1999/xhtml">
+     // Implement booking logic here and store
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.165.1" xmlns="http://www.w3.org/1999/xhtml">
+      into A
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.166.1" xmlns="http://www.w3.org/1999/xhtml">
+     16:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.167.1" xmlns="http://www.w3.org/1999/xhtml">
+      Output A
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.168.1" xmlns="http://www.w3.org/1999/xhtml">
+     Here is how the algorithm works, demonstrating the abilities of agency
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.169.1" xmlns="http://www.w3.org/1999/xhtml">
+      and autonomy:
+     </span>
+    </span>
+   </p>
+   <ol>
+    <li>
+     <span class="koboSpan" id="kobo.170.1" xmlns="http://www.w3.org/1999/xhtml">
+      We start by naming our agent; we call
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.171.1" xmlns="http://www.w3.org/1999/xhtml">
+       it
+      </span>
+     </span>
+     <span class="No-Break">
+      <strong class="source-inline">
+       <span class="koboSpan" id="kobo.172.1" xmlns="http://www.w3.org/1999/xhtml">
+        TripPlanner
+       </span>
+      </strong>
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.173.1" xmlns="http://www.w3.org/1999/xhtml">
+       .
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.174.1" xmlns="http://www.w3.org/1999/xhtml">
+      Next, we initialize a new
+     </span>
+     <strong class="source-inline">
+      <span class="koboSpan" id="kobo.175.1" xmlns="http://www.w3.org/1999/xhtml">
+       TravelAgent
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.176.1" xmlns="http://www.w3.org/1999/xhtml">
+      object with the name
+     </span>
+     <strong class="source-inline">
+      <span class="koboSpan" id="kobo.177.1" xmlns="http://www.w3.org/1999/xhtml">
+       N = "TripPlanner"
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.178.1" xmlns="http://www.w3.org/1999/xhtml">
+      ; this represents the creation of an entity capable of both agency
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.179.1" xmlns="http://www.w3.org/1999/xhtml">
+       and autonomy.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.180.1" xmlns="http://www.w3.org/1999/xhtml">
+      We then set
+     </span>
+     <a id="_idIndexMarker104">
+     </a>
+     <span class="koboSpan" id="kobo.181.1" xmlns="http://www.w3.org/1999/xhtml">
+      up a list to store the goals for the agent.
+     </span>
+     <span class="koboSpan" id="kobo.181.2" xmlns="http://www.w3.org/1999/xhtml">
+      This
+     </span>
+     <a id="_idIndexMarker105">
+     </a>
+     <span class="koboSpan" id="kobo.182.1" xmlns="http://www.w3.org/1999/xhtml">
+      relates to agency, as goals represent the intentions or desired outcomes the agent will work towards on behalf of the user.
+     </span>
+     <span class="koboSpan" id="kobo.182.2" xmlns="http://www.w3.org/1999/xhtml">
+      This is indicated by
+     </span>
+     <strong class="source-inline">
+      <span class="koboSpan" id="kobo.183.1" xmlns="http://www.w3.org/1999/xhtml">
+       A.goals ←
+      </span>
+     </strong>
+     <span class="No-Break">
+      <strong class="source-inline">
+       <span class="koboSpan" id="kobo.184.1" xmlns="http://www.w3.org/1999/xhtml">
+        empty list
+       </span>
+      </strong>
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.185.1" xmlns="http://www.w3.org/1999/xhtml">
+       .
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.186.1" xmlns="http://www.w3.org/1999/xhtml">
+      Next, we initialize an empty dictionary (also known as a map or key-value pairs) to store the agent’s knowledge.
+     </span>
+     <span class="koboSpan" id="kobo.186.2" xmlns="http://www.w3.org/1999/xhtml">
+      This is crucial for both agency (acting on behalf of users) and autonomy (independent operation), as it will contain information the agent uses to
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.187.1" xmlns="http://www.w3.org/1999/xhtml">
+       make decisions.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.188.1" xmlns="http://www.w3.org/1999/xhtml">
+      Steps
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.189.1" xmlns="http://www.w3.org/1999/xhtml">
+       4
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.190.1" xmlns="http://www.w3.org/1999/xhtml">
+      and
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.191.1" xmlns="http://www.w3.org/1999/xhtml">
+       5
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.192.1" xmlns="http://www.w3.org/1999/xhtml">
+      in the algorithm indicate the definition of a function that adds a new goal
+     </span>
+     <strong class="source-inline">
+      <span class="koboSpan" id="kobo.193.1" xmlns="http://www.w3.org/1999/xhtml">
+       G
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.194.1" xmlns="http://www.w3.org/1999/xhtml">
+      to the agent’s list of goals.
+     </span>
+     <span class="koboSpan" id="kobo.194.2" xmlns="http://www.w3.org/1999/xhtml">
+      This is akin to the agent taking on objectives on behalf of the user.
+     </span>
+     <span class="koboSpan" id="kobo.194.3" xmlns="http://www.w3.org/1999/xhtml">
+      This is indicated by
+     </span>
+     <strong class="source-inline">
+      <span class="koboSpan" id="kobo.195.1" xmlns="http://www.w3.org/1999/xhtml">
+       A.goals.Append(G)
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.196.1" xmlns="http://www.w3.org/1999/xhtml">
+      .
+     </span>
+     <span class="koboSpan" id="kobo.196.2" xmlns="http://www.w3.org/1999/xhtml">
+      Think of this as the piece of code that will receive the user’s chat message, such as
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.197.1" xmlns="http://www.w3.org/1999/xhtml">
+       “Book me a flight from San Diego to Seattle.”
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.198.1" xmlns="http://www.w3.org/1999/xhtml">
+      Here, the goal is to book a flight from San Diego
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.199.1" xmlns="http://www.w3.org/1999/xhtml">
+       to Seattle.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.200.1" xmlns="http://www.w3.org/1999/xhtml">
+      Steps
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.201.1" xmlns="http://www.w3.org/1999/xhtml">
+       6
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.202.1" xmlns="http://www.w3.org/1999/xhtml">
+      and
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.203.1" xmlns="http://www.w3.org/1999/xhtml">
+       7
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.204.1" xmlns="http://www.w3.org/1999/xhtml">
+      in the algorithm indicate the definition of a function that updates the agent’s knowledge base with a new key-value pair (map or dictionary).
+     </span>
+     <span class="koboSpan" id="kobo.204.2" xmlns="http://www.w3.org/1999/xhtml">
+      This represents agency through the acquisition of information that will be used to act on behalf of the user.
+     </span>
+     <span class="koboSpan" id="kobo.204.3" xmlns="http://www.w3.org/1999/xhtml">
+      It also supports autonomy by providing the agent with information it can use to make independent decisions.
+     </span>
+     <span class="koboSpan" id="kobo.204.4" xmlns="http://www.w3.org/1999/xhtml">
+      This operation is represented as
+     </span>
+     <strong class="source-inline">
+      <span class="koboSpan" id="kobo.205.1" xmlns="http://www.w3.org/1999/xhtml">
+       A.knowledge_base[K] ← V
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.206.1" xmlns="http://www.w3.org/1999/xhtml">
+      .
+     </span>
+     <span class="koboSpan" id="kobo.206.2" xmlns="http://www.w3.org/1999/xhtml">
+      In our case, this function uses several travel-related APIs (in theory) to get flight options between two cities, thus forming the knowledge into a knowledge base.
+     </span>
+     <span class="koboSpan" id="kobo.206.3" xmlns="http://www.w3.org/1999/xhtml">
+      This is also a place where each of these flight options will be scored; for example, late flights get low scores, and early flights get
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.207.1" xmlns="http://www.w3.org/1999/xhtml">
+       higher scores.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.208.1" xmlns="http://www.w3.org/1999/xhtml">
+      Steps
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.209.1" xmlns="http://www.w3.org/1999/xhtml">
+       8
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.210.1" xmlns="http://www.w3.org/1999/xhtml">
+      through
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.211.1" xmlns="http://www.w3.org/1999/xhtml">
+       10
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.212.1" xmlns="http://www.w3.org/1999/xhtml">
+      define a function that does a few different things.
+     </span>
+     <span class="koboSpan" id="kobo.212.2" xmlns="http://www.w3.org/1999/xhtml">
+      It takes a list of options and selects the best one based on some scoring criteria.
+     </span>
+     <span class="koboSpan" id="kobo.212.3" xmlns="http://www.w3.org/1999/xhtml">
+      This is an example of autonomy in the algorithm since the agent independently evaluates options and makes a decision without direct
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.213.1" xmlns="http://www.w3.org/1999/xhtml">
+       human intervention.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.214.1" xmlns="http://www.w3.org/1999/xhtml">
+      Finally, steps
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.215.1" xmlns="http://www.w3.org/1999/xhtml">
+       10
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.216.1" xmlns="http://www.w3.org/1999/xhtml">
+      through
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.217.1" xmlns="http://www.w3.org/1999/xhtml">
+       15
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.218.1" xmlns="http://www.w3.org/1999/xhtml">
+      demonstrate how all of these components work together, starting
+     </span>
+     <a id="_idIndexMarker106">
+     </a>
+     <span class="koboSpan" id="kobo.219.1" xmlns="http://www.w3.org/1999/xhtml">
+      from setting the goal of flight booking
+     </span>
+     <a id="_idIndexMarker107">
+     </a>
+     <span class="koboSpan" id="kobo.220.1" xmlns="http://www.w3.org/1999/xhtml">
+      using the departure and destination cities, updating the knowledge base using a flight lookup API, and then scoring the available flights.
+     </span>
+     <span class="koboSpan" id="kobo.220.2" xmlns="http://www.w3.org/1999/xhtml">
+      Subsequently, it uses the
+     </span>
+     <strong class="source-inline">
+      <span class="koboSpan" id="kobo.221.1" xmlns="http://www.w3.org/1999/xhtml">
+       MakeDecision
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.222.1" xmlns="http://www.w3.org/1999/xhtml">
+      function to find the best possible flight as per the highest score and performs the flight booking for
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.223.1" xmlns="http://www.w3.org/1999/xhtml">
+       the user.
+      </span>
+     </span>
+    </li>
+   </ol>
+   <p>
+    <span class="koboSpan" id="kobo.224.1" xmlns="http://www.w3.org/1999/xhtml">
+     A Python implementation of the
+    </span>
+    <strong class="source-inline">
+     <span class="koboSpan" id="kobo.225.1" xmlns="http://www.w3.org/1999/xhtml">
+      BookTravel
+     </span>
+    </strong>
+    <span class="koboSpan" id="kobo.226.1" xmlns="http://www.w3.org/1999/xhtml">
+     function from the algorithm is shown in the following
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.227.1" xmlns="http://www.w3.org/1999/xhtml">
+      code snippet:
+     </span>
+    </span>
+   </p>
+   <pre class="source-code"><span class="koboSpan" id="kobo.228.1" xmlns="http://www.w3.org/1999/xhtml">
+1 def book_travel(departure: str, destination: str):
+2     self.set_goal(f"Book flight from {departure} to {destination}")
+3     self.update_knowledge(departure, destination)
+4
+5     try:
+6        best_flight = self.make_decision()
+7        booking_confirmation = f"BOOKING_#12345"
+8        self.knowledge_base['booking_confirmation'] = \
+9                         booking_confirmation
+10       print(f"Booking confirmed: {booking_confirmation}")
+11    except Exception as e:
+12       print(f"Booking failed: {str(e)}")
+13
+14 if __name__ == "__main__":
+15    agent = TravelAgent("TripPlanner")
+16    agent.book_travel("SAN", "SEA")
+17    print("\n----------- Final Agent State: -----------")
+18    print(f"Name: {agent.name}")
+19    print(f"Goals: {agent.goals}")
+20    if 'booking_confirmation' in agent.knowledge_base:
+21      print(f"Booking Confirmation: \
+22      {agent.knowledge_base['booking_confirmation']}")</span></pre>
+   <p>
+    <span class="koboSpan" id="kobo.229.1" xmlns="http://www.w3.org/1999/xhtml">
+     The output
+    </span>
+    <a id="_idIndexMarker108">
+    </a>
+    <span class="koboSpan" id="kobo.230.1" xmlns="http://www.w3.org/1999/xhtml">
+     of this code when the agent is initialized
+    </span>
+    <a id="_idIndexMarker109">
+    </a>
+    <span class="koboSpan" id="kobo.231.1" xmlns="http://www.w3.org/1999/xhtml">
+     to book a flight from SAN (San Diego) to SEA (Seattle) looks
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.232.1" xmlns="http://www.w3.org/1999/xhtml">
+      as follows:
+     </span>
+    </span>
+   </p>
+   <pre class="console"><span class="koboSpan" id="kobo.233.1" xmlns="http://www.w3.org/1999/xhtml">
+1 Agent TripPlanner is booking travel from SAN to SEA
+2 Goal set: Book flight from SAN to SEA
+3 Knowledge updated with 3 flight options
+4 Decision made: Selected flight JetBlue
+5 Booking confirmed: BOOK-JetBlue-TRIPPLANNER
+6 ----------- Final Agent State: -----------
+7 Name: TripPlanner
+8 Goals: ['Book flight from SAN to SEA']
+9 Booking Confirmation: BOOK-JetBlue-TRIPPLANNER</span></pre>
+   <p>
+    <span class="koboSpan" id="kobo.234.1" xmlns="http://www.w3.org/1999/xhtml">
+     For the full implementation of the trip planner agent, refer to the
+    </span>
+    <strong class="source-inline">
+     <span class="koboSpan" id="kobo.235.1" xmlns="http://www.w3.org/1999/xhtml">
+      Chapter_02.ipynb
+     </span>
+    </strong>
+    <span class="koboSpan" id="kobo.236.1" xmlns="http://www.w3.org/1999/xhtml">
+     Python notebook in the
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.237.1" xmlns="http://www.w3.org/1999/xhtml">
+      GitHub repository.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.238.1" xmlns="http://www.w3.org/1999/xhtml">
+     In this code snippet, the
+    </span>
+    <strong class="source-inline">
+     <span class="koboSpan" id="kobo.239.1" xmlns="http://www.w3.org/1999/xhtml">
+      book_travel
+     </span>
+    </strong>
+    <span class="koboSpan" id="kobo.240.1" xmlns="http://www.w3.org/1999/xhtml">
+     function takes a departure city code (such as SAN or SEA, which are airport codes) and subsequently calls other functions to set the goal, update its knowledge base, and then make a decision on which flight to choose and book that flight.
+    </span>
+    <span class="koboSpan" id="kobo.240.2" xmlns="http://www.w3.org/1999/xhtml">
+     Note that our agent, although has some functionality of agency and autonomy, is not intelligent.
+    </span>
+    <span class="koboSpan" id="kobo.240.3" xmlns="http://www.w3.org/1999/xhtml">
+     It cannot take plain text messages from a user and decipher what the
+    </span>
+    <a id="_idIndexMarker110">
+    </a>
+    <span class="koboSpan" id="kobo.241.1" xmlns="http://www.w3.org/1999/xhtml">
+     user intends to do to set its goals, update its knowledge
+    </span>
+    <a id="_idIndexMarker111">
+    </a>
+    <span class="koboSpan" id="kobo.242.1" xmlns="http://www.w3.org/1999/xhtml">
+     base, and then perform the actions; rather, it needs the airport codes.
+    </span>
+    <span class="koboSpan" id="kobo.242.2" xmlns="http://www.w3.org/1999/xhtml">
+     However, as we saw in our example, a user (or customer) may simply express their intentions in plain language such as “
+    </span>
+    <em class="italic">
+     <span class="koboSpan" id="kobo.243.1" xmlns="http://www.w3.org/1999/xhtml">
+      Book me a flight from San Diego
+     </span>
+    </em>
+    <span class="No-Break">
+     <em class="italic">
+      <span class="koboSpan" id="kobo.244.1" xmlns="http://www.w3.org/1999/xhtml">
+       to Seattle”
+      </span>
+     </em>
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.245.1" xmlns="http://www.w3.org/1999/xhtml">
+      .
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.246.1" xmlns="http://www.w3.org/1999/xhtml">
+     In its current form, given any such user input (message), the agent is incapable of determining what the departure and destination cities are, what the user is asking for, or even what the string of input text even means.
+    </span>
+    <span class="koboSpan" id="kobo.246.2" xmlns="http://www.w3.org/1999/xhtml">
+     This is where generative AI steps in, as we will see in the subsequent chapters.
+    </span>
+    <span class="koboSpan" id="kobo.246.3" xmlns="http://www.w3.org/1999/xhtml">
+     For now, let’s continue with our discussion by looking at the characteristics
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.247.1" xmlns="http://www.w3.org/1999/xhtml">
+      of agents.
+     </span>
+    </span>
+   </p>
+   <h1 id="_idParaDest-47">
+    <a id="_idTextAnchor049">
+    </a>
+    <span class="koboSpan" id="kobo.248.1" xmlns="http://www.w3.org/1999/xhtml">
+     Reviewing intelligent agents and their characteristics
+    </span>
+   </h1>
+   <p>
+    <span class="koboSpan" id="kobo.249.1" xmlns="http://www.w3.org/1999/xhtml">
+     An intelligent agent is a complex, self-governed entity that perceives its environment and takes
+    </span>
+    <a id="_idIndexMarker112">
+    </a>
+    <span class="koboSpan" id="kobo.250.1" xmlns="http://www.w3.org/1999/xhtml">
+     action to achieve certain goals or objectives.
+    </span>
+    <span class="koboSpan" id="kobo.250.2" xmlns="http://www.w3.org/1999/xhtml">
+     These agents can range from basic systems that strictly adhere to a predefined set of rules to highly advanced systems with the ability to learn and adapt from
+    </span>
+    <a id="_idIndexMarker113">
+    </a>
+    <span class="koboSpan" id="kobo.251.1" xmlns="http://www.w3.org/1999/xhtml">
+     experience.
+    </span>
+    <span class="koboSpan" id="kobo.251.2" xmlns="http://www.w3.org/1999/xhtml">
+     Intelligent agents are characterized by several
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.252.1" xmlns="http://www.w3.org/1999/xhtml">
+      key attributes:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.253.1" xmlns="http://www.w3.org/1999/xhtml">
+       Reactivity
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.254.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Reactive agents respond to changes and events occurring in their environment
+     </span>
+     <a id="_idIndexMarker114">
+     </a>
+     <span class="koboSpan" id="kobo.255.1" xmlns="http://www.w3.org/1999/xhtml">
+      in real time.
+     </span>
+     <span class="koboSpan" id="kobo.255.2" xmlns="http://www.w3.org/1999/xhtml">
+      They continuously monitor their surroundings and adjust their behavior accordingly.
+     </span>
+     <span class="koboSpan" id="kobo.255.3" xmlns="http://www.w3.org/1999/xhtml">
+      This reactivity allows agents to adapt to dynamic conditions and respond appropriately to stimuli, ensuring their actions remain relevant
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.256.1" xmlns="http://www.w3.org/1999/xhtml">
+       and effective.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.257.1" xmlns="http://www.w3.org/1999/xhtml">
+       Proactiveness
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.258.1" xmlns="http://www.w3.org/1999/xhtml">
+      : An ideal intelligent agent should not merely react to events but also
+     </span>
+     <a id="_idIndexMarker115">
+     </a>
+     <span class="koboSpan" id="kobo.259.1" xmlns="http://www.w3.org/1999/xhtml">
+      exhibit proactive behavior.
+     </span>
+     <span class="koboSpan" id="kobo.259.2" xmlns="http://www.w3.org/1999/xhtml">
+      Proactive agents anticipate future needs, challenges, or opportunities, and take the initiative to plan and act accordingly.
+     </span>
+     <span class="koboSpan" id="kobo.259.3" xmlns="http://www.w3.org/1999/xhtml">
+      They are goal-oriented and actively pursue strategies to achieve their objectives, rather than simply reacting to circumstances as
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.260.1" xmlns="http://www.w3.org/1999/xhtml">
+       they arise.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.261.1" xmlns="http://www.w3.org/1999/xhtml">
+       Social ability
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.262.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Many intelligent agents operate in multi-agent systems, where they
+     </span>
+     <a id="_idIndexMarker116">
+     </a>
+     <span class="koboSpan" id="kobo.263.1" xmlns="http://www.w3.org/1999/xhtml">
+      interact and cooperate with other agents or humans to achieve common goals that require collaborative effort.
+     </span>
+     <span class="koboSpan" id="kobo.263.2" xmlns="http://www.w3.org/1999/xhtml">
+      Social ability encompasses communication, coordination, and negotiation skills, enabling agents to work together effectively and leverage collective intelligence
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.264.1" xmlns="http://www.w3.org/1999/xhtml">
+       or resources.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.265.1" xmlns="http://www.w3.org/1999/xhtml">
+     With these key characteristics, intelligent agents demonstrate remarkable versatility and efficiency across a wide spectrum of domains and scenarios.
+    </span>
+    <span class="koboSpan" id="kobo.265.2" xmlns="http://www.w3.org/1999/xhtml">
+     Their capabilities enable
+    </span>
+    <a id="_idIndexMarker117">
+    </a>
+    <span class="koboSpan" id="kobo.266.1" xmlns="http://www.w3.org/1999/xhtml">
+     them to excel in tasks ranging from simple, automated
+    </span>
+    <a id="_idIndexMarker118">
+    </a>
+    <span class="koboSpan" id="kobo.267.1" xmlns="http://www.w3.org/1999/xhtml">
+     processes to highly complex, dynamic decision-making situations that demand real-time adaptation and environmental responsiveness.
+    </span>
+    <span class="koboSpan" id="kobo.267.2" xmlns="http://www.w3.org/1999/xhtml">
+     In addition to these core characteristics, intelligent agents may possess other
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.268.1" xmlns="http://www.w3.org/1999/xhtml">
+      advanced capabilities:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.269.1" xmlns="http://www.w3.org/1999/xhtml">
+       Learning and adaptation
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.270.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Intelligent agents have the ability to learn from experience and adapt their behavior over time.
+     </span>
+     <span class="koboSpan" id="kobo.270.2" xmlns="http://www.w3.org/1999/xhtml">
+      They can acquire new knowledge, refine their decision-making processes, and improve their performance through techniques such as machine learning, reinforcement learning, or
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.271.1" xmlns="http://www.w3.org/1999/xhtml">
+       evolutionary algorithms.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.272.1" xmlns="http://www.w3.org/1999/xhtml">
+       Reasoning and planning
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.273.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Intelligent agents may employ reasoning and planning capabilities to analyze complex situations, formulate strategies, and make informed decisions.
+     </span>
+     <span class="koboSpan" id="kobo.273.2" xmlns="http://www.w3.org/1999/xhtml">
+      They can leverage techniques such as knowledge representation, logical inference, and planning algorithms to navigate through intricate problem spaces and determine optimal courses
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.274.1" xmlns="http://www.w3.org/1999/xhtml">
+       of action.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.275.1" xmlns="http://www.w3.org/1999/xhtml">
+       Autonomy and self-governance
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.276.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Intelligent agents often exhibit a degree of autonomy and self-governance, allowing them to make decisions and take actions independently without constant human intervention or supervision.
+     </span>
+     <span class="koboSpan" id="kobo.276.2" xmlns="http://www.w3.org/1999/xhtml">
+      This autonomy enables agents to operate efficiently in dynamic environments or scenarios where continuous human control is impractical
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.277.1" xmlns="http://www.w3.org/1999/xhtml">
+       or impossible.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.278.1" xmlns="http://www.w3.org/1999/xhtml">
+     With these
+    </span>
+    <a id="_idIndexMarker119">
+    </a>
+    <span class="koboSpan" id="kobo.279.1" xmlns="http://www.w3.org/1999/xhtml">
+     characteristics, intelligent agents can be versatile
+    </span>
+    <a id="_idIndexMarker120">
+    </a>
+    <span class="koboSpan" id="kobo.280.1" xmlns="http://www.w3.org/1999/xhtml">
+     and efficient in a wide range of domains, from simple, automated tasks to highly complex, dynamic decision-making situations.
+    </span>
+    <span class="koboSpan" id="kobo.280.2" xmlns="http://www.w3.org/1999/xhtml">
+     They find applications in areas such as robotics, decision support systems, virtual assistants, gaming, and simulations,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.281.1" xmlns="http://www.w3.org/1999/xhtml">
+      among others.
+     </span>
+    </span>
+   </p>
+   <h1 id="_idParaDest-48">
+    <a id="_idTextAnchor050">
+    </a>
+    <span class="koboSpan" id="kobo.282.1" xmlns="http://www.w3.org/1999/xhtml">
+     Exploring the architecture of agentic systems
+    </span>
+   </h1>
+   <p>
+    <span class="koboSpan" id="kobo.283.1" xmlns="http://www.w3.org/1999/xhtml">
+     Agentic systems, designed for executing complex goals in an autonomous way, can be implemented
+    </span>
+    <a id="_idIndexMarker121">
+    </a>
+    <span class="koboSpan" id="kobo.284.1" xmlns="http://www.w3.org/1999/xhtml">
+     using a good variety of architectural patterns.
+    </span>
+    <span class="koboSpan" id="kobo.284.2" xmlns="http://www.w3.org/1999/xhtml">
+     In general, these patterns define the structure and the behavior that allows the system to perceive, reason, learn, and act upon the environment in an effective way.
+    </span>
+    <span class="koboSpan" id="kobo.284.3" xmlns="http://www.w3.org/1999/xhtml">
+     Three main architectural patterns for agentic systems are deliberative, reactive, and hybrid architectures.
+    </span>
+    <span class="koboSpan" id="kobo.284.4" xmlns="http://www.w3.org/1999/xhtml">
+     Let’s discuss them
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.285.1" xmlns="http://www.w3.org/1999/xhtml">
+      in detail.
+     </span>
+    </span>
+   </p>
+   <h2 id="_idParaDest-49">
+    <a id="_idTextAnchor051">
+    </a>
+    <span class="koboSpan" id="kobo.286.1" xmlns="http://www.w3.org/1999/xhtml">
+     Deliberative architectures
+    </span>
+   </h2>
+   <p>
+    <span class="koboSpan" id="kobo.287.1" xmlns="http://www.w3.org/1999/xhtml">
+     Also
+    </span>
+    <a id="_idIndexMarker122">
+    </a>
+    <span class="koboSpan" id="kobo.288.1" xmlns="http://www.w3.org/1999/xhtml">
+     known as
+    </span>
+    <em class="italic">
+     <span class="koboSpan" id="kobo.289.1" xmlns="http://www.w3.org/1999/xhtml">
+      knowledge-based
+     </span>
+    </em>
+    <span class="koboSpan" id="kobo.290.1" xmlns="http://www.w3.org/1999/xhtml">
+     or
+    </span>
+    <em class="italic">
+     <span class="koboSpan" id="kobo.291.1" xmlns="http://www.w3.org/1999/xhtml">
+      symbolic
+     </span>
+    </em>
+    <span class="koboSpan" id="kobo.292.1" xmlns="http://www.w3.org/1999/xhtml">
+     architectures, rely
+    </span>
+    <a id="_idIndexMarker123">
+    </a>
+    <span class="koboSpan" id="kobo.293.1" xmlns="http://www.w3.org/1999/xhtml">
+     on the use of explicit representations of
+    </span>
+    <a id="_idIndexMarker124">
+    </a>
+    <span class="koboSpan" id="kobo.294.1" xmlns="http://www.w3.org/1999/xhtml">
+     knowledge and reasoning mechanisms to reach decisions.
+    </span>
+    <span class="koboSpan" id="kobo.294.2" xmlns="http://www.w3.org/1999/xhtml">
+     They typically follow a
+    </span>
+    <em class="italic">
+     <span class="koboSpan" id="kobo.295.1" xmlns="http://www.w3.org/1999/xhtml">
+      sense-plan-act
+     </span>
+    </em>
+    <span class="koboSpan" id="kobo.296.1" xmlns="http://www.w3.org/1999/xhtml">
+     cycle, where they
+    </span>
+    <a id="_idIndexMarker125">
+    </a>
+    <span class="koboSpan" id="kobo.297.1" xmlns="http://www.w3.org/1999/xhtml">
+     first perceive information about the environment, then make a plan of action according to that perception and the knowledge base, and finally execute such plans
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.298.1" xmlns="http://www.w3.org/1999/xhtml">
+      of action.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.299.1" xmlns="http://www.w3.org/1999/xhtml">
+     The key advantage of deliberative architectures is their ability to handle tasks that involve complex reasoning, such as planning, problem-solving, and decision-making.
+    </span>
+    <span class="koboSpan" id="kobo.299.2" xmlns="http://www.w3.org/1999/xhtml">
+     These architectures leverage techniques such as rule-based reasoning, constraint satisfaction, and heuristic search to navigate through intricate problem spaces and formulate appropriate courses
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.300.1" xmlns="http://www.w3.org/1999/xhtml">
+      of action.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.301.1" xmlns="http://www.w3.org/1999/xhtml">
+     One of the critical components of a deliberative architecture is the knowledge base that stores symbolic representations of the environment, goals, constraints, and domain-specific knowledge.
+    </span>
+    <span class="koboSpan" id="kobo.301.2" xmlns="http://www.w3.org/1999/xhtml">
+     This knowledge base is typically encoded using formal language or logic, enabling the system to perform logical inference and reasoning.
+    </span>
+    <span class="koboSpan" id="kobo.301.3" xmlns="http://www.w3.org/1999/xhtml">
+     The
+    </span>
+    <em class="italic">
+     <span class="koboSpan" id="kobo.302.1" xmlns="http://www.w3.org/1999/xhtml">
+      sense-plan-act
+     </span>
+    </em>
+    <span class="koboSpan" id="kobo.303.1" xmlns="http://www.w3.org/1999/xhtml">
+     cycle in deliberative architectures typically involves the
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.304.1" xmlns="http://www.w3.org/1999/xhtml">
+      following steps:
+     </span>
+    </span>
+   </p>
+   <ol>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.305.1" xmlns="http://www.w3.org/1999/xhtml">
+       Sensing
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.306.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The agent perceives and acquires information about the environment through various sensors or
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.307.1" xmlns="http://www.w3.org/1999/xhtml">
+       input mechanisms.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.308.1" xmlns="http://www.w3.org/1999/xhtml">
+       Knowledge updating
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.309.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The perceived information is used to update the agent’s internal knowledge base, ensuring that it maintains an accurate representation of the current state of
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.310.1" xmlns="http://www.w3.org/1999/xhtml">
+       the environment.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.311.1" xmlns="http://www.w3.org/1999/xhtml">
+       Planning and reasoning
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.312.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Based on the updated knowledge base, the agent employs
+     </span>
+     <a id="_idIndexMarker126">
+     </a>
+     <span class="koboSpan" id="kobo.313.1" xmlns="http://www.w3.org/1999/xhtml">
+      reasoning techniques and algorithms to formulate plans and make decisions.
+     </span>
+     <span class="koboSpan" id="kobo.313.2" xmlns="http://www.w3.org/1999/xhtml">
+      This may
+     </span>
+     <a id="_idIndexMarker127">
+     </a>
+     <span class="koboSpan" id="kobo.314.1" xmlns="http://www.w3.org/1999/xhtml">
+      involve techniques such as constraint satisfaction, logical inference, search algorithms, or
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.315.1" xmlns="http://www.w3.org/1999/xhtml">
+       heuristic-based planning.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.316.1" xmlns="http://www.w3.org/1999/xhtml">
+       Plan execution
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.317.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Once a plan or course of action has been determined, the agent executes the corresponding actions in the environment, potentially modifying the environment or achieving
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.318.1" xmlns="http://www.w3.org/1999/xhtml">
+       specific goals.
+      </span>
+     </span>
+    </li>
+   </ol>
+   <p>
+    <span class="koboSpan" id="kobo.319.1" xmlns="http://www.w3.org/1999/xhtml">
+     The following figure depicts a deliberative architecture of an agentic system with a
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.320.1" xmlns="http://www.w3.org/1999/xhtml">
+      sense-plan-act cycle:
+     </span>
+    </span>
+   </p>
+   <div>
+    <div class="IMG---Figure" id="_idContainer027">
+     <span class="koboSpan" id="kobo.321.1" xmlns="http://www.w3.org/1999/xhtml">
+      <img alt="img" role="presentation" src="image/B31483_02_1.jpg"/>
+     </span>
+    </div>
+   </div>
+   <p class="IMG---Caption" lang="en-US" xml:lang="en-US">
+    <span class="koboSpan" id="kobo.322.1" xmlns="http://www.w3.org/1999/xhtml">
+     Figure 2.1 – Deliberative architecture of an agentic system
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.323.1" xmlns="http://www.w3.org/1999/xhtml">
+     Deliberative architectures excel in handling tasks that require complex reasoning, planning, and decision-making in well-defined environments.
+    </span>
+    <span class="koboSpan" id="kobo.323.2" xmlns="http://www.w3.org/1999/xhtml">
+     They can effectively handle
+    </span>
+    <a id="_idIndexMarker128">
+    </a>
+    <span class="koboSpan" id="kobo.324.1" xmlns="http://www.w3.org/1999/xhtml">
+     uncertainty and ambiguity through techniques such as
+    </span>
+    <a id="_idIndexMarker129">
+    </a>
+    <span class="koboSpan" id="kobo.325.1" xmlns="http://www.w3.org/1999/xhtml">
+     probabilistic reasoning, fuzzy logic, or belief
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.326.1" xmlns="http://www.w3.org/1999/xhtml">
+      revision mechanisms.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.327.1" xmlns="http://www.w3.org/1999/xhtml">
+     However, deliberative architectures also have some disadvantages.
+    </span>
+    <span class="koboSpan" id="kobo.327.2" xmlns="http://www.w3.org/1999/xhtml">
+     One significant challenge is the computational cost associated with maintaining and reasoning over complex knowledge bases, which can limit real-time responsiveness in dynamic environments.
+    </span>
+    <span class="koboSpan" id="kobo.327.3" xmlns="http://www.w3.org/1999/xhtml">
+     Additionally, the explicit representation of knowledge can be challenging in domains where knowledge is difficult to formalize or
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.328.1" xmlns="http://www.w3.org/1999/xhtml">
+      constantly evolving.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.329.1" xmlns="http://www.w3.org/1999/xhtml">
+     To address these limitations, deliberative architectures are often combined with reactive or behavior-based components in hybrid architectures, allowing both complex reasoning and rapid response to
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.330.1" xmlns="http://www.w3.org/1999/xhtml">
+      environmental changes.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.331.1" xmlns="http://www.w3.org/1999/xhtml">
+     Despite their limitations, deliberative architectures remain a crucial component in many intelligent systems, particularly in domains where complex decision-making, planning, and reasoning are essential, such as robotics, decision support systems, and intelligent
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.332.1" xmlns="http://www.w3.org/1999/xhtml">
+      tutoring systems.
+     </span>
+    </span>
+   </p>
+   <h2 id="_idParaDest-50">
+    <a id="_idTextAnchor052">
+    </a>
+    <span class="koboSpan" id="kobo.333.1" xmlns="http://www.w3.org/1999/xhtml">
+     Reactive architectures
+    </span>
+   </h2>
+   <p>
+    <span class="koboSpan" id="kobo.334.1" xmlns="http://www.w3.org/1999/xhtml">
+     Reactive
+    </span>
+    <a id="_idIndexMarker130">
+    </a>
+    <span class="koboSpan" id="kobo.335.1" xmlns="http://www.w3.org/1999/xhtml">
+     architectures, also known as
+    </span>
+    <em class="italic">
+     <span class="koboSpan" id="kobo.336.1" xmlns="http://www.w3.org/1999/xhtml">
+      behavior-based
+     </span>
+    </em>
+    <span class="koboSpan" id="kobo.337.1" xmlns="http://www.w3.org/1999/xhtml">
+     or
+    </span>
+    <em class="italic">
+     <span class="koboSpan" id="kobo.338.1" xmlns="http://www.w3.org/1999/xhtml">
+      stimulus-response
+     </span>
+    </em>
+    <span class="koboSpan" id="kobo.339.1" xmlns="http://www.w3.org/1999/xhtml">
+     architectures, aim to provide immediate responses to stimuli
+    </span>
+    <a id="_idIndexMarker131">
+    </a>
+    <span class="koboSpan" id="kobo.340.1" xmlns="http://www.w3.org/1999/xhtml">
+     from the environment.
+    </span>
+    <span class="koboSpan" id="kobo.340.2" xmlns="http://www.w3.org/1999/xhtml">
+     Unlike deliberative
+    </span>
+    <a id="_idIndexMarker132">
+    </a>
+    <span class="koboSpan" id="kobo.341.1" xmlns="http://www.w3.org/1999/xhtml">
+     architectures, reactive architectures do not rely on explicit models of the world or complex reasoning processes.
+    </span>
+    <span class="koboSpan" id="kobo.341.2" xmlns="http://www.w3.org/1999/xhtml">
+     Instead, these systems directly map perceptions onto actions, typically using simple condition-action rules or neural networks as depicted in the
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.342.1" xmlns="http://www.w3.org/1999/xhtml">
+      following figure:
+     </span>
+    </span>
+   </p>
+   <div>
+    <div class="IMG---Figure" id="_idContainer028">
+     <span class="koboSpan" id="kobo.343.1" xmlns="http://www.w3.org/1999/xhtml">
+      <img alt="img" role="presentation" src="image/B31483_02_2.jpg"/>
+     </span>
+    </div>
+   </div>
+   <p class="IMG---Caption" lang="en-US" xml:lang="en-US">
+    <span class="koboSpan" id="kobo.344.1" xmlns="http://www.w3.org/1999/xhtml">
+     Figure 2.2 – Reactive architecture of an agentic system
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.345.1" xmlns="http://www.w3.org/1999/xhtml">
+     Some of
+    </span>
+    <a id="_idIndexMarker133">
+    </a>
+    <span class="koboSpan" id="kobo.346.1" xmlns="http://www.w3.org/1999/xhtml">
+     the key properties and characteristics of reactive architectures include
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.347.1" xmlns="http://www.w3.org/1999/xhtml">
+      the following:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.348.1" xmlns="http://www.w3.org/1999/xhtml">
+       Speed and responsiveness
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.349.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Reactive architectures are designed to react rapidly to changes in the environment.
+     </span>
+     <span class="koboSpan" id="kobo.349.2" xmlns="http://www.w3.org/1999/xhtml">
+      By directly coupling perceptions to actions, they can bypass time-consuming deliberative reasoning processes, enabling swift and
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.350.1" xmlns="http://www.w3.org/1999/xhtml">
+       timely responses.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.351.1" xmlns="http://www.w3.org/1999/xhtml">
+       Robustness and fault tolerance
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.352.1" xmlns="http://www.w3.org/1999/xhtml">
+      : These architectures are generally robust and less susceptible to noise or incomplete information.
+     </span>
+     <span class="koboSpan" id="kobo.352.2" xmlns="http://www.w3.org/1999/xhtml">
+      Their simple, standalone nature makes them less prone to catastrophic failures, as individual components or behaviors can compensate for or mitigate the effects of faulty or missing input, especially when used within a
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.353.1" xmlns="http://www.w3.org/1999/xhtml">
+       deliberative architecture.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.354.1" xmlns="http://www.w3.org/1999/xhtml">
+       Handling uncertainty
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.355.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Reactive architectures can effectively handle uncertainty in dynamic environments.
+     </span>
+     <span class="koboSpan" id="kobo.355.2" xmlns="http://www.w3.org/1999/xhtml">
+      Their ability to respond directly to environmental stimuli allows them to adapt and adjust their actions based on the current situation, without relying on precise or complete models of the
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.356.1" xmlns="http://www.w3.org/1999/xhtml">
+       entire world.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.357.1" xmlns="http://www.w3.org/1999/xhtml">
+       Parallel and distributed processing
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.358.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Reactive architectures often employ parallel
+     </span>
+     <a id="_idIndexMarker134">
+     </a>
+     <span class="koboSpan" id="kobo.359.1" xmlns="http://www.w3.org/1999/xhtml">
+      and distributed processing using multiple reactive modules, where multiple modules operate simultaneously and independently.
+     </span>
+     <span class="koboSpan" id="kobo.359.2" xmlns="http://www.w3.org/1999/xhtml">
+      This decentralized approach enables efficient handling of complex tasks and provides inherent scalability
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.360.1" xmlns="http://www.w3.org/1999/xhtml">
+       and modularity.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.361.1" xmlns="http://www.w3.org/1999/xhtml">
+       Emergence of complex behavior
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.362.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Despite the simplicity of individual behaviors or rules, the interaction and coordination of multiple reactive components can lead to the emergence of complex, intelligent-like behavior at the
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.363.1" xmlns="http://www.w3.org/1999/xhtml">
+       system level.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.364.1" xmlns="http://www.w3.org/1999/xhtml">
+     While reactive
+    </span>
+    <a id="_idIndexMarker135">
+    </a>
+    <span class="koboSpan" id="kobo.365.1" xmlns="http://www.w3.org/1999/xhtml">
+     architectures offer advantages in terms of speed, robustness, and handling uncertainty, they also have limitations
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.366.1" xmlns="http://www.w3.org/1999/xhtml">
+      as highlighted:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.367.1" xmlns="http://www.w3.org/1999/xhtml">
+       Lack of long-term planning
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.368.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Reactive architectures generally lack the ability to plan ahead or reason about long-term consequences.
+     </span>
+     <span class="koboSpan" id="kobo.368.2" xmlns="http://www.w3.org/1999/xhtml">
+      Their focus is on immediate responses to environmental stimuli, making it difficult to pursue complex, multi-step goals
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.369.1" xmlns="http://www.w3.org/1999/xhtml">
+       or strategies.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.370.1" xmlns="http://www.w3.org/1999/xhtml">
+       Limited reasoning and abstraction
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.371.1" xmlns="http://www.w3.org/1999/xhtml">
+      : These architectures may struggle with tasks that require abstract reasoning, generalization, or the manipulation of symbolic representations.
+     </span>
+     <span class="koboSpan" id="kobo.371.2" xmlns="http://www.w3.org/1999/xhtml">
+      They are primarily designed to operate at a lower,
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.372.1" xmlns="http://www.w3.org/1999/xhtml">
+       stimulus-response level.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.373.1" xmlns="http://www.w3.org/1999/xhtml">
+       Limited learning capabilities
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.374.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Many reactive architectures lack the ability to learn from experience or adapt their behavior over time.
+     </span>
+     <span class="koboSpan" id="kobo.374.2" xmlns="http://www.w3.org/1999/xhtml">
+      Their fixed set of rules or behaviors may not be suitable for dynamic environments or tasks that require continuous learning
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.375.1" xmlns="http://www.w3.org/1999/xhtml">
+       and adaptation.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.376.1" xmlns="http://www.w3.org/1999/xhtml">
+     Despite these limitations, reactive architectures are widely used in applications where real-time
+    </span>
+    <a id="_idIndexMarker136">
+    </a>
+    <span class="koboSpan" id="kobo.377.1" xmlns="http://www.w3.org/1999/xhtml">
+     responsiveness, robustness, and ability to handle uncertainty are essential, such as in robotics, video games built with AI, and control systems.
+    </span>
+    <span class="koboSpan" id="kobo.377.2" xmlns="http://www.w3.org/1999/xhtml">
+     Additionally, reactive architectures often serve as components within more complex hybrid architectures, complementing deliberative or learning-based systems to achieve desired levels of performance
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.378.1" xmlns="http://www.w3.org/1999/xhtml">
+      and adaptability.
+     </span>
+    </span>
+   </p>
+   <h2 id="_idParaDest-51">
+    <a id="_idTextAnchor053">
+    </a>
+    <span class="koboSpan" id="kobo.379.1" xmlns="http://www.w3.org/1999/xhtml">
+     Hybrid architectures
+    </span>
+   </h2>
+   <p>
+    <span class="koboSpan" id="kobo.380.1" xmlns="http://www.w3.org/1999/xhtml">
+     Researchers have recognized the strengths and limitations of both deliberative and reactive
+    </span>
+    <a id="_idIndexMarker137">
+    </a>
+    <span class="koboSpan" id="kobo.381.1" xmlns="http://www.w3.org/1999/xhtml">
+     architectures, leading to the development of hybrid architectures
+    </span>
+    <a id="_idIndexMarker138">
+    </a>
+    <span class="koboSpan" id="kobo.382.1" xmlns="http://www.w3.org/1999/xhtml">
+     that aim to exploit the advantages of both approaches.
+    </span>
+    <span class="koboSpan" id="kobo.382.2" xmlns="http://www.w3.org/1999/xhtml">
+     Such hybrid architectures typically employ a layered structure, consisting of
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.383.1" xmlns="http://www.w3.org/1999/xhtml">
+      the following:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <span class="koboSpan" id="kobo.384.1" xmlns="http://www.w3.org/1999/xhtml">
+      A
+     </span>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.385.1" xmlns="http://www.w3.org/1999/xhtml">
+       reactive layer
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.386.1" xmlns="http://www.w3.org/1999/xhtml">
+      for fast and low-level responses.
+     </span>
+     <span class="koboSpan" id="kobo.386.2" xmlns="http://www.w3.org/1999/xhtml">
+      The reactive layer is responsible
+     </span>
+     <a id="_idIndexMarker139">
+     </a>
+     <span class="koboSpan" id="kobo.387.1" xmlns="http://www.w3.org/1999/xhtml">
+      for handling real-time interactions
+     </span>
+     <a id="_idIndexMarker140">
+     </a>
+     <span class="koboSpan" id="kobo.388.1" xmlns="http://www.w3.org/1999/xhtml">
+      with the environment, providing rapid and situationally appropriate responses to external stimuli.
+     </span>
+     <span class="koboSpan" id="kobo.388.2" xmlns="http://www.w3.org/1999/xhtml">
+      This layer is designed to be highly responsive, fault-tolerant, and capable of handling uncertainty, leveraging the strengths of
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.389.1" xmlns="http://www.w3.org/1999/xhtml">
+       reactive architectures.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.390.1" xmlns="http://www.w3.org/1999/xhtml">
+      A
+     </span>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.391.1" xmlns="http://www.w3.org/1999/xhtml">
+       deliberative layer
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.392.1" xmlns="http://www.w3.org/1999/xhtml">
+      for high-level reasoning and planning.
+     </span>
+     <span class="koboSpan" id="kobo.392.2" xmlns="http://www.w3.org/1999/xhtml">
+      The deliberative layer is
+     </span>
+     <a id="_idIndexMarker141">
+     </a>
+     <span class="koboSpan" id="kobo.393.1" xmlns="http://www.w3.org/1999/xhtml">
+      dedicated to higher-level reasoning, planning, and decision-making processes.
+     </span>
+     <span class="koboSpan" id="kobo.393.2" xmlns="http://www.w3.org/1999/xhtml">
+      This layer can maintain a more
+     </span>
+     <a id="_idIndexMarker142">
+     </a>
+     <span class="koboSpan" id="kobo.394.1" xmlns="http://www.w3.org/1999/xhtml">
+      comprehensive representation of the environment, goals, and constraints, enabling it to formulate complex strategies, reason about abstract concepts, and plan long-term courses
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.395.1" xmlns="http://www.w3.org/1999/xhtml">
+       of action.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.396.1" xmlns="http://www.w3.org/1999/xhtml">
+     The interaction between these two layers is crucial for enabling agentic systems to respond effectively to dynamic environmental contexts while maintaining the capability to plan actions and reason about them.
+    </span>
+    <span class="koboSpan" id="kobo.396.2" xmlns="http://www.w3.org/1999/xhtml">
+     The reactive layer can provide real-time feedback and situational awareness to the deliberative layer, informing its decision-making processes.
+    </span>
+    <span class="koboSpan" id="kobo.396.3" xmlns="http://www.w3.org/1999/xhtml">
+     Conversely, the deliberative layer can guide and influence the reactive layer’s behavior by providing high-level plans, goals,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.397.1" xmlns="http://www.w3.org/1999/xhtml">
+      and constraints.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.398.1" xmlns="http://www.w3.org/1999/xhtml">
+     To achieve complex goals and leverage the strengths of both layers, hybrid architectures often employ the
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.399.1" xmlns="http://www.w3.org/1999/xhtml">
+      following techniques:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.400.1" xmlns="http://www.w3.org/1999/xhtml">
+       Task decomposition
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.401.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Break down complex tasks into subtasks that can be handled
+     </span>
+     <a id="_idIndexMarker143">
+     </a>
+     <span class="koboSpan" id="kobo.402.1" xmlns="http://www.w3.org/1999/xhtml">
+      by the appropriate layer, with the reactive layer handling low-level, time-critical tasks and the deliberative layer focusing on higher-level planning
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.403.1" xmlns="http://www.w3.org/1999/xhtml">
+       and coordination
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.404.1" xmlns="http://www.w3.org/1999/xhtml">
+       Multiplan selection
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.405.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The deliberative layer can generate multiple potential plans
+     </span>
+     <a id="_idIndexMarker144">
+     </a>
+     <span class="koboSpan" id="kobo.406.1" xmlns="http://www.w3.org/1999/xhtml">
+      or strategies, and the reactive layer can dynamically select and execute the most suitable plan based on the current
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.407.1" xmlns="http://www.w3.org/1999/xhtml">
+       environmental conditions
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.408.1" xmlns="http://www.w3.org/1999/xhtml">
+       Planning with external modules
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.409.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The deliberative layer can incorporate external
+     </span>
+     <a id="_idIndexMarker145">
+     </a>
+     <span class="koboSpan" id="kobo.410.1" xmlns="http://www.w3.org/1999/xhtml">
+      modules or specialized algorithms for tasks such as path planning, resource allocation, or scheduling, leveraging domain-specific knowledge
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.411.1" xmlns="http://www.w3.org/1999/xhtml">
+       and techniques
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.412.1" xmlns="http://www.w3.org/1999/xhtml">
+       Reflection and refinement
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.413.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The deliberative layer can reflect on the outcomes
+     </span>
+     <a id="_idIndexMarker146">
+     </a>
+     <span class="koboSpan" id="kobo.414.1" xmlns="http://www.w3.org/1999/xhtml">
+      of executed plans, learn from experience, and refine its reasoning and planning processes accordingly, enabling continuous improvement
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.415.1" xmlns="http://www.w3.org/1999/xhtml">
+       and adaptation
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.416.1" xmlns="http://www.w3.org/1999/xhtml">
+       Memory-augmented planning
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.417.1" xmlns="http://www.w3.org/1999/xhtml">
+      : The deliberative layer can maintain a memory
+     </span>
+     <a id="_idIndexMarker147">
+     </a>
+     <span class="koboSpan" id="kobo.418.1" xmlns="http://www.w3.org/1999/xhtml">
+      or history of past experiences, decisions, and outcomes, enabling it to leverage this knowledge in future planning and
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.419.1" xmlns="http://www.w3.org/1999/xhtml">
+       reasoning processes
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.420.1" xmlns="http://www.w3.org/1999/xhtml">
+     By combining the strengths of both deliberative and reactive approaches, hybrid architectures seek to balance responsiveness and reasoning, enabling the development of more robust, autonomous, and adaptable agentic systems.
+    </span>
+    <span class="koboSpan" id="kobo.420.2" xmlns="http://www.w3.org/1999/xhtml">
+     These architectures leverage the power of both approaches, providing the ability to respond rapidly to dynamic environments while maintaining the capability for complex planning, reasoning,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.421.1" xmlns="http://www.w3.org/1999/xhtml">
+      and decision-making.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.422.1" xmlns="http://www.w3.org/1999/xhtml">
+     The design and implementation of effective hybrid architectures remain an active area of research, as researchers strive to develop architectures that can seamlessly integrate and coordinate the deliberative and reactive components, enabling the creation of highly capable and intelligent
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.423.1" xmlns="http://www.w3.org/1999/xhtml">
+      agentic systems.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.424.1" xmlns="http://www.w3.org/1999/xhtml">
+     Selecting the appropriate architectural pattern for an agentic system is contingent upon the
+    </span>
+    <a id="_idIndexMarker148">
+    </a>
+    <span class="koboSpan" id="kobo.425.1" xmlns="http://www.w3.org/1999/xhtml">
+     specific requirements of the application, encompassing factors
+    </span>
+    <a id="_idIndexMarker149">
+    </a>
+    <span class="koboSpan" id="kobo.426.1" xmlns="http://www.w3.org/1999/xhtml">
+     such as task complexity, environmental uncertainty, and the necessity for real-time responsiveness.
+    </span>
+    <span class="koboSpan" id="kobo.426.2" xmlns="http://www.w3.org/1999/xhtml">
+     Deliberative architectures excel in scenarios that demand intricate reasoning and decision-making processes, while reactive architectures thrive in dynamic environments that necessitate swift and adaptive responses.
+    </span>
+    <span class="koboSpan" id="kobo.426.3" xmlns="http://www.w3.org/1999/xhtml">
+     Hybrid architectures strike a harmonious balance by judiciously leveraging the strengths of both paradigms, resulting in the development of more capable and adaptable agentic systems that can seamlessly navigate the complexities of their
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.427.1" xmlns="http://www.w3.org/1999/xhtml">
+      operating environments.
+     </span>
+    </span>
+   </p>
+   <h1 id="_idParaDest-52">
+    <a id="_idTextAnchor054">
+    </a>
+    <span class="koboSpan" id="kobo.428.1" xmlns="http://www.w3.org/1999/xhtml">
+     Understanding multi-agent systems
+    </span>
+   </h1>
+   <p>
+    <strong class="bold">
+     <span class="koboSpan" id="kobo.429.1" xmlns="http://www.w3.org/1999/xhtml">
+      Multi-agent systems
+     </span>
+    </strong>
+    <span class="koboSpan" id="kobo.430.1" xmlns="http://www.w3.org/1999/xhtml">
+     (
+    </span>
+    <strong class="bold">
+     <span class="koboSpan" id="kobo.431.1" xmlns="http://www.w3.org/1999/xhtml">
+      MASs
+     </span>
+    </strong>
+    <span class="koboSpan" id="kobo.432.1" xmlns="http://www.w3.org/1999/xhtml">
+     ) represent an important subfield of the broader area of distributed
+    </span>
+    <a id="_idIndexMarker150">
+    </a>
+    <span class="koboSpan" id="kobo.433.1" xmlns="http://www.w3.org/1999/xhtml">
+     artificial intelligence.
+    </span>
+    <span class="koboSpan" id="kobo.433.2" xmlns="http://www.w3.org/1999/xhtml">
+     They consist of several intelligent agents that interact, cooperate, and coordinate with each other to execute tasks and achieve collective goals.
+    </span>
+    <span class="koboSpan" id="kobo.433.3" xmlns="http://www.w3.org/1999/xhtml">
+     Each agent in a MAS is typically autonomous, capable of perceiving its environment through sensors, possessing a reasoning mechanism to make decisions, and acting upon those decisions to meet its design objectives.
+    </span>
+    <span class="koboSpan" id="kobo.433.4" xmlns="http://www.w3.org/1999/xhtml">
+     The collective behavior and interactions of these agents enable MASs to tackle complex problems that single-agent systems struggle with due to the inherent limitations of
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.434.1" xmlns="http://www.w3.org/1999/xhtml">
+      individual agents.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.435.1" xmlns="http://www.w3.org/1999/xhtml">
+     Examples
+    </span>
+    <a id="_idIndexMarker151">
+    </a>
+    <span class="koboSpan" id="kobo.436.1" xmlns="http://www.w3.org/1999/xhtml">
+     of MASs can be found in various domains, demonstrating their applicability and effectiveness in solving
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.437.1" xmlns="http://www.w3.org/1999/xhtml">
+      complex problems:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.438.1" xmlns="http://www.w3.org/1999/xhtml">
+       Supply chain management and logistics
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.439.1" xmlns="http://www.w3.org/1999/xhtml">
+      : MASs can be used to optimize supply chain operations by coordinating the activities of different agents representing suppliers, manufacturers, distributors, and retailers.
+     </span>
+     <span class="koboSpan" id="kobo.439.2" xmlns="http://www.w3.org/1999/xhtml">
+      Each agent can make decisions based on its local knowledge and constraints, while collaborating with other agents to ensure efficient resource allocation, inventory management, and
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.440.1" xmlns="http://www.w3.org/1999/xhtml">
+       transportation planning.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.441.1" xmlns="http://www.w3.org/1999/xhtml">
+       Traffic control and transportation systems
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.442.1" xmlns="http://www.w3.org/1999/xhtml">
+      : MASs have been employed in managing traffic flow and optimizing transportation networks.
+     </span>
+     <span class="koboSpan" id="kobo.442.2" xmlns="http://www.w3.org/1999/xhtml">
+      Agents can represent individual vehicles, traffic lights, or traffic management centers, working
+     </span>
+     <a id="_idIndexMarker152">
+     </a>
+     <span class="koboSpan" id="kobo.443.1" xmlns="http://www.w3.org/1999/xhtml">
+      together to reduce congestion, coordinate traffic signals, and find optimal routes for vehicles based on real-time
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.444.1" xmlns="http://www.w3.org/1999/xhtml">
+       traffic conditions.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.445.1" xmlns="http://www.w3.org/1999/xhtml">
+       Robotics and manufacturing
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.446.1" xmlns="http://www.w3.org/1999/xhtml">
+      : In manufacturing environments, MASs can coordinate the activities of multiple robots or automated systems.
+     </span>
+     <span class="koboSpan" id="kobo.446.2" xmlns="http://www.w3.org/1999/xhtml">
+      Each robot or agent can be responsible for specific tasks, such as assembly, welding, or material handling, while communicating and coordinating with other agents to ensure efficient and
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.447.1" xmlns="http://www.w3.org/1999/xhtml">
+       synchronized operations.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.448.1" xmlns="http://www.w3.org/1999/xhtml">
+       Environmental monitoring and resource management
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.449.1" xmlns="http://www.w3.org/1999/xhtml">
+      : MASs can be used for monitoring and managing natural resources, such as water distribution networks, forestry management, or wildlife habitat conservation.
+     </span>
+     <span class="koboSpan" id="kobo.449.2" xmlns="http://www.w3.org/1999/xhtml">
+      Agents can represent different stakeholders, environmental sensors, or decision-making entities, collaborating to make informed decisions about resource allocation, conservation efforts, or
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.450.1" xmlns="http://www.w3.org/1999/xhtml">
+       mitigation strategies.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.451.1" xmlns="http://www.w3.org/1999/xhtml">
+       Distributed sensor networks
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.452.1" xmlns="http://www.w3.org/1999/xhtml">
+      : MASs are well suited for applications involving distributed sensor networks, such as environmental monitoring, surveillance, or disaster response.
+     </span>
+     <span class="koboSpan" id="kobo.452.2" xmlns="http://www.w3.org/1999/xhtml">
+      Each sensor node can be represented as an agent, collecting and processing local data, while coordinating with other agents to fuse information and provide a comprehensive understanding of the monitored area
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.453.1" xmlns="http://www.w3.org/1999/xhtml">
+       or phenomenon.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.454.1" xmlns="http://www.w3.org/1999/xhtml">
+       Intelligent virtual environments and simulations
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.455.1" xmlns="http://www.w3.org/1999/xhtml">
+      : MASs can be used to create intelligent virtual environments and simulations, where agents represent various entities or actors within the simulated world.
+     </span>
+     <span class="koboSpan" id="kobo.455.2" xmlns="http://www.w3.org/1999/xhtml">
+      These agents can interact, make decisions, and exhibit complex behaviors, enabling realistic simulations of social systems, economic models, or military operations,
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.456.1" xmlns="http://www.w3.org/1999/xhtml">
+       among others.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.457.1" xmlns="http://www.w3.org/1999/xhtml">
+     The key advantages of MASs lie in their ability to distribute problem-solving capabilities, leverage the collective intelligence and specialization of individual agents, and exhibit robustness
+    </span>
+    <a id="_idIndexMarker153">
+    </a>
+    <span class="koboSpan" id="kobo.458.1" xmlns="http://www.w3.org/1999/xhtml">
+     and fault tolerance through decentralized decision-making.
+    </span>
+    <span class="koboSpan" id="kobo.458.2" xmlns="http://www.w3.org/1999/xhtml">
+     Additionally, MASs can facilitate the integration of heterogeneous components, enabling the development of flexible and scalable systems capable of addressing complex, dynamic problems that would be challenging for monolithic,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.459.1" xmlns="http://www.w3.org/1999/xhtml">
+      centralized approaches.
+     </span>
+    </span>
+   </p>
+   <h2 id="_idParaDest-53">
+    <a id="_idTextAnchor055">
+    </a>
+    <span class="koboSpan" id="kobo.460.1" xmlns="http://www.w3.org/1999/xhtml">
+     Definition and characteristics of MASs
+    </span>
+   </h2>
+   <p>
+    <span class="koboSpan" id="kobo.461.1" xmlns="http://www.w3.org/1999/xhtml">
+     A MAS is a system comprising multiple autonomous agents that can interact, collaborate, and
+    </span>
+    <a id="_idIndexMarker154">
+    </a>
+    <span class="koboSpan" id="kobo.462.1" xmlns="http://www.w3.org/1999/xhtml">
+     cooperate to achieve
+    </span>
+    <a id="_idIndexMarker155">
+    </a>
+    <span class="koboSpan" id="kobo.463.1" xmlns="http://www.w3.org/1999/xhtml">
+     shared goals.
+    </span>
+    <span class="koboSpan" id="kobo.463.2" xmlns="http://www.w3.org/1999/xhtml">
+     These agents can be software programs, robots, or even humans equipped with specialized capabilities and goals.
+    </span>
+    <span class="koboSpan" id="kobo.463.3" xmlns="http://www.w3.org/1999/xhtml">
+     Interaction among agents is a necessary component, enabling them to work together efficiently, share information, and divide tasks based on their strengths and areas of expertise.
+    </span>
+    <span class="koboSpan" id="kobo.463.4" xmlns="http://www.w3.org/1999/xhtml">
+     Key characteristics of MASs include
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.464.1" xmlns="http://www.w3.org/1999/xhtml">
+      the following:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.465.1" xmlns="http://www.w3.org/1999/xhtml">
+       Autonomy
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.466.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Each agent within a MAS is self-governing, making self-contained decisions based on its perception of the environment and its objectives.
+     </span>
+     <span class="koboSpan" id="kobo.466.2" xmlns="http://www.w3.org/1999/xhtml">
+      Agents operate independently without centralized control, exhibiting
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.467.1" xmlns="http://www.w3.org/1999/xhtml">
+       autonomous behavior.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.468.1" xmlns="http://www.w3.org/1999/xhtml">
+       Interaction
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.469.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Agents in a MAS communicate with each other through defined protocols, enabling them to share information, negotiate tasks, and coordinate their actions.
+     </span>
+     <span class="koboSpan" id="kobo.469.2" xmlns="http://www.w3.org/1999/xhtml">
+      This interaction can take various forms, such as cooperation, coordination, or competition, depending on the nature of the problem and the
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.470.1" xmlns="http://www.w3.org/1999/xhtml">
+       agents’ goals.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.471.1" xmlns="http://www.w3.org/1999/xhtml">
+       Adaptability
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.472.1" xmlns="http://www.w3.org/1999/xhtml">
+      : MASs possess the flexibility to adapt and change their behavior in response to changes in the environment or changes in the individual agents’ goals.
+     </span>
+     <span class="koboSpan" id="kobo.472.2" xmlns="http://www.w3.org/1999/xhtml">
+      This adaptability makes MAS capable of handling dynamic situations, making them flexible and robust
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.473.1" xmlns="http://www.w3.org/1999/xhtml">
+       during operation.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.474.1" xmlns="http://www.w3.org/1999/xhtml">
+       Distributed control
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.475.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Unlike centralized systems, MASs employ distributed control, where decision-making and control are distributed among the individual agents.
+     </span>
+     <span class="koboSpan" id="kobo.475.2" xmlns="http://www.w3.org/1999/xhtml">
+      This distributed control contributes to the system’s resilience, as failures or malfunctions in one agent do not necessarily affect the entire
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.476.1" xmlns="http://www.w3.org/1999/xhtml">
+       system’s functionality.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.477.1" xmlns="http://www.w3.org/1999/xhtml">
+       Scalability
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.478.1" xmlns="http://www.w3.org/1999/xhtml">
+      : MAS architectures are inherently scalable, allowing for the addition or removal of agents as needed.
+     </span>
+     <span class="koboSpan" id="kobo.478.2" xmlns="http://www.w3.org/1999/xhtml">
+      This scalability enables the system to grow or shrink in complexity and capabilities, making it suitable for a wide range
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.479.1" xmlns="http://www.w3.org/1999/xhtml">
+       of applications.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.480.1" xmlns="http://www.w3.org/1999/xhtml">
+       Heterogeneity
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.481.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Agents within a MAS can be heterogeneous, meaning they can have
+     </span>
+     <a id="_idIndexMarker156">
+     </a>
+     <span class="koboSpan" id="kobo.482.1" xmlns="http://www.w3.org/1999/xhtml">
+      different architectures, capabilities, and goals.
+     </span>
+     <span class="koboSpan" id="kobo.482.2" xmlns="http://www.w3.org/1999/xhtml">
+      This heterogeneity allows the integration of diverse components and the leveraging of specialized expertise, contributing to the overall
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.483.1" xmlns="http://www.w3.org/1999/xhtml">
+       system’s effectiveness.
+      </span>
+     </span>
+    </li>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.484.1" xmlns="http://www.w3.org/1999/xhtml">
+       Decentralized data and knowledge
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.485.1" xmlns="http://www.w3.org/1999/xhtml">
+      : In a MAS, data and knowledge are decentralized and distributed among the individual agents.
+     </span>
+     <span class="koboSpan" id="kobo.485.2" xmlns="http://www.w3.org/1999/xhtml">
+      This decentralization enhances robustness, as there is no single point of failure, and agents can operate based on their local knowledge
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.486.1" xmlns="http://www.w3.org/1999/xhtml">
+       and perceptions.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.487.1" xmlns="http://www.w3.org/1999/xhtml">
+     A MAS’s ability to distribute problem-solving capabilities, leverage collective intelligence, exhibit robustness, and integrate heterogeneous components makes them well suited for addressing complex, dynamic problems that are challenging for traditional,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.488.1" xmlns="http://www.w3.org/1999/xhtml">
+      centralized approaches.
+     </span>
+    </span>
+   </p>
+   <h2 id="_idParaDest-54">
+    <a id="_idTextAnchor056">
+    </a>
+    <span class="koboSpan" id="kobo.489.1" xmlns="http://www.w3.org/1999/xhtml">
+     Interaction mechanisms in MASs
+    </span>
+   </h2>
+   <p>
+    <span class="koboSpan" id="kobo.490.1" xmlns="http://www.w3.org/1999/xhtml">
+     Interaction
+    </span>
+    <a id="_idIndexMarker157">
+    </a>
+    <span class="koboSpan" id="kobo.491.1" xmlns="http://www.w3.org/1999/xhtml">
+     mechanisms in MASs play a crucial role in enabling effective communication, collaboration, and coordination among the agents within the system.
+    </span>
+    <span class="koboSpan" id="kobo.491.2" xmlns="http://www.w3.org/1999/xhtml">
+     The general classification of the basic interaction mechanisms in a MAS can be presented into three
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.492.1" xmlns="http://www.w3.org/1999/xhtml">
+      main types:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.493.1" xmlns="http://www.w3.org/1999/xhtml">
+       Cooperation
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.494.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Cooperation can be defined as agents working together towards a common goal or objective.
+     </span>
+     <span class="koboSpan" id="kobo.494.2" xmlns="http://www.w3.org/1999/xhtml">
+      It is particularly important in situations where no single agent, acting alone, can accomplish
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.495.1" xmlns="http://www.w3.org/1999/xhtml">
+       the objective.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <div>
+    <div class="IMG---Figure" id="_idContainer029">
+     <span class="koboSpan" id="kobo.496.1" xmlns="http://www.w3.org/1999/xhtml">
+      <img alt="img" role="presentation" src="image/B31483_02_3.jpg"/>
+     </span>
+    </div>
+   </div>
+   <p class="IMG---Caption" lang="en-US" xml:lang="en-US">
+    <span class="koboSpan" id="kobo.497.1" xmlns="http://www.w3.org/1999/xhtml">
+     Figure 2.3 – Cooperation in a MAS
+    </span>
+   </p>
+   <p class="list-inset">
+    <span class="koboSpan" id="kobo.498.1" xmlns="http://www.w3.org/1999/xhtml">
+     A prime example of cooperation in MAS is disaster rescue operations, where multiple drones, robotic agents, and humans need to cooperate and collaborate to locate and rescue victims effectively.
+    </span>
+    <span class="koboSpan" id="kobo.498.2" xmlns="http://www.w3.org/1999/xhtml">
+     A MAS relies on agents cooperating by pooling
+    </span>
+    <a id="_idIndexMarker158">
+    </a>
+    <span class="koboSpan" id="kobo.499.1" xmlns="http://www.w3.org/1999/xhtml">
+     their knowledge, resources, and efforts to accomplish tasks that are too complex for one agent.
+    </span>
+    <span class="koboSpan" id="kobo.499.2" xmlns="http://www.w3.org/1999/xhtml">
+     Agents may cooperate by dividing tasks, combining their specialized expertise, or complementing each other’s abilities to tackle complex problems
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.500.1" xmlns="http://www.w3.org/1999/xhtml">
+      more efficiently.
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.501.1" xmlns="http://www.w3.org/1999/xhtml">
+       Coordination
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.502.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Coordination deals with managing interdependencies that arise from the actions and activities of agents within the system.
+     </span>
+     <span class="koboSpan" id="kobo.502.2" xmlns="http://www.w3.org/1999/xhtml">
+      Coordination is essential when agents share resources and have overlapping responsibilities or
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.503.1" xmlns="http://www.w3.org/1999/xhtml">
+       conflicting actions.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <div>
+    <div class="IMG---Figure" id="_idContainer030">
+     <span class="koboSpan" id="kobo.504.1" xmlns="http://www.w3.org/1999/xhtml">
+      <img alt="img" role="presentation" src="image/B31483_02_4.jpg"/>
+     </span>
+    </div>
+   </div>
+   <p class="IMG---Caption" lang="en-US" xml:lang="en-US">
+    <span class="koboSpan" id="kobo.505.1" xmlns="http://www.w3.org/1999/xhtml">
+     Figure 2.4 – Coordination in a MAS
+    </span>
+   </p>
+   <p class="list-inset">
+    <span class="koboSpan" id="kobo.506.1" xmlns="http://www.w3.org/1999/xhtml">
+     Coordination mechanisms in MAS may include strategies such as task scheduling, resource allocation management, and conflict resolution.
+    </span>
+    <span class="koboSpan" id="kobo.506.2" xmlns="http://www.w3.org/1999/xhtml">
+     For example, in
+    </span>
+    <a id="_idIndexMarker159">
+    </a>
+    <span class="koboSpan" id="kobo.507.1" xmlns="http://www.w3.org/1999/xhtml">
+     a manufacturing setting, agents representing different robots on production lines may need to coordinate their actions to ensure efficient use of shared resources, prevent interference, and maintain overall
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.508.1" xmlns="http://www.w3.org/1999/xhtml">
+      production efficiency.
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.509.1" xmlns="http://www.w3.org/1999/xhtml">
+       Negotiation
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.510.1" xmlns="http://www.w3.org/1999/xhtml">
+      : Negotiation is the process through which agents reach agreements on how to share resources, divide tasks, or resolve conflicts.
+     </span>
+     <span class="koboSpan" id="kobo.510.2" xmlns="http://www.w3.org/1999/xhtml">
+      It involves agents making offers, counteroffers, and compromises, even when their interests may
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.511.1" xmlns="http://www.w3.org/1999/xhtml">
+       initially conflict.
+      </span>
+     </span>
+    </li>
+   </ul>
+   <div>
+    <div class="IMG---Figure" id="_idContainer031">
+     <span class="koboSpan" id="kobo.512.1" xmlns="http://www.w3.org/1999/xhtml">
+      <img alt="img" role="presentation" src="image/B31483_02_5.jpg"/>
+     </span>
+    </div>
+   </div>
+   <p class="IMG---Caption" lang="en-US" xml:lang="en-US">
+    <span class="koboSpan" id="kobo.513.1" xmlns="http://www.w3.org/1999/xhtml">
+     Figure 2.5 – Negotiation in a MAS
+    </span>
+   </p>
+   <p class="list-inset">
+    <span class="koboSpan" id="kobo.514.1" xmlns="http://www.w3.org/1999/xhtml">
+     Negotiation mechanisms in MAS enable agents to find mutually beneficial solutions by exchanging proposals, evaluating alternatives, and reaching consensus.
+    </span>
+    <span class="koboSpan" id="kobo.514.2" xmlns="http://www.w3.org/1999/xhtml">
+     This is particularly useful in situations where agents have limited or conflicting resources, different preferences, or competing goals.
+    </span>
+    <span class="koboSpan" id="kobo.514.3" xmlns="http://www.w3.org/1999/xhtml">
+     Negotiation can involve various techniques, such as auctions, voting protocols, bargaining strategies, or game-theoretic approaches, dependin
+    </span>
+    <a id="_idTextAnchor057">
+    </a>
+    <span class="koboSpan" id="kobo.515.1" xmlns="http://www.w3.org/1999/xhtml">
+     g on the specific requirements and constraints of the
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.516.1" xmlns="http://www.w3.org/1999/xhtml">
+      problem domain.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.517.1" xmlns="http://www.w3.org/1999/xhtml">
+     These
+    </span>
+    <a id="_idIndexMarker160">
+    </a>
+    <span class="koboSpan" id="kobo.518.1" xmlns="http://www.w3.org/1999/xhtml">
+     interaction mechanisms – cooperation, coordination, and negotiation – are fundamental to the effective functioning of MAS.
+    </span>
+    <span class="koboSpan" id="kobo.518.2" xmlns="http://www.w3.org/1999/xhtml">
+     They enable agents to work together, leverage their collective capabilities, and resolve conflicts or interdependencies that may arise during their interactions.
+    </span>
+    <span class="koboSpan" id="kobo.518.3" xmlns="http://www.w3.org/1999/xhtml">
+     The choice and design of appropriate interaction mechanisms are crucial for enabling efficient and robust multi-agent systems that can tackle complex problems and adapt to
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.519.1" xmlns="http://www.w3.org/1999/xhtml">
+      dynamic environments.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.520.1" xmlns="http://www.w3.org/1999/xhtml">
+     In the context of our travel assistant example, MASs can play a vital role in facilitating efficient coordination and negotiation among various entities involved in the travel industry network.
+    </span>
+    <span class="koboSpan" id="kobo.520.2" xmlns="http://www.w3.org/1999/xhtml">
+     In such a scenario, agents can represent different stakeholders, such as airlines, hotels, car rental companies, tour operators, or travel agencies, and utilize negotiation mechanisms to optimize various aspects of the travel
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.521.1" xmlns="http://www.w3.org/1999/xhtml">
+      booking operations.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.522.1" xmlns="http://www.w3.org/1999/xhtml">
+     For example, consider a MAS where agents represent airlines, hotels, and other relevant parties involved in the travel industry.
+    </span>
+    <span class="koboSpan" id="kobo.522.2" xmlns="http://www.w3.org/1999/xhtml">
+     These agents can engage in negotiation processes to determine
+    </span>
+    <a id="_idIndexMarker161">
+    </a>
+    <span class="koboSpan" id="kobo.523.1" xmlns="http://www.w3.org/1999/xhtml">
+     flight schedules, room availability, pricing, and other travel-related decisions, aiming to achieve the highest efficiency for the overall travel
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.524.1" xmlns="http://www.w3.org/1999/xhtml">
+      booking operations.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.525.1" xmlns="http://www.w3.org/1999/xhtml">
+     The negotiation process can unfold
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.526.1" xmlns="http://www.w3.org/1999/xhtml">
+      as follows:
+     </span>
+    </span>
+   </p>
+   <ol>
+    <li>
+     <span class="koboSpan" id="kobo.527.1" xmlns="http://www.w3.org/1999/xhtml">
+      Agents representing airlines can propose available seats, flight schedules, and pricing for
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.528.1" xmlns="http://www.w3.org/1999/xhtml">
+       their routes.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.529.1" xmlns="http://www.w3.org/1999/xhtml">
+      Agents representing hotels can evaluate these proposals based on their room availability, expected occupancy rates, and demand forecasts, and negotiate with the airline agents for the most suitable flight schedules that align with their check-in and
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.530.1" xmlns="http://www.w3.org/1999/xhtml">
+       check-out times.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.531.1" xmlns="http://www.w3.org/1999/xhtml">
+      Travel agency agents can then negotiate with both airline and hotel agents, taking into account customer preferences, budget constraints, and their specific requirements for travel dates
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.532.1" xmlns="http://www.w3.org/1999/xhtml">
+       and accommodations.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.533.1" xmlns="http://www.w3.org/1999/xhtml">
+      Transportation agents (for example, car rental companies or shuttle services) can also participate in the negotiation process, offering ground transportation services and proposing pickup/drop-off schedules and associated costs to the other
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.534.1" xmlns="http://www.w3.org/1999/xhtml">
+       agents involved.
+      </span>
+     </span>
+    </li>
+   </ol>
+   <p>
+    <span class="koboSpan" id="kobo.535.1" xmlns="http://www.w3.org/1999/xhtml">
+     Throughout the negotiation process, agents can utilize various strategies and algorithms to evaluate proposals, generate counteroffers, and find mutually acceptable agreements.
+    </span>
+    <span class="koboSpan" id="kobo.535.2" xmlns="http://www.w3.org/1999/xhtml">
+     These strategies may involve techniques such as auctions, bargaining protocols, game-theoretic approaches, or optimization algorithms tailored for travel industry operations.
+    </span>
+    <span class="koboSpan" id="kobo.535.3" xmlns="http://www.w3.org/1999/xhtml">
+     For example, agents may employ multi-attribute utility functions that consider factors such as travel time, cost, comfort, and customer preferences to evaluate and rank various proposals.
+    </span>
+    <span class="koboSpan" id="kobo.535.4" xmlns="http://www.w3.org/1999/xhtml">
+     They can then engage in iterative negotiations, adjusting their offers and counter offers based on their respective utility functions
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.536.1" xmlns="http://www.w3.org/1999/xhtml">
+      and constraints.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.537.1" xmlns="http://www.w3.org/1999/xhtml">
+     Moreover, the distributed nature of MAS allows decentralized decision-making, where each agent can make decisions based on its local knowledge and constraints, while still collaborating and coordinating with other agents to achieve global optimization goals.
+    </span>
+    <span class="koboSpan" id="kobo.537.2" xmlns="http://www.w3.org/1999/xhtml">
+     The negotiation mechanisms in MAS for our travel and hospitality example not only facilitate efficient coordination among various entities but also provide the flexibility and adaptability to handle dynamic changes in demand, supply, pricing changes, or other operational factors, ultimately leading to a more resilient and responsive system that caters to
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.538.1" xmlns="http://www.w3.org/1999/xhtml">
+      customer demands.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.539.1" xmlns="http://www.w3.org/1999/xhtml">
+     To illustrate
+    </span>
+    <a id="_idIndexMarker162">
+    </a>
+    <span class="koboSpan" id="kobo.540.1" xmlns="http://www.w3.org/1999/xhtml">
+     a MAS for our travel booking assistant example, we will introduce some new functionalities.
+    </span>
+    <span class="koboSpan" id="kobo.540.2" xmlns="http://www.w3.org/1999/xhtml">
+     In addition to booking flights, we now want our system to find hotels at the destination and create an appropriate travel package for the customer.
+    </span>
+    <span class="koboSpan" id="kobo.540.3" xmlns="http://www.w3.org/1999/xhtml">
+     The algorithm for such a MAS system could look like
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.541.1" xmlns="http://www.w3.org/1999/xhtml">
+      the following:
+     </span>
+    </span>
+   </p>
+   <p class="callout-heading">
+    <span class="koboSpan" id="kobo.542.1" xmlns="http://www.w3.org/1999/xhtml">
+     Algorithm 2: Multi-agent system for travel booking assistant
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.543.1" xmlns="http://www.w3.org/1999/xhtml">
+     Require: Sets of Airline Agents A = {A1, A2, ..., An} and Hotel Agents H = {H1, H2, ...,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.544.1" xmlns="http://www.w3.org/1999/xhtml">
+      Hm}
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.545.1" xmlns="http://www.w3.org/1999/xhtml">
+     Ensure: Initialized TravelBookingSystem S with Travel Agency
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.546.1" xmlns="http://www.w3.org/1999/xhtml">
+      Agent TA
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.547.1" xmlns="http://www.w3.org/1999/xhtml">
+     1: Initialize S with A, H,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.548.1" xmlns="http://www.w3.org/1999/xhtml">
+      and TA
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.549.1" xmlns="http://www.w3.org/1999/xhtml">
+     2: function RequestTravelPackage(departure,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.550.1" xmlns="http://www.w3.org/1999/xhtml">
+      destination, dates)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.551.1" xmlns="http://www.w3.org/1999/xhtml">
+     3:     for each Ai in
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.552.1" xmlns="http://www.w3.org/1999/xhtml">
+      A do
+     </span>
+    </span>
+   </p>
+   <p class="callout-heading">
+    <span class="koboSpan" id="kobo.553.1" xmlns="http://www.w3.org/1999/xhtml">
+     Algorithm 2: Multi-agent system for travel booking assistant
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.554.1" xmlns="http://www.w3.org/1999/xhtml">
+     4:         available_flights ← Ai.GetAvailableFlights(departure,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.555.1" xmlns="http://www.w3.org/1999/xhtml">
+      destination, dates)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.556.1" xmlns="http://www.w3.org/1999/xhtml">
+     5:     for each Hj in
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.557.1" xmlns="http://www.w3.org/1999/xhtml">
+      H do
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.558.1" xmlns="http://www.w3.org/1999/xhtml">
+     6:         available_rooms ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.559.1" xmlns="http://www.w3.org/1999/xhtml">
+      Hj.GetAvailableRooms(destination, dates)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.560.1" xmlns="http://www.w3.org/1999/xhtml">
+     7:     packages ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.561.1" xmlns="http://www.w3.org/1999/xhtml">
+      TA.CompilePackages(available_flights, available_rooms)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.562.1" xmlns="http://www.w3.org/1999/xhtml">
+     8:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.563.1" xmlns="http://www.w3.org/1999/xhtml">
+      return
+     </span>
+    </span>
+    <span class="No-Break">
+     <a id="_idIndexMarker163">
+     </a>
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.564.1" xmlns="http://www.w3.org/1999/xhtml">
+      packages
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.565.1" xmlns="http://www.w3.org/1999/xhtml">
+     9:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.566.1" xmlns="http://www.w3.org/1999/xhtml">
+      function BookTravel(selected_package)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.567.1" xmlns="http://www.w3.org/1999/xhtml">
+     10:    flight_booking ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.568.1" xmlns="http://www.w3.org/1999/xhtml">
+      selected_package.airline.BookFlight()
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.569.1" xmlns="http://www.w3.org/1999/xhtml">
+     11:    room_booking ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.570.1" xmlns="http://www.w3.org/1999/xhtml">
+      selected_package.hotel.BookRoom()
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.571.1" xmlns="http://www.w3.org/1999/xhtml">
+     12:    if flight_booking and room_booking are
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.572.1" xmlns="http://www.w3.org/1999/xhtml">
+      successful then
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.573.1" xmlns="http://www.w3.org/1999/xhtml">
+     13:        return
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.574.1" xmlns="http://www.w3.org/1999/xhtml">
+      CreateBooking(flight_booking, room_booking)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.575.1" xmlns="http://www.w3.org/1999/xhtml">
+     14:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.576.1" xmlns="http://www.w3.org/1999/xhtml">
+      else
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.577.1" xmlns="http://www.w3.org/1999/xhtml">
+     15:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.578.1" xmlns="http://www.w3.org/1999/xhtml">
+      return FailureNotification()
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.579.1" xmlns="http://www.w3.org/1999/xhtml">
+     16:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.580.1" xmlns="http://www.w3.org/1999/xhtml">
+      function UpdateDynamicPricing()
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.581.1" xmlns="http://www.w3.org/1999/xhtml">
+     17:    for each Ai in
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.582.1" xmlns="http://www.w3.org/1999/xhtml">
+      A do
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.583.1" xmlns="http://www.w3.org/1999/xhtml">
+     18:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.584.1" xmlns="http://www.w3.org/1999/xhtml">
+      Ai.UpdateFlightPrices()
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.585.1" xmlns="http://www.w3.org/1999/xhtml">
+     19:    for each Hj in
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.586.1" xmlns="http://www.w3.org/1999/xhtml">
+      H do
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.587.1" xmlns="http://www.w3.org/1999/xhtml">
+     20:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.588.1" xmlns="http://www.w3.org/1999/xhtml">
+      Hj.UpdateRoomPrices()
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.589.1" xmlns="http://www.w3.org/1999/xhtml">
+     21: while
+    </span>
+    <a id="_idIndexMarker164">
+    </a>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.590.1" xmlns="http://www.w3.org/1999/xhtml">
+      True do
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.591.1" xmlns="http://www.w3.org/1999/xhtml">
+     22:    if
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.592.1" xmlns="http://www.w3.org/1999/xhtml">
+      NewTravelRequest() then
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.593.1" xmlns="http://www.w3.org/1999/xhtml">
+     23:        request ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.594.1" xmlns="http://www.w3.org/1999/xhtml">
+      GetTravelRequest()
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.595.1" xmlns="http://www.w3.org/1999/xhtml">
+     24:        packages ← RequestTravelPackage(request.departure,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.596.1" xmlns="http://www.w3.org/1999/xhtml">
+      request.destination, request.dates)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.597.1" xmlns="http://www.w3.org/1999/xhtml">
+     25:        selected_package ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.598.1" xmlns="http://www.w3.org/1999/xhtml">
+      TA.PresentOptionsToCustomer(packages)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.599.1" xmlns="http://www.w3.org/1999/xhtml">
+     26:        if selected_package is not
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.600.1" xmlns="http://www.w3.org/1999/xhtml">
+      null then
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.601.1" xmlns="http://www.w3.org/1999/xhtml">
+     27:            booking ←
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.602.1" xmlns="http://www.w3.org/1999/xhtml">
+      BookTravel(selected_package)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.603.1" xmlns="http://www.w3.org/1999/xhtml">
+     28:            if booking is
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.604.1" xmlns="http://www.w3.org/1999/xhtml">
+      successful then
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.605.1" xmlns="http://www.w3.org/1999/xhtml">
+     29:                NotifyCustomer(booking, “
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.606.1" xmlns="http://www.w3.org/1999/xhtml">
+      Booking confirmed”)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.607.1" xmlns="http://www.w3.org/1999/xhtml">
+     30:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.608.1" xmlns="http://www.w3.org/1999/xhtml">
+      else
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.609.1" xmlns="http://www.w3.org/1999/xhtml">
+     31:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.610.1" xmlns="http://www.w3.org/1999/xhtml">
+      NotifyCustomer(“Booking failed”)
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.611.1" xmlns="http://www.w3.org/1999/xhtml">
+     32:    if
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.612.1" xmlns="http://www.w3.org/1999/xhtml">
+      TimeToUpdatePricing() then
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.613.1" xmlns="http://www.w3.org/1999/xhtml">
+     33:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.614.1" xmlns="http://www.w3.org/1999/xhtml">
+      UpdateDynamicPricing()
+     </span>
+    </span>
+   </p>
+   <p class="callout">
+    <span class="koboSpan" id="kobo.615.1" xmlns="http://www.w3.org/1999/xhtml">
+     34:
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.616.1" xmlns="http://www.w3.org/1999/xhtml">
+      Output S
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.617.1" xmlns="http://www.w3.org/1999/xhtml">
+     Here is a breakdown of the key components of
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.618.1" xmlns="http://www.w3.org/1999/xhtml">
+      this algorithm:
+     </span>
+    </span>
+   </p>
+   <ol>
+    <li>
+     <span class="koboSpan" id="kobo.619.1" xmlns="http://www.w3.org/1999/xhtml">
+      The first step is to clearly define a set of agents: in this case a flight agent, a hotel agent, and a travel agency agent.
+     </span>
+     <span class="koboSpan" id="kobo.619.2" xmlns="http://www.w3.org/1999/xhtml">
+      The flight and hotel agents are responsible for airlines and hotel-related actions, and the travel agency agent is responsible for creating travel packages based on the best
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.620.1" xmlns="http://www.w3.org/1999/xhtml">
+       options available.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.621.1" xmlns="http://www.w3.org/1999/xhtml">
+      Steps
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.622.1" xmlns="http://www.w3.org/1999/xhtml">
+       2
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.623.1" xmlns="http://www.w3.org/1999/xhtml">
+      through
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.624.1" xmlns="http://www.w3.org/1999/xhtml">
+       8
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.625.1" xmlns="http://www.w3.org/1999/xhtml">
+      show how the travel agent interacts with multiple airline and hotel
+     </span>
+     <a id="_idIndexMarker165">
+     </a>
+     <span class="koboSpan" id="kobo.626.1" xmlns="http://www.w3.org/1999/xhtml">
+      agents to compile travel packages.
+     </span>
+     <span class="koboSpan" id="kobo.626.2" xmlns="http://www.w3.org/1999/xhtml">
+      It finds appropriate flight schedules and hotel availability in the destination city and subsequently uses that data to
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.627.1" xmlns="http://www.w3.org/1999/xhtml">
+       create packages.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.628.1" xmlns="http://www.w3.org/1999/xhtml">
+      Steps
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.629.1" xmlns="http://www.w3.org/1999/xhtml">
+       9
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.630.1" xmlns="http://www.w3.org/1999/xhtml">
+      through
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.631.1" xmlns="http://www.w3.org/1999/xhtml">
+       15
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.632.1" xmlns="http://www.w3.org/1999/xhtml">
+      demonstrate the coordination between the selected airline and hotel agents to confirm the flight and hotel booking according to the
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.633.1" xmlns="http://www.w3.org/1999/xhtml">
+       chosen package.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.634.1" xmlns="http://www.w3.org/1999/xhtml">
+      Steps
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.635.1" xmlns="http://www.w3.org/1999/xhtml">
+       16
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.636.1" xmlns="http://www.w3.org/1999/xhtml">
+      through
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.637.1" xmlns="http://www.w3.org/1999/xhtml">
+       20
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.638.1" xmlns="http://www.w3.org/1999/xhtml">
+      show how each airline and hotel agent independently updates
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.639.1" xmlns="http://www.w3.org/1999/xhtml">
+       its pricing.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.640.1" xmlns="http://www.w3.org/1999/xhtml">
+      The main loop from steps
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.641.1" xmlns="http://www.w3.org/1999/xhtml">
+       21
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.642.1" xmlns="http://www.w3.org/1999/xhtml">
+      through
+     </span>
+     <em class="italic">
+      <span class="koboSpan" id="kobo.643.1" xmlns="http://www.w3.org/1999/xhtml">
+       33
+      </span>
+     </em>
+     <span class="koboSpan" id="kobo.644.1" xmlns="http://www.w3.org/1999/xhtml">
+      ties everything together, showing how the system handles travel requests and periodically updates pricing across
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.645.1" xmlns="http://www.w3.org/1999/xhtml">
+       all agents.
+      </span>
+     </span>
+    </li>
+   </ol>
+   <p>
+    <span class="koboSpan" id="kobo.646.1" xmlns="http://www.w3.org/1999/xhtml">
+     This example algorithm demonstrates a combination of coordination and cooperation
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.647.1" xmlns="http://www.w3.org/1999/xhtml">
+      between agents:
+     </span>
+    </span>
+   </p>
+   <ul>
+    <li>
+     <span class="koboSpan" id="kobo.648.1" xmlns="http://www.w3.org/1999/xhtml">
+      Cooperation, since all the agents work towards a common goal of booking the travel itinerary for
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.649.1" xmlns="http://www.w3.org/1999/xhtml">
+       the user
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.650.1" xmlns="http://www.w3.org/1999/xhtml">
+      Coordination, since the travel agency agent needs input from both the flight agent and the hotel agent to build a travel package, and then subsequently book the best
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.651.1" xmlns="http://www.w3.org/1999/xhtml">
+       travel package
+      </span>
+     </span>
+    </li>
+   </ul>
+   <p>
+    <span class="koboSpan" id="kobo.652.1" xmlns="http://www.w3.org/1999/xhtml">
+     The full Python code related to this algorithm can be found in the
+    </span>
+    <strong class="source-inline">
+     <span class="koboSpan" id="kobo.653.1" xmlns="http://www.w3.org/1999/xhtml">
+      Chapter_02.ipynb
+     </span>
+    </strong>
+    <span class="koboSpan" id="kobo.654.1" xmlns="http://www.w3.org/1999/xhtml">
+     Python notebook in GitHub repository.
+    </span>
+    <span class="koboSpan" id="kobo.654.2" xmlns="http://www.w3.org/1999/xhtml">
+     Keep in mind, just like before, our MAS is not very intelligent since it still needs discreet input, that is, departure
+    </span>
+    <a id="_idIndexMarker166">
+    </a>
+    <span class="koboSpan" id="kobo.655.1" xmlns="http://www.w3.org/1999/xhtml">
+     city code and arrival city code, to operate successfully, and lacks the a
+    </span>
+    <a id="_idTextAnchor058">
+    </a>
+    <span class="koboSpan" id="kobo.656.1" xmlns="http://www.w3.org/1999/xhtml">
+     bility to comprehend or infer values and actions from user messages
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.657.1" xmlns="http://www.w3.org/1999/xhtml">
+      or text.
+     </span>
+    </span>
+   </p>
+   <h1 id="_idParaDest-55">
+    <a id="_idTextAnchor059">
+    </a>
+    <span class="koboSpan" id="kobo.658.1" xmlns="http://www.w3.org/1999/xhtml">
+     Summary
+    </span>
+   </h1>
+   <p>
+    <span class="koboSpan" id="kobo.659.1" xmlns="http://www.w3.org/1999/xhtml">
+     In this chapter, we explored the intriguing world of agentic systems and intelligent agents, delving into the core concepts of agency, autonomy, and the characteristics that define an ideal agent.
+    </span>
+    <span class="koboSpan" id="kobo.659.2" xmlns="http://www.w3.org/1999/xhtml">
+     We studied various architectural patterns for designing and implementing such systems, including deliberative, reactive, and hybrid approaches.
+    </span>
+    <span class="koboSpan" id="kobo.659.3" xmlns="http://www.w3.org/1999/xhtml">
+     Additionally, we examined MASs, where multiple agents collaborate and coordinate to achieve collective goals through mechanisms such as cooperation, coordination,
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.660.1" xmlns="http://www.w3.org/1999/xhtml">
+      and negotiation.
+     </span>
+    </span>
+   </p>
+   <p>
+    <span class="koboSpan" id="kobo.661.1" xmlns="http://www.w3.org/1999/xhtml">
+     The knowledge gained from this chapter provides a solid foundation for developing intelligent and autonomous systems capable of operating effectively in complex, unpredictable environments.
+    </span>
+    <span class="koboSpan" id="kobo.661.2" xmlns="http://www.w3.org/1999/xhtml">
+     You should now be able to decide which agentic system architecture best suits any particular use case, and be able to craft a mental model of a MAS that gives you the foundation of your agentic system.
+    </span>
+    <span class="koboSpan" id="kobo.661.3" xmlns="http://www.w3.org/1999/xhtml">
+     In the next chapter, we will dive deeper into the essentials of an a
+    </span>
+    <a id="_idTextAnchor060">
+    </a>
+    <span class="koboSpan" id="kobo.662.1" xmlns="http://www.w3.org/1999/xhtml">
+     gentic system, further strengthening our ability to build
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.663.1" xmlns="http://www.w3.org/1999/xhtml">
+      efficient systems.
+     </span>
+    </span>
+   </p>
+   <h1 id="_idParaDest-56">
+    <a id="_idTextAnchor061">
+    </a>
+    <span class="koboSpan" id="kobo.664.1" xmlns="http://www.w3.org/1999/xhtml">
+     Questions
+    </span>
+   </h1>
+   <ol>
+    <li>
+     <span class="koboSpan" id="kobo.665.1" xmlns="http://www.w3.org/1999/xhtml">
+      What are the key characteristics of
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.666.1" xmlns="http://www.w3.org/1999/xhtml">
+       intelligent agents?
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.667.1" xmlns="http://www.w3.org/1999/xhtml">
+      What are the main types of architectural patterns for
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.668.1" xmlns="http://www.w3.org/1999/xhtml">
+       intelligent agents?
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.669.1" xmlns="http://www.w3.org/1999/xhtml">
+      How do deliberative and reactive architectures differ in their strengths
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.670.1" xmlns="http://www.w3.org/1999/xhtml">
+       and weaknesses?
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.671.1" xmlns="http://www.w3.org/1999/xhtml">
+      What is a
+     </span>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.672.1" xmlns="http://www.w3.org/1999/xhtml">
+       multi-agent system
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.673.1" xmlns="http://www.w3.org/1999/xhtml">
+      (
+     </span>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.674.1" xmlns="http://www.w3.org/1999/xhtml">
+       MAS
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.675.1" xmlns="http://www.w3.org/1999/xhtml">
+      ) and what are its
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.676.1" xmlns="http://www.w3.org/1999/xhtml">
+       key characteristics?
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.677.1" xmlns="http://www.w3.org/1999/xhtml">
+      What are the main interaction mechanisms
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.678.1" xmlns="http://www.w3.org/1999/xhtml">
+       in MASs?
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.679.1" xmlns="http://www.w3.org/1999/xhtml">
+      In what domains are MASs
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.680.1" xmlns="http://www.w3.org/1999/xhtml">
+       commonly applied?
+      </span>
+     </span>
+    </li>
+   </ol>
+   <h1 id="_idParaDest-57">
+    <a id="_idTextAnchor062">
+    </a>
+    <span class="koboSpan" id="kobo.681.1" xmlns="http://www.w3.org/1999/xhtml">
+     Answers
+    </span>
+   </h1>
+   <ol>
+    <li value="1">
+     <span class="koboSpan" id="kobo.682.1" xmlns="http://www.w3.org/1999/xhtml">
+      Key characteristics of intelligent agents include reactivity, proactiveness, social ability, autonomy, and the capability to learn
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.683.1" xmlns="http://www.w3.org/1999/xhtml">
+       and adapt.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.684.1" xmlns="http://www.w3.org/1999/xhtml">
+      The main architectural patterns for intelligent agents are deliberative (knowledge-based), reactive (behavior-based), and
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.685.1" xmlns="http://www.w3.org/1999/xhtml">
+       hybrid architectures.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.686.1" xmlns="http://www.w3.org/1999/xhtml">
+      Deliberative architectures excel in complex reasoning and planning but may struggle with real-time responsiveness in dynamic environments.
+     </span>
+     <span class="koboSpan" id="kobo.686.2" xmlns="http://www.w3.org/1999/xhtml">
+      Reactive architectures are well suited for dynamic environments requiring rapid responses but lack long-term planning and abstract
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.687.1" xmlns="http://www.w3.org/1999/xhtml">
+       reasoning capabilities.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.688.1" xmlns="http://www.w3.org/1999/xhtml">
+      A
+     </span>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.689.1" xmlns="http://www.w3.org/1999/xhtml">
+       multi-agent system
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.690.1" xmlns="http://www.w3.org/1999/xhtml">
+      (
+     </span>
+     <strong class="bold">
+      <span class="koboSpan" id="kobo.691.1" xmlns="http://www.w3.org/1999/xhtml">
+       MAS
+      </span>
+     </strong>
+     <span class="koboSpan" id="kobo.692.1" xmlns="http://www.w3.org/1999/xhtml">
+      ) consists of multiple intelligent agents that interact, cooperate, and coordinate to achieve collective goals.
+     </span>
+     <span class="koboSpan" id="kobo.692.2" xmlns="http://www.w3.org/1999/xhtml">
+      Key characteristics include autonomy, interaction, adaptability, distributed control, scalability, heterogeneity, and decentralized data
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.693.1" xmlns="http://www.w3.org/1999/xhtml">
+       and knowledge.
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.694.1" xmlns="http://www.w3.org/1999/xhtml">
+      The main interaction mechanisms in MASs are cooperation (working towards a common goal), coordination (managing interdependencies), and negotiation (
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.695.1" xmlns="http://www.w3.org/1999/xhtml">
+       reaching agreements).
+      </span>
+     </span>
+    </li>
+    <li>
+     <span class="koboSpan" id="kobo.696.1" xmlns="http://www.w3.org/1999/xhtml">
+      MASs find applications in domains such as supply chain management, traffic control, robotics, environmental monitoring, distributed sensor networks, and intelligent
+     </span>
+     <span class="No-Break">
+      <span class="koboSpan" id="kobo.697.1" xmlns="http://www.w3.org/1999/xhtml">
+       virtual environments.
+      </span>
+     </span>
+    </li>
+   </ol>
+   <h1 id="_idParaDest-58">
+    <a id="_idTextAnchor063">
+    </a>
+    <span class="koboSpan" id="kobo.698.1" xmlns="http://www.w3.org/1999/xhtml">
+     Join our communities on Discord and Reddit
+    </span>
+   </h1>
+   <p>
+    <span class="koboSpan" id="kobo.699.1" xmlns="http://www.w3.org/1999/xhtml">
+     Have questions about the book or want to contribute to discussions on Generative AI and LLMs?
+    </span>
+    <span class="koboSpan" id="kobo.699.2" xmlns="http://www.w3.org/1999/xhtml">
+     Join our Discord server at
+    </span>
+    <a href="https://packt.link/I1tSU">
+     <span class="koboSpan" id="kobo.700.1" xmlns="http://www.w3.org/1999/xhtml">
+      https://packt.link/I1tSU
+     </span>
+    </a>
+    <span class="koboSpan" id="kobo.701.1" xmlns="http://www.w3.org/1999/xhtml">
+     and our Reddit channel at
+    </span>
+    <a href="https://packt.link/ugMW0">
+     <span class="koboSpan" id="kobo.702.1" xmlns="http://www.w3.org/1999/xhtml">
+      https://packt.link/ugMW0
+     </span>
+    </a>
+    <span class="koboSpan" id="kobo.703.1" xmlns="http://www.w3.org/1999/xhtml">
+     to connect, share, and collaborate with
+    </span>
+    <span class="No-Break">
+     <span class="koboSpan" id="kobo.704.1" xmlns="http://www.w3.org/1999/xhtml">
+      like-minded enthusiasts.
+     </span>
+    </span>
+   </p>
+   <div>
+    <div class="IMG---Figure" id="_idContainer032">
+     <span class="koboSpan" id="kobo.705.1" xmlns="http://www.w3.org/1999/xhtml">
+      <img alt="img" role="presentation" src="image/B31483_Discord_QR_new.jpg"/>
+     </span>
+    </div>
+   </div>
+   <p>
+   </p>
+   <div>
+    <div class="IMG---Figure" id="_idContainer033">
+     <span class="koboSpan" id="kobo.706.1" xmlns="http://www.w3.org/1999/xhtml">
+      <img alt="img" role="presentation" src="image/qrcode_Reddit_Channel.jpg"/>
+     </span>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

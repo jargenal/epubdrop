@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+	<head>
+		<meta name="dtb:uid" content="978-1-80512-618-8" />
+		<meta name="dtb:depth" content="4" />
+		<meta name="dtb:totalPageCount" content="0" />
+		<meta name="dtb:maxPageNumber" content="0" />
+	</head>
+	<docTitle>
+		<text>MuleSoft Platform Architect’s Guide</text>
+	</docTitle>
+	<docAuthor>
+		<text>Jitendra Bafna and Jim Andrews</text>
+	</docAuthor>
+	<navMap>
+		<navPoint id="navpoint1" playOrder="1"><navLabel><text>MuleSoft Platform Architect’s Guide</text></navLabel><content src="B19922_FM.xhtml#_idParaDest-1" /></navPoint>
+		<navPoint id="navpoint2" playOrder="2"><navLabel><text>Contributors</text></navLabel><content src="B19922_FM.xhtml#_idParaDest-2" /></navPoint>
+		<navPoint id="navpoint3" playOrder="3"><navLabel><text>About the authors</text></navLabel><content src="B19922_FM.xhtml#_idParaDest-3" /></navPoint>
+		<navPoint id="navpoint4" playOrder="4"><navLabel><text>About the reviewers</text></navLabel><content src="B19922_FM.xhtml#_idParaDest-4" /></navPoint>
+		<navPoint id="navpoint5" playOrder="5"><navLabel><text>Preface</text></navLabel><content src="B19922_Preface.xhtml#_idParaDest-5" />
+			<navPoint id="navpoint6" playOrder="6"><navLabel><text>Who this book is for</text></navLabel><content src="B19922_Preface.xhtml#_idParaDest-6" /></navPoint>
+			<navPoint id="navpoint7" playOrder="7"><navLabel><text>What this book covers</text></navLabel><content src="B19922_Preface.xhtml#_idParaDest-7" /></navPoint>
+			<navPoint id="navpoint8" playOrder="8"><navLabel><text>To get the most out of this book</text></navLabel><content src="B19922_Preface.xhtml#_idParaDest-8" /></navPoint>
+			<navPoint id="navpoint9" playOrder="9"><navLabel><text>Download the color images</text></navLabel><content src="B19922_Preface.xhtml#_idParaDest-9" /></navPoint>
+			<navPoint id="navpoint10" playOrder="10"><navLabel><text>Conventions used</text></navLabel><content src="B19922_Preface.xhtml#_idParaDest-10" /></navPoint>
+			<navPoint id="navpoint11" playOrder="11"><navLabel><text>Get in touch</text></navLabel><content src="B19922_Preface.xhtml#_idParaDest-11" /></navPoint>
+			<navPoint id="navpoint12" playOrder="12"><navLabel><text>Share Your Thoughts</text></navLabel><content src="B19922_Preface.xhtml#_idParaDest-12" /></navPoint>
+			<navPoint id="navpoint13" playOrder="13"><navLabel><text>Download a free PDF copy of this book</text></navLabel><content src="B19922_Preface.xhtml#_idParaDest-13" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint14" playOrder="14"><navLabel><text>1</text></navLabel><content src="B19922_01.xhtml#_idParaDest-14" /></navPoint>
+		<navPoint id="navpoint15" playOrder="15"><navLabel><text>What is the MuleSoft Platform?</text></navLabel><content src="B19922_01.xhtml#_idParaDest-15" />
+			<navPoint id="navpoint16" playOrder="16"><navLabel><text>Technical requirements</text></navLabel><content src="B19922_01.xhtml#_idParaDest-16" /></navPoint>
+			<navPoint id="navpoint17" playOrder="17"><navLabel><text>What is MuleSoft and iPaaS?</text></navLabel><content src="B19922_01.xhtml#_idParaDest-17" /></navPoint>
+			<navPoint id="navpoint18" playOrder="18"><navLabel><text>How have integration approaches evolved?</text></navLabel><content src="B19922_01.xhtml#_idParaDest-18" />
+				<navPoint id="navpoint19" playOrder="19"><navLabel><text>J&amp;J Music Store Use Case</text></navLabel><content src="B19922_01.xhtml#_idParaDest-19" /></navPoint>
+				<navPoint id="navpoint20" playOrder="20"><navLabel><text>Point to Point</text></navLabel><content src="B19922_01.xhtml#_idParaDest-20" /></navPoint>
+				<navPoint id="navpoint21" playOrder="21"><navLabel><text>Middleware and Remote Procedure Calls</text></navLabel><content src="B19922_01.xhtml#_idParaDest-21" /></navPoint>
+				<navPoint id="navpoint22" playOrder="22"><navLabel><text>Enterprise Service Bus</text></navLabel><content src="B19922_01.xhtml#_idParaDest-22" /></navPoint>
+				<navPoint id="navpoint23" playOrder="23"><navLabel><text>Service Oriented Architecture</text></navLabel><content src="B19922_01.xhtml#_idParaDest-23" /></navPoint>
+				<navPoint id="navpoint24" playOrder="24"><navLabel><text>Representational State Transfer (REST Services)</text></navLabel><content src="B19922_01.xhtml#_idParaDest-24" /></navPoint>
+				<navPoint id="navpoint25" playOrder="25"><navLabel><text>iPaaS</text></navLabel><content src="B19922_01.xhtml#_idParaDest-25" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint26" playOrder="26"><navLabel><text>What is the modern challenge to integration?</text></navLabel><content src="B19922_01.xhtml#_idParaDest-26" />
+				<navPoint id="navpoint27" playOrder="27"><navLabel><text>Breaking the law is harder than you think</text></navLabel><content src="B19922_01.xhtml#_idParaDest-27" /></navPoint>
+				<navPoint id="navpoint28" playOrder="28"><navLabel><text>Business innovation at the speed of technical debt</text></navLabel><content src="B19922_01.xhtml#_idParaDest-28" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint29" playOrder="29"><navLabel><text>The Architectural capabilities of MuleSoft</text></navLabel><content src="B19922_01.xhtml#_idParaDest-29" />
+				<navPoint id="navpoint30" playOrder="30"><navLabel><text>Planes of operations</text></navLabel><content src="B19922_01.xhtml#_idParaDest-30" /></navPoint>
+				<navPoint id="navpoint31" playOrder="31"><navLabel><text>Platform deployment options</text></navLabel><content src="B19922_01.xhtml#_idParaDest-31" /></navPoint>
+				<navPoint id="navpoint32" playOrder="32"><navLabel><text>MuleSoft capabilities and components</text></navLabel><content src="B19922_01.xhtml#_idParaDest-32" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint33" playOrder="33"><navLabel><text>Why are APIs so important in delivering modern integrations?</text></navLabel><content src="B19922_01.xhtml#_idParaDest-33" /></navPoint>
+			<navPoint id="navpoint34" playOrder="34"><navLabel><text>Summary</text></navLabel><content src="B19922_01.xhtml#_idParaDest-34" /></navPoint>
+			<navPoint id="navpoint35" playOrder="35"><navLabel><text>Questions</text></navLabel><content src="B19922_01.xhtml#_idParaDest-35" /></navPoint>
+			<navPoint id="navpoint36" playOrder="36"><navLabel><text>Answers</text></navLabel><content src="B19922_01.xhtml#_idParaDest-36" /></navPoint>
+			<navPoint id="navpoint37" playOrder="37"><navLabel><text>Further Reading</text></navLabel><content src="B19922_01.xhtml#_idParaDest-37" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint38" playOrder="38"><navLabel><text>2</text></navLabel><content src="B19922_02.xhtml#_idParaDest-38" /></navPoint>
+		<navPoint id="navpoint39" playOrder="39"><navLabel><text>Platform Foundation Components and the Underlying Architecture</text></navLabel><content src="B19922_02.xhtml#_idParaDest-39" />
+			<navPoint id="navpoint40" playOrder="40"><navLabel><text>Technical requirements</text></navLabel><content src="B19922_02.xhtml#_idParaDest-40" /></navPoint>
+			<navPoint id="navpoint41" playOrder="41"><navLabel><text>The Anypoint control plane</text></navLabel><content src="B19922_02.xhtml#_idParaDest-41" />
+				<navPoint id="navpoint42" playOrder="42"><navLabel><text>Control plane hosting options</text></navLabel><content src="B19922_02.xhtml#_idParaDest-42" /></navPoint>
+				<navPoint id="navpoint43" playOrder="43"><navLabel><text>Securing the Anypoint control plane</text></navLabel><content src="B19922_02.xhtml#_idParaDest-43" /></navPoint>
+				<navPoint id="navpoint44" playOrder="44"><navLabel><text>Organizing the Anypoint control plane</text></navLabel><content src="B19922_02.xhtml#_idParaDest-44" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint45" playOrder="45"><navLabel><text>The runtime plane overview</text></navLabel><content src="B19922_02.xhtml#_idParaDest-45" />
+				<navPoint id="navpoint46" playOrder="46"><navLabel><text>Runtime deployment options</text></navLabel><content src="B19922_02.xhtml#_idParaDest-46" /></navPoint>
+				<navPoint id="navpoint47" playOrder="47"><navLabel><text>Runtime plane hosting</text></navLabel><content src="B19922_02.xhtml#_idParaDest-47" /></navPoint>
+				<navPoint id="navpoint48" playOrder="48"><navLabel><text>Core components in the runtime plane</text></navLabel><content src="B19922_02.xhtml#_idParaDest-48" /></navPoint>
+				<navPoint id="navpoint49" playOrder="49"><navLabel><text>Combining control plane hosts and runtime hosts</text></navLabel><content src="B19922_02.xhtml#_idParaDest-49" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint50" playOrder="50"><navLabel><text>Anypoint Core Services</text></navLabel><content src="B19922_02.xhtml#_idParaDest-50" />
+				<navPoint id="navpoint51" playOrder="51"><navLabel><text>Management capability</text></navLabel><content src="B19922_02.xhtml#_idParaDest-51" /></navPoint>
+				<navPoint id="navpoint52" playOrder="52"><navLabel><text>Design capability</text></navLabel><content src="B19922_02.xhtml#_idParaDest-52" /></navPoint>
+				<navPoint id="navpoint53" playOrder="53"><navLabel><text>Discover Capability</text></navLabel><content src="B19922_02.xhtml#_idParaDest-53" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint54" playOrder="54"><navLabel><text>Summary</text></navLabel><content src="B19922_02.xhtml#_idParaDest-54" /></navPoint>
+			<navPoint id="navpoint55" playOrder="55"><navLabel><text>Questions</text></navLabel><content src="B19922_02.xhtml#_idParaDest-55" /></navPoint>
+			<navPoint id="navpoint56" playOrder="56"><navLabel><text>Further reading</text></navLabel><content src="B19922_02.xhtml#_idParaDest-56" /></navPoint>
+			<navPoint id="navpoint57" playOrder="57"><navLabel><text>Answers</text></navLabel><content src="B19922_02.xhtml#_idParaDest-57" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint58" playOrder="58"><navLabel><text>3</text></navLabel><content src="B19922_03.xhtml#_idParaDest-58" /></navPoint>
+		<navPoint id="navpoint59" playOrder="59"><navLabel><text>Leveraging Catalyst and the MuleSoft Knowledge Hub</text></navLabel><content src="B19922_03.xhtml#_idParaDest-59" />
+			<navPoint id="navpoint60" playOrder="60"><navLabel><text>Exploring Catalyst, its core principles, and its engagements</text></navLabel><content src="B19922_03.xhtml#_idParaDest-60" />
+				<navPoint id="navpoint61" playOrder="61"><navLabel><text>What is Catalyst?</text></navLabel><content src="B19922_03.xhtml#_idParaDest-61" /></navPoint>
+				<navPoint id="navpoint62" playOrder="62"><navLabel><text>Catalyst’s foundation</text></navLabel><content src="B19922_03.xhtml#_idParaDest-62" /></navPoint>
+				<navPoint id="navpoint63" playOrder="63"><navLabel><text>Playbook organization</text></navLabel><content src="B19922_03.xhtml#_idParaDest-63" /></navPoint>
+				<navPoint id="navpoint64" playOrder="64"><navLabel><text>Catalyst engagements</text></navLabel><content src="B19922_03.xhtml#_idParaDest-64" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint65" playOrder="65"><navLabel><text>Leveraging the Catalyst Knowledge Hub</text></navLabel><content src="B19922_03.xhtml#_idParaDest-65" /></navPoint>
+			<navPoint id="navpoint66" playOrder="66"><navLabel><text>Finding value in a C4E</text></navLabel><content src="B19922_03.xhtml#_idParaDest-66" />
+				<navPoint id="navpoint67" playOrder="67"><navLabel><text>Team enablement</text></navLabel><content src="B19922_03.xhtml#_idParaDest-67" /></navPoint>
+				<navPoint id="navpoint68" playOrder="68"><navLabel><text>Metrics and KPIs</text></navLabel><content src="B19922_03.xhtml#_idParaDest-68" /></navPoint>
+				<navPoint id="navpoint69" playOrder="69"><navLabel><text>Staffing</text></navLabel><content src="B19922_03.xhtml#_idParaDest-69" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint70" playOrder="70"><navLabel><text>Summary</text></navLabel><content src="B19922_03.xhtml#_idParaDest-70" /></navPoint>
+			<navPoint id="navpoint71" playOrder="71"><navLabel><text>Questions</text></navLabel><content src="B19922_03.xhtml#_idParaDest-71" /></navPoint>
+			<navPoint id="navpoint72" playOrder="72"><navLabel><text>Further reading</text></navLabel><content src="B19922_03.xhtml#_idParaDest-72" /></navPoint>
+			<navPoint id="navpoint73" playOrder="73"><navLabel><text>Answers</text></navLabel><content src="B19922_03.xhtml#_idParaDest-73" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint74" playOrder="74"><navLabel><text>4</text></navLabel><content src="B19922_04.xhtml#_idParaDest-74" /></navPoint>
+		<navPoint id="navpoint75" playOrder="75"><navLabel><text>An Introduction to Application Networks</text></navLabel><content src="B19922_04.xhtml#_idParaDest-75" />
+			<navPoint id="navpoint76" playOrder="76"><navLabel><text>An introduction to MuleSoft application networks</text></navLabel><content src="B19922_04.xhtml#_idParaDest-76" />
+				<navPoint id="navpoint77" playOrder="77"><navLabel><text>What is an application network?</text></navLabel><content src="B19922_04.xhtml#_idParaDest-77" /></navPoint>
+				<navPoint id="navpoint78" playOrder="78"><navLabel><text>Components and the importance of an application network</text></navLabel><content src="B19922_04.xhtml#_idParaDest-78" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint79" playOrder="79"><navLabel><text>Building and implementing an application network</text></navLabel><content src="B19922_04.xhtml#_idParaDest-79" />
+				<navPoint id="navpoint80" playOrder="80"><navLabel><text>Planning the roadmap</text></navLabel><content src="B19922_04.xhtml#_idParaDest-80" /></navPoint>
+				<navPoint id="navpoint81" playOrder="81"><navLabel><text>Designing and developing</text></navLabel><content src="B19922_04.xhtml#_idParaDest-81" /></navPoint>
+				<navPoint id="navpoint82" playOrder="82"><navLabel><text>Managing and evangelizing reuse</text></navLabel><content src="B19922_04.xhtml#_idParaDest-82" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint83" playOrder="83"><navLabel><text>The benefits and best practices of an application network</text></navLabel><content src="B19922_04.xhtml#_idParaDest-83" />
+				<navPoint id="navpoint84" playOrder="84"><navLabel><text>Benefits</text></navLabel><content src="B19922_04.xhtml#_idParaDest-84" /></navPoint>
+				<navPoint id="navpoint85" playOrder="85"><navLabel><text>Best practices</text></navLabel><content src="B19922_04.xhtml#_idParaDest-85" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint86" playOrder="86"><navLabel><text>Summary</text></navLabel><content src="B19922_04.xhtml#_idParaDest-86" /></navPoint>
+			<navPoint id="navpoint87" playOrder="87"><navLabel><text>Questions</text></navLabel><content src="B19922_04.xhtml#_idParaDest-87" /></navPoint>
+			<navPoint id="navpoint88" playOrder="88"><navLabel><text>Further reading</text></navLabel><content src="B19922_04.xhtml#_idParaDest-88" /></navPoint>
+			<navPoint id="navpoint89" playOrder="89"><navLabel><text>Answers</text></navLabel><content src="B19922_04.xhtml#_idParaDest-89" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint90" playOrder="90"><navLabel><text>5</text></navLabel><content src="B19922_05.xhtml#_idParaDest-90" /></navPoint>
+		<navPoint id="navpoint91" playOrder="91"><navLabel><text>Speeding with Accelerators</text></navLabel><content src="B19922_05.xhtml#_idParaDest-91" />
+			<navPoint id="navpoint92" playOrder="92"><navLabel><text>Unpacking the accelerator building blocks</text></navLabel><content src="B19922_05.xhtml#_idParaDest-92" />
+				<navPoint id="navpoint93" playOrder="93"><navLabel><text>Pre-built APIs</text></navLabel><content src="B19922_05.xhtml#_idParaDest-93" /></navPoint>
+				<navPoint id="navpoint94" playOrder="94"><navLabel><text>Connectors</text></navLabel><content src="B19922_05.xhtml#_idParaDest-94" /></navPoint>
+				<navPoint id="navpoint95" playOrder="95"><navLabel><text>Templates</text></navLabel><content src="B19922_05.xhtml#_idParaDest-95" /></navPoint>
+				<navPoint id="navpoint96" playOrder="96"><navLabel><text>Best practices</text></navLabel><content src="B19922_05.xhtml#_idParaDest-96" /></navPoint>
+				<navPoint id="navpoint97" playOrder="97"><navLabel><text>Data mappings</text></navLabel><content src="B19922_05.xhtml#_idParaDest-97" /></navPoint>
+				<navPoint id="navpoint98" playOrder="98"><navLabel><text>Endpoints</text></navLabel><content src="B19922_05.xhtml#_idParaDest-98" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint99" playOrder="99"><navLabel><text>Customizing MuleSoft accelerators</text></navLabel><content src="B19922_05.xhtml#_idParaDest-99" />
+				<navPoint id="navpoint100" playOrder="100"><navLabel><text>Customizing the Accelerator for Retail – J&amp;J Music Store speeds up</text></navLabel><content src="B19922_05.xhtml#_idParaDest-100" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint101" playOrder="101"><navLabel><text>Essential building blocks for MuleSoft accelerators</text></navLabel><content src="B19922_05.xhtml#_idParaDest-101" /></navPoint>
+			<navPoint id="navpoint102" playOrder="102"><navLabel><text>The MuleSoft Catalyst GitHub repository</text></navLabel><content src="B19922_05.xhtml#_idParaDest-102" /></navPoint>
+			<navPoint id="navpoint103" playOrder="103"><navLabel><text>Summary</text></navLabel><content src="B19922_05.xhtml#_idParaDest-103" /></navPoint>
+			<navPoint id="navpoint104" playOrder="104"><navLabel><text>Further reading</text></navLabel><content src="B19922_05.xhtml#_idParaDest-104" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint105" playOrder="105"><navLabel><text>6</text></navLabel><content src="B19922_06.xhtml#_idParaDest-105" /></navPoint>
+		<navPoint id="navpoint106" playOrder="106"><navLabel><text>Aligning Desired Business Outcomes to Functional Requirements</text></navLabel><content src="B19922_06.xhtml#_idParaDest-106" />
+			<navPoint id="navpoint107" playOrder="107"><navLabel><text>Developing business outcomes and functional requirements</text></navLabel><content src="B19922_06.xhtml#_idParaDest-107" /></navPoint>
+			<navPoint id="navpoint108" playOrder="108"><navLabel><text>Designing for communication</text></navLabel><content src="B19922_06.xhtml#_idParaDest-108" /></navPoint>
+			<navPoint id="navpoint109" playOrder="109"><navLabel><text>EDM</text></navLabel><content src="B19922_06.xhtml#_idParaDest-109" />
+				<navPoint id="navpoint110" playOrder="110"><navLabel><text>Advantages of an EDM</text></navLabel><content src="B19922_06.xhtml#_idParaDest-110" /></navPoint>
+				<navPoint id="navpoint111" playOrder="111"><navLabel><text>Disadvantages of EDMs</text></navLabel><content src="B19922_06.xhtml#_idParaDest-111" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint112" playOrder="112"><navLabel><text>Bounded context data model</text></navLabel><content src="B19922_06.xhtml#_idParaDest-112" />
+				<navPoint id="navpoint113" playOrder="113"><navLabel><text>Advantages of the bounded context data model</text></navLabel><content src="B19922_06.xhtml#_idParaDest-113" /></navPoint>
+				<navPoint id="navpoint114" playOrder="114"><navLabel><text>Disadvantages of the bounded context data model</text></navLabel><content src="B19922_06.xhtml#_idParaDest-114" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint115" playOrder="115"><navLabel><text>Coarse-grained APIs</text></navLabel><content src="B19922_06.xhtml#_idParaDest-115" />
+				<navPoint id="navpoint116" playOrder="116"><navLabel><text>Advantages of coarse-grained APIs</text></navLabel><content src="B19922_06.xhtml#_idParaDest-116" /></navPoint>
+				<navPoint id="navpoint117" playOrder="117"><navLabel><text>Disadvantages of coarse-grained APIs</text></navLabel><content src="B19922_06.xhtml#_idParaDest-117" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint118" playOrder="118"><navLabel><text>Fine-grained APIs</text></navLabel><content src="B19922_06.xhtml#_idParaDest-118" />
+				<navPoint id="navpoint119" playOrder="119"><navLabel><text>Advantages of fine-grained APIs</text></navLabel><content src="B19922_06.xhtml#_idParaDest-119" /></navPoint>
+				<navPoint id="navpoint120" playOrder="120"><navLabel><text>Disadvantages of fine-grained APIs</text></navLabel><content src="B19922_06.xhtml#_idParaDest-120" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint121" playOrder="121"><navLabel><text>API concurrency</text></navLabel><content src="B19922_06.xhtml#_idParaDest-121" /></navPoint>
+			<navPoint id="navpoint122" playOrder="122"><navLabel><text>HTTP verbs</text></navLabel><content src="B19922_06.xhtml#_idParaDest-122" /></navPoint>
+			<navPoint id="navpoint123" playOrder="123"><navLabel><text>API callback</text></navLabel><content src="B19922_06.xhtml#_idParaDest-123" /></navPoint>
+			<navPoint id="navpoint124" playOrder="124"><navLabel><text>Summary</text></navLabel><content src="B19922_06.xhtml#_idParaDest-124" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint125" playOrder="125"><navLabel><text>7</text></navLabel><content src="B19922_07.xhtml#_idParaDest-125" /></navPoint>
+		<navPoint id="navpoint126" playOrder="126"><navLabel><text>Microservices, Application Networks, EDA, and API-led Design</text></navLabel><content src="B19922_07.xhtml#_idParaDest-126" />
+			<navPoint id="navpoint127" playOrder="127"><navLabel><text>Monolithic architecture</text></navLabel><content src="B19922_07.xhtml#_idParaDest-127" />
+				<navPoint id="navpoint128" playOrder="128"><navLabel><text>Advantages of a monolithic architecture</text></navLabel><content src="B19922_07.xhtml#_idParaDest-128" /></navPoint>
+				<navPoint id="navpoint129" playOrder="129"><navLabel><text>Disadvantages of a monolithic architecture</text></navLabel><content src="B19922_07.xhtml#_idParaDest-129" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint130" playOrder="130"><navLabel><text>Microservices architecture</text></navLabel><content src="B19922_07.xhtml#_idParaDest-130" />
+				<navPoint id="navpoint131" playOrder="131"><navLabel><text>Characteristics of microservices</text></navLabel><content src="B19922_07.xhtml#_idParaDest-131" /></navPoint>
+				<navPoint id="navpoint132" playOrder="132"><navLabel><text>Advantages of a microservices architecture</text></navLabel><content src="B19922_07.xhtml#_idParaDest-132" /></navPoint>
+				<navPoint id="navpoint133" playOrder="133"><navLabel><text>Disadvantages of a microservices architecture</text></navLabel><content src="B19922_07.xhtml#_idParaDest-133" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint134" playOrder="134"><navLabel><text>Saga pattern</text></navLabel><content src="B19922_07.xhtml#_idParaDest-134" />
+				<navPoint id="navpoint135" playOrder="135"><navLabel><text>Saga choreography pattern</text></navLabel><content src="B19922_07.xhtml#_idParaDest-135" /></navPoint>
+				<navPoint id="navpoint136" playOrder="136"><navLabel><text>Saga orchestration pattern</text></navLabel><content src="B19922_07.xhtml#_idParaDest-136" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint137" playOrder="137"><navLabel><text>The Competing Consumers pattern</text></navLabel><content src="B19922_07.xhtml#_idParaDest-137" />
+				<navPoint id="navpoint138" playOrder="138"><navLabel><text>Benefits of implementing the Competing Consumers pattern</text></navLabel><content src="B19922_07.xhtml#_idParaDest-138" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint139" playOrder="139"><navLabel><text>Circuit Breaker pattern</text></navLabel><content src="B19922_07.xhtml#_idParaDest-139" />
+				<navPoint id="navpoint140" playOrder="140"><navLabel><text>Circuit Breaker states</text></navLabel><content src="B19922_07.xhtml#_idParaDest-140" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint141" playOrder="141"><navLabel><text>Anypoint MQ</text></navLabel><content src="B19922_07.xhtml#_idParaDest-141" />
+				<navPoint id="navpoint142" playOrder="142"><navLabel><text>Message exchanges and queues</text></navLabel><content src="B19922_07.xhtml#_idParaDest-142" /></navPoint>
+				<navPoint id="navpoint143" playOrder="143"><navLabel><text>Cross-region failover for Anypoint MQ standard queues</text></navLabel><content src="B19922_07.xhtml#_idParaDest-143" /></navPoint>
+				<navPoint id="navpoint144" playOrder="144"><navLabel><text>Dead-letter queues</text></navLabel><content src="B19922_07.xhtml#_idParaDest-144" /></navPoint>
+				<navPoint id="navpoint145" playOrder="145"><navLabel><text>The Circuit Breaker pattern with Anypoint MQ</text></navLabel><content src="B19922_07.xhtml#_idParaDest-145" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint146" playOrder="146"><navLabel><text>Event-driven architecture (EDA)</text></navLabel><content src="B19922_07.xhtml#_idParaDest-146" />
+				<navPoint id="navpoint147" playOrder="147"><navLabel><text>Benefits of EDA</text></navLabel><content src="B19922_07.xhtml#_idParaDest-147" /></navPoint>
+				<navPoint id="navpoint148" playOrder="148"><navLabel><text>Limitations of EDA</text></navLabel><content src="B19922_07.xhtml#_idParaDest-148" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint149" playOrder="149"><navLabel><text>API-led connectivity and EDA together</text></navLabel><content src="B19922_07.xhtml#_idParaDest-149" />
+				<navPoint id="navpoint150" playOrder="150"><navLabel><text>Experience API</text></navLabel><content src="B19922_07.xhtml#_idParaDest-150" /></navPoint>
+				<navPoint id="navpoint151" playOrder="151"><navLabel><text>Process API</text></navLabel><content src="B19922_07.xhtml#_idParaDest-151" /></navPoint>
+				<navPoint id="navpoint152" playOrder="152"><navLabel><text>System API</text></navLabel><content src="B19922_07.xhtml#_idParaDest-152" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint153" playOrder="153"><navLabel><text>Application networks and composability</text></navLabel><content src="B19922_07.xhtml#_idParaDest-153" /></navPoint>
+			<navPoint id="navpoint154" playOrder="154"><navLabel><text>Summary</text></navLabel><content src="B19922_07.xhtml#_idParaDest-154" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint155" playOrder="155"><navLabel><text>8</text></navLabel><content src="B19922_08.xhtml#_idParaDest-155" /></navPoint>
+		<navPoint id="navpoint156" playOrder="156"><navLabel><text>Non-Functional Requirements Influence in Shaping the API Architecture</text></navLabel><content src="B19922_08.xhtml#_idParaDest-156" />
+			<navPoint id="navpoint157" playOrder="157"><navLabel><text>Common non-functional requirements</text></navLabel><content src="B19922_08.xhtml#_idParaDest-157" /></navPoint>
+			<navPoint id="navpoint158" playOrder="158"><navLabel><text>Meeting performance requirements in the platform</text></navLabel><content src="B19922_08.xhtml#_idParaDest-158" />
+				<navPoint id="navpoint159" playOrder="159"><navLabel><text>Response time</text></navLabel><content src="B19922_08.xhtml#_idParaDest-159" /></navPoint>
+				<navPoint id="navpoint160" playOrder="160"><navLabel><text>Throughput</text></navLabel><content src="B19922_08.xhtml#_idParaDest-160" /></navPoint>
+				<navPoint id="navpoint161" playOrder="161"><navLabel><text>Error rates</text></navLabel><content src="B19922_08.xhtml#_idParaDest-161" /></navPoint>
+				<navPoint id="navpoint162" playOrder="162"><navLabel><text>Availability</text></navLabel><content src="B19922_08.xhtml#_idParaDest-162" /></navPoint>
+				<navPoint id="navpoint163" playOrder="163"><navLabel><text>Latency</text></navLabel><content src="B19922_08.xhtml#_idParaDest-163" /></navPoint>
+				<navPoint id="navpoint164" playOrder="164"><navLabel><text>Scalability</text></navLabel><content src="B19922_08.xhtml#_idParaDest-164" /></navPoint>
+				<navPoint id="navpoint165" playOrder="165"><navLabel><text>Resource allocation</text></navLabel><content src="B19922_08.xhtml#_idParaDest-165" /></navPoint>
+				<navPoint id="navpoint166" playOrder="166"><navLabel><text>Performance testing</text></navLabel><content src="B19922_08.xhtml#_idParaDest-166" /></navPoint>
+				<navPoint id="navpoint167" playOrder="167"><navLabel><text>Performance monitoring</text></navLabel><content src="B19922_08.xhtml#_idParaDest-167" /></navPoint>
+				<navPoint id="navpoint168" playOrder="168"><navLabel><text>Load balancing</text></navLabel><content src="B19922_08.xhtml#_idParaDest-168" /></navPoint>
+				<navPoint id="navpoint169" playOrder="169"><navLabel><text>Application caching</text></navLabel><content src="B19922_08.xhtml#_idParaDest-169" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint170" playOrder="170"><navLabel><text>API security</text></navLabel><content src="B19922_08.xhtml#_idParaDest-170" /></navPoint>
+			<navPoint id="navpoint171" playOrder="171"><navLabel><text>Data security in motion or in transit</text></navLabel><content src="B19922_08.xhtml#_idParaDest-171" />
+				<navPoint id="navpoint172" playOrder="172"><navLabel><text>Data security at rest</text></navLabel><content src="B19922_08.xhtml#_idParaDest-172" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint173" playOrder="173"><navLabel><text>Deployment strategies</text></navLabel><content src="B19922_08.xhtml#_idParaDest-173" />
+				<navPoint id="navpoint174" playOrder="174"><navLabel><text>Rolling update deployment</text></navLabel><content src="B19922_08.xhtml#_idParaDest-174" /></navPoint>
+				<navPoint id="navpoint175" playOrder="175"><navLabel><text>Blue-green deployment</text></navLabel><content src="B19922_08.xhtml#_idParaDest-175" /></navPoint>
+				<navPoint id="navpoint176" playOrder="176"><navLabel><text>Canary deployment</text></navLabel><content src="B19922_08.xhtml#_idParaDest-176" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint177" playOrder="177"><navLabel><text>Summary</text></navLabel><content src="B19922_08.xhtml#_idParaDest-177" /></navPoint>
+			<navPoint id="navpoint178" playOrder="178"><navLabel><text>Further reading</text></navLabel><content src="B19922_08.xhtml#_idParaDest-178" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint179" playOrder="179"><navLabel><text>9</text></navLabel><content src="B19922_09.xhtml#_idParaDest-179" /></navPoint>
+		<navPoint id="navpoint180" playOrder="180"><navLabel><text>Hassle-free Deployment with Anypoint iPaaS (CloudHub 1.0)</text></navLabel><content src="B19922_09.xhtml#_idParaDest-180" />
+			<navPoint id="navpoint181" playOrder="181"><navLabel><text>Technical requirements</text></navLabel><content src="B19922_09.xhtml#_idParaDest-181" /></navPoint>
+			<navPoint id="navpoint182" playOrder="182"><navLabel><text>What is CloudHub 1.0?</text></navLabel><content src="B19922_09.xhtml#_idParaDest-182" />
+				<navPoint id="navpoint183" playOrder="183"><navLabel><text>Workers and worker size</text></navLabel><content src="B19922_09.xhtml#_idParaDest-183" /></navPoint>
+				<navPoint id="navpoint184" playOrder="184"><navLabel><text>Shared load balancer</text></navLabel><content src="B19922_09.xhtml#_idParaDest-184" /></navPoint>
+				<navPoint id="navpoint185" playOrder="185"><navLabel><text>Region</text></navLabel><content src="B19922_09.xhtml#_idParaDest-185" /></navPoint>
+				<navPoint id="navpoint186" playOrder="186"><navLabel><text>DNS records</text></navLabel><content src="B19922_09.xhtml#_idParaDest-186" /></navPoint>
+				<navPoint id="navpoint187" playOrder="187"><navLabel><text>Intelligent healing (single-region disaster recovery)</text></navLabel><content src="B19922_09.xhtml#_idParaDest-187" /></navPoint>
+				<navPoint id="navpoint188" playOrder="188"><navLabel><text>Zero downtime updates</text></navLabel><content src="B19922_09.xhtml#_idParaDest-188" /></navPoint>
+				<navPoint id="navpoint189" playOrder="189"><navLabel><text>High availability</text></navLabel><content src="B19922_09.xhtml#_idParaDest-189" /></navPoint>
+				<navPoint id="navpoint190" playOrder="190"><navLabel><text>Scalability</text></navLabel><content src="B19922_09.xhtml#_idParaDest-190" /></navPoint>
+				<navPoint id="navpoint191" playOrder="191"><navLabel><text>Persistent Queues</text></navLabel><content src="B19922_09.xhtml#_idParaDest-191" /></navPoint>
+				<navPoint id="navpoint192" playOrder="192"><navLabel><text>Managing schedules</text></navLabel><content src="B19922_09.xhtml#_idParaDest-192" /></navPoint>
+				<navPoint id="navpoint193" playOrder="193"><navLabel><text>Object Store V2</text></navLabel><content src="B19922_09.xhtml#_idParaDest-193" /></navPoint>
+				<navPoint id="navpoint194" playOrder="194"><navLabel><text>Static IP address</text></navLabel><content src="B19922_09.xhtml#_idParaDest-194" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint195" playOrder="195"><navLabel><text>Anypoint VPC</text></navLabel><content src="B19922_09.xhtml#_idParaDest-195" />
+				<navPoint id="navpoint196" playOrder="196"><navLabel><text>Anypoint VPC architecture</text></navLabel><content src="B19922_09.xhtml#_idParaDest-196" /></navPoint>
+				<navPoint id="navpoint197" playOrder="197"><navLabel><text>VPN IPsec tunnels</text></navLabel><content src="B19922_09.xhtml#_idParaDest-197" /></navPoint>
+				<navPoint id="navpoint198" playOrder="198"><navLabel><text>VPC peering</text></navLabel><content src="B19922_09.xhtml#_idParaDest-198" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint199" playOrder="199"><navLabel><text>Transit Gateway Attachments</text></navLabel><content src="B19922_09.xhtml#_idParaDest-199" /></navPoint>
+			<navPoint id="navpoint200" playOrder="200"><navLabel><text>AWS Direct Connect</text></navLabel><content src="B19922_09.xhtml#_idParaDest-200" />
+				<navPoint id="navpoint201" playOrder="201"><navLabel><text>Calculating a CIDR mask for Anypoint VPC</text></navLabel><content src="B19922_09.xhtml#_idParaDest-201" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint202" playOrder="202"><navLabel><text>Anypoint dedicated load balancer</text></navLabel><content src="B19922_09.xhtml#_idParaDest-202" />
+				<navPoint id="navpoint203" playOrder="203"><navLabel><text>Allowlist CIDRs</text></navLabel><content src="B19922_09.xhtml#_idParaDest-203" /></navPoint>
+				<navPoint id="navpoint204" playOrder="204"><navLabel><text>SSL certificates</text></navLabel><content src="B19922_09.xhtml#_idParaDest-204" /></navPoint>
+				<navPoint id="navpoint205" playOrder="205"><navLabel><text>Mutual authentication</text></navLabel><content src="B19922_09.xhtml#_idParaDest-205" /></navPoint>
+				<navPoint id="navpoint206" playOrder="206"><navLabel><text>Dedicated load balancer sizing</text></navLabel><content src="B19922_09.xhtml#_idParaDest-206" /></navPoint>
+				<navPoint id="navpoint207" playOrder="207"><navLabel><text>Dedicated load balancer timeout</text></navLabel><content src="B19922_09.xhtml#_idParaDest-207" /></navPoint>
+				<navPoint id="navpoint208" playOrder="208"><navLabel><text>Dedicated load balancer mapping rules</text></navLabel><content src="B19922_09.xhtml#_idParaDest-208" /></navPoint>
+				<navPoint id="navpoint209" playOrder="209"><navLabel><text>HTTP inbound mode</text></navLabel><content src="B19922_09.xhtml#_idParaDest-209" /></navPoint>
+				<navPoint id="navpoint210" playOrder="210"><navLabel><text>Recommendations</text></navLabel><content src="B19922_09.xhtml#_idParaDest-210" /></navPoint>
+				<navPoint id="navpoint211" playOrder="211"><navLabel><text>Dedicated load balancers for public and private traffic</text></navLabel><content src="B19922_09.xhtml#_idParaDest-211" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint212" playOrder="212"><navLabel><text>Different options for deploying a MuleSoft application to CloudHub 1.0 Runtime Manager</text></navLabel><content src="B19922_09.xhtml#_idParaDest-212" />
+				<navPoint id="navpoint213" playOrder="213"><navLabel><text>The Mule Maven plugin</text></navLabel><content src="B19922_09.xhtml#_idParaDest-213" /></navPoint>
+				<navPoint id="navpoint214" playOrder="214"><navLabel><text>Anypoint CLI</text></navLabel><content src="B19922_09.xhtml#_idParaDest-214" /></navPoint>
+				<navPoint id="navpoint215" playOrder="215"><navLabel><text>CloudHub 1.0 API</text></navLabel><content src="B19922_09.xhtml#_idParaDest-215" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint216" playOrder="216"><navLabel><text>Summary</text></navLabel><content src="B19922_09.xhtml#_idParaDest-216" /></navPoint>
+			<navPoint id="navpoint217" playOrder="217"><navLabel><text>Further reading</text></navLabel><content src="B19922_09.xhtml#_idParaDest-217" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint218" playOrder="218"><navLabel><text>10</text></navLabel><content src="B19922_10.xhtml#_idParaDest-218" /></navPoint>
+		<navPoint id="navpoint219" playOrder="219"><navLabel><text>Hassle-Free Deployment with Anypoint iPaaS (CloudHub 2.0)</text></navLabel><content src="B19922_10.xhtml#_idParaDest-219" />
+			<navPoint id="navpoint220" playOrder="220"><navLabel><text>What is CloudHub 2.0?</text></navLabel><content src="B19922_10.xhtml#_idParaDest-220" />
+				<navPoint id="navpoint221" playOrder="221"><navLabel><text>Why CloudHub 2.0?</text></navLabel><content src="B19922_10.xhtml#_idParaDest-221" /></navPoint>
+				<navPoint id="navpoint222" playOrder="222"><navLabel><text>Replicas and replica size</text></navLabel><content src="B19922_10.xhtml#_idParaDest-222" /></navPoint>
+				<navPoint id="navpoint223" playOrder="223"><navLabel><text>Region</text></navLabel><content src="B19922_10.xhtml#_idParaDest-223" /></navPoint>
+				<navPoint id="navpoint224" playOrder="224"><navLabel><text>Clustering</text></navLabel><content src="B19922_10.xhtml#_idParaDest-224" /></navPoint>
+				<navPoint id="navpoint225" playOrder="225"><navLabel><text>High availability</text></navLabel><content src="B19922_10.xhtml#_idParaDest-225" /></navPoint>
+				<navPoint id="navpoint226" playOrder="226"><navLabel><text>Application isolation</text></navLabel><content src="B19922_10.xhtml#_idParaDest-226" /></navPoint>
+				<navPoint id="navpoint227" playOrder="227"><navLabel><text>Intelligent healing</text></navLabel><content src="B19922_10.xhtml#_idParaDest-227" /></navPoint>
+				<navPoint id="navpoint228" playOrder="228"><navLabel><text>Zero-downtime updates</text></navLabel><content src="B19922_10.xhtml#_idParaDest-228" /></navPoint>
+				<navPoint id="navpoint229" playOrder="229"><navLabel><text>Scalability</text></navLabel><content src="B19922_10.xhtml#_idParaDest-229" /></navPoint>
+				<navPoint id="navpoint230" playOrder="230"><navLabel><text>Supported Mule runtime</text></navLabel><content src="B19922_10.xhtml#_idParaDest-230" /></navPoint>
+				<navPoint id="navpoint231" playOrder="231"><navLabel><text>Granular vCore options</text></navLabel><content src="B19922_10.xhtml#_idParaDest-231" /></navPoint>
+				<navPoint id="navpoint232" playOrder="232"><navLabel><text>Object Store v2</text></navLabel><content src="B19922_10.xhtml#_idParaDest-232" /></navPoint>
+				<navPoint id="navpoint233" playOrder="233"><navLabel><text>Managing schedules</text></navLabel><content src="B19922_10.xhtml#_idParaDest-233" /></navPoint>
+				<navPoint id="navpoint234" playOrder="234"><navLabel><text>Last-mile security</text></navLabel><content src="B19922_10.xhtml#_idParaDest-234" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint235" playOrder="235"><navLabel><text>Shared space</text></navLabel><content src="B19922_10.xhtml#_idParaDest-235" /></navPoint>
+			<navPoint id="navpoint236" playOrder="236"><navLabel><text>Private space</text></navLabel><content src="B19922_10.xhtml#_idParaDest-236" />
+				<navPoint id="navpoint237" playOrder="237"><navLabel><text>AWS service role</text></navLabel><content src="B19922_10.xhtml#_idParaDest-237" /></navPoint>
+				<navPoint id="navpoint238" playOrder="238"><navLabel><text>Inbound and outbound traffic rules</text></navLabel><content src="B19922_10.xhtml#_idParaDest-238" /></navPoint>
+				<navPoint id="navpoint239" playOrder="239"><navLabel><text>TLS context and domains</text></navLabel><content src="B19922_10.xhtml#_idParaDest-239" /></navPoint>
+				<navPoint id="navpoint240" playOrder="240"><navLabel><text>Public and private endpoints</text></navLabel><content src="B19922_10.xhtml#_idParaDest-240" /></navPoint>
+				<navPoint id="navpoint241" playOrder="241"><navLabel><text>Ingress load balancer</text></navLabel><content src="B19922_10.xhtml#_idParaDest-241" /></navPoint>
+				<navPoint id="navpoint242" playOrder="242"><navLabel><text>HTTP requests</text></navLabel><content src="B19922_10.xhtml#_idParaDest-242" /></navPoint>
+				<navPoint id="navpoint243" playOrder="243"><navLabel><text>VPN connection</text></navLabel><content src="B19922_10.xhtml#_idParaDest-243" /></navPoint>
+				<navPoint id="navpoint244" playOrder="244"><navLabel><text>Transit gateways</text></navLabel><content src="B19922_10.xhtml#_idParaDest-244" /></navPoint>
+				<navPoint id="navpoint245" playOrder="245"><navLabel><text>Private space network architecture</text></navLabel><content src="B19922_10.xhtml#_idParaDest-245" /></navPoint>
+				<navPoint id="navpoint246" playOrder="246"><navLabel><text>Multiple environments in private spaces</text></navLabel><content src="B19922_10.xhtml#_idParaDest-246" /></navPoint>
+				<navPoint id="navpoint247" playOrder="247"><navLabel><text>Multiple domains in private spaces</text></navLabel><content src="B19922_10.xhtml#_idParaDest-247" /></navPoint>
+				<navPoint id="navpoint248" playOrder="248"><navLabel><text>Different options for deploying MuleSoft applications to CloudHub Runtime Manager</text></navLabel><content src="B19922_10.xhtml#_idParaDest-248" /></navPoint>
+				<navPoint id="navpoint249" playOrder="249"><navLabel><text>Anypoint CLI</text></navLabel><content src="B19922_10.xhtml#_idParaDest-249" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint250" playOrder="250"><navLabel><text>Technical enhancements from CloudHub 1.0 to 
+CloudHub 2.0</text></navLabel><content src="B19922_10.xhtml#_idParaDest-250" /></navPoint>
+			<navPoint id="navpoint251" playOrder="251"><navLabel><text> Summary</text></navLabel><content src="B19922_10.xhtml#_idParaDest-251" /></navPoint>
+			<navPoint id="navpoint252" playOrder="252"><navLabel><text>Further reading</text></navLabel><content src="B19922_10.xhtml#_idParaDest-252" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint253" playOrder="253"><navLabel><text>11</text></navLabel><content src="B19922_11.xhtml#_idParaDest-253" /></navPoint>
+		<navPoint id="navpoint254" playOrder="254"><navLabel><text>Containerizing the Runtime Plane with Runtime Fabric</text></navLabel><content src="B19922_11.xhtml#_idParaDest-254" />
+			<navPoint id="navpoint255" playOrder="255"><navLabel><text>Technical requirements</text></navLabel><content src="B19922_11.xhtml#_idParaDest-255" /></navPoint>
+			<navPoint id="navpoint256" playOrder="256"><navLabel><text>Kubernetes architecture</text></navLabel><content src="B19922_11.xhtml#_idParaDest-256" />
+				<navPoint id="navpoint257" playOrder="257"><navLabel><text>Master node components</text></navLabel><content src="B19922_11.xhtml#_idParaDest-257" /></navPoint>
+				<navPoint id="navpoint258" playOrder="258"><navLabel><text>Worker node components</text></navLabel><content src="B19922_11.xhtml#_idParaDest-258" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint259" playOrder="259"><navLabel><text>What is Runtime Fabric?</text></navLabel><content src="B19922_11.xhtml#_idParaDest-259" />
+				<navPoint id="navpoint260" playOrder="260"><navLabel><text>Runtime Fabric on bare-metal servers/VMs</text></navLabel><content src="B19922_11.xhtml#_idParaDest-260" /></navPoint>
+				<navPoint id="navpoint261" playOrder="261"><navLabel><text>Network architecture</text></navLabel><content src="B19922_11.xhtml#_idParaDest-261" /></navPoint>
+				<navPoint id="navpoint262" playOrder="262"><navLabel><text>Shared responsibility between the customer and MuleSoft</text></navLabel><content src="B19922_11.xhtml#_idParaDest-262" /></navPoint>
+				<navPoint id="navpoint263" playOrder="263"><navLabel><text>The concept of etcd in Runtime Fabric</text></navLabel><content src="B19922_11.xhtml#_idParaDest-263" /></navPoint>
+				<navPoint id="navpoint264" playOrder="264"><navLabel><text>Quorum management</text></navLabel><content src="B19922_11.xhtml#_idParaDest-264" /></navPoint>
+				<navPoint id="navpoint265" playOrder="265"><navLabel><text>Scalability</text></navLabel><content src="B19922_11.xhtml#_idParaDest-265" /></navPoint>
+				<navPoint id="navpoint266" playOrder="266"><navLabel><text>High availability</text></navLabel><content src="B19922_11.xhtml#_idParaDest-266" /></navPoint>
+				<navPoint id="navpoint267" playOrder="267"><navLabel><text>Fault tolerance</text></navLabel><content src="B19922_11.xhtml#_idParaDest-267" /></navPoint>
+				<navPoint id="navpoint268" playOrder="268"><navLabel><text>Inbound load balancer (ingress load balancer)</text></navLabel><content src="B19922_11.xhtml#_idParaDest-268" /></navPoint>
+				<navPoint id="navpoint269" playOrder="269"><navLabel><text>Anypoint Security</text></navLabel><content src="B19922_11.xhtml#_idParaDest-269" /></navPoint>
+				<navPoint id="navpoint270" playOrder="270"><navLabel><text>Application performance metrics</text></navLabel><content src="B19922_11.xhtml#_idParaDest-270" /></navPoint>
+				<navPoint id="navpoint271" playOrder="271"><navLabel><text>Internal load balancer performance metrics</text></navLabel><content src="B19922_11.xhtml#_idParaDest-271" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint272" playOrder="272"><navLabel><text>Runtime Fabric on self-managed Kubernetes</text></navLabel><content src="B19922_11.xhtml#_idParaDest-272" /></navPoint>
+			<navPoint id="navpoint273" playOrder="273"><navLabel><text>Runtime Fabric architecture on EKS</text></navLabel><content src="B19922_11.xhtml#_idParaDest-273" />
+				<navPoint id="navpoint274" playOrder="274"><navLabel><text>Installing Runtime Fabric on self-managed Kubernetes</text></navLabel><content src="B19922_11.xhtml#_idParaDest-274" /></navPoint>
+				<navPoint id="navpoint275" playOrder="275"><navLabel><text>Shared responsibilities between the customer and MuleSoft</text></navLabel><content src="B19922_11.xhtml#_idParaDest-275" /></navPoint>
+				<navPoint id="navpoint276" playOrder="276"><navLabel><text>High availability and fault tolerance</text></navLabel><content src="B19922_11.xhtml#_idParaDest-276" /></navPoint>
+				<navPoint id="navpoint277" playOrder="277"><navLabel><text>Scalability</text></navLabel><content src="B19922_11.xhtml#_idParaDest-277" /></navPoint>
+				<navPoint id="navpoint278" playOrder="278"><navLabel><text>How will an application deployed to self-managed Kubernetes communicate with an external service for which IP whitelisting is required?</text></navLabel><content src="B19922_11.xhtml#_idParaDest-278" /></navPoint>
+				<navPoint id="navpoint279" playOrder="279"><navLabel><text>The difference between Runtime Fabric on self-managed Kubernetes and bare-metal/VMs</text></navLabel><content src="B19922_11.xhtml#_idParaDest-279" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint280" playOrder="280"><navLabel><text>Tokenization services</text></navLabel><content src="B19922_11.xhtml#_idParaDest-280" /></navPoint>
+			<navPoint id="navpoint281" playOrder="281"><navLabel><text>Secrets Manager</text></navLabel><content src="B19922_11.xhtml#_idParaDest-281" /></navPoint>
+			<navPoint id="navpoint282" playOrder="282"><navLabel><text>CPU bursting in Runtime Fabric</text></navLabel><content src="B19922_11.xhtml#_idParaDest-282" /></navPoint>
+			<navPoint id="navpoint283" playOrder="283"><navLabel><text>Pod</text></navLabel><content src="B19922_11.xhtml#_idParaDest-283" /></navPoint>
+			<navPoint id="navpoint284" playOrder="284"><navLabel><text>Last-mile security</text></navLabel><content src="B19922_11.xhtml#_idParaDest-284" /></navPoint>
+			<navPoint id="navpoint285" playOrder="285"><navLabel><text>Internal service-to-service communication</text></navLabel><content src="B19922_11.xhtml#_idParaDest-285" /></navPoint>
+			<navPoint id="navpoint286" playOrder="286"><navLabel><text>Persistence Gateway with Runtime Fabric</text></navLabel><content src="B19922_11.xhtml#_idParaDest-286" /></navPoint>
+			<navPoint id="navpoint287" playOrder="287"><navLabel><text>Deployment strategy</text></navLabel><content src="B19922_11.xhtml#_idParaDest-287" /></navPoint>
+			<navPoint id="navpoint288" playOrder="288"><navLabel><text>Clustering</text></navLabel><content src="B19922_11.xhtml#_idParaDest-288" /></navPoint>
+			<navPoint id="navpoint289" playOrder="289"><navLabel><text>Backing up and restoring Runtime Fabric</text></navLabel><content src="B19922_11.xhtml#_idParaDest-289" />
+				<navPoint id="navpoint290" playOrder="290"><navLabel><text>When to use the backup and restore process</text></navLabel><content src="B19922_11.xhtml#_idParaDest-290" /></navPoint>
+				<navPoint id="navpoint291" playOrder="291"><navLabel><text>What’s backed up?</text></navLabel><content src="B19922_11.xhtml#_idParaDest-291" /></navPoint>
+				<navPoint id="navpoint292" playOrder="292"><navLabel><text>Backing up and restoring</text></navLabel><content src="B19922_11.xhtml#_idParaDest-292" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint293" playOrder="293"><navLabel><text>Different options for deploying a MuleSoft application to Runtime Fabric</text></navLabel><content src="B19922_11.xhtml#_idParaDest-293" />
+				<navPoint id="navpoint294" playOrder="294"><navLabel><text>The Mule Maven plugin</text></navLabel><content src="B19922_11.xhtml#_idParaDest-294" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint295" playOrder="295"><navLabel><text>The benefits of Runtime Fabric</text></navLabel><content src="B19922_11.xhtml#_idParaDest-295" /></navPoint>
+			<navPoint id="navpoint296" playOrder="296"><navLabel><text>Runtime Fabric on Red Hat OpenShift</text></navLabel><content src="B19922_11.xhtml#_idParaDest-296" /></navPoint>
+			<navPoint id="navpoint297" playOrder="297"><navLabel><text>Summary</text></navLabel><content src="B19922_11.xhtml#_idParaDest-297" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint298" playOrder="298"><navLabel><text>12</text></navLabel><content src="B19922_12.xhtml#_idParaDest-298" /></navPoint>
+		<navPoint id="navpoint299" playOrder="299"><navLabel><text>Deploying to Your Own Data Center</text></navLabel><content src="B19922_12.xhtml#_idParaDest-299" />
+			<navPoint id="navpoint300" playOrder="300"><navLabel><text>Technical requirements</text></navLabel><content src="B19922_12.xhtml#_idParaDest-300" />
+				<navPoint id="navpoint301" playOrder="301"><navLabel><text>Hardware requirements</text></navLabel><content src="B19922_12.xhtml#_idParaDest-301" /></navPoint>
+				<navPoint id="navpoint302" playOrder="302"><navLabel><text>Software requirements</text></navLabel><content src="B19922_12.xhtml#_idParaDest-302" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint303" playOrder="303"><navLabel><text>Why an on-premises Mule runtime?</text></navLabel><content src="B19922_12.xhtml#_idParaDest-303" />
+				<navPoint id="navpoint304" playOrder="304"><navLabel><text>Running applications in an on-premises Mule runtime</text></navLabel><content src="B19922_12.xhtml#_idParaDest-304" /></navPoint>
+				<navPoint id="navpoint305" playOrder="305"><navLabel><text>High availability</text></navLabel><content src="B19922_12.xhtml#_idParaDest-305" /></navPoint>
+				<navPoint id="navpoint306" playOrder="306"><navLabel><text>Scalability</text></navLabel><content src="B19922_12.xhtml#_idParaDest-306" /></navPoint>
+				<navPoint id="navpoint307" playOrder="307"><navLabel><text>Load balancer</text></navLabel><content src="B19922_12.xhtml#_idParaDest-307" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint308" playOrder="308"><navLabel><text>Anypoint clustering</text></navLabel><content src="B19922_12.xhtml#_idParaDest-308" />
+				<navPoint id="navpoint309" playOrder="309"><navLabel><text>Concurrency issues</text></navLabel><content src="B19922_12.xhtml#_idParaDest-309" /></navPoint>
+				<navPoint id="navpoint310" playOrder="310"><navLabel><text>Setting up Anypoint clustering manually</text></navLabel><content src="B19922_12.xhtml#_idParaDest-310" /></navPoint>
+				<navPoint id="navpoint311" playOrder="311"><navLabel><text>Setting up Anypoint clustering on Anypoint Platform</text></navLabel><content src="B19922_12.xhtml#_idParaDest-311" /></navPoint>
+				<navPoint id="navpoint312" playOrder="312"><navLabel><text>Persistent object store</text></navLabel><content src="B19922_12.xhtml#_idParaDest-312" /></navPoint>
+				<navPoint id="navpoint313" playOrder="313"><navLabel><text>Primary node and secondary nodes</text></navLabel><content src="B19922_12.xhtml#_idParaDest-313" /></navPoint>
+				<navPoint id="navpoint314" playOrder="314"><navLabel><text>VM queues in Anypoint clustering</text></navLabel><content src="B19922_12.xhtml#_idParaDest-314" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint315" playOrder="315"><navLabel><text>Anypoint server group</text></navLabel><content src="B19922_12.xhtml#_idParaDest-315" />
+				<navPoint id="navpoint316" playOrder="316"><navLabel><text>Anypoint Platform Private Cloud Edition</text></navLabel><content src="B19922_12.xhtml#_idParaDest-316" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint317" playOrder="317"><navLabel><text>Running on-premises Mule runtime use cases</text></navLabel><content src="B19922_12.xhtml#_idParaDest-317" />
+				<navPoint id="navpoint318" playOrder="318"><navLabel><text>Mule runtime plane on-premises and no control plane (standalone)</text></navLabel><content src="B19922_12.xhtml#_idParaDest-318" /></navPoint>
+				<navPoint id="navpoint319" playOrder="319"><navLabel><text>Mule runtime plane on-premises and control plane on Anypoint Platform (hybrid)</text></navLabel><content src="B19922_12.xhtml#_idParaDest-319" /></navPoint>
+				<navPoint id="navpoint320" playOrder="320"><navLabel><text>Mule runtime plane on-premises and control plane on Anypoint Platform PCE (fully on-premises)</text></navLabel><content src="B19922_12.xhtml#_idParaDest-320" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint321" playOrder="321"><navLabel><text>Running multiple MuleSoft applications on a single port (Mule domain)</text></navLabel><content src="B19922_12.xhtml#_idParaDest-321" />
+				<navPoint id="navpoint322" playOrder="322"><navLabel><text>How to use a domain project in API-led connectivity architecture</text></navLabel><content src="B19922_12.xhtml#_idParaDest-322" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint323" playOrder="323"><navLabel><text>Deploying a MuleSoft application on-premises using the Mule Maven plugin</text></navLabel><content src="B19922_12.xhtml#_idParaDest-323" /></navPoint>
+			<navPoint id="navpoint324" playOrder="324"><navLabel><text>Deploying a MuleSoft application on-premises using the Anypoint Runtime Manager (ARM) REST API</text></navLabel><content src="B19922_12.xhtml#_idParaDest-324" /></navPoint>
+			<navPoint id="navpoint325" playOrder="325"><navLabel><text>Deploying Mule for high availability and disaster recovery strategies</text></navLabel><content src="B19922_12.xhtml#_idParaDest-325" />
+				<navPoint id="navpoint326" playOrder="326"><navLabel><text>Cold standby</text></navLabel><content src="B19922_12.xhtml#_idParaDest-326" /></navPoint>
+				<navPoint id="navpoint327" playOrder="327"><navLabel><text>Warm standby</text></navLabel><content src="B19922_12.xhtml#_idParaDest-327" /></navPoint>
+				<navPoint id="navpoint328" playOrder="328"><navLabel><text>Hot standby – active-passive</text></navLabel><content src="B19922_12.xhtml#_idParaDest-328" /></navPoint>
+				<navPoint id="navpoint329" playOrder="329"><navLabel><text>Active-active</text></navLabel><content src="B19922_12.xhtml#_idParaDest-329" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint330" playOrder="330"><navLabel><text>Upgrading a Mule runtime or scaling the underlying infrastructure without any downtime</text></navLabel><content src="B19922_12.xhtml#_idParaDest-330" /></navPoint>
+			<navPoint id="navpoint331" playOrder="331"><navLabel><text>Mule runtime on-premises security</text></navLabel><content src="B19922_12.xhtml#_idParaDest-331" /></navPoint>
+			<navPoint id="navpoint332" playOrder="332"><navLabel><text>Summary</text></navLabel><content src="B19922_12.xhtml#_idParaDest-332" /></navPoint>
+			<navPoint id="navpoint333" playOrder="333"><navLabel><text>Further reading</text></navLabel><content src="B19922_12.xhtml#_idParaDest-333" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint334" playOrder="334"><navLabel><text>13</text></navLabel><content src="B19922_13.xhtml#_idParaDest-334" /></navPoint>
+		<navPoint id="navpoint335" playOrder="335"><navLabel><text>Government Cloud and the EU Control Plane – Special Considerations</text></navLabel><content src="B19922_13.xhtml#_idParaDest-335" />
+			<navPoint id="navpoint336" playOrder="336"><navLabel><text>FedRAMP compliance</text></navLabel><content src="B19922_13.xhtml#_idParaDest-336" /></navPoint>
+			<navPoint id="navpoint337" playOrder="337"><navLabel><text>What is MuleSoft Government Cloud?</text></navLabel><content src="B19922_13.xhtml#_idParaDest-337" />
+				<navPoint id="navpoint338" playOrder="338"><navLabel><text>Government Cloud considerations</text></navLabel><content src="B19922_13.xhtml#_idParaDest-338" /></navPoint>
+				<navPoint id="navpoint339" playOrder="339"><navLabel><text>Security in MuleSoft Government Cloud</text></navLabel><content src="B19922_13.xhtml#_idParaDest-339" /></navPoint>
+				<navPoint id="navpoint340" playOrder="340"><navLabel><text>Anypoint Virtual Private Cloud and Virtual Private Network in MuleSoft Government Cloud</text></navLabel><content src="B19922_13.xhtml#_idParaDest-340" /></navPoint>
+				<navPoint id="navpoint341" playOrder="341"><navLabel><text>A dedicated load balancer in MuleSoft Government Cloud</text></navLabel><content src="B19922_13.xhtml#_idParaDest-341" /></navPoint>
+				<navPoint id="navpoint342" playOrder="342"><navLabel><text>The MuleSoft Government Cloud control plane</text></navLabel><content src="B19922_13.xhtml#_idParaDest-342" /></navPoint>
+				<navPoint id="navpoint343" playOrder="343"><navLabel><text>The MuleSoft Government Cloud runtime plane</text></navLabel><content src="B19922_13.xhtml#_idParaDest-343" /></navPoint>
+				<navPoint id="navpoint344" playOrder="344"><navLabel><text>Standalone Mule support in MuleSoft Government Cloud</text></navLabel><content src="B19922_13.xhtml#_idParaDest-344" /></navPoint>
+				<navPoint id="navpoint345" playOrder="345"><navLabel><text>Deployment models for MuleSoft Government Cloud</text></navLabel><content src="B19922_13.xhtml#_idParaDest-345" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint346" playOrder="346"><navLabel><text>The EU control plane</text></navLabel><content src="B19922_13.xhtml#_idParaDest-346" />
+				<navPoint id="navpoint347" playOrder="347"><navLabel><text>EU control plane considerations</text></navLabel><content src="B19922_13.xhtml#_idParaDest-347" /></navPoint>
+				<navPoint id="navpoint348" playOrder="348"><navLabel><text>Deploying applications to the EU control plane</text></navLabel><content src="B19922_13.xhtml#_idParaDest-348" /></navPoint>
+				<navPoint id="navpoint349" playOrder="349"><navLabel><text>Object Store in the EU control plane</text></navLabel><content src="B19922_13.xhtml#_idParaDest-349" /></navPoint>
+				<navPoint id="navpoint350" playOrder="350"><navLabel><text>Moving from the US control plane to the EU control plane</text></navLabel><content src="B19922_13.xhtml#_idParaDest-350" /></navPoint>
+				<navPoint id="navpoint351" playOrder="351"><navLabel><text>Anypoint VPC and VPN in the EU control plane</text></navLabel><content src="B19922_13.xhtml#_idParaDest-351" /></navPoint>
+				<navPoint id="navpoint352" playOrder="352"><navLabel><text>Anypoint Dedicated Load Balancer (DLB) in the EU control plane</text></navLabel><content src="B19922_13.xhtml#_idParaDest-352" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint353" playOrder="353"><navLabel><text>Summary</text></navLabel><content src="B19922_13.xhtml#_idParaDest-353" /></navPoint>
+			<navPoint id="navpoint354" playOrder="354"><navLabel><text>Further reading</text></navLabel><content src="B19922_13.xhtml#_idParaDest-354" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint355" playOrder="355"><navLabel><text>14</text></navLabel><content src="B19922_14.xhtml#_idParaDest-355" /></navPoint>
+		<navPoint id="navpoint356" playOrder="356"><navLabel><text>Functional Monitoring, Alerts, and Operation Monitors</text></navLabel><content src="B19922_14.xhtml#_idParaDest-356" />
+			<navPoint id="navpoint357" playOrder="357"><navLabel><text>Why is API monitoring required?</text></navLabel><content src="B19922_14.xhtml#_idParaDest-357" /></navPoint>
+			<navPoint id="navpoint358" playOrder="358"><navLabel><text>Anypoint Monitoring</text></navLabel><content src="B19922_14.xhtml#_idParaDest-358" />
+				<navPoint id="navpoint359" playOrder="359"><navLabel><text>The monitoring and analytics capabilities of Anypoint API Manager</text></navLabel><content src="B19922_14.xhtml#_idParaDest-359" /></navPoint>
+				<navPoint id="navpoint360" playOrder="360"><navLabel><text>Understanding Mule API analytics charts</text></navLabel><content src="B19922_14.xhtml#_idParaDest-360" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint361" playOrder="361"><navLabel><text>API Manager alerts</text></navLabel><content src="B19922_14.xhtml#_idParaDest-361" /></navPoint>
+			<navPoint id="navpoint362" playOrder="362"><navLabel><text>Understanding the Mule Analytics Event API</text></navLabel><content src="B19922_14.xhtml#_idParaDest-362" />
+				<navPoint id="navpoint363" playOrder="363"><navLabel><text>API reports</text></navLabel><content src="B19922_14.xhtml#_idParaDest-363" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint364" playOrder="364"><navLabel><text>Understanding Anypoint Monitoring</text></navLabel><content src="B19922_14.xhtml#_idParaDest-364" />
+				<navPoint id="navpoint365" playOrder="365"><navLabel><text>Dashboards</text></navLabel><content src="B19922_14.xhtml#_idParaDest-365" /></navPoint>
+				<navPoint id="navpoint366" playOrder="366"><navLabel><text>Anypoint Monitoring event-driven alerts</text></navLabel><content src="B19922_14.xhtml#_idParaDest-366" /></navPoint>
+				<navPoint id="navpoint367" playOrder="367"><navLabel><text>Enabling Anypoint Monitoring for applications deployed to CloudHub</text></navLabel><content src="B19922_14.xhtml#_idParaDest-367" /></navPoint>
+				<navPoint id="navpoint368" playOrder="368"><navLabel><text>Enabling Anypoint Monitoring for applications deployed to CloudHub 2.0</text></navLabel><content src="B19922_14.xhtml#_idParaDest-368" /></navPoint>
+				<navPoint id="navpoint369" playOrder="369"><navLabel><text>Enabling Anypoint Monitoring for applications deployed to Runtime Fabric</text></navLabel><content src="B19922_14.xhtml#_idParaDest-369" /></navPoint>
+				<navPoint id="navpoint370" playOrder="370"><navLabel><text>Enabling Anypoint Monitoring for applications deployed in hybrid environments</text></navLabel><content src="B19922_14.xhtml#_idParaDest-370" /></navPoint>
+				<navPoint id="navpoint371" playOrder="371"><navLabel><text>Data retention policy and limits</text></navLabel><content src="B19922_14.xhtml#_idParaDest-371" /></navPoint>
+				<navPoint id="navpoint372" playOrder="372"><navLabel><text>Monitoring connectors</text></navLabel><content src="B19922_14.xhtml#_idParaDest-372" /></navPoint>
+				<navPoint id="navpoint373" playOrder="373"><navLabel><text>Server information for hybrid environments</text></navLabel><content src="B19922_14.xhtml#_idParaDest-373" /></navPoint>
+				<navPoint id="navpoint374" playOrder="374"><navLabel><text>Enabling alerts for hybrid environments with Runtime Manager</text></navLabel><content src="B19922_14.xhtml#_idParaDest-374" /></navPoint>
+				<navPoint id="navpoint375" playOrder="375"><navLabel><text>Enabling alerts for CloudHub with Runtime Manager</text></navLabel><content src="B19922_14.xhtml#_idParaDest-375" /></navPoint>
+				<navPoint id="navpoint376" playOrder="376"><navLabel><text>Enabling alerts for CloudHub 2.0 with Runtime Manager</text></navLabel><content src="B19922_14.xhtml#_idParaDest-376" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint377" playOrder="377"><navLabel><text>Functional Monitoring</text></navLabel><content src="B19922_14.xhtml#_idParaDest-377" />
+				<navPoint id="navpoint378" playOrder="378"><navLabel><text>Monitoring the endpoints of public APIs</text></navLabel><content src="B19922_14.xhtml#_idParaDest-378" /></navPoint>
+				<navPoint id="navpoint379" playOrder="379"><navLabel><text>Monitoring the endpoints of private APIs</text></navLabel><content src="B19922_14.xhtml#_idParaDest-379" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint380" playOrder="380"><navLabel><text>Why is logging important?</text></navLabel><content src="B19922_14.xhtml#_idParaDest-380" />
+				<navPoint id="navpoint381" playOrder="381"><navLabel><text>Logs in Anypoint Monitoring</text></navLabel><content src="B19922_14.xhtml#_idParaDest-381" /></navPoint>
+				<navPoint id="navpoint382" playOrder="382"><navLabel><text>Understanding logging with MuleSoft applications deployed to CloudHub</text></navLabel><content src="B19922_14.xhtml#_idParaDest-382" /></navPoint>
+				<navPoint id="navpoint383" playOrder="383"><navLabel><text>Understanding logging with MuleSoft applications deployed to CloudHub 2.0</text></navLabel><content src="B19922_14.xhtml#_idParaDest-383" /></navPoint>
+				<navPoint id="navpoint384" playOrder="384"><navLabel><text>Understanding logging with MuleSoft applications deployed to on-premises/hybrid environments</text></navLabel><content src="B19922_14.xhtml#_idParaDest-384" /></navPoint>
+				<navPoint id="navpoint385" playOrder="385"><navLabel><text>Understanding logging with MuleSoft applications deployed to Runtime Fabric on bare-metal systems/VMs</text></navLabel><content src="B19922_14.xhtml#_idParaDest-385" /></navPoint>
+				<navPoint id="navpoint386" playOrder="386"><navLabel><text>JSON logging with a Mule application</text></navLabel><content src="B19922_14.xhtml#_idParaDest-386" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint387" playOrder="387"><navLabel><text>Anypoint Visualizer</text></navLabel><content src="B19922_14.xhtml#_idParaDest-387" /></navPoint>
+			<navPoint id="navpoint388" playOrder="388"><navLabel><text>Summary</text></navLabel><content src="B19922_14.xhtml#_idParaDest-388" /></navPoint>
+			<navPoint id="navpoint389" playOrder="389"><navLabel><text>Further reading</text></navLabel><content src="B19922_14.xhtml#_idParaDest-389" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint390" playOrder="390"><navLabel><text>15</text></navLabel><content src="B19922_15.xhtml#_idParaDest-390" /></navPoint>
+		<navPoint id="navpoint391" playOrder="391"><navLabel><text>Controlling API Sprawl with Universal API Management</text></navLabel><content src="B19922_15.xhtml#_idParaDest-391" />
+			<navPoint id="navpoint392" playOrder="392"><navLabel><text>API sprawl</text></navLabel><content src="B19922_15.xhtml#_idParaDest-392" /></navPoint>
+			<navPoint id="navpoint393" playOrder="393"><navLabel><text>How to prevent API sprawl</text></navLabel><content src="B19922_15.xhtml#_idParaDest-393" /></navPoint>
+			<navPoint id="navpoint394" playOrder="394"><navLabel><text>Universal API management</text></navLabel><content src="B19922_15.xhtml#_idParaDest-394" /></navPoint>
+			<navPoint id="navpoint395" playOrder="395"><navLabel><text>API management</text></navLabel><content src="B19922_15.xhtml#_idParaDest-395" />
+				<navPoint id="navpoint396" playOrder="396"><navLabel><text>The full API management life cycle</text></navLabel><content src="B19922_15.xhtml#_idParaDest-396" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint397" playOrder="397"><navLabel><text>API gateway</text></navLabel><content src="B19922_15.xhtml#_idParaDest-397" /></navPoint>
+			<navPoint id="navpoint398" playOrder="398"><navLabel><text>Mule Gateway</text></navLabel><content src="B19922_15.xhtml#_idParaDest-398" />
+				<navPoint id="navpoint399" playOrder="399"><navLabel><text>API proxies</text></navLabel><content src="B19922_15.xhtml#_idParaDest-399" /></navPoint>
+				<navPoint id="navpoint400" playOrder="400"><navLabel><text>When to use an API proxy</text></navLabel><content src="B19922_15.xhtml#_idParaDest-400" /></navPoint>
+				<navPoint id="navpoint401" playOrder="401"><navLabel><text>API proxies versus API autodiscovery</text></navLabel><content src="B19922_15.xhtml#_idParaDest-401" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint402" playOrder="402"><navLabel><text>Anypoint Service Mesh</text></navLabel><content src="B19922_15.xhtml#_idParaDest-402" />
+				<navPoint id="navpoint403" playOrder="403"><navLabel><text>Benefits of Flex Gateway</text></navLabel><content src="B19922_15.xhtml#_idParaDest-403" /></navPoint>
+				<navPoint id="navpoint404" playOrder="404"><navLabel><text>Flex Gateway in Connected Mode</text></navLabel><content src="B19922_15.xhtml#_idParaDest-404" /></navPoint>
+				<navPoint id="navpoint405" playOrder="405"><navLabel><text>Flex Gateway in Local Mode</text></navLabel><content src="B19922_15.xhtml#_idParaDest-405" /></navPoint>
+				<navPoint id="navpoint406" playOrder="406"><navLabel><text>Flex Gateway deployment models</text></navLabel><content src="B19922_15.xhtml#_idParaDest-406" /></navPoint>
+				<navPoint id="navpoint407" playOrder="407"><navLabel><text>High availability and scalability with Flex Gateway</text></navLabel><content src="B19922_15.xhtml#_idParaDest-407" /></navPoint>
+				<navPoint id="navpoint408" playOrder="408"><navLabel><text>Routing in Flex Gateway</text></navLabel><content src="B19922_15.xhtml#_idParaDest-408" /></navPoint>
+				<navPoint id="navpoint409" playOrder="409"><navLabel><text>Flex Gateway in Centralized Mode</text></navLabel><content src="B19922_15.xhtml#_idParaDest-409" /></navPoint>
+				<navPoint id="navpoint410" playOrder="410"><navLabel><text>Flex Gateway in Decentralized Mode</text></navLabel><content src="B19922_15.xhtml#_idParaDest-410" /></navPoint>
+				<navPoint id="navpoint411" playOrder="411"><navLabel><text>Flex Gateway API policies</text></navLabel><content src="B19922_15.xhtml#_idParaDest-411" /></navPoint>
+				<navPoint id="navpoint412" playOrder="412"><navLabel><text>Flex Gateway versus Mule Gateway</text></navLabel><content src="B19922_15.xhtml#_idParaDest-412" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint413" playOrder="413"><navLabel><text>Share and discover APIs using Anypoint Platform</text></navLabel><content src="B19922_15.xhtml#_idParaDest-413" />
+				<navPoint id="navpoint414" playOrder="414"><navLabel><text>Developer portal</text></navLabel><content src="B19922_15.xhtml#_idParaDest-414" /></navPoint>
+				<navPoint id="navpoint415" playOrder="415"><navLabel><text>ACM</text></navLabel><content src="B19922_15.xhtml#_idParaDest-415" /></navPoint>
+				<navPoint id="navpoint416" playOrder="416"><navLabel><text>API Experience Hub</text></navLabel><content src="B19922_15.xhtml#_idParaDest-416" /></navPoint>
+				<navPoint id="navpoint417" playOrder="417"><navLabel><text>ACM versus API Experience Hub</text></navLabel><content src="B19922_15.xhtml#_idParaDest-417" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint418" playOrder="418"><navLabel><text>API Analytics</text></navLabel><content src="B19922_15.xhtml#_idParaDest-418" /></navPoint>
+			<navPoint id="navpoint419" playOrder="419"><navLabel><text>API policies</text></navLabel><content src="B19922_15.xhtml#_idParaDest-419" /></navPoint>
+			<navPoint id="navpoint420" playOrder="420"><navLabel><text>API Governance</text></navLabel><content src="B19922_15.xhtml#_idParaDest-420" />
+				<navPoint id="navpoint421" playOrder="421"><navLabel><text>Implementing API Governance</text></navLabel><content src="B19922_15.xhtml#_idParaDest-421" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint422" playOrder="422"><navLabel><text>Anypoint API Manager alerts</text></navLabel><content src="B19922_15.xhtml#_idParaDest-422" /></navPoint>
+			<navPoint id="navpoint423" playOrder="423"><navLabel><text>API security threats</text></navLabel><content src="B19922_15.xhtml#_idParaDest-423" />
+				<navPoint id="navpoint424" playOrder="424"><navLabel><text>DoS</text></navLabel><content src="B19922_15.xhtml#_idParaDest-424" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint425" playOrder="425"><navLabel><text>Summary</text></navLabel><content src="B19922_15.xhtml#_idParaDest-425" /></navPoint>
+			<navPoint id="navpoint426" playOrder="426"><navLabel><text>References</text></navLabel><content src="B19922_15.xhtml#_idParaDest-426" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint427" playOrder="427"><navLabel><text>16</text></navLabel><content src="B19922_16.xhtml#_idParaDest-427" /></navPoint>
+		<navPoint id="navpoint428" playOrder="428"><navLabel><text>Addressing Non-Functional Requirements – from a Thought to an Operation</text></navLabel><content src="B19922_16.xhtml#_idParaDest-428" />
+			<navPoint id="navpoint429" playOrder="429"><navLabel><text>Prerequisites</text></navLabel><content src="B19922_16.xhtml#_idParaDest-429" /></navPoint>
+			<navPoint id="navpoint430" playOrder="430"><navLabel><text>What are NFRs?</text></navLabel><content src="B19922_16.xhtml#_idParaDest-430" /></navPoint>
+			<navPoint id="navpoint431" playOrder="431"><navLabel><text>High availability</text></navLabel><content src="B19922_16.xhtml#_idParaDest-431" />
+				<navPoint id="navpoint432" playOrder="432"><navLabel><text>High availability and fault tolerance with CloudHub 1.0</text></navLabel><content src="B19922_16.xhtml#_idParaDest-432" /></navPoint>
+				<navPoint id="navpoint433" playOrder="433"><navLabel><text>High availability and fault tolerance with CloudHub 2.0</text></navLabel><content src="B19922_16.xhtml#_idParaDest-433" /></navPoint>
+				<navPoint id="navpoint434" playOrder="434"><navLabel><text>High availability and fault tolerance with the on-premises Mule runtime</text></navLabel><content src="B19922_16.xhtml#_idParaDest-434" /></navPoint>
+				<navPoint id="navpoint435" playOrder="435"><navLabel><text>High availability and fault tolerance with Runtime Fabric (bare-metal servers/VMs)</text></navLabel><content src="B19922_16.xhtml#_idParaDest-435" /></navPoint>
+				<navPoint id="navpoint436" playOrder="436"><navLabel><text>High availability and fault tolerance with Runtime Fabric (self-managed Kubernetes)</text></navLabel><content src="B19922_16.xhtml#_idParaDest-436" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint437" playOrder="437"><navLabel><text>Scalability</text></navLabel><content src="B19922_16.xhtml#_idParaDest-437" />
+				<navPoint id="navpoint438" playOrder="438"><navLabel><text>Scalability with CloudHub 1.0</text></navLabel><content src="B19922_16.xhtml#_idParaDest-438" /></navPoint>
+				<navPoint id="navpoint439" playOrder="439"><navLabel><text>Scalability with CloudHub 2.0</text></navLabel><content src="B19922_16.xhtml#_idParaDest-439" /></navPoint>
+				<navPoint id="navpoint440" playOrder="440"><navLabel><text>Scalability with Runtime Fabric (bare-metal servers/VMs)</text></navLabel><content src="B19922_16.xhtml#_idParaDest-440" /></navPoint>
+				<navPoint id="navpoint441" playOrder="441"><navLabel><text>Scalability with Runtime Fabric (self-managed Kubernetes)</text></navLabel><content src="B19922_16.xhtml#_idParaDest-441" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint442" playOrder="442"><navLabel><text>DR</text></navLabel><content src="B19922_16.xhtml#_idParaDest-442" />
+				<navPoint id="navpoint443" playOrder="443"><navLabel><text>DR for CloudHub 1.0 (multi-region)</text></navLabel><content src="B19922_16.xhtml#_idParaDest-443" /></navPoint>
+				<navPoint id="navpoint444" playOrder="444"><navLabel><text>DR for CloudHub 2.0 (multi-region)</text></navLabel><content src="B19922_16.xhtml#_idParaDest-444" /></navPoint>
+				<navPoint id="navpoint445" playOrder="445"><navLabel><text>DR for the on-premises Mule runtime</text></navLabel><content src="B19922_16.xhtml#_idParaDest-445" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint446" playOrder="446"><navLabel><text>vCores allocation and optimization</text></navLabel><content src="B19922_16.xhtml#_idParaDest-446" />
+				<navPoint id="navpoint447" playOrder="447"><navLabel><text>vCores optimization and allocation with CloudHub 1.0 and CloudHub 2.0</text></navLabel><content src="B19922_16.xhtml#_idParaDest-447" /></navPoint>
+				<navPoint id="navpoint448" playOrder="448"><navLabel><text>vCores optimization and allocation with the on-premises Mule runtime</text></navLabel><content src="B19922_16.xhtml#_idParaDest-448" /></navPoint>
+				<navPoint id="navpoint449" playOrder="449"><navLabel><text>vCores optimization and allocation with Runtime Fabric</text></navLabel><content src="B19922_16.xhtml#_idParaDest-449" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint450" playOrder="450"><navLabel><text>Summary</text></navLabel><content src="B19922_16.xhtml#_idParaDest-450" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint451" playOrder="451"><navLabel><text>17</text></navLabel><content src="B19922_17.xhtml#_idParaDest-451" /></navPoint>
+		<navPoint id="navpoint452" playOrder="452"><navLabel><text>Prepare for Success</text></navLabel><content src="B19922_17.xhtml#_idParaDest-452" />
+			<navPoint id="navpoint453" playOrder="453"><navLabel><text>MCPA – Level 1 certification</text></navLabel><content src="B19922_17.xhtml#_idParaDest-453" />
+				<navPoint id="navpoint454" playOrder="454"><navLabel><text>Format of the examination</text></navLabel><content src="B19922_17.xhtml#_idParaDest-454" /></navPoint>
+				<navPoint id="navpoint455" playOrder="455"><navLabel><text>Validity</text></navLabel><content src="B19922_17.xhtml#_idParaDest-455" /></navPoint>
+				<navPoint id="navpoint456" playOrder="456"><navLabel><text>MCPA – Level 1 Maintenance exam</text></navLabel><content src="B19922_17.xhtml#_idParaDest-456" /></navPoint>
+				<navPoint id="navpoint457" playOrder="457"><navLabel><text>How to prepare for MCPA – Level 1</text></navLabel><content src="B19922_17.xhtml#_idParaDest-457" /></navPoint>
+				<navPoint id="navpoint458" playOrder="458"><navLabel><text>Why take the MCPA – Level 1 exam?</text></navLabel><content src="B19922_17.xhtml#_idParaDest-458" /></navPoint>
+				<navPoint id="navpoint459" playOrder="459"><navLabel><text>Who should take the MCPA – Level 1 exam?</text></navLabel><content src="B19922_17.xhtml#_idParaDest-459" /></navPoint>
+				<navPoint id="navpoint460" playOrder="460"><navLabel><text>What topics are covered in the examination?</text></navLabel><content src="B19922_17.xhtml#_idParaDest-460" /></navPoint>
+				<navPoint id="navpoint461" playOrder="461"><navLabel><text>Strategies for answering multiple-choice questions</text></navLabel><content src="B19922_17.xhtml#_idParaDest-461" /></navPoint>
+				<navPoint id="navpoint462" playOrder="462"><navLabel><text>System requirements for the examination</text></navLabel><content src="B19922_17.xhtml#_idParaDest-462" /></navPoint>
+				<navPoint id="navpoint463" playOrder="463"><navLabel><text>Exam day</text></navLabel><content src="B19922_17.xhtml#_idParaDest-463" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint464" playOrder="464"><navLabel><text>Summary</text></navLabel><content src="B19922_17.xhtml#_idParaDest-464" /></navPoint>
+			<navPoint id="navpoint465" playOrder="465"><navLabel><text>Questions</text></navLabel><content src="B19922_17.xhtml#_idParaDest-465" /></navPoint>
+			<navPoint id="navpoint466" playOrder="466"><navLabel><text>Further reading</text></navLabel><content src="B19922_17.xhtml#_idParaDest-466" /></navPoint>
+			<navPoint id="navpoint467" playOrder="467"><navLabel><text>Answers</text></navLabel><content src="B19922_17.xhtml#_idParaDest-467" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint468" playOrder="468"><navLabel><text>18</text></navLabel><content src="B19922_18.xhtml#_idParaDest-468" /></navPoint>
+		<navPoint id="navpoint469" playOrder="469"><navLabel><text>Tackling Tricky Topics</text></navLabel><content src="B19922_18.xhtml#_idParaDest-469" />
+			<navPoint id="navpoint470" playOrder="470"><navLabel><text>Considerations for choosing the right deployment model</text></navLabel><content src="B19922_18.xhtml#_idParaDest-470" />
+				<navPoint id="navpoint471" playOrder="471"><navLabel><text>CloudHub 1.0</text></navLabel><content src="B19922_18.xhtml#_idParaDest-471" /></navPoint>
+				<navPoint id="navpoint472" playOrder="472"><navLabel><text>CloudHub 2.0</text></navLabel><content src="B19922_18.xhtml#_idParaDest-472" /></navPoint>
+				<navPoint id="navpoint473" playOrder="473"><navLabel><text>Runtime Fabric</text></navLabel><content src="B19922_18.xhtml#_idParaDest-473" /></navPoint>
+				<navPoint id="navpoint474" playOrder="474"><navLabel><text>On-premises Mule runtime</text></navLabel><content src="B19922_18.xhtml#_idParaDest-474" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint475" playOrder="475"><navLabel><text>Anypoint CLI</text></navLabel><content src="B19922_18.xhtml#_idParaDest-475" /></navPoint>
+			<navPoint id="navpoint476" playOrder="476"><navLabel><text>Resilient API techniques</text></navLabel><content src="B19922_18.xhtml#_idParaDest-476" /></navPoint>
+			<navPoint id="navpoint477" playOrder="477"><navLabel><text>Idempotent scope</text></navLabel><content src="B19922_18.xhtml#_idParaDest-477" /></navPoint>
+			<navPoint id="navpoint478" playOrder="478"><navLabel><text>Cache scope</text></navLabel><content src="B19922_18.xhtml#_idParaDest-478" /></navPoint>
+			<navPoint id="navpoint479" playOrder="479"><navLabel><text>Core components</text></navLabel><content src="B19922_18.xhtml#_idParaDest-479" />
+				<navPoint id="navpoint480" playOrder="480"><navLabel><text>Choice router</text></navLabel><content src="B19922_18.xhtml#_idParaDest-480" /></navPoint>
+				<navPoint id="navpoint481" playOrder="481"><navLabel><text>Scatter-Gather router</text></navLabel><content src="B19922_18.xhtml#_idParaDest-481" /></navPoint>
+				<navPoint id="navpoint482" playOrder="482"><navLabel><text>Error handling</text></navLabel><content src="B19922_18.xhtml#_idParaDest-482" /></navPoint>
+				<navPoint id="navpoint483" playOrder="483"><navLabel><text>Transform Message</text></navLabel><content src="B19922_18.xhtml#_idParaDest-483" /></navPoint>
+			</navPoint>
+			<navPoint id="navpoint484" playOrder="484"><navLabel><text>Use case 1</text></navLabel><content src="B19922_18.xhtml#_idParaDest-484" /></navPoint>
+			<navPoint id="navpoint485" playOrder="485"><navLabel><text>Use case 2</text></navLabel><content src="B19922_18.xhtml#_idParaDest-485" /></navPoint>
+			<navPoint id="navpoint486" playOrder="486"><navLabel><text>Use case 3</text></navLabel><content src="B19922_18.xhtml#_idParaDest-486" /></navPoint>
+			<navPoint id="navpoint487" playOrder="487"><navLabel><text>Summary</text></navLabel><content src="B19922_18.xhtml#_idParaDest-487" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint488" playOrder="488"><navLabel><text>Index</text></navLabel><content src="B19922_Index.xhtml#_idParaDest-488" />
+			<navPoint id="navpoint489" playOrder="489"><navLabel><text>Why subscribe?</text></navLabel><content src="B19922_BM.xhtml#_idParaDest-489" /></navPoint>
+		</navPoint>
+		<navPoint id="navpoint490" playOrder="490"><navLabel><text>Other Books You May Enjoy</text></navLabel><content src="B19922_BM.xhtml#_idParaDest-490" />
+			<navPoint id="navpoint491" playOrder="491"><navLabel><text>Packt is searching for authors like you</text></navLabel><content src="B19922_BM.xhtml#_idParaDest-491" /></navPoint>
+			<navPoint id="navpoint492" playOrder="492"><navLabel><text>Share Your Thoughts</text></navLabel><content src="B19922_BM.xhtml#_idParaDest-492" /></navPoint>
+			<navPoint id="navpoint493" playOrder="493"><navLabel><text>Download a free PDF copy of this book</text></navLabel><content src="B19922_BM.xhtml#_idParaDest-493" /></navPoint>
+		</navPoint>
+	</navMap>
+</ncx>

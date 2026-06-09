@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xml:lang="en"
+lang="en"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>Enabling Microservice Success</title>
+<link rel="stylesheet" type="text/css" href="override_v1.css"/>
+<link rel="stylesheet" type="text/css" href="epub.css"/>
+</head>
+<body>
+<div id="book-content">
+<div id="sbo-rt-content"><section data-type="preface" epub:type="preface" data-pdf-bookmark="Preface"><div class="preface" id="id431">
+<h1>Preface</h1>
+
+
+<p>Microservice architectures can be a very effective approach to speeding up delivery of value to your organization and customers. If you get it right.</p>
+
+<p>Get it wrong and you can end up with a complex mess that makes operation and maintenance very hard and leaves you with small teams trying to support lots of services, some of which they’ve never touched.</p>
+
+<p>Adopting microservices goes beyond selecting an architectural approach. To be successful at doing microservices, you need to make cultural and organizational changes. You have to move toward autonomous, empowered teams.</p>
+
+<p>That means that many things that used to be someone else’s concern are now the responsibility of engineering teams. You need to think beyond system design, architecture, and implementation. That includes considering how you will build systems that you can successfully operate in production, and how to maintain and manage them for the long term. You need to understand distributed systems architecture and are likely to be more hands-on with at least some parts of your infrastructure.</p>
+
+<p>This book will help you with all of that. It gives practical advice on how to adopt a microservice architecture and how to make sure it still works for you once you are several years in, maintaining and sustaining your systems as they mature.</p>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Why I Wrote This Book"><div class="sect1" id="id448">
+<h1>Why I Wrote This Book</h1>
+
+<p>The focus of this book is how to benefit from microservices for the long term. I want you to avoid getting several years in and looking around to find lots of accidental complexity, with developers spending their time on things that aren’t providing business value. If you’re already at that point, I want to help you tackle that.</p>
+
+<p>I built my first microservices in 2013, and I was still there at the same organization building and operating the same systems eight years later. That means I’ve seen the problems, tried to solve them, and been there long enough to know whether those solutions actually worked.</p>
+
+<p>During that time, I’ve worked in product development, operations and incident management, and engineering enablement.  That’s given me a wide perspective on how to approach microservices. My aim is to help you get to a point where you are using a microservice architecture successfully and sustainably.</p>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Who Should Read This Book"><div class="sect1" id="id449">
+<h1>Who Should Read This Book</h1>
+
+<p>This book is for senior engineers, architects, and technical leaders who are moving to microservices and wondering what that means for all the techniques and processes they currently use. It is also for those already using microservices who are struggling with the complexity and want to learn how other people have successfully met some of those challenges.</p>
+
+<p>I assume you are familiar with the fundamental concepts of software development and architecture, but I don’t assume you already have experience with microservice architecture.</p>
+
+<p>I won’t spend a lot of time on the details of specific technologies, or stepping through how to do things. There are already books that cover these things, and I will recommend them at the relevant points. This book will focus on practical advice but won’t be specific to any one technology, instead focusing on the principles that will help you decide what tools you need.</p>
+
+<p>If you’re new to this architectural style, <a data-type="xref" href="ch01.html#chapter1">Chapter 1</a> is an introductory chapter where I cover an overview of what microservices are, the advantages and disadvantages, and the enabling technologies that helped them become widely adopted. If you already feel you have a grasp of that, you can skip that chapter and start with <a data-type="xref" href="ch02.html#chapter2">Chapter 2</a>.</p>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Navigating This Book"><div class="sect1" id="id450">
+<h1>Navigating This Book</h1>
+
+<p>Each chapter in this book covers a different topic. If you want to jump straight to a particular chapter, you should find everything you need, but if you read the book from start to finish you’ll see that each chapter builds on those before it.</p>
+
+<p>This book is divided into three main parts: Context; Organizational Structure and Culture; and Building and Operating. Let’s look at what they cover.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Part I: Context"><div class="sect2" id="id451">
+<h2>Part I: Context</h2>
+
+<p>This sets the context—what are microservices, what does success look like, and are microservices the right architectural pattern for you?</p>
+<dl>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch01.html#chapter1">Chapter 1, “Understanding Microservices”</a></dt>
+<dd>
+<p>We’ll start with a full definition of the microservices architectural style. If you are new to microservices, this will give you a grounding, but even if you’ve been using them for a while, it’s worth reminding yourself of the core concepts, including why people adopted microservices in the first place.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch02.html#chapter2">Chapter 2, “Effective Software Delivery”</a></dt>
+<dd>
+<p>What defines effective software delivery? This chapter discusses the importance of being able to move fast, working on the highest-value features, building stable and resilient systems, keeping control of risk, avoiding having to start again, and finally, providing an environment where people get to spend most of their time on meaningful work. You can think of this chapter as a guide. I’ll introduce the concepts I’ll be talking about in the remainder of the book to link key themes together before we break them down in detail later.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch03.html#chapter3">Chapter 3, “Are Microservices Right for You?”</a></dt>
+<dd>
+<p>Microservices can be a very effective architecture, but they are not the only approach. So, are they the right solution for you? This chapter will help you make that assessment, discussing what you need to have in place to be able to tackle a move to microservices.</p>
+</dd>
+</dl>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Part II: Organizational Structure and Culture"><div class="sect2" id="id452">
+<h2>Part II: Organizational Structure and Culture</h2>
+
+<p>To be successful with microservices, you need to do more than adopt the architectural patterns. There are organizational and cultural considerations, and these are the first things to focus on because if you can’t get these right, you will be taking on a lot of additional complexity for not much benefit. This part explores the organizational and cultural challenges.</p>
+<dl>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch04.html#chapter4">Chapter 4, “Conway’s Law and Finding 
+<span class="keep-together">the Right Boundaries</span>”</a></dt>
+<dd>
+<p>Conway’s Law says that organizations ship their organization structure: if you have two development groups, you’ll have two systems. This chapter explores the implications. It’s important to get your organizational boundaries in the right place.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch05.html#chapter5">Chapter 5, “Building Effective Teams”</a></dt>
+<dd>
+<p>You need a particular type of organizational culture to be successful with microservices: open, learning, and optimized for change.
+This chapter discusses the culture needed to build effective teams, ones that are autonomous and cross-functional, containing all the skills necessary to design, build, and deploy 
+<span class="keep-together">features.</span></p>
+</dd>
+</dl>
+<dl class="less_space pagebreak-before">
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch06.html#chapter6">Chapter 6, “Enabling Autonomy”</a></dt>
+<dd>
+<p>Teams need to be able to move at their own speed, instead of having to wait for someone outside the team to do something. This chapter covers how to support autonomy in teams, what the expectations are of those teams, and how they interact.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch07.html#chapter7">Chapter 7, “Engineering Enablement and 
+<span class="keep-together">Paving the Road</span>”</a></dt>
+<dd>
+<p>You can’t have every skill on every development team. You need to make some distinction between the platform and infrastructure services everyone needs and the products being built. This isn’t a return to dev versus ops: the platform teams should build and run the platform, while the dev teams build and run the services, and the interactions between them need to be as low friction as you can make them, while maintaining a level of security, quality, and cost control that your company would expect. This chapter talks about how to build a paved road: a set of tools and services that make life easy for all your product development teams.</p>
+</dd>
+<dt><a href="ch08.html#chapter8">Chapter 8, “Ensuring ‘You Build It, You Run It’”</a></dt>
+<dd>
+<p>You can’t move fast if every service has to be handed over to someone else to run. Services need to be owned in production by the team that wrote the code. That brings benefits: you build things differently when you are the person who might get called at 2 a.m. But it also means that lots of people who’ve never been on call now will be. And you’ll probably have some teams that are too small to run an out-of-hours rota. This chapter discusses how to navigate the changing demands so that on call doesn’t suck.</p>
+</dd>
+</dl>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Part III: Building and Operating"><div class="sect2" id="id453">
+<h2>Part III: Building and Operating</h2>
+
+<p>The third part digs into the practicalities of building and operating microservices. Each chapter covers techniques for getting the most out of microservices, explaining where they require a different approach to the monolith, and drawing on nearly a decade of experience.</p>
+
+<p>Each chapter in this section looks at how to avoid running into trouble, but also what to do to recover if you find yourself in the mire.</p>
+<dl>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch09.html#chapter9">Chapter 9, “Active Service Ownership”</a></dt>
+<dd>
+<p>Services need to be strongly and actively owned. And that needs to be by a team, not by a person. Active ownership means that dependencies are upgraded, alerts are monitored, code is reviewed, and security vulnerabilities are patched. This chapter discusses what active ownership involves, and how to get there.</p>
+</dd>
+</dl>
+<dl class="less_space pagebreak-before">
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch10.html#chapter10">Chapter 10, “Getting Value from Testing”</a></dt>
+<dd>
+<p>This chapter looks at testing microservices. Quick, automated unit tests give a lot of value, but testing in production and good monitoring is often a more effective approach than end-to-end tests in staging, which can turn into fixture maintenance hell. Manual testing needs to be kept to a minimum: it simply takes too long when you move from releasing once a week to multiple times a day.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch11.html#chapter11">Chapter 11, “Governance and Standardization: 
+<span class="keep-together">Finding the Balance</span>”</a></dt>
+<dd>
+<p>One of the selling points of microservices is the ability to choose “the right tool for the job.” But being flexible on programming languages or data storage layers increases the complexity of your estate, reduces your flexibility in moving people to work on the most important thing, and can increase both cost and risk. This chapter discusses how to find the right balance, with a focus on introducing guardrails, choosing well-established technology, and light touch governance.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch12.html#chapter12">Chapter 12, “Building Resilience In”</a></dt>
+<dd>
+<p>Microservices are distributed systems and we need to build them differently. This chapter covers how to build resilient services and how to combine them together into a resilient system, covering topics like SLOs, error budgets, caching, timeouts and retries, and chaos engineering.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch13.html#chapter13">Chapter 13, “Running Your System in Production”</a></dt>
+<dd>
+<p>Do you have Slack channels that are unusable from the amount of alerts? Or do you have lots of alerts that everyone ignores? Both are bad news. This chapter looks at the operational challenges of microservices and explains how to build observability in and how to make sure you know when there’s a real problem.</p>
+</dd>
+<dt><a data-type="xref" data-xrefstyle="chap-num-title" href="ch14.html#chapter14">Chapter 14, “Keeping Things Up-to-Date”</a></dt>
+<dd>
+<p>With so many different technologies, and so many services, you can spend a huge amount of time upgrading dependencies and migrating from old to new versions of software. This is even worse when there is an urgent security patch that hits hundreds of your services. This chapter looks at how to minimize the impact of all these changes, and how to be effective in managing the changes you <em>do</em> need to make.</p>
+</dd>
+</dl>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Appendixes"><div class="sect2" id="id454">
+<h2>Appendixes</h2>
+
+<p>Finally, at the end of the book, I bring things together. I explain why microservices are the right pick in many cases, and provide you with guidance to help assess whether they would be a good match for you, and whether you have the necessary conditions in place, in terms of structure, culture, tools, and processes, to make a success of them. Finally, I include a short list of recommended reading: the books that are within arm’s reach on my desk as I write this; the posts that are open in tabs of my web browser.</p>
+</div></section>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Case Studies"><div class="sect2" id="id455">
+<h2>Case Studies</h2>
+
+<p>While I draw on real-life examples throughout the book, I also have some in-depth case studies, from the <em>Financial Times</em> and from other organizations:</p>
+
+<ul>
+<li>
+<p><a data-type="xref" href="ch03.html#cs_shopifymm">“Case Study: Shopify’s Modular Monolith”</a></p>
+</li>
+<li>
+<p><a data-type="xref" href="ch04.html#cs_fobFT">“Case Study: Finding Our Boundaries at the Financial Times”</a></p>
+</li>
+<li>
+<p><a data-type="xref" href="ch05.html#cs_eosFT">“Case Study: The Evolution of the Organizational Structure at the Financial Times”</a></p>
+</li>
+<li>
+<p><a data-type="xref" href="ch06.html#cs_sat_FT">“Case Study: Supporting Autonomous Teams at the Financial Times”</a></p>
+</li>
+<li>
+<p><a data-type="xref" href="ch07.html#cs_eeFT">“Case Study: Engineering Enablement at the Financial Times”</a></p>
+</li>
+<li>
+<p><a data-type="xref" href="ch08.html#cs_imFT">“Case Study: Incident Management at the Financial Times”</a></p>
+</li>
+<li>
+<p><a data-type="xref" href="ch11.html#govatmonzo">“Governance at Monzo”</a></p>
+</li>
+<li>
+<p><a data-type="xref" href="ch11.html#govatskyscanner">“Governance at Skyscanner”</a></p>
+</li>
+</ul>
+</div></section>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Conventions Used in This Book"><div class="sect1" id="id456">
+<h1>Conventions Used in This Book</h1>
+<div data-type="tip" class="shrink"><h6>Tip</h6>
+<p>This element signifies a tip or suggestion.</p>
+</div>
+<div data-type="note" epub:type="note" class="shrink"><h6>Note</h6>
+<p>This element signifies a general note.</p>
+</div>
+<div data-type="warning" epub:type="warning" class="shrink"><h6>Warning</h6>
+<p>This element indicates a warning or caution.</p>
+</div>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" class="less_space pagebreak-before" data-pdf-bookmark="O’Reilly Online Learning"><div class="sect1" id="id457">
+<h1>O’Reilly Online Learning</h1>
+<div data-type="note" epub:type="note" class="ormenabled"><h6>Note</h6>
+<p>For more than 40 years, <a href="https://oreilly.com" class="orm:hideurl"><em class="hyperlink">O’Reilly Media</em></a> has provided technology and business training, knowledge, and insight to help companies succeed.</p>
+</div>
+
+<p>Our unique network of experts and innovators share their knowledge and expertise through books, articles, and our online learning platform. O’Reilly’s online learning platform gives you on-demand access to live training courses, in-depth learning paths, interactive coding environments, and a vast collection of text and video from O’Reilly and 200+ other publishers. For more information, visit <a href="https://oreilly.com" class="orm:hideurl"><em>https://oreilly.com</em></a>.</p>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="How to Contact Us"><div class="sect1" id="id458">
+<h1>How to Contact Us</h1>
+
+<p>Please address comments and questions concerning this book to the publisher:</p>
+<ul class="simplelist">
+  <li>O’Reilly Media, Inc.</li>
+  <li>1005 Gravenstein Highway North</li>
+  <li>Sebastopol, CA 95472</li>
+  <li>800-889-8969 (in the United States or Canada)</li>
+  <li>707-827-7019 (international or local)</li>
+  <li>707-829-0104 (fax)</li>
+  <li><a class="email" href="mailto:support@oreilly.com"><em>support@oreilly.com</em></a></li>
+  <li><a href="https://www.oreilly.com/about/contact.html"><em>https://www.oreilly.com/about/contact.html</em></a></li>
+</ul>
+
+<p>We have a web page for this book, where we list errata, examples, and any additional information. You can access this page at <a href="https://oreil.ly/enabling-microservice-success" class="bare"><em class="hyperlink">https://oreil.ly/enabling-microservice-success</em></a>.</p>
+<!--Don't forget to update the link above.-->
+
+<p>For news and information about our books and courses, visit <a href="https://oreilly.com" class="bare"><em class="hyperlink">https://oreilly.com</em></a>.</p>
+
+<p>Find us on LinkedIn: <a href="https://linkedin.com/company/oreilly-media" class="bare"><em class="hyperlink">https://linkedin.com/company/oreilly-media</em></a>.</p>
+
+<p>Watch us on YouTube: <a href="https://youtube.com/oreillymedia" class="bare"><em class="hyperlink">https://youtube.com/oreillymedia</em></a>.</p>
+</div></section>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Acknowledgments"><div class="sect1" id="id459">
+<h1>Acknowledgments</h1>
+
+<p>First off, I want to thank the many people I worked with at the <em>Financial Times</em>. I learned so much in my time at the <em>FT</em>, and was given so many opportunities.</p>
+
+<p>I was there for over a decade and I could name hundreds of people who influenced me, so let me just pick out a few in particular. Cait O’Riordan and John Kundert, who led the department through significant change, and encouraged me to step up and become a leader. Rob Shilston, who challenged me to put a proposal in for Velocity conference in 2015 and set me on the path toward being a published author. My 
+<span class="keep-together">colleagues</span> in the Content Programme, Operations &amp; Reliability, and Engineering Enablement: thanks for all the times you’ve shared ideas, given feedback, and generally been awesome. Thanks to you all!</p>
+
+<p>Thank you to: Daniel Bryant and Sam Newman for feedback on the proposal and for helping at every stage since; Benji Weber, Abby Bangser, Tanya Reilly, Nicky Wrightson, and Anna Shipman for great feedback on an early outline for the book and the first draft of the first chapter I wrote. All gave me great course-correcting feedback that has made this a much better book.</p>
+
+<p>Sam, Daniel, Anna, Nicky, Abby, and Suhail Patel have gone on to review the entire book. Thank you! You have all been so generous with your time and your comprehensive feedback has tightened up and improved this book significantly. Obviously any errors that remain are my own.</p>
+
+<p>Thanks to Philip Müller for a fascinating discussion about Shopify and the way their modular monolith works; Matt Clarke, for information on how Spotify does platform engineering; Charles Humble for inviting me to chat on his podcast, <em>Hacking the Org</em>, where the discussions about engineering enablement really helped me with the first draft of the chapter on paving the road; Matthew Skelton for feedback on Chapters <a href="ch04.html#chapter4">4</a> and <a href="ch05.html#chapter5">5</a>, which lean heavily on his <em>Team Topologies</em> book, and for sharing how his and Manuel Pais’s thinking around team types is evolving; and to Simon Brown, for permission to reuse content from his GOTO 2018 <a href="https://oreil.ly/8GdXW">“Modular Monoliths” talk</a>.</p>
+
+<p>I have been amazed at how many people have answered questions from me, provided details of the way they work, clarified that I’ve understood something they wrote, or provided general help and encouragement. In no particular order, thanks to Liz Fong-Jones, Charity Majors, Susanne Kaiser, Joe Wardell, Stuart Davidson, Matt Chadburn, Alice Bartlett, Luke Blaney, Rhys Evans, Rob Godfrey, Liz Saling, and Victoria Morgan-Smith.</p>
+
+<p>Thanks to everyone at O’Reilly. Louise Corrigan, acquisitions editor; my awesome development editor, Jill Leonard; and Melissa Duffield, the commissioning editor who persuaded me that writing this book was exactly what I should do during my “funemployment” after leaving the <em>FT</em>: my regular meetings with the three of you have been a lovely highlight of the writing process. Thanks also to everyone who has guided my book through the production process: Clare Laylock, Kim Cofer, Kate Dullea, Johnna VanHoose Dinse, Tonya Trybula, Karen Montgomery, David Futato, Kristen Brown, and others.</p>
+
+<p>And finally, thanks to my husband Steve. From my first steps as a speaker through to many months of writing, thinking, rewriting, and editing, I couldn’t have done this without your support.</p>
+</div></section>
+</div></section></div>
+</div>
+</body>
+</html>

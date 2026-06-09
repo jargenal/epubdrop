@@ -1,0 +1,503 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Emphasis Over Completeness</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:92ba0b7d-13f4-451f-bd22-6d8c6bb667a1" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 21. Emphasis Over Completeness" data-type="chapter" epub:type="chapter"><div class="chapter" id="EmphasisOverCompleteness">
+<h1><span class="label">Chapter 21. </span>Emphasis Over Completeness</h1>
+
+
+<p class="subtitle">Show the Forest, Not the Trees</p>
+
+<figure class="informal"><div class="figure" id="emphasis_over">
+<img alt="Can you spot the performance bottleneck in this database schema?" src="assets/SAEch_021.png"/>
+<h6>Can you spot the performance bottleneck in this database schema?</h6>
+</div></figure>
+
+<p>When<a data-primary="communication" data-secondary="enhancing focus by placing emphasis" data-type="indexterm" id="Cfocus21"/><a data-primary="writing skills" data-secondary="enhancing focus by placing emphasis" data-type="indexterm" id="Wfocus21"/><a data-primary="presentations" data-see="also writing skills" data-type="indexterm" id="idm45952854857976"/> sharing a diagram, you might receive feedback such as, “System ABC is
+missing.” Even though it’s well intentioned, completeness shouldn’t be your
+architecture diagrams’ primary goal. Rather, you should depict the appropriate scope. What’s the right scope? One
+that’s big enough to be meaningful, small enough to be comprehensible,
+and cohesive enough to make sense.</p>
+
+<p>In large organizations, there’s a constant danger of being overcome by the sheer size and complexity of
+the environment. So, putting some blinders on is allowed, and in fact
+encouraged.</p>
+
+
+
+
+
+
+<section class="less_space pagebreak-before" data-pdf-bookmark="Diagrams Are Models" data-type="sect1"><div class="sect1" id="idm45952854855720">
+<h1>Diagrams Are Models</h1>
+
+<p>When<a data-primary="presentations" data-secondary="creating useful models" data-type="indexterm" id="idm45952854854136"/><a data-primary="architecture diagrams" data-type="indexterm" id="archdia21"/><a data-primary="models" data-secondary="diagrams as" data-type="indexterm" id="idm45952854852248"/> discussing architecture diagrams, it’s good to remind ourselves why we draw them in the first place. Architecture diagrams are <em>models of reality</em> (<a data-type="xref" href="ch22.html#DiagramDrivenDesign">Chapter 22</a>). The most common model of reality we use in daily life is a map: maps help us decide where to go and how to get there. To do so, maps select a specific scope and emphasis. For example, a Chicago
+street map that shows only half of downtown would be awkward. However,
+including all of Lake Michigan wouldn’t be very useful, just like adding Springfield at the same scale. A map designer chooses conscious boundaries and a conscious level of detail based on the map’s
+intended purpose.</p>
+
+<p>Models, whether maps or architecture diagrams, aren’t about being right or wrong. In fact, they’re all <em>wrong</em> (<a data-type="xref" href="ch06.html#MakingDecisions">Chapter 6</a>) because they aren’t reality.
+The opening paragraph of William Kent’s book <em>Data and Reality</em><sup><a data-type="noteref" href="ch21.html#idm45952854847096" id="idm45952854847096-marker">1</a></sup> aptly reminds us: “Rivers do not have dotted lines in them and freeways are not painted red.”</p>
+
+<p>Instead of trying to make models right, you should think about whether your models are useful. To answer that question, though, you need to first know what the model’s use, or purpose,
+is. For a model to be useful, it needs to help you answer a question or make a better decision.
+Otherwise, your diagram is just art, and having looked at thousands of
+architecture diagrams, my impression is that most architects aren’t
+particularly gifted artists.</p>
+
+<p>So, before setting out to draw a specific diagram or design a
+presentation slide, you must first decide which questions you are
+looking to answer. A broad “lay of the land” might be needed to build your <em>world map</em> (<a data-type="xref" href="ch16.html#WorldMap">Chapter 16</a>), but it isn’t very useful as an architecture diagram. Think of it this way: a travel bureau will show you beaches
+and palm trees, not a map of the whole continent.</p>
+<div class="pullquote" data-type="example">
+<h5><span class="label">Example 21-1. </span></h5>
+
+<p>All models are wrong, but some are useful. To know which ones, you must first know which question you’re trying to answer.</p></div>
+
+<p>When deciding on a diagram’s scope and boundaries, I am not always able
+to do so <em>a priori</em>. Sometimes, I need to have the diagram in front
+of my eyes to decide whether I prefer to split it into two. I therefore
+almost always work iteratively.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="The Five-Second Test" data-type="sect1"><div class="sect1" id="idm45952854839672">
+<h1>The Five-Second Test</h1>
+
+<p>Architecture diagrams<a data-primary="presentations" data-secondary="five-second test" data-type="indexterm" id="idm45952854838376"/><a data-primary="five-second test" data-type="indexterm" id="idm45952854837432"/> or slides are designed to get a specific point
+across and therefore must place a clear emphasis. This distinguishes
+them from reference books or manuals, which aim to be comprehensive.
+Still, too many slides I see try to give the big picture as the best possible approximation of reality without knowing which part is actually worth looking at.</p>
+
+<p>When faced with overly “noisy” slides, I tend to apply a strict but useful <em>five-second rule</em>, which isn’t related to food safety:<sup><a data-type="noteref" href="ch21.html#idm45952854835288" id="idm45952854835288-marker">2</a></sup></p>
+<blockquote>
+<p>I show the audience a slide for a mere five seconds and ask them to describe what they saw. In most cases, the responses boil down to a few words from the headline and statements like “two yellow boxes and one blue barrel below.” If you are aiming to convey a <a href="https://oreil.ly/VQ20P"><em>shared database pattern</em></a>, you likely succeeded, but most authors will be disappointed to hear such a dramatic simplification of their precious content.</p>
+</blockquote>
+
+<p>Slides that don’t pass this test are likely to confuse the audience when first shown: viewers’ eyes will chase across the visuals,
+trying to discern what’s important and what’s the meaning of it all.
+During that time your audience isn’t listening to you explaining the
+content because they’re busy with the visuals. Of course, you will show
+the actual slide for more than five seconds, but first impressions count—for every slide you show.</p>
+<div class="bubble" data-type="note" epub:type="note"><h6>Note</h6>
+<p>A useful presentation technique is to verbally introduce the concept
+of the next slide before actually showing it. The audience is more
+likely to listen because they’re aren’t distracted by the new visual and
+you’re building up a bit of suspense. Naturally, this requires you to
+know which slide comes next rather than use the slides as a reminder
+what to talk about.</p>
+</div>
+
+<p>Some organizations create slides that try to act like documents, meaning
+they are also meant to be read as handouts. The resulting <em>slideument</em>,
+a term coined by Garr Reynolds,<sup><a data-type="noteref" href="ch21.html#idm45952854827784" id="idm45952854827784-marker">3</a></sup> is rarely a useful presentation and never passes the five-second test because there’s way too much content on a slide. Sadly, most of them don’t make a meaningful document either because it usually lacks a clear structure and storyline. Interestingly, Martin Fowler realized that there’s a use case for documents created in a presentation tool, for which he’s coined the term <em>Infodecks</em>.<sup><a data-type="noteref" href="ch21.html#idm45952854824616" id="idm45952854824616-marker">4</a></sup> Nancy Duarte shows a <span class="keep-together">similar approach</span> with <em>SlideDocs</em>.<sup><a data-type="noteref" href="ch21.html#idm45952854821560" id="idm45952854821560-marker">5</a></sup> Both can be a useful communication medium when being read as opposed to being projected.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="A Pop Quiz" data-type="sect1"><div class="sect1" id="idm45952854819256">
+<h1>A Pop Quiz</h1>
+
+<p>I<a data-primary="presentations" data-secondary="recapping key points" data-type="indexterm" id="idm45952854817960"/> participate in many architecture reviews and decision boards. While
+such boards often exist due to an <em>undesirable separation of decision makers and knowledge holders</em> (<a data-type="xref" href="ch01.html#ArchitectElevator">Chapter 1</a>), many large enterprises depend on them to harmonize their
+technical landscape and to gain an overview across many functional
+silos. The topics for these meetings can be fairly technical in nature,
+making me skeptical whether the audience is truly following along.</p>
+<div class="bubble" data-type="note" epub:type="note"><h6>Note</h6>
+<p>A presentation pop quiz consists of blanking the presentation and having a member of the audience explain what they saw and understood. It’s a test for the presenter, not the audience.</p>
+</div>
+
+<p>To test whether the decision body understands what they are deciding, I
+inject a pop quiz<sup><a data-type="noteref" href="ch21.html#idm45952854813048" id="idm45952854813048-marker">6</a></sup> into the presentation by
+telling the presenter to pause and blank the slide (hitting “B” will
+do this in PowerPoint) and asking who among the audience would like to recap
+what was said up to this point in their own words. Sadly, this exercise is more likely to
+trigger nervous laughter, frantic staring at the floor, and sudden checking of incoming emails as opposed to a good summary. As a result, I might ask
+the presenter to briefly recap the key points for everyone’s benefit.
+It’s also useful to highlight to the audience that this is a test for the
+presenter, not for them.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Simple Language" data-type="sect1"><div class="sect1" id="idm45952854811304">
+<h1>Simple Language</h1>
+
+<p>I<a data-primary="presentations" data-secondary="using simple language" data-type="indexterm" id="idm45952854810008"/> don’t exclude myself from the pop quiz. When replaying what the
+speaker said, I often intentionally use very simple language to make
+sure I really capture the essence.</p>
+<div class="tie" data-type="note" epub:type="note"><h6>Note</h6>
+<p>In a presentation about network security architecture
+in the untrusted network zone, after watching a handful of rather busy
+slides, I summarized the speaker’s statement as follows: “What worries
+you is the black line going all the way from top to bottom?” His
+resounding “yes” confirmed both that I had correctly summarized the
+issue and that the presenter took away an insight into how to better
+communicate this very aspect.</p>
+</div>
+
+<p>This technique might seem overly simplistic at first, but it validates that there is a solid connection between the model being presented (such as vertical lines depicting legal network paths from the internet to the trusted network) and the problem statement (direct paths pose a security risk). Removing all noise and reducing the statement down to the “black line” sharpens the message.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Diagramming Basics" data-type="sect1"><div class="sect1" id="idm45952854805736">
+<h1>Diagramming Basics</h1>
+
+<p>If<a data-primary="presentations" data-secondary="presenting clear and useful diagrams" data-type="indexterm" id="Pdiagram21"/> I had to name the number-one enemy of useful architecture diagrams,
+it would likely be Visio’s default 10-point font size and skimpy line width,
+augmented by poor user judgment regarding component placement. It’s
+really in the same league as PowerPoint’s autosize feature that gives
+people an endless supply of bullet points to neutralize their audience.
+True, the tool isn’t solely responsible, but Visio’s default settings,
+which are tuned for detailed engineering schematics, lure the user into
+creating visuals that are unsuitable for projecting something evocative
+on the wall.</p>
+
+<p>My advice for creating diagrams that can convey a clear message without
+dumbing down the content therefore starts with the following basic techniques.</p>
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Avoid the Ant Font" data-type="sect2"><div class="sect2" id="idm45952854801736">
+<h2>Avoid the Ant Font</h2>
+
+<p>Text<a data-primary="diagrams, creating clear" data-type="indexterm" id="diagram21"/> that isn’t readable isn’t adding value, so avoid <em>ant
+fonts</em><sup><a data-type="noteref" href="ch21.html#idm45952854799000" id="idm45952854799000-marker">7</a></sup> unless you consider “I know you can’t read this” an
+engaging introduction into a slide. Using sans-serif fonts of decent
+size and good color contrast will be appreciated in any presentation. I
+can’t count the number of times I see slides that contain tiny fonts but
+consist of 50% empty space that could have been used for larger boxes
+and larger fonts, similar to <a data-type="xref" href="#use_the_available_space_to_make_text_easily_readable">Figure 21-1</a>. Architecture diagrams aren’t the place for minimalism—go bold.</p>
+
+<figure><div class="figure" id="use_the_available_space_to_make_text_easily_readable">
+<img alt="Use the available space to make text easily readable." src="assets/tsae_2101.png"/>
+<h6><span class="label">Figure 21-1. </span>Use the available space to make text easily readable</h6>
+</div></figure>
+
+<p>Most tools allow you to set defaults for line width and font sizes. Use them. Also, periodically zoom down the diagram on your screen to 25% to see what’s still readable.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Maximize the Signal-to-Noise Ratio" data-type="sect2"><div class="sect2" id="idm45952854793384">
+<h2>Maximize the Signal-to-Noise Ratio</h2>
+
+<p>Differences in elements that don’t have meaning are nothing but
+distractions. Therefore, reduce visual noise; for example, by properly
+aligning elements and using a consistent form and shape (see <a data-type="xref" href="#make_sure_that_same_things_look_the_same">Figure 21-2</a>). It’s also good to
+be careful with too much decoration, such as rounded corners, shadows, and so on—they can distract from the core message you’re trying to convey.
+If things look different, make sure that this expresses meaning, as detailed in <a data-type="xref" href="ch23.html#DrawingTheLine">Chapter 23</a>.</p>
+
+<figure><div class="figure" id="make_sure_that_same_things_look_the_same">
+<img alt="Make same things look the same." src="assets/tsae_2102.png"/>
+<h6><span class="label">Figure 21-2. </span>Make same things look the same</h6>
+</div></figure>
+
+<p>Great advice on placement, visual layout, and emphasis can be found in
+Nancy Duarte’s book <em>slide:ology</em>.<sup><a data-type="noteref" href="ch21.html#idm45952854786872" id="idm45952854786872-marker">8</a></sup></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Let Arrows Point" data-type="sect2"><div class="sect2" id="idm45952854785464">
+<h2>Let Arrows Point</h2>
+
+<p>One of the my most frequent maneuvers in presentation tools is to
+increase the size of arrowheads. If you use directed arrows to <em>express semantics</em> (<a data-type="xref" href="ch23.html#DrawingTheLine">Chapter 23</a>), you’re going to want them to be easily recognizable, as depicted in <a data-type="xref" href="#if_direction_is_important_make_the_arrow_head_big_enough_to_see">Figure 21-3</a>. If direction isn’t critical to understanding
+the diagram, omit the arrowheads to reduce noise.</p>
+
+<figure><div class="figure" id="if_direction_is_important_make_the_arrow_head_big_enough_to_see">
+<img alt="If direction is important, make the arrowhead big enough to see." src="assets/tsae_2103.png"/>
+<h6><span class="label">Figure 21-3. </span>If direction is important, make the arrowhead big enough to see</h6>
+</div></figure>
+
+<p>If your tool won’t cooperate, place a triangle over the line; never let
+the tool be an excuse for poor diagrams. It’s like the cook coming out
+of the kitchen and telling you that your meal isn’t tasty because the
+farmer didn’t grow tasty tomatoes. You’re unlikely to be extraordinarily
+sympathetic.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Legends Are Crutches" data-type="sect2"><div class="sect2" id="idm45952854778504">
+<h2>Legends Are Crutches</h2>
+
+<p>Although they’re a standard feature in scientific circles and charts exported from
+Excel, a visual legend requires a viewer to correlate patterns or colors
+in a diagram with explanatory labels below or next to it. Having the
+label where the data is located is much easier to digest, as shown in <a data-type="xref" href="#label_your_data_as_opposed_to_making_the_reader_read_a_legend">Figure 21-4</a>.</p>
+
+<figure><div class="figure" id="label_your_data_as_opposed_to_making_the_reader_read_a_legend">
+<img alt="Label your data as opposed to making the reader read a legend." src="assets/tsae_2104.png"/>
+<h6><span class="label">Figure 21-4. </span>Label your data as opposed to making the reader read a legend</h6>
+</div></figure>
+
+<p>Therefore, use legends only when absolutely unavoidable. Most of the
+time you can remove clutter or increase the size of boxes to put the
+labels where they belong. I have redrawn stacked bar graphs exported
+from Excel export to have better control over sizing and labeling. The
+investment of a mere five minutes saved a room full of executives much
+time and effort in reading the data.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Layer Visually" data-type="sect2"><div class="sect2" id="idm45952854772712">
+<h2>Layer Visually</h2>
+
+<p>As we already learned, a <em>good document reads like watching the movie</em> <em>Shrek</em> (<a data-type="xref" href="ch20.html#WritingForBusyPeople">Chapter 20</a>). The same is true for diagrams, which might be required to illustrate complex interrelationships that lead to a particular <em>system behavior</em> (<a data-type="xref" href="ch10.html#Systems">Chapter 10</a>). They should nevertheless pass the <em>five-second test</em> by having a clear high-level structure that is visible first, augmented by additional detail that reveals itself later and doesn’t interfere with the big picture. <a data-type="xref" href="#give_your_diagrams_a_clear_high_level_structure">Figure 21-5</a> first reveals that the system consists of two identical zones, after which you can “zoom in” to see how each zone is internally composed.</p>
+
+<figure><div class="figure" id="give_your_diagrams_a_clear_high_level_structure">
+<img alt="Give your diagrams a clear high-level structure." src="assets/tsae_2106.png"/>
+<h6><span class="label">Figure 21-5. </span>Give your diagrams a clear high-level structure</h6>
+</div></figure>
+
+<p>I occasionally use a <em>build slide</em> or <em>incremental reveal</em> for this
+purpose, acknowledging that there are strong opinions for and against
+such visual effects. I find build slides to work well as they give the
+viewer time to understand each element before adding the next batch. For
+this to work, let the new elements simply appear, avoiding any
+temptation to select one of those amazing spiral-twist-fade-rotate
+reveals.</p>
+
+<p>If you layer a diagram perfectly, the visuals will reveal themselves
+incrementally. If you can’t quite get there every time, incremental
+build slides are a reasonable substitute.</p>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="The Style of Elements" data-type="sect1"><div class="sect1" id="idm45952854761720">
+<h1>The Style of Elements</h1>
+
+<p>Most architects will develop their own visual style over time and can
+use it as a valuable branding tool. Many of my technical papers and
+diagrams are easily recognizable—for example, when sitting on someone’s desk—thanks to a consistent set of colors and a bold, almost cartoon-like
+style that favors large lettering over subtle aesthetics.</p>
+
+<p>My<a data-primary="" data-startref="Pdiagram21" data-type="indexterm" id="idm45952854759640"/> diagrams virtually always have <em>lines</em> (<a data-type="xref" href="ch23.html#DrawingTheLine">Chapter 23</a>), but I
+keep the lines’ semantics to two or at most three concepts. Each type of
+relationship that I depict with lines should be intuitive. For example,
+I might depict a data flow with broad, gray arrows, whereas control flow is
+shown in thin, black lines, as illustrated in <a data-type="xref" href="#control_bus">Figure 21-6</a>, which depicts the <em>Control Bus</em> pattern from <em>Enterprise Integration</em> <span class="keep-together"><em>Patterns</em>.</span><sup><a data-type="noteref" href="ch21.html#idm45952854754408" id="idm45952854754408-marker">9</a></sup></p>
+
+<figure><div class="figure" id="control_bus">
+<img alt="The Control Bus pattern illustrates line semantics." src="assets/tsae_2105.png"/>
+<h6><span class="label">Figure 21-6. </span>The Control Bus pattern illustrates line semantics</h6>
+</div></figure>
+
+<p>The line width suggests that a large amount
+of data flows through the system’s data flow while the control flow is
+much smaller but significant.<a data-primary="" data-startref="diagram21" data-type="indexterm" id="idm45952854750696"/> The best visual style, borrowed from
+advice on writing, is the one “that keeps solely in view the thought
+one wants to convey.”<sup><a data-type="noteref" href="ch21.html#idm45952854749480" id="idm45952854749480-marker">10</a></sup></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Making a Statement" data-type="sect1"><div class="sect1" id="idm45952854748152">
+<h1>Making a Statement</h1>
+
+<p>When<a data-primary="presentations" data-secondary="titles" data-type="indexterm" id="idm45952854746856"/> preparing a slide or a document paragraph, the title sets the tone
+for a clear and focused statement. For most circumstances, I prefer
+titles that are full sentences because the title alone tells the essence
+of the story. Using this approach also assures that each slide or
+paragraph focuses on a single main <span class="keep-together">statement.</span></p>
+
+<p>I make an exception for keynote presentations to a large and diverse
+audience for which I use titles consisting of single words or short phrases
+like the <em>Architect Elevator</em> (<a data-type="xref" href="ch01.html#ArchitectElevator">Chapter 1</a>). Such short
+titles mesh well with simple visuals that are truly a <em>visual aid</em> to
+me, the speaker, to draw the audience’s attention and help them memorize
+the content via a visual metaphor.</p>
+
+<p>For technical presentations that are prepared for a review or
+decision-making session, however, I prefer clear statements, with which
+one can either agree or disagree. These statements are much better
+represented as full sentences, akin to the <em>story-telling headings</em> (<a data-type="xref" href="ch20.html#WritingForBusyPeople">Chapter 20</a>) in documents for
+busy people. In such cases, “Stateless services and automation support
+elastic scale-out” is a better title than “Server Architecture.”</p>
+
+<p>What you certainly want to avoid are verbose phrases or crippled
+sentences that confuse the reader but don’t make any form of statement:
+“Server infrastructure and application architecture overview diagram
+(abstracted for simplicity’s sake).” Trust me, I’ve seen even worse.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Twenty Slides, One Story" data-type="sect1"><div class="sect1" id="idm45952854739304">
+<h1>Twenty Slides, One Story</h1>
+
+<p>When<a data-primary="presentations" data-secondary="structuring" data-type="indexterm" id="idm45952854737992"/> structuring presentations, I realize that too many technical
+presentations tell one story per slide. While it’s good to focus on one
+message per slide, the sequence of messages needs to form a cohesive
+story, as demonstrated in the bottom half of <a data-type="xref" href="#telling_one_story_supported_by_slides_aids_flow_and_saves_time">Figure 21-7</a>. Interestingly, you can test this easily using
+PowerPoint’s Outline View, which shows all slide headings in a sidebar.</p>
+
+<figure><div class="figure" id="telling_one_story_supported_by_slides_aids_flow_and_saves_time">
+<img alt="Telling one story supported by slides aids flow and saves time." src="assets/tsae_2107.png"/>
+<h6><span class="label">Figure 21-7. </span>Telling one story supported by slides aids flow and saves time</h6>
+</div></figure>
+
+<p>Creating this cohesion not only makes a single story line for a more logical flow, it also
+drastically shortens the time to needed to present. If each slide tells a new
+story, the speaker will easily spend half a minute looking at and
+introducing each slide. Multiply this by the typical 20 to 30 slides in
+a presentation, and you’ll find that having a connected storyline can
+save you up 15 minutes. So, when someone worries that they don’t have
+enough time for their content, I advise them to make sure that they have
+a single story.</p>
+
+<p>For a good collection of slide decks that tell a story, I recommend a
+visit to <a href="https://speakerdeck.com"><em class="hyperlink">https://speakerdeck.com</em></a>.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-pdf-bookmark="Nothing Is Confusing in and of Itself" data-type="sect1"><div class="sect1" id="idm45952854730536">
+<h1>Nothing Is Confusing in and of Itself</h1>
+
+<p>The closing advice I give to anyone creating documents and visuals that
+need to explain complex topics is the following: things might be
+complicated, but whether it’s confusing, that’s up to you.<a data-primary="" data-startref="Cfocus21" data-type="indexterm" id="idm45952854729048"/><a data-primary="" data-startref="Wfocus21" data-type="indexterm" id="idm45952854728104"/><a data-primary="" data-startref="archdia21" data-type="indexterm" id="idm45952854727160"/></p>
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="idm45952854847096"><sup><a href="ch21.html#idm45952854847096-marker">1</a></sup> William Kent, <em>Data and Reality: A Timeless Perspective on Perceiving and Managing Information in Our Imprecise World</em>, 3rd ed. (Westfield, NJ: Technics Publications, LLC, 2012).</p><p data-type="footnote" id="idm45952854835288"><sup><a href="ch21.html#idm45952854835288-marker">2</a></sup> Wikipedia, “Five-Second Rule,” <a href="https://oreil.ly/1Z397"><em class="hyperlink">https://oreil.ly/1Z397</em></a>.</p><p data-type="footnote" id="idm45952854827784"><sup><a href="ch21.html#idm45952854827784-marker">3</a></sup> Garr Reynolds, "<em>Slideuments</em> and the Catch-22 for Conference Speakers,” Presentation Zen (blog), April 5, 2006, <a href="https://oreil.ly/yw45r"><em class="hyperlink">https://oreil.ly/yw45r</em></a>.</p><p data-type="footnote" id="idm45952854824616"><sup><a href="ch21.html#idm45952854824616-marker">4</a></sup> Martin Fowler, “Infodeck,” MartinFowler.com, Nov. 16, 2012, <a href="https://oreil.ly/yvgTq"><em class="hyperlink">https://oreil.ly/yvgTq</em></a>.</p><p data-type="footnote" id="idm45952854821560"><sup><a href="ch21.html#idm45952854821560-marker">5</a></sup> Nancy Duarte, “PowerPoint Presentations vs. Slidedocs,” Duarte.com, <a href="https://oreil.ly/MjKny"><em class="hyperlink">https://oreil.ly/MjKny</em></a>.</p><p data-type="footnote" id="idm45952854813048"><sup><a href="ch21.html#idm45952854813048-marker">6</a></sup> A pop quiz is a short test given by a teacher in class without prior announcement. It goes without saying that this is fairly unpopular with students.</p><p data-type="footnote" id="idm45952854799000"><sup><a href="ch21.html#idm45952854799000-marker">7</a></sup> Neal Ford, Matthew McCullough, and Nathaniel Schutta,  <em>Presentation Patterns: Techniques for Crafting Better Presentations</em>  (Boston: Addison-Wesley Professional, 2012).</p><p data-type="footnote" id="idm45952854786872"><sup><a href="ch21.html#idm45952854786872-marker">8</a></sup> Nancy Duarte, <em>slide:ology: The Art and Science of Creating Great Presentations</em> (Sebastopol, CA: O’Reilly Media, 2008).</p><p data-type="footnote" id="idm45952854754408"><sup><a href="ch21.html#idm45952854754408-marker">9</a></sup> Hohpe and Woolf, <em>Enterprise Integration Patterns</em>.</p><p data-type="footnote" id="idm45952854749480"><sup><a href="ch21.html#idm45952854749480-marker">10</a></sup> Barzun, <em>Simple &amp; Direct</em>.</p></div></div></section></body></html>

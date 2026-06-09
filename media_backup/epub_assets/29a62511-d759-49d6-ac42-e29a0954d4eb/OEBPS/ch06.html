@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Managing Multiple Teams</title><link rel="stylesheet" type="text/css" href="epub.css"></link></head><body data-type="book"><div style="display:none;"><a id="GBS.0131.01"></a></div><section data-type="chapter" xmlns:epub="http://www.idpf.org/2007/ops" epub:type="chapter" data-pdf-bookmark="Chapter 6. Managing Multiple Teams"><div id="managing_multiple_teams" class="chapter">
+<h1><span class="label">Chapter 6. </span>Managing Multiple Teams</h1>
+
+
+<p><a data-type="indexterm" data-primary="multiple-team management" data-secondary="responsibilities of" id="IEr125"></a>Welcome to the world of multiple-team management! We&#8217;re going to talk about managing multiple teams before we talk about managing managers, because while those things are related, they don&#8217;t necessarily coincide. You probably have tech leads reporting to you now, though, and juggling the work of directly managing more than three or four people with the process<a id="GBS.0131.02"></a> of understanding details about what&#8217;s happening across a couple of teams probably means one important thing: you&#8217;re not writing (much, any, production) code.</p>
+
+<p>When I created the career ladder for my previous job, the director of engineering role was usually the place where a person would start to manage multiple large teams. Let’s review some of the description from my engineering ladder:</p>
+<blockquote>
+<p><a id="GBS.0131.03"></a>The engineering director is responsible for a significant area of the technology team. The engineering director typically leads engineers across multiple product areas, or multiple technology functions. Both tech leads and individual contributors report into them.</p>
+
+<p>The engineering director is not generally expected to write code on a day-to-day basis. However, the engineering director is responsible<a id="GBS.0131.04"></a> for their organization&#8217;s overall technical competence, guiding and growing that competence in the whole team as necessary via training and hiring. They should have a strong technical background and spend some of their time researching new technologies and staying abreast of trends in the tech industry. They will be expected to help debug and triage critical systems, and should understand the<a id="GBS.0131.05"></a> systems they oversee well enough to perform code reviews and help research problems as needed. They should contribute to architecture and design efforts primarily by serving as the technically savvy voice that asks business and product questions of the engineers on their teams, ensuring that the code we are writing matches the product and business needs and can scale appropriately as those needs<a id="GBS.0132.01"></a> grow.</p>
+
+<p>The engineering director is primarily concerned with ensuring smooth execution of complex deliverables. To that end, they focus on ensuring that we continually evaluate and refine our development/infrastructure standards and processes to create technology that will deliver sustained value to the business. They are responsible for creating high-performance, high-velocity organizations,<a id="GBS.0132.02"></a> measuring and iterating on processes as we grow and evolve as a business. They are the leaders for recruiting, headcount management and planning, career growth and training for the organization. As necessary, directors will manage vendor relationships and participate in the budgeting process.</p>
+
+<p>The impact of an engineering director should reach across multiple areas of the technology organization.<a id="GBS.0132.03"></a> They are responsible for creating and growing the next generation of leadership and management talent in the organization, and helping that talent learn how to balance technical and people leadership and management. They are obsessed with creating high-functioning, engaged, and motivated organizations, and they are expected to own retention goals within their organization. Additionally, engineering<a id="GBS.0132.04"></a> directors are responsible for strategically balancing immediate and long-term product-/business-focused work with technical debt and strategic technical development.</p>
+
+<p><a data-type="indexterm" data-primary="collaboration" data-secondary="cross-functional collaboration" id="idm140116580424112"></a><a data-type="indexterm" data-primary="cross-functional collaboration" id="idm140116580430992"></a><a data-type="indexterm" data-primary="peers" data-secondary="cross-functional collaboration with" id="idm140116580422768"></a>Directors are strong leaders who set the example for cross-functional collaboration both between technology and other areas of the company, and across divisions of technology. The goal of this collaboration is to create both a strategic<a id="GBS.0132.05"></a> and tactical tech roadmap that tackles business needs, efficiencies and revenue, and fundamental technology innovation. The director is a very strong communicator who can both simplify technical concepts to explain them to nontechnical partners and explain business direction to the technology team in a way that inspires and guides them. Directors of engineering help to create a positive public<a id="GBS.0133.01"></a> presence for Rent the Runway tech and are capable of selling the company and their area to potential candidates.</p>
+
+<p>Due to their breadth of exposure to both technology and the business drivers, directors are responsible for guiding the goal-setting process for all of the teams in their organization, helping these teams articulate goals that support both business initiatives and technology and organizational<a id="GBS.0133.02"></a> quality.</p></blockquote>
+
+<p><a data-type="indexterm" data-primary="coding" data-secondary="amount of, by multiple-team managers" id="IEr31"></a><a data-type="indexterm" data-primary="multiple-team management" data-secondary="coding, amount of" id="IEr122"></a>I took pains to make sure that we called out the fact that engineering directors would not necessarily be writing code every day, because I believe that it is very difficult for a person responsible for hands-on management of multiple teams to write code. Your schedule, by this point, has probably moved away from &#8220;maker&#8221; and firmly into &#8220;manager.&#8221; Between your 1-1s, meetings with other<a id="GBS.0133.03"></a> engineering leads, team planning sessions, and sessions with your peers in product management or other business functions, you&#8217;re probably quite busy. Be realistic about your schedule at this point. If you don&#8217;t have solid blocks of time to dedicate to it and you can&#8217;t realistically guarantee solid blocks of time at least a few days a week, any code you write is going to be very slow-going.</p>
+
+<p><a id="GBS.0133.04"></a>Fortunately for us, there are ways to stay hands-on that don&#8217;t require writing a lot of production code. Code reviews are a good thing to stay in practice with, at least as a secondary reviewer. If you created systems when you were more hands-on, stay engaged with those systems, because you&#8217;ll remember the details better than most, and you can help engineers working in those systems with code reviews<a id="GBS.0133.05"></a> and questions. Debugging and production support are also valuable. How you stay hands-on depends on your skill set. If you were not a strong debugger before you went into management, jumping into incidents may be more annoying than useful. You may be more helpful doing pair programming, or fixing minor bugs or features. So often we diminish these small efforts as not worthwhile, but they&#8217;re very<a id="GBS.0134.01"></a> good at keeping you in tune with the feeling of software development and showing your teams that you are willing and able to help out with the day-to-day in a valuable way.</p>
+
+<p>The risk of going hands-off is greatly amplified if you don&#8217;t spend enough time coding before moving into this role to get yourself deeply, fluently comfortable with at least one programming language. I advocate strongly<a id="GBS.0134.02"></a> that you spend the time to gain mastery of programming before moving into management. For me, this took about 10 years, including my undergraduate and graduate degrees. You may do it faster than I did, but scrutinize yourself carefully in this regard. Do you feel fluent enough in at least one programming language to productively contribute to a good code base written in it, after a limited time spent<a id="GBS.0134.03"></a> getting up to speed in the basics of writing it, using a standard development environment, and working in standard frameworks and libraries? Eventually even the deepest knowledge will atrophy, but fluency in working in a language (which includes comfort with its standard tools, libraries, and runtimes) is something that sticks with you for a long time.</p>
+
+<p>Useful fluency also requires an ingrained<a id="GBS.0134.04"></a> understanding of what it means to work productively in such a language, hopefully on a team with other people building production software. Without this sense of the rhythms of building software, you&#8217;ll struggle with one of the critical parts of the job at this level: debugging team issues and keeping your teams producing quality software smoothly.</p>
+
+<p>Finally, even if you don&#8217;t intend to write<a id="GBS.0134.05"></a> much code, I strongly advise you to keep at least a solid half-day once a week completely free from meetings or other obligations, and try to use this time at least partially on some creative pursuit. You might write blog posts for your engineering blog, prepare conference talks, or participate in an open source project. Do something to scratch that creative itch, which can otherwise be hard for you<a id="GBS.0135.01"></a> to scratch as a manager.<a data-type="indexterm" data-primary="" data-startref="IEr125" id="idm140116580400176"></a></p>
+<aside data-type="sidebar" epub:type="sidebar"><div id="i_miss_code_exclamation" class="sidebar">
+<h5>Ask the CTO: I Miss Code!</h5>
+<p><em>I’m managing two complex teams and my management responsibilities are forcing me to step back from technical responsibilities. I find that I miss code terribly. Is this a sign that I shouldn’t be a manager?</em></p>
+
+<p>Almost <a data-type="indexterm" data-primary="Ask the CTO sections" data-secondary="I Miss Code!" id="idm140116580433040"></a>everyone who goes from a heavily hands-on technical role into management has a transition period where they question frequently<a id="GBS.0135.02"></a> whether they&#8217;ve made a mistake. Furthermore, many worry that they&#8217;re losing all of their valuable skills in the process. Ask yourself whether you&#8217;ve internalized the idea that management is not a job. The tech industry is filled with people who despise management, thinking it&#8217;s not as important a job as writing code. But management is a job, it is a necessary and important job, and in particular,<a id="GBS.0135.03"></a> it&#8217;s your job right now.</p>
+
+<p>Writing code is full of quick wins, especially for the experienced developer. You make tests pass, you see new features come to life, you get something to compile, you fix a problem. Management has fewer obvious quick wins, especially for new managers. It&#8217;s natural to feel some longing for simpler times, when it was just you and your computer and you didn&#8217;t have to deal<a id="GBS.0135.04"></a> with all these messy, complicated humans. You probably felt some similar nostalgia for your school days when you first started working full-time, because by the time you left school you knew exactly what to expect from it. It&#8217;s OK to feel nostalgia for the simpler times, and a little bit of fear for what you&#8217;re giving up. But you can&#8217;t do everything all at once. Becoming a great manager requires<a id="GBS.0135.05"></a> you to focus on the skills of management, and that requires giving up some of your technical focus. It&#8217;s a tradeoff, and one you&#8217;ll have to decide if you&#8217;re up to making.<a data-type="indexterm" data-primary="" data-startref="IEr31" id="idm140116580402240"></a><a data-type="indexterm" data-primary="" data-startref="IEr122" id="idm140116580425424"></a></p>
+</div></aside>
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Managing Your Time: What’s Important, Anyway?"><div id="managing_your_time_colon_whatas_importan" class="sect1">
+<h1>Managing Your Time: What’s Important, Anyway?</h1>
+
+<p><a data-type="indexterm" data-primary="multiple-team management" data-secondary="time management for" id="IEr127"></a><a data-type="indexterm" data-primary="time management" id="IEr249"></a><a data-type="indexterm" data-primary="scheduling" data-secondary="time management" id="IEr249a"></a>When you have so many management duties that you have little time to code, you can start to feel like your day has been taken hostage by the whims of others. You start<a id="GBS.0136.01"></a> to see the meetings pile up: the one-on-ones, the planning meetings, the status updates. Standups. Sit-downs. Fight fight fight!</p>
+
+<p>Wait, no—no fighting in the war room!</p>
+
+<p>It&#8217;s time&#8212;now&#8212;for you to figure out how to manage your time. Otherwise, you&#8217;ll find yourself with days gone by and little to show for them. You still have responsibilities as a manager. You still have deliverables that require<a id="GBS.0136.02"></a> you to do more than sit in a meeting&#8212;things like setting goals for the team, helping your product team put details on the product roadmaps, and making sure that an assigned task actually got finished. That last one, following up on task completion, can become one of the biggest time sinks and distractions in your day if you aren&#8217;t careful.</p>
+
+<p><a data-type="indexterm" data-primary="books and publications" data-secondary="Getting Things Done (Allen)" data-secondary-sortas="Getting Things Done" id="idm140116580397968"></a><a data-type="indexterm" data-primary="Getting Things Done (Allen)" data-primary-sortas="Getting Things Done" id="idm140116580391088"></a>Time management is a personal thing. Some people are<a id="GBS.0136.03"></a> very organized, and those people develop complex strategies for managing their calendars and to-do lists. I applaud these people. I am not generally one of them. However, I have found the ideas in David Allen&#8217;s book <em>Getting Things Done</em><sup><a data-type="noteref" id="CHP-6-FN-1-marker" href="ch06.html#CHP-6-FN-1">1</a></sup> to be useful to think about, and I recommend reading it even if you don’t adopt the whole process.</p>
+
+<p>In the meantime, my general time-management philosophy will<a id="GBS.0136.04"></a> serve you well no matter what your tactics might be. Managing your time comes down to one important thing: understanding the difference between <em>importance</em> and <em>urgency</em>. Pretty much all of your tasks will fall on a graph of these two elements. Roughly, they are in one of four quadrants (see <a data-type="xref" href="#prioritizing_your_time">Table 6-1</a>).</p>
+<table id="prioritizing_your_time">
+<caption><span class="label">Table 6-1. </span>Prioritizing your time</caption>
+<thead>
+<tr>
+<th></th>
+<th>Not urgent</th>
+<th>Urgent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p><strong>Important</strong></p></td>
+<td><p>Strategic: make time</p></td>
+<td><p><a id="GBS.0136.05"></a>Obvious work</p></td>
+</tr>
+<tr>
+<td><p><strong>Unimportant</strong></p></td>
+<td><p>Obvious avoid</p></td>
+<td><p>Tempting distractions</p></td>
+</tr>
+</tbody>
+</table>
+
+<p>If it&#8217;s important and urgent, you&#8217;re doing it. You know what I&#8217;m talking about. There&#8217;s a major outage that you&#8217;re helping to fix. Performance review write-ups are due tomorrow. You want to make an offer to a great candidate who has another competing offer expiring in two days. If you drop the ball on a task in this category,<a id="GBS.0137.01"></a> you lose something tangible. It&#8217;s unlikely that you&#8217;re blind to the need to get these sorts of things done.</p>
+
+<p>A big part of the challenge of time management emerges when you start to lose the sense of importance. Urgency is often more clearly felt than importance. Responding to email is a good example. It&#8217;s easy to get sucked into email as a distraction, because the red dot tells you there&#8217;s something<a id="GBS.0137.02"></a> new, and it feels urgent to you to acknowledge it. And yet how often is email really urgent? Email is probably the worst vehicle for conveying urgent, time-sensitive information. It feels urgent, but it isn&#8217;t urgent. This is why so many precise time-management tips encourage reading and responding to email at specific times of the day. We also tend to substitute <em>obvious</em> for <em>urgent</em> in determining<a id="GBS.0137.03"></a> something&#8217;s value. If a meeting is on your calendar, it&#8217;s obvious where you should be at that time, but is that meeting really urgent, or are you using it to avoid thinking about the best way to use your time?</p>
+
+<p>There are many things that feel urgent that aren&#8217;t. The whole of the internet, for example. News, Facebook, Twitter. Chat can feel urgent, but chat is almost as bad as email for communicating<a id="GBS.0137.04"></a> truly urgent and important information in the case of a collocated team. We&#8217;ve moved a lot of communication in the modern tech workplace out of email into chat systems like Slack and HipChat. This has benefits and drawbacks, but it&#8217;s important to note that moving communication is not the same thing as eliminating communication. The words and information keep flowing, they just move to different<a id="GBS.0137.05"></a> places, and you can get even more distracted by the ever-moving trickle of information in chat.</p>
+
+<p><a data-type="indexterm" data-primary="meetings" data-secondary="preparing for" id="idm140116580376192"></a>It&#8217;s likely that you&#8217;re spending a lot of your time on things that are urgent but only slightly important, and sacrificing things that are important but not urgent. One example of an important but not urgent task is actually preparing for meetings so that you can guide them in a healthy way. Healthy<a id="GBS.0138.01"></a> meetings require involvement from all parties, and a culture that favors short but productive <span class="keep-together">meetings</span> requires that participants do some up-front work to come to the meeting prepared. As a manager of multiple teams, you can win back a lot of time by pushing an efficient meetings culture down to your teams. Hold people accountable to prepare in whatever way makes sense. Ask for agenda items up<a id="GBS.0138.02"></a> front. Any sort of standard meeting that involves a group of people, whether it&#8217;s planning, retrospective, or postmortem, should have a clear procedure and expected <span class="keep-together">outcomes.</span></p>
+
+<p>One of the major changes at this level compared to the previous level is that your boss will expect you to be mature enough to manage yourself and your teams independently. This means that your manager trusts you to proactively<a id="GBS.0138.03"></a> deal with all those important but not urgent things before they become urgent, and especially before they become urgent for your manager. No one will tell you how to manage your calendar to give yourself the time to do this. I&#8217;ve seen managers fail at this point because they just could not juggle all the different tasks in an organized fashion.</p>
+
+<p>Meetings can fall into that urgent but not important<a id="GBS.0138.04"></a> category, and you may decide to simply not attend them where you&#8217;re not clearly needed. Be very careful with over-deploying this strategy at this particular level of management. The responsibility of keeping your teams successfully moving forward and happily engaged is on your shoulders. When you stop going to all of their internal meetings, you run the risk of missing out on the very clues<a id="GBS.0138.05"></a> that will help you catch problems early&#8212;a major one being the existence of too many boring meetings. During meetings, look around the room at your team and notice their engagement. If half of them are falling asleep, staring off into space, on their phones or laptops ignoring the proceedings, or otherwise disengaged, the meeting is wasting their time. Your attendance at these meetings is partially<a id="GBS.0139.01"></a> to pay attention to the dynamics and morale of your team. A happy team will feel energized and engaged. An unhappy or unmotivated team will feel drained or bored.</p>
+
+<p>Back to matters important but not urgent. Thinking about the future is high on this list. There are undoubtedly things that you know you should do but have put off. Perhaps it&#8217;s writing job descriptions for roles you&#8217;re hiring for.<a id="GBS.0139.02"></a> Perhaps it&#8217;s developing a hiring plan at all. It might be reviewing the current work on a project to make sure no obvious problems are creeping in, or talking to a manager on another team where there is conflict or a difference of opinion on how to move forward on a shared issue. It might be cultivating the list of things that are important but you haven&#8217;t thought about in a while, so you know what<a id="GBS.0139.03"></a> to focus on. If you don&#8217;t set aside some time to focus on these issues, they&#8217;ll sneak up on you in negative ways. As a manager of multiple teams, you&#8217;re responsible for balancing breadth and depth of thinking, for knowing the details of your teams today but also looking at where you need to be going in the future and what you need to get there.</p>
+
+<p>As you navigate your new obligations, start to<a id="GBS.0139.04"></a> ask yourself: How important is the thing I&#8217;m doing? Does it seem important because it is urgent? How much time have I spent this week on urgent things? Have I managed to carve out enough time for things that are not urgent?</p>
+<aside data-type="sidebar" epub:type="sidebar"><div id="the_hardest_comma_shortest_lesson_becomi" class="sidebar">
+<h5>The Hardest, Shortest Lesson of Becoming a Manager</h5>
+<p>As a manager, I have this mental list of things about what my team needs. Things that I&#8217;m monitoring, things that I&#8217;m trying<a id="GBS.0139.05"></a> to fix, things that I&#8217;m trying to find for them. It&#8217;s my job to understand what is going on and what the team as a whole needs to be effective.</p>
+
+<p>Maybe you can look at the state of things and say, “We have a deadline right now, and what we need is another engineer for the next month. That engineer is me.”</p>
+
+<p>But more likely you look at the state of things and realize that what your team needs is<a id="GBS.0140.01"></a> a manager. Because you need to hire X more people. Because Y has a lot of potential but needs some coaching. Because product or design or some other team hasn&#8217;t given you what you need, so you need to go and get it. Because process is important, and the process you have is insufficient or just plain wrong.</p>
+
+<p>If your team needs a manager more than they need an engineer, you have to accept that<a id="GBS.0140.02"></a> being that manager means that you by definition can&#8217;t be that engineer. I know some people manage both, but you need to decide, if you&#8217;re going to suck at one, which one that will be.</p>
+
+<p>I feel bad when I suck at being an engineer, but sucking at being a manager would be a choice I inflicted on other people. That’s not fair.</p>
+
+<p>So at the end of another day when I feel like I didn&#8217;t write enough<a id="GBS.0140.03"></a> code and I have no way to quantify what I&#8217;ve achieved, I tell myself I was being as good a manager as I know how to be. And that has to be enough for today.<a data-type="indexterm" data-primary="" data-startref="IEr127" id="idm140116580380544"></a><a data-type="indexterm" data-primary="" data-startref="IEr249" id="idm140116580363952"></a><a data-type="indexterm" data-primary="" data-startref="IEr249a" id="idm140116580352800"></a></p>
+
+<p class="byline"><a href="http://bit.ly/huston-manager">Cate Huston</a></p>
+</div></aside>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Decisions and Delegation"><div id="decisions_and_delegation" class="sect1">
+<h1>Decisions and Delegation</h1>
+
+<p><a data-type="indexterm" data-primary="decision making" data-secondary="when to delegate" id="IEr66"></a><a data-type="indexterm" data-primary="delegating" data-secondary="decisions regarding" id="IEr67"></a><a data-type="indexterm" data-primary="multiple-team management" data-secondary="delegating, decisions regarding" id="IEr123"></a>How do you feel at the end of the day these days? If you&#8217;re like many new full-time managers, you probably feel quite drained. Even though you didn&#8217;t write a lot of code&#8212;or any code!&#8212;all<a id="GBS.0140.04"></a> day, when you get home you find yourself with no energy to decide what to eat for dinner, no energy for hobbies, and the desire to eat comfort food, drink a beer perhaps, and stare blankly at the computer or TV until it&#8217;s time to go to bed.</p>
+
+<p>The first several months of managing multiple teams can feel like a death march, even when your hours are not excessive. Your once-focused attention gets<a id="GBS.0140.05"></a> sliced and diced between the various meetings that pepper your day. I lost my voice repeatedly during my first few months managing multiple teams; I was totally unused to talking so much every single day. A friend of mine recently became a director of engineering, and she had to start having an assistant order her lunch because she discovered that she would forget to eat&#8212;and had no energy to decide<a id="GBS.0141.01"></a> what to eat when she realized she needed food.</p>
+
+<p>So, first, the bad news: the only way out of this situation is to go through it. In fact, I would expect most people to go through this for a while. If you haven&#8217;t experienced it at all, either count yourself extremely lucky, or double-check to make sure you&#8217;re really paying attention to everything that needs your attention. In my experience both<a id="GBS.0141.02"></a> going through this transition and managing people in it, if you don&#8217;t feel a little bit overwhelmed, you&#8217;re likely missing something.</p>
+
+<p>The best way to describe the feeling of management from here on out is plate spinning. If you&#8217;re not familiar with it, plate spinning is a fancy form of juggling where the juggler has several poles, each with a plate spinning on top of it. The juggler must attend<a id="GBS.0141.03"></a> to each plate before it slows down enough to fall off the pole. Your plates are the people and projects you&#8217;re overseeing, and your job is to figure out how much attention each one needs at what time. It&#8217;s important that you approach this spinning with a student&#8217;s mind. You&#8217;re still learning how to spin plates, and you&#8217;re going to drop some on the floor because you&#8217;ve neglected them for too long.<a id="GBS.0141.04"></a> Honing your instincts about when to touch which plate is the name of the game.</p>
+
+<p>Now for the good news: you&#8217;ll get better at this over time. Your instincts will improve. You&#8217;ll start to recognize the early warning signs of projects that are going poorly, people who are getting ready to quit, and teams that are underperforming. I recommended in the last section that you think carefully about dropping<a id="GBS.0141.05"></a> out of meetings, and part of the reason is that those meetings are where you learn what healthy and unhealthy dynamics look like. This is also why I strongly advise you maintain your practice of regular, reliable 1-1 meetings with everyone who reports directly to you. If you have too many people, you may need to shorten those meetings or hold them biweekly instead of weekly, but skipping 1-1s<a id="GBS.0142.01"></a> because you&#8217;re too busy with other things is a great way to miss the warning signs of an employee who is going to quit.</p>
+
+<p>I called this section &#8220;Decisions and Delegation&#8221;&#8212;so where does delegation fit in? Delegation is the primary way you claw yourself out of the feeling of having too many plates spinning at once. As tasks come at you, ask yourself: do I need to be the person who completes this<a id="GBS.0142.02"></a> work? The answer may depend on a few factors (see <a data-type="xref" href="#deciding_when_to_delegate_or_do_it">Table 6-2</a>).</p>
+<table id="deciding_when_to_delegate_or_do_it">
+<caption><span class="label">Table 6-2. </span>Deciding when to delegate or do it yourself</caption>
+<thead>
+<tr>
+<th></th>
+<th>Frequent</th>
+<th>Infrequent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><p><strong>Simple</strong></p></td>
+<td><p>Delegate</p></td>
+<td><p>Do it yourself</p></td>
+</tr>
+<tr>
+<td><p><strong>Complex</strong></p></td>
+<td><p>Delegate (carefully)</p></td>
+<td><p>Delegate for training purposes</p></td>
+</tr>
+</tbody>
+</table>
+
+<p>The degree of complexity and the frequency of the task can act as guides to determining whether and how you should delegate.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Delegate Simple and Frequent Tasks"><div id="delegate_simple_and_frequent_tasks" class="sect2">
+<h2>Delegate Simple<a id="GBS.0142.03"></a> and Frequent Tasks</h2>
+
+<p>If the task is simple and frequent, find someone to whom you can hand it off. Examples of simple and frequent tasks might include running daily standups, writing up a summary of the teams’ progress each week, or conducting minor code reviews. Your tech leads or other senior engineers can take responsibility for these tasks and probably won’t even need training to do so.</p>
+</div></section><a id="GBS.0142.04"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Handle Simple and Infrequent Tasks Yourself"><div id="handle_simple_and_infrequent_tasks_yours" class="sect2">
+<h2>Handle Simple and Infrequent Tasks Yourself</h2>
+
+<p>If it’s faster to do something yourself than it would be to explain it to someone else and it rarely needs to be done, roll up your sleeves and do it, even if you deem the task beneath you. This can be anything from booking the occasional conference ticket for your team to running the script that generates quarterly reports.</p>
+</div></section>
+
+
+
+
+
+
+<a id="GBS.0142.05"></a>
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Use Complex and Infrequent Tasks as Training Opportunities for Rising Leaders"><div id="use_complex_and_infrequent_tasks_as_trai" class="sect2">
+<h2>Use Complex and Infrequent Tasks as Training Opportunities for Rising Leaders</h2>
+
+<p><a data-type="indexterm" data-primary="hiring" data-secondary="plans for, training others to do" id="idm140116580331296"></a><a data-type="indexterm" data-primary="performance reviews" data-secondary="training others to do" id="idm140116580330848"></a>Tasks like writing performance reviews and making hiring plans are yours alone. However, these are also the skills you will want to pass on to rising managers. You may have a tech lead sit with you to write the performance review for an intern, or have a senior engineer provide feedback on how many new people<a id="GBS.0143.01"></a> he believes would be needed to support a project next year. Ask for help from above on these tasks until you feel comfortable doing them, but once you feel comfortable, start pulling in rising leaders to learn how they are done.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Delegate Complex and Frequent Tasks to Develop Your Team"><div id="delegate_complex_and_frequent_tasks_to" class="sect2">
+<h2>Delegate Complex and Frequent Tasks to Develop Your Team</h2>
+
+<p><a data-type="indexterm" data-primary="project management" id="idm140116580335360"></a>Tasks like project planning, systems design, or being the key person during an outage are the<a id="GBS.0143.02"></a> biggest opportunity you have to grow talent on your team while also making the team run better. Strong managers spend a lot of their time developing members of their teams in these areas. Your goal is to make your teams capable of operating at a high level without much input from you, and that means they&#8217;ll need individuals who can take over these complex tasks and run them without you around.</p><a id="GBS.0143.03"></a>
+
+<p><a data-type="indexterm" data-primary="new hires" data-secondary="onboarding" id="idm140116580320432"></a><a data-type="indexterm" data-primary="new reports" data-secondary="onboarding" id="idm140116580334144"></a><a data-type="indexterm" data-primary="onboarding" id="idm140116580322256"></a>Are your teams learning how to operate independently, or are you keeping them dependent on you for critical functions? List the tasks that you and only you really know how to do for the team. Some of them may be appropriate, like writing performance reviews or making hiring plans, but many of them are important to teach your teams to accomplish themselves. Project management. Onboarding new team<a id="GBS.0143.04"></a> members. Working with the product team to break down product roadmap goals into technical deliverables. Production support. These are all skills members of your team need to learn. Teaching them may take time up front, but in the long run it will save you time. Not only that, but teaching your team how to do these things is part of your job. It is your responsibility, as a manager, to build up<a id="GBS.0143.05"></a> the talent in your organization, and to help your people learn new skills they&#8217;ll need for the next stages of their careers.</p>
+
+<p><a data-type="indexterm" data-primary="" data-startref="IEr66" id="idm140116580321328"></a><a data-type="indexterm" data-primary="" data-startref="IEr67" id="idm140116580311296"></a><a data-type="indexterm" data-primary="" data-startref="IEr123" id="idm140116580310416"></a>Delegation is a process that starts slow but turns into the essential element for career growth. If you teams can&#8217;t operate well without you around, you&#8217;ll find it hard to be promoted. Develop your talent and push decisions down to that talent so that you can find new<a id="GBS.0144.01"></a> and interesting plates to learn how to spin.</p>
+<aside data-type="sidebar" epub:type="sidebar"><div id="warning_signs" class="sidebar">
+<h5>Ask the CTO: Warning Signs</h5>
+<p><em>I’ve experienced a couple of times now when teams have struggled unexpectedly, and a person has quit without warning. Are there any warning signs I can look out for to catch these issues earlier?</em></p>
+
+<p>There <a data-type="indexterm" data-primary="Ask the CTO sections" data-secondary="Warning Signs" id="idm140116580323888"></a>are definitely signals that you start to notice after you&#8217;ve been managing for a while. Here are some I&#8217;ve learned to<a id="GBS.0144.02"></a> spot:</p>
+
+<ul>
+<li>
+<p><em>The <a data-type="indexterm" data-primary="challenging situations" data-secondary="unhappy team members" id="IEr29"></a><a data-type="indexterm" data-primary="engineers" data-secondary="unhappy, warning signs of" id="IEr80"></a><a data-type="indexterm" data-primary="teams" data-secondary="unhappy, warning signs of" id="IEr233"></a>person who is usually chatty, happy, and engaged suddenly starts leaving early, coming in late, taking breaks to leave during the workday, staying quiet in meetings, and not hanging out on chat.</em> This person is either having a major personal issue or getting ready to quit. Usually, people will tell someone when there is a personal issue (such as a sick relative, relationship problems,<a id="GBS.0144.03"></a> or health issues), but not always. If this happened right after a major adjustment, such as a promotion, a team reorganization, or other event, the person may feel that she was overlooked. Regardless of the reason, you may want to have an honest conversation and try to get to the root of the issue before she resigns.</p>
+</li>
+<li>
+<p><em>The tech lead claims that everything is going well, but skips your 1-1s frequently<a id="GBS.0144.04"></a> and rarely provides detail in his status updates.</em> This person may be hiding something. Often what he&#8217;s hiding is that the progress is going far slower than he anticipated, or he&#8217;s building something outside of the scope of the project. Help him create a clear project plan early and set expectations for how to adjust that plan when things change, so that it&#8217;s harder for him to hide a lack of progress.<a id="GBS.0144.05"></a> Also help him clarify the project&#8217;s goals and scope, which can be daunting for some new tech leads. You may have experienced something similar when managing new hires who were in over their heads. This is also related to the person who spends a lot of time advocating for new languages/platforms/processes instead of finishing her work.</p>
+</li>
+<li>
+<p><em>The team has absolutely no energy at all in their meetings.<a id="GBS.0145.01"></a> In fact, the meetings feel like a total slog, with the product manager and tech lead doing all of the talking while the rest of the team sits silently or speaks only when called upon.</em> A lack of engagement in meetings tends to mean the team isn’t engaged by the work or do not feel like they have a say in the decision-making process.</p>
+</li>
+<li>
+<p><em>The team&#8217;s project list seems to change every week, depending<a id="GBS.0145.02"></a> on the customers&#8217; whims that day.</em> This team hasn’t thought about its goals beyond pleasing customers, and may need better product or business direction.</p>
+</li>
+<li>
+<p><em>A small team internally seems very fragmented in understanding; the engineers profess ignorance about systems they don’t work on and lack the curiosity or openness to learn about those systems.</em> This team is more strongly identified by their<a id="GBS.0145.03"></a> day-to-day work and the systems they touch than by the larger team or the company. They may be resistant to changing their systems based on the needs of the larger team or the business.<a data-type="indexterm" data-primary="" data-startref="IEr29" id="idm140116580307488"></a><a data-type="indexterm" data-primary="" data-startref="IEr80" id="idm140116580304624"></a><a data-type="indexterm" data-primary="" data-startref="IEr233" id="idm140116580315152"></a></p>
+</li>
+</ul>
+</div></aside>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Challenging Situations: Strategies for Saying No"><div id="challenging_situations_colon_strategies" class="sect1">
+<h1>Challenging Situations: Strategies for Saying No</h1>
+
+<p><a data-type="indexterm" data-primary="challenging situations" data-secondary="strategies for saying no" id="IEr27"></a><a data-type="indexterm" data-primary="multiple-team management" data-secondary="saying no, when and how to" id="IEr126"></a>A manager&#8217;s job involves making it easy for her employees to get things done by creating fertile environments in which work can happen.<a id="GBS.0145.04"></a> She focuses her team so that they can do what they do best. She cultivates camaraderie and friendship on the team, and helps people learn new skills. In all these things, she is an enabler, a coach, and a champion.</p>
+
+<p>But to create this environment, she sometimes must say no. She must say no to the team. She must say no to her peers. She must even say no to her boss. Each of these nos is hard,<a id="GBS.0145.05"></a> in its own way, and a strong manager must develop effective strategies for saying no. Here are a few that I have identified.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="“Yes, and”"><div id="lyes_comma_andr" class="sect2">
+<h2>“Yes, and”</h2>
+
+<p>Saying no to your boss rarely looks like a simple &#8220;no&#8221; when you&#8217;re a manager. Instead, it looks like the &#8220;yes, and&#8221; technique of improvisational comedy. &#8220;Yes, we can do that project, and all we will need to do is delay the start of this other project<a id="GBS.0146.01"></a> that is currently on the roadmap.&#8221; Responding with positivity while still articulating the boundaries of reality will get you into the major leagues of senior leadership. This type of positive no is a pretty hard skill for most engineers to master. We&#8217;re used to articulating the downsides of projects, and getting out of the knee-jerk &#8220;no, that can&#8217;t happen&#8221; habit is hard. Start mastering the &#8220;yes,<a id="GBS.0146.02"></a> and&#8221; strategy for saying no, particularly when interacting with your boss and peers, and see how it often transforms contentious disagreements into realistic negotiations for priority.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Create Policies"><div id="create_policies" class="sect2">
+<h2>Create Policies</h2>
+
+<p><a data-type="indexterm" data-primary="decision making" data-secondary="policies for" id="idm140116580295312"></a><a data-type="indexterm" data-primary="policies" data-secondary="for decision making" data-secondary-sortas="decision making" id="idm140116580294464"></a>When it comes to your team, you want to help them understand what it takes to get to &#8220;yes.&#8221; Perhaps you are dealing with an engineer who wants to switch to a new programming language<a id="GBS.0146.03"></a> for a project, one that your team doesn&#8217;t use. He has some great arguments as to why this language is the perfect tool for the job, but you&#8217;re reluctant to add a new tool just because it&#8217;s perfect. You might be tempted to just say no, give the reasoning, and leave it, and sometimes that will work. But you may find yourself saying the same &#8220;no&#8221; over and over again, giving the same reasons. &#8220;No,<a id="GBS.0146.04"></a> we need to have more people who know that language; we need to understand what it means to put that language into production.&#8221; &#8220;No, we need to have standards for logging; we need to think about what testing would look like.&#8221; When you start repeating yourself, you have the basis for a reasonable policy. That policy consists of the hard requirements that must be met in order to say yes, and some<a id="GBS.0146.05"></a> guidelines for thinking about the decision. Making a policy helps your team know in advance the cost of getting to &#8220;yes.&#8221;</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="“Help Me Say Yes”"><div id="lhelp_me_say_yesr" class="sect2">
+<h2>“Help Me Say Yes”</h2>
+
+<p>Policies are useful, but they don&#8217;t cover every case. The next strategy, &#8220;help me say yes,&#8221; is similar to policy writing, but works better for the one-off instances where there is no clear policy. Sometimes you&#8217;ll hear ideas that seem very<a id="GBS.0147.01"></a> ill-considered. &#8220;Help me say yes&#8221; means you ask questions and dig in on the elements that seem so questionable to you. Often, this line of questioning helps people come to the realization themselves that their plan isn&#8217;t a good idea, but sometimes they&#8217;ll surprise you with their line of thinking. Either way, curious interrogation of ideas can help you say no and teach at the same time.</p>
+</div></section>
+
+
+
+<a id="GBS.0147.02"></a>
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Appeal to Budget"><div id="appeal_to_budget" class="sect2">
+<h2>Appeal to Budget</h2>
+
+<p>When it comes to both your team and your peers, one tactic that you can use is appealing to time and budget. Lay out the current workload in plain terms, and show how there is little room to maneuver. Sometimes this is coupled with &#8220;not right now,&#8221; another somewhat passive-aggressive way of saying no. &#8220;Not right now&#8221; implies that you might agree with the idea but can&#8217;t<a id="GBS.0147.03"></a> do it at this moment, so maybe you&#8217;ll get to it in the future. This is frequently true, and so it&#8217;s easy to fall back into &#8220;not right now&#8221; mode. But as I discussed earlier, when you give an implied promise that &#8220;not right now&#8221; means that you&#8217;ll seriously do something &#8220;later,&#8221; you need to be sure that later can actually happen.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Work as a Team"><div id="work_as_a_team" class="sect2">
+<h2>Work as a Team</h2>
+
+<p>Speaking of your peers, there will<a id="GBS.0147.04"></a> be times when you and your peers (particularly across functions&#8212;i.e., your product or business peers) will need to act together to say no. This can apply to a no at any level. Sometimes you will use your technical authority to say no in a way that is beneficial to the product team. Sometimes you will appeal to the finance department to help you say no to certain budget excesses. Playing good cop/bad<a id="GBS.0147.05"></a> cop can be a little bit dishonest, so use this sparingly, but it can be useful to lend your authority to a no and then be able to call in the favor when you need support for your own no in the future.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Don’t Prevaricate"><div id="donat_prevaricate" class="sect2">
+<h2>Don’t Prevaricate</h2>
+
+<p><a data-type="indexterm" data-primary="" data-startref="IEr27" id="idm140116580276384"></a><a data-type="indexterm" data-primary="" data-startref="IEr126" id="idm140116580275440"></a>When you know that you need to say no, it&#8217;s better to say it quickly than to delay and drag out the process. If you have the authority to say no, and you don&#8217;t<a id="GBS.0148.01"></a> believe something should happen, do yourself a favor and don&#8217;t agonize over the process. You&#8217;ll be wrong sometimes, so when you discover that you were too quick to say no, apologize for making that mistake. You won&#8217;t have the luxury to carefully investigate and analyze every decision, so practice getting comfortable with the quick no (and the quick yes!) for low-risk, low-impact decisions.</p>
+<aside data-type="sidebar" epub:type="sidebar"><div id="my_tech_lead_isnat_managing" class="sidebar">
+<h5><a id="GBS.0148.02"></a>Ask the CTO: My Tech Lead Isn&#8217;t Managing</h5>
+<p><em>I <a data-type="indexterm" data-primary="challenging situations" data-secondary="tech leads not taking responsibility" id="IEr28"></a><a data-type="indexterm" data-primary="tech leads" data-secondary="not taking responsibility" id="IEr238"></a><a data-type="indexterm" data-primary="Ask the CTO sections" data-secondary="My Tech Lead Isn’t Managing" id="idm140116580282320"></a>have a tech lead who was supposed to be overseeing one of our junior engineers on a project to rewrite our app from Objective-C to Swift. I just found out that the junior engineer still hasn&#8217;t created a project plan, and hasn&#8217;t answered any of the feedback I gave in the design review. How do I get the tech lead to manage this without me having to step<a id="GBS.0148.03"></a> in?</em></p>
+
+<p>Delegation failures happen. It sounds like your tech lead doesn’t understand that you’re holding her responsible for making sure that the junior engineer follows up on design feedback and creates a project plan. So the first step is to ask the tech lead why these things haven’t happened yet.</p>
+
+<p>The answer you will get is likely to be a combination of things. One, the tech lead is busy with<a id="GBS.0148.04"></a> her own work and didn&#8217;t remember to follow up with the junior engineer. This happens, and you&#8217;ll have to remind her that mentoring and overseeing this person&#8217;s work needs to be scheduled in with her code and other responsibilities.</p>
+
+<p>Two, the tech lead may not know how to push the junior engineer when he doesn&#8217;t want to commit to a schedule. Ask her how she&#8217;s tried to get the information from<a id="GBS.0148.05"></a> him, and see whether you have an opportunity to suggest different approaches. Sometimes new tech leads are reluctant to push people for project plans because they don&#8217;t feel that they have authority and are flustered when they ask for something and the other person just never delivers.</p>
+
+<p>The best thing to do here is to work with your tech lead to give her the skills and confidence to ask for reports<a id="GBS.0149.01"></a> from other members of the team. It will be slower than stepping in and asking for them yourself, but you&#8217;ll teach the team to respect her requests and teach her how to lead the team independently.<a data-type="indexterm" data-primary="" data-startref="IEr28" id="idm140116580263520"></a><a data-type="indexterm" data-primary="" data-startref="IEr238" id="idm140116580271776"></a></p>
+</div></aside>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Technical Elements Beyond Code"><div id="technical_elements_beyond_code" class="sect1">
+<h1>Technical Elements Beyond Code</h1>
+
+<p><a data-type="indexterm" data-primary="multiple-team management" data-secondary="monitoring health of teams" id="IEr124"></a><a data-type="indexterm" data-primary="teams" data-secondary="monitoring health of" id="IEr232"></a>Management at this level gets confusing. We hire managers based partially on their technical skills, but many of us think of this job as not<a id="GBS.0149.02"></a> really &#8220;technical.&#8221; After all, the manager is probably not writing much code or doing much systems design, right?</p>
+
+<p>Assuming that the job at this level becomes essentially nontechnical is a mistake. It turns out there&#8217;s more to running effective engineering teams than pure management skills, and management at this level will require you to learn some new skills that are easiest to learn if you<a id="GBS.0149.03"></a> understand the practice and discipline of software engineering. You&#8217;re going to turn your technical focus now to observing and improving the systems of work that your developers are operating within. In particular, you now need to develop an eye for the technical health signals for the overall team. But what are those health signals?</p>
+
+<p><a data-type="indexterm" data-primary="books and publications" data-secondary="First, Break All the Rules (Buckingham and Coffman)" data-secondary-sortas="First, Break All the Rules" id="idm140116580257824"></a><a data-type="indexterm" data-primary="First, Break All the Rules (Buckingham and Coffman)" data-primary-sortas="First, Break All the Rules" id="idm140116580258944"></a>The popular management book <em>First, Break All the Rules</em><sup><a data-type="noteref" id="CHP-6-FN-2-marker" href="ch06.html#CHP-6-FN-2">2</a></sup> discusses<a id="GBS.0149.04"></a> several questions you can answer to help predict team productivity and satisfaction. Among them are:</p>
+
+<ul>
+<li>
+<p>Do I know what is expected of me at work?</p>
+</li>
+<li>
+<p>Do I have the materials and equipment I need to do my work right?</p>
+</li>
+<li>
+<p>Do I have the opportunity to do what I do best every day?</p>
+</li>
+</ul>
+
+<p>For most engineers, the answer to these questions can be discerned by the speed and frequency with which they push<a id="GBS.0149.05"></a> code. If the work they need to do is clear, they know what code to write. If the tools, tickets, automation, and process are available and easy to use, they are able to get the code written. And if they&#8217;re not distracted by excessive meetings or drowning in support and incident management, they&#8217;ll get a chance to write code every day. These health signals&#8212;frequency of code releases, frequency of code<a id="GBS.0150.01"></a> check-ins, and infrequency of incidents&#8212;are the key indicators of a team that knows what to do, has the tools to do it, and has the time to do it every day.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Measuring the Health of Your Development Team"><div id="measuring_the_health_of_your_development" class="sect1">
+<h1>Measuring the Health of Your Development Team</h1>
+
+<p>When you&#8217;re focusing on the health of your development teams, put on your technical hat to design systems and processes that will keep things moving. Create the tools that developers<a id="GBS.0150.02"></a> need to do their jobs. Help them focus so they can easily figure out what needs to happen next. Interrogate every process to determine the value it should provide, and always ask yourself if it can be automated further. Consider these ways to measure the health of your team.</p>
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Frequency of Releases"><div id="frequency_of_releases" class="sect2">
+<h2>Frequency of Releases</h2>
+
+<p><a data-type="indexterm" data-primary="coding" data-secondary="releases, frequency of" id="IEr38"></a><a data-type="indexterm" data-primary="project delivery" data-secondary="release frequency" id="IEr174"></a>In <a data-type="xref" href="ch05.html#managing_a_team">Chapter 5</a> I talked about how a common dysfunction of technical teams is not shipping<a id="GBS.0150.03"></a> code, and release frequency is the most direct measure of this. If your company doesn&#8217;t appreciate the value of releasing code frequently, I&#8217;m sorry. In this modern era, frequency of code change is one of the leading indicators of a healthy engineering team. Great engineering managers of product-focused teams know how to create environments where their teams can move fast, and part of moving fast<a id="GBS.0150.04"></a> requires breaking work down into small chunks. Even if your company doesn&#8217;t appreciate it, you must work to help your team achieve the best release frequency possible for their product. Lest you think this doesn&#8217;t apply to you because you&#8217;re building a product (say, a database) that can&#8217;t release frequently, I&#8217;m sure there is a complete artifact pushed to a beta/developer testing environment that<a id="GBS.0150.05"></a> provides a similarly valuable measure in terms of frequency and stability.</p>
+
+<p>Why don&#8217;t you release more frequently? Take a look at your team. If they don&#8217;t release continuously, or daily, what does the release process look like? How long does it take? How often has something gone wrong in the past few months regarding releases? What does it look like when things go wrong? How often have you had<a id="GBS.0151.01"></a> to delay or roll back a release due to problems? What were the impacts of that delay or rollback? How do you determine if code is ready to go into production? How long does that take? Who is primarily responsible for determining this?</p>
+
+<p>I bet if you honestly take a look at a team that isn&#8217;t releasing frequently, you&#8217;ll see cracks. The process of performing a release takes a long time. Engineers<a id="GBS.0151.02"></a> don&#8217;t feel ownership over their code quality, and they leave all of that work to a QA team, which creates a lot of back-and-forth communication delays. Rolling back code in the case of a bad release takes a long time. Things go wrong in the process of releasing that lead to incidents in production (or broken development builds). A whole host of ills in a team come from not being able to release<a id="GBS.0151.03"></a> frequently.</p>
+
+<p>Now, you might say, “Thanks for the advice, but I don’t have the time to work on this with the product roadmap we have to deliver.” Or, “Our systems aren’t designed to be released frequently.” Or, “It’s just not that important that we change things that frequently.”</p>
+
+<p>Here&#8217;s the thing. Is your team working to its full capacity? Are your engineers challenged and growing? Is your product<a id="GBS.0151.04"></a> team excited by the progress you&#8217;re making? Are people able to spend most of their time on writing new code and evolving the systems? If so, great. Ignore me. You&#8217;ve got it under control. If not, you have a problem, and you&#8217;re ignoring that problem at your peril.</p>
+
+<p>It&#8217;s important to remember that, as a technical leader, while you may not be writing code much, you&#8217;re still responsible for the technical<a id="GBS.0151.05"></a> side of getting work done. You&#8217;re also responsible for keeping your team happy and productive, and often the solution to this is not cheerleading or paying them better or praising them more, but instead enabling them to be more productive, challenging them to go faster and do better work, and helping them find the time they need to make their work more interesting. You have to be the advocate<a id="GBS.0152.01"></a> and push for technical process improvements that can lead to increased engineer productivity, even if you&#8217;re not implementing them all yourself.</p>
+
+<p>The beauty of pushing for more frequent releases is that it often uncovers a host of interesting challenges. There&#8217;s no one true way to increase release frequency because frequency problems will be somewhat unique from team to team. You&#8217;ll almost certainly<a id="GBS.0152.02"></a> need to solve some automation elements. Developer tooling to enable feature toggles that make sense for your code bases is another frequent challenge. Thinking about architecting code to move forward without breaking backward compatibility, rolling upgrades of systems, and implementing small changes instead of giant patches&#8212;all of these things may need addressing. You&#8217;re responsible for leading<a id="GBS.0152.03"></a> the effort here, even if you don&#8217;t do the work. Push for time away from the product roadmap to support increasing engineering productivity, and set goals for the team that inspire them to move faster.<a data-type="indexterm" data-primary="" data-startref="IEr38" id="idm140116580235424"></a><a data-type="indexterm" data-primary="" data-startref="IEr174" id="idm140116580231456"></a></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Frequency of Code Check-ins"><div id="frequency_of_code_check-ins" class="sect2">
+<h2>Frequency of Code Check-ins</h2>
+
+<p><a data-type="indexterm" data-primary="coding" data-secondary="check-ins, frequency of" id="idm140116580233344"></a>It&#8217;s hard to have an agile team that doesn&#8217;t understand the value of breaking its work down into small chunks. You&#8217;ll likely need to teach this skill<a id="GBS.0152.04"></a> to new hires out of college, but even senior developers sometimes need a push here. I&#8217;m not going to advocate for any particular software development methodology, but I find that engineers who don&#8217;t write tests often have a harder time breaking down their work, and learning how to do test-driven development (even if they don&#8217;t actually practice that on a daily basis) can help them get better at this<a id="GBS.0152.05"></a> skill.</p>
+
+<p>I focus on this topic because it can be very uncomfortable for you as a new manager to tell people who may have been writing code for as long or longer than you have that their style needs updating. Conflict avoidance runs deep in most of us, and matters of what feels like personal style can be particularly difficult. If your company expects fast-moving product development, engineers<a id="GBS.0153.01"></a> who want to go off for weeks and write code alone without pushing it into shared version control will slow your team down and cause problems. You&#8217;re not managing a research team. (Are you? Skip this section, then!) It&#8217;s OK for you to have the expectation that work in progress is regularly updated.</p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect2" data-pdf-bookmark="Frequency of Incidents"><div id="frequency_of_incidents" class="sect2">
+<h2>Frequency of Incidents</h2>
+
+<p><a data-type="indexterm" data-primary="coding" data-secondary="incidents, frequency of" id="IEr35"></a>How stable is the software being produced by the team? Is<a id="GBS.0153.02"></a> the quality improving, getting worse, or staying the same? Determining the level of software quality you need for the product you&#8217;re building and adjusting that measure over time is a technical challenge for you, the manager, to help address. If you&#8217;re building a brand new product for a small but growing business, it may be more important to focus on features over stability. On the other hand, if<a id="GBS.0153.03"></a> you own mission-critical systems, stability and incident minimization may be your top priority. The goal here is to balance risk in such a way that neither incident frequency nor incident prevention turns into a job that takes developers away from writing code for days at a time.</p>
+
+<p>You may work for a company that has developers support the code or systems they write. This process has some downsides;<a id="GBS.0153.04"></a> significantly, expecting members of a team to frequently be on-call nights and weekends is a huge contributor to burnout. Despite that risk, it has the upside of putting the best people to help fix a problem in the role of responding to it. As a manager, you may be tempted now to take yourself out of this role. I sympathize, but if your team is set up to do its own incident management, you<a id="GBS.0153.05"></a> should be moving yourself into the role of escalation support. You won&#8217;t necessarily manage incidents as frequently, but you&#8217;ll be expected to be available more often in case the person supporting the systems needs you.</p>
+
+<p>Analysis around incident management should include the question, &#8220;Is our current setup enabling my team to do what they do best every day?&#8221; Incident management, when it becomes<a id="GBS.0154.01"></a> merely reacting to incidents rather than working to reduce them, can turn into a task that diminishes your team&#8217;s ability to do what they do best. Engineers go on-call, they get burned out and exhausted from handling the deluge of problems and getting nothing done but fixing the consequences of incidents, and then they hand off the job to the next poor sap on the rotation. If that describes your<a id="GBS.0154.02"></a> team&#8217;s approach to incident management and on-call, your team is not able to do what they do best every day, and every time they go on-call they probably hate their jobs a little bit more. In this case, as a leader you probably want to focus on providing time to actually design systems that are more stable, or writing code to fix the recurring incidents as they arise.</p>
+
+<p>An overemphasis on incident<a id="GBS.0154.03"></a> prevention can also reduce your team&#8217;s ability to do what they do best every day. Overfocusing on building systems that are defect-free, or pushing for error prevention by slowing down the development process, is often almost as bad as moving too fast and releasing unstable code. When risk reduction turns into weeks of manual QA, excessive and slow code reviews, infrequent releases, or a drawn-out<a id="GBS.0154.04"></a> planning process, the increased analysis can leave developers idle and restless, without necessarily reducing the risk of incidents.<a data-type="indexterm" data-primary="" data-startref="IEr35" id="idm140116580236336"></a><a data-type="indexterm" data-primary="" data-startref="IEr124" id="idm140116580245280"></a><a data-type="indexterm" data-primary="" data-startref="IEr232" id="idm140116580237648"></a></p>
+</div></section>
+
+
+
+
+
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Good Manager, Bad Manager: Us Versus Them, Team Player"><div id="us_versus_them_comma_team_player" class="sect1">
+<h1>Good Manager, Bad Manager: Us Versus Them, Team Player</h1>
+
+<p><em>Diana <a data-type="indexterm" data-primary="culture" data-secondary="team members fitting, importance of" id="idm140116580228272"></a><a data-type="indexterm" data-primary="peers" data-secondary="cohesion of team members" id="IEr141"></a><a data-type="indexterm" data-primary="shallow binding" id="IEr201"></a><a data-type="indexterm" data-primary="team players" id="idm140116580222320"></a><a data-type="indexterm" data-primary="teams" data-secondary="cohesion of" id="IEr226"></a><a data-type="indexterm" data-primary="us versus them mentality" id="IEr255"></a><a data-type="indexterm" data-primary="Good Manager, Bad Manager sections" data-secondary="Us Versus Them, Team Player" id="idm140116580216160"></a>has just joined a midsize startup to run the long-neglected mobile team. She was told coming in that the team was a mess, so her first step is to quickly hire in a bunch of new<a id="GBS.0154.05"></a> people who worked for her at BigCo. They aren&#8217;t quite a culture fit, and the team quickly turns into a clique of developers who see themselves as better than the rest of the organization. While the technology has improved, they seem to be clashing a lot with the product team, and ultimately the apps aren&#8217;t evolving very quickly. After a year, Diana gets fed up with the company and quits. The rest<a id="GBS.0155.01"></a> of her new team soon follows, leaving the company right back where it started.</em></p>
+
+<p>It can be hard for new managers to create a shared team identity. Many of them default to an identity built around the specifics of their job function or technology. They unite the team by emphasizing how this identity is special as compared to other teams. When they go too far, this identity is used to make the team<a id="GBS.0155.02"></a> feel superior to the rest of the company, and the team is more interested in its superiority than the company&#8217;s goals. Rallying a team in this way is a <em>shallow binding</em> that is vulnerable to many dysfunctions:</p>
+
+<ul>
+<li>
+<p><strong>Fragile to the loss of the leader.</strong> In-group teams tend to be very fragile to the loss of their leader. When you hire a manager who builds a clique, that clique is likely to dissolve and<a id="GBS.0155.03"></a> leave the company if the manager leaves the company. This problem makes it that much harder to address the problems that the manager is causing by creating a clique in the first place.</p>
+</li>
+<li>
+<p><strong>Resistant to outside ideas.</strong> In-groups tend to be resistant to ideas that do not come from those within the group. This means that they miss opportunities to learn and grow. The lack of growth for members of the<a id="GBS.0155.04"></a> team often causes the best members of the team to leave not just the group, but the company. Because they believe they&#8217;re in the best group but they still find themselves bored, they don&#8217;t appreciate the growth they could find just by switching to a new team.</p>
+</li>
+<li>
+<p><strong>Empire building.</strong> Leaders who favor an us-versus-them style tend to be empire builders, seeking out opportunities to grow their teams<a id="GBS.0155.05"></a> and their mandates without concern for what is best for the overall organization. This often results in competition with other leaders for headcount and control of projects.</p>
+</li>
+<li>
+<p><strong>Inflexibility.</strong> These groups tend to struggle against change that comes from outside the group. Reorganizations, cancelled projects, and shifting focus all can cause breaks in the core parts of their identity. Whether it&#8217;s<a id="GBS.0156.01"></a> a move from functional groups to cross-functional teams, delaying the iPad application, or prioritizing a new product, the change can devastate the fragile bonds of the team to the company.</p>
+</li>
+</ul>
+
+<p><a data-type="indexterm" data-primary="" data-startref="IEr201" id="idm140116580194960"></a><a data-type="indexterm" data-primary="" data-startref="IEr255" id="idm140116580196064"></a>As a manager, be careful about focusing on your teams to the exclusion of the wider group. Even when you have been hired to fix a team, remember that the company has gotten this far because of some fundamental<a id="GBS.0156.02"></a> strengths. Before you try to change everything to fit your vision, take the time to understand the company&#8217;s strengths and culture, and think about how you&#8217;re going to create a team that works well with this culture, not against it. The trick is not to focus on what&#8217;s broken, but to identify existing strengths and cultivate them.</p>
+
+<p><em>Neil <a data-type="indexterm" data-primary="collaboration" data-secondary="cross-functional collaboration" id="idm140116580209552"></a><a data-type="indexterm" data-primary="cross-functional collaboration" id="idm140116580208256"></a><a data-type="indexterm" data-primary="peers" data-secondary="cross-functional collaboration with" id="idm140116580207648"></a>has also joined a startup where things are chaotic. While<a id="GBS.0156.03"></a> he can see that he needs to change the team, he moves cautiously to fire people and takes the time to make sure that new hires are always vetted by someone who&#8217;s been with the company for a while. He spends a lot of time working closely with his peers in product, and proposes a path forward that emphasizes cross-functional collaboration. He focuses on setting clear goals and communicating them to<a id="GBS.0156.04"></a> his team. Things start out slow, but over time the entire organization feels stronger and both the technology and the product have improved dramatically.</em></p>
+
+<p><a data-type="indexterm" data-primary="core values of organization" id="IEr46"></a><a data-type="indexterm" data-primary="organization" data-secondary="core values of" id="IEr137"></a>Durable teams are built on a shared purpose that comes from the company itself, and they align themselves with the company’s values (see <a data-type="xref" href="ch09.html#applying_core_values">“Applying Core Values”</a> in <a data-type="xref" href="ch09.html#bootstrapping_culture">Chapter 9</a> for more on this topic). They have a clear understanding of the company&#8217;s<a id="GBS.0156.05"></a> mission, and they see how their team fits into this mission. They can see that the mission requires many different types of teams, but all of the teams share a set of values. By creating a strong and enduring alignment between the team, its individuals, and the overall company, this <em>purpose-based binding</em> makes teams:</p>
+
+<ul>
+<li>
+<p><strong>Resilient to loss of individuals.</strong> While the clique is fragile, especially<a id="GBS.0157.01"></a> to the loss of the leader, the purpose-driven team tends to be very resilient to the loss of individuals and leadership. Because they&#8217;re loyal to the mission of the larger organization, they can see a path forward even through loss.</p>
+</li>
+<li>
+<p><strong>Driven to find better ways to achieve their purpose.</strong> Purpose-driven teams are more open to new ideas and value changes that can help them serve their purpose better.<a id="GBS.0157.02"></a> They care less about the source of an idea than its merit in achieving their goals. The members of these teams are interested in learning from others outside their function, and they actively seek out chances to collaborate more broadly to create the best results.</p>
+</li>
+<li>
+<p><strong>First-team <a data-type="indexterm" data-primary="first-team focus" id="idm140116580182864"></a><a data-type="indexterm" data-primary="team players" id="idm140116580182256"></a>focused.</strong> Leaders who are strong team players understand that the people who report to them are not their first team.<a id="GBS.0157.03"></a> Instead, their first team is their peers across the company. This first-team focus helps them make decisions that consider the needs of the company as a whole before focusing on the needs of their team.</p>
+</li>
+<li>
+<p><strong>Open to changes that serve their purpose.</strong> The collaborative leader understands that changes will happen to serve the wider purpose. Teams will change structure and people will need to move to<a id="GBS.0157.04"></a> where the business needs are. With that knowledge, these leaders create teams that are more flexible and understanding of frequent change in service of the larger vision.</p>
+</li>
+</ul>
+
+<p><a data-type="indexterm" data-primary="collaboration" data-secondary="cross-functional collaboration" id="idm140116580179376"></a><a data-type="indexterm" data-primary="cross-functional collaboration" id="idm140116580177968"></a><a data-type="indexterm" data-primary="peers" data-secondary="cross-functional collaboration with" id="idm140116580177360"></a>Getting clarity about the purpose of your team and your company can take time. In startups especially, there is often some confusion about the current goals and even sometimes the underlying mission. In the case where the<a id="GBS.0157.05"></a> goals are fuzzy and the mission is unclear, do your best to understand the company culture and think about how you can set your teams up to work well within that culture. By collaborating across teams and across business functions, your teams will come to understand the bigger picture and appreciate their mission as part of that picture.<a data-type="indexterm" data-primary="" data-startref="IEr46" id="idm140116580176208"></a><a data-type="indexterm" data-primary="" data-startref="IEr137" id="idm140116580175200"></a><a data-type="indexterm" data-primary="" data-startref="IEr141" id="idm140116580174256"></a><a data-type="indexterm" data-primary="" data-startref="IEr226" id="idm140116580173312"></a></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="The Virtues of Laziness and Impatience"><div id="the_virtues_of_laziness_and_impatience" class="sect1">
+<h1>The Virtues of Laziness and Impatience</h1>
+
+<p><a data-type="indexterm" data-primary="decision making" data-secondary="impatience and laziness for" id="IEr64"></a><a data-type="indexterm" data-primary="hours worked" id="IEr88"></a><a data-type="indexterm" data-primary="impatience and laziness" id="IEr89"></a><a data-type="indexterm" data-primary="laziness and impatience" id="IEr91"></a><a data-type="indexterm" data-primary="processes" data-secondary="impatience and laziness for" id="IEr168"></a><a id="GBS.0158.01"></a>I love Larry Wall&#8217;s idea that &#8220;laziness, impatience, and hubris&#8221; are virtues of engineers, as he articulated in <a href="http://shop.oreilly.com/product/9780596004927.do" class="orm:hideurl"><em>Programming Perl</em></a>.<sup><a data-type="noteref" id="CHP-6-FN-3-marker" href="ch06.html#CHP-6-FN-3">3</a></sup> These virtues persist into leadership, and learning how to channel these traits into advantages is something I encourage all managers to do.</p>
+
+<p>As a manager, when you are dealing with people one-on-one you probably don&#8217;t want to be impatient, of course. Impatience can<a id="GBS.0158.02"></a> be rude if it&#8217;s directed at individuals. And you don&#8217;t want to seem lazy, because there&#8217;s nothing worse than working for a manager who seems to be taking it easy while you kill yourself to deliver projects. But impatience paired with laziness is wonderful when you direct it at processes and decisions. Impatience and laziness, applied to process, are the key elements to focus.</p>
+
+<p>As you grow more<a id="GBS.0158.03"></a> into leadership positions, people will look to you for behavioral guidance. What you want to teach them is how to focus. To that end, there are two areas I encourage you to practice modeling, right now: figuring out what&#8217;s important, and going home.</p>
+
+<p>I can&#8217;t stand watching people waste their energy approaching problems with brute force and spending time rather than thought. And yet, any culture<a id="GBS.0158.04"></a> where you are encouraged to work excessive hours all the time is almost certainly doing just that. What is the value in automation if you don&#8217;t use it to make your job easier? We engineers automate so that we can focus on the fun stuff&#8212;and the fun stuff is the work that uses most of your brain, and it&#8217;s not usually something you can do for hours and hours, day after day.</p>
+
+<p>So be impatient to figure<a id="GBS.0158.05"></a> out the nut of what&#8217;s important. As a leader, any time you see something being done that feels inefficient, question it: Why does this feel inefficient to me? What is the value in the thing we are doing? Can we deliver that value faster? Can we strip down this project into something simpler and get it done more quickly?</p>
+
+<p>The problem with this line of questioning is that often when managers ask<a id="GBS.0159.01"></a> whether something can be done faster, what they explicitly or implicitly want to know is whether the team can work harder or longer hours to deliver it in fewer days. This is why I encourage you to develop and show the value of laziness. Because &#8220;faster&#8221; is not about &#8220;the same number of hours but fewer total days.&#8221; &#8220;Faster&#8221; is about &#8220;the same value to the company in less total time.&#8221; If the team<a id="GBS.0159.02"></a> works 60 hours in a week to deliver something that otherwise would&#8217;ve taken a week and a half, they haven&#8217;t worked faster, they&#8217;ve just given the company more of their free time.</p>
+
+<p><a data-type="indexterm" data-primary="burnout" id="idm140116580161104"></a>This is where going home comes in. Go home! And stop emailing people at all hours of the night and all hours of the weekend! Forcing yourself to disengage is essential for your mental health, believe me. Burnout is<a id="GBS.0159.03"></a> a real problem in the American workforce these days, and almost everyone I know who has worked sustained excess hours has experienced it to some degree. It&#8217;s terrible for individuals, terrible for their families, and terrible for teams. But this isn&#8217;t just about preventing your own burnout&#8212;it&#8217;s about preventing your team&#8217;s burnout. When you work later than everyone else, when you send those emails<a id="GBS.0159.04"></a> at all hours, even if you don&#8217;t expect your team to respond to those emails or work those hours, they see you doing it and think it&#8217;s important. And that overwork makes them less effective, especially at the detailed knowledge work that engineers need to perform.</p>
+
+<p>When you&#8217;re a newish manager and you haven&#8217;t figured out the tricks to do your job effectively, you might find yourself needing to<a id="GBS.0159.05"></a> work more hours to get it all done. That&#8217;s OK for a little while. But I encourage you to figure out a way to work those hours without encouraging your team to do so, or making them feel obligated to be on your schedule. Queue up the weekend and overnight emails for the next workday. Put your chat status as &#8220;away&#8221; in off hours. Take a vacation, and don&#8217;t answer email during that time. And constantly<a id="GBS.0160.01"></a> ask yourself the same questions you ask your team: Can I do this faster? Do I need to be doing this at all? What value am I providing with this work?</p>
+
+<p>Laziness and impatience. We focus so we can go home, and we encourage going home because it forces us to constantly focus. This is how great teams scale.<a data-type="indexterm" data-primary="" data-startref="IEr64" id="idm140116580158992"></a><a data-type="indexterm" data-primary="" data-startref="IEr88" id="idm140116580162080"></a><a data-type="indexterm" data-primary="" data-startref="IEr89" id="idm140116580145392"></a><a data-type="indexterm" data-primary="" data-startref="IEr91" id="idm140116580144448"></a><a data-type="indexterm" data-primary="" data-startref="IEr168" id="idm140116580150336"></a></p>
+</div></section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section data-type="sect1" data-pdf-bookmark="Assessing Your Own Experience"><div id="assessing_your_own_experience-id5" class="sect1">
+<h1>Assessing Your Own Experience</h1>
+
+<ul>
+<li>
+<p>When <a data-type="indexterm" data-primary="assessments" data-secondary="for multiple-team management" id="IEr4"></a><a data-type="indexterm" data-primary="multiple-team management" data-secondary="assessing your abilities at" id="IEr121"></a>was the last time you reviewed your<a id="GBS.0160.02"></a> schedule for things that you&#8217;re doing but that aren&#8217;t providing a lot of value for you or your team? Look back on the past couple of weeks. Look forward to the next couple of weeks. What did you accomplish, and what do you hope to accomplish?</p>
+</li>
+<li>
+<p>If you are still writing code, how does this fit in with the rest of your schedule? Are you doing it after hours? What&#8217;s driving you to continue to spend<a id="GBS.0160.03"></a> this time?</p>
+</li>
+<li>
+<p>What was the last task you delegated to a member of one of your teams? Was it simple or complex? How is the person you delegated to handling the new task?</p>
+</li>
+<li>
+<p>Who are the rising leaders of your teams? What is your plan for coaching them to take on bigger leadership roles? What tasks are you giving them to prepare them for more responsibility?</p>
+</li>
+<li>
+<p>Does the process of writing, releasing,<a id="GBS.0160.04"></a> and supporting code seem to function smoothly on your teams? When was the last time there was a noticeable incident with part of this process? What happened, and how did the team respond to it? How often does the process encounter these exceptional conditions?</p>
+</li>
+<li>
+<p>When was the last time you pushed your team to cut the scope of a project? When you cut scope do you cut features, technical quality,<a id="GBS.0160.05"></a> or both? How do you decide?</p>
+</li>
+<li>
+<p>When was the last time you sent email after 8 pm or on the weekend? Did the person you sent that email to respond? Did you need him or her to respond?<a data-type="indexterm" data-primary="" data-startref="IEr4" id="idm140116580140576"></a><a data-type="indexterm" data-primary="" data-startref="IEr121" id="idm140116580141824"></a></p>
+</li>
+</ul>
+</div></section>
+
+
+
+
+
+
+
+<div data-type="footnotes"><p data-type="footnote" id="CHP-6-FN-1"><sup><a href="ch06.html#CHP-6-FN-1-marker">1</a></sup> David Allen, <em>Getting Things Done: The Art of Stress-Free Productivity</em> (New York: Penguin, 2001).</p><p data-type="footnote" id="CHP-6-FN-2"><sup><a href="ch06.html#CHP-6-FN-2-marker">2</a></sup> Marcus Buckingham and Curt Coffman, <em>First, Break All the Rules: What the World&#8217;s Greatest Managers Do<a id="GBS.0161.01"></a> Differently</em> (New York: Simon &amp; Schuster, 1999).</p><p data-type="footnote" id="CHP-6-FN-3"><sup><a href="ch06.html#CHP-6-FN-3-marker">3</a></sup> Tom Christiansen, brian d foy, Larry Wall, and Jon Orwant, <em>Programming Perl</em>, 4<sup>th</sup> edition (Sebastopol, CA: O’Reilly, 2012).</p></div></div></section><div style="display:none;"><a id="GBS.0161.02"></a></div></body></html>

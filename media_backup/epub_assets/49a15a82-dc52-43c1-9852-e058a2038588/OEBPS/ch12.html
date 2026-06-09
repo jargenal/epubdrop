@@ -1,0 +1,413 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>AWS Networking Services</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:a44aec70-12ef-4d3e-90ec-26a4e9d25e01" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 12. AWS Networking Services" data-type="chapter" epub:type="chapter"><div class="chapter" id="ch12_aws_networking_services_1763395115969150">
+<h1><span class="label">Chapter 12. </span>AWS Networking Services</h1>
+
+<p>In this chapter, you’ll learn about AWS networking services. You’ll see how virtual private clouds create isolated networks, enabling your resources to stay secure and organized. You’ll also learn what makes Route 53 work, from directing global traffic with resilience to keeping your applications available through routing policies and health checks. And if you need to connect your on-premises environments to AWS, services like Site-to-Site VPN and Direct Connect come into play.</p>
+
+<p>In the AWS Certified Cloud Practitioner exam, the focus is on what each networking service does, its key features, and when to use it.</p>
+
+<section data-pdf-bookmark="Networking in a Data Center" data-type="sect1"><div class="sect1" id="ch12_networking_in_a_data_center_1763395115969267">
+<h1>Networking in a Data Center</h1>
+
+<p>In<a contenteditable="false" data-primary="networking in data centers" data-type="indexterm" id="jc12.1"/> a data center, networking systems allow servers, applications, storage and other systems to talk to each other—both internally and across the internet.</p>
+
+<p>At the core of networking are protocols. These are agreed-upon rules that govern how data moves back and forth. Here are some of the most common protocols you’ll see in a data center:</p>
+
+<dl>
+	<dt>Ethernet</dt>
+	<dd>
+	<p>Created<a contenteditable="false" data-primary="Ethernet" data-type="indexterm" id="id1231"/> in the 1970s, this technology remains a workhorse protocol today. It uses physical cables to connect devices and delivers high-speed data transfers while ensuring the information arrives accurately.</p>
+	</dd>
+	<dt>Transmission Control Protocol/Internet Protocol (TCP/IP)</dt>
+	<dd>
+	<p>This <a contenteditable="false" data-primary="Transmission Control Protocol/Internet Protocol (TCP/IP)" data-type="indexterm" id="id1232"/><a contenteditable="false" data-primary="TCP/IP (Transmission Control Protocol/Internet Protocol)" data-type="indexterm" id="id1233"/>set of protocols connects systems to the internet as well as private networks, managing the complex interactions required to deliver data packets reliably. While most networks today use <a contenteditable="false" data-primary="Internet Protocol version 4 (IPv4)" data-type="indexterm" id="id1234"/><a contenteditable="false" data-primary="IPv4 (Internet Protocol version 4)" data-type="indexterm" id="id1235"/><a contenteditable="false" data-primary="IPv6 (Internet Protocol version 6)" data-type="indexterm" id="id1236"/><a contenteditable="false" data-primary="Internet Protocol version 6 (IPv6)" data-type="indexterm" id="id1237"/>Internet Protocol version 4 (IPv4), IPv6 adoption is growing due to its vastly expanded address space. To support both current and future networking needs, AWS enables dual-stack mode—supporting both IPv4 and IPv6—across services like VPCs, EC2, and load balancers, ensuring flexibility and scalability for modern architectures.</p>
+	</dd>
+	<dt>Data center bridging (DCB)</dt>
+	<dd>
+	<p>Developed <a contenteditable="false" data-primary="data center bridging (DCB)" data-type="indexterm" id="id1238"/><a contenteditable="false" data-primary="DCB (data center bridging)" data-type="indexterm" id="id1239"/>by the <a contenteditable="false" data-primary="IEEE (Institute of Electrical and Electronics Engineers)" data-type="indexterm" id="id1240"/><a contenteditable="false" data-primary="Institute of Electrical and Electronics Engineers (IEEE)" data-type="indexterm" id="id1241"/>IEEE (Institute of Electrical and Electronics Engineers), DCB enhances Ethernet performance and reliability. One key feature is priority-based flow control, which helps balance and manage heavy traffic loads in the data <span class="keep-together">center</span>.</p>
+	</dd>
+	<dt>Fibre Channel</dt>
+	<dd>
+	<p>Designed<a contenteditable="false" data-primary="Fibre Channel protocol" data-type="indexterm" id="id1242"/> for high-speed networking, this protocol can reach speeds up to 256 Gbps. It’s often used to connect servers to shared storage systems that need rapid and consistent data access.</p>
+	</dd>
+</dl>
+
+<p>Inside an organization, you’ll find different types of networks serving specific needs. These are examples:</p>
+
+<dl>
+	<dt>Local area networks (LANs)</dt>
+	<dd>
+	<p>These<a contenteditable="false" data-primary="local area networks (LANs)" data-type="indexterm" id="id1243"/><a contenteditable="false" data-primary="LANs (local area networks)" data-type="indexterm" id="id1244"/> cover small areas like an office or a single building. Because of their limited reach, LANs usually deliver faster speeds.</p>
+	</dd>
+	<dt>Wide area networks (WANs)</dt>
+	<dd>
+	<p>WANs<a contenteditable="false" data-primary="wide area networks (WANs)" data-type="indexterm" id="id1245"/><a contenteditable="false" data-primary="WANs (wide area networks)" data-type="indexterm" id="id1246"/> span larger areas, connecting multiple cities or even entire countries. In many ways, cloud platforms are advanced WANs. Whether public or private, they provide networking and compute resources on demand.</p>
+	</dd>
+	<dt>Software-defined WANs (SD-WANs)</dt>
+	<dd>
+	<p>SD-WANs<a contenteditable="false" data-primary="software-defined WANs (SD-WANs)" data-type="indexterm" id="id1247"/><a contenteditable="false" data-primary="SD-WANs (software-defined WANs)" data-type="indexterm" id="id1248"/> take a virtual approach, letting you configure and manage the network through software rather than relying only on hardware. This flexibility makes it easier to adapt to changing traffic demands.</p>
+	</dd>
+</dl>
+
+<p>At the hardware level, networking relies on switches and routers. Switches manage internal communication within the data center, directing data packets efficiently between servers and storage. Routers, on the other hand, handle communication between the data center and external networks, such as the internet, always aiming to find the best route for data to travel.</p>
+
+<p>To keep everything secure, data centers deploy firewalls. These combine hardware and software to control incoming and outgoing traffic based on pre-established security rules.</p>
+
+<p class="pagebreak-before">As for networking architectures, there are two types:</p>
+
+<dl>
+	<dt>Client-server</dt>
+	<dd>
+	<p>A <a contenteditable="false" data-primary="client-server networks" data-type="indexterm" id="id1249"/>server provides resources like storage, processing power, and data, whereas the client (the end user) consumes these services. Each client connects to the server, but they don’t share resources with each other.</p>
+	</dd>
+	<dt>Peer-to-peer (P2P) networks</dt>
+	<dd>
+	<p>Here, <a contenteditable="false" data-primary="peer-to-peer (P2P) networks" data-type="indexterm" id="id1250"/><a contenteditable="false" data-primary="P2P (peer-to-peer) networks" data-type="indexterm" id="id1251"/>all computers in the network have equal privileges. There’s no central server controlling access. Instead, each machine can share resources directly with the others.</p>
+	</dd>
+</dl>
+
+<p>Now, let’s look at AWS’s networking services in more<a contenteditable="false" data-primary="networking in data centers" data-startref="jc12.1" data-type="indexterm" id="id1252"/> detail.</p>
+</div></section>
+
+<section data-pdf-bookmark="Virtual Private Cloud (VPC)" data-type="sect1"><div class="sect1" id="ch12_virtual_private_cloud_vpc_1763395115969326">
+<h1>Virtual Private Cloud (VPC)</h1>
+
+<p>A<a contenteditable="false" data-primary="VPC (Virtual Private Cloud)" data-type="indexterm" id="jc12.3"/> virtual private cloud (VPC) allows for full control over your network setup. <a data-type="xref" href="#ch12_figure_1_1763395115963976">Figure 12-1</a> shows an example of how this works.</p>
+
+<figure><div class="figure" id="ch12_figure_1_1763395115963976"><img alt="A diagram illustrating the components of a Virtual Private Cloud (VPC) setup, including an internet gateway, route table, NAT gateway, security group, and NACL, with EC2 and RDS in public and private subnets respectively." src="assets/awsc_1201.png"/>
+<h6><span class="label">Figure 12-1. </span>The setup of a VPC</h6>
+</div></figure>
+
+<p class="pagebreak-before">With a VPC, you decide your IP address ranges, create subnets to organize resources into logical groups, and set up routing and security rules that fit your architecture. A subnet is a segmented portion of a VPC’s IP address range that allows you to organize and isolate resources within your virtual network for better security and efficient routing.</p>
+
+<p>For example, suppose you’re running a web application. You might place your public-facing web servers in a subnet that connects to the internet, while your sensitive database servers sit in a private subnet without internet access. That way, customers can browse your website freely, but your database remains tucked away from direct <span class="keep-together">exposure</span>.</p>
+
+<p>When it comes to securing your VPC, AWS gives you multiple layers of defense. At the instance level, you have Security Groups. For example, you might configure one to only allow HTTP and HTTPS traffic into your web server and permit database connections only from the web server’s IP.</p>
+
+<p>Then there are network access control lists (NACLs), <a contenteditable="false" data-primary=" network access control lists (NACLs)" data-type="indexterm" id="id1253"/><a contenteditable="false" data-primary="NACLs (network access control lists)" data-type="indexterm" id="id1254"/>which provide an additional layer of security at the subnet level. Unlike Security Groups, which are stateful (if traffic is allowed in, the response is automatically allowed out), NACLs are stateless. You have to define both inbound and outbound rules explicitly.</p>
+
+<p>Another key piece of a VPC is the internet gateway (IGW). <a contenteditable="false" data-primary="internet gateway (IGW)" data-type="indexterm" id="id1255"/><a contenteditable="false" data-primary="IGW (internet gateway)" data-type="indexterm" id="id1256"/>This is what connects your VPC to the internet. If your EC2 instance needs to download software updates, it uses the IGW to reach external servers.</p>
+
+<p>But what if you have resources that shouldn’t be accessible from the internet but still need to initiate outbound connections? That’s where a <a contenteditable="false" data-primary="network address translation (NAT) gateway" data-type="indexterm" id="id1257"/><a contenteditable="false" data-primary="NAT (network address translation) gateway" data-type="indexterm" id="id1258"/>network address translation (NAT) gateway comes in. For example, your database server might need to download security patches without exposing itself to inbound connections from the outside world.</p>
+
+<p>Route tables tie everything together by directing traffic within your VPC. Think of them like a GPS<a contenteditable="false" data-primary="GPS" data-type="indexterm" id="id1259"/> for your network traffic. If a user sends a request to your web server, the route table makes sure the reply goes back out through the IGW or to another subnet, depending on its destination.</p>
+
+<p>Here are some common AWS services you’ll deploy inside your VPC:</p>
+
+<ul>
+	<li>
+	<p>EC2 for virtual servers to run applications</p>
+	</li>
+	<li>
+	<p>Amazon RDS for managed relational databases like MySQL or PostgreSQL</p>
+	</li>
+	<li>
+	<p>ELB to distribute incoming traffic across multiple servers, which boosts <span class="keep-together">reliability</span></p>
+	</li>
+	<li>
+	<p>EFS for scalable shared storage between instances</p>
+	</li>
+</ul>
+
+<p>Finally, your VPC doesn’t operate in isolation. AWS offers services like VPC peering, <a contenteditable="false" data-primary="VPC peering" data-type="indexterm" id="id1260"/>which enables two VPCs to communicate privately, even across regions. Keep in mind that while this is useful for setups such as separate development, staging, and production environments, data transfer charges apply for cross-region traffic.</p>
+
+<p>For larger or more complex environments, AWS also provides<a contenteditable="false" data-primary="Transit Gateway" data-type="indexterm" id="id1261"/> Transit Gateway. This acts as a scalable hub to connect multiple VPCs, on-premises networks, and VPNs. Unlike full-mesh peering, Transit Gateway simplifies network architecture by centralizing routing and control, making it especially valuable for enterprises managing dozens or hundreds of interconnected   networks.</p>
+</div></section>
+
+<section data-pdf-bookmark="Setting Up a VPC" data-type="sect1"><div class="sect1" id="ch12_setting_up_a_vpc_1763395115969377">
+<h1>Setting Up a VPC</h1>
+
+<p>Let’s set up a VPC in AWS. Here are the steps:</p>
+
+<ol>
+	<li>
+	<p>Log in to AWS.</p>
+	</li>
+	<li>
+	<p>Enter VPC in the search box.</p>
+	</li>
+	<li>
+	<p>Select Create VPC. You will see the setup screen shown in <a data-type="xref" href="#ch12_figure_2_1763395115964006">Figure 12-2</a>.</p>
+
+	<figure><div class="figure" id="ch12_figure_2_1763395115964006"><img alt="AWS setup screen showing options to create a VPC with resources, auto-generate name tags, and preview of the virtual network configuration." src="assets/awsc_1202.png"/>
+	<h6><span class="label">Figure 12-2. </span>The setup screen to create a VPC</h6>
+	</div></figure>
+	</li>
+	<li>
+	<p>Enter a name for the VPC.</p>
+	</li>
+	<li>
+	<p>For “Resources to create,” select “VPC and more.” This will create the VPC along with subnets, route tables, and gateways.</p>
+	</li>
+	<li>
+	<p>Enter an IPv4 Classless Inter-Domain Routing (CIDR) <a contenteditable="false" data-primary="Classless Inter-Domain Routing (CIDR)" data-type="indexterm" id="id1262"/><a contenteditable="false" data-primary="CIDR (Classless Inter-Domain Routing)" data-type="indexterm" id="id1263"/>block. Use the default 10.0.0.0/16, which gives you plenty of IP addresses.</p>
+	</li>
+	<li>
+	<p>Leave the IPv6 CIDR block field set to “No IPv6 CIDR block” unless you require IPv6 connectivity.</p>
+	</li>
+	<li>
+	<p>For Tenancy, keep the default option selected.</p>
+	</li>
+	<li>
+	<p>Choose the number of Availability Zones. Select 2 to provide high availability across data centers.</p>
+	</li>
+	<li>
+	<p>For “Number of public subnets,” select 2. These will host resources like web servers that need internet access.</p>
+	</li>
+	<li>
+	<p>For “Number of private subnets,” select 2. These are for backend resources such as databases that should not be exposed to the internet.</p>
+	</li>
+	<li>
+	<p>For “NAT gateways ($),” choose “In 1 AZ” to allow private subnets to initiate internet connections securely.</p>
+	</li>
+	<li>
+	<p>Leave VPC endpoints as None. You can add endpoints like S3 File Gateway later if needed.</p>
+	</li>
+	<li>
+	<p>Ensure DNS hostnames and DNS resolution are both enabled so your resources can use domain names easily.</p>
+	</li>
+	<li>
+	<p>Select Create<a contenteditable="false" data-primary="VPC (Virtual Private Cloud)" data-startref="jc12.3" data-type="indexterm" id="id1264"/><a contenteditable="false" data-primary="networking services" data-secondary="Virtual Private Cloud" data-startref="jc12.2" data-type="indexterm" id="id1265"/> VPC.</p>
+	</li>
+</ol>
+</div></section>
+
+<section data-pdf-bookmark="Route 53" data-type="sect1"><div class="sect1" id="ch12_route_53_1763395115969424">
+<h1>Route 53</h1>
+
+<p>In <a data-type="xref" href="ch08.html#ch08_aws_global_infrastructure_1763395115294159">Chapter 8</a>, we<a contenteditable="false" data-primary="Route 53" data-type="indexterm" id="id1266"/><a contenteditable="false" data-primary="networking services" data-secondary="Route 53" data-type="indexterm" id="id1267"/><a contenteditable="false" data-primary="Amazon Route 53" data-type="indexterm" id="id1268"/> talked about Route 53’s global DNS architecture and how it anchors name resolution at the edge. But let’s dig deeper into how this system weaves itself into AWS networking to boost resiliency, performance, security, and hybrid-cloud flexibility.</p>
+
+<p>Amazon Route 53 can act as a traffic director, sending users to where they need to go. That could be an EC2 instance, an S3 bucket, a server in your data center, or a third-party endpoint. If you’re running a hybrid setup with resources split between AWS and on-premises, Route 53 routes traffic to the right place.</p>
+
+<p>One of its most useful features is health checks. Every minute, Route 53 sends out quick probes using HTTP, HTTPS, TCP, or CloudWatch alarms to check that each endpoint is up and running. These results feed straight into CloudWatch, giving you near-real-time visibility. And if a server fails, Route 53 automatically reroutes traffic to a healthy endpoint.</p>
+
+<p>Route 53 gives you various options for routing traffic. You can steer users to the endpoint with the lowest latency, send them based on their geographic location, or split traffic evenly to run A/B tests. You can combine these routing rules however you need. Plus, Domain Name System Security Extensions (DNSSEC) <a contenteditable="false" data-primary="Domain Name System Security Extensions (DNSSEC)" data-type="indexterm" id="id1269"/>adds an extra layer of security by cryptographically signing your DNS records to protect against <span class="keep-together">tampering</span>.</p>
+
+<p>If you operate in both AWS and your own network, Route 53 Resolver bridges them. It lets your AWS applications resolve internal data center records. It uses inbound and outbound Resolver endpoints along with forwarding rules sent over AWS VPN or AWS Direct Connect. This setup ensures the DNS works smoothly whether your resources live in the cloud or on-premises.</p>
+
+<p>AWS also offers PrivateLink, <a contenteditable="false" data-primary="PrivateLink" data-type="indexterm" id="id1270"/>which lets you securely access AWS services (like S3 or DynamoDB) and third-party SaaS applications directly through VPC endpoints. With PrivateLink, traffic never traverses the public internet, which reduces latency and significantly improves security for sensitive workloads.</p>
+
+<p>Finally, Route 53 keeps detailed logs of every DNS query. You’ll see what was queried, when it happened, where it came from, and which firewall rule or policy applied.</p>
+</div></section>
+
+<section data-pdf-bookmark="Network Connectivity Options to AWS" data-type="sect1"><div class="sect1" id="ch12_network_connectivity_options_to_aws_1763395115969499">
+<h1>Network Connectivity Options to AWS</h1>
+
+<p>Connecting<a contenteditable="false" data-primary="AWS" data-secondary="network connectivity options to" data-type="indexterm" id="jc12.5"/><a contenteditable="false" data-primary="networking services" data-secondary="network connectivity options to AWS" data-type="indexterm" id="jc12.4"/> your office network or data center to AWS might feel daunting at first, but AWS gives you two options to make it straightforward: Site-to-Site VPN and Direct Connect. Both create secure links between your on-premises environment and AWS resources, but they differ in speed, reliability, cost, and setup complexity. Let’s break down what each one brings to the table.</p>
+
+<section data-pdf-bookmark="AWS Site-to-Site VPN" data-type="sect2"><div class="sect2" id="ch12_aws_site_to_site_vpn_1763395115969551">
+<h2>AWS Site-to-Site VPN</h2>
+
+<p>AWS<a contenteditable="false" data-primary="Site-to-Site VPN" data-type="indexterm" id="id1271"/> Site-to-Site VPN sets <a contenteditable="false" data-primary="VPNs (virtual private networks)" data-type="indexterm" id="id1272"/>up an encrypted tunnel over the public internet to link your network to a VPC. It’s like driving on a public highway in an armored car. Your data stays protected, but the ride quality depends on internet traffic conditions.</p>
+
+<p>Here are the factors to consider for this option:</p>
+
+<dl>
+	<dt>Setup and cost</dt>
+	<dd>
+	<p>You can get a VPN connection up and running within minutes using the AWS Management Console, with no extra physical hardware needed. It’s budget-friendly and comes with two automatically provisioned tunnels for redundancy, so if one drops, traffic switches to the other.</p>
+	</dd>
+	<dt>Performance</dt>
+	<dd>
+	<p>Speeds can reach up to 4 Gbps, but performance varies depending on internet conditions.</p>
+	</dd>
+	<dt>Security</dt>
+	<dd>
+	<p>VPN connections use industry-standard Internet Protocol Security (IPsec) encryption, keeping data safe as it travels across public networks.</p>
+	</dd>
+</dl>
+</div></section>
+
+<section data-pdf-bookmark="AWS Direct Connect" data-type="sect2"><div class="sect2" id="ch12_aws_direct_connect_1763395115969600">
+<h2>AWS Direct Connect</h2>
+
+<p>AWS<a contenteditable="false" data-primary="Direct Connect" data-type="indexterm" id="id1273"/> Direct Connect provides a dedicated, private fiber link from your premises directly into AWS, skipping the public internet altogether. These are some of the main factors to consider:</p>
+
+<dl>
+	<dt>Setup and cost</dt>
+	<dd>
+	<p>Direct Connect requires physical setup, either in your own facility or through a co-location partner. It usually takes anywhere from 4 to 12 weeks to establish, and upfront costs are higher compared to a VPN.</p>
+	</dd>
+	<dt>Performance</dt>
+	<dd>
+	<p>Because it’s a private line, you get consistent bandwidth ranging from 1 Gbps up to 100 Gbps or more, with stable low latency and no fluctuations from internet congestion.</p>
+	</dd>
+	<dt>Security</dt>
+	<dd>
+	<p>The connection is private, and you can enhance security further with<a contenteditable="false" data-primary="MACsec" data-type="indexterm" id="id1274"/> MACsec encryption (a network security standard that operates at the medium access control layer), though this option is only available at select locations and for speeds of 10 Gbps or higher. For broader compatibility, you can also overlay an IPsec VPN for end-to-end encryption when needed.</p>
+	</dd>
+</dl>
+
+<p>It’s common for organizations to choose to use both. They may rely on Direct Connect for its stable, high-performance backbone and add a VPN either as an extra encryption layer over Direct Connect or as a failover path if Direct Connect goes down. This hybrid setup ensures maximum reliability, redundancy, and secure connectivity across your environments.</p>
+
+<p><a data-type="xref" href="#ch12_table_1_1763395115965777">Table 12-1</a> shows a summary of the different types<a contenteditable="false" data-primary="VPC (Virtual Private Cloud)" data-type="indexterm" id="id1275"/> of AWS <a contenteditable="false" data-primary="Route 53" data-type="indexterm" id="id1276"/><a contenteditable="false" data-primary="Amazon Route 53" data-type="indexterm" id="id1277"/>networking<a contenteditable="false" data-primary="Site-to-Site VPN" data-type="indexterm" id="id1278"/> services.</p>
+
+<table id="ch12_table_1_1763395115965777">
+	<caption><span class="label">Table 12-1. </span>Summary of AWS networking services</caption>
+	<thead>
+		<tr>
+			<th>Service</th>
+			<th>Description and features</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p>Virtual Private Cloud (VPC)</p>
+			</td>
+			<td>
+			<ul>
+				<li>Provides full control over your virtual network setup</li>
+				<li>Allows creation of subnets, route tables, IGWs, and NAT gateways</li>
+				<li>Enhances security with Security Groups and NACLs</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Route 53</p>
+			</td>
+			<td>
+			<ul>
+				<li>Acts as a DNS service and traffic director for routing</li>
+				<li>Includes health checks and DNSSEC for security and resiliency</li>
+				<li>Supports hybrid DNS resolution with Route 53 Resolver</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>AWS Site-to-Site VPN</p>
+			</td>
+			<td>
+			<ul>
+				<li>Creates an encrypted tunnel over the public internet</li>
+				<li>Quick setup with redundant tunnels for failover</li>
+				<li>Uses IPsec encryption for secure connectivity</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>AWS Direct Connect</p>
+			</td>
+			<td>
+			<ul>
+				<li>Provides dedicated private fiber connection to AWS</li>
+				<li>Offers consistent high bandwidth with low latency</li>
+				<li>Requires physical setup<a contenteditable="false" data-primary="AWS" data-secondary="network connectivity options to" data-startref="jc12.5" data-type="indexterm" id="id1279"/><a contenteditable="false" data-primary="networking services" data-secondary="network connectivity options to AWS" data-startref="jc12.4" data-type="indexterm" id="id1280"/> with higher upfront costs</li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div></section>
+</div></section>
+
+<section class="less_space pagebreak-before" data-pdf-bookmark="Conclusion" data-type="sect1"><div class="sect1" id="ch12_conclusion_1763395115969647">
+<h1>Conclusion</h1>
+
+<p>In this chapter, we learned about the core networking services that AWS offers to build secure, scalable, and reliable cloud architectures. We saw how VPCs provide full control over your network setup with subnets, route tables, security groups, and NAT gateways. We also examined Route 53’s role as a global DNS and traffic routing service with features like health checks and DNSSEC for security and resiliency. Finally, we covered connectivity options, comparing Site-to-Site VPN’s quick, encrypted internet tunnels with Direct Connect’s dedicated private links offering consistent high bandwidth and low latency.</p>
+
+<p>In the next chapter, we’ll take a look at AI services for AWS.</p>
+</div></section>
+
+<section data-pdf-bookmark="Chapter Quiz" data-type="sect1"><div class="sect1" id="ch12_quiz_1763395115969692">
+<h1>Chapter Quiz</h1>
+
+<p>To check your answers, please refer to the <a data-type="xref" href="app02.html#appb_chapter_12_answer_key_1763395113746514">“Chapter 12 Answer Key”</a>.</p>
+
+<ol>
+	<li>
+	<p>What does a virtual private cloud (VPC) allow you to do in AWS?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>Control your virtual network setup, including subnets and route tables</p>
+		</li>
+		<li>
+		<p>Automatically encrypt all data at rest</p>
+		</li>
+		<li>
+		<p>Create EC2 instances without security groups</p>
+		</li>
+		<li>
+		<p>Connect directly to on-premises data centers without any setup</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>What is a function of a network address translation (NAT) gateway in a VPC?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>It provides inbound internet access to private subnets.</p>
+		</li>
+		<li>
+		<p>It acts as a firewall.</p>
+		</li>
+		<li>
+		<p>It allows outbound internet connections from private subnets.</p>
+		</li>
+		<li>
+		<p>It stores database snapshots.</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>What is the purpose of a subnet in a VPC?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>It provides Domain Name System (DNS) services.</p>
+		</li>
+		<li>
+		<p>It encrypts traffic in transit.</p>
+		</li>
+		<li>
+		<p>It segments IP ranges to organize resources.</p>
+		</li>
+		<li>
+		<p>It creates virtual private network (VPN) tunnels.</p>
+		</li>
+	</ol>
+	</li>
+	<li class="less_space pagebreak-before">
+	<p>What is the primary use of AWS Site-to-Site VPN?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>Creating an encrypted tunnel between on-premises and AWS</p>
+		</li>
+		<li>
+		<p>Direct physical fiber connection</p>
+		</li>
+		<li>
+		<p>Hosting DNS services</p>
+		</li>
+		<li>
+		<p>Caching web content globally</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>What is the purpose of an internet gateway in a VPC?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>It encrypts traffic in transit.</p>
+		</li>
+		<li>
+		<p>It creates private subnets.</p>
+		</li>
+		<li>
+		<p>It allows resources to connect to the internet.</p>
+		</li>
+		<li>
+		<p>It provides DNS resolution.</p>
+		</li>
+	</ol>
+	</li>
+</ol>
+</div></section>
+</div></section></body></html>

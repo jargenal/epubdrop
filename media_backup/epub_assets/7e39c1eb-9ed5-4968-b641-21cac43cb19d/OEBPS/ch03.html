@@ -1,0 +1,847 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Shared Alignment</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:0439a25f-2a75-4098-aebb-6db19e715d55" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 3. Shared Alignment" data-type="chapter" epub:type="chapter"><div class="chapter" id="ch03_shared_alignment_1721833262137786">
+<h1><span class="label">Chapter 3. </span>Shared Alignment</h1>
+
+<p>The heart of an effective enterprise architecture strategy is creating shared alignment for architecture decisions.<a contenteditable="false" data-primary="shared alignment" data-type="indexterm" id="ix_shalgn1"/> In <a data-type="xref" href="ch02.html#ch02_key_strategy_objectives_1721833215734460">Chapter 2</a>, you learned that creating shared alignment means that all impacted stakeholders are aligned to adhere with an architecture decision, even if they don’t necessarily agree with that decision or would have preferred an alternative. You also learned that a culture of trust is foundational to achieve alignment.<a contenteditable="false" data-primary="alignment" data-seealso="shared alignment" data-type="indexterm" id="id574"/> In this chapter, you’ll go deeper to better understand mechanisms that you can use to create shared alignment and the culture of trust that is a prerequisite for it.</p>
+
+<p>Did you know that enterprise architecture as a function is uniquely positioned to bring a group of individual stakeholders together with a common goal? It is unique because enterprise architecture is concerned with a holistic perspective and solving problems with the whole company in mind. This is different from organizational functions like engineering, business development, and cybersecurity.<a contenteditable="false" data-primary="cybersecurity" data-type="indexterm" id="id575"/> Whereas these functions do work toward the company’s common goal, such as increasing business revenue, each function tends to focus on solving its own problems first. For example, cybersecurity may seek additional protections and risk mitigations, while engineering may seek to modernize, and business development may seek to penetrate new markets. Only enterprise architecture is positioned to look across all of these functional areas to define the north star as a modernization strategy with security built in to allow for new market growth.</p>
+
+<p>To establish an effective enterprise architecture practice, you must transform teams of individuals to teams of a collective whole, and you need to do that at scale. While enterprise architecture as a function enables architect roles (enterprise, solution, and application) to chart paths into the unknown and define the north star of technology strategy and technology solutions, the paths need to be implemented by the efforts of partners such as engineering, product, and cybersecurity. This is necessary whether the north star guidance is as broad as an enterprise strategy or as narrow as a single application. At the broadest level the partners are at senior leadership level, whereas at the most granular level the partners are specific to a single application team.</p>
+
+<p>A real-life example is the construction of a house. I’m sure you would agree that it does no good for an architect to create great blueprints if the construction manager can’t find the building materials to build them or the electrician is nowhere to be found to do the wiring because they’re too busy with other jobs and priorities. Whereas, if the architect, construction manager, and electrician worked together from the beginning, they could have come up with a feasible blueprint and aligned schedules to make the delivery work—for them, and for their customer.</p>
+
+<p>Effective enterprise architecture as an organizational function can set the course for bringing stakeholders together to work collectively. The first step to creating shared alignment for an architecture decision begins with knowing who needs to align.</p>
+
+<section data-pdf-bookmark="Align on Who" data-type="sect1"><div class="sect1" id="ch03_align_on_who_1721833262137850">
+<h1>Align on Who</h1>
+
+<p>Knowing who needs to be engaged and aligning<a contenteditable="false" data-primary="shared alignment" data-secondary="aligning on who" data-type="indexterm" id="ix_shalgn1who"/> them on the problem statement along with, and prior to, aligning them on the solution, is essential to the success of architecture work. If the wrong stakeholders are included, then the credibility of the decision is likely to be undermined, the decision is likely to be ignored and not get implemented, and the decision is likely to be relitigated once the right stakeholders get involved.</p>
+
+<p>Have you ever gone through a long, arduous collaboration process to get to a decision only to find out, after the decision was approved, that some key stakeholders had been missed in the impact analysis or that you had the wrong approver? I have, and it is exceedingly frustrating to be in this circumstance. It took me some time to understand that it didn’t matter how good of a job I did in thinking through my analysis and recommendations if I didn’t bring the right stakeholders along with me on that decision-making journey.</p>
+
+<p>Fortunately for me, I have the benefit of project management and consulting experience to draw from, and I learned several techniques around stakeholder management that I can now share with you to help prevent such frustrating scenarios from <span class="keep-together">occurring.</span></p>
+
+<p>So, what exactly do I mean by a stakeholder? Let’s find out.</p>
+
+<section class="pagebreak-before less_space" data-pdf-bookmark="What Is a Stakeholder?" data-type="sect2"><div class="sect2" id="ch03_what_is_a_stakeholder_1721833262137887">
+<h2>What Is a Stakeholder?</h2>
+
+<p>A <em>stakeholder</em> refers to a person or group that is <em>impacted </em>by<a contenteditable="false" data-primary="stakeholders" data-type="indexterm" id="ix_stkhld"/> the decision, has <em>authority</em> over the decision, and/or is a <em>subject matter expert</em> in the decision’s problem space.<a contenteditable="false" data-primary="stakeholders" data-secondary="defined" data-type="indexterm" id="id576"/></p>
+
+<p><em>Impact</em> refers to any positive or adverse change that occurs as a result of implementing the decision’s solution. Going back to my real-life house example, the homeowner is positively impacted, and the neighbors are also impacted, potentially in an adverse way during construction.</p>
+
+<p><em>Authority</em> refers to positional or designated ability to approve changes recommended by the decision. <a contenteditable="false" data-primary="authority" data-type="indexterm" id="id577"/>In the real-life house example, the construction manager has approval authority over his team to oversee the implementation work. It may also be necessary to attain a permit to do the construction work. The permit approver has authority over issuing that permit.</p>
+
+<p><em>Subject matter expert</em> (SME) refers to having the expertise<a contenteditable="false" data-primary="SMEs (subject matter experts)" data-type="indexterm" id="id578"/> necessary to vet the decision in terms of completeness, feasibility, and/or impact. For example, when considering a house, a housing inspector is the SME on housing regulations and can tell whether or not the house is compliant.<a contenteditable="false" data-primary="subject matter experts" data-see="SMEs" data-type="indexterm" id="id579"/></p>
+
+<p>Now, when you think about all of the stakeholders that meet one or more of these criteria for your architecture decision, you may end up with a very long list. To filter or prioritize this list, you also need to consider the <em>influence</em> level of the stakeholder and the <em>importance</em> of the decision to that stakeholder.<a contenteditable="false" data-primary="stakeholders" data-secondary="influence level of and importance of decision to" data-type="indexterm" id="id580"/></p>
+
+<p><em>Influence</em> refers to the ability of the stakeholder to impact the outcome of the decision itself. High influence means that their dissent is a roadblock or impediment. For example, let’s say a decision requires implementing a change to query logic of a reporting dashboard. The engineering and product owners of that reporting dashboard would be highly influential in that decision.</p>
+
+<p><em>Importance </em>means that the stakeholder has an internal or external motivation to be engaged in the decision-making process. An example of internal motivation is when the decision impacts an area that aligns with their interest or passion, and therefore they consider it important. Personally, my love for cloud technology drives my willingness to participate in strategic cloud-related decisions. An example of an external motivation is an organizational incentive; perhaps there’s a reward or recognition for someone to be involved or the decision is important because it impacts the success of an initiative or solution that they own or the decision-making process requires their approval.</p>
+
+<p><a data-type="xref" href="#ch03_figure_1_1721833262096881">Figure 3-1</a> illustrates the dimensions of influence and importance in a quadrant chart.</p>
+
+<figure><div class="figure" id="ch03_figure_1_1721833262096881"><img alt="" src="assets/foea_0301.png"/>
+<h6><span class="label">Figure 3-1. </span>Stakeholder mapping to influence versus importance</h6>
+</div></figure>
+
+<p>The top right quadrant contains your key target stakeholders, those with high influence and high importance. These are the ones that need regular engagement in your decision-making process and need to be kept mollified. They should be engaged from the very beginning and throughout the decision-making process, and their engagement is quite active. For instance, they are invited to meetings, they review documentation, they are provided frequent updates, and they can provide comments. In the real-life house example, the homeowner and the construction manager are stakeholders in this quadrant.</p>
+
+<p>The top left quadrant of stakeholders is important to consider and keep aligned because of the high influence that they wield. However, because they would consider this decision to be less important and therefore of less relevance to them, you likely only need to monitor them and reach out sporadically. For example, you could set up infrequent check-ins to ascertain their needs and provide briefings, or disseminate documentation as milestones in the decision making process are hit. Note, you may even need to convince them that they are key stakeholders by making a case for why this decision should be important to them. In the real-life house example, the permit approver is in this quadrant because construction cannot proceed without them yet they don’t have a specific tie to any given construction project.</p>
+
+<p>Stakeholders in the bottom right quadrant, low influence and high importance, are likely to be noisy if not engaged in some fashion, so it is best to keep them informed and abreast of updates, even if they are not actively part of the decision-making process. For example, let’s say there is a decision that changes a key reporting metric and there are some power users that heavily use the metric in multiple downstream reports. The change is of high importance to the power users, but they could be deemed as low influence in that the change has to happen with or without their support. As it is usually better to have support, it would be good to give them a chance to be informed and react to the change early and provide feedback, even if they can’t actually change the outcome of the decision. In the real-life house example, the neighbors fit this criteria.</p>
+
+<p>The bottom left quadrant, low influence and low importance, means that these stakeholders are not needed in the decision-making process. Only if the decision actually impacts them would there need to be an effort to communicate essential relevant information once the decision is finalized. For instance, taking the same example above, of a decision that changes a key reporting metric, let’s say this time there are only end users that sometimes use that metric. They would need to be notified to understand the change, but they would not necessarily be included in the decision-making process of the details of the change if they are mapped as low influence and low importance. In the real-life house example, the housing inspector fits in this quadrant; they need to know the house was built to do the inspection, but they are not directly involved in the decisions made to build the house.<a contenteditable="false" data-primary="stakeholders" data-secondary="mapping example for building a house" data-type="indexterm" id="id581"/></p>
+
+<p>To perform a stakeholder mapping, first brainstorm all the possible stakeholders against the criteria and then map them against the quadrant chart. You could use a table format like <a data-type="xref" href="#ch03_table_1_1721833262110307">Table 3-1</a>.</p>
+
+<table id="ch03_table_1_1721833262110307">
+	<caption><span class="label">Table 3-1. </span>Stakeholder mapping template</caption>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Impact</th>
+			<th>Authority</th>
+			<th>SME</th>
+			<th>Influence</th>
+			<th>Importance</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Person/Group</td>
+			<td>Yes/No</td>
+			<td>Yes/No</td>
+			<td>Yes/No</td>
+			<td>High/Low</td>
+			<td>High/Low</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><a data-type="xref" href="#ch03_table_2_1721833262110354">Table 3-2</a> shows using this mapping for the real-life example of the house.</p>
+
+<table id="ch03_table_2_1721833262110354">
+	<caption><span class="label">Table 3-2. </span>Stakeholder mapping example for building a house</caption>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Impact</th>
+			<th>Authority</th>
+			<th>SME</th>
+			<th>Influence</th>
+			<th>Importance</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Homeowner</td>
+			<td>Yes</td>
+			<td>Yes</td>
+			<td>No</td>
+			<td>High</td>
+			<td>High</td>
+		</tr>
+		<tr>
+			<td>Construction manager</td>
+			<td>Yes</td>
+			<td>Yes</td>
+			<td>Yes</td>
+			<td>High</td>
+			<td>High</td>
+		</tr>
+		<tr>
+			<td>Permit Approver</td>
+			<td>Yes</td>
+			<td>Yes</td>
+			<td>No</td>
+			<td>High</td>
+			<td>Low</td>
+		</tr>
+		<tr>
+			<td>Neighbors</td>
+			<td>No</td>
+			<td>No</td>
+			<td>No</td>
+			<td>Low</td>
+			<td>High</td>
+		</tr>
+		<tr>
+			<td>Housing Inspector</td>
+			<td>Yes</td>
+			<td>Yes</td>
+			<td>Yes</td>
+			<td>Low</td>
+			<td>Low</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Your stakeholder mapping for a given architecture decision will tell you who needs to be <em>engaged </em>in making that architecture decision. But what exactly does engaged mean? The next section explains.</p>
+</div></section>
+
+<section data-pdf-bookmark="What Is Stakeholder Engagement?" data-type="sect2"><div class="sect2" id="ch03_what_is_stakeholder_engagement_1721833262137919">
+<h2>What Is Stakeholder Engagement?</h2>
+
+<p>Stakeholder engagement defines how to include a stakeholder <a contenteditable="false" data-primary="stakeholders" data-secondary="stakeholder engagement" data-type="indexterm" id="id582"/>and for what activity. <em>Engaged </em>means that a <a contenteditable="false" data-primary="responsible, accountable, consulted, informed (RACI)" data-seealso="RACI charts" data-type="indexterm" id="id583"/>stakeholder is one or<a contenteditable="false" data-primary="RACI (responsible, accountable, consulted, informed)" data-type="indexterm" id="id584"/> more of the following:</p>
+
+<dl>
+	<dt>Responsible (R)</dt>
+	<dd>
+	<p>This stakeholder <a contenteditable="false" data-primary="stakeholders" data-secondary="stakeholder engagement" data-tertiary="RACI" data-type="indexterm" id="id585"/>ensures that all necessary decision-making process steps are followed, and they may also need to implement next steps.</p>
+	</dd>
+	<dt>Accountable (A)</dt>
+	<dd>
+	<p>This stakeholder ensures that the outcome of the architecture decision is realized.</p>
+	</dd>
+	<dt>Consulted (C)</dt>
+	<dd>
+	<p>This stakeholder provides inputs that help shape and strengthen the architecture decision.</p>
+	</dd>
+	<dt>Informed (I)</dt>
+	<dd>
+	<p>This stakeholder needs to be told about the decision, typically with respect to the result of the decision and transparency into who made the decision and with what considerations.<a contenteditable="false" data-primary="stakeholders" data-secondary="stakeholder engagement" data-tertiary="RACI chart template" data-type="indexterm" id="id586"/><a contenteditable="false" data-primary="RACI charts" data-secondary="depiction of shareholder engagement in" data-type="indexterm" id="id587"/></p>
+	</dd>
+</dl>
+
+<p>A common depiction of engagement is a RACI chart as shown in <a data-type="xref" href="#ch03_table_3_1721833262110376">Table 3-3</a>.</p>
+
+<table id="ch03_table_3_1721833262110376">
+	<caption><span class="label">Table 3-3. </span>RACI chart template</caption>
+	<thead>
+		<tr>
+			<th> </th>
+			<th>Stakeholder 1</th>
+			<th>Stakeholder 2</th>
+			<th>Stakeholder 3</th>
+			<th>Stakeholder 4</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Activity</td>
+			<td>A</td>
+			<td>R</td>
+			<td>C</td>
+			<td>I</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>There must only be one accountable stakeholder for each defined activity. Shared accountability doesn’t work very well in practice since it diffuses and weakens accountable authority. That’s very different from responsibility. While there must be at least one responsible stakeholder to ensure that someone does the activity, there can be more than one. The accountable stakeholder can also be responsible, though does not have to be. Overall, for an architecture decision-making process, for every activity, you need one accountable and at least one responsible stakeholder. Depending on the specific architecture decision, there may be none, one, or multiple consulted or informed stakeholders.<a contenteditable="false" data-primary="stakeholders" data-secondary="stakeholder engagement" data-tertiary="example RACI chart applied to architecture decision" data-type="indexterm" id="id588"/><a contenteditable="false" data-primary="RACI charts" data-secondary="example chart applied to architecture decision" data-type="indexterm" id="id589"/></p>
+
+<p><a data-type="xref" href="#ch03_table_4_1721833262110398">Table 3-4</a> provides an example RACI chart filled out for an architecture decision.</p>
+
+<table id="ch03_table_4_1721833262110398">
+	<caption><span class="label">Table 3-4. </span>Generic example of RACI chart applied to an architecture decision</caption>
+	<thead>
+		<tr>
+			<th> </th>
+			<th>Architect</th>
+			<th>Engineering lead</th>
+			<th>Product lead</th>
+			<th>SME</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Conduct analysis of alternatives</td>
+			<td>A/R</td>
+			<td>C</td>
+			<td>C</td>
+			<td>C</td>
+		</tr>
+		<tr>
+			<td>Complete proof of concept</td>
+			<td>A</td>
+			<td>I</td>
+			<td>I</td>
+			<td>R</td>
+		</tr>
+		<tr>
+			<td>Approve decision from business perspective</td>
+			<td>I</td>
+			<td>I</td>
+			<td>A/R</td>
+			<td>C/I</td>
+		</tr>
+		<tr>
+			<td>Approve decision from engineering perspective</td>
+			<td>I</td>
+			<td>A/R</td>
+			<td>I</td>
+			<td>C/I</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>In this example, the architect role is accountable and responsible for providing the analysis that goes into the decision. They actively collaborate with other stakeholders to vet and document the architecture decision. They also work with an SME to perform a proof of concept to validate their recommendation. (Note: as this is a generic decision, I’ve used the generic architect role rather than the more specific application architect, solution architect, or enterprise architect role. The type of architect, and seniority of architect, vary based on the scope of decision.)</p>
+
+<p>The engineering lead is accountable and takes responsibility for the results of the decision from a technology perspective. They actively review and approve the decision from an engineering implementation perspective. The seniority of the engineering lead varies based on the scope of the decision and organizational structure.</p>
+
+<p>Similarly, the product lead is accountable and takes responsibility for the results of the decision from a product perspective. They actively review and approve the decision from a product need and prioritization perspective. The seniority of the product lead varies based on the scope of the decision and organizational structure.</p>
+
+<p>The SME is consulted to provide input and vet the alternatives and analysis conducted in the decision.<a contenteditable="false" data-primary="SMEs (subject matter experts)" data-type="indexterm" id="id590"/> They bring relevant subject matter expertise in the business and/or technology referenced by the decision to strengthen the decision.</p>
+
+<p>Your RACI should be a transparent artifact that sets the expectations of the stakeholders that you engage with. That transparency up front also allows them the ability to confirm whether or not they are in fact the right stakeholder for that specific level of involvement. For instance, you may end up with an accountable stakeholder providing you with delegates that are responsible, such that the responsible stakeholders are engaged in day-to-day collaboration and the accountable stakeholder just needs to be debriefed periodically. You may find out that you need a higher level of seniority to be your accountable lead.</p>
+
+<p>It is very important to complete this confirmation step as part of your stakeholder mapping process. Otherwise, you may risk making false assumptions of who is your stakeholder, and how they should be engaged.</p>
+
+<p>What if your stakeholder map ends up with an unmanageable number of stakeholders with whom to engage? For that, let’s look at scaling stakeholder engagement.</p>
+</div></section>
+
+<section data-pdf-bookmark="How Do You Scale Stakeholder Engagement?" data-type="sect2"><div class="sect2" id="ch03_how_do_you_scale_stakeholder_engagement_1721833262137946">
+<h2>How Do You Scale Stakeholder Engagement?</h2>
+
+<p>Especially for transformational <a contenteditable="false" data-primary="stakeholders" data-secondary="scaling stakeholder engagement" data-type="indexterm" id="id591"/>decisions that impact the entire enterprise or organizational units, it is impossible to directly include every stakeholder that will be impacted by that decision. Rather, the organization should have a culture of trust such that there is a trusted individual that can serve as the authoritative representative of a group, an organizational unit, or a functional area in the enterprise and can voice the larger group’s opinion.</p>
+
+<p>In an organization in which consensus is deeply rooted, it may be beneficial to include a <em>request for comment</em> (RFC) period as part of the transparent decision-making process.<a contenteditable="false" data-primary="request for comment (RFC) period" data-type="indexterm" id="id592"/> RFC allows for a large group to be invited to consult on the proposal beyond the SMEs that are directly involved in collaborative meetings. It can also be helpful to timebox a decision, meaning give a deadline. That way, there is a finite time period in which to debate and then come to a conclusion, rather than perpetually bring in more and more stakeholders for input and/or drag on the discussions.</p>
+
+<p>In addition, for all types of organizations, the decision-making process should be very transparent and well documented. That way, the reasoning for the decision, the alternatives considered, the implications identified—all of that is available for people who were not directly involved in making the decision to better understand the decision. This transparency is also helpful if you need to include new stakeholders along the way because of organizational changes or because new impacts are identified as part of the decision-making process.</p>
+</div></section>
+
+<section data-pdf-bookmark="How Does “Align on Who” Relate to Your Effective Enterprise Architecture Strategy?" data-type="sect2"><div class="sect2" id="ch03_how_does_align_on_who_relate_to_your_effective_e_1721833262138863">
+<h2>How Does “Align on Who” Relate to Your Effective Enterprise Architecture Strategy?</h2>
+
+<p>Knowing who to include, and how exactly to engage them, is essential to creating shared alignment. <a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="relation of aligning on who to effective strategy" data-type="indexterm" id="id593"/><a contenteditable="false" data-primary="stakeholders" data-secondary="aligning on, relation to effective enterprise architecture strategy" data-type="indexterm" id="id594"/>How does knowing this help you in your organization? Well, as part of establishing the objective of creating shared alignment, consider the maturity of your organization. Are there processes or organizational elements that need to be improved to do the following?</p>
+
+<dl>
+	<dt>Clarify stakeholder role definitions</dt>
+	<dd>
+	<p>Do definitions exist? Are people aligned with them? Is there training to confirm that understanding?</p>
+	</dd>
+	<dt>Clarify stakeholder engagement for activities relating to architecture decisions</dt>
+	<dd>
+	<p>Do RACI charts exist? Do people understand them? Do people use them? Is there an authorization hierarchy that is well understood?</p>
+	</dd>
+	<dt>Provide mechanisms for stakeholder mapping</dt>
+	<dd>
+	<p>Are templates available? Do architects understand how to do a stakeholder mapping? Is there a baseline defined for the enterprise that enterprise leadership aligns to, which can be tailored as needed for a given architecture decision? Are stakeholders included consistently in decision-making workflows?</p>
+	</dd>
+	<dt>Increase trust between stakeholders</dt>
+	<dd>
+	<p>Are stakeholders incentivized to work as a team? Is leadership advocating for collective goals?</p>
+	</dd>
+	<dt>Increase transparency in architecture decision-making process</dt>
+	<dd>
+	<p>Does such a process exist? Does tooling exist to support that process? Is it easy to find decision documentation? Is an RFC process needed, and if so, is it operational? Is there consistent execution of these processes?</p>
+	</dd>
+</dl>
+
+<p>Any gaps or improvement opportunities become inputs into your specific key results (KR) for this strategic objective. For example, maybe your organization doesn’t have shared alignment on architecture roles and how to engage them. In that situation, that could be the first KR that your enterprise architecture strategy function goes after, to define a baseline stakeholder role definition and stakeholder engagement RACI that your senior leadership agrees with. Maybe the enterprise architecture enablement function provides templates and tooling. Perhaps the enterprise architecture enforcement function comes up with requirements around engagement at key points of the software delivery lifecycle. The details of the KRs will vary by organization, but if you assess your organization and figure out where the highest-leverage opportunities are, you can turn those opportunities into specific KRs that are relevant to your organization.</p>
+
+<p>To identify who is engaged in an architecture decision, I mentioned earlier that you’ll want to consider who is impacted by the decision. To understand who is impacted, it is necessary to have a well-grounded understanding of the decision’s problem statement to identify those impacts. Let’s look at this in detail in the next section.<a contenteditable="false" data-primary="stakeholders" data-startref="ix_stkhld" data-type="indexterm" id="id595"/><a contenteditable="false" data-primary="shared alignment" data-secondary="aligning on who" data-startref="ix_shalgn1who" data-type="indexterm" id="id596"/></p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Align on the Why" data-type="sect1"><div class="sect1" id="ch03_align_on_the_why_1721833262138954">
+<h1>Align on the Why</h1>
+
+<p>If the stakeholder doesn’t care about the<a contenteditable="false" data-primary="shared alignment" data-secondary="aligning on why" data-type="indexterm" id="ix_shalgn1why"/> problem, understand the benefit of solving that problem, and/or understand the need to solve it now, then there is very little prospect that they will engage in problem-solving in the desired timeline and align with the recommended solution that is documented in an architecture decision.</p>
+
+<p>The first act of engaging the stakeholder is to<a contenteditable="false" data-primary="problem statement" data-type="indexterm" id="id597"/> review the problem statement and ensure that you and the stakeholder are interpreting the problem statement the same way. <a contenteditable="false" data-primary="stakeholders" data-secondary="reviewing problem statement with" data-type="indexterm" id="id598"/>It is very easy to assume that stakeholders understand the problem, but I found from my experience that people often talk past each other instead of to each other to define a shared understanding.</p>
+
+<p>So, methodically state the problem statement, but do so in a way that sells its value and makes it clear that solving the problem will provide a collective gain.</p>
+
+<section data-pdf-bookmark="Sell the Why" data-type="sect2"><div class="sect2" id="ch03_sell_the_why_1721833262138990">
+<h2>Sell the Why</h2>
+
+<p>When defining a problem statement, ensure that you <em>sell the why</em>, which means that you are able to clarify the following to avoid<a contenteditable="false" data-primary="problem statement" data-secondary="selling the why" data-type="indexterm" id="id599"/> conflicting goals:</p>
+
+<ul>
+	<li>
+	<p>Why this problem? What is the context for it?</p>
+	</li>
+	<li>
+	<p>Why now? Why not later?</p>
+	</li>
+	<li>
+	<p>What’s the impact in business terms of this problem?</p>
+	</li>
+</ul>
+
+<p>The mistake that I have made and often see is stopping with stating what the problem is, rather than emphasizing why that problem is impactful.</p>
+
+<p>To make this less abstract, here are two real-life problems that I experienced while writing this paragraph today:</p>
+
+<ol>
+	<li>
+	<p>My car doesn’t have enough gas to get very far.</p>
+	</li>
+	<li>
+	<p>We are missing a main ingredient for our dinner.</p>
+	</li>
+</ol>
+
+<p>Which of these problems do I tackle first? Do I get gas or go grocery shopping?</p>
+
+<p>To answer that, I need to first understand the impact.<a contenteditable="false" data-primary="problem statement" data-secondary="selling the why" data-tertiary="understanding the impact" data-type="indexterm" id="id600"/> Problem number 2 is impactful because without that main ingredient, we will have no dinner, and we need to eat. It definitely needs to be solved. Problem number 1 is only impactful if I need to use my car to drive somewhere. Thus, most likely I will table problem number 1 until I need to drive, and solve problem number 2 by walking to the grocery store. On the other hand, if I was dealing with time pressure, I would get gas on the way to the grocery store, thereby solving both problems together. There’s no right or wrong answer here; it’s more that thinking through impact is more helpful for problem-solving than just stating what the problem is.</p>
+
+<p>Along with articulating impact, you also need to state the <em>benefits </em>of solving the problem. <a contenteditable="false" data-primary="benefits of solving a problem" data-type="indexterm" id="id601"/>By <em>benefits</em>, I am referring to tangible, positive business outcomes that help attain business objectives. <a contenteditable="false" data-primary="business objectives" data-secondary="of solving a problem" data-secondary-sortas="solving" data-type="indexterm" id="id602"/>The reason I stress business outcomes here is because effective architecture marries the usage of technology to business needs; it is only in delivering business value that the architecture work delivers value. Ask yourself these questions:</p>
+
+<ul>
+	<li>
+	<p>What business objective is achieved or what progress is made toward that <span class="keep-together">objective?</span></p>
+	</li>
+	<li>
+	<p>Who benefits if the problem is solved?</p>
+	</li>
+	<li>
+	<p>Are there ways to expand the benefits, either to more stakeholders or to more reuse?</p>
+	</li>
+</ul>
+
+<p>Business benefits are often<a contenteditable="false" data-primary="business benefits of solving a problem" data-type="indexterm" id="id603"/> stated in terms of the following:</p>
+
+<dl>
+	<dt>Financial benefits</dt>
+	<dd>
+	<p>Include cost reduction, increased <a contenteditable="false" data-primary="cost efficiency" data-type="indexterm" id="id604"/>cost efficiency, improved return on investment, avoidance of future costs, and increased profits or revenue</p>
+	</dd>
+	<dt>Risk benefits</dt>
+	<dd>
+	<p>Include risk reduction or mitigation</p>
+	</dd>
+	<dt>Productivity benefits</dt>
+	<dd>
+	<p>Include reducing level of effort, increasing human productivity rates, faster time to market, improved employee satisfaction, increased employee retention, and increased operational efficiency<a contenteditable="false" data-primary="efficiency" data-secondary="operational" data-type="indexterm" id="id605"/></p>
+	</dd>
+	<dt>Branding or reputation benefits</dt>
+	<dd>
+	<p>Include increased quality of service, reliability of service, improved customer satisfaction, and increased loyalty</p>
+	</dd>
+</dl>
+
+<p>I highly recommend quantifying as much as you can. It is much more compelling to have quantitative data for the problem statement’s impact and benefits than it is to have qualitative assertions. For example, a 20% productivity improvement is more compelling and easier to understand than stating that solving the problem would help increase productivity. Be sure to ground your qualitative output in a credible basis, such as historical precedent, assumptions, and/or anecdotal evidence that is then extrapolated.<a contenteditable="false" data-primary="stakeholders" data-secondary="writing effective problem statement for" data-type="indexterm" id="id606"/></p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>Get into the habit of sizing the problem, sizing its impacts, and sizing its benefits.</p>
+</div>
+
+<p>Let’s review<a contenteditable="false" data-primary="problem statement" data-secondary="example of" data-type="indexterm" id="id607"/> an example:</p>
+
+<ul class="simplelist">
+	<li>
+	<p>Attempt #1: “This problem causes challenges for our developers.”</p>
+	</li>
+</ul>
+
+<p>This problem statement is very weak. So what if it causes challenges? Developers face tons of challenges.</p>
+
+<ul class="simplelist">
+	<li>
+	<p>Attempt #2: “This problem causes challenges that waste developers’ time.”</p>
+	</li>
+</ul>
+
+<p>Better, but still not getting a sense of scale. Is this a papercut or a true blocker?</p>
+
+<ul class="simplelist">
+	<li>
+	<p>Attempt #3: “This problem causes challenges that waste 20% of the average developer’s capacity every release cycle. Fixing this problem will enable 1.5x new business features to be developed every quarter.”</p>
+	</li>
+</ul>
+
+<p>If I’m a business <a contenteditable="false" data-primary="cybersecurity" data-secondary="selling the why to cybersecurity stakeholder" data-type="indexterm" id="id608"/>stakeholder, I now care. I want more features! If I’m a technology stakeholder, I care. I want to free up my most precious resource, human developers! If I’m a cybersecurity stakeholder, I don’t care yet.</p>
+
+<ul class="simplelist">
+	<li>
+	<p>Attempt #4: “This problem causes challenges that waste 20% of the average developer’s capacity every release cycle. Fixing this problem while incorporating security controls will enable 1.5x new business features to be developed every quarter safely.”</p>
+	</li>
+</ul>
+
+<p>Boom! Now, as a cybersecurity stakeholder, I can tell that my expertise will be needed in a consultative manner. As a business and technology stakeholder, I know that I will be accountable and responsible for this decision for my particular areas of <span class="keep-together">responsibility.</span> As a developer, I am excited to see this decision get made, because it benefits me.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>Always ask yourself “So what?” when you review a problem statement, to help you define the <em>why</em>.</p>
+</div>
+
+<p>Now that you have a compelling problem statement that clearly articulates impact and benefit, you are one step further on your journey to get shared alignment. However, sometimes, you may find that even with the best-written problem statement, your stakeholders still don’t agree that the problem has to be solved right now. What happened? Most likely, a priority mismatch.</p>
+</div></section>
+
+<section data-pdf-bookmark="Align on Priority" data-type="sect2"><div class="sect2" id="ch03_align_on_priority_1721833262139018">
+<h2>Align on Priority</h2>
+
+<p>I’ve been in situations where <a contenteditable="false" data-primary="priority" data-secondary="aligning on" data-type="indexterm" id="id609"/>stakeholders agree that there is a problem, and that it would in fact be good to solve it, but, because there were higher-priority fires burning that absolutely had to be solved right now, that this one would have to wait. The capacity of human resources, after all, is a finite resource.</p>
+
+<p>What’s a passionate architect to do in this situation?</p>
+
+<ol>
+	<li>
+	<p>Get really frustrated and quit.</p>
+	</li>
+	<li>
+	<p>Try again to build a more compelling business case.</p>
+	</li>
+	<li>
+	<p>Disagree and commit to helping with the burning fire, so that you can come back to the problem that you really care about later.</p>
+	</li>
+</ol>
+
+<p>If I thought I had misunderstood the importance factor and did not make the argument as relevant or compelling as it could have been based on the stakeholder’s motivations, I would probably put some effort into number 2. <a contenteditable="false" data-primary="ROI (return on investment)" data-type="indexterm" id="id610"/><a contenteditable="false" data-primary="return on investment (ROI)" data-type="indexterm" id="id611"/>If I thought that the return on investment (ROI) really wasn’t there for the problem as compared with others, then I would likely do number 3, but I would still get commitment from the stakeholders that they would revisit and evaluate at a later time.</p>
+
+<p class="widows4">To prevent getting to this frustrating point, get familiar with that stakeholder’s prioritization framework.<a contenteditable="false" data-primary="stakeholders" data-secondary="prioritization framework for problems" data-type="indexterm" id="id612"/> This would be the criteria that they use to prioritize what work must be done versus what work should be done versus what work needs to wait or not be done. Common criteria include impact and benefits, which were discussed earlier in this chapter. The others tend to be effort, investment, and risk. <em>Effort</em> refers to level of effort, or human labor. How many stakeholders need to be involved and for how long? What kind of capacity is required? <em>Investment</em> refers to a material stake; for example, will a proof of concept be needed that requires infrastructure or third-party resources? <em>Risk</em> refers to all types of risk—technology, cybersecurity, business—is any new risk incurred by deviating resources to work on this?</p>
+
+<p>Ultimately, you’re trying to make the business case that there is more value to be gained than there is effort needed, whether you’re trying to get alignment just to execute the decision-making process or you’re trying to get alignment to execute on implementation after an approved decision.</p>
+</div></section>
+
+<section data-pdf-bookmark="How Does “Align on the Why” Relate to Your Effective Enterprise Architecture Strategy?" data-type="sect2"><div class="sect2" id="ch03_how_does_align_on_the_why_relate_to_your_effecti_1721833262139052">
+<h2>How Does “Align on the Why” Relate to Your Effective Enterprise Architecture Strategy?</h2>
+
+<p>Knowing how to align stakeholders on the problem statement, and why it is important to solve that <a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="relation of aligning on the why to effective strategy" data-type="indexterm" id="id613"/>problem now, is essential to creating shared alignment. How does knowing this help you in your organization? As part of establishing the objective of creating shared alignment, assess if there are processes or organizational elements that need to be improved for the following:</p>
+
+<dl>
+	<dt>Clear strategic business objectives</dt>
+	<dd>
+	<p>Are there high-level enterprise objectives<a contenteditable="false" data-primary="business objectives" data-type="indexterm" id="id614"/> that new work can be aligned against?</p>
+	</dd>
+	<dt>Problem statement communication</dt>
+	<dd>
+	<p>Does your organization run on slideware?<a contenteditable="false" data-primary="problem statement" data-secondary="communicating to stakeholders" data-type="indexterm" id="id615"/><a contenteditable="false" data-primary="communication" data-secondary="problem statement" data-type="indexterm" id="id616"/> Whitepapers? Something else? Whatever it is, is there a template available for architects to use in this style to explain problem statements with quantitative benefits? Are there forums where leaders can be engaged to discuss problems and priorities?</p>
+	</dd>
+	<dt>Prioritization framework</dt>
+	<dd>
+	<p>Is there a consistent prioritization framework across the organization?<a contenteditable="false" data-primary="priority" data-secondary="prioritization framework for the organization" data-type="indexterm" id="id617"/> Or at least within organizational units? Do those prioritization frameworks include referencing architecture decisions?</p>
+	</dd>
+</dl>
+
+<p>Now that the stakeholders have been identified and aligned with the why, it’s time to discuss how to get alignment on the decision itself.<a contenteditable="false" data-primary="shared alignment" data-secondary="aligning on why" data-startref="ix_shalgn1why" data-type="indexterm" id="id618"/></p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Align on the Decision" data-type="sect1"><div class="sect1" id="ch03_align_on_the_decision_1721833262139093">
+<h1>Align on the Decision</h1>
+
+<p>To gain shared alignment from your various stakeholders on the decision itself, you need to become adept at conflict resolution.<a contenteditable="false" data-primary="conflict resolution" data-secondary="conflict during decision-making process" data-type="indexterm" id="id619"/><a contenteditable="false" data-primary="shared alignment" data-secondary="aligning on the decision" data-type="indexterm" id="ix_shalgn1dec"/><a contenteditable="false" data-primary="decisions" data-secondary="aligning on the decision" data-type="indexterm" id="ix_decalgn"/> Conflict during the decision-making process can actually be very positive, as this allows for diverse perspectives to be considered. Concerns can be transparently aired and addressed to strengthen the solution recommendation in the final decision.</p>
+
+<p>There are many methods for conflict resolution. What follows is what I have seen work well from experience. The first part of my conflict resolution approach is to consider different perspectives.</p>
+
+<section data-pdf-bookmark="Consider Differing Perspectives" data-type="sect2"><div class="sect2" id="ch03_consider_differing_perspectives_1721833262139120">
+<h2>Consider Differing Perspectives</h2>
+
+<p>Put yourself in a stakeholder’s position.<a contenteditable="false" data-primary="decisions" data-secondary="aligning on the decision" data-tertiary="considering different perspectives" data-type="indexterm" id="id620"/><a contenteditable="false" data-primary="conflict resolution" data-secondary="considering differing perspectives" data-type="indexterm" id="id621"/><a contenteditable="false" data-primary="perspectives (differing), considering" data-type="indexterm" id="id622"/> What are their motivations based on their role and responsibilities, historical record of actions, and goals?<a contenteditable="false" data-primary="stakeholders" data-secondary="motivation drivers" data-type="indexterm" id="id623"/> What concerns could they raise? What are they worried about, and what is their most pressing priority? How much context do they already have, and what information do they need? See <a data-type="xref" href="#ch03_figure_2_1721833262096912">Figure 3-2</a> for visualization.</p>
+
+<figure><div class="figure" id="ch03_figure_2_1721833262096912"><img alt="" src="assets/foea_0302.png"/>
+<h6><span class="label">Figure 3-2. </span>Typical stakeholder motivation drivers</h6>
+</div></figure>
+
+<p>You’ve actually done some amount of motivational analysis previously in your stakeholder mapping, when you determined how important the problem statement and solving it are to the stakeholder. If you have direct access to a stakeholder, a preexisting relationship, and/or experience with them, it is of course much easier to ascertain their motives. If you do not, though, which very well may be the case if you’re working in a new area or if you are at a more junior level than the stakeholders that you need buy-in from, then you may need to do some detective work via networking first. Find peers who can get you information about their organizational purpose, and about them. Find a manager who might have better access than you do to make some introductions to people who can get you the insight that you seek.</p>
+
+<p>To preclude<a contenteditable="false" data-primary="relationship-based conflict" data-type="indexterm" id="id624"/> relationship-based conflict where people don’t get along, it is very important not to judge motivations and the concerns that stem from them. Rather, it is much more beneficial to review concerns with curiosity to truly understand them. This can be difficult, since people typically have predefined beliefs, biases, and assumptions that color concerns. Sometimes, emotions get involved, too. Even still, it is better to really listen to the stakeholder rather than to try and validate your own assumptions of how the stakeholder should be thinking.</p>
+
+<p class="pagebreak-before">For example, there were times in my career where I thought that a particular architecture decision was a no-brainer. The solution was based on thorough analysis, and it seemed to be a no-regrets move to go forward with it. However, sometimes I would get surprised when a stakeholder in a different area, like legal or cybersecurity, would balk at the solution. In those situations, I needed to take a step back and get rid of my preconceived notions to ask them what they were concerned about and why.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>Seek to understand other points of view with curiosity rather than defending your position. <a contenteditable="false" data-primary="listening" data-type="indexterm" id="id625"/>Invest in listening.</p>
+</div>
+
+<p>Getting concerns aired transparently is key to identifying the source of conflict. Your conversation skills can help do this, and that brings me to the second part of my conflict resolution approach, which is to foster positive conflict in conversation.</p>
+</div></section>
+
+<section data-pdf-bookmark="Foster Positive Conflict in Conversation" data-type="sect2"><div class="sect2" id="ch03_foster_positive_conflict_in_conversation_1721833262139151">
+<h2>Foster Positive Conflict in Conversation</h2>
+
+<p>In conversations<a contenteditable="false" data-primary="conflict" data-secondary="fostering positive conflict in conversations" data-type="indexterm" id="id626"/> where the goal is to align <a contenteditable="false" data-primary="decisions" data-secondary="aligning on the decision" data-tertiary="fostering positive conflict in conversation" data-type="indexterm" id="id627"/>stakeholders, I <a contenteditable="false" data-primary="positive conflict" data-secondary="fostering in conversation" data-type="indexterm" id="id628"/>recommend the following:</p>
+
+<dl>
+	<dt>Demeanor</dt>
+	<dd>
+	<p>Be positive, open, approachable, and engaged. Be clear and concise. Acknowledge concerns and varying perspectives, even if you don’t agree with them. Everyone wants to be respected, heard, and understood.</p>
+	</dd>
+	<dt>Be factual</dt>
+	<dd>
+	<p>Separate facts from fiction. Sometimes people have firm beliefs that are not actually true.</p>
+	</dd>
+	<dt>Neutralize</dt>
+	<dd>
+	<p>Beware of emotions. Diffusing tense situations typically requires a person to control their own emotions before they can diffuse others’.</p>
+	</dd>
+	<dt>Be humble</dt>
+	<dd>
+	<p>Doing the right thing is more important than being right. And that could mean compromising, admitting when you were wrong, and/or changing your point of view of the right path forward.</p>
+	</dd>
+	<dt>Be confident</dt>
+	<dd>
+	<p>Add value to the conversation by offering your point of view and your opinions.<a contenteditable="false" data-primary="communication" data-secondary="optimizations to help align stakeholders" data-type="indexterm" id="id629"/></p>
+	</dd>
+</dl>
+
+<p class="pagebreak-after"><a data-type="xref" href="#ch03_table_5_1721833262110417">Table 3-5</a> provides some prompts and revisions that you could use to help listen and align the stakeholder’s views.</p>
+
+<table class="less_space" id="ch03_table_5_1721833262110417">
+	<caption><span class="label">Table 3-5. </span>Communication optimizations</caption>
+	<thead>
+		<tr>
+			<th>Instead of…</th>
+			<th>Try to…</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p>Being open-ended to solicit input, with statements such as “What do you think?”</p>
+			</td>
+			<td>
+			<p>Be more specific. For example, “What concerns do you have about this solution?”</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Saying only “Great, thanks” to show you appreciate their input.</p>
+			</td>
+			<td>
+			<p>Play back what you heard:</p>
+
+			<p>“Thanks! It sounds like…about…”</p>
+
+			<p>Example: “Thanks! It sounds like you’re concerned about introducing new risks with this solution.”</p>
+
+			<p>If you don’t understand enough of what they said to play back, ask:</p>
+
+			<p>“Thanks for sharing. Please tell me more. When you say new risk, what do you mean?”</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Providing your point of view without acknowledging theirs, by saying, “I think this solution works well because…”</p>
+			</td>
+			<td>
+			<p>Share your point of view while acknowledging that you understand theirs:</p>
+
+			<p>“I understand that this solution introduces a new risk, and here’s my point of view on how we can mitigate that.”</p>
+
+			<p>Include them in problem-solving if you don’t have an answer:</p>
+
+			<p>“I understand how important it is to address new risks. What are some mitigation measures that we could take?”</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Closing the conversation without gratitude. For example, “OK, we’ll get back to you.”</p>
+			</td>
+			<td>
+			<p>Manners and gratitude go a long way. Human connection is an essential basis of establishing trust. Remind the stakeholder that this is an “us” issue for the greater good:</p>
+
+			<p>“I appreciate you sharing your concerns openly; thanks for taking the time to work through them together.”</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>With these communication aids, your positive conflict conversations should be productive in that they raise the true concerns. Next, you have to deal with them productively. That brings me to the third and final part of my conflict resolution approach, which is to resolve the positive conflict.</p>
+</div></section>
+
+<section data-pdf-bookmark="Resolve the Positive Conflict" data-type="sect2"><div class="sect2" id="ch03_resolve_the_positive_conflict_1721833262139178">
+<h2>Resolve the Positive Conflict</h2>
+
+<p>Document <a contenteditable="false" data-primary="decisions" data-secondary="aligning on the decision" data-tertiary="resolving positive conflict" data-type="indexterm" id="id630"/>concerns as part of the<a contenteditable="false" data-primary="positive conflict" data-secondary="resolving" data-type="indexterm" id="id631"/> trade-off <a contenteditable="false" data-primary="conflict resolution" data-secondary="resolving positive conflict" data-type="indexterm" id="id632"/>analysis of the architecture decision to (a) show that you listened and (b) provide a tangible artifact for them to review and validate that you heard correctly. This is especially necessary if the concern needs to be accepted as a risk and cannot be ameliorated by changing the decision.</p>
+
+<p>Speaking of documentation, make sure you also get alignment documented, in the form of concurrence or formal approval, either in meeting minutes or as part of the decision record. This documentation for posterity can be very helpful to avoid future rehashes of the same topic, and it also shows that the stakeholders really were on the same page and not just assumed to have been aligned.</p>
+
+<p>Remember that you can <em>timebox </em>if you <a contenteditable="false" data-primary="timebox" data-type="indexterm" id="id633"/>need to curtail chatter and bring about a resolution—whether that is a consensus-based resolution or a disagree-and-commit resolution. Timebox means putting a timeline against how long a decision will be debated before it is finalized.</p>
+
+<p><em>Escalation </em>is another mechanism, but it should be used sparingly.<a contenteditable="false" data-primary="escalation" data-type="indexterm" id="id634"/> Escalation means going to someone with higher authority than the stakeholder expressing concerns to see if they can bring about alignment using their positional authority. Escalation is usually only necessary if the stakeholder refuses to disagree and commit, but it can also backfire if the root cause of the concern is not actually addressed, since the escalation authority may in fact have the same issue.</p>
+</div></section>
+
+<section data-pdf-bookmark="Get Commitment as a Result of Alignment" data-type="sect2"><div class="sect2" id="ch03_get_commitment_as_a_result_of_alignment_1721833262139205">
+<h2>Get Commitment as a Result of Alignment</h2>
+
+<p>Just agreeing with a decision isn’t enough.<a contenteditable="false" data-primary="commitment, getting as result of alignment" data-type="indexterm" id="id635"/><a contenteditable="false" data-primary="decisions" data-secondary="aligning on the decision" data-tertiary="getting commitment as result of" data-type="indexterm" id="id636"/> You also need commitment from stakeholders that the decision will be implemented. <a contenteditable="false" data-primary="stakeholders" data-secondary="commitment that decision will be implemented, getting from" data-type="indexterm" id="id637"/>Commitment means that the stakeholders also feel that they have an obligation to ensure that the outcomes sought by the decision are actually achieved. The stakeholder clearly understands what part they play, and what value they bring, in getting to the overall collective goal.</p>
+
+<p>Commitment means that there is follow-through on an implementation plan relating to the decision. The work required to implement the decision should be formally tracked and absorbed into however work is managed at your organization. It’s a good idea to revisit the decision and celebrate joint successes when the outcome is achieved, or if the decision is for something complicated and long-lived, for the milestones as well. Also, if the people in a stakeholder’s role change over time, then also make sure that they know about the previous commitments to be able to honor them.</p>
+
+<p>Now that we’ve covered conflict resolution and commitment, let’s see how they relate to your effective enterprise architecture strategy.</p>
+</div></section>
+
+<section data-pdf-bookmark="How Does “Align on the Decision” Relate to Your Effective Enterprise Architecture Strategy?" data-type="sect2"><div class="sect2" id="ch03_how_does_align_on_the_decision_relate_to_your_ef_1721833262139242">
+<h2>How Does “Align on the Decision” Relate to Your Effective Enterprise Architecture Strategy?</h2>
+
+<p>Knowing how to align stakeholders on the decision itself is essential to creating shared alignment.<a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="relation of aligning on the decision to effective strategy" data-type="indexterm" id="id638"/><a contenteditable="false" data-primary="decisions" data-secondary="aligning on the decision" data-tertiary="relation to effective enterprise architecture strategy" data-type="indexterm" id="id639"/> How does knowing this help you in your organization? As part of establishing the objective of creating shared alignment, assess if there are processes or organizational elements that need to be improved in the following areas:</p>
+
+<dl>
+	<dt>Communication skills</dt>
+	<dd>
+	<p>Is there training available for your talent? Are there preferred communication styles?</p>
+	</dd>
+	<dt>Cultural values</dt>
+	<dd>
+	<p>Is positive conflict part of the cultural mindset? <a contenteditable="false" data-primary="positive conflict" data-secondary="cultural values and" data-type="indexterm" id="id640"/>Is positive conflict embraced as part of collaboration, or is there conflict avoidance?</p>
+	</dd>
+	<dt>Accountability</dt>
+	<dd>
+	<p>Do stakeholders understand accountability? Is there a culture of holding each other accountable for commitments?</p>
+	</dd>
+</dl>
+
+<p>With this basis of aligning on who, aligning them on the why, and aligning them on the decision, you should be in good shape to create shared alignment to a greater degree than what exists today.<a contenteditable="false" data-primary="decisions" data-secondary="aligning on the decision" data-startref="ix_decalgn" data-type="indexterm" id="id641"/><a contenteditable="false" data-primary="shared alignment" data-secondary="aligning on the decision" data-startref="ix_shalgn1dec" data-type="indexterm" id="id642"/></p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Case Studies" data-type="sect1"><div class="sect1" id="ch03_case_studies_1721833262139277">
+<h1>Case Studies</h1>
+
+<p>Let’s review a few case studies related to creating shared alignment and examine some thematic dos and don’ts that they reveal.<a contenteditable="false" data-primary="shared alignment" data-secondary="case studies in creating" data-type="indexterm" id="ix_shalgn1csst"/><a contenteditable="false" data-primary="case studies" data-secondary="in shared alignment" data-type="indexterm" id="ix_csstdySA"/> Let’s pretend that we’re reviewing a software company called EA Example Company<em>.</em></p>
+
+<p>Let’s look at the first scenario, <em>the mandate.</em></p>
+
+<section data-pdf-bookmark="The Mandate" data-type="sect2"><div class="sect2" id="ch03_the_mandate_1721833262139304">
+<h2>The Mandate</h2>
+
+<p>EA Example Company<em> </em>had a problem. Software release after software release went to production rife with bugs and issues.<a contenteditable="false" data-primary="case studies" data-secondary="in shared alignment" data-tertiary="mandate" data-type="indexterm" id="id643"/><a contenteditable="false" data-primary="mandate (case study in shared alignment)" data-type="indexterm" id="id644"/> Engineering teams were constantly in the mode of fixing incidents caused by changes. New features were being delayed.</p>
+
+<p>The senior engineering executive—let’s call him Tom—needed to solve this problem. He turned to his enterprise architecture team for help. The enterprise architecture team reviewed recent incident history and talked with some of the engineering teams involved in those incidents. They quickly determined that the root cause of this vicious cycle of bugs and issues was a lack of effective testing. If there was good-quality testing, then the bug or issue would have been caught earlier in the software delivery lifecycle, prior to the production release. The engineering team would still have to fix the bug or issue, but much earlier and under much less time pressure than when the issue became an incident. Further, if the testing was automated, then the volume of tests could scale more quickly to match the pace of desired releases.</p>
+
+<p>Tom was excited to get this insight. He promptly issued a mandate that no code was to go to production without automated unit testing coverage of 90%.</p>
+
+<p>Tom’s engineering teams grumbled a bit, but because they were under a mandate, and that mandate was enforced by their deployment tooling, they complied. They spent side of desk time learning how to automate unit tests. They spent time developing unit tests, and changes that went to production did pass those unit tests.</p>
+
+<p>However, EA Example Company noticed that there was still a trend of production incidents caused by changes, particularly those dealing with dependencies or integrations with other systems. In addition, employee satisfaction was declining.</p>
+
+<p>What happened here? Let’s take it point by point.</p>
+
+<p>The enterprise architecture team engaged stakeholders—the engineering teams—to figure out the root cause of the problem. But they did not dig hard enough. Why was there a lack of testing efforts? Was testing incentivized by the organization? There are multiple types of testing; why focus only on the bare minimum of unit testing? Automated testing is easier said than done; where was the feasibility analysis for <span class="keep-together">enablement?</span></p>
+
+<p>The leadership gave a mandate to solve what they thought was the problem, but it wasn’t quite the right problem, and there was a lack of stakeholder buy-in and enablement to conform to that mandate. There was no explanation provided to the engineering teams having to do the work. The engineering teams didn’t have proper tools and processes to be successful. There was no priority trade-off allowing engineering teams to upskill in the automated testing needs. There was no trusted representative of the engineering teams to engage in the decision-making process.</p>
+
+<p>So, to summarize, key takeaways from this tale are as follows.</p>
+
+<p><em>Do:</em></p>
+
+<ul>
+	<li>
+	<p>Engage stakeholders to validate assumptions and come up with a recommendation.</p>
+	</li>
+	<li>
+	<p>Use mandates to enforce requirements if needed, but provide transparency into the mandate’s rationale and benefits.</p>
+	</li>
+</ul>
+
+<p><em>Don’t</em>:</p>
+
+<ul>
+	<li>
+	<p>Blindly mandate metrics. <a contenteditable="false" data-primary="metrics" data-secondary="blindly mandating, avoiding" data-type="indexterm" id="id645"/>Metrics drive behavior. In this case, the mandate incentivized greater unit testing code coverage without emphasizing the quality of the tests. Therefore, the outcome of improving incidents was not realized.</p>
+	</li>
+	<li>
+	<p>Issue mandates without an explanation or without an understanding of the feasibility of adhering to that mandate.</p>
+	</li>
+	<li>
+	<p>Ignore impacted stakeholders as part of the decision-making process.</p>
+	</li>
+</ul>
+
+<p>Let’s now take a look at another scenario, <em>the relitigation</em>.</p>
+</div></section>
+
+<section data-pdf-bookmark="The Relitigation" data-type="sect2"><div class="sect2" id="ch03_the_relitigation_1721833262139331">
+<h2>The Relitigation</h2>
+
+<p>Jane spends a lot of time making architecture decisions.<a contenteditable="false" data-primary="case studies" data-secondary="in shared alignment" data-tertiary="relitigation" data-type="indexterm" id="id646"/><a contenteditable="false" data-primary="relitigation (case study in shared alignment)" data-type="indexterm" id="id647"/> She does a stakeholder analysis and includes the right stakeholders to be accountable, responsible, consulted, and informed. She makes sure to document the decision, along with the decision’s <span class="keep-together">approval.</span></p>
+
+<p>Over time, there are changes at EA Example Company, and as a result, there are new people in the roles of the former approvers. The new people aren’t aware of the previous decisions, and they start directing contradictory work. Jane finds out and reviews the decisions with them. They decide that the decisions made by their predecessors are invalid, and therefore, new decisions need to be made. The decision-making process starts all over again.</p>
+
+<p>What happened here?</p>
+
+<p>Jane did all the right things in getting alignment to the original decision, but the decision was not lasting due to factors outside of her control. Apparently, there’s an underlying issue of a lack of trust between the new set of stakeholders and the original set, and/or the stakeholders thought their way was better than the old way.</p>
+
+<p>Key takeaways from this tale are summarized below.</p>
+
+<p><em>Do:</em></p>
+
+<ul>
+	<li>
+	<p>Consider the right stakeholders and follow a transparent decision-making <span class="keep-together">process.</span></p>
+	</li>
+	<li>
+	<p>Establish a culture of trust in the organization.<a contenteditable="false" data-primary="culture of trust" data-type="indexterm" id="id648"/> It is always possible that decisions need to be refined if there is new information that changes an assumption or constraint that was considered in making the decision, but changing people should not invalidate a former decision.</p>
+	</li>
+	<li>
+	<p>Define principles for consistent decision making.</p>
+	</li>
+</ul>
+
+<p><em>Don’t</em>:</p>
+
+<ul>
+	<li>
+	<p>Assume that new leaders understand why and how a previous decision was made. Recommunicate as needed, and keep documentation records.</p>
+	</li>
+</ul>
+
+<p>Next, let’s look at a scenario called <em>the silo</em>.</p>
+</div></section>
+
+<section data-pdf-bookmark="The Silo" data-type="sect2"><div class="sect2" id="ch03_the_silo_1721833262139356">
+<h2>The Silo</h2>
+
+<p>EA Example Company needed to solve problems with data management and data privacy. <a contenteditable="false" data-primary="silos" data-secondary="silo case study" data-type="indexterm" id="id649"/><a contenteditable="false" data-primary="case studies" data-secondary="in shared alignment" data-tertiary="silo" data-type="indexterm" id="id650"/>The data management team included their solution architect, product lead, and engineering lead to come up with an architecture and solution for registering data and managing data lineage. Similarly, the data privacy team included their solution architect, product lead, and engineering lead to come up with a great architecture and solution for classifying data and filtering data access based on privacy rules. However, neither solution worked well with each other. Thus, engineering teams had to provide data classification information as part of the data management solution and as part of the data privacy solution. There were no cross-checks between them to gather insights into the data or scale the efforts around the data.</p>
+
+<p>What happened here?</p>
+
+<p>While each decision at a local level seemed like the right decision, when looked at together, it is clear that they were made in silo. Either the data management and data privacy architects should have engaged one another, or an overarching enterprise data architect should have been engaged to bring their efforts together. The <span class="keep-together">stakeholder</span> analysis was not done or missed the fact that the data management and data privacy solutions would impact one another.</p>
+
+<p>Let’s summarize the key takeaways from this tale.</p>
+
+<p><em>Do:</em></p>
+
+<ul>
+	<li>
+	<p>Ensure that all impacted stakeholders are identified and included.</p>
+	</li>
+	<li>
+	<p>Share decisions.</p>
+	</li>
+	<li>
+	<p>Promote collaboration between silos.</p>
+	</li>
+</ul>
+
+<p><em>Don’t</em>:</p>
+
+<ul>
+	<li>
+	<p>Assume limited impact from a given decision.</p>
+	</li>
+</ul>
+
+<p>Now, let’s look at another situation, called <em>the never-ending debate</em><em>.</em></p>
+</div></section>
+
+<section data-pdf-bookmark="The Never-Ending Debate" data-type="sect2"><div class="sect2" id="ch03_the_never_ending_debate_1721833262139385">
+<h2>The Never-Ending Debate</h2>
+
+<p>EA Example Company once experienced a conflict between two application architects, Jane and John.<a contenteditable="false" data-primary="case studies" data-secondary="in shared alignment" data-tertiary="never-ending debate" data-type="indexterm" id="id651"/> <a contenteditable="false" data-primary="conflict" data-secondary="never-ending debate case study" data-type="indexterm" id="id652"/>The compute layer of an application was already containerized but was running on a self-managed compute service that came with an infrastructure management tail. Tom, the engineering manager, thought it would be good to get out of the infrastructure management overhead, and he asked them for a decision on what cloud service technology to use for the compute layer of their application.</p>
+
+<p>Jane had good experience with serverless compute and thought that was best. John, however, was adamant that containers were already a great compute option and they should just stick with that, but in a managed container service form. They both stuck to their convictions and could not come to an agreement. As a result, the engineering team did neither and stuck with their self-managed option.</p>
+
+<p>What happened here?</p>
+
+<p>It doesn’t matter if Jane was right or if John was right. Because they could not agree on a direction, the engineering team ended up not doing anything differently and therefore did not get any benefit. Tom’s problem was not solved, and he probably lost some trust in the role of application architects.</p>
+
+<p>Ideally, either Jane or John could have taken the lead on conflict resolution. They could have set aside their differences to learn from one another on why they had such firm convictions on their solution outcome. They could have taken a step back to factually review the needs of the compute layer and compare that with the service capabilities to figure out the best option. They could have timeboxed their debate time, and, if all else failed, agreed to disagree and commit, to make progress. Any decision is usually better than no decision, assuming that the culture is OK with taking some amount of risk. Last but not least, they could have invested in taking some time to connect with one another to strengthen their own relationship.</p>
+
+<p>Key takeaways from this tale are summarized below.</p>
+
+<p><em>Do:</em></p>
+
+<ul>
+	<li>
+	<p>Timebox decisions.</p>
+	</li>
+	<li>
+	<p>Promote a culture of collective gain.</p>
+	</li>
+	<li>
+	<p>Invest in relationships and human connection.</p>
+	</li>
+</ul>
+
+<p><em>Don’t</em>:</p>
+
+<ul>
+	<li>
+	<p>Refuse to compromise.<a contenteditable="false" data-primary="case studies" data-secondary="in shared alignment" data-startref="ix_csstdySA" data-type="indexterm" id="id653"/><a contenteditable="false" data-primary="shared alignment" data-secondary="case studies in creating" data-startref="ix_shalgn1csst" data-type="indexterm" id="id654"/></p>
+	</li>
+</ul>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Summary" data-type="sect1"><div class="sect1" id="ch03_summary_1721833262139413">
+<h1>Summary</h1>
+
+<p>To achieve the shared alignment objective and tailor KRs for your own organization, consider any weak points in your organizational structure and/or processes that may hinder creating shared alignment across varied stakeholders. What can you strengthen to support stakeholder management?</p>
+
+<p>First, you need to <a contenteditable="false" data-primary="stakeholders" data-secondary="identifying and engaging in architecture decision" data-type="indexterm" id="id655"/>institute the mechanisms necessary to clearly identify who needs to be engaged in making the architecture decision and how they should be engaged:</p>
+
+<ul>
+	<li>
+	<p>Are there techniques for stakeholder mapping, to identify who is impacted by this architecture decision, who wields the right level of influence, and who considers the impact important to them?</p>
+	</li>
+	<li>
+	<p>Are there mechanisms for defining stakeholder engagement plans, where it is clear who needs to be accountable, who is responsible, who needs to be consulted, and who needs to be informed for all relevant activities?</p>
+	</li>
+</ul>
+
+<p>Second, you need <a contenteditable="false" data-primary="problem statement" data-secondary="gaining alignment on and prioritization of" data-type="indexterm" id="id656"/>to establish mechanisms that allow for gaining alignment on the problem statement, and the priority of that problem statement:</p>
+
+<ul>
+	<li>
+	<p>Is there any methodology, frameworks, or templates available to support defining problem statements in terms of impacts and business benefits, in quantifiable terms?</p>
+	</li>
+</ul>
+
+<p class="pagebreak-before">Third, you need a foundation to get alignment and commitment on the decisions themselves:<a contenteditable="false" data-primary="decisions" data-secondary="getting alignment and commitment on" data-type="indexterm" id="id657"/></p>
+
+<ul>
+	<li>
+	<p>What are the challenges that the organization faces in creating shared alignment? Are there cultural issues, such as a lack of trust? Are there pace issues, such as mismatched priorities? Are there talent issues, such as a lack of skill to provide the level of conversation needed to agree?</p>
+	</li>
+	<li>
+	<p>Is there transparency in the architecture decision-making process? At every level of the organization? Are decisions well understood? By leadership? By teams?</p>
+	</li>
+</ul>
+
+<p>Use this framework to diagnose weaknesses in your organization that you can strengthen through your enterprise architecture strategy objective and KRs for creating shared alignment. Next up, we’ll go in detail on embedded and accessible architecture information.<a contenteditable="false" data-primary="shared alignment" data-startref="ix_shalgn1" data-type="indexterm" id="id658"/></p>
+</div></section>
+</div></section></body></html>

@@ -1,0 +1,785 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>AWS Global Infrastructure</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:a44aec70-12ef-4d3e-90ec-26a4e9d25e01" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 8. AWS Global Infrastructure" data-type="chapter" epub:type="chapter"><div class="chapter" id="ch08_aws_global_infrastructure_1763395115294159">
+<h1><span class="label">Chapter 8. </span>AWS Global Infrastructure</h1>
+
+<p>A<a contenteditable="false" data-primary="global infrastructure" data-secondary="overview" data-type="indexterm" id="jc8.1"/> global application is one that’s deployed across multiple geographic locations. In AWS, this typically means leveraging multiple AWS Regions, Availability Zones, and Edge Locations. The main benefit of this setup is that users will experience less delay when interacting with your application. Because of the sheer size of the planet, a user in India accessing a server in the United States will experience noticeable lag. But if your application is deployed closer to where your users are—say, in both the US and Asia—then everyone benefits from faster, more responsive performance.</p>
+
+<p>Another major reason to go global is <a contenteditable="false" data-primary="disaster recovery" data-type="indexterm" id="id917"/>disaster recovery. You may not want to rely solely on a single AWS Region. While AWS is highly reliable, disasters like earthquakes, power outages, or political instability can impact a Region. Deploying your application across multiple Regions enhances resilience by enabling failover if one Region goes down. To make this seamless, however, you need to configure replication (such as S3 Cross-Region Replication), implement solid backup strategies, and use services like Amazon Route 53 for DNS failover. This layered approach ensures redundancy, maximizes uptime, and keeps your applications highly available even during Regional disruptions.</p>
+
+<p>Finally, distributing your application globally can also strengthen defenses against cyberattacks. Threats like<a contenteditable="false" data-primary="distributed denial-of-service (DDoS) attacks" data-type="indexterm" id="id918"/><a contenteditable="false" data-primary="DDoS (distributed denial-of-service) attacks" data-type="indexterm" id="id919"/> DDoS attacks are unfortunately common, but spreading infrastructure across multiple Regions makes it much harder for attackers to disrupt your entire system. With services such as AWS Shield providing DDoS protection and AWS Global Accelerator enabling intelligent traffic rerouting, you gain additional resilience. Pairing this with other security measures—like AWS WAF for filtering malicious requests and IAM for access control—further ensures that your application remains secure, reliable, and available worldwide.</p>
+
+<p>In this chapter, we’ll look at the AWS global infrastructure. We’ll look at how data centers, Regions, Availability Zones, and Edge Locations work. We’ll also look at the various AWS services, such as CloudFront, as well as deployment options. All of these are common topics on the<a contenteditable="false" data-primary="global infrastructure" data-secondary="overview" data-startref="jc8.1" data-type="indexterm" id="id920"/> exam.</p>
+
+<section data-pdf-bookmark="Data Centers" data-type="sect1"><div class="sect1" id="ch08_data_centers_1763395115294317">
+<h1>Data Centers</h1>
+
+<p>At<a contenteditable="false" data-primary="data centers" data-type="indexterm" id="jc8.3"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="data centers" data-type="indexterm" id="jc8.2"/> the core of any cloud platform lies the data center. It’s the physical foundation behind all the powerful services we associate with the cloud. This is where you’ll find the hardware like servers, storage units, networking gear, and other critical equipment. This is all housed in a dedicated facility.</p>
+
+<p>The data center industry is massive. In the United States alone, there are more than <a href="https://oreil.ly/OGRcX">5,300 data centers</a>, making it the global leader. Worldwide, that number <a href="https://oreil.ly/uaFEQ">climbs to nearly 12,000</a>.</p>
+
+<p>Most data centers share a common set of features:</p>
+
+<dl>
+	<dt>Racks and cabinets</dt>
+	<dd>
+	<p>These<a contenteditable="false" data-primary="racks, data centers" data-type="indexterm" id="id921"/> are <a contenteditable="false" data-primary="cabinets, data centers" data-type="indexterm" id="id922"/>the frameworks for organizing servers, networking hardware, and storage. A standard rack measures 19 inches wide, and they are arranged in rows, which are usually enclosed in cabinets. Smart layout design here matters. This improves cooling efficiency and makes maintenance easier.</p>
+	</dd>
+	<dt>Cabling</dt>
+	<dd>
+	<p>Power <a contenteditable="false" data-primary="cabling, data centers" data-type="indexterm" id="id923"/>and data flow through a dense network of cables, typically routed through ceilings or under raised floors. Managing this web of connections is critical for keeping the system running smoothly.</p>
+	</dd>
+	<dt>Power systems</dt>
+	<dd>
+	<p>Data <a contenteditable="false" data-primary="power systems, data centers" data-type="indexterm" id="id924"/>centers rely on backup generators and<a contenteditable="false" data-primary="UPS (uninterruptible power supply)" data-type="indexterm" id="id925"/> uninterruptible power supplies (UPSs). These are usually powered by diesel so as to keep operations going even during outages.</p>
+	</dd>
+	<dt>Environmental controls</dt>
+	<dd>
+	<p>All<a contenteditable="false" data-primary="environmental controls, data centers" data-type="indexterm" id="id926"/> the hardware in a data center generates considerable heat. Systems to regulate temperature and humidity are important to prevent overheating and maintain optimal performance.</p>
+	</dd>
+	<dt>Fire protection</dt>
+	<dd>
+	<p>Fires<a contenteditable="false" data-primary="fire protection, data centers" data-type="indexterm" id="id927"/> can spread fast in a data center. This is why these facilities are equipped with smoke detectors, heat sensors, and suppression systems like sprinklers to catch problems early and minimize damage.</p>
+	</dd>
+	<dt>Physical security</dt>
+	<dd>
+	<p>To <a contenteditable="false" data-primary="physical security, data centers" data-type="indexterm" id="id928"/>protect against unauthorized access, data centers use a mix of surveillance cameras, fencing, biometric scanners, and secure login systems.</p>
+	</dd>
+</dl>
+
+<p>With all these systems in place, the cost of building and maintaining a data center adds up quickly. For example, in the US, the price to build one typically ranges between <a href="https://oreil.ly/89RPh">$7 million and $12 million per megawatt (MW) of capacity</a>. In Europe, the cost runs a bit higher—between $8 million and $14 million per MW. This is mainly due to stricter environmental regulations. In developing Regions, the price tends to range between $4 million and $7 million per MW.</p>
+
+<p>Operating costs <a contenteditable="false" data-primary="operating costs, data centers" data-type="indexterm" id="id929"/>come next, and energy is by far the largest expense. It often eats up <a href="https://oreil.ly/kZUaW">30% to 60% of a facility’s ongoing budget</a>. Location plays a big role in how high the energy bill gets. Factors like access to cheap power sources and climate conditions matter a lot. For this reason, cloud companies often build their data centers near low-cost energy sources. Apple, for example, located one of its facilities in Foulum, Denmark, to take advantage of nearby hydroelectric power from Norway.</p>
+
+<p>Not all data centers are built on the same scale. Some are compact and serve niche purposes, while others are massive and built for enterprise-level workloads. A typical cloud provider’s data center might span about 100,000 square meters.</p>
+
+<p>Then there are the giants.</p>
+
+<p>Take <a contenteditable="false" data-primary="Meta" data-type="indexterm" id="id930"/>Meta’s project in Richland Parish, Louisiana: a planned four-million-square-foot data center with an estimated <a href="https://oreil.ly/7_fzV">construction cost of $10 billion</a>. Once it’s up and running—targeted for 2030—it’ll support about 500 employees. On top of that, Meta is investing $200 million to upgrade local roads and water infrastructure. For energy, the company has partnered with Entergy Louisiana, which will build new power generation systems to support the facility.</p>
+
+<p>Other tech giants are racing to build their own mega-scale data centers as well—Microsoft, Apple, Oracle, and Amazon are all in the mix. This growth is pushing demand for electricity sharply upward.</p>
+
+<p>In fact, the Electric Power Research Institute <a contenteditable="false" data-primary="Electric Power Research Institute" data-type="indexterm" id="id931"/>predicts that by 2030, data centers could consume up to <a href="https://oreil.ly/x8UpH">9% of the US’s total electricity</a>—more than double today’s levels.</p>
+
+<p>This rapid growth presents a major challenge. The current power grid wasn’t designed for such high loads from modern data centers. Upgrading the grid to handle this demand will be both costly and time-consuming.</p>
+
+<p>Renewable energy sources like wind and solar are promising but unreliable due to their intermittent nature. Plus, there’s the regulatory maze that slows down approvals for new energy projects.</p>
+
+<p>In response to growing energy demands and the limitations of traditional and renewable power sources, several major tech companies are turning to nuclear energy as a viable solution. Amazon, for instance, acquired a <a href="https://oreil.ly/5jJ14">960-MW data center in March 2024</a> that draws its power directly from the Susquehanna nuclear facility in Pennsylvania. Meanwhile, <a contenteditable="false" data-primary="Google data center" data-type="indexterm" id="id932"/>Google announced a partnership with Kairos Power in October 2024 to develop small modular reactors (SMRs),<a contenteditable="false" data-primary="SMRs (small modular reactors)" data-type="indexterm" id="id933"/> with a goal of generating up to 500 MW of carbon-free electricity by 2035.</p>
+
+<p>Nuclear power <a contenteditable="false" data-primary="nuclear power" data-type="indexterm" id="id934"/>offers clear benefits. It’s carbon-free and capable of providing steady energy at scale. But it also comes with serious risks. Accidents can be catastrophic, and new plants are extremely expensive and slow to build.</p>
+
+<p>Still, as demand for cloud services keeps rising, and as workloads like AI place even greater strain on infrastructure, the need for reliable, scalable energy solutions isn’t going<a contenteditable="false" data-primary="data centers" data-startref="jc8.3" data-type="indexterm" id="id935"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="data centers" data-startref="jc8.2" data-type="indexterm" id="id936"/> away.</p>
+</div></section>
+
+<section data-pdf-bookmark="Regions and Availability Zones" data-type="sect1"><div class="sect1" id="ch08_regions_and_availability_zones_1763395115294381">
+<h1>Regions and Availability Zones</h1>
+
+<p>AWS<a contenteditable="false" data-primary="Availability Zones (AZs)" data-type="indexterm" id="jc8.6"/><a contenteditable="false" data-primary="AZs (Availability Zones)" data-type="indexterm" id="ibd8001"/><a contenteditable="false" data-primary="Regions" data-secondary="overview" data-type="indexterm" id="jc8.5"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="Regions and Availability Zones" data-type="indexterm" id="jc8.4"/> builds its global infrastructure around the concept of Regions, which are geographically distinct areas that each contain multiple Availability Zones, or AZs. These AZs function as independent data centers but are designed to work together. Every Region includes at least two AZs, all linked by high-speed, low-latency networking. This setup allows for rapid, synchronous data replication and supports robust, fault-tolerant architectures that can keep running even in the face of service disruptions or disasters.</p>
+
+<p>One of the biggest strengths of this approach is Regional isolation. Each Region runs independently, so if a natural disaster, technical glitch, or political event affects one Region, the others remain untouched. Within a single Region, AZs are physically spread out to reduce the chance of a single incident taking down multiple zones. This physical separation helps maintain service continuity even during localized failures.</p>
+
+<p>Each AZ comes equipped with its own power backup systems, including UPSs and generators, and draws electricity from different substations and grids. This design eliminates shared points of failure in power delivery. On the networking side, AZs connect using fully redundant, high-bandwidth fiber, and each one hooks into multiple Tier 1 transit providers. AWS also rolls out updates one zone at a time, which lowers the risk of system-wide issues.</p>
+
+<p>Currently, AWS operates 39 Regions worldwide, spanning 123 Availability Zones. <a data-type="xref" href="#ch08_figure_1_1763395115282965">Figure 8-1</a> shows those for North America.</p>
+
+<p>And they’re still growing. New Regions are already in the pipeline, including locations in New Zealand, Saudi Arabia, and Chile, and a Sovereign EU Region, along with 13 additional AZs.</p>
+
+<p>North America is home to nine AWS Regions, spanning the United States, Canada, and—since early 2025—Mexico. Besides these, there are the AWS GovCloud (US) Regions. They are specialized, isolated environments built to host sensitive data and regulated workloads for US government agencies, defense contractors, and organizations in highly regulated industries. These Regions are physically and logically separate from standard AWS commercial Regions. This provides an added layer of security and compliance.</p>
+
+<figure><div class="figure" id="ch08_figure_1_1763395115282965"><img alt="Map showing AWS Regions across North America, marked with dots." src="assets/awsc_0801.png"/>
+<h6><span class="label">Figure 8-1. </span>AWS Regions in North America</h6>
+</div></figure>
+
+<p>GovCloud<a contenteditable="false" data-primary="GovCloud" data-type="indexterm" id="id937"/><a contenteditable="false" data-primary="AWS GovCloud" data-type="indexterm" id="id938"/> supports strict regulatory requirements, including<a contenteditable="false" data-primary="FedRAMP High regulatory standard" data-type="indexterm" id="id939"/> FedRAMP High, the most rigorous level of FedRAMP authorization, International Traffic in Arms Regulations (ITAR),<a contenteditable="false" data-primary="International Traffic in Arms Regulations (ITAR)" data-type="indexterm" id="id940"/><a contenteditable="false" data-primary="ITAR (International Traffic in Arms Regulations)" data-type="indexterm" id="id941"/> and Department of Defense standards.<a contenteditable="false" data-primary="Department of Defense regulatory standards" data-type="indexterm" id="id942"/> This makes it suitable for handling Controlled Unclassified Information and other mission-critical workloads. Collectively, these Regions include 31 AZs. <a data-type="xref" href="#ch08_table_1_1763395115286634">Table 8-1</a> shows the details.</p>
+
+<table id="ch08_table_1_1763395115286634">
+	<caption><span class="label">Table 8-1. </span>AWS Regions and Availability Zones in North America</caption>
+	<thead>
+		<tr>
+			<th>Region name</th>
+			<th>Code</th>
+			<th>AZ</th>
+			<th>Launch year</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p>US East (Northern Virginia)</p>
+			</td>
+			<td>
+			<p>us-east-1</p>
+			</td>
+			<td>
+			<p>6</p>
+			</td>
+			<td>
+			<p>2006</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>US East (Ohio)</p>
+			</td>
+			<td>
+			<p>us-east-2</p>
+			</td>
+			<td>
+			<p>3</p>
+			</td>
+			<td>
+			<p>2016</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>US West (Oregon)</p>
+			</td>
+			<td>
+			<p>us-west-2</p>
+			</td>
+			<td>
+			<p>4</p>
+			</td>
+			<td>
+			<p>2011</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>US West (Northern California)</p>
+			</td>
+			<td>
+			<p>us-west-1</p>
+			</td>
+			<td>
+			<p>3</p>
+			</td>
+			<td>
+			<p>2009</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Canada (Central)</p>
+			</td>
+			<td>
+			<p>ca-central-1</p>
+			</td>
+			<td>
+			<p>3</p>
+			</td>
+			<td>
+			<p>2016</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>AWS GovCloud (US-West)</p>
+			</td>
+			<td>
+			<p>us-gov-west-1</p>
+			</td>
+			<td>
+			<p>3</p>
+			</td>
+			<td>
+			<p>2011</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>AWS GovCloud (US-East)</p>
+			</td>
+			<td>
+			<p>us-gov-east-1</p>
+			</td>
+			<td>
+			<p>3</p>
+			</td>
+			<td>
+			<p>2018</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>US West (Arizona)</p>
+			</td>
+			<td>
+			<p>us-west-3</p>
+			</td>
+			<td>
+			<p>3</p>
+			</td>
+			<td>
+			<p>2023</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Mexico (Central)</p>
+			</td>
+			<td>
+			<p>mx-central-1</p>
+			</td>
+			<td>
+			<p>3</p>
+			</td>
+			<td>
+			<p>2025</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Whenever you work with AWS—whether through the CLI, SDKs, or infrastructure-as-code tools like CloudFormation or Terraform—you’ll need to specify Regions using their official codes (such as those listed in <a data-type="xref" href="#ch08_table_1_1763395115286634">Table 8-1</a> for North America and <a data-type="xref" href="#ch08_table_2_1763395115286661">Table 8-2</a> for some of the other global Regions). These codes follow a standardized naming convention, and they’re essential for telling AWS where to create or manage your resources.</p>
+
+<p><a data-type="xref" href="#ch08_table_2_1763395115286661">Table 8-2</a> shows some of the popular codes<a contenteditable="false" data-primary="Availability Zones (AZs)" data-startref="jc8.6" data-type="indexterm" id="id943"/><a contenteditable="false" data-primary="AZs (Availability Zones)" data-startref="ibd8001" data-type="indexterm" id="id944"/><a contenteditable="false" data-primary="Regions" data-secondary="overview" data-startref="jc8.5" data-type="indexterm" id="id945"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="Regions and Availability Zones" data-startref="jc8.4" data-type="indexterm" id="id946"/> for foreign markets.</p>
+
+<table id="ch08_table_2_1763395115286661">
+	<caption><span class="label">Table 8-2. </span>AWS codes for Regions</caption>
+	<thead>
+		<tr>
+			<th>Region</th>
+			<th>Code</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p>Europe (Ireland)</p>
+			</td>
+			<td>
+			<p>eu-west-1</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Europe (Frankfurt)</p>
+			</td>
+			<td>
+			<p>eu-central-1</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Asia Pacific (Tokyo)</p>
+			</td>
+			<td>
+			<p>ap-northeast-1</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Asia Pacific (Seoul)</p>
+			</td>
+			<td>
+			<p>ap-northeast-2</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Asia Pacific (Mumbai)</p>
+			</td>
+			<td>
+			<p>ap-south-1</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Asia Pacific (Singapore)</p>
+			</td>
+			<td>
+			<p>ap-southeast-1</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Asia Pacific (Sydney)</p>
+			</td>
+			<td>
+			<p>ap-southeast-2</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Africa (Cape Town)</p>
+			</td>
+			<td>
+			<p>af-south-1</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Middle East (Bahrain)</p>
+			</td>
+			<td>
+			<p>me-south-1</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div></section>
+
+<section data-pdf-bookmark="Selecting Regions" data-type="sect1"><div class="sect1" id="ch08_selecting_regions_1763395115294442">
+<h1>Selecting Regions</h1>
+
+<p>Picking<a contenteditable="false" data-primary="Regions" data-secondary="selecting" data-tertiary="overview" data-type="indexterm" id="jc8.8"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="selecting Regions" data-tertiary="overview" data-type="indexterm" id="jc8.7"/> the right AWS Region is a strategic move that directly impacts how your applications perform, how much you’ll pay, whether you meet regulatory requirements, and which AWS services you can actually use. To make the best choice, it helps to evaluate your needs across four key areas:</p>
+
+<dl>
+	<dt>Compliance and data sovereignty</dt>
+	<dd>
+	<p>Some industries and countries require certain data to remain within specific geographic boundaries. AWS supports these mandates through a broad selection of global Regions, dedicated Local Zones, <a contenteditable="false" data-primary="dedicated Local Zones" data-type="indexterm" id="id947"/>and specialized offerings like the European Sovereign Cloud. To ensure compliance, review relevant laws such as GDPR or UK GDPR, along with your organization’s internal policies. AWS tools like Control Tower and CloudHSM can further support compliance and control over data residency.</p>
+	</dd>
+	<dt>Proximity to users</dt>
+	<dd>
+	<p>Latency can make or break the user experience. Again, deploying your infrastructure in Regions close to your users helps reduce round-trip time. For broader reach, services like CloudFront and Global Accelerator intelligently route traffic to the nearest available endpoint.</p>
+	</dd>
+	<dt>Service and feature availability</dt>
+	<dd>
+	<p>Not every AWS service is available in every Region. Major Regions usually receive new features first. Before choosing a Region, consult the AWS Services List to verify that the capabilities you need are available. If they’re not, you may need to architect around it or delay implementation until AWS expands support.</p>
+	</dd>
+	<dt>Pricing and cost differences</dt>
+	<dd>
+	<p>AWS pricing varies significantly between Regions. For example, workloads in São Paulo can cost 50–70% more than the same setup in Northern Virginia. Use tools like the AWS Pricing Calculator or the<a contenteditable="false" data-primary="Price List API" data-type="indexterm" id="id948"/> Price List API to estimate expenses accurately. Also keep in mind that data transfer costs can vary. This is not just between Regions but also between Availability Zones. Inter-AZ transfers are not always free unless you’re using certain services, such as S3 replication or workloads within the same placement group. To optimize costs further, consider Reserved Instances and Savings Plans, and carefully account for data transfer fees if your architecture spans multiple Regions or<a contenteditable="false" data-primary="Regions" data-secondary="selecting" data-startref="jc8.8" data-tertiary="overview" data-type="indexterm" id="id949"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="selecting Regions" data-startref="jc8.7" data-tertiary="overview" data-type="indexterm" id="id950"/> AZs.</p>
+	</dd>
+</dl>
+
+<section data-pdf-bookmark="Edge Locations" data-type="sect2"><div class="sect2" id="ch08_edge_locations_1763395115294501">
+<h2>Edge Locations</h2>
+
+<p>Beyond<a contenteditable="false" data-primary="Edge Locations" data-type="indexterm" id="jc8.11"/><a contenteditable="false" data-primary="Regions" data-secondary="selecting" data-tertiary="Edge Locations" data-type="indexterm" id="jc8.10"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="selecting Regions" data-tertiary="Edge Locations" data-type="indexterm" id="jc8.9"/> AWS Regions and Availability Zones, there’s another key layer in the AWS global infrastructure that helps speed things up: Points of Presence (PoPs). <a contenteditable="false" data-primary="Points of Presence (PoPs)" data-secondary="defined" data-type="indexterm" id="id951"/>These are physical sites that host Edge Locations and regional edge caches. They are strategically placed in major cities and densely populated areas to sit closer to end users. Unlike full AWS Regions, PoPs focus on specialized tasks such as caching content, handling DNS lookups, and defending against DDoS attacks.</p>
+
+<p>AWS has built out a massive global network of PoPs—over 600 as of 2025—spanning more than 90 cities in 45+ countries. This network powers services like Amazon CloudFront, Route 53, AWS Shield, and AWS Global Accelerator, enabling low-latency content delivery, intelligent traffic routing, and stronger protection against threats. Together, these PoPs form the backbone of one of the most extensive content delivery and security systems in the world.</p>
+
+<p>In <a data-type="xref" href="ch07.html#ch07_security_1763395115073884">Chapter 7</a>, we saw how these services operate from a security perspective. Now, let’s shift to how they fit into and benefit from AWS’s broader global infrastructure.</p>
+
+<section data-pdf-bookmark="Global Accelerator" data-type="sect3"><div class="sect3" id="ch08_global_accelerator_1763395115294553">
+<h3>Global Accelerator</h3>
+
+<p>The<a contenteditable="false" data-primary="Global Accelerator" data-type="indexterm" id="id952"/> AWS Global Accelerator helps users around the world connect faster and more reliably, without you needing to do much extra work.</p>
+
+<p>Here’s how it works: Global Accelerator gives you two static IP addresses that don’t change, no matter what. These IPs use a routing method called anycast, which means they’re announced from dozens of AWS Edge Locations. When someone tries to access your application, their request hops onto AWS’s private network from the nearest Edge Location. The private backbone usually beats the public internet in both speed and consistency.</p>
+
+<p>If something goes wrong—like a failure in a Region—the Global Accelerator can shift traffic to a working endpoint in another Region almost instantly. The user won’t notice anything and there will be no DNS changes.</p>
+</div></section>
+
+<section data-pdf-bookmark="Amazon Route 53" data-type="sect3"><div class="sect3" id="ch08_amazon_route_53_1763395115294597">
+<h3>Amazon Route 53</h3>
+
+<p>Amazon<a contenteditable="false" data-primary="Route 53" data-type="indexterm" id="id953"/><a contenteditable="false" data-primary="Amazon Route 53" data-type="indexterm" id="id954"/> Route 53 manages DNS operations from the edge. It operates on a global anycast network and uses over 200 PoPs<a contenteditable="false" data-primary="Points of Presence (PoPs)" data-secondary="Amazon Route 53's use of" data-type="indexterm" id="id955"/>. When someone tries to resolve a domain like <em>myapp.mydomain.com</em>, the request is routed to the nearest PoP based on real-time network conditions. This minimizes latency and ensures users receive fast, reliable responses no matter where they are.</p>
+
+<p>Route 53 is architected in two layers: a global control plane and a distributed data plane. The control plane lives in one AWS Region and handles tasks like creating or updating DNS records, setting up routing policies, and configuring health checks.</p>
+
+<p>The data plane, on the other hand, is everywhere. It handles the DNS lookups and keeps an eye on endpoint health across PoPs, Regions, and Edge Locations. Even if the control plane goes offline temporarily, the data plane keeps running—resolving DNS queries and routing traffic as needed.</p>
+</div></section>
+
+<section data-pdf-bookmark="CloudFront" data-type="sect3"><div class="sect3" id="ch08_cloudfront_1763395115294642">
+<h3>CloudFront</h3>
+
+<p>CloudFront<a contenteditable="false" data-primary="CloudFront" data-type="indexterm" id="id956"/><a contenteditable="false" data-primary="Amazon CloudFront" data-type="indexterm" id="id957"/> runs on a layered system that includes Edge Locations, Regional Edge Caches (RECs), <a contenteditable="false" data-primary="Regional Edge Caches (RECs)" data-type="indexterm" id="id958"/><a contenteditable="false" data-primary="RECs (Regional Edge Caches)" data-type="indexterm" id="id959"/>and AWS’s private global backbone.</p>
+
+<p>Here’s how it works: when someone requests a file—maybe a video, image, or web page—CloudFront starts by checking the nearest Edge Location. If the file’s already cached there, it’s delivered instantly. If not, the request quietly moves up the chain to a REC, which has a much larger cache and holds onto content longer. If this is not enough, then CloudFront pulls the content from your origin server.</p>
+
+<p>This tiered system cuts down on trips to the origin, reduces load on your backend, and speeds things up for users—all with no extra work on your part.</p>
+
+<p>Behind the scenes, CloudFront doesn’t rely on the public internet for these fetches. Its PoPs <a contenteditable="false" data-primary="Points of Presence (PoPs)" data-secondary="CloudFront's use of" data-type="indexterm" id="id960"/>and RECs connect through AWS’s own high-capacity fiber network—hundreds of terabits of fully redundant, low-latency connections that span AWS Regions and AZs.</p>
+</div></section>
+
+<section data-pdf-bookmark="AWS Shield" data-type="sect3"><div class="sect3" id="ch08_aws_shield_1763395115294688">
+<h3>AWS Shield</h3>
+
+<p>AWS<a contenteditable="false" data-primary="Shield" data-type="indexterm" id="id961"/> Shield is built into the backbone of AWS. The service kicks in at the edge of the network, where it can stop threatening traffic before it gets anywhere near your <span class="keep-together">application</span>.</p>
+
+<p>Every AWS account gets Shield Standard by default. It automatically filters out common DDoS attacks at the Edge Locations, which are the same PoPs used by services like CloudFront, Route 53, and Global Accelerator. When a surge of malicious traffic shows up, Shield Standard blocks it on the spot.</p>
+
+<p>If an application has higher stakes—or you just want more control—Shield Advanced takes things further. It learns traffic patterns and uses custom rules, along with AWS WAF to catch more complex threats at the edge. It provides access to real-time dashboards, detailed flow logs, and support from AWS’s dedicated DDoS Response Team.</p>
+</div></section>
+
+<section data-pdf-bookmark="AWS Outposts" data-type="sect3"><div class="sect3" id="ch08_aws_outposts_1763395115294733">
+<h3>AWS Outposts</h3>
+
+<p>AWS<a contenteditable="false" data-primary="Outposts, AWS" data-type="indexterm" id="jc8.12"/> Outposts allow for running AWS services in a data center or co-location <span class="keep-together">facility—a</span> third-party data center where companies rent space for their own IT infrastructure. AWS takes care of everything: delivery, setup, and ongoing support.</p>
+
+<p>There are two options for AWS Outposts:</p>
+
+<ul>
+	<li>
+	<p>Full-size 42U racks <a contenteditable="false" data-primary="racks, data centers" data-type="indexterm" id="id962"/>are tall data center cabinets (about 80 inches high), preloaded with servers, storage, networking gear, and redundant power systems. They show up fully assembled and are ready to go.</p>
+	</li>
+	<li>
+	<p>Compact servers are for tighter spaces like branch offices or factory floors.</p>
+	</li>
+</ul>
+
+<p>Each Outposts rack comes with integrated switches and supports two key network connections:</p>
+
+<ul>
+	<li>
+	<p>The service link <a contenteditable="false" data-primary="service link" data-type="indexterm" id="id963"/>is an encrypted connection that ties your Outpost to its parent AWS Region. It handles all the control traffic—like provisioning and updates—so AWS can provide centralized management.</p>
+	</li>
+	<li>
+	<p>The local gateway provides a low-latency bridge between your Outpost and on-site systems, letting your apps talk to local resources without going out to the cloud and back.</p>
+	</li>
+</ul>
+
+<p class="pagebreak-before">Although the hardware sits in your building, it behaves like it’s part of AWS. You use the same console, CLI, and APIs, but get the benefits of low latency, local data processing, and hardware management. If your AWS connection drops, your workloads keep running locally and sync back automatically once you’re reconnected. In addition, AWS offers <a contenteditable="false" data-primary="Direct Connect" data-type="indexterm" id="id964"/>Direct Connect locations at over 100 global sites. This provides dedicated network connections to AWS Regions or Local Zones. It enables hybrid workloads to benefit from consistent low latency, higher bandwidth, and more reliable connectivity than the public internet alone.</p>
+</div></section>
+
+<section data-pdf-bookmark="Local Zones and Wavelength Zones" data-type="sect3"><div class="sect3" id="ch08_local_zones_and_wavelength_zones_1763395115294784">
+<h3>Local Zones and Wavelength Zones</h3>
+
+<p>When<a contenteditable="false" data-primary="Wavelength Zones" data-type="indexterm" id="jc8.13"/><a contenteditable="false" data-primary="Local Zones" data-type="indexterm" id="id965"/> applications require lower latency and more specialized hardware, AWS has capabilities that go beyond Regions and Edge Locations. This is where Local Zones and Wavelength Zones come in. They are AWS’s way of moving compute and storage even closer to users.</p>
+
+<section data-pdf-bookmark="Local Zones" data-type="sect4"><div class="sect4" id="ch08_local_zones_1763395115294835">
+<h4>Local Zones</h4>
+
+<p>When your users are far from the nearest AWS Region, delays start to creep in. Data takes longer to move, and applications can become sluggish. Local Zones fix this by dropping a smaller slice of AWS—compute, storage, and database power—into major cities. This helps enable ultra-low-latency applications like gaming or real-time analytics.</p>
+
+<p>You start by opting in to a Local Zone and linking it to your existing VPC. From there, you carve out a subnet inside that zone—essentially reserving resources, just like you would in a standard AZ. Once that’s set, you can launch your services—EC2 instances, EBS volumes, RDS databases—in the city. Your application stays connected to the main AWS Region through a fast, secure network, but now your core resources live closer to the action.</p>
+
+<p>However, Local Zones aren’t full-blown AWS Regions. They offer fewer service types and less hardware variety, and there’s less built-in redundancy. So it’s smart to have a backup plan—say, rerouting workloads to a regular AZ. And note that Local Zones often come with slightly higher hourly rates. Also, not all services are available, like RDS Aurora and EKS.</p>
+</div></section>
+
+<section data-pdf-bookmark="Wavelength Zones" data-type="sect4"><div class="sect4" id="ch08_wavelength_zones_1763395115294892">
+<h4>Wavelength Zones</h4>
+
+<p>Imagine AWS moving into a telecom provider’s 5G data center—right alongside the equipment that powers your mobile connection. That’s what a Wavelength Zone is. Instead of sending mobile data on a long trip to a distant AWS Region, it stays inside the carrier’s network and gets processed right there, delivering near-instant responses and ultra-low latency.</p>
+
+<p>Getting started with Wavelength is straightforward. You opt in, link it to your existing VPC, and spin up a subnet inside the Wavelength Zone. From there, you can launch familiar AWS services like EC2 for compute or EBS for storage. A key piece here is the carrier gateway—a specialized connector that ties your AWS instances directly to the telecom’s 5G network. So when a user sends a request over 5G, your application gets it almost instantly, without that data ever leaving the carrier’s network.</p>
+
+<p>Even though these instances run at the network edge, they still stay connected to your primary AWS Region through a secure, high-speed private link. This means you can tap into Region-based services like RDS or DynamoDB, as if the edge resources were sitting in your cloud environment.</p>
+
+<p>Wavelength Zones and Local Zones don’t replace AWS Regions or AZs—they extend them. They’re built for cases where location really matters, such as with real-time gaming, video streaming, or connected vehicles. You still rely on the core cloud for most services, but you gain the option to push latency-sensitive parts of your application closer to users. It’s a flexible setup that helps you balance performance and scale, depending on what your application needs.</p>
+
+<p><a data-type="xref" href="#ch08_table_3_1763395115286680">Table 8-3</a> shows a summary of the<a contenteditable="false" data-primary="Global Accelerator" data-type="indexterm" id="id966"/><a contenteditable="false" data-primary="Amazon Route 53" data-type="indexterm" id="id967"/><a contenteditable="false" data-primary="Route 53" data-type="indexterm" id="id968"/><a contenteditable="false" data-primary="CloudFront" data-type="indexterm" id="id969"/><a contenteditable="false" data-primary="Amazon CloudFront" data-type="indexterm" id="id970"/><a contenteditable="false" data-primary="Shield" data-type="indexterm" id="id971"/><a contenteditable="false" data-primary="AWS Outposts" data-type="indexterm" id="id972"/><a contenteditable="false" data-primary="Outposts, AWS" data-startref="jc8.12" data-type="indexterm" id="id973"/><a contenteditable="false" data-primary="Local Zones" data-type="indexterm" id="id974"/>Edge Location services in<a contenteditable="false" data-primary="Wavelength Zones" data-startref="jc8.13" data-type="indexterm" id="id975"/> AWS.</p>
+
+<table id="ch08_table_3_1763395115286680">
+	<caption><span class="label">Table 8-3. </span>Edge Location services in AWS</caption>
+	<thead>
+		<tr>
+			<th>Services</th>
+			<th>Key features</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p>Global Accelerator</p>
+			</td>
+			<td>
+			<ul>
+				<li>Provides static anycast IPs announced from Edge Locations</li>
+				<li>Routes traffic over AWS’s private backbone for better speed and reliability</li>
+				<li>Automatically redirects traffic on failure without DNS changes</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Amazon Route 53</p>
+			</td>
+			<td>
+			<ul>
+				<li>Resolves DNS at the edge using a global anycast network</li>
+				<li>Keeps latency low with 200+ Points of Presence</li>
+				<li>Data plane stays operational even if the control plane goes down</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>CloudFront</p>
+			</td>
+			<td>
+			<ul>
+				<li>Delivers cached content from Edge Locations and Regional caches</li>
+				<li>Uses AWS’s private network for fast, secure content delivery</li>
+				<li>Reduces trips to the origin, improving speed and lowering backend load</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>AWS Shield</p>
+			</td>
+			<td>
+			<ul>
+				<li>Automatically blocks DDoS attacks at Edge Locations</li>
+				<li>Shield Advanced adds custom protections and real-time visibility</li>
+				<li>Integrated with services like CloudFront and Route 53</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>AWS Outposts</p>
+			</td>
+			<td>
+			<ul>
+				<li>Brings AWS infrastructure to your data center or branch</li>
+				<li>Supports the service link (to AWS Region) and local gateway (to on-prem systems)</li>
+				<li>Managed through AWS tools like the Console and the CLI</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Local Zones</p>
+			</td>
+			<td>
+			<ul>
+				<li>Brings compute, storage, and database resources closer to users</li>
+				<li>Useful for latency-sensitive workloads in metro areas</li>
+				<li>Integrated with your VPC but offers fewer services than a full Region</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Wavelength Zones</p>
+			</td>
+			<td>
+			<ul>
+				<li>Deploys AWS infrastructure inside telecom 5G data centers</li>
+				<li>Enables ultra-low latency for mobile and edge devices</li>
+				<li>Connected to an AWS Region<a contenteditable="false" data-primary="Edge Locations" data-startref="jc8.11" data-type="indexterm" id="id976"/><a contenteditable="false" data-primary="Regions" data-secondary="selecting" data-startref="jc8.10" data-tertiary="Edge Locations" data-type="indexterm" id="id977"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="selecting Regions" data-startref="jc8.9" data-tertiary="Edge Locations" data-type="indexterm" id="id978"/> via secure private link</li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div></section>
+</div></section>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Deploying AWS Services" data-type="sect1"><div class="sect1" id="ch08_deploying_aws_services_1763395115294944">
+<h1>Deploying AWS Services</h1>
+
+<p>In<a contenteditable="false" data-primary="AWS" data-secondary="deploying services" data-type="indexterm" id="jc8.15"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="deploying AWS services" data-type="indexterm" id="jc8.14"/> <a data-type="xref" href="ch06.html#ch06_aws_identity_and_access_management_iam_1763395114795692">Chapter 6</a>, we looked at the different ways to interact with AWS, like with the Management Console, the CLI, SDKs, and CloudShell. But these tools aren’t just for poking around or adjusting settings. You can use them to provision and deploy AWS services.</p>
+
+<p>Let’s walk through the main options available:</p>
+
+<dl>
+	<dt>AWS Management Console</dt>
+	<dd>
+	<p>If <a contenteditable="false" data-primary="AWS Management Console" data-type="indexterm" id="id979"/><a contenteditable="false" data-primary="Management Console" data-type="indexterm" id="id980"/>you’re getting started or need to do something quick, the AWS Management Console is a good option. It’s for tasks like spinning up an EC2 instance, creating a new S3 bucket, or tweaking a security group. You can do it all from here without touching a line of code. The Management Console is useful when testing the waters or handling small, one-off tasks.</p>
+	</dd>
+	<dt>AWS CLI</dt>
+	<dd>
+	<p>When<a contenteditable="false" data-primary="AWS CLI" data-type="indexterm" id="id981"/><a contenteditable="false" data-primary="CLI (Command Line Interface)" data-type="indexterm" id="id982"/><a contenteditable="false" data-primary="Command Line Interface (CLI)" data-type="indexterm" id="id983"/> you’re ready to automate—or prefer working in a terminal—the AWS CLI gives you scriptable, repeatable control over AWS resources. For example, with a single command like <code>aws s3 cp file.txt s3://my-bucket</code>, you can move files around, launch services, or batch-process changes. The CLI is fast, efficient, and fits into your existing shell scripts or automation routines.</p>
+	</dd>
+	<dt>AWS SDKs</dt>
+	<dd>
+	<p>If <a contenteditable="false" data-primary="AWS SDKs" data-type="indexterm" id="id984"/><a contenteditable="false" data-primary="software development kits (SDKs)" data-type="indexterm" id="id985"/><a contenteditable="false" data-primary="SDKs (software development kits)" data-type="indexterm" id="id986"/>you’re writing code and want AWS baked in, the SDKs are libraries that do the heavy lifting behind the scenes. They handle retries, authentication, and other low-level details, so you can focus on building your app.</p>
+	</dd>
+	<dt>AWS APIs</dt>
+	<dd>
+	<p>Under<a contenteditable="false" data-primary="AWS APIs" data-type="indexterm" id="id987"/> the hood, everything—from the CLI to SDKs—talks to AWS through its APIs. These are direct HTTP endpoints that let you interact with AWS services at a low level. You probably won’t use them directly unless you’re building a custom tool or integrating AWS into something that doesn’t support the CLI or SDKs. But if you need full control and don’t mind handling authentication and formatting yourself, the APIs are there.</p>
+	</dd>
+	<dt>Infrastructure-as-code (IaC) tools</dt>
+	<dd>
+	<p>If <a contenteditable="false" data-primary="infrastructure-as-code (IaC) tools" data-type="indexterm" id="id988"/><a contenteditable="false" data-primary="IaC (infrastructure-as-code) tools" data-type="indexterm" id="id989"/>you’re deploying the same infrastructure more than once—or managing multiple environments like dev, staging, and production—you’ll want to look into IaC. Tools like<a contenteditable="false" data-primary="CloudFormation tool" data-type="indexterm" id="id990"/> CloudFormation, the AWS Cloud Development Kit (CDK),<a contenteditable="false" data-primary="AWS Cloud Development Kit (CDK)" data-type="indexterm" id="id991"/><a contenteditable="false" data-primary="CDK (AWS Cloud Development Kit)" data-type="indexterm" id="id992"/><a contenteditable="false" data-primary="Cloud Development Kit (CDK)" data-type="indexterm" id="id993"/> and Terraform let you define your infrastructure in code or config files. Once written, you can version, reuse, and roll back those definitions just like application code. It’s a solid approach for consistency, collaboration, and staying sane as your environment grows.</p>
+	</dd>
+</dl>
+
+<p><a data-type="xref" href="#ch08_table_4_1763395115286698">Table 8-4</a> shows a summary of the different deployment options.</p>
+
+<table id="ch08_table_4_1763395115286698">
+	<caption><span class="label">Table 8-4. </span>Summary of AWS deployment options</caption>
+	<thead>
+		<tr>
+			<th>AWS tool/method</th>
+			<th>Description and use cases</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			<p>AWS Management Console</p>
+			</td>
+			<td>
+			<ul>
+				<li>For beginners and quick tasks</li>
+				<li>GUI-based; no coding required</li>
+				<li>Used for launching EC2, creating S3 buckets, etc.</li>
+				<li>Best for testing or one-off actions</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>AWS CLI</p>
+			</td>
+			<td>
+			<ul>
+				<li>Command Line Interface for automation</li>
+				<li>Scriptable and repeatable workflows</li>
+				<li>Fast and efficient for batch operations</li>
+				<li>Fits well in shell scripts and CI/CD</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>AWS SDKs</p>
+			</td>
+			<td>
+			<ul>
+				<li>Code libraries for multiple languages</li>
+				<li>Integrate AWS into applications directly</li>
+				<li>Handle retries, auth, and API calls</li>
+				<li>Ideal for developer workflows</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>AWS APIs</p>
+			</td>
+			<td>
+			<ul>
+				<li>Low-level HTTP interfaces to AWS services</li>
+				<li>Used under the hood by CLI/SDKs</li>
+				<li>Full control for custom integrations</li>
+				<li>Requires manual handling of auth/formatting</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>Infrastructure as code</p>
+			</td>
+			<td>
+			<ul>
+				<li>Defines infrastructure in code or config files</li>
+				<li>Tools: CloudFormation, CDK, Terraform</li>
+				<li>Supports versioning and reuse</li>
+				<li>Best for managing<a contenteditable="false" data-primary="AWS" data-secondary="deploying services" data-startref="jc8.15" data-type="indexterm" id="id994"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="deploying AWS services" data-startref="jc8.14" data-type="indexterm" id="id995"/> multi-env setups (dev/staging/prod)</li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div></section>
+
+<section data-pdf-bookmark="Choosing Between One-Time Tasks and Repeatable Processes in AWS" data-type="sect1"><div class="sect1" id="ch08_choosing_between_one_time_tasks_and_repeatable_pro_1763395115294996">
+<h1>Choosing Between One-Time Tasks and <span class="keep-together">Repeatable Processes</span> in AWS</h1>
+
+<p>When<a contenteditable="false" data-primary="repeatable processes" data-type="indexterm" id="id996"/><a contenteditable="false" data-primary="one-time tasks" data-type="indexterm" id="id997"/><a contenteditable="false" data-primary="global infrastructure" data-secondary="choosing between one-time tasks and repeatable processes" data-type="indexterm" id="id998"/> you’re working in AWS, a common crossroads you’ll hit is deciding whether to do something manually, or take the time to automate it for the future. This decision plays a big role in how efficient, scalable, and reliable your cloud setup turns out <span class="keep-together">to be</span>.</p>
+
+<p>Manual, one-time tasks usually happen through the AWS console or a quick CLI command. They’re fine for simple, occasional jobs—like spinning up a test server or tweaking a security group on the fly.</p>
+
+<p>On the flip side, automation comes into play when you need to repeat a task regularly or keep things consistent across multiple environments. Tools like AWS CloudFormation, the CLI, SDKs, or Terraform make it easy to turn one-off efforts into codified, repeatable processes. It takes more time upfront, but the payoff is real: fewer errors, smoother scaling, and a setup you can trust to work the same way every time.</p>
+
+<p>The key is knowing which path fits your situation. For production deployments or anything that involves multiple teams or Regions, automation is usually the smarter move. But if it’s a quick fix or a throwaway test, manual might make more sense. Striking the right balance helps you stay flexible without sacrificing reliability.</p>
+</div></section>
+
+<section data-pdf-bookmark="Conclusion" data-type="sect1"><div class="sect1" id="ch08_conclusion_1763395115295040">
+<h1>Conclusion</h1>
+
+<p>This chapter covered how AWS builds a global, resilient infrastructure using Regions, AZs, and edge services like CloudFront, Route 53, and AWS Shield to deliver low-latency, high-availability applications. We also looked at how AWS extends its reach with Outposts, Local Zones, and Wavelength Zones for edge computing. Finally, we discussed deployment tools—Console, the CLI, SDKs, APIs, and IaC—and how to choose between manual tasks and automation based on your needs.</p>
+
+<p>In the next chapter, we’ll look at AWS compute services.</p>
+</div></section>
+
+<section data-pdf-bookmark="Chapter Quiz" data-type="sect1"><div class="sect1" id="ch08_quiz_1763395115295088">
+<h1>Chapter Quiz</h1>
+
+<p>To check your answers, please refer to the <a data-type="xref" href="app02.html#appb_chapter_8_answer_key_1763395113746333">“Chapter 8 Answer Key”</a>.</p>
+
+<ol>
+	<li>
+	<p>What is the main benefit of using multiple AWS Regions for global applications?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>To reduce costs for all storage services</p>
+		</li>
+		<li>
+		<p>To increase Elastic Compute Cloud (EC2) instance speed</p>
+		</li>
+		<li>
+		<p>To consolidate resource access logs</p>
+		</li>
+		<li>
+		<p>To reduce latency and improve disaster recovery</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>Which AWS component is a physical location containing server racks, storage, and networking gear?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>Availability Zone</p>
+		</li>
+		<li>
+		<p>Edge Location</p>
+		</li>
+		<li>
+		<p>Region</p>
+		</li>
+		<li>
+		<p>Data center</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>Which AWS service provides built-in distributed denial-of-service (DDoS) protection at Edge Locations?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>AWS Shield</p>
+		</li>
+		<li>
+		<p>Amazon EC2</p>
+		</li>
+		<li>
+		<p>AWS Config</p>
+		</li>
+		<li>
+		<p>AWS Virtual Private Network (VPN)</p>
+		</li>
+	</ol>
+	</li>
+	<li class="less_space pagebreak-before">
+	<p>Which AWS service uses a tiered caching structure, starting at Edge Locations and scaling up?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>AWS Shield</p>
+		</li>
+		<li>
+		<p>Amazon Route 53</p>
+		</li>
+		<li>
+		<p>Amazon CloudFront</p>
+		</li>
+		<li>
+		<p>Amazon Elastic Block Store (EBS)</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>How do AWS Regions and Availability Zones (AZs) work together?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>AZs host entire Regions.</p>
+		</li>
+		<li>
+		<p>Regions are made up of multiple isolated AZs.</p>
+		</li>
+		<li>
+		<p>AZs and Regions are the same.</p>
+		</li>
+		<li>
+		<p>Regions provide caching; AZs do not.</p>
+		</li>
+	</ol>
+	</li>
+</ol>
+</div></section>
+</div></section></body></html>

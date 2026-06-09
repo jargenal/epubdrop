@@ -1,0 +1,156 @@
+<package xmlns="http://www.idpf.org/2007/opf" prefix="ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/ calibre: https://calibre-ebook.com" unique-identifier="EbookISBN" version="3.0" xml:lang="en-US">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:title id="id">Thinking in Bets</dc:title>
+    <dc:title>Making Smarter Decisions When You Don't Have All the Facts</dc:title>
+    <dc:creator id="id-1">Annie Duke</dc:creator>
+    <dc:identifier>calibre:3996</dc:identifier>
+    <dc:identifier>uuid:4dfc964d-e797-4d4c-bbec-a65ccbfbdb02</dc:identifier>
+    <dc:identifier id="EbookISBN">9780735216365</dc:identifier>
+    <dc:source>9780735216358</dc:source>
+    <dc:language>en-US</dc:language>
+    <dc:date>2018-02-06T00:00:00+00:00</dc:date>
+    <dc:description>&lt;div&gt;
+&lt;p style="font-weight: bold"&gt;Thinking in Bets: Making Smarter Decisions When You Don't Have All the Facts &lt;/p&gt;
+&lt;p&gt;Poker champion turned business consultant Annie Duke teaches you how to get comfortable with uncertainty and make better decisions as a result. In Super Bowl XLIX, Seahawks coach Pete Carroll made one of the most controversial calls in football history: With 26 seconds remaining, and trailing by four at the Patriots' one-yard line, he called for a pass instead of a hand off to his star running back. The pass was intercepted and the Seahawks lost. Critics called it the dumbest play in history. But was the call really that bad? Or did Carroll actually make a great move that was ruined by bad luck? &lt;/p&gt;
+&lt;p&gt;Even the best decision doesn't yield the best outcome every time. There's always an element of luck that you can't control, and there is always information that is hidden from view. So the key to long-term success (and avoiding worrying yourself to death) is to think in bets: How sure am I? What are the possible ways things could turn out? What decision has the highest odds of success? Did I land in the unlucky 10% on the strategy that works 90% of the time? Or is my success attributable to dumb luck rather than great decision making? &lt;/p&gt;
+&lt;p&gt;Annie Duke, a former World Series of Poker champion turned business consultant, draws on examples from business, sports, politics, and (of course) poker to share tools anyone can use to embrace uncertainty and make better decisions. For most people, it's difficult to say "I'm not sure" in a world that values and, even, rewards the appearance of certainty. But professional poker players are comfortable with the fact that great decisions don't always lead to great outcomes and bad decisions don't always lead to bad outcomes. &lt;/p&gt;
+&lt;p&gt;By shifting your thinking from a need for certainty to a goal of accurately assessing what you know and what you don't, you'll be less vulnerable to reactive emotions, knee-jerk biases, and destructive habits in your decision making. You'll become more confident, calm, compassionate and successful in the long run. &lt;/p&gt;&lt;/div&gt;</dc:description>
+    <dc:publisher>Penguin Publishing Group</dc:publisher>
+    <opf:meta refines="#id" property="title-type">main</opf:meta>
+    <opf:meta refines="#id" property="file-as">Thinking in Bets</opf:meta>
+    <meta content="Portfolio" name="imprint"/>
+    <meta property="dcterms:modified">2023-01-10T02:44:39Z</meta>
+    <meta content="Adobe InDesign 12.1 unZip_INDD_ePub.app v1.0" name="generator"/>
+    <meta name="cover" content="cover.jpg"/>
+    <meta property="ibooks:specified-fonts">true</meta>
+    <meta property="schema:accessMode">textual</meta>
+    <meta property="schema:accessMode">visual</meta>
+    <meta property="schema:accessModeSufficient">textual,visual</meta>
+    <meta property="schema:accessibilityFeature">displayTransformability</meta>
+    <meta property="schema:accessibilityFeature">tableOfContents</meta>
+    <meta property="schema:accessibilityFeature">bookmarks</meta>
+    <meta property="schema:accessibilityHazard">none</meta>
+    <meta content="1" name="GBSProcVer"/>
+    <meta content="GoogleEbooks" name="GBSEpubSource"/>
+    <meta property="calibre:author_link_map">{"Annie Duke": ""}</meta>
+    <opf:meta refines="#id-1" property="role" scheme="marc:relators">aut</opf:meta>
+    <opf:meta refines="#id-1" property="file-as">Duke, Annie</opf:meta>
+  </metadata>
+  <manifest>
+    <item href="xhtml/01_COVER.xhtml" id="cover" media-type="application/xhtml+xml" properties="calibre:title-page"/>
+    <item href="xhtml/02_TITLE_PAGE.xhtml" id="x9780735216365_EPUB" media-type="application/xhtml+xml"/>
+    <item href="xhtml/03_COPYRIGHT.xhtml" id="x9780735216365_EPUB-1" media-type="application/xhtml+xml"/>
+    <item href="xhtml/04_DEDICATION.xhtml" id="x9780735216365_EPUB-2" media-type="application/xhtml+xml"/>
+    <item href="xhtml/05_CONTENTS.xhtml" id="x9780735216365_EPUB-3" media-type="application/xhtml+xml"/>
+    <item href="xhtml/06_INTRODUCTION_Why_This.xhtml" id="x9780735216365_EPUB-4" media-type="application/xhtml+xml"/>
+    <item href="xhtml/07_CHAPTER_1_Life_Is_Pok.xhtml" id="x9780735216365_EPUB-5" media-type="application/xhtml+xml"/>
+    <item href="xhtml/08_CHAPTER_2_Wanna_Bet_.xhtml" id="x9780735216365_EPUB-6" media-type="application/xhtml+xml"/>
+    <item href="xhtml/09_CHAPTER_3_Bet_to_Lear.xhtml" id="x9780735216365_EPUB-7" media-type="application/xhtml+xml"/>
+    <item href="xhtml/10_CHAPTER_4_The_Buddy_S.xhtml" id="x9780735216365_EPUB-8" media-type="application/xhtml+xml"/>
+    <item href="xhtml/11_CHAPTER_5_Dissent_to_.xhtml" id="x9780735216365_EPUB-9" media-type="application/xhtml+xml"/>
+    <item href="xhtml/12_CHAPTER_6_Adventures_.xhtml" id="x9780735216365_EPUB-10" media-type="application/xhtml+xml"/>
+    <item href="xhtml/13_ACKNOWLEDGMENTS.xhtml" id="x9780735216365_EPUB-11" media-type="application/xhtml+xml"/>
+    <item href="xhtml/14_NOTES.xhtml" id="x9780735216365_EPUB-12" media-type="application/xhtml+xml"/>
+    <item href="xhtml/15_SELECTED_BIBLIOGRAPHY.xhtml" id="x9780735216365_EPUB-13" media-type="application/xhtml+xml"/>
+    <item href="xhtml/16_INDEX.xhtml" id="x9780735216365_EPUB-14" media-type="application/xhtml+xml"/>
+    <item href="xhtml/17_Footnote.xhtml" id="x9780735216365_EPUB-5_fn1" media-type="application/xhtml+xml"/>
+    <item href="xhtml/18_Footnote.xhtml" id="x9780735216365_EPUB-6_fn1" media-type="application/xhtml+xml"/>
+    <item href="xhtml/19_Footnote.xhtml" id="x9780735216365_EPUB-6_fn2" media-type="application/xhtml+xml"/>
+    <item href="xhtml/20_Footnote.xhtml" id="x9780735216365_EPUB-6_fn3" media-type="application/xhtml+xml"/>
+    <item href="xhtml/21_Footnote.xhtml" id="x9780735216365_EPUB-7_fn1" media-type="application/xhtml+xml"/>
+    <item href="xhtml/22_Footnote.xhtml" id="x9780735216365_EPUB-7_fn2" media-type="application/xhtml+xml"/>
+    <item href="xhtml/23_Footnote.xhtml" id="x9780735216365_EPUB-7_fn3" media-type="application/xhtml+xml"/>
+    <item href="xhtml/24_Footnote.xhtml" id="x9780735216365_EPUB-7_fn4" media-type="application/xhtml+xml"/>
+    <item href="xhtml/25_Footnote.xhtml" id="x9780735216365_EPUB-7_fn5" media-type="application/xhtml+xml"/>
+    <item href="xhtml/26_Footnote.xhtml" id="x9780735216365_EPUB-7_fn6" media-type="application/xhtml+xml"/>
+    <item href="xhtml/27_Footnote.xhtml" id="x9780735216365_EPUB-7_fn7" media-type="application/xhtml+xml"/>
+    <item href="xhtml/28_Footnote.xhtml" id="x9780735216365_EPUB-7_fn8" media-type="application/xhtml+xml"/>
+    <item href="xhtml/29_Footnote.xhtml" id="x9780735216365_EPUB-8_fn1" media-type="application/xhtml+xml"/>
+    <item href="xhtml/30_Footnote.xhtml" id="x9780735216365_EPUB-8_fn2" media-type="application/xhtml+xml"/>
+    <item href="xhtml/31_Footnote.xhtml" id="x9780735216365_EPUB-8_fn3" media-type="application/xhtml+xml"/>
+    <item href="xhtml/32_Footnote.xhtml" id="x9780735216365_EPUB-9_fn1" media-type="application/xhtml+xml"/>
+    <item href="xhtml/33_Footnote.xhtml" id="x9780735216365_EPUB-10_fn1" media-type="application/xhtml+xml"/>
+    <item href="xhtml/34_Footnote.xhtml" id="x9780735216365_EPUB-10_fn2" media-type="application/xhtml+xml"/>
+    <item href="xhtml/35_Footnote.xhtml" id="x9780735216365_EPUB-10_fn3" media-type="application/xhtml+xml"/>
+    <item href="xhtml/36_Footnote.xhtml" id="x9780735216365_EPUB-10_fn4" media-type="application/xhtml+xml"/>
+    <item href="xhtml/37_Footnote.xhtml" id="x9780735216365_EPUB-10_fn5" media-type="application/xhtml+xml"/>
+    <item href="xhtml/38_Footnote.xhtml" id="x9780735216365_EPUB-10_fn6" media-type="application/xhtml+xml"/>
+    <item href="xhtml/39_Footnote.xhtml" id="x9780735216365_EPUB-10_fn7" media-type="application/xhtml+xml"/>
+    <item href="xhtml/40_Footnote.xhtml" id="x9780735216365_EPUB-10_fn8" media-type="application/xhtml+xml"/>
+    <item href="xhtml/41_Footnote.xhtml" id="x9780735216365_EPUB-10_fn9" media-type="application/xhtml+xml"/>
+    <item href="xhtml/next-reads.xhtml" id="next-reads.xhtml" media-type="application/xhtml+xml"/>
+    <item href="navDoc.xhtml" id="toc" media-type="application/xhtml+xml" properties="nav"/>
+    <item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml"/>
+    <item href="css/idGeneratedStyles.css" id="idGeneratedStyles.css" media-type="text/css"/>
+    <item href="image/1.jpg" id="x1.jpg" media-type="image/jpeg"/>
+    <item href="image/11.jpg" id="x11.jpg" media-type="image/jpeg"/>
+    <item href="image/2.jpg" id="x2.jpg" media-type="image/jpeg"/>
+    <item href="image/Art_01.jpg" id="Art_01.jpg" media-type="image/jpeg"/>
+    <item href="image/Art_02.jpg" id="Art_02.jpg" media-type="image/jpeg"/>
+    <item href="image/Art_03.jpg" id="Art_03.jpg" media-type="image/jpeg"/>
+    <item href="image/Art_04.jpg" id="Art_04.jpg" media-type="image/jpeg"/>
+    <item href="image/Art_05.jpg" id="Art_05.jpg" media-type="image/jpeg"/>
+    <item href="image/Art_10.jpg" id="Art_10.jpg" media-type="image/jpeg"/>
+    <item href="image/ART-06.jpg" id="ART-06.jpg" media-type="image/jpeg"/>
+    <item href="image/ART-07.jpg" id="ART-07.jpg" media-type="image/jpeg"/>
+    <item href="image/ART-08.jpg" id="ART-08.jpg" media-type="image/jpeg"/>
+    <item href="image/cover.jpg" id="cover.jpg" media-type="image/jpeg" properties="cover-image"/>
+    <item href="image/next-reads_logo.jpg" id="next-reads_logo.jpg" media-type="image/jpeg"/>
+    <item href="image/page_iii.jpg" id="page_iii.jpg" media-type="image/jpeg"/>
+    <item href="image/penguin-logo-for-copyright.jpg" id="penguin-logo-for-copyright.jpg" media-type="image/jpeg"/>
+    <item href="image/PortfolioPenguinLogo_K.jpg" id="PortfolioPenguinLogo_K.jpg" media-type="image/jpeg"/>
+    <item href="font/Fort-Book.otf" id="Fort-Book.otf" media-type="application/vnd.ms-opentype"/>
+    <item href="font/Shift-BoldItalic.otf" id="Shift-BoldItalic.otf" media-type="application/vnd.ms-opentype"/>
+    <item href="font/Shift-Light.otf" id="Shift-Light.otf" media-type="application/vnd.ms-opentype"/>
+    <item href="_page_map_.xml" id="_page_map_" media-type="application/oebps-page-map+xml"/>
+  </manifest>
+  <spine page-map="_page_map_" toc="ncx">
+    <itemref idref="cover"/>
+    <itemref idref="x9780735216365_EPUB"/>
+    <itemref idref="x9780735216365_EPUB-1"/>
+    <itemref idref="x9780735216365_EPUB-2"/>
+    <itemref idref="x9780735216365_EPUB-3"/>
+    <itemref idref="x9780735216365_EPUB-4"/>
+    <itemref idref="x9780735216365_EPUB-5"/>
+    <itemref idref="x9780735216365_EPUB-6"/>
+    <itemref idref="x9780735216365_EPUB-7"/>
+    <itemref idref="x9780735216365_EPUB-8"/>
+    <itemref idref="x9780735216365_EPUB-9"/>
+    <itemref idref="x9780735216365_EPUB-10"/>
+    <itemref idref="x9780735216365_EPUB-11"/>
+    <itemref idref="x9780735216365_EPUB-12"/>
+    <itemref idref="x9780735216365_EPUB-13"/>
+    <itemref idref="x9780735216365_EPUB-14"/>
+    <itemref idref="x9780735216365_EPUB-5_fn1" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-6_fn1" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-6_fn2" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-6_fn3" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-7_fn1" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-7_fn2" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-7_fn3" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-7_fn4" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-7_fn5" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-7_fn6" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-7_fn7" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-7_fn8" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-8_fn1" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-8_fn2" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-8_fn3" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-9_fn1" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-10_fn1" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-10_fn2" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-10_fn3" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-10_fn4" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-10_fn5" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-10_fn6" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-10_fn7" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-10_fn8" linear="no"/>
+    <itemref idref="x9780735216365_EPUB-10_fn9" linear="no"/>
+    <itemref idref="next-reads.xhtml"/>
+  </spine>
+  <guide>
+    <reference href="xhtml/01_COVER.xhtml" title="Cover" type="cover"/>
+    <reference href="xhtml/05_CONTENTS.xhtml#_idParaDest-4" title="Table of Contents" type="toc"/>
+    <reference href="xhtml/06_INTRODUCTION_Why_This.xhtml" title="Start" type="start"/>
+  </guide>
+</package>

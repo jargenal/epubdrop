@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="2.0" >
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"  xmlns:opf="http://www.idpf.org/2007/opf">
+<dc:title>Solutions Architect&#x27;s Handbook - Second Edition</dc:title>
+<dc:creator opf:file-as="Saurabh Shrivastava" opf:role="aut">Saurabh Shrivastava</dc:creator>
+<dc:creator opf:file-as="Neelanjali Srivastav" opf:role="aut">Neelanjali Srivastav</dc:creator>
+<dc:creator opf:file-as="Rajesh Sheth" opf:role="aut">Rajesh Sheth</dc:creator>
+<dc:creator opf:file-as="Rohan Karmarkar" opf:role="aut">Rohan Karmarkar</dc:creator>
+<dc:creator opf:file-as="Kamal Arora" opf:role="aut">Kamal Arora</dc:creator>
+<dc:description>&lt;span&gt;&lt;p&gt;&lt;b&gt;From fundamentals and design patterns to the different strategies for creating secure and reliable architectures in AWS cloud, learn everything you need to become a successful solutions architect&lt;/b&gt;&lt;/p&gt;&lt;h4&gt;Key Features&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;Transform business requirements into end-to-end technical architectures with this practical guide&lt;/li&gt;&lt;li&gt;Assess and overcome the various challenges while updating or modernizing legacy applications&lt;/li&gt;&lt;li&gt;Learn how to future-proof your architecture with IoT, machine learning, and quantum computing&lt;/li&gt;&lt;/ul&gt;&lt;h4&gt;Book Description&lt;/h4&gt;&lt;p&gt;Solutions Architect&#x27;s Handbook, Second Edition, takes a hands-on approach to helping you become a solutions architect. You will learn how to create robust, scalable, and fault-tolerant solutions and next-generation architecture designs in a cloud environment. This will help you build effective product strategies for your business and implement them from start to finish.&lt;/p&gt;&lt;p&gt;The new edition incorporates new chapters on disruptive technologies, such Internet of Things (IoT), quantum computing, data engineering, and machine learning. It also includes updated discussions on cloud-native architecture, blockchain data storage, and mainframe modernization with public cloud.&lt;/p&gt;&lt;p&gt;This book provides an understanding of solution architecture and how it fits into an agile enterprise environment. It will take you through the journey of solution architecture design by providing detailed knowledge of design pillars, advanced design patterns, anti-patterns, and the cloud-native aspects of modern software design.&lt;/p&gt;&lt;p&gt;By the end of this book, you&#x27;ll have learned techniques that enable you to create efficient architecture designs that meet your business requirements.&lt;/p&gt;&lt;h4&gt;What you will learn&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;Explore the various roles of a solutions architect in the enterprise landscape&lt;/li&gt;&lt;li&gt;Implement key design principles and patterns to build high-performance, cost-effective solutions&lt;/li&gt;&lt;li&gt;Choose appropriate strategies to secure your architectures and increase their availability&lt;/li&gt;&lt;li&gt;Modernize legacy applications with the help of cloud integration&lt;/li&gt;&lt;li&gt;Understand big data processing, machine learning, IoT, and quantum computing, and how they fit into modern architecture&lt;/li&gt;&lt;li&gt;Integrate a DevOps mindset to promote collaboration, increase operational efficiency, and streamline production&lt;/li&gt;&lt;/ul&gt;&lt;h4&gt;Who this book is for&lt;/h4&gt;&lt;p&gt;This book is for software developers, system engineers, DevOps engineers, architects, and team leaders working in the information technology industry who aspire to become solutions architect professionals. It will also be useful for existing solutions architects who want to broaden their skillset and learn about new technologies.&lt;/p&gt;&lt;p&gt;A good understanding of the real-world software development process and general programming experience with any language will be useful.&lt;/p&gt;&lt;/span&gt;</dc:description>
+<dc:publisher>Packt Publishing</dc:publisher>
+<dc:rights></dc:rights>
+<dc:language>en-US</dc:language>
+<dc:date>2022-01-17</dc:date>
+<dc:identifier id="bookid">9781801816618</dc:identifier>
+<meta name="cover" content="Images/cover.png"/>
+</metadata>
+<manifest>
+<item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+<item id="cover" href="cover.xhtml" media-type="application/xhtml+xml" />
+<item id="Title_Page" href="Title_Page.xhtml" media-type="application/xhtml+xml" />
+<item id="toc" href="toc.xhtml" media-type="application/xhtml+xml" />
+<item id="Preface" href="Preface.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_1" href="Chapter_1.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_2" href="Chapter_2.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_3" href="Chapter_3.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_4" href="Chapter_4.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_5" href="Chapter_5.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_6" href="Chapter_6.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_7" href="Chapter_7.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_8" href="Chapter_8.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_9" href="Chapter_9.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_10" href="Chapter_10.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_11" href="Chapter_11.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_12" href="Chapter_12.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_13" href="Chapter_13.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_14" href="Chapter_14.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_15" href="Chapter_15.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_16" href="Chapter_16.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_17" href="Chapter_17.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_18" href="Chapter_18.xhtml" media-type="application/xhtml+xml" />
+<item id="Chapter_19" href="Chapter_19.xhtml" media-type="application/xhtml+xml" />
+<item id="Other_Books_You_May_Enjoy" href="Other_Books_You_May_Enjoy.xhtml" media-type="application/xhtml+xml" />
+<item id="Index" href="Index.xhtml" media-type="application/xhtml+xml" />
+<item id="img_B17764_02_03" href="Images/B17764_02_03.png" media-type="image/png" />
+<item id="img_B17764_16_02" href="Images/B17764_16_02.png" media-type="image/png" />
+<item id="img_B17764_06_25" href="Images/B17764_06_25.png" media-type="image/png" />
+<item id="img_B17764_04_02" href="Images/B17764_04_02.png" media-type="image/png" />
+<item id="img_B17764_10_10" href="Images/B17764_10_10.png" media-type="image/png" />
+<item id="img_B17764_04_07" href="Images/B17764_04_07.png" media-type="image/png" />
+<item id="img_B17764_11_06" href="Images/B17764_11_06.png" media-type="image/png" />
+<item id="img_B17764_12_03" href="Images/B17764_12_03.png" media-type="image/png" />
+<item id="img_B17764_06_06" href="Images/B17764_06_06.png" media-type="image/png" />
+<item id="img_B17764_03_02" href="Images/B17764_03_02.png" media-type="image/png" />
+<item id="img_9" href="Images/9.png" media-type="image/png" />
+<item id="img_B17764_06_02" href="Images/B17764_06_02.png" media-type="image/png" />
+<item id="img_B17764_12_13" href="Images/B17764_12_13.png" media-type="image/png" />
+<item id="img_B17764_05_01" href="Images/B17764_05_01.png" media-type="image/png" />
+<item id="img_B17764_16_08" href="Images/B17764_16_08.png" media-type="image/png" />
+<item id="img_B17764_11_09" href="Images/B17764_11_09.png" media-type="image/png" />
+<item id="img_B17764_06_15" href="Images/B17764_06_15.png" media-type="image/png" />
+<item id="img_B17764_01_05" href="Images/B17764_01_05.png" media-type="image/png" />
+<item id="img_9781789539233cov" href="Images/9781789539233cov.png" media-type="image/png" />
+<item id="img_B17764_04_04" href="Images/B17764_04_04.png" media-type="image/png" />
+<item id="img_B17764_13_05" href="Images/B17764_13_05.png" media-type="image/png" />
+<item id="img_B17764_12_14" href="Images/B17764_12_14.png" media-type="image/png" />
+<item id="img_B17764_19_03" href="Images/B17764_19_03.png" media-type="image/png" />
+<item id="img_B17764_01_03" href="Images/B17764_01_03.png" media-type="image/png" />
+<item id="img_B17764_15_04" href="Images/B17764_15_04.png" media-type="image/png" />
+<item id="img_B17764_01_04" href="Images/B17764_01_04.png" media-type="image/png" />
+<item id="img_B17764_16_03" href="Images/B17764_16_03.png" media-type="image/png" />
+<item id="img_B17764_06_17" href="Images/B17764_06_17.png" media-type="image/png" />
+<item id="img_9781800566040" href="Images/9781800566040.png" media-type="image/png" />
+<item id="img_1" href="Images/1.png" media-type="image/png" />
+<item id="img_B17764_08_10" href="Images/B17764_08_10.png" media-type="image/png" />
+<item id="img_B17764_12_04" href="Images/B17764_12_04.png" media-type="image/png" />
+<item id="img_B17764_09_10" href="Images/B17764_09_10.png" media-type="image/png" />
+<item id="img_B17764_16_016" href="Images/B17764_16_016.png" media-type="image/png" />
+<item id="img_B17764_06_05" href="Images/B17764_06_05.png" media-type="image/png" />
+<item id="img_B17764_06_16" href="Images/B17764_06_16.png" media-type="image/png" />
+<item id="img_B17764_01_02" href="Images/B17764_01_02.png" media-type="image/png" />
+<item id="img_B17764_12_15" href="Images/B17764_12_15.png" media-type="image/png" />
+<item id="img_B17764_13_09" href="Images/B17764_13_09.png" media-type="image/png" />
+<item id="img_B17764_06_08" href="Images/B17764_06_08.jpg" media-type="image/jpeg" />
+<item id="img_B17764_09_05" href="Images/B17764_09_05.png" media-type="image/png" />
+<item id="img_B17764_16_011" href="Images/B17764_16_011.png" media-type="image/png" />
+<item id="img_B17764_10_09" href="Images/B17764_10_09.png" media-type="image/png" />
+<item id="img_Image35275" href="Images/Image35275.jpg" media-type="image/jpeg" />
+<item id="img_4" href="Images/4.png" media-type="image/png" />
+<item id="img_B17764_16-01" href="Images/B17764_16-01.png" media-type="image/png" />
+<item id="img_B17764_13_02" href="Images/B17764_13_02.png" media-type="image/png" />
+<item id="img_B17764_14_04" href="Images/B17764_14_04.png" media-type="image/png" />
+<item id="img_B17764_09_07" href="Images/B17764_09_07.png" media-type="image/png" />
+<item id="img_B17764_17_05" href="Images/B17764_17_05.png" media-type="image/png" />
+<item id="img_B17764_06_18" href="Images/B17764_06_18.png" media-type="image/png" />
+<item id="img_B17764_09_04" href="Images/B17764_09_04.png" media-type="image/png" />
+<item id="img_B17764_18_10" href="Images/B17764_18_10.png" media-type="image/png" />
+<item id="img_B17764_06_04" href="Images/B17764_06_04.png" media-type="image/png" />
+<item id="img_B17764_12_09" href="Images/B17764_12_09.png" media-type="image/png" />
+<item id="img_B17764_09_06" href="Images/B17764_09_06.png" media-type="image/png" />
+<item id="img_B17764_10_08" href="Images/B17764_10_08.png" media-type="image/png" />
+<item id="img_B17764_02_04" href="Images/B17764_02_04.png" media-type="image/png" />
+<item id="img_B17764_16_009" href="Images/B17764_16_009.png" media-type="image/png" />
+<item id="img_B17764_11_11" href="Images/B17764_11_11.png" media-type="image/png" />
+<item id="img_B17764_18_07" href="Images/B17764_18_07.png" media-type="image/png" />
+<item id="img_B17764_06_14" href="Images/B17764_06_14.png" media-type="image/png" />
+<item id="img_B17764_07_04" href="Images/B17764_07_04.png" media-type="image/png" />
+<item id="img_B17764_17_01" href="Images/B17764_17_01.png" media-type="image/png" />
+<item id="img_B17764_08_08" href="Images/B17764_08_08.png" media-type="image/png" />
+<item id="img_B17764_02_01" href="Images/B17764_02_01.png" media-type="image/png" />
+<item id="img_B17764_06_01" href="Images/B17764_06_01.png" media-type="image/png" />
+<item id="img_B17764_10_01" href="Images/B17764_10_01.png" media-type="image/png" />
+<item id="img_B17764_10_07" href="Images/B17764_10_07.png" media-type="image/png" />
+<item id="img_B17764_16_006" href="Images/B17764_16_006.png" media-type="image/png" />
+<item id="img_B17764_04_08" href="Images/B17764_04_08.png" media-type="image/png" />
+<item id="img_B17764_06_07" href="Images/B17764_06_07.png" media-type="image/png" />
+<item id="img_B17764_03_08" href="Images/B17764_03_08.png" media-type="image/png" />
+<item id="img_B17764_08_02" href="Images/B17764_08_02.png" media-type="image/png" />
+<item id="img_B17764_10_06" href="Images/B17764_10_06.png" media-type="image/png" />
+<item id="img_B17764_12_11" href="Images/B17764_12_11.png" media-type="image/png" />
+<item id="img_B17764_16_017" href="Images/B17764_16_017.png" media-type="image/png" />
+<item id="img_B17764_04_03" href="Images/B17764_04_03.png" media-type="image/png" />
+<item id="img_B17764_13_08" href="Images/B17764_13_08.png" media-type="image/png" />
+<item id="img_B17764_13_04" href="Images/B17764_13_04.png" media-type="image/png" />
+<item id="img_B17764_18_05" href="Images/B17764_18_05.png" media-type="image/png" />
+<item id="img_B17764_05_07" href="Images/B17764_05_07.png" media-type="image/png" />
+<item id="img_6" href="Images/6.png" media-type="image/png" />
+<item id="img_B17764_18_06" href="Images/B17764_18_06.png" media-type="image/png" />
+<item id="img_B17764_08_04" href="Images/B17764_08_04.png" media-type="image/png" />
+<item id="img_B17764_03_09" href="Images/B17764_03_09.png" media-type="image/png" />
+<item id="img_B17764_13_11" href="Images/B17764_13_11.png" media-type="image/png" />
+<item id="img_B17764_16_004" href="Images/B17764_16_004.png" media-type="image/png" />
+<item id="img_B17764_15_01" href="Images/B17764_15_01.png" media-type="image/png" />
+<item id="img_B17764_14_02" href="Images/B17764_14_02.png" media-type="image/png" />
+<item id="img_B17764_16_010" href="Images/B17764_16_010.png" media-type="image/png" />
+<item id="img_B17764_05_06" href="Images/B17764_05_06.png" media-type="image/png" />
+<item id="img_B17764_16_002" href="Images/B17764_16_002.png" media-type="image/png" />
+<item id="img_B17764_16_019" href="Images/B17764_16_019.png" media-type="image/png" />
+<item id="img_B17764_06_12" href="Images/B17764_06_12.png" media-type="image/png" />
+<item id="img_B17764_01_01" href="Images/B17764_01_01.png" media-type="image/png" />
+<item id="img_B17764_15_05" href="Images/B17764_15_05.png" media-type="image/png" />
+<item id="img_B17764_17_03" href="Images/B17764_17_03.png" media-type="image/png" />
+<item id="img_B17764_13_12" href="Images/B17764_13_12.png" media-type="image/png" />
+<item id="img_B17764_14_05" href="Images/B17764_14_05.png" media-type="image/png" />
+<item id="img_B17764_11_03" href="Images/B17764_11_03.png" media-type="image/png" />
+<item id="img_B17764_18_04" href="Images/B17764_18_04.png" media-type="image/png" />
+<item id="img_B17764_10_11" href="Images/B17764_10_11.png" media-type="image/png" />
+<item id="img_B17764_09_08" href="Images/B17764_09_08.png" media-type="image/png" />
+<item id="img_cover" href="Images/cover.png" media-type="image/png" />
+<item id="img_3" href="Images/3.png" media-type="image/png" />
+<item id="img_B17764_10_05" href="Images/B17764_10_05.png" media-type="image/png" />
+<item id="img_B17764_08_01" href="Images/B17764_08_01.png" media-type="image/png" />
+<item id="img_B17764_11_10" href="Images/B17764_11_10.png" media-type="image/png" />
+<item id="img_B17764_16_014" href="Images/B17764_16_014.png" media-type="image/png" />
+<item id="img_B17764_03_07" href="Images/B17764_03_07.png" media-type="image/png" />
+<item id="img_B17764_04_01" href="Images/B17764_04_01.png" media-type="image/png" />
+<item id="img_B17764_06_10" href="Images/B17764_06_10.png" media-type="image/png" />
+<item id="img_B17764_07_07" href="Images/B17764_07_07.png" media-type="image/png" />
+<item id="img_B17764_13_06" href="Images/B17764_13_06.png" media-type="image/png" />
+<item id="img_B17764_16_0001" href="Images/B17764_16_0001.png" media-type="image/png" />
+<item id="img_B17764_03_04" href="Images/B17764_03_04.png" media-type="image/png" />
+<item id="img_B17764_09_02" href="Images/B17764_09_02.png" media-type="image/png" />
+<item id="img_B17764_02_02" href="Images/B17764_02_02.png" media-type="image/png" />
+<item id="img_B17764_04_09" href="Images/B17764_04_09.png" media-type="image/png" />
+<item id="img_B17764_12_08" href="Images/B17764_12_08.png" media-type="image/png" />
+<item id="img_B17764_07_02" href="Images/B17764_07_02.png" media-type="image/png" />
+<item id="img_B17764_12_02" href="Images/B17764_12_02.png" media-type="image/png" />
+<item id="img_B17764_06_24" href="Images/B17764_06_24.png" media-type="image/png" />
+<item id="img_B17764_16_0111" href="Images/B17764_16_0111.png" media-type="image/png" />
+<item id="img_B17764_17_09" href="Images/B17764_17_09.png" media-type="image/png" />
+<item id="img_B17764_18_08" href="Images/B17764_18_08.png" media-type="image/png" />
+<item id="img_Image23262" href="Images/Image23262.png" media-type="image/png" />
+<item id="img_B17764_04_06" href="Images/B17764_04_06.png" media-type="image/png" />
+<item id="img_B17764_04_05" href="Images/B17764_04_05.png" media-type="image/png" />
+<item id="img_B17764_15_06" href="Images/B17764_15_06.png" media-type="image/png" />
+<item id="img_B17764_06_21" href="Images/B17764_06_21.png" media-type="image/png" />
+<item id="img_B17764_12_01" href="Images/B17764_12_01.png" media-type="image/png" />
+<item id="img_B17764_13_03" href="Images/B17764_13_03.png" media-type="image/png" />
+<item id="img_B17764_12_05" href="Images/B17764_12_05.png" media-type="image/png" />
+<item id="img_B17764_18_02" href="Images/B17764_18_02.png" media-type="image/png" />
+<item id="img_B17764_08_03" href="Images/B17764_08_03.png" media-type="image/png" />
+<item id="img_2" href="Images/2.png" media-type="image/png" />
+<item id="img_B17764_19_02" href="Images/B17764_19_02.png" media-type="image/png" />
+<item id="img_B17764_06_13" href="Images/B17764_06_13.png" media-type="image/png" />
+<item id="img_B17764_12_12" href="Images/B17764_12_12.png" media-type="image/png" />
+<item id="img_B17764_14_03" href="Images/B17764_14_03.png" media-type="image/png" />
+<item id="img_B17764_08_12" href="Images/B17764_08_12.png" media-type="image/png" />
+<item id="img_B17764_16_008" href="Images/B17764_16_008.png" media-type="image/png" />
+<item id="img_B17764_08_06" href="Images/B17764_08_06.png" media-type="image/png" />
+<item id="img_B17764_11_05" href="Images/B17764_11_05.png" media-type="image/png" />
+<item id="img_B17764_05_05" href="Images/B17764_05_05.png" media-type="image/png" />
+<item id="img_B17764_14_01" href="Images/B17764_14_01.png" media-type="image/png" />
+<item id="img_B17764_05_03" href="Images/B17764_05_03.png" media-type="image/png" />
+<item id="img_B17764_06_23" href="Images/B17764_06_23.png" media-type="image/png" />
+<item id="img_B17764_16_05" href="Images/B17764_16_05.png" media-type="image/png" />
+<item id="img_B17764_16_07" href="Images/B17764_16_07.png" media-type="image/png" />
+<item id="img_B17764_02_05" href="Images/B17764_02_05.png" media-type="image/png" />
+<item id="img_7" href="Images/7.png" media-type="image/png" />
+<item id="img_B17764_06_22" href="Images/B17764_06_22.png" media-type="image/png" />
+<item id="img_B17764_06_09" href="Images/B17764_06_09.png" media-type="image/png" />
+<item id="img_B17764_06_11" href="Images/B17764_06_11.png" media-type="image/png" />
+<item id="img_B17764_07_06" href="Images/B17764_07_06.png" media-type="image/png" />
+<item id="img_B17764_08_09" href="Images/B17764_08_09.png" media-type="image/png" />
+<item id="img_B17764_11_02" href="Images/B17764_11_02.png" media-type="image/png" />
+<item id="img_B17764_17_06" href="Images/B17764_17_06.png" media-type="image/png" />
+<item id="img_5" href="Images/5.png" media-type="image/png" />
+<item id="img_B17764_18_01" href="Images/B17764_18_01.png" media-type="image/png" />
+<item id="img_B17764_17_07" href="Images/B17764_17_07.png" media-type="image/png" />
+<item id="img_B17764_13_07" href="Images/B17764_13_07.png" media-type="image/png" />
+<item id="img_B17764_03_05" href="Images/B17764_03_05.png" media-type="image/png" />
+<item id="img_B17764_18_09" href="Images/B17764_18_09.png" media-type="image/png" />
+<item id="img_B17764_11_07" href="Images/B17764_11_07.png" media-type="image/png" />
+<item id="img_B17764_07_03" href="Images/B17764_07_03.png" media-type="image/png" />
+<item id="img_B17764_06_03" href="Images/B17764_06_03.png" media-type="image/png" />
+<item id="img_B17764_13_10" href="Images/B17764_13_10.png" media-type="image/png" />
+<item id="img_B17764_19_01" href="Images/B17764_19_01.png" media-type="image/png" />
+<item id="img_B17764_07_01" href="Images/B17764_07_01.png" media-type="image/png" />
+<item id="img_B17764_09_09" href="Images/B17764_09_09.png" media-type="image/png" />
+<item id="img_B17764_17_08" href="Images/B17764_17_08.png" media-type="image/png" />
+<item id="img_B17764_06_20" href="Images/B17764_06_20.png" media-type="image/png" />
+<item id="img_B17764_09_01" href="Images/B17764_09_01.png" media-type="image/png" />
+<item id="img_B17764_11_08" href="Images/B17764_11_08.png" media-type="image/png" />
+<item id="img_8" href="Images/8.png" media-type="image/png" />
+<item id="img_B17764_12_10" href="Images/B17764_12_10.png" media-type="image/png" />
+<item id="img_B17764_09_03" href="Images/B17764_09_03.png" media-type="image/png" />
+<item id="img_B17764_07_05" href="Images/B17764_07_05.png" media-type="image/png" />
+<item id="img_B17764_05_08" href="Images/B17764_05_08.png" media-type="image/png" />
+<item id="img_B17764_11_01" href="Images/B17764_11_01.png" media-type="image/png" />
+<item id="img_B17764_06_26" href="Images/B17764_06_26.png" media-type="image/png" />
+<item id="img_B17764_10_02" href="Images/B17764_10_02.png" media-type="image/png" />
+<item id="img_B17764_10_12" href="Images/B17764_10_12.png" media-type="image/png" />
+<item id="img_B17764_16_06" href="Images/B17764_16_06.png" media-type="image/png" />
+<item id="img_B17764_17_02" href="Images/B17764_17_02.png" media-type="image/png" />
+<item id="img_B17764_10_04" href="Images/B17764_10_04.png" media-type="image/png" />
+<item id="img_B17764_11_04" href="Images/B17764_11_04.png" media-type="image/png" />
+<item id="img_B17764_08_07" href="Images/B17764_08_07.png" media-type="image/png" />
+<item id="img_B17764_15_03" href="Images/B17764_15_03.png" media-type="image/png" />
+<item id="img_B17764_03_06" href="Images/B17764_03_06.png" media-type="image/png" />
+<item id="img_B17764_08_11" href="Images/B17764_08_11.png" media-type="image/png" />
+<item id="img_B17764_15_02" href="Images/B17764_15_02.png" media-type="image/png" />
+<item id="img_B17764_12_06" href="Images/B17764_12_06.png" media-type="image/png" />
+<item id="img_B17764_16_003" href="Images/B17764_16_003.png" media-type="image/png" />
+<item id="img_B17764_16_04" href="Images/B17764_16_04.png" media-type="image/png" />
+<item id="img_B17764_18_03" href="Images/B17764_18_03.png" media-type="image/png" />
+<item id="img_B17764_17_04" href="Images/B17764_17_04.png" media-type="image/png" />
+<item id="img_B17764_10_03" href="Images/B17764_10_03.png" media-type="image/png" />
+<item id="img_B17764_03_01" href="Images/B17764_03_01.png" media-type="image/png" />
+<item id="img_B17764_06_19" href="Images/B17764_06_19.png" media-type="image/png" />
+<item id="img_B17764_13_01" href="Images/B17764_13_01.png" media-type="image/png" />
+<item id="img_B17764_16_001" href="Images/B17764_16_001.png" media-type="image/png" />
+<item id="img_B17764_05_04" href="Images/B17764_05_04.png" media-type="image/png" />
+<item id="img_B17764_08_05" href="Images/B17764_08_05.png" media-type="image/png" />
+<item id="img_B17764_03_03" href="Images/B17764_03_03.png" media-type="image/png" />
+<item id="img_B17764_12_07" href="Images/B17764_12_07.png" media-type="image/png" />
+<item id="img_B17764_16_018" href="Images/B17764_16_018.png" media-type="image/png" />
+<item id="style_00" href="Styles/Style00.css" media-type="text/css" />
+<item id="style_01" href="Styles/Style01.css" media-type="text/css" />
+<item id="style_02" href="Styles/Style02.css" media-type="text/css" />
+</manifest>
+<spine toc="ncx">
+<itemref idref="cover"/>
+<itemref idref="Title_Page"/>
+<itemref idref="toc"/>
+<itemref idref="Preface"/>
+<itemref idref="Chapter_1"/>
+<itemref idref="Chapter_2"/>
+<itemref idref="Chapter_3"/>
+<itemref idref="Chapter_4"/>
+<itemref idref="Chapter_5"/>
+<itemref idref="Chapter_6"/>
+<itemref idref="Chapter_7"/>
+<itemref idref="Chapter_8"/>
+<itemref idref="Chapter_9"/>
+<itemref idref="Chapter_10"/>
+<itemref idref="Chapter_11"/>
+<itemref idref="Chapter_12"/>
+<itemref idref="Chapter_13"/>
+<itemref idref="Chapter_14"/>
+<itemref idref="Chapter_15"/>
+<itemref idref="Chapter_16"/>
+<itemref idref="Chapter_17"/>
+<itemref idref="Chapter_18"/>
+<itemref idref="Chapter_19"/>
+<itemref idref="Other_Books_You_May_Enjoy"/>
+<itemref idref="Index"/></spine>
+<guide><reference href="cover.xhtml" title="Cover" type="cover" /></guide>
+</package>

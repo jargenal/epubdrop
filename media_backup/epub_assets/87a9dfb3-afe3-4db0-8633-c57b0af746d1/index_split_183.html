@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos695907" class="calibre_2"><span class="calibre2"><span class="bold">Real and synthetic traffic</span></span></p><p class="calibre_1">Key performance indicators and a focus on the mean time to recovery are all well and good, but they are also largely academic unless there is traffic running through your cloud-native system. <a></a>International companies will likely have traffic around the clock, but many systems do not have an international user base. <a></a>Furthermore, even though the system as a whole may be receiving continuous traffic, individual regions will receive different levels of traffic throughout the day.</p><p class="calibre_1">We are continuously deploying changes into production and we need to proactively assert the health of the system immediately after each deployment to be confident in the success of the deployment. <a></a>However, without traffic in the system, there is no information available to assert the health of the system. <a></a>This is particularly true when we are performing a canary deployment in an off-peak region, as we discussed in <a></a><span class="calibre3"><tt class="calibre4">Chapter 6</tt></span><a></a>, <a></a><span class="italic">Deployment</span><a></a>.</p><p class="calibre_1">We certainly want to monitor real user traffic and fully understand the quality of their user experience. <a></a>We also need to continuously synthesize predictable traffic to sufficiently fill the gaps in real traffic to support asserting the health of the system. <a></a>We will use real-user monitoring and synthetic transaction monitoring in combination to help ensure we have proper test coverage in production to build our level of confidence.</p><div class="mbp_pagebreak" id="calibre_pb_184"></div>
+</body></html>

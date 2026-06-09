@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos579891" class="calibre_2"><span class="calibre2"><span class="bold">Canary deployment</span></span></p><p class="calibre_1">The canary deployment approach improves on the blue-green approach by routing only a portion of users to the new version, as shown in the following diagram, to ensure it is working properly before switching over all the traffic. <a></a>The name comes from the mining practice of bringing a canary into the mine because the bird is more susceptible to toxic fumes and would provide an early warning sign to the miners when the bird stopped singing.</p><p class="calibre_13"><img src="images/00040.jpg" class="calibre_51"/></p><p class="calibre_1">From an infrastructure standpoint, a canary deployment looks pretty much the same as the blue-green deployment. <a></a>The major difference is with the database. <a></a>Both the old and the new version of the components are used simultaneously. <a></a>Therefore, it is not usually feasible to have two versions of the database running concurrently and keeping them in sync, to support rolling back to the previous version if the canary test fails. <a></a>The same case can be made for blue-green deployments, which assumes a conversion prior to the switch in either direction.</p><p class="calibre_1">Database versioning and versioning in general are important enough that we will cover the topic in its own section shortly. <a></a>There is still room for improving the zero-downtime deployment approach and account for regional failover as well.</p><div class="mbp_pagebreak" id="calibre_pb_156"></div>
+</body></html>

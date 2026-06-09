@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Architecting Cloud Native Applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+<link rel="stylesheet" type="text/css" href="page_styles.css"/>
+</head>
+  <body class="calibre">
+<p id="filepos767187" class="calibre_2"><span class="calibre2"><span class="bold">Data in transit</span></span></p><p class="calibre_1">Coarse-grained encryption of data in transit is necessary when one side of the communication channel is not able to encrypt the individual elements of the request or response. <a></a>For example, user interfaces are not able to encrypt data elements because they cannot secure the private key. <a></a>Therefore, clients will send the data as-is through an encrypted channel, such as HTTPS, and the server-side will decrypt the data for the client before sending it on the encrypted channel.</p><p class="calibre_1">Fortunately, value-added cloud services make it very easy for cloud-native systems to enforce the encryption of data in transit. <a></a>For example, API gateways, function-as-a-service, event streams, and cloud-native databases typically only support HTTPS, therefore there is no option but to encrypt the data in transit. <a></a>These fully managed services handle the certificates so we do not have to.</p><p class="calibre_1">When using a CDN, we have the choice to use HTTPS or not. <a></a>For example, a public static website would not necessarily require the use of HTTPS. <a></a>However, when we use the CDN in front of an API gateway we need to require HTTPS. <a></a>The CDN is typically used to customize the domain name of an API. <a></a>In this case, we need to provide a custom SSL certificate to the customer. <a></a>To make this easy, cloud providers offer a certificate management service. <a></a>These services integrate with the CDN, take the headache out of creating a certificate, and will automatically renew and deploy the certificate when it expires.</p><div class="mbp_pagebreak" id="calibre_pb_206"></div>
+</body></html>

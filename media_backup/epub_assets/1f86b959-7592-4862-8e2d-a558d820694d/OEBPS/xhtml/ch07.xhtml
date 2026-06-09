@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>7. Macro Architecture: Preserving Consistency of State</title>
+<link href="9780138249595.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:5cddacd8-016d-40ae-8bbb-614b0314c95e" name="Adept.expected.resource"/>
+</head>
+<body>
+<section epub:type="chapter">
+<h2 class="h2" id="ch07"><span epub:type="pagebreak" id="page_75"/><span class="big">7</span></h2>
+<h2 class="h2a">Macro Architecture: Preserving Consistency of State</h2>
+<section>
+<h3 class="h3" id="ch07lev1sec01">Why Transactions?</h3>
+<p class="noindent">Transactions help us avoid data inconsistencies. For example, many nodes participate in coordination logic. Due to scale or high availability, we might keep multiple copies of some data points whose values can drift while updates momentarily happen. Moreover, one of those nodes, networks, any outside dependencies, or communication can fail, stopping the complete execution or creating long-lasting inconsistencies. A well-designed app must never end up in an unexpected state regardless of the challenges.</p>
+<p class="noindent">Inconsistencies can take a second form also. Even running an app has side effects. For example, the bookshop app charges money from the customer to deliver books. Also, it updates its internal data storage (for example, changing an inventory table to represent how many books are left in the store). In the app’s specification, we define how these side effects happen. For example, we must ship the book if we have charged the account, and we must not reduce inventory without selling a book.</p>
+<p class="noindent">A well-designed app never deviates from its specifications. This section discusses how we handle these cases. We can achieve this goal by analyzing all failure conditions and writing code to ensure the application behaves according to the specification.</p>
+<p class="noindent">For example, we charge for the book, and then we ship it. If shipping fails, we retry the transaction, and if it fails too, we return the money (void the transaction if by bank card) and notify the customer. If any of the responses to failure fail, we need to handle that issue too. However, addressing this issue is easier said than done because it requires complicated code. For example, if the service fails while we are performing the shipping operation, when <span epub:type="pagebreak" id="page_76"/>the system recovers, we might not know the outcome of the shipping operation. Log-based recovery algorithms can handle similar conditions, even after a failure, but they are complex. Compensating for failures and for the responses to failures is also complex. Developers, most likely including you and me, may not get this right for complex scenarios and may spend weeks and months writing the same code and troubleshooting it.</p>
+<p class="noindent">Transactions enable us to avoid this complexity. Transactions provide four guarantees when multiple operations are performed at the same time:</p>
+<ul class="bull">
+<li><p class="bullet"><strong>Atomic:</strong> All side effects produced by the operations occur or none at all.</p></li>
+<li><p class="bullet"><strong>Consistency:</strong> Data storage goes only from one consistent state to another.</p></li>
+<li><p class="bullet"><strong>Isolation:</strong> The outcomes of operations from two interleaved transactions are as if two transactions happen consecutively.</p></li>
+<li><p class="bullet"><strong>Durability:</strong> When committed, the transaction stays committed.</p></li>
+</ul>
+<p class="noindent">Typically, these guarantees are supported as part of the database, which does the hard work of handling all the complexities. Using transactions, developers can focus on the business logic without having to worry about failure. In 1998, Jim Gray, the inventor of transactions, won the Turing award, which spotlights the importance of transactions. E-commerce and most enterprise use cases would not have been possible without transactions.</p>
+</section>
+<section>
+<h3 class="h3" id="ch07lev1sec02">Why Do We Need to Go Beyond Transactions?</h3>
+<p class="noindent">When we want to design a system, how can we build a system on top of transactions? We know that databases support transactions, which we can use with database clients. We also know that when data is changed or read, it can be inconsistent. To avoid inconsistencies, we can carry out each read and write within a transaction; then data will be consistent.</p>
+<p class="noindent">However, users also use our applications through mobile or web applications. Due to security reasons, mobile or web applications can’t talk to the database directly. They need to talk to a service, which talks to a database and carries out our transactions. For example, if a user wants to buy a book, that user indicates that desire in the web app, which talks to a service, which, in turn, communicates with a database.</p>
+<p class="noindent">The most trivial way of handling transactions is to put all logic into a single service and call that service, which carries out the transaction. However, this approach goes against the typical service-based architecture (e.g., SOA or ROA) we discussed in <a href="ch05.xhtml#ch05">Chapter 5</a>.</p>
+<p class="noindent">Instead, we can break the code into multiple services and coordinate the execution to call those services as discussed in <a href="ch06.xhtml#ch06">Chapter 6</a>. To coordinate the transaction across multiple services, we use a transaction manager (e.g., Atomikos). We first initialize the transaction with the transaction manager and talk to each service as needed, passing references to the transaction. We later ask the transaction manager to commit the translation. The transaction manager coordinates between the different participants in the transaction and safely completes it.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_77"/>If we use a single database for all data, although we use a transaction manager, overhead is limited. The reason is that, behind the curtain, there is only one transaction-aware participant (the database in the transaction). This is a common scenario. <a href="ch07.xhtml#ch07fig01">Figure 7.1</a> shows a sample setup.</p>
+<figure class="figure" id="ch07fig01">
+<img alt="Images" src="graphics/07fig01.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 7.1</strong></p>
+<p class="title-f1">Multiple services using the single database as transaction participant.</p>
+</figcaption>
+</figure>
+<p class="noindent">If there is more than one participant in the transaction (e.g., multiple databases, JMS broker, and other transaction-aware resources), the transaction manager must carry out a distributed transaction using the two-phase commit protocol (see <a href="https://en.wikipedia.org/wiki/Two-phase_commit_protocol">https://en.wikipedia.org/wiki/Two-phase_commit_protocol</a>). Distributed transactions are complex and heavy. Using distributed transactions significantly reduces the performance of the applications. Transactions have a limited scale, typically limited to hundreds of transactions per second. When high performance is needed, we must avoid or limit the use of transactions.</p>
+<p class="noindent">Furthermore, in some cases, not all parties can take part in a transaction. For example, often, we cannot ask the customer to be part of the transaction. Typically, we must accept the request from the customer and carry out the transaction. If it succeeds or fails, we notify the customer and carry out necessary corrective action if needed. For example, if the book the customer ordered is missing from our inventory, we can’t reverse the order using a transaction.</p>
+<p class="noindent">We can’t ask every customer to be part of a transaction. Instead, we need to talk to the customer and return the money. In other words, we must combine transaction and nontransaction codes. To keep the system’s consistency under these conditions, we may have to go beyond transactions.</p>
+</section>
+<section>
+<h3 class="h3" id="ch07lev1sec03">Going Beyond Transactions</h3>
+<p class="noindent">There are two broad approaches to going beyond transactions: The first is to redefine the problem to require lesser guarantees, and the second is to use compensations. These are complex techniques, and as with many other complex techniques, we must use them only when necessary.</p>
+<section>
+<h4 class="h4" id="ch07lev2sec01"><span epub:type="pagebreak" id="page_78"/>Approach 1: Redefining the Problem to Require Lesser Guarantees</h4>
+<p class="noindent">The idea here is to figure out a way to resolve complex situations. For example, in the bookstore, we can choose first to ship the book and then deduct the money. If the logic fails and we can’t decide what happened, we can take the hit and not charge the customer. When failure is rare, it is often cheaper to not charge than to build a system that supports distributed transactions with the required throughput. When you take this approach, whenever possible, the system should bear the cost of inconsistencies, not the user.</p>
+<p class="noindent">In other cases, the user can’t tell the difference between the weaker guarantees or accept them. For example, on a social media site, as long as I see all my activities and other activities that are causally related and happen before my activities, I can’t detect inconsistencies (this is called “read your writes”). When we evaluate consistency from the user’s point of view, we can relax the need for consistency. Several of these models are described under client-centric consistency models (see <a href="https://en.wikipedia.org/wiki/Consistency_model#Client-centric_consistency_models">https://en.wikipedia.org/wiki/Consistency_model#Client-centric_consistency_models</a>).</p>
+<p class="noindent">Another simple idea is to provide a button for users to forcefully refresh the page if they can tell that it is outdated. Also, sometimes eventual consistencies or timeouts are sufficient where we can bite the bullet and settle for a lesser consistency; for example, Werner Vogel’s post, “Eventually Consistent” (<a href="http://www.allthingsdistributed.com/2007/12/eventually_consistent.html">http://www.allthingsdistributed.com/2007/12/eventually_consistent.html</a>) is a good starting point.</p>
+<p class="noindent">It is important to communicate these assumptions and to associate costs with stakeholders and to agree on the limited guarantees provided by the system. An architect must not leave lesser guarantees as a surprise to stakeholders or to the users. Rather, you need to communicate and agree about limited guarantees early and then set the right expectations for the users through the right UX design.</p>
+</section>
+<section>
+<h4 class="h4" id="ch07lev2sec02">Approach 2: Using Compensations</h4>
+<p class="noindent">As the famous post “Starbucks Does Not Use Two-Phase Commit” describes, the normal world works without transactions.<sup><a href="#ch07fn1" id="ich07fn1">1</a></sup> For example, baristas at Starbucks do not wait until your transaction completes. Instead, they handle multiple customers at the same time, compensating for any errors explicitly. You can do the same if you are willing to do a bit more work. The key idea is that if an action fails, you can compensate.</p>
+<p class="footnote"><a href="#ich07fn1" id="ch07fn1">1</a>. <a href="https://news.ycombinator.com/item?id=7995130">https://news.ycombinator.com/item?id=7995130</a></p>
+<p class="noindent">It is important to understand that what transactions do is also a form of compensation, and compensation can be complex because it can also fail. However, when the following three conditions are true, we can implement compensation with limited effort. When these conditions are not true, compensation is complex, and we need to use distributed transactions.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_79"/>Often, we can design most systems such that they satisfy these three conditions. Let’s explore them in detail:</p>
+<ul class="bull">
+<li><p class="bullet"><strong>Condition 1:</strong> Each individual operation can be verified.</p></li>
+<li><p class="bullet"><strong>Condition 2:</strong> The system does not have writes or side effects that cause operations to depend on a read from a mutable state.</p></li>
+<li><p class="bullet"><strong>Condition 3:</strong> We can handle the failure or take compensative actions.</p></li>
+</ul>
+<p class="noindent">The first condition, the individual operations, can be verified if any of the following conditions are true:</p>
+<ul class="bull">
+<li><p class="bullet">The operation is carried out as a transaction. This is a local transaction that happens with a single resource, not a distributed transaction.</p></li>
+<li><p class="bullet">The operation is idempotent. If we repeat the operation with the same data, no additional side effects occur. For example, if our shipping service ships only once for a single order, even if we call the shipping service multiple times with the same data, it is idempotent. The implementation remembers processed requests and ignores any duplicates.</p></li>
+<li><p class="bullet">We can check the status of the operation via an API call. For example, if the courier service lets us check the status of the shipping operation and we can’t decide what happened, we can call this API.</p></li>
+</ul>
+<p class="noindent">In condition 2, side effects mean that the operation changes something significantly. For example, a shipping operation has the side effect of shipping something to a customer, or as another example, charging a customer takes money from the customer. To understand the second condition, the read-dependent writes and operations, let’s consider the following example:</p>
+<pre class="pre1"><code>count = readInventory(..)
+If count &gt; 0:
+writeToInventory(..)
+chargeCustomer(..)
+fulfilOrder(..)
+return ..
+Else
+handOffToPartner(..)
+return ..</code></pre>
+<p class="noindent">Here, we read the item count, and the next operation depends on this. Consider that there are two transactions happening, and both have read the item count. If the first transaction checks the condition and updates the item count to zero, to enforce the isolation condition of transactions, the database must roll back the second transaction.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_80"/>To enforce isolation, the database needs to keep track of reads and writes that happen in transactions, and if two transactions are in conflict, it commits only one. Handling this situation without the help of transactions is complicated. Hence, it is difficult to use compensation to handle similar cases where the next write depends on a read because you will end up implementing a significant portion of the database while doing so.</p>
+<p class="noindent">The third condition states that it is possible to carry out compensative action. When all three conditions are met, we can use compensation. <a href="ch07.xhtml#ch07tab01">Table 7.1</a> summarizes when we can use compensation. Batching means collecting the operations and carrying them out together as a single transaction if possible.</p>
+<figure class="table" id="ch07tab01">
+<figcaption>
+<p class="title-t"><strong>Table 7.1 Using Compensation</strong></p>
+</figcaption>
+<table class="table1">
+<thead>
+<tr>
+<th class="borderb"><p class="tab-para"> </p></th>
+<th class="borderb"><p class="tab-para"><strong>No External Operations</strong></p></th>
+<th class="borderb"><p class="tab-para"><strong>Only Operations Without Side Effects</strong></p></th>
+<th class="borderb"><p class="tab-para"><strong>Has Operations with Side Effects</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="borderb1"><p class="tab-para">Read operations only</p></td>
+<td class="borderb1"><p class="tab-para">No transaction needed</p></td>
+<td class="borderb1"><p class="tab-para">No transaction needed</p></td>
+<td class="borderb1"><p class="tab-para">Use compensation</p></td>
+</tr>
+<tr>
+<td class="borderb2"><p class="tab-para">Write operations only</p></td>
+<td class="borderb2"><p class="tab-para">Batch them and execute or use compensation</p></td>
+<td class="borderb2"><p class="tab-para">Batch them and execute or use compensation</p></td>
+<td class="borderb2"><p class="tab-para">Batch them and execute or use compensation</p></td>
+</tr>
+<tr>
+<td class="borderb1"><p class="tab-para">Writes do not depend on read operations</p></td>
+<td class="borderb1"><p class="tab-para">Batch them and execute or use compensation</p></td>
+<td class="borderb1"><p class="tab-para">Batch them and execute or use compensation</p></td>
+<td class="borderb1"><p class="tab-para">Batch them and execute or use compensation</p></td>
+</tr>
+<tr>
+<td class="borderb2"><p class="tab-para">Writes depend on reads</p></td>
+<td class="borderb2"><p class="tab-para">Need transactions</p></td>
+<td class="borderb2"><p class="tab-para">Need transactions</p></td>
+<td class="borderb2"><p class="tab-para">Need transactions</p></td>
+</tr>
+</tbody>
+</table>
+</figure>
+<p class="noindent">When we use compensation or batch operations, we need to make sure all the steps are carried out. We can use databases or message queues to remember partial steps and then carry them out. If the second condition is true, it is OK to repeat some of the operations when compensating. If transactions are needed, the best choice is to use workflows.</p>
+<p class="noindent">This section discussed three conditions that we need to meet when using compensation and how those conditions can be handled. The article “Life Beyond Distributed Transactions: An Apostate’s Opinion” by Pat Helland (<a href="https://queue.acm.org/detail.cfm?id=3025012">https://queue.acm.org/detail.cfm?id=3025012</a>) provides a discussion of these techniques.</p>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch07lev1sec04">Best Practices</h3>
+<p class="noindent">Here are a few best practices we can adhere to when working with transactions:</p>
+<ul class="bull">
+<li><p class="bullet">Many distributed applications have one to two service calls for each user request. In this case, it may be possible to avoid the coordination layer.</p></li>
+<li><p class="bullet">When possible, go for lesser guarantees. Consider the failure when transactions are not there and ask if you can gracefully recover from that. For example, a video streaming service needs to use transactions for payment, but a movie stream does not need them. The same goes for the online bookshop; it does not need to use transactions while browsing books.</p></li>
+<li><p class="bullet">When possible, make service operations or API calls idempotent. This makes the implementation of transaction-like scenarios simple.</p></li>
+<li><p class="bullet"><span epub:type="pagebreak" id="page_81"/>Define the scope of the transaction to be as restrictive as possible. If possible, limit it to a single service and avoid distributed transactions.</p></li>
+<li><p class="bullet">Put operations that read and write data into the same service call when possible. For example, if we rewrite the code so that we can check for inventory availability, reduce it in the database and return the value as one operation. This practice removes the read-dependent write due to inventory.</p></li>
+</ul>
+<p class="noindent">My recommendation is to use a transactions manager with one participant as the default solution and go for complex solutions as needed.</p>
+<p class="noindent">Let’s discuss these practices with a working example. As an example of transaction choices, let’s consider several design choices for the bookstore. A user needs to search for books and wants to add selected books to the shopping cart. When the user clicks Buy, we need to check our inventory, charge the user, and schedule delivery. Let’s assume that we store the shopping cart in the user’s browser. First, searching for books reads only read-only data, so the catalog can be excluded from all transactions. Here are our design choices:</p>
+<ul class="bull">
+<li><p class="bullet"><strong>Design 1:</strong> We can put checking the inventory, charging the user, and scheduling the delivery operations into a single service. We can then handle everything using transactions within the same service call. However, this design forces us to share databases across services, breaking a microservice best practice.</p></li>
+<li><p class="bullet"><strong>Design 2:</strong> We implement our inventory check as <code>reserveABook</code>(..) and <code>returnABook</code>(..) functions, which scan for availability and increase or reduce the book count. We can use a transaction manager to perform distributed transactions for payment.</p></li>
+<li><p class="bullet"><strong>Design 3:</strong> We implement the flow using workflows, with or without transactions. In the latter case, we use compensation support, which is built into the workflows.</p></li>
+<li><p class="bullet"><strong>Design 4:</strong> We can choose to first ship the book and then deduct the money, and in the case where the logic fails, we can take the hit and not charge the customer. Alternatively, we can get visual check and manually charge the customer.</p></li>
+<li><p class="bullet"><strong>Design 5:</strong> We can implement the system as a simple sequence without recovery and write a task that visits the database, finding any buy orders that are not processed and what state they are in, and then recover the processing.</p></li>
+</ul>
+<p class="noindent">Transaction processing is slow and often a bottleneck. Yet, as the design options show, imaginative designers have many choices at their disposal.</p>
+</section>
+<section>
+<h3 class="h3" id="ch07lev1sec05">Leadership Considerations</h3>
+<p class="noindent">Making decisions about storage and consistency can be one of the trickiest tasks for architects.</p>
+<p class="noindent">Two frequent missteps are going beyond transactions even when it’s unnecessary and building a system that assumes transaction guarantees when they’re not needed.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_82"/>We are typically caught between two considerations:</p>
+<ul class="bull">
+<li><p class="bullet">Solutions that are more complex than transactions are often significantly costlier (e.g., 10X) than simple database-based systems.</p></li>
+<li><p class="bullet">Modifying the data model later is often expensive because it often leaks into the user experience. This issue can’t be resolved even with a system rewrite, because changing the APIs or user experience isn’t always feasible.</p></li>
+</ul>
+<p class="noindent">Therefore, there’s no single recipe for success here. It demands judgment.</p>
+<p class="noindent">Even when an ACID database can meet our needs, we should take care not to expose ACID guarantees to the end user through our APIs or UIs, because it’s difficult to modify these later.</p>
+<p class="noindent">Let’s revisit the five questions and seven principles.</p>
+<p class="ul-noindent">Question 1: When is the best time to market?</p>
+<p class="ul-noindent">Question 2: What is the skill level of the team?</p>
+<p class="ul-noindent">Question 3: What is our system’s performance sensitivity?</p>
+<p class="ul-noindent">Question 4: When can we rewrite the system?</p>
+<p class="ul-noindent">Question 5: What are the hard problems?</p>
+<p class="noindent">If system performance is a critical factor, the data model often poses a tough problem. You’d need to carry out a proof of concept and verify that the proposed data model can meet performance requirements. Management needs to establish minimal processes to ensure that performance standards are upheld. Furthermore, going beyond transactions demands high skill levels from the team.</p>
+<p class="ul-noindent">Principle 1: Drive everything from the user’s journey.</p>
+<p class="ul-noindent">Principle 2: Use an iterative thin slice strategy.</p>
+<p class="ul-noindent">Principle 3: On each iteration, add the most value for the least effort to support more users.</p>
+<p class="ul-noindent">Principle 4: Make decisions and absorb the risks.</p>
+<p class="ul-noindent">Principle 5: Design deeply things that are hard to change but implement them slowly.</p>
+<p class="ul-noindent">Principle 6: Eliminate the unknowns and learn from the evidence by working on hard problems early and in parallel.</p>
+<p class="ul-noindent">Principle 7: Understand the trade-offs between cohesion and flexibility in the software architecture.</p>
+<p class="noindent">Often, we can start with a simple single transaction-based system with APIs that expose only minimum guarantees and reassess our design when we redesign the system. If we thoughtlessly apply a microservices architecture, we might end up having to execute distributed <span epub:type="pagebreak" id="page_83"/>transactions across databases, which we should strive to avoid. A simple single transaction-based system, even if it goes against microservices best practices, is often the quickest and easiest to implement. For more details, refer to <a href="ch10.xhtml#ch10">Chapter 10</a>.</p>
+<p class="noindent">When we’re dealing with clouds, issues related to maintaining consistent data can become more pronounced because of increased delays. These scenarios need to be thoroughly tested.</p>
+<p class="noindent">In some situations, like in banking, maintaining both large-scale and strong data consistency is crucial. Making transactions work in these scenarios requires specialized knowledge and particular hardware and software solutions. For instance, properly configured Oracle systems on specialized hardware can deliver high performance but come with a substantial price tag.</p>
+<p class="noindent">It’s rare that you’ll need to go beyond ACID databases. When in doubt, choose ACID databases. You may need to make the decision and shoulder the risks.</p>
+</section>
+<section>
+<h3 class="h3" id="ch07lev1sec06">Summary</h3>
+<p class="noindent">Following are key takeaways from this chapter:</p>
+<ul class="bull">
+<li><p class="bullet">When handling failures, transactions reduce the complexity and simplify the code we must write as we develop the system.</p></li>
+<li><p class="bullet">We often use transactions with databases, but other sources such as JMS brokers, services, and workflows may also support transactions.</p></li>
+<li><p class="bullet">If the transaction includes multiple transaction sources, we call it a distributed transaction and implement it with a transaction manager.</p></li>
+<li><p class="bullet">Transactions are slow, yet distributed transactions are even slower, but we can avoid distributed transactions.</p></li>
+<li><p class="bullet">Most systems have a database as the single transaction source, which needs a transaction manager.</p></li>
+<li><p class="bullet">In advanced scenarios that require performance and scale, we can avoid transactions by redefining the problem to require fewer guarantees or by using compensation. The resulting systems are complicated, and we should use these techniques only when necessary.<span epub:type="pagebreak" id="page_84"/></p></li>
+</ul>
+</section>
+</section>
+</body>
+</html>

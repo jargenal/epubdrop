@@ -1,0 +1,265 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>12. Building Stable Systems</title>
+<link href="9780138249595.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:5cddacd8-016d-40ae-8bbb-614b0314c95e" name="Adept.expected.resource"/>
+</head>
+<body>
+<section epub:type="chapter">
+<h2 class="h2" id="ch12"><span epub:type="pagebreak" id="page_149"/><span class="big">12</span></h2>
+<h2 class="h2a">Building Stable Systems</h2>
+<p class="noindent">Clever architects achieve scalability. Yet, the stability of their systems separates great architects from good ones. A stable system is predictable, fulfilling the specifications of the system under varying conditions and degrading gradually if the system faces extraordinary circumstances. After a system meets its specifications, stability is the fundamental expectation from the system. Stability encompasses maintaining aspects such as fault tolerance, high availability, scalability within its specifications, even when the system receives external shocks (e.g., workload changes, failures). A stable system is economical, gives peace of mind, and empowers the team to evolve the design. In this chapter, we explore how to build a stable system.</p>
+<section>
+<h3 class="h3" id="ch12lev1sec01">Why Do Systems Fail, and What Can We Do About Them?</h3>
+<p class="noindent">What do we mean by stability? Many equate it to high availability (HA). I believe availability is only a part of the problem. The first goal of the system is never to get into an irreversible or inconsistent state and never to cause significant harm. The second goal is to be available as much as possible. For example, consider two systems. First is a single-node system with a backup that is unavailable for a small time frame until it is recovered after failing. The second is a two-node system that might corrupt the database in edge cases. The former is preferred over the latter.</p>
+<p class="noindent">Note that the stability of a system goes beyond avoiding failures. Any system can and will fail, but stable systems can recover faster with minimal interruptions to the system. Refusing to accept this and overreaching to avoid failures lead to longer downtimes and catastrophes. For example, adopting complex data replication systems increases the risk of corrupting the data storage due to unforeseen failure scenarios. Take <a href="ch12.xhtml#ch12fig01">Figure 12.1</a>, for example.</p>
+<span epub:type="pagebreak" id="page_150"/>
+<figure class="figure" id="ch12fig01">
+<img alt="Images" src="graphics/12fig01.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 12.1</strong></p>
+<p class="title-f1">Factors affecting the stability of the system.</p>
+</figcaption>
+</figure>
+<p class="noindent">What affects the stability of a system? As <a href="ch12.xhtml#ch12fig01">Figure 12.1</a> shows, code, configurations, resources, dependencies, and workload affect the system. Surprises related to each can affect the stability. The following are examples of scenarios that affect stability:</p>
+<ul class="bull">
+<li><p class="bullet">Unexpected workloads</p>
+<ul class="bull">
+<li><p class="bullet">High load</p></li>
+<li><p class="bullet">High concurrency</p></li>
+<li><p class="bullet">Load fluctuations</p></li>
+<li><p class="bullet">Unexpected inputs</p></li>
+<li><p class="bullet">DOS attacks</p></li>
+<li><p class="bullet">Security attacks</p></li>
+<li><p class="bullet">Slow clients</p></li>
+</ul></li>
+<li><p class="bullet">Resource and dependency failures, plus service-level agreement violations</p>
+<ul class="bull">
+<li><p class="bullet">Machine failures</p></li>
+<li><p class="bullet">Network failures</p></li>
+<li><p class="bullet">Database failures</p></li>
+<li><p class="bullet">Slow nodes (database)</p></li>
+<li><p class="bullet">DNS failures</p></li>
+<li><p class="bullet">Authentication failures</p></li>
+<li><p class="bullet">Slow DNS</p></li>
+<li><p class="bullet"><span epub:type="pagebreak" id="page_151"/>Network partitions</p></li>
+<li><p class="bullet">Out-of-memory (OOM) errors</p></li>
+<li><p class="bullet">Disk over capacity</p></li>
+<li><p class="bullet">CPU-consuming processes</p></li>
+<li><p class="bullet">Clock out of sync</p></li>
+</ul></li>
+<li><p class="bullet">Human mistakes</p>
+<ul class="bull">
+<li><p class="bullet">Code changes</p></li>
+<li><p class="bullet">Configuration mistakes</p></li>
+</ul></li>
+<li><p class="bullet">Software bugs in both ours and borrowed code</p></li>
+</ul>
+<p class="noindent">We can anticipate and avoid or recover from as many known errors as possible. However, when avoidance or recovery is not possible, the system should capture as much information as possible so that we can fix the problem and avoid any recurrence. The rest of the chapter discusses different approaches to handle conditions that lead to instability. Then, we discuss unknown failures and how to detect and address them.</p>
+</section>
+<section>
+<h3 class="h3" id="ch12lev1sec02">How to Handle Known Errors</h3>
+<p class="noindent">The following sections discuss how to handle common types of known errors. They include unexpected load, resource failures, dependencies, and human changes.</p>
+<section>
+<h4 class="h4" id="ch12lev2sec01">Handling Unexpected Load</h4>
+<p class="noindent">The workload the system receives can go beyond its specifications. This can happen because the business organization is doing well due to a temporary peak or to a denial-of-service (DoS) attack. In either case, if not carefully handled, a system can have terrible latencies due to the higher load. We must be concerned about this when any system operates close to its limits.</p>
+<p class="noindent">First, we need to understand the load and set up a system that can keep up with the load most of the time. This is called <em>capacity planning</em>. Although autoscaling reduces the need for capacity planning, we still need to tune the autoscaling algorithm (e.g., how many warm nodes to keep) based on average capacity. Also, my experience is that the gains we get by running too close to the system’s limit are negated by complexity and effort to recover from performance issues. Thus, we are better off adding extra resources and leaving a buffer.</p>
+<p class="noindent">Recall from <a href="ch03.xhtml#ch03">Chapter 3</a> how a system behaves under load. We can think of any system or service as a queuing system, where work is placed in queues and one or more workers process the work and produce a response. When there are no explicit queues, work will block and <span epub:type="pagebreak" id="page_152"/>wait in the OS queues (CPU queue, I/O queue, etc.) until it can be processed. Because of these queues, we can use queuing theory to understand systems and the latency of a system, as <a href="ch12.xhtml#ch12fig02">Figure 12.2</a> depicts.</p>
+<figure class="figure" id="ch12fig02">
+<img alt="Images" src="graphics/12fig02.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 12.2</strong></p>
+<p class="title-f1">Latency vs. arrival rate.</p>
+</figcaption>
+</figure>
+<p class="noindent">As <a href="ch12.xhtml#ch12fig02">Figure 12.2</a> shows, queues have a trigger behavior with latency. As long as the arrival rate is the same as or less than the processing rate, latency is fairly stable, but once the arrival rate exceeds the processing rate, latency shoots through the roof. This is bad news if a service or a system receives requests that far exceed expectations: latency skyrockets, and the system becomes unusable in practice. When the higher load is received, we have only a little time to recover.</p>
+<section>
+<h5 class="h5" id="ch12lev3sec01">Autoscaling</h5>
+<p class="noindent">What can we do? One option is autoscaling. We can create more workers (e.g., service replicas) to handle the load. However, starting a new service and getting it to work takes some time. We must begin to autoscale before the problem intensifies. A typical approach is to keep a buffer of nodes live and proactively start autoscaling. Sometimes, however, autoscaling is not possible. Even when autoscaling is possible, we can’t autoscale forever (we hit a different bottleneck). Additionally, it is possible to receive a load beyond the limits of autoscaling.</p>
+<p class="noindent">When facing a high load, if we can’t handle it by autoscaling, then the only alternative is to drop requests. This is a heated and highly contested topic. Many would argue that we can’t drop user requests. However, the truth is that we are faced with dropping a few requests versus dropping most of them when latency inevitably spikes.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_153"/>If we take more requests than we can handle, the queue grows, and future requests must wait longer. Soon requests in the queue start to time out. We then need to take corrective measures.</p>
+</section>
+<section>
+<h5 class="h5" id="ch12lev3sec02">Admission Control</h5>
+<p class="noindent">We can use admission control (also known as <em>load shredding</em>) to handle load spikes. For example, when a video streaming service found that its payments service couldn’t keep up with the demand during a launch, they handled payment service rejections by giving customers the first month free. This solution makes sense because customer acquisition costs (CACs) in video services are often much higher than the first month’s subscription fee.</p>
+<p class="noindent">Another critical advantage of admission control is predictability, which isolates load problems and handles them as early as possible. Furthermore, admission control significantly improves the latency of the system.</p>
+<p class="noindent">We can implement admission control through either a request timeout or using a queue length limit. With the former method, we reject requests that have taken more than a timeout value. With the latter method, the system rejects new requests if the queue length is too large or growing too fast. When there is no queue, we can use the number of messages <em>in flight</em> (messages received by the service, but those that are not done yet) to measure the queue length. We can do this with a simple counter. Between the two methods, the latter is more efficient because the former uses up system resources before rejecting the requests. It is also possible to use both methods in tandem, providing greater stability.</p>
+<p class="noindent">My recommendation is to always operate each service at about 80% of its capacity, leaving room for absorbing any surprises. When the queue length is too high (or if the queue length is growing too fast), we should reject the requests and retry at the load balancer level or at the client, which buys the system time to recover. If that fails, the system must notify the user to drop the request (and maybe give them a coupon to compensate).</p>
+<p class="noindent">If we use more advanced admission control algorithms such as machine learning, it may be possible to operate the service closer to its limits. However, my recommendation is to start with a simple algorithm (queue length) that you can use as the baseline against more advanced algorithms. Then use advanced algorithms only when they can significantly outperform (&gt; 50%) the baseline.</p>
+<p class="noindent">When a downstream service in a cascade of services is experiencing a load spike, the service must propagate an error back to the services before them. Typically, this is done by sending an error or HTTP code such as 503 – Service Unavailable. This is called <em>back pressure</em>. Back pressure propagates through the call path and eventually asks the client to slow down (or the client program automatically does this). If we don’t use back pressure, the requests stack up in the service, slowing down the server, and the server eventually dies (typically causing an out-of-memory error).</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_154"/>In addition to allowing the system to keep working and autoscale without failing, the most significant advantage of back pressure is to avoid out-of-memory errors, which are usually hard to isolate and fix. Instead, back pressure creates overloaded errors whose root cause is evident, opening the possibility of automatic recovery.</p>
+</section>
+<section>
+<h5 class="h5" id="ch12lev3sec03">Noncritical Functionality</h5>
+<p class="noindent">Another useful tool in handling load is to turn off noncritical functionality. A classic example already discussed is an online retailer skipping charges for small transactions. Turning off noncritical functionality is typically an advanced feature that we should add to a system after exhausting other avenues to handle the increased load.</p>
+<p class="noindent">We can simulate most load conditions and test the system, which helps us understand the system deeply. Furthermore, systematic and detailed data collection and analysis (e.g., the number of messages in flight for each service in the system) further deepen our understanding.</p>
+<p class="noindent">Finally, workloads can sometimes create unexpected situations. A great example is slow clients. Years back, while debugging a production outage, we saw the throughput of enterprise service buses (ESBs) gradually deteriorating in a critical client deployment, and after weeks of investigation, we found that the culprit was slow clients. In this case, some clients talking to the system were behind a slow network (mobile phone), and reading from and writing to those clients blocked worker threads in the ESB, effectively reducing the number of effective threads in the ESB. Such problems are hard to detect and only found through careful analysis. Note that full nonblocking architectures are resilient against these types of specific slow clients.</p>
+<p class="noindent">Sometimes, the higher load can come as an attack (called a DoS attack). Although having proper overload limits can prevent the system from failing, DOS can still stop legitimate users from getting their work done. As we discussed before, DOS needs special techniques, which we find in most firewalls.</p>
+<p class="noindent">I recommend setting up overload limits both at each node level and at the overall load balancer cluster level. Node-level overload limits protect the node if the load is not distributed evenly among the cluster and enable the node to handle the problem, returning when the failure is resolved. When we use autoscaling, we should adjust the load balancer overload limit based on the currently active nodes.</p>
+</section>
+</section>
+<section>
+<h4 class="h4" id="ch12lev2sec02">Handling Resource Failures</h4>
+<p class="noindent">External shock is a fact of life. Computers, disks, and even networks can fail. Some failures are total and complex to recover from, needing human interactions. Examples are a failed or slow DNS server, an out-of-sync clock, a failed network, or expired certificates. To handle such situations, we create processes and, sometimes, have dedicated people to monitor and avoid <span epub:type="pagebreak" id="page_155"/>failures in such critical infrastructures. Observability alerts can also help to focus site reliability engineering (SRE) on potential problems.</p>
+<p class="noindent">We try to recover from these problems automatically. There are two key approaches. The first is building systems that never fail, and the second is building systems that can recover quickly, which we discussed in <a href="ch09.xhtml#ch09">Chapter 9</a>.</p>
+<p class="noindent">Considering replication, when a service fails and the system switches to a replica, it no longer has a backup. We need to notify operations teams so that they fix the problem and recover the failed service, restoring a replica into the system. The following discussion focuses on a fast recovery in such situations. However, the fast recovery of a database is often complicated due to state. It is recommended to perform active or passive replication (see <a href="ch09.xhtml#ch09">Chapter 9</a>) using tools provided by the database. I recommend fast recovery methods as much as possible for the rest of the system because they make the overall system more stable. We need to meet the following conditions to use fast recovery:</p>
+<ul class="bull">
+<li><p class="bullet">Services need to be stateless.</p></li>
+<li><p class="bullet">Startup time of individual services is low (2–3 seconds).</p></li>
+<li><p class="bullet">Services can start and join the system in any order.</p></li>
+</ul>
+<p class="noindent">As part of services and macro architecture design, we should try to meet these conditions.</p>
+<p class="noindent">If we have fast recovery, when a node fails, other nodes that depend on the failed node need to switch to a replacement. There are several ways to achieve this:</p>
+<ul class="bull">
+<li><p class="bullet">We can reroute all service calls between services through a load balancer, which detects service failures and reroutes the traffic to the replica.</p></li>
+<li><p class="bullet">As discussed in <a href="ch09.xhtml#ch09">Chapter 9</a>, some network layers let us hot-swap IPs, and if that is available, the system can detect service failures and swap the IPs.</p></li>
+<li><p class="bullet">Each service can detect failures and reconnect to a replica. The service can get replicas from configurations or a central registry.</p></li>
+</ul>
+<p class="noindent">While the switch happens, the failed service is unavailable. When a service detects that its downstream resources are unavailable, it needs to retry. For a short time, it can retry to see whether downstream services will become available. However, if a problem persists, it should try to find a replica when possible. If that is not possible, the client propagates the error back to upstream services, allowing it to reroute traffic or notify the end user. At the same time after a permanent failure, the system needs to resend requests when the service comes back online. A typical approach is for upstream services to periodically ping the failed service and add it back to active replicas when it becomes available. Even when the replica resides in the same address as the old service, the client may get an error. Then the client may need to log in again, reestablish sessions, and reset connection pools.</p>
+<p class="noindent">We need to automate parts of the system that use fast recovery. Having a human in the loop adds at least a 15–30-minute delay, severely reducing availability. In a cloud platform, we can use Kubernetes, serverless, or equivalent features for recovery.</p>
+<section>
+<h5 class="h5" id="ch12lev3sec04"><span epub:type="pagebreak" id="page_156"/>Detection of Resource Failures</h5>
+<p class="noindent">Both fast recovery and replication depend on detecting failures. However, detecting the failure of resources is not perfect. False negatives (not detecting the error) are usually not a significant concern because, with time, the system will detect the failure if it persists. However, we always need to ask what happens if a false positive occurs (detecting an error when there is no error). Let’s consider a few examples.</p>
+<p class="noindent">If a node fails, Kubernetes restarts it. However, if a restart does not fix the problem, the node gets into a restart/fail loop. The slow or overloaded network sometimes leads to false positives and a random restart of systems due to a recovery loop. For example, default CPU thresholds in Kubernetes can create this situation with CPU-hungry services. It is a good idea to detect restart loops and shut down the offending system or the whole system based on the blast radius.</p>
+<p class="noindent">If failure detection is a false positive, some services may switch to the replica, although others may continue with the primary. Furthermore, even when the secondary takes over due to a detected failure, the primary can continue to work. As happened in the well-documented case of the Knight Capital Group, two nodes, being active in an active-passive setup simultaneously, created problems. Because of this, Knight Capital lost millions of dollars in one day.<sup><a href="#ch12fn1" id="ich12fn1">1</a></sup> A database lock, discussed in the next section, is one way to avoid two active nodes in an active-passive setup.</p>
+<p class="footnote"><a href="#ich12fn1" id="ch12fn1">1</a>. See <a href="https://www.henricodolfing.com/2019/06/project-failure-case-study-knight-capital.html">https://www.henricodolfing.com/2019/06/project-failure-case-study-knight-capital.html</a></p>
+<p class="noindent">The best defense against these cases is a careful analysis of edge cases and comprehensive testing. It is also important to generate events when the system topology undergoes changes so that the SRE team can check and guard against edge cases. Additionally, it is often a good idea to independently monitor the work being done and use that to trigger alerts. For example, if the transaction rate is lower than average in a bank, it is a good idea to generate an alert, triggering administrator oversight.</p>
+<p class="noindent">Furthermore, failures are often rare; thus, recovery paths rarely run. Therefore, if recovery paths are broken, we would not know about that situation until it’s too late. It is a good idea to conduct drills that simulate failures to test the recovery path. An advanced version of this approach is called <em>Chaos Monkey</em>, which is a process that randomly injects failures into the system, forcing it to recover, making sure recovery paths work.</p>
+<p class="noindent">Finally, if the data does not change quickly and is not very big (e.g., configuration data), sometimes it is useful to keep cache values and fall back on those values if the source is unavailable. For example, when a service loads configurations from a config registry, it can maintain a configuration cache to allow it to work even if the configuration registry fails. This useful pattern increases the system’s stability across the board.</p>
+</section>
+<section>
+<h5 class="h5" id="ch12lev3sec05"><span epub:type="pagebreak" id="page_157"/>Network Partitions</h5>
+<p class="noindent">Network partitions are a special case of resource failures, and they may be the most complex challenge in distributed systems. A network partition breaks the network into two fully disconnected partitions, and when this happens, each partition thinks that nodes in the other partitions are dead. Both partitions can proceed to serve user requests, putting the system in an inconsistent state. Also, when partitions are resolved, the systems in the two partitions must merge.</p>
+<p class="noindent">The typical approach for a network partition is to use a quorum, where the partition with more than half of the nodes continues while the other side gives up and waits. Because only one partition can have more than half the nodes, this approach works. However, a quorum is possible only if we have at least three copies and an odd number of nodes.</p>
+<p class="noindent">With two nodes, we can approximate a solution with each node getting a database lock, allowing whatever partition that includes the database to continue. However, with this technique, the system fails if the database fails, which is a single point of failure that needs to be handled separately. We used this technique in a message broker product that I designed.</p>
+<p class="noindent">Regardless of the approach, it is a good idea to get a human involved as soon as possible. Then, when possible, it is easier to wipe out the system and restart rather than merging the two partitioned systems.</p>
+<p class="noindent">With new network hardware, network partitions are rare. Also, if you have a typical system with stateless services and a database without automatic failover, network partitions aren’t harmful because, usually, only one side hosts the database. When you set up automatic failover, you need to be careful because two databases can continue on their own.</p>
+<p class="noindent">Look out for network partitions. Especially check them if you are using a complicated architecture because then the potential damage of network partitions is much higher.</p>
+</section>
+</section>
+<section>
+<h4 class="h4" id="ch12lev2sec03">Handling Dependencies</h4>
+<p class="noindent">With the cloud and API economy, our systems depend on other systems. As Leslie Lamport reports:</p>
+<p class="bq"><em>A distributed system is one in which the failure of a computer you didn’t even know existed can render your own computer unusable.<sup><a href="#ch12fn2" id="ich12fn2">2</a></sup></em></p>
+<p class="footnote"><a href="#ich12fn2" id="ch12fn2">2</a>. <a href="https://en.wikiquote.org/wiki/Leslie_Lamport">https://en.wikiquote.org/wiki/Leslie_Lamport</a></p>
+<p class="noindent">Lamport’s quote is accurate for many systems. Dependencies are either at the infrastructure level or at the service level. We use cloud hardware (IaaS, or Infrastructure as a Service) or platforms (PaaS, or Platform as a Service) at the infrastructure level, and we use a network service or APIs provided as SaaS (Software as a Service) at the service level.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_158"/>Our availability can never be higher than our dependencies. The first question is, “Is the availability of our dependencies sufficient?” Most systems aim to support three to four 9s of availability, while cloud infrastructures often provide four to five 9s of availability. Hence, often, we do not need to worry about cloud infrastructure availability.</p>
+<p class="noindent">The availability of APIs (services) varies widely. When service providers promise penalties if they fall short of a service-level agreement (SLA), it is a sign of stability, but we should make sure penalties represent risks. However, the availability of most APIs provided by cloud providers is often high enough and sufficient. If we need higher infrastructure availability than that provided by cloud providers, we must run a parallel system with another cloud provider.</p>
+<p class="noindent">I recommend that, at the system’s initial rollout, availability provided by most dependencies is sufficient. The added complexity of ultra-high availability is often not justifiable. As your app finds more adoption, you’ll need to make a decision on how to proceed. It is important to keep track of the availability of your dependencies and whether they live up to their promises. If service providers are falling short, escalate early. Their response tells you important information about their reliability as partners. We will need alternative APIs to reduce the risk due to API-level dependencies. Also, it is important to think through what happens if dependencies are down. It is much better to stop serving requests than to lose customer requests, fail them in the last step, or worse, take the system to a corrupted state.</p>
+<p class="noindent">Furthermore, two common problems we face are running out of quota and high tail latencies. Let’s consider each in detail. At design and deployment time, we need to ensure that the system can operate within the quota given by the service provider. We must use back pressure and fail gracefully if running out of quota while generating alerts, for instance. Clear error propagation can save a lot of time. With tail latencies, we need to work with the service provider. There are solutions, such as sending two parallel requests and then using the first response (which works only with idempotent operations), but then you consume the quota twice as fast. In both of these cases, if the service provider says no, we do not have a good recourse other than moving away and finding another provider.</p>
+<p class="noindent">It is important to do back-of-the-napkin calculations to ensure we are not operating at the edge or beyond the limits. If we operate at the edge, or in other words, our system is performance-sensitive, we need to evaluate the choice of external dependencies carefully.</p>
+</section>
+<section>
+<h4 class="h4" id="ch12lev2sec04">Handling Human Changes</h4>
+<p class="noindent">Finally, let’s explore stability against the changes we make. Unfortunately, changes we make are a common source of system downtimes. Let’s look at how we can mitigate those mistakes.</p>
+<p class="noindent">The first defense is to check all changes against a test setup. The test setup is a parallel setup that duplicates the production conditions as closely as possible. We must push all new changes to the test setup and run exhaustive tests before applying the changes to production. The quality of this step depends on the quality of the tests.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_159"/>Another powerful tool is GitOps, which keeps all information required to boot up the system in a version-controlled repository (e.g., Git). Often, you can apply the same patch you applied to a test setup to the production GitOps repository, reducing the chance of typos. With GitOps, we can boot up a parallel copy and switch traffic when a failure happens. However, preserving the database state in the switch is complicated. The common solution is to have a highly available database setup and use GitOps with the rest of the system.</p>
+<p class="noindent">The next idea is to have blue-green systems where we keep two systems live, called <em>blue</em> and <em>green</em>. When we want to change the system, we make another copy, apply changes, test, and then switch traffic. We keep the original system as a backup in case of failures. Like before, it is not practical to sync data quickly between two databases. Therefore, both systems must share the same database.</p>
+<p class="noindent">Canary deployments are the next evolution of this model. A canary deployment lets us test the new system under realistic conditions and switch to contain the impact of a potential failure. In a canary setup, we send a small percentage of users to the new system and gradually increase the load to that system as it proves itself, finally crossing over to the new system entirely. In some real-life deployments, complete crossovers can take months.</p>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch12lev1sec03">Common Bugs</h3>
+<p class="noindent">A few common failures can happen within system design or implementation. Let us explore two: resource leaks and deadlocks.</p>
+<section>
+<h4 class="h4" id="ch12lev2sec05">Resource Leaks</h4>
+<p class="noindent">A memory leak can cause system memory to grow and eventually crash. Even with garbage collection, memory leaks are possible. Objects referenced from long-running or static objects are not cleaned, and they can lead to memory leaks. Leaks can also happen in connection pools, file descriptors, other pools, and so on.</p>
+<p class="noindent">We typically check for leaks through long-running tests. Although it is possible to catch leaks in the common path through long-running tests, this approach does not detect leaks in less common paths. We should watch our servers for leaks through observability metrics. If we observe any leaks, we should collect as much information as possible before restarting the system. The reason is that some leaks are hard to recreate.</p>
+<p class="noindent">With container-based systems, another drastic approach is to reboot all services periodically (using a round-robin restart) to avoid any subtle leaks from building up. For example, the Apache Server destroys each process after some time to reduce the effect of memory leaks. With containers, we can now do this with any code.</p>
+</section>
+<section>
+<h4 class="h4" id="ch12lev2sec06"><span epub:type="pagebreak" id="page_160"/>Deadlocks and Slow Operations</h4>
+<p class="noindent">Deadlocks block threads and take them out of usual processing, which can lead to slower response times or timeouts. Deadlocks are hard to detect and find because they occur rarely. Often, they happen when the code acquires an exclusive lock or a resource while holding other exclusive resources. Also, not all blocks that cause deadlocks are apparent because some locks might be inside a database query and out of our control. I recommend reading <em>The Little Book of Semaphores</em> by Allen B. Downey (Green Tea Press, 2009) to understand deadlocks.</p>
+<p class="noindent">To prevent deadlocks, it is best practice to avoid acquiring one resource while holding the other. If you must do this, all code segments need to acquire the resources in the same order. For example, consider the following code:</p>
+<pre class="pre1"><code>locka =
+lockb =
+
+Thread 1:
+     locka.aquire()
+     do_work(..)
+     lockb.aquire()
+     do_work()
+     lockb.release()
+     locka.release()
+
+Thread 2:
+     lockb.aquire()
+     do_work(..)
+     locka.aquire()
+     do_work()
+     locka.release()
+     lockb.release()</code></pre>
+<p class="noindent">If Thread 2 acquires <code>lockb</code> after Thread 1 acquires <code>locka</code>, we have a deadlock. If in Thread 2 we move <code>locka.aquire()</code> as the first statement, then a deadlock is not possible because if we get locka, it is guaranteed that <code>lockb</code> is available. Yet, in complex systems, it is often hard to ensure the order of resource allocations.</p>
+<p class="noindent">When possible, we should avoid deadlocks by acquiring resources in the same order. If not, long-running tests with many participants might recreate the deadlocks, helping us in finding and fixing them.</p>
+<p class="noindent">Timeouts also help with deadlocks, but before a timeout happens, often the system is slowed down significantly. Similar effects can happen due to slow operations. For example, performing blocking I/O when the system has only a few threads can significantly reduce its performance. Also, doing I/O while holding exclusive resources forces everyone waiting on <span epub:type="pagebreak" id="page_161"/>the resources to indirectly wait on the I/O, slowing down the system. This effect is called the <em>Convoy Effect</em>.</p>
+<p class="noindent">It is good practice to use timeouts when performing potentially slow operations. Timeouts reduce the potential impact due to mistakes in the logic. However, we must log those timeouts and investigate because their occurrence signals a bug in the system.</p>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch12lev1sec04">How to Handle Unknown Errors</h3>
+<p class="noindent">Unknown errors often stem from observability and bugs and testing. The following sections look at each of these situations.</p>
+<section>
+<h4 class="h4" id="ch12lev2sec07">Observability</h4>
+<p class="noindent">Great architects know they cannot anticipate all error conditions. Architects who think otherwise are either arrogant, ignorant, or inexperienced. The more you learn about systems, the more you realize there are things that you do not know and do not understand. Therefore, wise architects learn from their system. They aim to extract all learning from the system.</p>
+<p class="noindent">The best way to do this is to observe the system deeply. The idea is to build deep metrics into the system. We can use an Application Performance Monitoring (APM) tool coupled with custom metrics such as latencies, throughputs, queue lengths, resource utilization, and so forth. We need to watch these metrics manually, using anomaly detectors (e.g., artificial intelligence). We should compare the behaviors against the expected baseline. When a system deviates, we need to explore the root causes, and if we can’t, we need to improve our metrics.</p>
+<p class="noindent">Most importantly, when a failure happens, we need to be able to capture as much information as possible to enable us to find the problem and fix it. Our system needs its own black box, like an airplane. Some failures are rare and hard to recreate. Unless we have enough data, we can’t fix them. To find the root cause, we need to play detective. The book <em>Debugging: The 9 Indispensable Rules for Finding Even the Most Elusive Software and Hardware Problems</em> by David J. Agans (HarperCollins Publishing, 2002) addresses this topic deeply.</p>
+</section>
+<section>
+<h4 class="h4" id="ch12lev2sec08">Bugs and Testing</h4>
+<p class="noindent">Enough has been said of the effects of bugs and how to reduce them when writing code that I will not add to that discussion here. And we know that we can catch known errors through testing. Known errors are any errors we find while testing, and we either fix or use them to define the limits of the system.</p>
+<p class="noindent">A computer program is often deterministic. In other words, given the same input, it produces the same output. Input comes in three forms: external inputs (user inputs, events, messages), internal states, and failures. If we can test the system against all possible input, then we have fully tested the system. However, often these three types of input are infinite.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_162"/>The best approach is to test the system against all input classes. We identify classes and design one or more tests to verify each class. For example, one case would be if the name field is longer than 256 characters. However, often there is an infinite number of classes, so we need to consider only the important ones. We miss bugs if we leave out the important classes. For example, if we do not consider what happens if the system gets a false-positive resource failure, we might miss some bugs.</p>
+<p class="noindent">Important classes to consider are the known potential issues (known-unknowns). Our tests should convert these to known bugs so that we can either fix them or use them to identify the system’s limits. Furthermore, testing guards against the recurrence of those issues. Important classes we miss are the unknown potential issues (unknown-unknowns).</p>
+<p class="noindent">I see testing as a search with two competing priorities: exploration versus exploitation. Exploitation is the discipline of comprehensively testing known-unknowns. Exploration is discovering unknown-unknowns (missed important classes) through creativity. Following are some techniques to find important classes of input:</p>
+<ul class="bull">
+<li><p class="bullet"><strong>Anticipate surprises:</strong> Two approaches to this are checking the system against fallacies of distributed systems (see <a href="https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing">https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing</a>) and identifying your assumptions in your design, asking what if those are no longer true.</p></li>
+<li><p class="bullet"><strong>Undertake chaos testing:</strong> Using randomness as your ally, you can inject random data and failures, and simulate random scenarios to identify error scenarios.</p></li>
+<li><p class="bullet"><strong>Encourage brainstorming:</strong> Use a diverse group of people to come up with scenarios (classes) where the system can fail. The diversity of individuals helps because people in your team with different expertise, backgrounds, and upbringing contributing to the design can help find failure scenarios.</p></li>
+<li><p class="bullet"><strong>Use AI generators:</strong> Recent advances in AI let you easily generate new input and combinations thereof, which you can use to test the system and uncover failure scenarios. Systems such as co-pilot and ChatGPT can also generate test cases or test scenarios.</p></li>
+</ul>
+<p class="noindent">Exploration and exploitation are well-known problems that have been widely studied. The multi-arm bandit algorithm is one approach to balance them. Some of those strategies might be useful when planning a testing strategy. Blue-green and canary tests are our last defense against unknown-unknowns. Not only do they help uncover human errors, but they also help with bugs, only if that condition occurs while testing.</p>
+<p class="noindent">Finally, having a bias toward simplicity in design helps us reduce unknown-unknowns. For example, we should use complex algorithms or designs only with extraordinary gains. We must be aware of complex situations such as acquiring a resource or doing I/O while holding a resource. Also, CQRS is a great idea, but code changes make things very complex. Simple designs make it easy to debug and recover from problems. Keeping dependency paths between services simple with less depth is also a good idea. We also should look out for cyclic dependencies.</p>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch12lev1sec05"><span epub:type="pagebreak" id="page_163"/>Graceful Degradation</h3>
+<p class="noindent">Once we hit the goal of avoiding disasters and improving availability, graceful degradation is a desired feature of the system. Graceful degradation can come in two ways. The first, as we discussed already, is to continue to work when the load exceeds the resources and, at least, serve a subset of users. We should use back pressure, admission control, and timeouts to avoid the whole system failing. Also, we might reject certain kinds of input.</p>
+<p class="noindent">The second approach is to continue to work with reduced functionality. The inspiration comes from bulkheads in ships, which stop the vessel from sinking even if part of it floods. An example of this is the control plane/data plane separation, where the data plane continues to work (maybe with reduced functionality) if the control plane fails.</p>
+</section>
+<section>
+<h3 class="h3" id="ch12lev1sec06">Leadership Considerations</h3>
+<p class="noindent">There are two types of instability:</p>
+<ul class="bull">
+<li><p class="bullet">The system is not accessible for a period.</p></li>
+<li><p class="bullet">There are unrecoverable, severe failures, like corrupting the database or losing data.</p></li>
+</ul>
+<p class="noindent">The first step is to keep both in mind. It’s easy to focus on keeping the system available (the first type) and ignore the risk of the second type. Also, complex systems have a higher risk of instability.</p>
+<p class="noindent">The best way to improve stability is to have a clear model of the system you’re building, with a good understanding of its limits. However, this isn’t always possible, so we have to use the techniques described in this chapter. Many of these stability-enhancing methods are complex, which can actually increase instability.</p>
+<p class="noindent">We need to remember this feedback loop and know when to stop. A key part of stability is accepting low-probability failures or failures we can recover from quickly. Overreaching to prevent failures can lead to longer downtimes and catastrophes. For instance, using complex data replication systems can increase the risk of database corruption due to unforeseen failure scenarios.</p>
+<p class="noindent">As a leader, you need to understand this trade-off: Aiming for stability can also reduce your stability, and you need to find a balance that suits your context.</p>
+<p class="noindent">For example, many complex decisions come from the need for stability, so consider the second question discussed in <a href="ch02.xhtml#ch02">Chapter 2</a>: What is the skill level of the team? Can the team handle it?</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_164"/>If you choose a complex design, consider these points in relation to stability:</p>
+<p class="ul-noindent">Question 5: What are the hard problems?</p>
+<p class="ul-noindent">Principle 5: Design deeply things that are hard to change but implement them slowly.</p>
+<p class="ul-noindent">Principle 6: Eliminate the unknowns and learn from the evidence by working on hard problems early and in parallel.</p>
+<p class="noindent">Just like security, stability is relative. We should aim to achieve a level of stability within the available time and resources. As leaders, we may need to refer to the question of when we can rewrite the system and the principle of making decisions and absorbing the risks to guide the team.</p>
+<p class="noindent">An often-overlooked way to achieve stability is to run each part of the system below its limits, leaving room for unexpected events. In many cases, adding complexity is more costly in the long run than running the system close to its limits.</p>
+<p class="noindent">If the system is performance-sensitive, the risk of instability is higher, and it’s a good idea to consider stability as part of the design. However, you should go for complex solutions only after careful thought.</p>
+<p class="noindent">Finally, external dependencies can pose risks to stability. But it’s important to use them as much as possible, and you may need to make decisions and accept risks to enable reuse.</p>
+</section>
+<section>
+<h3 class="h3" id="ch12lev1sec07">Summary</h3>
+<p class="noindent">Following are key takeaways from this chapter:</p>
+<ul class="bull">
+<li><p class="bullet">Stability is not equal to high availability. The first goal of the system is never to get into an irreversible, inconsistent state and not to cause significant harm. The second goal is to be available as much as possible.</p></li>
+<li><p class="bullet">We handle unexpected workloads through autoscaling or admission control of requests.</p></li>
+<li><p class="bullet">We handle resource failures using replication or fast recovery.</p></li>
+<li><p class="bullet">We cannot have better availability or stability than our dependencies (e.g., cloud providers or hardware we run on, APIs we use). We must choose these carefully and then monitor them.</p></li>
+<li><p class="bullet">We can handle human mistakes through GitOps, blue-green systems, and canary deployments.</p></li>
+<li><p class="bullet">We can detect unknown issues through observability and testing.</p></li>
+<li><p class="bullet">When we encounter instabilities that we can’t handle, we need to reduce the impact by controlling admission, refusing specific requests, shutting down certain features, and so on.</p></li>
+</ul>
+</section>
+</section>
+</body>
+</html>

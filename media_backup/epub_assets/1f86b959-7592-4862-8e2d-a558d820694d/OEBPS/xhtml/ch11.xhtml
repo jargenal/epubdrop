@@ -1,0 +1,324 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+<title>11. Server Architectures</title>
+<link href="9780138249595.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:5cddacd8-016d-40ae-8bbb-614b0314c95e" name="Adept.expected.resource"/>
+</head>
+<body>
+<section epub:type="chapter">
+<h2 class="h2" id="ch11"><span epub:type="pagebreak" id="page_129"/><span class="big">11</span></h2>
+<h2 class="h2a">Server Architectures</h2>
+<p class="noindent">In earlier chapters, we discussed architecture at the macro level. Service is the fundamental component of those designs, which implements functionality that we can’t borrow among architectural building blocks. This chapter explores how we can implement well-designed, efficient, and stable services.</p>
+<section>
+<h3 class="h3" id="ch11lev1sec01">Writing a Service</h3>
+<p class="noindent">Several frameworks (e.g., Spring Boot, Ballerina) let you write a service. In each case, you adopt a template that looks something like this:</p>
+<p class="codelink"><a href="ch11_images.xhtml#f0129-01a" id="f0129-01">Click here to view code image</a></p>
+<pre class="pre1"><code>Response do-something(request){
+     //code
+     response = ...
+     return response
+}</code></pre>
+<p class="noindent">The <code>request</code> object represents the user’s input, typically JSON, XML, or a binary protocol such as Protocol Buffers. We then process the request, carry out what is needed, construct the response using the same format as the request, and send it back. Next, we give the port number to the framework, start it, and we have a service. If someone wants to access the service, it is available in the http://<em>your-machine-ip:port</em> location. If you are a decent <span epub:type="pagebreak" id="page_130"/>programmer, you will get this done in a few minutes to a few days, based on the complexity of the service.</p>
+<p class="noindent">It is useful to understand how our service works. A service, when started, creates a server socket with a given port (e.g., 8008) and waits for a client. When a client (e.g., a mobile app running on our customer’s phone) opens a connection, the server socket creates a new socket and hands it over to the service implementation. The service implementation reads the headers (usually HTTP); reads the message; parses it as XML, JSON, or another format; and then calls our <code>do-something</code> method using a thread it picked up from a thread pool. When our method finishes, the server sends the response back to the client and returns the thread to the thread pool. More complex implementations are possible, and we talk about them later in the chapter.</p>
+<p class="noindent">To some extent, we are already done with our service. However, we need to discuss a lot of details under the hood. This chapter first describes some best practices for writing services (using the methods we discussed previously). Next, we dig into advanced techniques such as different server architectures and how to use them in practice. Finally, as you may have guessed by now, I tell you not to use them unless it is necessary.</p>
+</section>
+<section>
+<h3 class="h3" id="ch11lev1sec02">Understanding Best Practices for Writing a Service</h3>
+<p class="noindent">The following are some guidelines for writing efficient and simple services:</p>
+<ul class="bull">
+<li><p class="bullet">Just as with the larger architecture, it’s crucial to maintain a level of separation and flexibility (loose coupling) between the components within a service too. To achieve this goal, we need to implement well-known software development best practices, like SOLID principles, DRY (Don’t Repeat Yourself), KISS (Keep It Simple, Stupid), YAGNI (You Aren’t Gonna Need It), and others.</p></li>
+<li><p class="bullet">Do not reinvent the wheel. Borrow libraries and frameworks instead of writing code from scratch when the benefits outweigh the costs. Libraries and frameworks are typically more stable, are tested, and provide a maintained implementation, which means you do less work. They reduce financial costs as well as indirect costs, which include added complexity, architecture pollution, uncertainty, and, sometimes, performance overhead.</p></li>
+<li><p class="bullet">Handling state within a service is complex. Write stateless services when you can and keep as little state as possible if you must keep it in the service. One way of doing this is to ask clients to remember and send the state with each request (e.g., using cookies). Do not keep any state in memory that you can’t recreate at restart. Among examples of states that you can recreate are caches, pools, and indexes.</p></li>
+<li><p class="bullet">When writing the code for the service, block the service thread as little as possible. A blocked service call keeps a thread away from the CPU. Although we can compensate <span epub:type="pagebreak" id="page_131"/>by having more threads, that also means higher context switch costs, as discussed in <a href="ch03.xhtml#ch03">Chapter 3</a>. For example, if you call one service and then call another while waiting for the first, the time taken for both calls to finish will be less than calling them one after the other. Unfortunately, nothing is free. Not blocking often requires asynchronous programming, which is complex and hard to debug.</p></li>
+<li><p class="bullet">Use pools to reuse complex objects, such as clients that call services and database connections. Each pool has a queue. Monitor queue lengths and create back pressure if the queues are full. We discuss this topic more fully in <a href="ch12.xhtml#ch12">Chapter 12</a>. As discussed in <a href="ch02.xhtml#ch02">Chapter 2</a>, get a thin slice working as early as possible. Additionally, test the performance, profile the code, and iterate as you add more functionality. The most critical path in a service is serving the requests. The next critical path is server startup. Do as little as possible on the critical paths. For example, read configurations and deployments on startup or in the background. Always take your time to tune the critical path.</p></li>
+<li><p class="bullet">Most services get the request, do a read or write on a database, do a few service calls, and do some processing and returns. Database calls and service calls take time, increasing the latency, so</p>
+<ul class="bull-i">
+<li><p class="bullet">Cache what you can.</p></li>
+<li><p class="bullet">Prefetch the values if possible (start an asynchronous call to fetch them as early as possible).</p></li>
+<li><p class="bullet">Batch the reads and writes if possible.</p></li>
+<li><p class="bullet">Take time to tune the database (e.g., slow query logs).</p></li>
+</ul></li>
+<li><p class="bullet">If services call many other services or APIs, they will have high latency. You may have to use nonblocking calls so that the external service calls happen in parallel.</p></li>
+<li><p class="bullet">Controlling both the client and server gives us better performance and reliability guarantees, such as message order. Also, keep in mind, in this case, you can easily change things in the future.</p></li>
+<li><p class="bullet">Idempotent operations do not have any effect even if they receive multiple copies of the same request, so make service operations idempotent whenever possible. Then it is easy to recover, and you can live with at least one delivery. This makes your macro architecture simple. For example, as we discussed in <a href="ch07.xhtml#ch07">Chapter 7</a>, you can often avoid transactions if all your stateful services are idempotent.</p></li>
+</ul>
+<p class="noindent">Having followed these guidelines, if the service does what you want with the expected performance guarantees, then you are done. The rest of the chapter discusses more advanced service design techniques. However, my recommendation is to start with the default server architecture, unless the performance is critical for your use cases. If you are using advanced techniques, hire a few experienced developers who have implemented the same or similar techniques before.</p>
+</section>
+<section>
+<h3 class="h3" id="ch11lev1sec03"><span epub:type="pagebreak" id="page_132"/>Understanding Advanced Techniques</h3>
+<p class="noindent">So far in this chapter, we have focused on the most straightforward server architecture, using blocking I/O to read and write data from the network and making use of a thread-per-request (thread mode), which we call <em>thread-per-request</em> architecture. With this design, service developers can write code as usual, blocking I/O and other blocking operations. This approach provides the simplest user programming and debugging experience. It is not the most performant architecture, but it provides acceptable performance in most use cases. Hence, the thread-per-request architecture is an excellent choice for most use cases.</p>
+<p class="noindent">In the rest of the chapter, we discuss advanced techniques. Although these techniques give developers more power, each also brings a bit of complexity. Use them with care and only when needed.</p>
+<section>
+<h4 class="h4" id="ch11lev2sec01">Using Alternative I/O and Thread Models</h4>
+<p class="noindent">In advanced architectures, we vary the I/O and thread models from thread-per-request architecture. As discussed in <a href="ch03.xhtml#ch03">Chapter 3</a>, a system achieves the best performance when running with a thread count close to the number of CPU cores while keeping each thread busy doing useful things. We usually accomplish this with an event-driven thread model, which keeps context-switching costs to a minimum. However, if there are any task blocks (for I/O, for example) in this architecture, the CPU will idle waiting for blocked tasks, and the performance of the system will reduce significantly.</p>
+<p class="noindent">We must implement such architectures carefully. These observations suggest several conclusions:</p>
+<ul class="bull">
+<li><p class="bullet">When using an event-driven thread model, we must use nonblocking I/O. Thus, the thread model and I/O model are interrelated.</p></li>
+<li><p class="bullet">The service implementation must do all other operations in a nonblocking manner, passing the burden to the service programmer. This forces the programmer to learn new techniques.</p></li>
+<li><p class="bullet">In some cases, blocking is unavoidable. In those cases, we need a hybrid model.</p></li>
+</ul>
+<p class="noindent">We already know the thread-per-request model and event-based model. One widely used hybrid model is called staged event-driven architecture (SEDA), a nonblocking I/O with processing arranged in a pipeline. Let’s explore each model in detail.</p>
+<section>
+<h5 class="h5" id="ch11lev3sec01">Thread-per-Request Architecture (TRA)</h5>
+<p class="noindent">With TRA architecture, a single thread does all the work for a single request. <a href="ch11.xhtml#ch11fig01">Figure 11.1</a> assumes each request has three work items. All work items in each request are assigned to one thread. If all the threads in the thread pools are exhausted, requests must wait.</p>
+<span epub:type="pagebreak" id="page_133"/>
+<figure class="figure" id="ch11fig01">
+<img alt="Images" src="graphics/11fig01.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 11.1</strong></p>
+<p class="title-f1">Thread-per-request architecture (TRA).</p>
+</figcaption>
+</figure>
+<p class="noindent">To understand this architecture, let’s map it hypothetically to the real world. Imagine a restaurant that operates using a TRA, where a single person (a thread) does all the steps involved with ordering: seating the customer, taking the order, cooking, serving, giving and processing the check, and imparting the final greeting. That person remains idle in between customers (e.g., while patrons are eating), doing nothing worthwhile when “idling.” This is a wasteful scenario because the restaurant needs the same number of wait staff as tables.<sup><a href="#ch11fn1" id="ich11fn1">1</a></sup></p>
+<p class="footnote"><a href="#ich11fn1" id="ch11fn1">1</a>. This example is influenced by the article “What Is SEDA?” at <a href="https://stackoverflow.com/questions/3570610/what-is-seda-staged-event-driven-architecture">https://stackoverflow.com/questions/3570610/what-is-seda-staged-event-driven-architecture</a>.</p>
+<p class="noindent">As another example, consider a stock market service that receives a buy request, calls an API to get stock quotes, and buys the stock if the quotes are within the given price range. With this model, all processing happens in a single thread. Having sent an API call, the thread idles, waiting for the response. Even though both scenarios are not ideal, there are three main advantages of TRA:</p>
+<ul class="bull">
+<li><p class="bullet">It provides the most natural programming model for service developers.</p></li>
+<li><p class="bullet">Several frameworks (e.g., Spring Boot, Tomcat) already support this model.</p></li>
+<li><p class="bullet">The implementation itself is easy to understand.</p></li>
+</ul>
+<p class="noindent">The main disadvantage of this model centers on the number of threads that we want to use for our service. We must carefully pick an appropriate number of threads. Once all the threads are exhausted, the system must wait for a thread to be free to accept new requests.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_134"/>If we use a CPU workload for the service, the thread number should be close to the number of cores. If there is significant I/O, the thread number should be 50–100 times the number of cores to accommodate blocking. A higher number of threads increases the context-switching overhead, as discussed in <a href="ch03.xhtml#ch03">Chapter 3</a>. Consequently, this architecture is not the most performant in most use cases.</p>
+</section>
+<section>
+<h5 class="h5" id="ch11lev3sec02">Event-Driven (Nonblocking) Architecture</h5>
+<p class="noindent">Event-driven architecture requires that we break the processing into subitems that do <em>not</em> block. To achieve this effect, we often take work done between two blocking operations (e.g., I/O and acquiring locks) and assign them to one item. <a href="ch11.xhtml#ch11fig02">Figure 11.2</a> provides an example of this approach.</p>
+<figure class="figure" id="ch11fig02">
+<img alt="Images" src="graphics/11fig02.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 11.2</strong></p>
+<p class="title-f1">Event-driven (nonblocking) architecture.</p>
+</figcaption>
+</figure>
+<p class="noindent">To avoid blocking, we need to use a nonblocking API for blocking operations. Doing so breaks blocking operations into two parts: the beginning and the end. We begin by calling for the start of I/O and end the call when I/O is done. Often subitems start with the end part of a blocking operation and end with the beginning part. For instance, if we have a stock-buying service that calls two services for quotes, makes the decision, and sends a response, it can have three subitems, as depicted in <a href="ch11.xhtml#ch11fig03">Figure 11.3</a>.</p>
+<figure class="figure" id="ch11fig03">
+<img alt="Images" src="graphics/11fig03.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 11.3</strong></p>
+<p class="title-f1">Example of subitems for a service doing two service calls.</p>
+</figcaption>
+</figure>
+<p class="noindent">As <a href="ch11.xhtml#ch11fig03">Figure 11.3</a> shows, the nonblocking architecture sets up event listeners to receive external events (requests) and to schedule subitems in response to these events. The architecture may assign each subitem to a different thread when running.</p>
+<p class="noindent">For service calls, subitems must use nonblocking I/O operations. After the service call starts, the thread is released to take on new work. When the service call completes, the architecture schedules the next subitem with the service response and adds it to the queue. A thread picks up the subitem and processes it. This process continues until all subitems are done.</p>
+<span epub:type="pagebreak" id="page_135"/>
+<p class="noindent">If our hypothetical restaurant operated using event-driven architecture, every person (thread) needs to be able to do any task. They wait for an activity, and one jumps in and does the task (seating or ordering, for example). When the task ends, they go back and wait for a new task. This restaurant can work with much fewer wait staff than the number of tables; however, each person must be able to do all the tasks. Also, wait staff need not wait on a single table; rather, they need to submit work (an order) and then check for completion.</p>
+<p class="noindent">The key advantage of the nonblocking architecture is performance. The architecture operates with a fixed thread pool that’s close to the number of cores in the system. Because none of the subitems get blocked, given there are enough subitems, this architecture can achieve close to 100% utilization. There are, however, two downsides:</p>
+<ul class="bull">
+<li><p class="bullet">It is hard to make everything nonblocking.</p></li>
+<li><p class="bullet">Writing nonblocking service implementations requires a deep understanding of how I/O works from service developers. Unfortunately, few developers understand I/O that deeply.</p></li>
+</ul>
+</section>
+<section>
+<h5 class="h5" id="ch11lev3sec03">Staged Event-Driven Architecture (SEDA)</h5>
+<p class="noindent">We use SEDA in response to the difficulty of making everything nonblocking. It brings the advantages of event-driven architecture without forcing us to make everything nonblocking.<sup><a href="#ch11fn2" id="ich11fn2">2</a></sup></p>
+<p class="footnote"><a href="#ich11fn2" id="ch11fn2">2</a>. See “SEDA: An Architecture for Well-Conditioned, Scalable Internet Services” by Matt Welsh, David Culler, and Eric Brewer, in ACM SOSP 2001, available at <a href="https://dl.acm.org/doi/10.1145/502059.502057">https://dl.acm.org/doi/10.1145/502059.502057</a>.</p>
+<p class="noindent">As <a href="ch11.xhtml#ch11fig04">Figure 11.4</a> illustrates, SEDA consists of multiple stages connected by queues. Each stage can use either a blocking or a nonblocking architecture. It often uses runtime tuning to find the best parameters (e.g., number of threads) for different stages. SEDA is conceptually similar to the manufacturing pipeline.</p>
+<span epub:type="pagebreak" id="page_136"/>
+<figure class="figure" id="ch11fig04">
+<img alt="Images" src="graphics/11fig04.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 11.4</strong></p>
+<p class="title-f1">Staged event-driven architecture (SEDA).</p>
+</figcaption>
+</figure>
+<p class="noindent">Let’s look again at our hypothetical restaurant. This time, it works using a SEDA-like architecture: different people (threads) process different stages. In some stages, one person may do all the processing, but in a different stage, multiple people might work together. This architecture allows for specializations (e.g., seating, cooking, serving, and so forth). And, if we go back to our stock-buying example, the stages would be processing the request, calling the API, making the decision, buying stocks, and sending the response.</p>
+<p class="noindent">The primary challenge for this architecture is that service developers need to identify the stages, which requires a deep understanding of the performance behaviors. Although many middleware frameworks use SEDA, it is not widely used by service developers to build day-to-day services due to the design complexity.</p>
+<p class="noindent">If we plan to use a SEDA-like architecture, we can build on top of a disruptor framework, which provides an efficient implementation of a staging architecture. As <a href="ch11.xhtml#ch11fig05">Figure 11.5</a> shows, the disruptor works through a circular buffer, and new work is added, moving counterclockwise around the buffer.</p>
+<figure class="figure" id="ch11fig05">
+<img alt="Images" src="graphics/11fig05.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 11.5</strong></p>
+<p class="title-f1">SEDA-like architecture on top of a disruptor framework.</p>
+</figcaption>
+</figure>
+<p class="noindent">Processors belonging to multiple stages can simultaneously work with circular buffers, and we can control the order of processing by defining constraints. For example, a processor from the first stage (processors in <a href="ch11.xhtml#ch11fig05">Figure 11.5</a>) can lock a cell, read, process, and write data back to the cell. The second stage processor also can read the cell, process, and write back to the cell. We can, however, define a constraint where processors from the second stage must never be allowed to access a cell before a processor from the first stage has written to the cell. This approach creates a SEDA-staged pipeline. Similarly, we can implement more complex stages including forks.</p>
+<p class="noindent">Disrupter frameworks reduce the memory cost of sharing data between threads through a careful data structure design that avoids cache invalidation. The disrupter adds additional savings in SEDA architecture by replacing multiple queues and data movements between them with a single circular buffer and constraints.</p>
+<span epub:type="pagebreak" id="page_137"/>
+</section>
+<section>
+<h5 class="h5" id="ch11lev3sec04">Comparing the Architectures</h5>
+<p class="noindent">Chapter 4.2 of Benjamin Erb’s diploma thesis, “Concurrent Programming for Scalable Web Architectures” (<a href="https://berb.github.io/diploma-thesis/">https://berb.github.io/diploma-thesis/</a>), discusses these architectures as well as some additional ones. In this chapter, I have excluded the multiprocessor architecture from my discussion because it is rarely used due to the availability of multicore architectures.</p>
+<p class="noindent">It is worth noting that, on one hand, implementing the nonblocking I/O with a thread-per-request architecture does not yield significant performance improvements. On the other hand, using a blocking I/O and event-driven model can lead to drastic performance penalties.</p>
+<p class="noindent">The three architectures described in this section provide a trade-off between the complexity of programming versus better performance. Because developer productivity is the critical goal, most service development and hosting frameworks use the thread-per-request model. You should also use the same through one of the frameworks such as Tomcat or Go kit. Only when extracting the maximum possible performance from the server is a crucial advantage should you choose to go with other architectures. In the following sections, we continue our discussion about advanced techniques.</p>
+</section>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec02"><span epub:type="pagebreak" id="page_138"/>Understanding Coordination Overhead</h4>
+<p class="noindent">Performance behaviors can be counterintuitive. For example, sometimes a single thread-based implementation performs better than multiple threads, even in a multicore machine, due to coordination overhead. This happens because of Amdahl’s law, which we discussed in <a href="ch03.xhtml#ch03">Chapter 3</a>. Two common forms of coordination overhead are I/O overhead and memory access overhead. Let’s look at them next.</p>
+<section>
+<h5 class="h5" id="ch11lev3sec05">I/O Overhead</h5>
+<p class="noindent">A single writer often performs better than multiple coordinating writers when writing to the same source. In such cases, it is better to submit data from multiple threads to a queue or LMAX Disruptor ring buffer and write the data using a single writer. This design also lets us buffer the data, reducing the number of writes required and improving the performance. This is called the Single Writer Principle.<sup><a href="#ch11fn3" id="ich11fn3">3</a></sup></p>
+<p class="footnote"><a href="#ich11fn3" id="ch11fn3">3</a>. If you’re curious about the Single Writer Principle, see <a href="https://mechanical-sympathy.blogspot.com/2011/09/single-writer-principle.html">https://mechanical-sympathy.blogspot.com/2011/09/single-writer-principle.html</a>.</p>
+</section>
+<section>
+<h5 class="h5" id="ch11lev3sec06">Memory Access Overhead</h5>
+<p class="noindent">A single thread can outperform multiple threads even without I/O. This is especially true when computations scatter memory access or multiple threads frequently update one or a few variables.<sup><a href="#ch11fn4" id="ich11fn4">4</a></sup> In such cases, we should rewrite the code to use a single thread or optimize data exchange between threads.</p>
+<p class="footnote"><a href="#ich11fn4" id="ch11fn4">4</a>. See the article “Scalability! But at What COST?” by Frank McSherry at <a href="http://www.frankmcsherry.org/graph/scalability/cost/2015/01/15/COST.html">http://www.frankmcsherry.org/graph/scalability/cost/2015/01/15/COST.html</a> and the blog at <a href="http://blog.acolyer.org/2015/06/05/scalability-but-at-what-cost/">http://blog.acolyer.org/2015/06/05/scalability-but-at-what-cost/</a>.</p>
+<p class="noindent">At the OS level, each thread has its own cache and a programming counter. To prevent threads from reading stale data, the system invalidates the cache line that holds the variable when a shared variable changes. This forces all the threads to read data from memory, slowing down their executions. This is called <em>cache coherency</em>. Each cache line holds many variables, which can lead to a behavior called <em>false sharing</em>, where the cache is invalidated because a widely read variable or a widely written variable sits in the same cache line, although the latter is never read.<sup><a href="#ch11fn5" id="ich11fn5">5</a></sup></p>
+<p class="footnote"><a href="#ich11fn5" id="ch11fn5">5</a>. See the blog posts at <a href="https://mechanical-sympathy.blogspot.com/2011/07/false-sharing.html">https://mechanical-sympathy.blogspot.com/2011/07/false-sharing.html</a> and <a href="https://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html">https://mechanical-sympathy.blogspot.com/2011/07/memory-barriersfences.html</a>.</p>
+<p class="noindent">Handling such conditions is difficult. Unless you are one of the rare breeds of programmers who thrive in complexity, you won’t enjoy this. The good news is that for Java and C++, the LMAX Disruptor library handles the complexity of exchanging data between threads, which you can reuse. Also, you can replace data structures shared between threads with concurrent <span epub:type="pagebreak" id="page_139"/>data structures. (e.g., Java concurrent data structures). Still, sometimes nothing works, and a single thread outperforms multiple threads.</p>
+</section>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec03">Efficiently Saving Local State</h4>
+<p class="noindent">Sometimes services need to save and recover a local state to or from a disk or a database, for example. In most such cases, clients need to know that the state is saved. With databases, we can achieve this with transactions. However, sometimes we use disks or queues for better performance or for more control over reliability guarantees.</p>
+<p class="noindent">Given a service that does not have randomness (a.k.a. a deterministic service), we can reconstruct its state by recording and replaying all its inputs (including timer interrupts). The reason is that a deterministic service’s output depends only on its input. The following sections describe two techniques that use this principle by saving all incoming messages to a disk or to a queue so that if the service fails, it can reconstruct the state from stored messages.</p>
+<section>
+<h5 class="h5" id="ch11lev3sec07">Disk-Based Persistent Service</h5>
+<p class="noindent">A disk-based persistent service saves each request and acknowledges its receipt to the client. This enables the service to ensure it always processes messages it receives. This behavior is a useful tool to ensure that messages are not lost while processing. However, writing each message to disk one by one is slow. Instead, as <a href="ch11.xhtml#ch11fig06">Figure 11.6</a> illustrates, we can keep a write queue and submit all write requests to this queue.</p>
+<figure class="figure" id="ch11fig06">
+<img alt="Images" src="graphics/11fig06.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 11.6</strong></p>
+<p class="title-f1">Architecture for a disk-based persistent service.</p>
+</figcaption>
+</figure>
+<p class="noindent">In the figure, a single thread (running batch writer) reads as many write requests as possible from the write queue (shown as the Ack queue in the figure) and writes them, batching multiple requests in a single write. When the writer has written the messages, it sends acknowledgments back to the corresponding clients. This approach lets us acknowledge each <span epub:type="pagebreak" id="page_140"/>message after writing to disk when using a batch I/O, significantly improving throughput. Although simple, this method can provide 10 to 100 times better performance than writing messages one by one.</p>
+</section>
+<section>
+<h5 class="h5" id="ch11lev3sec08">Message Queue-Based Persistent Service</h5>
+<p class="noindent">In a message queue-based persistent service, the client places messages in a message queue (e.g., Apache Kafka), and the service reads from the queue and processes the messages. From time to time, the service saves its current state together with the last message ID processed. In case of a failure, the service reloads the saved state and reprocesses the last message ID. This approach enables the service to save its state periodically, not for every message, and still recover from failures, providing much better performance.</p>
+<p class="noindent">In most cases, the message queue-based service is preferred over the disk-based persistent service. The reason is that it significantly reduces the complexity of the code that we need to write.</p>
+</section>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec04">Choosing a Transport System</h4>
+<p class="noindent">Most services use HTTP as a transport mechanism to receive and send responses, but other alternatives are possible. With HTTP, the request starts from the client, the server processes the request and sends a response, and the client waits until a response is received. HTTP, however, provides no message delivery guarantees. Other transport systems include</p>
+<ul class="bull">
+<li><p class="bullet">WebSocket, GRPC, and HTTP2. These systems can connect and hold the connection, and the server can also push messages to the client.</p></li>
+<li><p class="bullet">Messaging protocols such as AMQP (Advanced Message Queuing Protocol) and Kafka. These protocols can send one-way (request-only) messages persistently and delete the message only after the receiver has acknowledged that processing is complete. If the receiver or message broker fails, the system can recover the messages from the disk.</p></li>
+</ul>
+<p class="noindent">My recommendation is to stick with HTTP or HTTP2 because they are widely understood and supported by most frameworks. When higher processing guarantees (e.g., guaranteed delivery and exactly once) are needed, we can use other messaging protocols: GRPC is used when we need high performance; and WebSockets, GRPC, and HTTP2 push notifications are often used when the server wants to notify the client about an event.</p>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec05">Handling Latency</h4>
+<p class="noindent">Services often need to keep within latency bounds. Sometimes, the application has enough freedom within these bounds that special handling is not required. <a href="ch03.xhtml#ch03">Chapter 3</a> discussed how to provide strong latency guarantees in other cases.</p>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec06"><span epub:type="pagebreak" id="page_141"/>Separating Reads and Writes</h4>
+<p class="noindent">Typical service implementations are optimized for read performance. When we need maximum write performance, it is possible to separate reads and writes into two services, as <a href="ch11.xhtml#ch11fig07">Figure 11.7</a> shows.</p>
+<figure class="figure" id="ch11fig07">
+<img alt="Images" src="graphics/11fig07.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 11.7</strong></p>
+<p class="title-f1">Architecture for separating reads and writes.</p>
+</figcaption>
+</figure>
+<p class="noindent">This approach creates a service for read operations and a service for write operations, each backed by its own database. As in <a href="ch11.xhtml#ch11fig07">Figure 11.7</a>, all writes are directly written and sent to the read service, which constructs a model for use in the read service while responding to any queries. This model can be implemented in memory or in a database.</p>
+<p class="noindent">This approach frees the writer from read locks and from any limits on append operations. Append operations significantly reduce the need to seek delays from database operations. The resulting system can operate much faster, providing outstanding write performance. An example of this approach is CQRS (Command and Query Responsibility Segregation).<sup><a href="#ch11fn6" id="ich11fn6">6</a></sup></p>
+<p class="footnote"><a href="#ich11fn6" id="ch11fn6">6</a>. See <a href="https://martinfowler.com/bliki/CQRS.html">https://martinfowler.com/bliki/CQRS.html</a></p>
+<p class="noindent">We must use this approach carefully because it is tough to get this right. For example, a problem that can get us into trouble is the reconstruction of the current state from events, which can break if some code in the system is updated. To get proper state reconstruction from events, we need to track code changes and process the code using the appropriate version. Such problems are hard to fix and even harder to anticipate.</p>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec07">Using Locks (and Signaling) in Applications</h4>
+<p class="noindent">Sometimes a service needs to coordinate the execution of its threads using locks to protect shared data structures or using semaphores to make threads wait for each other. We call constructs such as locks and semaphores <em>synchronization primitives</em>.<sup><a href="#ch11fn7" id="ich11fn7">7</a></sup></p>
+<p class="footnote"><a href="#ich11fn7" id="ch11fn7">7</a>. An excellent introduction to these primitives is <em>The Little Book of Semaphores</em> by Allen B. Downey (Green Tea Press, 2009). You can find it at <a href="https://greenteapress.com/wp/semaphores/">https://greenteapress.com/wp/semaphores/</a>.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_142"/>We should avoid coordination if possible. For example, instead of protecting data structures using locks, we can use concurrent data structures that do not need protection. Instead of using the semaphores method <code>acquire()</code>, which blocks, we can use the <code>tryAcquire()</code> method and retry if it fails. Note that we need to account for the complexity of asynchronous programming with <code>tryAcquire()</code>.</p>
+<p class="noindent">We must reduce the time execution spends with synchronization by releasing the lock or synchronization primitive as soon as possible. Consider a thread on which other threads are blocking. We should be extra careful if such a thread is doing I/O operations, performing synchronized operations, or acquiring objects from a pool. If we do these types of operations, until that thread finishes execution, none of the waiting lines can run, effectively creating a bottleneck. These kinds of bugs have cascading effects, slowing down everything. Because operations such as I/O take time, they intensify the effects of synchronization operations.</p>
+<p class="noindent">In the multicore era, where most applications use multiple cores, synchronization primitives significantly impair performance. We can explain this using Amdahl’s law, as we discussed in <a href="ch03.xhtml#ch03">Chapter 3</a>. Because synchronization primitives have a crippling effect on performance, we should first tune synchronization operations before tuning other things.</p>
+<p class="noindent">If we do use synchronization, we should use a profiler to understand its behavior and optimize that, and we should do this before any other tuning. Many profilers (including Oracle’s JVM profiler, Flight Recorder) include a synchronization and locks check that lets you analyze where most of the blocking happens.</p>
+<p class="noindent"><a href="ch11.xhtml#ch11fig08">Figure 11.8</a> shows a snapshot of thread states in a program. The lowest band shows running threads, the next shows blocked threads and the third band shows waiting threads, and the top band shows parked threads. We want the blocked threads of the program to be as small as possible. Once we know there’s a problem, we can use the lock profile to find primitives that create the most overhead.</p>
+<figure class="figure" id="ch11fig08">
+<img alt="Images" src="graphics/11fig08.jpg"/>
+<figcaption>
+<p class="title-f"><strong>Figure 11.8</strong></p>
+<p class="title-f1">Snapshot of an application’s thread states: running, blocked, waiting, and parked (from bottom to top, respectively).</p>
+</figcaption>
+</figure>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec08">Using Queues and Pools</h4>
+<p class="noindent">We use queues to match the speed of different parts of the program. For example, if some requests come faster than we can handle, we queue them. A program using a queue can block in two ways: putting data into a full queue or reading data from an empty queue. <span epub:type="pagebreak" id="page_143"/>Queues are a significant source of latency in a system. A blocked queue behaves similarly to a synchronization primitive, and the same best practices for those apply to queues also.</p>
+<p class="noindent">Database and thread pools in our programs let us reuse something. For example, a database connection pool lets us reuse database connections, or a thread pool lets us share threads. Pools also behave similarly to a queue. It is important to note that pools are often a form of throttling to control the load on the server. For example, a thread pool controls the number of threads created, or a database connection pool controls the number of concurrent requests on the backend server.</p>
+<p class="noindent">Handling pools is not as simple as extending its pool size. We often also need to scale its backend (e.g., database). We must carefully monitor pools, and as with synchronization, we should understand the effect of pools and queues and tune them before tuning other parts of the program. At runtime, if the queue or a pool is blocked, the best practice is to propagate an error back to the client. We call this applying back pressure. We discuss this issue more fully in <a href="ch12.xhtml#ch12">Chapter 12</a>.</p>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec09">Handling Service Calls</h4>
+<p class="noindent">Service calls (also called API calls) within code are common in new architectures. If service calls are blocked, they behave similarly to pools or locks, and they can be a severe bottleneck, as discussed previously. Because service calls always do I/O operations, handling them takes time, and the effects may be worse than queues and locks. However, often they can be handled efficiently using asynchronous I/O.</p>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch11lev1sec04">Using These Techniques in Practice</h3>
+<p class="noindent">This section explores how to combine the techniques mentioned in this chapter when designing services. We already discussed the effect of locks, thread pools, and queues. However, their effects are much more dominating and predictable than the interplay between I/O, memory, and CPU. Hence, we should first tune locks, pools, and queues before tuning I/O, memory, and the CPU.</p>
+<p class="noindent">Tuning I/O, memory, and the CPU is complicated. To understand the trio, let’s start with a classification of applications based on their resource usage. When an application executes, it always needs a CPU and some memory. In the following classifications, CPU and memory are always present. Because I/O is much more expensive than CPU or memory operations (see <a href="ch03.xhtml#ch03">Chapter 3</a>), even the presence of a little I/O significantly transforms the behavior of an application.</p>
+<p class="noindent">The four classifications that we explore in detail are as follows. In the following sections, we also discuss what kind of architecture suits each. Here, &gt;&gt; means <em>significantly greater than</em>.</p>
+<ul class="bull">
+<li><p class="bullet">CPU-bound applications (CPU &gt;&gt; Memory and no I/O)</p></li>
+<li><p class="bullet">Memory-bound applications (CPU + Bound Memory and no I/O)</p></li>
+<li><p class="bullet"><span epub:type="pagebreak" id="page_144"/>Balanced applications (CPU + Memory + I/O)</p></li>
+<li><p class="bullet">I/O-bound applications (I/O &gt; CPU)</p></li>
+</ul>
+<section>
+<h4 class="h4" id="ch11lev2sec10">CPU-Bound Applications (CPU &gt;&gt; Memory and No I/O)</h4>
+<p class="noindent">CPU-bound applications use a lot of CPU, a little memory, and no I/O. Often, special applications such as scientific simulation or 3D rendering and brute-force attacks to crack a key follow this pattern. For example, given a number, finding the largest prime number smaller than the given number is a CPU-bound application.</p>
+<p class="noindent">Optimized architecture for this service maintains a pool of threads of the same number as CPU cores, handling a nonblocking I/O service that submits each request to one of the threads. Any surplus tasks are queued until a thread is free. To further optimize performance, we can consider pinning threads to cores, which reduces the context switch overhead. Because there is no blocking or I/O, the thread-per-request model discussed in this chapter is sufficient for this use case.</p>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec11">Memory-Bound Applications (CPU + Bound Memory and No I/O)</h4>
+<p class="noindent">The typical architecture of memory-bound applications works similarly to CPU-bound applications, but the architect’s challenges are to reduce cache misses and to optimize memory management. Because there is no blocking or I/O, the thread-per-request model is sufficient for this use case. One key concern is overhead added by cache coherency when multiple threads are working on the same data, which we already discussed in this chapter.</p>
+<p class="noindent">After cache coherency is handled, if present, the next common bottleneck is garbage collection (GC). We can use memory and object creation profiles to find problems and fix them using code changes or tuning the GC algorithm. If GC becomes a significant factor, we should consider off-heap memory management. Refer to <a href="ch03.xhtml#ch03">Chapter 3</a> for more details.</p>
+<p class="noindent">In some cases, systems must manage a large amount of memory while processing data. Examples of these systems are databases, in-memory databases, and graph processing systems. Generally, these systems build complex indexes to avoid having to walk through all the data for processing, thus trading memory for processing. If there is excess memory, this is the right approach. Sometimes, the system may recalculate things as needed rather than storing them to trade excess CPU for storage or I/O.</p>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec12">Balanced Applications (CPU + Memory + I/O)</h4>
+<p class="noindent">Most services (perhaps, 90%) that we write are balanced applications. When I/O presents, it adds significant complications. Threads block while doing I/O, which takes 1,000 to 2,500 times more latency than memory access (see <a href="ch03.xhtml#ch03lev2sec02">model 2</a> in <a href="ch03.xhtml#ch03">Chapter 3</a>). If the CPU can’t be used for the alternative task while doing I/O, it wastes the CPU. There are several ways to solve this problem.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_145"/>The easiest is to add more threads (often 20–50 times the number of cores). When one thread blocks, the OS parks the blocked thread and runs a different thread, letting it use the CPU until I/O finishes. Although this approach helps, it also increases context switches, increasing the overhead added by the OS (see <a href="ch03.xhtml#ch03lev2sec03">model 3</a> in <a href="ch03.xhtml#ch03">Chapter 3</a>).</p>
+<p class="noindent">As discussed previously in the section “<a href="ch11.xhtml#ch11lev3sec02">Event-Driven (Nonblocking) Architecture</a>,” an alternative is to use the event-based model with nonblocking I/O. Nonblocking I/O checks the status of the I/O channel and issues the call only when the channel can carry out the operation. It schedules the I/O operation and releases the calling thread, which can do some other useful work meanwhile. Netty and Apache MINA are frameworks that support this model.</p>
+<p class="noindent">Unfortunately, not all calls can be nonblocking. For example, APIs provided by the most widely used database systems are blocking. In this case, both the threads and events can be used together. The SEDA architecture we discussed earlier in this chapter is an example of this model.</p>
+<p class="noindent">Sometimes, although CPU is available, the data needed for computations is not available because I/O takes a much longer time. To work around this issue, we should use the techniques described under “I/O Optimization Techniques” in <a href="ch03.xhtml#ch03">Chapter 3</a>: send early, receive late, don’t ask but tell; prefetching; avoiding I/O; and buffering.</p>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec13">I/O-Bound Applications (I/O + Memory &gt; CPU)</h4>
+<p class="noindent">A typical architecture for the I/O-bound applications category optimizes I/O and uses other resources (e.g., CPU and memory) to reduce the required I/O. Techniques for such architectures are discussed in <a href="ch03.xhtml#ch03">Chapter 3</a> in the section regarding optimization techniques.</p>
+</section>
+<section>
+<h4 class="h4" id="ch11lev2sec14">Other Application Categorizations</h4>
+<p class="noindent">I/O, memory, and CPU-bound categorizations reflect how a computer system works, yet we do not think about systems on those terms. Hence, the categorizations previously mentioned are limiting. Instead, we often think about an application in terms of the task performed by the service. The following sections describe two common types of services we often encounter.</p>
+<section>
+<h5 class="h5" id="ch11lev3sec09">Calculators</h5>
+<p class="noindent">Calculators carry out computations. The design revolves around making data available to make those calculations as fast as possible. There are several use cases for this:</p>
+<ul class="bull">
+<li><p class="bullet"><strong>Case 1:</strong> If applications have readily available data, it becomes a CPU-bound, no I/O application. Examples include calculating prime numbers or breaking a password.</p></li>
+<li><p class="bullet"><strong>Case 2:</strong> If computations need a lot of memory access, it becomes a memory-bound application. Examples include scientific simulations such as weather forecasting or air tunnel simulation.</p></li>
+<li><p class="bullet"><span epub:type="pagebreak" id="page_146"/><strong>Case 3:</strong> If data comes through I/O, the application has to do a lot of work to move data and make it available for computations. An example is big data applications such as MapReduce. I/O optimization techniques such as prefetching and batching also can help a lot in these situations.</p>
+<p class="bull-p">Often the resulting application would be I/O-bound because a bottleneck would bring in the data. Thus, it becomes a balanced application (CPU + Memory + I/O).</p></li>
+</ul>
+<p class="noindent">Also, these three cases reveal a pattern that we often see. The main goal of the application and the real bottlenecks of the implementation can be different.</p>
+</section>
+<section>
+<h5 class="h5" id="ch11lev3sec10">Update and Lookup Services</h5>
+<p class="noindent">Most applications that look up data run as servers. Among examples are relational databases, NoSQL databases such as Cassandra and MongoDB, and both time series and graph databases. They often support complex query languages such as SQL. Two types of databases, based on where they store the data, are memory or disk. Both cases use indexes to find data, which may also be stored in memory or on disk.</p>
+<p class="noindent">Although trivial implementations of these systems are I/O or memory-bound, most real-world implementations use the CPU to trade off I/O operations. For example, Cassandra stores data in SSTables, which are append-only, where they achieve higher I/O bandwidth but have to combine multiple updates on demand to get the current value to support a read operation. This means giving up computations to optimize I/O. Complex update and lookup services often become balanced applications after optimizations.</p>
+</section>
+</section>
+</section>
+<section>
+<h3 class="h3" id="ch11lev1sec05">Leadership Considerations</h3>
+<p class="noindent">When creating services, developers need to understand the business requirements, typically expressed as “business logic,” and quality of service (QoS) requirements. Leaders have to make sure that these business contexts are factored into the API design, shared with the developers, and integrated into testing processes.</p>
+<p class="noindent">Three usual errors while creating services are</p>
+<ul class="bull">
+<li><p class="bullet">Making premature optimizations</p></li>
+<li><p class="bullet">Not paying enough attention to APIs</p></li>
+<li><p class="bullet">Not tuning the service first before changing the macro architecture</p></li>
+</ul>
+<p class="noindent">As we’ve mentioned, creating services is pretty straightforward with modern service development tools. They use a thread-per-request model, which is easy to manage and understand. Often, only a few services in the macro architecture affect overall performance. So it’s an error to move away from the default structure in a service before we know it’s truly the bottleneck.</p>
+<p class="noindent"><span epub:type="pagebreak" id="page_147"/>Second, API definitions are part of the macro architecture and should be designed carefully because they’re hard to change. Yet, it’s common for architects to hand over the API details to the development team because they know the specifics. Architects need to keep an eye on this issue, review, and make sure these APIs are designed carefully and the risk of big changes is small. Good APIs greatly cut down the risk linked with the service. Poorly designed APIs can lead to expensive changes throughout the system.</p>
+<p class="noindent">Third, when a service is the bottleneck, detailed tuning can sometimes lead to major improvements. It’s an error to scale the macro architecture before tuning the server architecture to achieve maximum performance. For example, let’s say we need to deliver 12,000 TPS and each service can deliver 1,000 TPS. But, with careful tuning, sometimes a single service can provide 15,000 TPS, which would greatly simplify the overall structure. It’s important to explore this possibility before changing the macro architecture.</p>
+<p class="noindent">Lastly, the skills needed for server architectures are often different from those needed for macro architecture. Great server developers are skilled in dealing with concurrency and have a deep understanding of how computers work in detail. You should aim to have a few experienced server developers in your team to help when you deviate from the thread-per-request model.</p>
+</section>
+<section>
+<h3 class="h3" id="ch11lev1sec06">Summary</h3>
+<p class="noindent">Following are key takeaways from this chapter:</p>
+<ul class="bull">
+<li><p class="bullet">Writing services is relatively easy using modern service development frameworks. These use the thread-per-request model, which is simple to support and to understand.</p></li>
+<li><p class="bullet">Here are some of the best practices in writing services: when making services stateless, try not to block the threads, makes operations idempotent, and control both the client and service if you can.</p></li>
+<li><p class="bullet">You can perform better than a de facto service with event-driven or SEDA models, but the resulting implementations are much more complex to code, debug, and maintain. If you choose to go with sophisticated techniques, it is a good idea to add people to the team who have handled such designs and implementations before.</p></li>
+<li><p class="bullet">You should first tune locks, pools, and service calls before profiling your service.</p></li>
+<li><p class="bullet">I/O, CPU, and memory in an application have a complex relationship. Based on the type of bottleneck, you can trade one to save another. For example, applications can trade memory to save CPU by using a cache.</p></li>
+<li><p class="bullet">It is easier to tune individual services than to tune the whole system.</p></li>
+<li><p class="bullet">You need to balance the cost of the complexity in the services against the cost of complexity in the macro architecture to scale the system.<span epub:type="pagebreak" id="page_148"/></p></li>
+</ul>
+</section>
+</section>
+</body>
+</html>

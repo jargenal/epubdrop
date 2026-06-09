@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="eng">
+  <head>
+    <meta name="dtb:uid" content="e4d1229e-d2a2-4c78-ae19-948db99a896c"/>
+    <meta name="dtb:depth" content="3"/>
+    <meta name="dtb:generator" content="calibre (6.26.0)"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>The Art of Explanation</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="num_1" playOrder="0" class="chapter">
+      <navLabel>
+        <text>Title Page</text>
+      </navLabel>
+      <content src="text/part0000.html#0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_2" playOrder="1" class="chapter">
+      <navLabel>
+        <text>Copyright Page</text>
+      </navLabel>
+      <content src="text/part0001.html#UGI0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_3" playOrder="2" class="chapter">
+      <navLabel>
+        <text>Contents</text>
+      </navLabel>
+      <content src="text/part0002.html#1T140-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_4" playOrder="3" class="chapter">
+      <navLabel>
+        <text>About Ros Atkins</text>
+      </navLabel>
+      <content src="text/part0003.html#2RHM0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_5" playOrder="4" class="chapter">
+      <navLabel>
+        <text>Praise for Ros Atkins</text>
+      </navLabel>
+      <content src="text/part0004.html#3Q280-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_6" playOrder="5" class="chapter">
+      <navLabel>
+        <text>About the Book</text>
+      </navLabel>
+      <content src="text/part0005.html#4OIQ0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_7" playOrder="6" class="chapter">
+      <navLabel>
+        <text>Dedication</text>
+      </navLabel>
+      <content src="text/part0006.html#5N3C0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_8" playOrder="7" class="chapter">
+      <navLabel>
+        <text>Acknowledgments</text>
+      </navLabel>
+      <content src="text/part0007.html#6LJU0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_9" playOrder="8" class="chapter">
+      <navLabel>
+        <text>Introduction</text>
+      </navLabel>
+      <content src="text/part0008.html#7K4G0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_10" playOrder="9" class="chapter">
+      <navLabel>
+        <text>1. The anatomy of a good explanation</text>
+      </navLabel>
+      <content src="text/part0009_split_000.html#8IL20-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_11" playOrder="10" class="chapter">
+      <navLabel>
+        <text>2. Know your audience</text>
+      </navLabel>
+      <content src="text/part0010.html#9H5K0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_12" playOrder="11" class="chapter">
+      <navLabel>
+        <text>3. Seven-step explanation</text>
+      </navLabel>
+      <content src="text/part0011_split_000.html#AFM60-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+      <navPoint id="num_13" playOrder="1" class="chapter">
+        <navLabel>
+          <text>Step One: Set-up</text>
+        </navLabel>
+        <content src="text/part0011_split_001.html"/>
+      </navPoint>
+      <navPoint id="num_14" playOrder="2" class="chapter">
+        <navLabel>
+          <text>Step Two: Find the Information</text>
+        </navLabel>
+        <content src="text/part0011_split_002.html"/>
+      </navPoint>
+      <navPoint id="num_15" playOrder="3" class="chapter">
+        <navLabel>
+          <text>Step Three: Distil the Information</text>
+        </navLabel>
+        <content src="text/part0011_split_003.html"/>
+      </navPoint>
+      <navPoint id="num_16" playOrder="4" class="chapter">
+        <navLabel>
+          <text>Step Four: Organise the Information</text>
+        </navLabel>
+        <content src="text/part0011_split_004.html"/>
+      </navPoint>
+      <navPoint id="num_17" playOrder="5" class="chapter">
+        <navLabel>
+          <text>Step Five: Link the Information</text>
+        </navLabel>
+        <content src="text/part0011_split_005.html"/>
+      </navPoint>
+      <navPoint id="num_18" playOrder="6" class="chapter">
+        <navLabel>
+          <text>Step Six: Tighten</text>
+        </navLabel>
+        <content src="text/part0011_split_006.html"/>
+      </navPoint>
+      <navPoint id="num_19" playOrder="7" class="chapter">
+        <navLabel>
+          <text>Step Seven: Delivery</text>
+        </navLabel>
+        <content src="text/part0011_split_007.html"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="num_20" playOrder="19" class="chapter">
+      <navLabel>
+        <text>4. Seven-step dynamic explanation</text>
+      </navLabel>
+      <content src="text/part0012_split_000.html#BE6O0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+      <navPoint id="num_21" playOrder="8" class="chapter">
+        <navLabel>
+          <text>Steps One to Three: Prepare the Information</text>
+        </navLabel>
+        <content src="text/part0012_split_001.html"/>
+      </navPoint>
+      <navPoint id="num_22" playOrder="9" class="chapter">
+        <navLabel>
+          <text>Step Four: Organise the Information</text>
+        </navLabel>
+        <content src="text/part0012_split_002.html"/>
+      </navPoint>
+      <navPoint id="num_23" playOrder="10" class="chapter">
+        <navLabel>
+          <text>Step Five: Verbalise</text>
+        </navLabel>
+        <content src="text/part0012_split_003.html"/>
+      </navPoint>
+      <navPoint id="num_24" playOrder="11" class="chapter">
+        <navLabel>
+          <text>Step Six: Memorise</text>
+        </navLabel>
+        <content src="text/part0012_split_004.html"/>
+      </navPoint>
+      <navPoint id="num_25" playOrder="12" class="chapter">
+        <navLabel>
+          <text>Step Seven: Questions</text>
+        </navLabel>
+        <content src="text/part0012_split_005.html"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="num_26" playOrder="25" class="chapter">
+      <navLabel>
+        <text>5. Quick explanations</text>
+      </navLabel>
+      <content src="text/part0013_split_000.html#CCNA0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+      <navPoint id="num_27" playOrder="13" class="chapter">
+        <navLabel>
+          <text>Quick Verbal Explanations</text>
+        </navLabel>
+        <content src="text/part0013_split_001.html"/>
+      </navPoint>
+      <navPoint id="num_28" playOrder="14" class="chapter">
+        <navLabel>
+          <text>Short Written Explanations, aka Emails and Messages</text>
+        </navLabel>
+        <content src="text/part0013_split_002.html"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="num_29" playOrder="28" class="chapter">
+      <navLabel>
+        <text>Conclusion</text>
+      </navLabel>
+      <content src="text/part0014.html#DB7S0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_30" playOrder="29" class="chapter">
+      <navLabel>
+        <text>References</text>
+      </navLabel>
+      <content src="text/part0015.html#E9OE0-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+    <navPoint id="num_31" playOrder="30" class="chapter">
+      <navLabel>
+        <text>Index</text>
+      </navLabel>
+      <content src="text/part0016.html#F8900-1b4abfa8c7bd4fe69a99ccb98eed52c3"/>
+    </navPoint>
+  </navMap>
+</ncx>

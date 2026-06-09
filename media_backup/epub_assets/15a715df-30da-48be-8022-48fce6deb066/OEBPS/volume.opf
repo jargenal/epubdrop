@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pub-identifier" prefix="ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:title>The Manager’s Path</dc:title>
+    <dc:creator>Camille Fournier</dc:creator>
+    <dc:description>Managing people is difficult wherever you work, but the tech industry as a whole is pretty bad at it. Tech companies in general lack the experience, tools, texts, and frameworks to do it well. In this book, author Camille Fournier takes you through the stages of technical management, from mentoring interns to working with the senior staff. You&apos;ll get actionable advice for approaching various obstacles in your path, whether you&apos;re a new manager, a mentor, or a more experienced leader looking for fresh advice.</dc:description>
+    <dc:publisher>O&apos;Reilly Media, Inc.</dc:publisher>
+    <dc:date>2017-03-24</dc:date>
+    <dc:identifier id="pub-identifier">9781491973899</dc:identifier>
+    <dc:language>en</dc:language>
+    <meta property="dcterms:identifier" id="meta-identifier">9781491973899</meta>
+    <meta property="dcterms:title" id="meta-title">The Manager’s Path</meta>
+    <meta property="dcterms:language" id="meta-language">en</meta>
+    <meta property="dcterms:modified">2017-12-04T16:25:39Z</meta>
+    <meta property="dcterms:publisher">O&#39;Reilly Media, Inc.</meta>
+    <meta property="dcterms:date">2017-03-24</meta>
+    <meta property="dcterms:description">Managing people is difficult wherever you work, but the tech industry as a whole is pretty bad at it. Tech companies in general lack the experience, tools, texts, and frameworks to do it well. In this book, author Camille Fournier takes you through the stages of technical management, from mentoring interns to working with the senior staff. You&#39;ll get actionable advice for approaching various obstacles in your path, whether you&#39;re a new manager, a mentor, or a more experienced leader looking for fresh advice.</meta>
+    <meta property="dcterms:creator">Camille Fournier</meta>
+    <meta name="cover" content="cover-image" />
+    <meta property="ibooks:specified-fonts">true</meta>
+    <meta name="GBSProcVer" content="1" />
+    <meta name="GBSEpubSource" content="GoogleEbooks" />
+  </metadata>
+  <manifest>
+    <item id="toc.ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+    <item id="epub.embedded.asset.7" href="css_assets/titlepage_footer_ebook.png" media-type="image/png" />
+    <item id="cover-image" href="assets/cover.png" media-type="image/png" properties="cover-image" />
+    <item id="cover" href="cover.html" media-type="application/xhtml+xml" />
+    <item id="dedication-idm140116581745040" href="dedication01.html" media-type="application/xhtml+xml" />
+    <item id="titlepage-idm140116581718752" href="titlepage01.html" media-type="application/xhtml+xml" />
+    <item id="copyright-page-idm140116581712880" href="copyright-page01.html" media-type="application/xhtml+xml" />
+    <item id="dedication-idm140116581715536" href="dedication02.html" media-type="application/xhtml+xml" />
+    <item id="preface-idm140116581678640" href="preface01.html" media-type="application/xhtml+xml" />
+    <item id="preface-idm140116581671856" href="preface02.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116581670448" href="ch01.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116581589312" href="ch02.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116581275904" href="ch03.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116581274704" href="ch04.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116581066336" href="ch05.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116580723008" href="ch06.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116580438064" href="ch07.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116580136032" href="ch08.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116579782336" href="ch09.html" media-type="application/xhtml+xml" />
+    <item id="chapter-idm140116579431696" href="ch10.html" media-type="application/xhtml+xml" />
+    <item id="index-idm140116579141168" href="ix01.html" media-type="application/xhtml+xml" />
+    <item id="colophon-idm140116579142576" href="colophon01.html" media-type="application/xhtml+xml" />
+    <item id="colophon-idm140116579157008" href="colophon02.html" media-type="application/xhtml+xml" />
+    <item id="epub-css" href="epub.css" media-type="text/css" />
+    <item id="epub.embedded.asset.1" href="DejaVuSans-Bold.otf" media-type="application/vnd.ms-opentype" />
+    <item id="epub.embedded.asset.2" href="DejaVuSerif.otf" media-type="application/vnd.ms-opentype" />
+    <item id="epub.embedded.asset.3" href="UbuntuMono-Bold.otf" media-type="application/vnd.ms-opentype" />
+    <item id="epub.embedded.asset.4" href="UbuntuMono-BoldItalic.otf" media-type="application/vnd.ms-opentype" />
+    <item id="epub.embedded.asset.5" href="UbuntuMono-Italic.otf" media-type="application/vnd.ms-opentype" />
+    <item id="epub.embedded.asset.6" href="UbuntuMono-Regular.otf" media-type="application/vnd.ms-opentype" />
+    <item id="toc-idm140116581679168" href="toc01.html" media-type="application/xhtml+xml" properties="nav" />
+    <item id="_page_map_" href="_page_map_.xml" media-type="application/oebps-page-map+xml" />
+  </manifest>
+  <spine toc="toc.ncx" page-map="_page_map_">
+    <itemref idref="cover" />
+    <itemref idref="dedication-idm140116581745040" />
+    <itemref idref="titlepage-idm140116581718752" />
+    <itemref idref="copyright-page-idm140116581712880" />
+    <itemref idref="dedication-idm140116581715536" />
+    <itemref idref="preface-idm140116581678640" />
+    <itemref idref="preface-idm140116581671856" />
+    <itemref idref="chapter-idm140116581670448" />
+    <itemref idref="chapter-idm140116581589312" />
+    <itemref idref="chapter-idm140116581275904" />
+    <itemref idref="chapter-idm140116581274704" />
+    <itemref idref="chapter-idm140116581066336" />
+    <itemref idref="chapter-idm140116580723008" />
+    <itemref idref="chapter-idm140116580438064" />
+    <itemref idref="chapter-idm140116580136032" />
+    <itemref idref="chapter-idm140116579782336" />
+    <itemref idref="chapter-idm140116579431696" />
+    <itemref idref="index-idm140116579141168" />
+    <itemref idref="colophon-idm140116579142576" />
+    <itemref idref="colophon-idm140116579157008" />
+  </spine>
+  <guide>
+    <reference type="cover" title="Cover" href="cover.html" />
+    <reference type="toc" title="Table of Contents" href="toc01.html" />
+    <reference type="text" href="titlepage01.html" />
+  </guide>
+</package>

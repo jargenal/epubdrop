@@ -1,0 +1,731 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Key Strategy Objectives</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:0439a25f-2a75-4098-aebb-6db19e715d55" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 2. Key Strategy Objectives" data-type="chapter" epub:type="chapter"><div class="chapter" id="ch02_key_strategy_objectives_1721833215734460">
+<h1><span class="label">Chapter 2. </span>Key Strategy Objectives</h1>
+
+<p>So far, you’ve read that a strong, effective enterprise architecture <a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-type="indexterm" id="ix_strat"/>practice provides the <em>north star</em>, or strategic direction, to define an organization’s technology roadmap through a series of architecture decisions. It may not come as a surprise, then, that a strategy is also needed to guide and establish an effective enterprise architecture practice itself.</p>
+
+<p>If you’re asking, “How do I get started?” you’re in luck, because that’s precisely the question this chapter answers. All strategies start by defining their objectives, so this chapter discusses the objectives of an effective enterprise architecture strategy. Although details of implementation may vary and will be tailored based on unique characteristics of your organization, the objectives will, I hope, resonate with you.</p>
+
+<section data-pdf-bookmark="Overview" data-type="sect1"><div class="sect1" id="ch02_overview_1721833215734514">
+<h1>Overview</h1>
+
+<p>To share the key objectives of an effective enterprise architecture strategy, I have found that the <em>objectives and key results</em> (OKR) framework—which was defined in the 1970s and popularized by Google—is very helpful.<a contenteditable="false" data-primary="OKR (objectives and key results) framework" data-type="indexterm" id="id427"/> What I find special about the OKR framework is that rather than just defining transparent and aspirational goals, the OKR framework includes <em>measurement</em> as a key characteristic.<a contenteditable="false" data-primary="measurements" data-secondary="key characteristic in OKR framework" data-type="indexterm" id="id428"/></p>
+
+<p>It is measurement that is novel to architecture. Traditionally, architectural outcomes are perceived in terms of artifacts or deliverables, such as those described in <a data-type="xref" href="ch01.html#ch01_key_enterprise_architecture_concepts_1721832912892198">Chapter 1</a>. As a result, it is difficult to qualitatively (let alone quantitatively) tie architecture work to business value.<a contenteditable="false" data-primary="business value" data-secondary="tying architecture work to" data-type="indexterm" id="id429"/> This, in my opinion, is the number one reason it can be so hard to answer the question of what is the value of architecture.<a contenteditable="false" data-primary="value of architecture" data-type="indexterm" id="id430"/> And this is why it can be so difficult for architects to be valued by an organization. When all you see is a deliverable, likely to be in document form, but not the business results that the <span class="keep-together">deliverable</span> is driving, then it is very easy to dismiss that deliverable’s value and all the work that it took to create that deliverable.</p>
+
+<p>For example, let’s say a software engineering team was able to significantly reduce cloud storage costs by implementing an architecture pattern. By following this pattern, the team changed the storage class of less frequently accessed objects and implemented a hygiene policy that deleted unused data after a period of time. Who gets credit for the cost savings result? The software engineering team? The architect who contributed the pattern? Ideally, it would be both: the team for making the engineering choice and the architect for providing a reusable solution that benefited the business with cost reductions. Thus, it is necessary to place a business value on the architecture pattern itself—both for what it could save and for what it does save. To measure what it does save requires having a mechanism to track pattern adoption.</p>
+
+<p>Here’s another example. Let’s say it took a solution architect six months to get all relevant stakeholders to agree on a strategy that combines their efforts to build a common platform to provide an enterprise-level service. Now, let’s say it takes a couple of years to build this common platform. What happens? Does the architect get rewarded for delivering the strategy before the platform is built, because it was their leadership that allowed for an agreed-upon impactful outcome? Does the architect get no credit at all, or have to wait to get recognized, because strategy isn’t as tangible a deliverable as the platform itself? Ideally, the strategy is recognized as a key technical deliverable, and furthermore, all stakeholders adhere to the strategic decisions to implement the solution to realize the projected business outcomes. Thus, it is necessary to quantify the benefits and impacts of the strategy itself. What were the benefits of converging on a platform solution, and what were the milestones that demonstrate incremental progress, and therefore incremental business value, for getting to that final destination? These need to be defined as part of the strategy.</p>
+
+<p>So, starting with the effective enterprise architecture strategy itself, bringing in measurability from the onset is key to success. Understanding that the value of architecture is the business outcomes that the architecture drives, and articulating that in a measurable way, are the first key steps to establishing an effective enterprise architecture strategy.<a contenteditable="false" data-primary="measurements" data-secondary="outcome-based and effort-based in OKRs" data-type="indexterm" id="id431"/></p>
+
+<p>Measurements are intrinsic to OKRs, since they<a contenteditable="false" data-primary="key results" data-see="KRs" data-type="indexterm" id="id432"/> include <a contenteditable="false" data-primary="KRs (key results)" data-secondary="types in OKRs" data-type="indexterm" id="id433"/>two types of key results (KRs):</p>
+
+<dl>
+	<dt>Outcome-based</dt>
+	<dd>
+	<p>Measures quantifiable outcomes of a process, task, or activity</p>
+	</dd>
+	<dt>Effort-based</dt>
+	<dd>
+	<p>Measures the success of a particular initiative or effort</p>
+	</dd>
+</dl>
+
+<p>Outcome-based KRs also tend to be <em>key performance indicators</em> (KPIs). KPIs are metrics that a company can use to measure the success of its objectives. <a contenteditable="false" data-primary="KPIs (key performance indicators)" data-type="indexterm" id="id434"/>Moreover, KPIs drive behaviors, so they must be carefully thought through to incentivize the right behaviors. <em>Leading</em> indicator KPIs are metrics that indicate future behavior or impact. <em>Lagging</em> indicator KPIs are metrics based on events that have occurred in the past.<a contenteditable="false" data-primary="key performance indicators" data-see="KPIs" data-type="indexterm" id="id435"/><a contenteditable="false" data-primary="lagging indicator KPIs" data-type="indexterm" id="id436"/><a contenteditable="false" data-primary="leading indicator KPIs" data-type="indexterm" id="id437"/></p>
+
+<p>To complete the definition of a KPI and measure KRs, you must also <a contenteditable="false" data-primary="KPIs (key performance indicators)" data-secondary="defining and measuring, necessary information" data-type="indexterm" id="id438"/>establish the <span class="keep-together">following:</span></p>
+
+<dl>
+	<dt>Clear data sources</dt>
+	<dd>
+	<p>Explicitly stating the measurement’s data source(s) and transformation logic ensures that there is no ambiguity on the logic used to measure. This exercise may also identify opportunities to create the data source or extract from an existing source.</p>
+	</dd>
+	<dt>Clear ownership</dt>
+	<dd>
+	<p>Explicitly stating the owner of the measurement clarifies who is accountable and responsible within your organization to ensure that the KPI is delivered.</p>
+	</dd>
+	<dt>Frequency</dt>
+	<dd>
+	<p>Establishing the frequency of the measurement allows an organization to also react to the KPI results on a periodic basis. While many operational KPIs use monthly as a best practice, given that architecture is a more elongated activity, quarterly tends to be sufficient.</p>
+	</dd>
+</dl>
+
+<p>Metrics drive behavior. <a contenteditable="false" data-primary="metrics" data-secondary="things not to measure" data-type="indexterm" id="id439"/>So don’t measure things like this:</p>
+
+<dl>
+	<dt>Number of architecture standards</dt>
+	<dd>
+	<p>If you measure this, the behavior that is incentivized is the number of standards that exist, not the quality or efficacy of those standards. So you may very well see an increase in the number of standards, but they may not add true business value.</p>
+	</dd>
+	<dt>Number of architecture artifacts</dt>
+	<dd>
+	<p>If you measure this, you may increase coverage and get more artifacts. However, this doesn’t cover the true objective of why there was effort put into those <span class="keep-together">artifacts.</span></p>
+	</dd>
+	<dt>Number of compliant applications</dt>
+	<dd>
+	<p>If you only measure this, you may increase the amount of applications that are compliant, which is good, but not good enough, because you don’t see the business benefit of that compliance. You will get compliance for compliance’s sake, rather than the true goal, which is likely around risk mitigation.</p>
+	</dd>
+</dl>
+
+<p>Instead, measure outcome-based indicators to incentivize the behaviors that will drive your organization to the business outcomes achieved with an effective enterprise architecture strategy. The following sections provide examples of such indicators while elaborating on each objective recommended for an effective enterprise architecture strategy.</p>
+
+<p>The first objective focuses on the keyword <em>shared</em>.</p>
+</div></section>
+
+<section data-pdf-bookmark="The Shared Alignment OKR" data-type="sect1"><div class="sect1" id="ch02_the_shared_alignment_okr_1721833215734553">
+<h1>The Shared Alignment OKR</h1>
+
+<p>The first<a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-tertiary="shared alignment OKR" data-type="indexterm" id="ix_stratshalgn"/> objective of an effective <a contenteditable="false" data-primary="shared alignment OKR" data-type="indexterm" id="ix_shalgn"/>enterprise architecture strategy<a contenteditable="false" data-primary="OKRs (objectives and key results)" data-secondary="shared alignment OKR" data-type="indexterm" id="ix_OKRshalgn"/> is to <em>create shared alignment</em>, where all relevant stakeholders not only agree with the architecture decisions, but also really believe in adhering to them. Regardless of corporate culture, it is human nature that if a human has buy-in to a decision, they will be more motivated to willingly adhere to it. Without buy-in, a human with less authority can still abide by the decision but may not do so with as much aplomb or diligence.</p>
+
+<p>Here’s a real-life example. If I make a decision that it’s time for homework, my kids, if in the middle of an exciting game, will pause the game and do their homework. However, they may do it grudgingly, and rush things, and not really get any joy out of the learning that occurs. Homework will get completed, but not with high quality. On the other hand, if I make learning fun and allow my kids some input on exactly when the homework gets completed, then they have more buy-in to do it. They will more likely complete it calmly and with focus, and the outcome will likely be better than just having the homework done. You see, the true objective wasn’t actually to complete the homework. It was to ensure that learning occurred.</p>
+
+<p>I have seen this behavior a thousand times over in my career, if not more. When decisions are made, and mandates are handed down, professionals will abide by them, especially if there are also mechanisms to enforce the mandates. But the true quality of the outcome depends on how much buy-in they have. Hence, the more <em>shared</em> the decision is, the better.<a contenteditable="false" data-primary="decision making" data-secondary="shared" data-type="indexterm" id="id440"/></p>
+
+<p>With that in mind, it is critical that the first objective of an effective enterprise architecture strategy is creating shared alignment<strong> </strong>across all major stakeholders, inclusive of business and technology leaders. <em>Shared alignment</em> means that all of these major stakeholders are aligned to adhere to the decision, even if they did not fully agree with it. The scope and degree of shared alignment depends on the impact of the decision. An enterprise-impactful decision ideally has shared alignment across the leadership team and throughout the organization. An application-specific decision, on the other hand, only needs local alignment for the affected application team. The specific details of which stakeholders are necessary to include in decision making are elaborated upon in <a data-type="xref" href="ch03.html#ch03_shared_alignment_1721833262137786">Chapter 3</a>.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>A culture of trust accelerates shared alignment.<a contenteditable="false" data-primary="trust" data-secondary="culture of trust accelerating shared alignment" data-type="indexterm" id="id441"/> Transparency and clear engagement in the architecture decisioning process are key to establishing such a culture.</p>
+</div>
+
+<p>To scale shared decision making across an entire organization, it is necessary to have a very transparent decision-making process. <a contenteditable="false" data-primary="transparency" data-secondary="in decision-making process" data-secondary-sortas="decision" data-type="indexterm" id="id442"/>That way, individuals who are impacted by the decision but were not a part of the initial decision-making process can review how the decision was made and feel comfortable with that decision. The level of comfort is dependent on the level of trust embedded into an organization’s culture. If there is high trust in decision makers, then organizations generally find it easier to socialize and adhere to those decisions.</p>
+
+<aside data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="id443">
+<h1>A Culture of Trust</h1>
+
+<p>Company culture is a powerful aid or detractor to the success of an effective enterprise architecture strategy.<a contenteditable="false" data-primary="culture of trust" data-type="indexterm" id="id444"/><a contenteditable="false" data-primary="shared alignment OKR" data-secondary="culture of trust" data-type="indexterm" id="id445"/> For enterprise architecture to thrive, there must be a foundational culture of trust to build upon.<a contenteditable="false" data-primary="trust" data-secondary="culture of trust, characteristics of" data-type="indexterm" id="id446"/> What does a culture of trust look like?</p>
+
+<p><em>Trust</em> is a loaded term. You may be thinking about relationships in your life when you read the word <em>trust</em>. In relationships where there is a high degree of trust, you have probably found smooth sailing, where it is easy to have conversations, even difficult ones. You can take comfort in being able to rely on a trusted relationship to come through for you. As you think about trust in your personal life, you can see how much trust can impact your professional life, at both the micro team level and the macro enterprise organization level. High-performing teams typically have a high degree of trust in one another. In a professional capacity, you may already have come across various trust models.</p>
+
+<p>A culture of trust can be summarized into three key questions:</p>
+
+<ul>
+	<li>
+	<p>Can you do it?</p>
+	</li>
+	<li>
+	<p>Do you do it?</p>
+	</li>
+	<li>
+	<p>Do you care about me?</p>
+	</li>
+</ul>
+
+<p>The first question, can you do it, speaks to <a contenteditable="false" data-primary="competency" data-type="indexterm" id="id447"/>competency. <em>Competency</em> in this context means people are able to do the things that are expected of them—they have the skill set, the time, the ability, and the means to achieve the results. They have demonstrated behaviors in the past that allow for trusting that they can deliver in future. They set expectations and meet them.</p>
+
+<p>The second question, do you do it, speaks<a contenteditable="false" data-primary="credibility" data-type="indexterm" id="id448"/> to credibility<em>. Credibility</em> means believable, and this trait goes both ways, where employees see their leaders as credible decision makers and vice versa. Credibility means that people can be relied upon to achieve results consistently. Consistently is also key; it takes time to build trust through consistent successful results. Note, trust can be easily lost with one misstep.<a contenteditable="false" data-primary="autonomy and empowerment" data-type="indexterm" id="id449"/><a contenteditable="false" data-primary="empowerment" data-type="indexterm" id="id450"/> Credibility usually goes hand in hand with some degree of <em>autonomy </em>and <em>empowerment</em>, where employees have some degree of freedom to provide input into decisions and can make their own decisions.</p>
+
+<p>The third question, do you care about me, speaks to <em>cooperative collaboration</em>. Employees feel respected by peers and management and therefore feel valued as individuals and as teams. There’s no gossip, no underlying tensions or undermining actions. People are honest and both speak and act with integrity. They say what they do, and do as they say. Employees are incentivized to work together because they trust in collaboration and in teamwork. People willingly share knowledge and skills with others.</p>
+
+<p>How does this apply to architecture? Here’s an example. Imagine a scenario where a solution architect is tasked to deliver a <a contenteditable="false" data-primary="capabilities" data-secondary="capability target architecture" data-type="indexterm" id="id451"/>capability target architecture. Without trust, many things can go wrong. If the solution architect is not trusted as competent and adding value in their subject matter area, the business and technology partners are not likely to engage and use the capability target architecture. If the organization does not view architecture as a value-added credible practice, again, it is difficult for the solution architect’s recommendations to be taken seriously and make an impact. If the business or technology partner does not care about or value the architect’s role and their contribution, it is nearly impossible for an individual architect to overcome this challenge to successfully deliver a capability target architecture in partnership with them.</p>
+
+<p>There <a contenteditable="false" data-primary="solution architects" data-secondary="trust-inducing behaviors" data-type="indexterm" id="id452"/>are some trust-inducing behaviors that a solution architect can exhibit regardless of company culture, such as active listening and keeping their word. Active listening allows<a contenteditable="false" data-primary="listening" data-secondary="active" data-type="indexterm" id="id453"/> the solution architect to understand the business and technology partners’ needs, and build trust by providing solutions that meet those needs. Keeping their word around setting delivery expectations and doing as they say not only builds a personal brand around integrity but also builds trust through a consistent track record of results. While these behaviors are in an individual’s control, ultimately the corporate culture is what dictates the value of and trust in the architect’s role.</p>
+
+<p>An effective enterprise architecture strategy must emphasize a culture of trust. It can instill mechanisms such as clarifying architecture roles and establishing standard architecture processes and engagement models that foster cooperation. Ultimately, it is the culture that will make or break an effective enterprise architecture practice.</p>
+</div></aside>
+
+<p>KRs need to be measurable and should focus on the outcomes more so than defining a tactical to-do list. Hence, the specific set of KRs will vary by company.<a contenteditable="false" data-primary="KRs (key results)" data-secondary="shared alignment OKR, sample KRs for" data-type="indexterm" id="id454"/><a contenteditable="false" data-primary="shared alignment OKR" data-secondary="sample KRs for" data-type="indexterm" id="id455"/> Here are some sample KRs for this first objective; see <a data-type="xref" href="ch03.html#ch03_shared_alignment_1721833262137786">Chapter 3</a> for a framework to help you come up with your own:</p>
+
+<ul>
+	<li>
+	<p>Increase culture of trust as measured by satisfaction surveys by 20%.</p>
+	</li>
+	<li>
+	<p>Improve communication skills of architecture talent by 20%.</p>
+	</li>
+	<li>
+	<p>Enable transparency of 100% of enterprise-impactful decisions.</p>
+	</li>
+	<li>
+	<p>Decrease the number of decisions that are relitigated by 50%.</p>
+	</li>
+</ul>
+
+<p>The outcome of the “create shared alignment” objective is that key stakeholders agree on an architecture decision. So what? What’s the business benefit of this agreement?</p>
+
+<p>The business benefits are that this preexisting agreement causes acceleration in delivery processes by precluding churn and also reduces duplication among the solutions being delivered.</p>
+
+<p>With this in mind, here are some<a contenteditable="false" data-primary="leading indicator KPIs" data-secondary="focusing on business benefits, examples of" data-type="indexterm" id="id456"/> examples<a contenteditable="false" data-primary="shared alignment OKR" data-secondary="examples of leading KPIs focusing on business benefits" data-type="indexterm" id="id457"/> of leading KPIs focusing on the business benefits:</p>
+
+<dl>
+	<dt>Duration of delivery process</dt>
+	<dd>
+	<p>If this plateaus or seems high due to churn, that’s an indication<a contenteditable="false" data-primary="duration of delivery process KPI" data-type="indexterm" id="id458"/> that there isn’t enough shared alignment. Ideally, your trend line goes down over time, as illustrated in <a data-type="xref" href="#ch02_figure_1_1721833215696236">Figure 2-1</a>.</p>
+
+	<figure><div class="figure" id="ch02_figure_1_1721833215696236"><img alt="" src="assets/foea_0201.png"/>
+	<h6><span class="label">Figure 2-1. </span>Example of a duration of delivery process KPI</h6>
+	</div></figure>
+	</dd>
+	<dt>Uniqueness</dt>
+	<dd>
+	<p>Compares the number of unique solutions to duplicate solutions.<a contenteditable="false" data-primary="uniqueness KPI" data-type="indexterm" id="id459"/> If this decreases or plateaus, that’s an indication that there isn’t enough shared alignment to converge and deprecate. Ideally, your trend line shows an increase in unique solutions over time, as illustrated in <a data-type="xref" href="#ch02_figure_2_1721833215696272">Figure 2-2</a>.</p>
+
+	<figure><div class="figure" id="ch02_figure_2_1721833215696272"><img alt="" src="assets/foea_0202.png"/>
+	<h6><span class="label">Figure 2-2. </span>Example of a uniqueness KPI</h6>
+	</div></figure>
+	</dd>
+	<dt>Employee satisfaction</dt>
+	<dd>
+	<p>Tailored toward architecture practitioners<a contenteditable="false" data-primary="employee satisfaction KPI" data-type="indexterm" id="id460"/> and their partners, this can indicate a healthy culture or signs of an unhealthy one that impact the ability to make, align, and adhere with architecture decisions. Ideally, your satisfaction scores plateau at an acceptable threshold or trend upward, as shown in <a data-type="xref" href="#ch02_figure_3_1721833215696295">Figure 2-3</a>.</p>
+
+	<figure><div class="figure" id="ch02_figure_3_1721833215696295"><img alt="" src="assets/foea_0203.png"/>
+	<h6><span class="label">Figure 2-3. </span>Example of an employee satisfaction KPI</h6>
+	</div></figure>
+	</dd>
+</dl>
+
+<p class="pagebreak-before">Here’s an<a contenteditable="false" data-primary="lagging indicator KPIs" data-secondary="example of" data-type="indexterm" id="id461"/> example of <a contenteditable="false" data-primary="shared alignment OKR" data-secondary="example of lagging KPI" data-type="indexterm" id="id462"/>a lagging KPI:</p>
+
+<dl>
+	<dt>Number of decisions made that were revisited in a six-month span</dt>
+	<dd>
+	<p>If this seems high, it <a contenteditable="false" data-primary="decision making" data-secondary="decisions made and revisited in six-month span" data-type="indexterm" id="id463"/>indicates that too many decisions are being litigated too often, which could mean that the right stakeholders aren’t involved and/or there is a lack of cultural trust.</p>
+	</dd>
+</dl>
+
+<p>To achieve the objective of creating shared alignment, let’s turn our attention to principles that you can introduce or amplify in your company culture.<a contenteditable="false" data-primary="OKRs (objectives and key results)" data-secondary="shared alignment OKR" data-startref="ix_OKRshalgn" data-type="indexterm" id="id464"/><a contenteditable="false" data-primary="shared alignment OKR" data-startref="ix_shalgn" data-type="indexterm" id="id465"/><a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-startref="ix_stratshalgn" data-tertiary="shared alignment OKR" data-type="indexterm" id="id466"/></p>
+</div></section>
+
+<section data-pdf-bookmark="Principles to Create Shared Alignment" data-type="sect1"><div class="sect1" id="ch02_principles_to_create_shared_alignment_1721833215734586">
+<h1>Principles to Create Shared Alignment</h1>
+
+<p>The degree of <em>shared</em> in shared alignment that is necessary for a given architecture decision depends in part on your organizational culture.<a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-tertiary="principles to create shared alignment" data-type="indexterm" id="ix_stratshalgnprn"/><a contenteditable="false" data-primary="shared alignment OKR" data-secondary="principles to create shared alignment" data-type="indexterm" id="ix_shalgnprn"/><a contenteditable="false" data-primary="OKRs (objectives and key results)" data-secondary="shared alignment OKR" data-tertiary="principles for creation of" data-type="indexterm" id="ix_OKRshalgnprn"/> Organizations that have a well-ingrained ability to <em>disagree and commit</em> and <em>command and control</em> may need less consensus than those that are focused on achieving <em>consensus</em>.</p>
+
+<section data-pdf-bookmark="Disagree and Commit" data-type="sect2"><div class="sect2" id="ch02_disagree_and_commit_1721833215734613">
+<h2>Disagree and Commit</h2>
+
+<p><em>Disagree and commit</em> refers to the management principle that you can disagree with a decision yet stay committed to adhering to that decision.<a contenteditable="false" data-primary="shared alignment OKR" data-secondary="principles to create shared alignment" data-tertiary="disagree and commit" data-type="indexterm" id="id467"/><a contenteditable="false" data-primary="disagree and commit principle" data-type="indexterm" id="id468"/> Diversity of thought is usually encouraged such that anyone can disagree with a proposal prior to that proposal being approved as a decision. Once approved as a decision, though, anyone who still disagrees with it needs to commit to following through with the decision. This process is illustrated in <a data-type="xref" href="#ch02_figure_4_1721833215696316">Figure 2-4</a>.</p>
+
+<figure><div class="figure" id="ch02_figure_4_1721833215696316"><img src="assets/foea_0204.png"/>
+<h6><span class="label">Figure 2-4. </span>Disagree-and-commit management principle illustrated in making a decision</h6>
+</div></figure>
+
+<p>The advantage of the <em>disagree-and-commit</em> principle is that decisions can occur even with gridlock. The cycle time for decision making is sped up, because there is a clear decision maker that is empowered to make the decision without needing full consensus. Moreover, decisions are not revisited with endless churn, and therefore they are upheld efficiently. The disadvantage of this principle is that it is quite difficult in practice to execute <span class="keep-together">correctly;</span> it’s really hard for people to support a decision enthusiastically that they may fundamentally disagree with.</p>
+
+<p>That is why the first objective for an effective enterprise architecture strategy is to create shared alignment. Even when there is a disagreement of opinions or perspectives, it is essential that the culture allows for dissent and healthy debate and then promotes active united support to overcome the initial position. The <em>disagree-and-commit</em> principle can be very helpful to apply to architecture decision making since the more complex and nuanced a problem is, the more possible ways there are to solve that problem, and the more trade-offs there are to consider in the decision. It is highly likely that there will always be disagreeing opinions in such complex, contentious architecture decisions and so a disagree-and-commit approach can help to move decisions forward with the support necessary to implement them.</p>
+
+<p>Next, let’s look at the <em>command-and-control</em> principle.</p>
+</div></section>
+
+<section data-pdf-bookmark="Command and Control" data-type="sect2"><div class="sect2" id="ch02_command_and_control_1721833215734639">
+<h2>Command and Control</h2>
+
+<p><em>Command and control</em> refers to the management principle where a person with positional authority tells subordinates what to do, and they must obey.<a contenteditable="false" data-primary="shared alignment OKR" data-secondary="principles to create shared alignment" data-tertiary="command and control" data-type="indexterm" id="id469"/><a contenteditable="false" data-primary="command and control principle" data-type="indexterm" id="id470"/> The leader with positional authority is given great power and responsibility to understand what needs to be done and to direct actions accordingly. Typically, the leader makes the decision themselves with little to no input. This process is illustrated in <a data-type="xref" href="#ch02_figure_5_1721833215696335">Figure 2-5</a>.</p>
+
+<figure><div class="figure" id="ch02_figure_5_1721833215696335"><img src="assets/foea_0205.png"/>
+<h6><span class="label">Figure 2-5. </span>Command-and-control management principle illustrated in making a <span class="keep-together">decision</span></h6>
+</div></figure>
+
+<p class="pagebreak-after">The advantage of <em>command and control</em> is that it tends to be the most optimal in risky situations that require decisive action. It ensures consistent decision making and discipline to follow through on those decisions without any operational inefficiencies due to pushback. The disadvantages are that this style can miss opportunities to strengthen the solution and lead to miscommunication and feelings of disempowerment from <span class="keep-together">employees.</span></p>
+
+<p>This principle can be very helpful to apply in creating shared alignment as a result of an effective enterprise architecture practice because there are times when enterprise architecture needs to declare standards and/or apply constraints due to regulations. Protecting customer data and ensuring privacy regulations are met, for example, are paramount, and no discussion is entertained to fight that this is in fact a requirement for software delivery. Rather, the discussion can constructively be turned toward how best to meet these requirements.</p>
+
+<p>Next, let’s look at the <em>consensus-driven</em> and <em>consensus-seeking</em> principles.</p>
+</div></section>
+
+<section data-pdf-bookmark="Consensus-Driven and Consensus-Seeking" data-type="sect2"><div class="sect2" id="ch02_consensus_driven_and_consensus_seeking_1721833215734665">
+<h2>Consensus-Driven and Consensus-Seeking</h2>
+
+<p><em>Consensus-driven</em> refers to the<a contenteditable="false" data-primary="shared alignment OKR" data-secondary="principles to create shared alignment" data-tertiary="consensus-driven and consensus-seeking" data-type="indexterm" id="id471"/> management principle <a contenteditable="false" data-primary="consensus-driven principle" data-type="indexterm" id="id472"/>where all relevant stakeholders are solicited for input, and their agreement is necessary to move a decision forward. The goal is truly to have agreement and acceptance of the decision unanimously. Stakeholders are empowered to debate and engage in healthy dialogue until they come to an agreement. <a data-type="xref" href="#ch02_figure_6_1721833215696354">Figure 2-6</a> illustrates this process.</p>
+
+<figure><div class="figure" id="ch02_figure_6_1721833215696354"><img src="assets/foea_0206.png"/>
+<h6><span class="label">Figure 2-6. </span>Consensus-driven management principle illustrated in making a decision</h6>
+</div></figure>
+
+<p>The advantages of the consensus-driven principle are that the act of building consensus increases cooperation, is very inclusive and empowers stakeholders to take ownership of the final decision, and overcomes differences to create better, stronger solutions. The disadvantages are that consensus building can take a lot of time and can seem endless if there is no common goal or purpose or clear arbiter or if there is lack of trust to make a decision. Also, there is a risk that decisions are reopened and relitigated when there is a change in stakeholders, because the new stakeholders also need to get to consensus.</p>
+
+<p class="pagebreak-after">To overcome these disadvantages, it is helpful to tailor the <em>consensus-driven</em> principle to the <em>consensus-seeking</em> principle.<a contenteditable="false" data-primary="consensus-seeking principle" data-type="indexterm" id="id473"/> <em>Consensus-seeking</em> refers to the management principle where the wisdom of the crowd is sought to provide diverse perspectives into making a decision, but there is one clear arbiter that is empowered to make that decision and a simple majority suffices to represent consensus. Generally speaking, the US Congress is an example of where a simple majority is used to achieve consensus.</p>
+
+<p>This <em>consensus-seeking</em> principle can be very helpful to apply to decision making in an effective enterprise architecture practice because there are so many opportunities to do creative problem-solving, where there are a number of stakeholders that need to come together and figure out the best path forward. For example, in the scenario where stakeholders need to lay aside differences to deprecate one solution and converge on another, it is very helpful for all stakeholders to agree to work together with trust that any advantages of the deprecated solution will be built into the converged solution.</p>
+
+<p>So if we use these principles to achieve the first objective, to create shared alignment, then we have alignment to adhere to the architecture decisions that result from effective enterprise architecture practices. That is wonderful, but how do people actually make the decisions?</p>
+
+<p>For that, we turn our attention to the next objective and associated KRs.<a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-startref="ix_stratshalgnprn" data-tertiary="principles to create shared alignment" data-type="indexterm" id="id474"/><a contenteditable="false" data-primary="OKRs (objectives and key results)" data-secondary="shared alignment OKR" data-startref="ix_OKRshalgnprn" data-tertiary="principles for creation of" data-type="indexterm" id="id475"/><a contenteditable="false" data-primary="shared alignment OKR" data-secondary="principles to create shared alignment" data-startref="ix_shalgnprn" data-type="indexterm" id="id476"/></p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="The Embedded and Accessible OKR" data-type="sect1"><div class="sect1" id="ch02_the_embedded_and_accessible_okr_1721833215734696">
+<h1>The Embedded and Accessible OKR</h1>
+
+<p>To support<a contenteditable="false" data-primary="OKRs (objectives and key results)" data-secondary="embedded and accessible OKR" data-type="indexterm" id="ix_OKRembd"/> making great <a contenteditable="false" data-primary="embedded and accessible OKR" data-type="indexterm" id="ix_embdacc"/>architecture decisions, it is <a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-tertiary="embedded and accessible OKR" data-type="indexterm" id="ix_stratembacc"/>necessary to empower architecture practitioners by providing architecture information at the right time, through the right process, and using the right tools. In other words, making architecture information embedded and accessible is key to effective usage of that information in architecture decision making. <em>Embedded </em>means that following an architecture standard or process, and using an architecture deliverable, is intrinsically part of normal software delivery processes used by the organization. They are not separate, distinct processes that require extra effort to find and follow. <em>Accessible </em>means that architecture information is easily intuitive, usable, and consumable by the desired audience—typically architects, engineers, and product leaders.<a contenteditable="false" data-primary="accessible (embedded and accessible OKR)" data-type="indexterm" id="id477"/></p>
+
+<p>Specific KRs will vary based <a contenteditable="false" data-primary="KRs (key results)" data-secondary="sample KRs for embedded and accessible OKR" data-type="indexterm" id="id478"/>on your organization’s maturity in processes and tools. Here are some sample ones around embedded and accessible architecture <span class="keep-together">information:</span></p>
+
+<ul>
+	<li>
+	<p>Integrate 100% architecture standards into software delivery processes.</p>
+	</li>
+	<li>
+	<p>Increase library of architecture patterns by 20%.</p>
+	</li>
+	<li>
+	<p>Ensure 100% of all architecture practitioners complete annual architecture <span class="keep-together">training.</span></p>
+	</li>
+	<li>
+	<p>Improve usability of architecture patterns and standards by 20% as measured by surveys.</p>
+	</li>
+</ul>
+
+<p class="pagebreak-before">The outcome of the embedded and accessible objective is that architecture information is readily available and consumable through software delivery processes. So what? What does this outcome really lead to?</p>
+
+<p>The business benefit is that architecture decisions will be more consistent and sustainable, since the practitioners of architecture and their key partners are empowered by the architecture information to inform great architecture decisions.</p>
+
+<p>With this<a contenteditable="false" data-primary="leading indicator KPIs" data-secondary="examples for embedded and accessible OKR" data-type="indexterm" id="id479"/> in mind, here are some example <a contenteditable="false" data-primary="architecture knowledge KPI" data-type="indexterm" id="id480"/>leading indicators focusing on the business benefits:</p>
+
+<dl>
+	<dt>Architecture knowledge gained</dt>
+	<dd>
+	<p>This should increase over time as processes and training materials improve, as illustrated in <a data-type="xref" href="#ch02_figure_7_1721833215696373">Figure 2-7</a>.</p>
+
+	<figure><div class="figure" id="ch02_figure_7_1721833215696373"><img alt="" src="assets/foea_0207.png"/>
+	<h6><span class="label">Figure 2-7. </span>Example of an architecture knowledge KPI</h6>
+	</div></figure>
+	</dd>
+	<dt>Net promoter scores (NPS) of architecture tooling</dt>
+	<dd>
+	<p>This<a contenteditable="false" data-primary="net promoter scores (NPS) KPI" data-type="indexterm" id="id481"/> should <a contenteditable="false" data-primary="NPS (net promoter scores) KPI" data-type="indexterm" id="id482"/>improve over time to indicate a high degree of usability and satisfaction, as illustrated in <a data-type="xref" href="#ch02_figure_8_1721833215696391">Figure 2-8</a>.</p>
+
+	<figure><div class="figure" id="ch02_figure_8_1721833215696391"><img alt="" src="assets/foea_0208.png"/>
+	<h6><span class="label">Figure 2-8. </span>Example of an NPS KPI</h6>
+	</div></figure>
+	</dd>
+	<dt>Hours spent finding architecture information</dt>
+	<dd>
+	<p>This <a contenteditable="false" data-primary="hours spent finding architecture information (KPI)" data-type="indexterm" id="id483"/>should decrease over time as processes and training materials improve, as shown in <a data-type="xref" href="#ch02_figure_9_1721833215696419">Figure 2-9</a>.</p>
+
+	<figure><div class="figure" id="ch02_figure_9_1721833215696419"><img alt="" src="assets/foea_0209.png"/>
+	<h6><span class="label">Figure 2-9. </span>Example of an “hours spent finding architecture information” KPI</h6>
+	</div></figure>
+	</dd>
+</dl>
+
+<p>Here’s an <a contenteditable="false" data-primary="lagging indicator KPIs" data-secondary="example for embedded and accessible OKR" data-type="indexterm" id="id484"/>example lagging indicator:</p>
+
+<dl>
+	<dt>Number of architecture decisions changed</dt>
+	<dd>
+	<p>A high number or rate could indicate that the right information wasn’t available, leading to a high degree of change.<a contenteditable="false" data-primary="decision making" data-secondary="number of architecture decisions changed lagging KPI" data-type="indexterm" id="id485"/></p>
+	</dd>
+</dl>
+
+<p><a data-type="xref" href="ch01.html#ch01_key_enterprise_architecture_concepts_1721832912892198">Chapter 1</a> referred to architecture patterns as a typical architectural deliverable. In these sample KRs, I’ve also included a mention of architecture standards. That is just one more type of architecture information.<a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-startref="ix_stratembacc" data-tertiary="embedded and accessible OKR" data-type="indexterm" id="id486"/><a contenteditable="false" data-primary="embedded and accessible OKR" data-startref="ix_embdacc" data-type="indexterm" id="id487"/><a contenteditable="false" data-primary="OKRs (objectives and key results)" data-secondary="embedded and accessible OKR" data-startref="ix_OKRembd" data-type="indexterm" id="id488"/> The next section elaborates on architecture information.</p>
+</div></section>
+
+<section data-pdf-bookmark="What Is Architecture Information?" data-type="sect1"><div class="sect1" id="ch02_what_is_architecture_information_1721833215734731">
+<h1>What Is Architecture Information?</h1>
+
+<p><em>Architecture information</em> refers to any type of architectural content that is used to inform an architecture decision.<a contenteditable="false" data-primary="architecture information" data-type="indexterm" id="ix_archinf"/><a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-tertiary="architecture information" data-type="indexterm" id="ix_stratarcinf"/> In addition to the architectural deliverables described in <a data-type="xref" href="ch01.html#ch01_key_enterprise_architecture_concepts_1721832912892198">Chapter 1</a>, which included architecture patterns, architecture decisions, capability target architectures, and application target architecture, architecture information is more generic and also typically includes principles, standards, frameworks, best practices, architecture diagrams, and metrics.</p>
+
+<section data-pdf-bookmark="Architecture Principles" data-type="sect2"><div class="sect2" id="ch02_architecture_principles_1721833215734755">
+<h2>Architecture Principles</h2>
+
+<p>A principle is a rule or idea that guides you.<a contenteditable="false" data-primary="principles (architecture)" data-type="indexterm" id="id489"/><a contenteditable="false" data-primary="architecture information" data-secondary="architecture principles" data-type="indexterm" id="id490"/> An <em>architecture principle</em>,<em> </em>then, is simply the rules or ideas that guide consistent architecture decision making. The enterprise architecture strategy function should define architecture principles that are aligned with senior leadership’s beliefs.</p>
+
+<p>For example, an organization may define principles stemming from risk tolerance of vendor lock-in to make consistent build-versus-buy decisions when using cloud services.<a contenteditable="false" data-primary="risks" data-secondary="risk tolerance of vendor lock-in" data-type="indexterm" id="id491"/><a contenteditable="false" data-primary="build-versus-buy decisions" data-secondary="for cloud services" data-type="indexterm" id="id492"/> Some organizations may define cloud native as their principle, having decided that the benefits of using cloud native services outweigh the risks of lock-in. Others may define cloud agnostic as their principle, having decided that the benefits of being free from lock-in outweigh the risks of abstraction.</p>
+
+<p>In this scenario, let’s say an engineering team is trying to make an application architecture decision on whether or not to use a cloud native serverless functions service. In the organization that has the cloud native principle, they are likely to use it assuming the service meets all of their technical requirements. In the organization that has the cloud-agnostic principle, they are likely not to use it, and to stick with containerized services instead as the more portable option.</p>
+
+<p>Either way, this principle will guide the organization’s technical architecture decisions for its solutions, capabilities, and strategies—but only if the decision makers know about and understand what the principles are. Hence, the architecture principles must be transparently embedded and accessible to the decision makers.</p>
+
+<p>Next, let’s look at architecture standards.</p>
+</div></section>
+
+<section data-pdf-bookmark="Architecture Standards" data-type="sect2"><div class="sect2" id="ch02_architecture_standards_1721833215734779">
+<h2>Architecture Standards</h2>
+
+<p>An <em>architecture</em> <em>standard</em> defines the requirements<em> </em>that guide consistent architecture decision making to produce well-architected solutions and strategies.<a contenteditable="false" data-primary="architecture information" data-secondary="architecture standards" data-type="indexterm" id="id493"/><a contenteditable="false" data-primary="standards" data-secondary="architecture" data-type="indexterm" id="id494"/> A <em>requirement</em> is something that must be true, and results in governance actions if violated.<a contenteditable="false" data-primary="requirements" data-type="indexterm" id="id495"/> The enterprise architecture strategy function defines standards that the enterprise architecture enablement function empowers end users to meet, and that the enterprise architecture oversight function enforces is met.</p>
+
+<p>Architecture standards can encompass any kind of technology requirement that an organization needs to support the business, and they are effective when that requirement can be both enabled and enforced. For example, an organization may define a standard as granular as what software languages are approved to build applications, or as broad as what makes an application modern. Enabling such standards is what the embedded and accessible objective helps with.</p>
+
+<p>In addition to what must be true, architecture can also define what should be true. Let’s first look at architecture frameworks as a type of architecture information that helps define what should be true.</p>
+</div></section>
+
+<section data-pdf-bookmark="Architecture Frameworks" data-type="sect2"><div class="sect2" id="ch02_architecture_frameworks_1721833215734803">
+<h2>Architecture Frameworks</h2>
+
+<p><em>Architecture frameworks </em>define guidance—structure and methods—that can be used in architecture decision making. <a contenteditable="false" data-primary="frameworks" data-secondary="architecture frameworks" data-type="indexterm" id="id496"/><a contenteditable="false" data-primary="architecture information" data-secondary="architecture frameworks" data-type="indexterm" id="id497"/>The enterprise architecture strategy function and all architecture roles can define reusable frameworks. It is usually not necessary to enforce the use of a specific framework, as they are usually meant to provide a baseline of helpful guidance.</p>
+
+<p>For example, there are well-known enterprise architecture frameworks like <a href="https://oreil.ly/8lsJb">TOGAF</a>. Many organizations also establish their own tailored architecture frameworks, such as a build-versus-buy assessment framework to guide architecture decisions around whether or not to develop or purchase software to fulfill a business need. In fact, this book is filled with frameworks in upcoming chapters for you to adapt and use as you see fit.</p>
+
+<p>In addition to an architecture framework, the other kind of architecture information that helps define what should be true, and how it should be true, is architecture best practices. Let’s look at them next.</p>
+</div></section>
+
+<section data-pdf-bookmark="Architecture Best Practices" data-type="sect2"><div class="sect2" id="ch02_architecture_best_practices_1721833215734827">
+<h2>Architecture Best Practices</h2>
+
+<p>A <em>best practice</em> in general is a proven way to do something better than alternative ways. An <em>architecture best practice </em>is a proven way to solve a problem that is usually defined in an architecture pattern. <a contenteditable="false" data-primary="architecture information" data-secondary="architecture best practices" data-type="indexterm" id="id498"/><a contenteditable="false" data-primary="best practices" data-type="indexterm" id="id499"/>Best practices are typically not enforced with the same rigor as a requirement that is defined in an architecture standard.</p>
+
+<p>An organization should define whatever architecture best practices are most relevant to the solutions it needs to deliver. For example, perhaps an organization is trying to modernize by using cloud technology. In that scenario, it would be beneficial to define best practices for migrating applications from on premises to the cloud, and for operating those applications in the cloud, rather than defining best practices for maintaining on-premises fleets. Again, these best practices only return the investment made in defining them when they are used—thus, making sure that these best practices are embedded and accessible to end users is essential.</p>
+</div></section>
+
+<section data-pdf-bookmark="Architecture Diagrams" data-type="sect2"><div class="sect2" id="ch02_architecture_diagrams_1721833215734851">
+<h2>Architecture Diagrams</h2>
+
+<p>An <em>architecture diagram </em>is a visualization that explains characteristics of a solution or process. <a contenteditable="false" data-primary="architecture information" data-secondary="architecture diagrams" data-type="indexterm" id="id500"/><a contenteditable="false" data-primary="diagrams (architecture)" data-type="indexterm" id="id501"/>The enterprise architecture strategy function should define standards around diagramming for consistency and easy understanding across multiple diagrams. These standards should include types of diagrams, any industry standards used to model the diagram, the tools used for the diagram, and the legend of colors, shapes, and lines used in the diagram.</p>
+
+<p>Architecture diagrams can be very helpful visual aids to illustrate logical boundaries, concepts, workflows, and sequences, to name a few things. However, they risk becoming stale quickly, where the information is out of date. Thus, freshness and dynamism are important elements of embedded and accessible architecture diagrams. How do I keep an architecture diagram living? How do I codify an architecture diagram so that it is in code, generatable, and queryable rather than a static drawing? These are questions that you should answer as part of your KRs in the embedded and accessible objective.</p>
+</div></section>
+
+<section data-pdf-bookmark="Architecture Metrics" data-type="sect2"><div class="sect2" id="ch02_architecture_metrics_1721833215734874">
+<h2>Architecture Metrics</h2>
+
+<p>A <em>metric</em> is a quantifiable measurement or evaluation of something.<a contenteditable="false" data-primary="architecture information" data-secondary="architecture metrics" data-type="indexterm" id="id502"/><a contenteditable="false" data-primary="metrics" data-secondary="architecture" data-type="indexterm" id="id503"/> An <em>architecture metric </em>is therefore a quantifiable measurement in the context of an architectural concern. If you recall, I started this chapter with an emphasis on measuring business outcomes as a result of architecture deliverables.</p>
+
+<p>Architecture metrics are another architecture information type because they help inform architectural decisions. For example, metrics around total cost of ownership and return on investment can make a compelling business case for investing in one technology over another. As another example, metrics around enterprise architecture standard adoption and requirement adherence can tell a factual story around what is working well and what needs improvement in enabling and enforcing those <span class="keep-together">standards.</span><a contenteditable="false" data-primary="standards" data-secondary="architecture" data-tertiary="metrics on" data-type="indexterm" id="id504"/></p>
+
+<p>Now that we’ve reviewed typical architecture information types that can inform architecture decisions, let’s go into the relationship between them a bit more.</p>
+</div></section>
+
+<section data-pdf-bookmark="Architecture Information Powers Architecture Decisions" data-type="sect2"><div class="sect2" id="ch02_architecture_information_powers_architecture_decis_1721833215734911">
+<h2>Architecture Information Powers Architecture Decisions</h2>
+
+<p>I mentioned earlier that architecture information needs to be embedded and accessible to inform<a contenteditable="false" data-primary="architecture information" data-secondary="powering architecture decisions" data-type="indexterm" id="id505"/> architecture <a contenteditable="false" data-primary="decisions" data-secondary="architecture information powering architecture decisions" data-type="indexterm" id="id506"/>decisions. <a data-type="xref" href="#ch02_figure_10_1721833215696442">Figure 2-10</a> shows the relationship between architecture information content types and the architecture decisions that are strengthened by using them at a high level.</p>
+
+<figure><div class="figure" id="ch02_figure_10_1721833215696442"><img alt="" src="assets/foea_0210.png"/>
+<h6><span class="label">Figure 2-10. </span>Architecture decisions powered by architecture information</h6>
+</div></figure>
+
+<p>For example, let’s say an application architecture decision needs to be made around high availability design, where the business states they need high availability. The following inputs would apply to the decision makers:<a contenteditable="false" data-primary="high availability design, application architecture decision made around" data-type="indexterm" id="id507"/></p>
+
+<dl>
+	<dt>Principles</dt>
+	<dd>
+	<p>Guidelines such as what constitutes a fault domain, cloud native versus not</p>
+	</dd>
+	<dt>Standards</dt>
+	<dd>
+	<p>Requirements such as recovery time objective and recovery point objective</p>
+	</dd>
+	<dt>Patterns</dt>
+	<dd>
+	<p>Best practices around highly available application architectures</p>
+	</dd>
+	<dt>Decisions</dt>
+	<dd>
+	<p>Previous decisions around scaling, monitoring and alerting, database type</p>
+	</dd>
+	<dt>Diagrams</dt>
+	<dd>
+	<p>Visualizations of the application’s deployment architecture</p>
+	</dd>
+</dl>
+
+<p>Another example in the solution architecture space could be around an architecture decision for investing in a new capability.<a contenteditable="false" data-primary="capabilities" data-secondary="new capability, architecture decision for investing in" data-type="indexterm" id="id508"/> The following inputs would apply to the decision makers:</p>
+
+<dl>
+	<dt>Principles</dt>
+	<dd>
+	<p>Principles such as modernization</p>
+	</dd>
+	<dt>Standards</dt>
+	<dd>
+	<p>Requirements such as technology standards for capabilities—is there already an existing technology solution that meets the new capability need?</p>
+	</dd>
+	<dt>Frameworks</dt>
+	<dd>
+	<p>Build versus buy, domain-driven design</p>
+	</dd>
+	<dt>Decisions</dt>
+	<dd>
+	<p>Previous decisions on related capabilities</p>
+	</dd>
+</dl>
+
+<p>Last but not least, an example in the enterprise architecture space could be around an architecture decision <a contenteditable="false" data-primary="standards" data-secondary="architecture decision made around" data-type="indexterm" id="id509"/>such as a new technology standard, like standardizing on a database type:</p>
+
+<dl>
+	<dt>Principles</dt>
+	<dd>
+	<p>Principles such as vendor stickiness, modernization</p>
+	</dd>
+	<dt>Frameworks</dt>
+	<dd>
+	<p>Frameworks such as analysis of alternatives</p>
+	</dd>
+	<dt>Decisions</dt>
+	<dd>
+	<p>Previous decisions on related standards</p>
+	</dd>
+</dl>
+
+<p>Thus, you can see how there are various types of architecture information that need to be available to a given architecture role, and to all the partners that they have in making a decision, at the time that the decision needs to be made.</p>
+
+<p><a data-type="xref" href="ch04.html#ch04_embedded_and_accessible_1721833294242861">Chapter 4</a> discusses common mechanisms for making such information available.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>The more embedded, accessible, and just-in-time available architecture information is, the more reuse and efficiency you get from it being able to inform architecture decisions.<a contenteditable="false" data-primary="efficiency" data-secondary="architecture information and" data-type="indexterm" id="id510"/></p>
+</div>
+
+<p>With this embedded and accessible objective and KRs, architecture information will be more effectively used in both making architecture decisions and adhering to architecture standards. Speaking of adhering to architecture standards, let’s look at an objective that ensures they are effective.<a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-startref="ix_stratarcinf" data-tertiary="architecture information" data-type="indexterm" id="id511"/><a contenteditable="false" data-primary="architecture information" data-startref="ix_archinf" data-type="indexterm" id="id512"/></p>
+</div></section>
+</div></section>
+
+<section class="pagebreak-before less_space" data-pdf-bookmark="The Enable and Enforce OKR" data-type="sect1"><div class="sect1" id="ch02_the_enable_and_enforce_okr_1721833215734948">
+<h1>The Enable and Enforce OKR</h1>
+
+<p>Architecture standards and <a contenteditable="false" data-primary="OKRs (objectives and key results)" data-secondary="enable and enforce OKR" data-type="indexterm" id="ix_OKREE"/>their requirements <a contenteditable="false" data-primary="enable and enforce OKR" data-type="indexterm" id="ix_enaenf"/>can be much<a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-tertiary="enable and enforce OKR" data-type="indexterm" id="ix_stratEEOKR"/> maligned if they are enforced with a heavy hand when teams are not enabled to easily adhere to them. By <em>enabled</em>, I mean that the process or activity to conform to the standard is well defined, highly automated, and limits necessary friction.<a contenteditable="false" data-primary="automation" data-secondary="enabling compliance with standards" data-type="indexterm" id="id513"/></p>
+
+<p>If the opposite is true, meaning the process or activity to conform to the standard is ill defined and highly manual, and it has undue friction, be prepared for negative feedback and the perception of architecture as a bottleneck. For example, let’s say an enterprise architecture standard requires applications to log using a specific schema and sending those logs to a centralized log analysis tool. If applications are flagged as noncompliant because they did not log or logged incorrectly, yet there is no automation, documentation, or support on what to log, how to log, and how to use the log analysis tool, software releases will get bogged down while engineers deal with this issue, and there will be several complaints to deal with.</p>
+
+<p>Similarly, if there is enablement without enforcement, then the organization carries the risk that the standard will not be met in full. In such an opt-in model, some teams will opt in, but enforcement is what verifies that all teams did. Let’s go back to the logging example above. <a contenteditable="false" data-primary="automation" data-secondary="of logging" data-secondary-sortas="logging" data-type="indexterm" id="id514"/>This time, let’s say there is automation, documentation, and support available on what to log, how to log, and how to use that log analysis tool. However, in this example, there’s no enforcement check, meaning applications do not get flagged as noncompliant. Because there is still a level of effort involved in adhering to the logging requirement, and getting the logs right, some teams end up skipping this requirement as a trade-off to release software ever faster. As a result, the risk that this requirement was trying to mitigate, pertaining to operational troubleshooting and mean time to repair for issues, is still a prevalent risk.</p>
+
+<p>Thus, this objective is centered around both the enablement and enforcement of architecture standards. <a data-type="xref" href="ch05.html#ch05_enable_and_enforce_1721833327743655">Chapter 5</a> discusses mechanisms and a framework to decide how to enable and enforce, and the trade-offs inherent in the degrees of enablement and enforcement.</p>
+
+<div data-type="tip"><h6>Tip</h6>
+<p>Just enabling, or just enforcing, an architecture standard isn’t enough. You need to do both to ensure the standard is effectively adopted.</p>
+</div>
+
+<p class="pagebreak-before">Specific KRs will vary based on the sophistication of your organization’s enablement and enforcement mechanisms. <a contenteditable="false" data-primary="enable and enforce OKR" data-secondary="sample KRs for" data-type="indexterm" id="id515"/><a contenteditable="false" data-primary="KRs (key results)" data-secondary="sample KRs for enable and enforce OKR" data-type="indexterm" id="id516"/>Here are some sample KRs:</p>
+
+<ul>
+	<li>
+	<p>100% of architecture standards are adopted by new technology development.</p>
+	</li>
+	<li>
+	<p>Increased convergence to standard solutions by 20% (meaning alternatives are deprecated).</p>
+	</li>
+	<li>
+	<p>Reduced level of effort by 20% to adhere to a given architecture standard.</p>
+	</li>
+	<li>
+	<p>Improved satisfaction scores of architecture standards by 20%.</p>
+	</li>
+	<li>
+	<p>Increased enablement automation <a contenteditable="false" data-primary="automation" data-secondary="enablement and enforcement of architecture standards" data-type="indexterm" id="id517"/>of architecture standards by 20%.</p>
+	</li>
+	<li>
+	<p>Increased enforcement automation of architecture standards by 20%.</p>
+	</li>
+</ul>
+
+<p>The outcome of the enable and enforce objective is that the activity to adhere to an architecture standard or requirement is clear, well understood, and easily doable, and that the output of those activities is enforced in such a way to determine compliance.<a contenteditable="false" data-primary="compliance with standards" data-secondary="business benefits of" data-type="indexterm" id="id518"/> Again, so what? What is the business benefit of compliance?</p>
+
+<p>Depending on the standard, the business benefit will differ. For example, a standard around highly resilient and reliable architecture would claim the business benefit of high availability, thereby helping maintain high customer satisfaction and protecting brand and reputation.</p>
+
+<p>With this in mind, leading indicators should be framed around the business benefit of the standard and will vary based on the standard.</p>
+
+<p>Examples of<a contenteditable="false" data-primary="lagging indicator KPIs" data-secondary="examples for enable and enforce OKR" data-type="indexterm" id="id519"/> lagging indicators <a contenteditable="false" data-primary="enable and enforce OKR" data-secondary="examples of lagging indicator KPIs for" data-type="indexterm" id="id520"/>include <a contenteditable="false" data-primary="compliance with standards" data-secondary="lagging indicators, examples of" data-type="indexterm" id="id521"/>the following:</p>
+
+<dl>
+	<dt>Number or % of violations</dt>
+	<dd>
+	<p>This should trend down lower over time, else it indicates a flawed enablement or standard.</p>
+	</dd>
+	<dt>Number or % of overrides</dt>
+	<dd>
+	<p>This should trend down lower over time, else it indicates that perhaps the standard itself should be revisited.</p>
+	</dd>
+	<dt>Number or % of preventive controls</dt>
+	<dd class="pagebreak-after">
+	<p>This ideally trends higher over time, because preventing a compliance issue as early as possible is generally better.</p>
+	</dd>
+	<dt class="less_space">Number or % of detective controls</dt>
+	<dd>
+	<p>This ideally plateaus over time, as controls shift toward preventive.</p>
+	</dd>
+	<dt>Number or % of automated controls</dt>
+	<dd>
+	<p>This ideally increases over time toward 100% coverage, since automation is generally more sustainable than manual enforcement.<a contenteditable="false" data-primary="automation" data-secondary="controls an enablement activities" data-type="indexterm" id="id522"/></p>
+	</dd>
+	<dt>Number or % of automated enablement activities</dt>
+	<dd>
+	<p>This ideally increases over time toward 100% coverage, since automation is generally more scalable than manual.</p>
+	</dd>
+</dl>
+
+<p>While the enable and enforce objective has to do with architecture standards, it is also worth thinking through KPIs for the effectiveness of the architecture standards <span class="keep-together">themselves.</span></p>
+
+<section data-pdf-bookmark="Architecture Standard KPIs" data-type="sect2"><div class="sect2" id="ch02_architecture_standard_kpis_1721833215734977">
+<h2>Architecture Standard KPIs</h2>
+
+<p>The objective of an efficient set of architecture standards is that they create high-quality target architectures.<a contenteditable="false" data-primary="enable and enforce OKR" data-secondary="architecture standard KPIs and effectiveness of standards" data-type="indexterm" id="id523"/><a contenteditable="false" data-primary="KPIs (key performance indicators)" data-secondary="architecture standard KPIs" data-type="indexterm" id="id524"/> This applies whether the scope of that architecture is a single component of an application, the application itself, a group of applications, or a group of capabilities.</p>
+
+<p>What does <em>high-quality target architecture</em> mean to you? <a contenteditable="false" data-primary="high-quality target architecture" data-type="indexterm" id="id525"/>There are various ways to define <em>high quality</em>. <a contenteditable="false" data-primary="quality, defining high quality in target architecture" data-type="indexterm" id="id526"/>What I recommend considering is that it results in well-architected applications that meet the following criteria:</p>
+
+<dl>
+	<dt>Scalable</dt>
+	<dd>
+	<p>The application can expand or compress<a contenteditable="false" data-primary="automation" data-secondary="automated scaling" data-type="indexterm" id="id527"/> based on demands in an automated manner.<a contenteditable="false" data-primary="scalability" data-secondary="in high-quality targeted architecture" data-secondary-sortas="high" data-type="indexterm" id="id528"/></p>
+	</dd>
+	<dt>Resilient</dt>
+	<dd>
+	<p>The application is able to recover swiftly from <a contenteditable="false" data-primary="automation" data-secondary="recovery in resilient applications" data-type="indexterm" id="id529"/>failure, usually through automated means.<a contenteditable="false" data-primary="resilience in high-quality targeted architecture" data-type="indexterm" id="id530"/></p>
+	</dd>
+	<dt>Reliable</dt>
+	<dd>
+	<p>The application mitigated risks of critical failures caused by dependencies and its own deployment architecture such that it can withstand failures without loss of data or available critical transactions.<a contenteditable="false" data-primary="reliability" data-secondary="in high-quality targeted architecture" data-secondary-sortas="high" data-type="indexterm" id="id531"/></p>
+	</dd>
+	<dt>Cost-optimized</dt>
+	<dd>
+	<p>The application has traded off on cost levers in its deployment architecture for a cost-optimal design.<a contenteditable="false" data-primary="cost optimization" data-secondary="in high-quality targeted architecture" data-secondary-sortas="high" data-type="indexterm" id="id532"/></p>
+	</dd>
+	<dt>Functional</dt>
+	<dd>
+	<p>The application meets business requirements.<a contenteditable="false" data-primary="functional applications" data-type="indexterm" id="id533"/></p>
+	</dd>
+	<dt>Future-proof</dt>
+	<dd>
+	<p>The application has an optimized amount of technical debt, allowing it to easily adapt to changes.<a contenteditable="false" data-primary="future-proof applications" data-type="indexterm" id="id534"/></p>
+	</dd>
+	<dt>Aligned</dt>
+	<dd>
+	<p>The application has alignment across all of its impacted stakeholders to build or buy in accordance with the defined architecture.<a contenteditable="false" data-primary="alignment" data-secondary="in high-quality targeted architecture" data-secondary-sortas="high" data-type="indexterm" id="id535"/></p>
+	</dd>
+	<dt>Secure</dt>
+	<dd>
+	<p>The application protects<a contenteditable="false" data-primary="security" data-secondary="in high-quality targeted architecture" data-secondary-sortas="high" data-type="indexterm" id="id536"/> data and<a contenteditable="false" data-primary="cybersecurity" data-secondary="secure applications" data-type="indexterm" id="id537"/> aligns with cybersecurity principles.</p>
+	</dd>
+	<dt>Modular</dt>
+	<dd>
+	<p>The application is able to be independently <a contenteditable="false" data-primary="modularity" data-secondary="in high-quality targeted architecture" data-secondary-sortas="high" data-type="indexterm" id="id538"/>deployed into an ecosystem and reused in that ecosystem without adverse impact to other solutions.</p>
+	</dd>
+	<dt>Extensible</dt>
+	<dd>
+	<p>The application has well-defined interfaces, allowing for growth and interoperability.<a contenteditable="false" data-primary="extensibility" data-secondary="in high-quality targeted architecture" data-secondary-sortas="high" data-type="indexterm" id="id539"/></p>
+	</dd>
+	<dt>Compliant</dt>
+	<dd>
+	<p>The application is compliant or has approved exceptions to all policies, standards, and procedures that apply to it.<a contenteditable="false" data-primary="compliance with standards" data-secondary="in high-quality targeted architecture" data-secondary-sortas="high" data-type="indexterm" id="id540"/> </p>
+	</dd>
+</dl>
+
+<p>With this framing, leading indicators focused on high-quality application architecture include these examples:</p>
+
+<dl>
+	<dt>Cost to deliver application</dt>
+	<dd>
+	<p>If this is higher than expected, it may indicate that the application isn’t cost optimized and can adversely impact net profits.<a contenteditable="false" data-primary="costs" data-secondary="cost to deliver application" data-type="indexterm" id="id541"/></p>
+	</dd>
+	<dt>Incidents caused by application</dt>
+	<dd>
+	<p>If this is higher than expected, it may indicate <a contenteditable="false" data-primary="incidents caused by application" data-type="indexterm" id="id542"/>that the application isn’t built to be scalable, resilient, and/or reliable and needs corrective action or it can adversely impact the company’s brand and reputation.</p>
+	</dd>
+</dl>
+
+<p>Lagging indicators focused on <a contenteditable="false" data-primary="high-quality target architecture" data-secondary="lagging indicators for" data-type="indexterm" id="id543"/>high-quality <a contenteditable="false" data-primary="lagging indicator KPIs" data-secondary="example for high-quality application architecture" data-type="indexterm" id="id544"/>application architecture include this example:</p>
+
+<dl>
+	<dt>Number of approved architecture exceptions associated with application</dt>
+	<dd>
+	<p>If this is higher than expected, it may indicate that a level of risk has been accepted for this application that can cause adverse impact in its compliance and operational postures.</p>
+	</dd>
+</dl>
+
+<p>To deliver the enable and enforce objective, let’s review some principles that you can establish in your organization.</p>
+</div></section>
+
+<section class="pagebreak-before less_space" data-pdf-bookmark="Principles for Enablement" data-type="sect2"><div class="sect2" id="ch02_principles_for_enablement_1721833215735002">
+<h2>Principles for Enablement</h2>
+
+<p>The principles illustrated in <a data-type="xref" href="#ch02_figure_11_1721833215696460">Figure 2-11</a> help guide investment in the work necessary to enable software engineering teams to adopt and adhere to architecture standards.<a contenteditable="false" data-primary="standards" data-secondary="architecture" data-tertiary="principles for enablement of" data-type="indexterm" id="id545"/><a contenteditable="false" data-primary="enable and enforce OKR" data-secondary="principles for enablement" data-type="indexterm" id="id546"/></p>
+
+<figure><div class="figure" id="ch02_figure_11_1721833215696460"><img src="assets/foea_0211.png"/>
+<h6><span class="label">Figure 2-11. </span>Architecture standard enablement principles</h6>
+</div></figure>
+
+<p>The first principle, <em>think like an engineer</em>, is first and foremost because the engineer role is, after all, the target audience of an architecture standard.<a contenteditable="false" data-primary="think like an engineer (principle)" data-type="indexterm" id="id547"/> They are the ones who need to understand the standard and be enabled to adopt it. What do they need to know about the standard? When do they need to know it? What is different for them now that they need to follow a standard? How are they going to use the provided tools and process in their day-to-day work? The more you think like an engineer when determining the best method of enablement, the more optimal your enablement solution will be.</p>
+
+<p>The second principle, <em>lead with why</em>, builds on the same theme as mentioned earlier in the section <a data-type="xref" href="#ch02_the_shared_alignment_okr_1721833215734553">“The Shared Alignment OKR”</a>, which is that it is important to get human buy-in on a standard. <a contenteditable="false" data-primary="lead with why principle" data-type="indexterm" id="id548"/>Clearly and transparently communicating the context of the standard and requirement in terms of why it is a requirement, what risks it mitigates, and how to meet it, avoids confusion and increases the chances that the requirement will be adequately fulfilled. In addition, it is helpful to clarify roles and responsibilities for compliance—who does what, when, and how during the activities necessary to be compliant to the requirement. Last but not least, it is also helpful to be transparent about any constraints or known pain points to set expectations and reduce extemporaneous efforts. Excellent, well-maintained documentation is a helpful mechanism to provide such communication.</p>
+
+<p class="pagebreak-before">The third principle, <em>make it easy to do the right thing</em>, may appear self-explanatory. Software engineering teams have a lot of demands on their time.<a contenteditable="false" data-primary="make it easy to do the right thing (principle)" data-type="indexterm" id="id549"/> As a result, the simpler that you can make enablement, through reduced process and increased automation, the more you will incentivize the right behaviors for compliance. Also, make it easy for engineers to scale enabling automation with a contribution model and incorporate a feedback loop so that the enablement mechanism continuously improves and encourages more adoption. In addition, ensure that there are sufficient support and resources—both for training and for troubleshooting help.</p>
+
+<p>The last principle, <em>respect innovation</em>, is something that I personally believe in strongly. <a contenteditable="false" data-primary="respect innovation principle" data-type="indexterm" id="id550"/><a contenteditable="false" data-primary="innovation" data-secondary="respecting" data-type="indexterm" id="id551"/>While the premise of the <em>enable and enforce</em> objective is around supporting standards, enablement is generally about <em>how </em>to meet a requirement in a compliant way. Often, flexibility is needed given that there is generally more than one way to solve for a how. This principle speaks to understanding when to force uniformity and when to allow for deviations, as well as when to include a feedback loop in the enablement mechanism such that deviations can become new valid conformance options. This can manifest as decisions around when to abstract versus when to give choice, such as in a configuration option.</p>
+
+<p>I’ve used these principles in real life to enable and enforce personal standards too. For example, one standard rule that we have in my household is to take off shoes and put them away when entering our home. Along with my children, I even had to change my behavior and build a better habit of putting away shoes (you see, I originally was in the habit of just kicking them off by the door). So we thought about the end user—in this case, the kids and me—to figure out what would be easiest for them, which turned out to be individualized shelves in a cubby. We lead with why by explaining and reiterating why we were a shoeless household, and why cluttering the front door was a bad idea. We made the right behavior easy by keeping the shoe cubby close to the door. We respected innovation by using the kids’ suggestion to keep rain boots separate and my husband’s suggestion to get shoe organizers to maximize the cubby space.</p>
+
+<p>Now that we’ve looked at principles for enablement, let’s elaborate on principles to guide enforcement of architecture standards.</p>
+</div></section>
+
+<section class="pagebreak-before less_space" data-pdf-bookmark="Principles for Enforcement" data-type="sect2"><div class="sect2" id="ch02_principles_for_enforcement_1721833215735026">
+<h2>Principles for Enforcement</h2>
+
+<p>The principles illustrated in <a data-type="xref" href="#ch02_figure_12_1721833215696479">Figure 2-12</a> help guide investment in the work necessary to enforce that software engineering teams adopt and adhere to architecture standards in a compliant manner.<a contenteditable="false" data-primary="enable and enforce OKR" data-secondary="principles for enforcement" data-type="indexterm" id="id552"/> </p>
+
+<figure><div class="figure" id="ch02_figure_12_1721833215696479"><img src="assets/foea_0212.png"/>
+<h6><span class="label">Figure 2-12. </span>Architecture standard enforcement principles</h6>
+</div></figure>
+
+<p>The first principle, <em>fair proportionality</em>, refers to ensuring <a contenteditable="false" data-primary="fair proportionality" data-type="indexterm" id="id553"/>that the consequence of the compliance violation is reasonably commensurate with the risk or threat posed by that offense. If the risk or threat is considered to be critical, then and only then is the most severe consequence taken—for example, an alert that summons on-call support, or termination of the violating resources, or blocking the deployment of the noncompliant software. Whereas if the risk or threat is low, then a less severe consequence occurs, such as a notification with a time period in which to rectify the error. Instilling a fair and proportional system of enforcement will reduce backlash and drive human behavior to pay attention to the most risky violations, therefore optimizing the usage of human judgment and time to rectify the error.</p>
+
+<p>The next principle, <em>predictable consistency</em>, complements the first one. It means that the software engineer can expect the same behavior for a pass or fail of an enforcement policy. <a contenteditable="false" data-primary="predictable consistency" data-type="indexterm" id="id554"/>It doesn’t matter if the policy is run in different environments, or at different enforcement points; the same outcome occurs. Furthermore, when coupled with fair proportionality, the same type of consequences occur for similarly assessed risk violations. This consistency in defining the risk level of the requirement and consistency in resulting compliance actions allows for humans to learn the right behaviors more quickly than when faced with inconsistent enforcement.</p>
+
+<p>For example, a simple schema that supports fair proportionality and predictable consistency to assess the risk of a standard requirement violation could be as follows:</p>
+
+<dl>
+	<dt>Critical</dt>
+	<dd>
+	<p>Immediate corrective action needed. If enforced during deployment, deployment is blocked until the issue is corrected. If enforced post-deployment, then a high severity incident is created and incident management is used to correct the issue and/or resources are terminated/quarantined.</p>
+	</dd>
+	<dt>High</dt>
+	<dd>
+	<p>Near-term corrective action is needed, where “near term” is a specific consistent period of days. If not corrected within that near-term period, then the issue is escalated to critical. If enforced during deployment, deployment is blocked but allows for escalation approval to override blocking behavior. If enforced post-deployment, then a low severity incident is created and incident management is used to correct the issue.</p>
+	</dd>
+	<dt>Moderate</dt>
+	<dd>
+	<p>Mid-term corrective action is needed, where “mid term” is a specific consistent period of days. If not corrected within that mid-term period, then the issue is escalated to high. If enforced during deployment, deployment can proceed with a warning. If enforced post-deployment, an alert is generated.</p>
+	</dd>
+	<dt>Low</dt>
+	<dd>
+	<p>Long-term corrective action is needed, where “long term” is a specific consistent period of days. If not corrected within that long-term period, then the issue is escalated to moderate. If enforced during deployment, deployment can proceed with a warning. If enforced post-deployment, an alert is generated.</p>
+	</dd>
+</dl>
+
+<p>The third principle, <em>distributed accountability</em>, refers to that right behavior.<a contenteditable="false" data-primary="distributed accountability" data-type="indexterm" id="id555"/> This principle is all about ensuring that the software engineer understands and cares about what actions they are accountable for (and in many cases, also responsible for). Empathize with the plight of the software engineer and the demands of their time to drive automation as a high priority in enforcement.<a contenteditable="false" data-primary="automation" data-secondary="high priority in enforcement" data-type="indexterm" id="id556"/> Automation should reduce the amount of human decision making and limit what requires human judgment, thereby saving the engineer time. Automation can encompass a range of things associated with enforcement, such as checking for the violation (the earlier the better), correcting the violation, and providing a self-service dashboard. Note, the engineer still needs to understand what the automation did and why to fully support their software application. While it is ideal to never have a compliance issue, if in fact there is one, it is best to allow for failing fast and failing early, to correct as early as possible and reduce duplicative issues or entirely deter future violations. It is also helpful to provide a feedback loop for the scenario in which the enforcement policy is incorrect or does not recognize a valid exclusion from the compliance requirement.</p>
+
+<p>The fourth principle, <em>optimize for immutability</em>, recognizes<a contenteditable="false" data-primary="immutability, optimize for immutability principle" data-type="indexterm" id="id557"/> that<a contenteditable="false" data-primary="optimize for immutability principle" data-type="indexterm" id="id558"/> enforcement capabilities themselves require investment, especially given the ever-changing landscape of risks and threats as technology and standards rapidly evolve. To optimize this <span class="keep-together">investment,</span> it is best practice to enforce or check for a compliance violation only at the times or points of the software development lifecycle that it is possible to make a change that affects that compliance posture. Also, in the spirit of distributed accountability, it may be helpful to have a testing period or early warning period for new or changed enforcement policies to ensure they are working as expected prior to releasing them with full enforcement powers.</p>
+
+<p>Applying these principles should help to provide a positive, scalable enforcement experience that aims for willing cooperation over compulsion yet verifies for assurance in a consistent, reasonable, and proportional way.</p>
+
+<p>So far, you’ve learned about three OKRs: creating shared alignment, making architecture information embedded and accessible, and, most recently, enabling and enforcing standards. What’s left? Glad you asked! Next up: the proactive and reactive OKR.<a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-startref="ix_stratEEOKR" data-tertiary="enable and enforce OKR" data-type="indexterm" id="id559"/><a contenteditable="false" data-primary="OKRs (objectives and key results)" data-secondary="enable and enforce OKR" data-startref="ix_OKREE" data-type="indexterm" id="id560"/><a contenteditable="false" data-primary="enable and enforce OKR" data-startref="ix_enaenf" data-type="indexterm" id="id561"/></p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="The Proactive and Reactive OKR" data-type="sect1"><div class="sect1" id="ch02_the_proactive_and_reactive_okr_1721833215735053">
+<h1>The Proactive and Reactive OKR</h1>
+
+<p>The nature of the decision itself <a contenteditable="false" data-primary="OKRs (objectives and key results)" data-secondary="proactive and reactive OKR" data-type="indexterm" id="id562"/>is missing—is the architecture <a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-tertiary="proactive and reactive OKR" data-type="indexterm" id="id563"/>decision <em>proactive </em>or <em>reactive</em>? <em>Proactive</em> means trying to control the future situation, considerations, and trade-offs by predicting what the future holds. <a contenteditable="false" data-primary="proactive architecture decisions" data-type="indexterm" id="id564"/><a contenteditable="false" data-primary="architecture decisions" data-secondary="proactive and reactive" data-type="indexterm" id="id565"/>Proactive architecture decisions are strategic, and high-quality proactive architecture decisions are future-proofed and sustainable.<a contenteditable="false" data-primary="reactive architecture decisions" data-type="indexterm" id="id566"/> <em>Reactive</em> means using already occurring information and considerations to make a more tactical decision. Reactive generally means that there is some sort of trigger, stimulus, or constraint causing a problem that needs to be solved.</p>
+
+<p>If you think of a set of weighing scales measuring the number of proactive and reactive decisions, one extreme or the other is not where you see the most benefit. Proactive strategy without reactive tactics isn’t helpful because then the strategy is rendered infeasible and therefore indefensible. Similarly, reactive tactics without proactive strategy isn’t enough—it will ultimately take longer to get to where you want to go, since you’re only ever solving the problems of today rather than the big picture problems of tomorrow.</p>
+
+<p>Can you think of a real-life example where this applies? For me, my kids’ wardrobe comes to mind. My children are still growing, and every year they need a different clothing size. If I am only reactive, then the day comes where they are dressed in too-small clothes, with no other recourse. If I am proactive, then I buy the next size up in advance so that on that day, they can change into the next size. I can’t be overly enthusiastic in my proactiveness, though, and buy a whole set of clothes in the next size, because their tastes may change, or buy clothes two or three sizes up, because my storage is limited. So I balance the proactive and reactive decision making to future-proof their clothing enough that they will always have something that fits, and then react to the information that they need new clothes to buy more when needed.</p>
+
+<p>Thus, the final objective of an effective enterprise architecture strategy is around promoting a balance of proactive and reactive architecture decisions. By being proactive and reactive to technology and business trends in the industry and within the organization, architecture can be more effective at defining the future direction. This future direction can then be based on a well-formed proactive strategy with well-defined reactive tactics to achieve it.</p>
+
+<p>Specific KRs will vary based on your organization’s tolerance for change. A sample KR would be a 20% increase in the number of approved architecture strategies.</p>
+
+<p>The outcome of the proactive and reactive objective is that architecture decisions are made in anticipation of future problems and outcomes, and they also solve current relevant problems. The business benefit is that the architecture actually is defining strategic intent, that north star that we discussed in <a data-type="xref" href="ch01.html#ch01_key_enterprise_architecture_concepts_1721832912892198">Chapter 1</a>, in an aspirational yet achievable way.</p>
+
+<p>An example of a lagging indicator could include the number of approved architecture strategies. Assuming these are good-quality strategies, the more strategy the more direction has been clarified.</p>
+</div></section>
+
+<section data-pdf-bookmark="Summary" data-type="sect1"><div class="sect1" id="ch02_summary_1721833215735077">
+<h1>Summary</h1>
+
+<p>To establish a strong, effective enterprise architecture practice, you need a strategy to guide and establish that effective enterprise architecture practice itself. This chapter covered key objectives in such a strategy aided by the OKR framework to define clear, measurable OKRs. Measurement is key, to tie architecture work to business outcomes. Outcome-based KRs are also known as <em>key performance indicators</em> (KPIs).<a contenteditable="false" data-primary="KPIs (key performance indicators)" data-type="indexterm" id="id567"/> KPIs are used to indicate progress toward an objective and to incentivize behavior.</p>
+
+<p>The <a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-tertiary="summary of" data-type="indexterm" id="id568"/>objectives include:</p>
+
+<dl>
+	<dt>Shared alignment</dt>
+	<dd>
+	<p>This relies heavily on a<a contenteditable="false" data-primary="shared alignment OKR" data-type="indexterm" id="id569"/> culture of trust throughout the organization to bring relevant stakeholders together and align on an architecture decision for implementation. This section covered management principles such as disagree and commit, command and control, and consensus based or consensus driven to achieve alignment.</p>
+	</dd>
+	<dt>Embedded and accessible</dt>
+	<dd>
+	<p>This refers to ensuring that various<a contenteditable="false" data-primary="embedded and accessible OKR" data-type="indexterm" id="id570"/> types of architecture information, including but not limited to principles, standards, patterns, best practices, frameworks, and previous decisions, are embedded in everyday processes and tooling and accessible or usable by the end users that are meant to use the information in making architecture decisions.</p>
+	</dd>
+	<dt>Enable and enforce</dt>
+	<dd>
+	<p>This reviewed the need to <a contenteditable="false" data-primary="enable and enforce OKR" data-type="indexterm" id="id571"/>both enable and enforce architecture standards, or rather the requirements associated with those standards. This section also covered relevant principles for guiding enablement activities as well as for guiding enforcement solutions.</p>
+	</dd>
+	<dt>Proactive and reactive</dt>
+	<dd>
+	<p>This discussed<a contenteditable="false" data-primary="proactive and reactive OKR" data-type="indexterm" id="id572"/> the need to both make and balance strategic and tactical architecture decisions.</p>
+	</dd>
+</dl>
+
+<p>Achieving these objectives should yield efficient architecture practices that create shared alignment, are embedded and accessible through familiar processes and tooling, are enabled and enforced transparently and intuitively, and support both proactive and reactive problem-solving.</p>
+
+<p>The next four chapters dive deep into each objective so that you can tailor the OKRs and KPIs to what your organization needs to establish an effective enterprise architecture strategy.<a contenteditable="false" data-primary="strategy (enterprise architecture)" data-secondary="key objectives" data-startref="ix_strat" data-type="indexterm" id="id573"/></p>
+</div></section>
+</div></section></body></html>

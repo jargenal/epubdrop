@@ -1,0 +1,314 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Artificial Intelligence and Data Analytics Tools</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:a44aec70-12ef-4d3e-90ec-26a4e9d25e01" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 13. Artificial Intelligence and Data Analytics Tools" data-type="chapter" epub:type="chapter"><div class="chapter" id="ch13_artificial_intelligence_and_data_analytics_tools_1763395116091292">
+<h1><span class="label">Chapter 13. </span>Artificial Intelligence and <span class="keep-together">Data Analytics Tools</span></h1>
+
+<p>Artificial intelligence (AI) is reshaping industries faster than ever.<a contenteditable="false" data-primary="International Data Corporation (IDC)" data-type="indexterm" id="id1281"/><a contenteditable="false" data-primary="IDC (International Data Corporation)" data-type="indexterm" id="id1282"/> International Data Corporation (IDC) predicts that by 2027, global spending on AI systems will reach <a href="https://oreil.ly/3xBGs">$500 billion, more than double what organizations spent in 2023</a>. Companies are investing heavily in AI to automate tasks, improve customer experiences, and innovate across their products and services.</p>
+
+<p>You see AI at work every day, whether it’s the personalized recommendations on your favorite streaming app, an intelligent chatbot that answers your banking questions, or real-time systems that detect fraud before it impacts customers. As AI capabilities continue to grow, so does the demand for people who know how to build and deploy these solutions in the cloud. This is also a key reason that AI is covered in the AWS Certified Cloud Practitioner exam.</p>
+
+<p>In this chapter, we’ll break down the core ideas behind AI, machine learning (ML), deep learning (DL), and generative AI (GenAI), and see how each fits into the broader AI landscape. We’ll also look at key AWS services that support these workloads. They include Amazon SageMaker for building and deploying ML models, AWS Lex for creating conversational interfaces like chatbots, and Amazon Kendra for enterprise search.</p>
+
+<p>Finally, we’ll touch on AWS data analytics services such as Athena, Glue, Kinesis, and QuickSight.</p>
+
+<section data-pdf-bookmark="Artificial Intelligence, Machine Learning, Deep Learning, and Generative AI" data-type="sect1"><div class="sect1" id="ch13_artificial_intelligence_machine_learning_deep_le_1763395116091405">
+<h1>Artificial Intelligence, Machine Learning, Deep Learning, and Generative AI</h1>
+
+<p>AI<a contenteditable="false" data-primary="GenAI (generative AI)" data-type="indexterm" id="jc13.4"/><a contenteditable="false" data-primary="DL (deep learning)" data-type="indexterm" id="jc13.3"/><a contenteditable="false" data-primary="ML (machine learning)" data-type="indexterm" id="jc13.2"/><a contenteditable="false" data-primary="machine learning (ML)" data-type="indexterm" id="kb9"/><a contenteditable="false" data-primary="AI (artificial intelligence)" data-secondary="overview" data-type="indexterm" id="jc13.1"/><a contenteditable="false" data-primary="Generative AI (GenAI)" data-type="indexterm" id="ibd1301"/> covers a wide range of technologies. But at the core, it’s about building machines and systems that can act in ways we usually associate with human intelligence. This means they can learn, reason, perceive their environment, and make decisions.</p>
+
+<p>Within this broad field is ML. It is about teaching machines to learn from data without explicitly programming every rule. Instead, these systems rely on statistical models and algorithms, such as regression, decision trees, clustering, and reinforcement learning. You see ML in many applications like email spam filters and recommendations for ecommerce systems.</p>
+
+<p>DL is a subset of ML. It uses artificial neural networks with many layers (this is where “deep” comes from). These networks can extract and build features from raw, unstructured data such as images, audio, or text. For instance, DL powers capabilities like tagging people in photos, translating languages, or powering chatbots.</p>
+
+<p>GenAI is a part of DL. It uses models such as<a contenteditable="false" data-primary="generative adversarial networks (GANs)" data-type="indexterm" id="id1283"/><a contenteditable="false" data-primary="GANs (generative adversarial networks)" data-type="indexterm" id="id1284"/> generative adversarial networks (GANs) and large language models (LLMs) <a contenteditable="false" data-primary="large language models (LLMs)" data-type="indexterm" id="id1285"/><a contenteditable="false" data-primary="LLMs (large language models)" data-type="indexterm" id="id1286"/>to create entirely new content, such as text, images, audio, video, and code. Today, you see GenAI in tools like ChatGPT and Claude, as well as those from Amazon Bedrock.</p>
+
+<p><a data-type="xref" href="#ch13_figure_1_1763395116086814">Figure 13-1</a> shows how AI, ML, DL, and GenAI relate to each other.</p>
+
+<figure><div class="figure" id="ch13_figure_1_1763395116086814"><img alt="Diagram showing concentric circles representing the hierarchical relationship: Artificial Intelligence encompasses Machine Learning, which includes Deep Learning, which in turn contains Generative AI." src="assets/awsc_1301.png"/>
+<h6><span class="label">Figure 13-1. </span>The relationships between AI, ML, DL, and GenAI</h6>
+</div></figure>
+
+<p class="pagebreak-before">Running modern AI, ML, DL, and GenAI workloads often requires large amounts of compute, memory, and storage. AWS offers a myriad of services to meet<a contenteditable="false" data-primary="AI (artificial intelligence)" data-secondary="overview" data-startref="jc13.1" data-type="indexterm" id="id1287"/> these demands.</p>
+
+<section data-pdf-bookmark="Amazon SageMaker AI" data-type="sect2"><div class="sect2" id="ch13_amazon_sagemaker_ai_1763395116091467">
+<h2>Amazon SageMaker AI</h2>
+
+<p>Amazon<a contenteditable="false" data-primary="SageMaker" data-type="indexterm" id="jc13.6"/><a contenteditable="false" data-primary="AI (artificial intelligence)" data-secondary="SageMaker" data-type="indexterm" id="jc13.5"/> SageMaker is a platform for building AI, ML, DL, and GenAI solutions. It covers the entire development lifecycle, from bringing in and preparing data to experimenting with models, deploying them, and monitoring their performance. For generative AI projects, SageMaker integrates with Bedrock, which lets you design GenAI applications, knowledge bases, and agents.</p>
+
+<p>A key feature in SageMaker is its notebooks, which are built on the Jupyter platform. They let you write and run code, visualize data, and document your workflows all in one place. This setup makes it easy to experiment with different approaches, build and refine models, and share your findings with your team.</p>
+
+<p>When your models are ready for production, SageMaker simplifies deployment at scale, whether you’re running real-time predictions or processing data in batches. It does this through MLOps pipelines. They are automated workflows that bring AI, ML, DL, and GenAI models into production environments. SageMaker also supports CI/CD. This automates the building, testing, and rollout of models or applications. This allows you to release updates quickly with minimal manual work.</p>
+
+<p>SageMaker integrates with ETL<a contenteditable="false" data-primary="ETL (extract, transform, load)" data-type="indexterm" id="id1288"/><a contenteditable="false" data-primary="extract, transform, load (ETL)" data-type="indexterm" id="id1289"/> pipelines as well. This means you can pull data from different sources, transform it into the format you need, and load it into storage or analytics systems for use in your ML projects.</p>
+
+<p>Here are a few other key features of Amazon SageMaker:</p>
+
+<dl>
+	<dt>Unified Studio</dt>
+	<dd>
+	<p>SageMaker <a contenteditable="false" data-primary="Unified Studio" data-type="indexterm" id="id1290"/>brings together AI, ML, DL, and GenAI workflows alongside data engineering and analytics tasks. It connects easily to AWS services like EMR, Glue, Athena, and Redshift.</p>
+	</dd>
+	<dt>Data and AI governance</dt>
+	<dd>
+	<p>Built on AWS DataZone, SageMaker helps organizations securely discover, share, and manage data assets and AI artifacts. It offers unified metadata tracking, fine-grained access controls, asset lineage, and policy enforcement across your analytics and AI projects. These governance tools support responsible AI practices, such as detecting model bias, implementing toxicity safeguards, and monitoring models throughout their lifecycle.</p>
+	</dd>
+	<dt class="less_space pagebreak-before">Lakehouse architecture</dt>
+	<dd>
+	<p>SageMaker Lakehouse<a contenteditable="false" data-primary="SageMaker Lakehouse" data-type="indexterm" id="id1291"/> creates an open, unified data layer that combines data from Amazon S3 data lakes, S3 Tables, Amazon Redshift, and other external sources. You can query this data in place using engines like Athena, Spark, and SQL, and it supports federated queries along with zero-ETL ingestion from various databases.</p>
+	</dd>
+	<dt>Amazon CodeWhisperer</dt>
+	<dd>
+	<p>This <a contenteditable="false" data-primary="CodeWhisperer" data-type="indexterm" id="id1292"/>uses AI to generate code suggestions within integrated development environments (IDEs)<a contenteditable="false" data-primary="integrated development environments (IDEs)" data-type="indexterm" id="id1293"/><a contenteditable="false" data-primary="IDEs (integrated development environments)" data-type="indexterm" id="id1294"/> like Visual Studio Code and JetBrains. There is support for various languages, like Python, Java, and<a contenteditable="false" data-primary="SageMaker" data-startref="jc13.6" data-type="indexterm" id="id1295"/><a contenteditable="false" data-primary="AI (artificial intelligence)" data-secondary="SageMaker" data-startref="jc13.5" data-type="indexterm" id="id1296"/> JavaScript.</p>
+	</dd>
+</dl>
+</div></section>
+
+<section data-pdf-bookmark="AWS Lex" data-type="sect2"><div class="sect2" id="ch13_aws_lex_1763395116091519">
+<h2>AWS Lex</h2>
+
+<p>AWS<a contenteditable="false" data-primary="Lex" data-type="indexterm" id="jc13.8"/><a contenteditable="false" data-primary="AI (artificial intelligence)" data-secondary="Lex" data-type="indexterm" id="jc13.7"/> Lex allows you to build virtual assistants and conversational interfaces for your applications. It combines advanced <a contenteditable="false" data-primary="natural language understanding (NLU)" data-type="indexterm" id="id1297"/><a contenteditable="false" data-primary="NLU (natural language understanding)" data-type="indexterm" id="id1298"/>natural language understanding (NLU) with automatic speech recognition (ASR).<a contenteditable="false" data-primary="automatic speech recognition (ASR)" data-type="indexterm" id="id1299"/><a contenteditable="false" data-primary="ASR (automatic speech recognition)" data-type="indexterm" id="id1300"/> In simple terms, Lex acts as the brain behind chatbots. This allows them to understand what users say or type, pull out key details (known as slots), and respond in an intelligent way. Lex also works with both text and voice inputs.</p>
+
+<p>This service comes with built-in integrations for services like Amazon Connect. This streamlines the process of creating <a contenteditable="false" data-primary="interactive voice response (IVR) systems" data-type="indexterm" id="id1301"/><a contenteditable="false" data-primary="IVR (interactive voice response) systems" data-type="indexterm" id="id1302"/>interactive voice response (IVR) systems for customer service. You can also connect your Lex bots to mobile apps, websites, or messaging platforms such as Facebook Messenger.</p>
+
+<p>Since Lex uses the same deep learning technology that powers Amazon Alexa, it delivers strong speech recognition and NLU right out of the box. It also integrates with AWS Lambda, which means your bots can execute business logic behind the scenes, like booking an appointment or looking up user information.</p>
+
+<p>Let’s see how to use Lex:</p>
+
+<ol>
+	<li>
+	<p>Log in to AWS.</p>
+	</li>
+	<li>
+	<p>Enter Lex into the search box. Select it.</p>
+	</li>
+	<li>
+	<p>Choose “Create bot.” You will see the bot setup screen in <a data-type="xref" href="#ch13_figure_2_1763395116086851">Figure 13-2</a>.</p>
+
+	<figure><div class="figure" id="ch13_figure_2_1763395116086851"><img alt="The setup screen for creating a bot in Amazon Lex, showing the choice between &quot;Traditional&quot; and &quot;Generative AI&quot; creation methods, with a note about needing Amazon Bedrock for certain features." src="assets/awsc_1302.png"/>
+	<h6><span class="label">Figure 13-2. </span>The setup screen to create a bot in Amazon Lex</h6>
+	</div></figure>
+	</li>
+	<li>
+	<p>For “Creation method,” select Traditional. This lets you manually define intents and slot types.</p>
+	</li>
+	<li>
+	<p>Enter a name for your bot.</p>
+	</li>
+	<li>
+	<p>Under IAM permissions, choose a Runtime role. Select “Create a role with basic Amazon Lex permissions” to automatically create a role.</p>
+	</li>
+	<li>
+	<p>Under “Bot error logging,” select Enabled to allow Lex to log errors for <span class="keep-together">debugging</span>.</p>
+	</li>
+	<li>
+	<p>Under the Children’s Online Privacy Protection Act (COPPA)<a contenteditable="false" data-primary="Children’s Online Privacy Protection Act (COPPA)" data-type="indexterm" id="id1303"/><a contenteditable="false" data-primary="COPPA (Children’s Online Privacy Protection Act)" data-type="indexterm" id="id1304"/>, choose No unless your bot is subject to COPPA compliance.</p>
+	</li>
+	<li>
+	<p>For “Idle session timeout,” leave it at the default of 5 minutes, or adjust to your needs (between 1 and 1,440 minutes).</p>
+	</li>
+	<li>
+	<p>Select Next.</p>
+	</li>
+	<li>
+	<p>For Language, select English (US) or your preferred language from the drop-down list.</p>
+	</li>
+	<li>
+	<p>Under “Voice interaction,” you can choose a text-to-speech voice. To hear how each voice sounds, click Play next the voice sample, and then choose the one you like.</p>
+	</li>
+	<li>
+	<p>For “Intent classification confidence score threshold,” leave it at the default 0.40 unless you have specific accuracy requirements. This sets how confidently Lex must match user inputs to intents (range is 0.00 to 1.00).</p>
+	</li>
+	<li>
+	<p>Under “Describe your use case,” enter a description of what your bot should do. For example, you can enter something like this: “We want a bot to help customers order food (using item id, quantity, size), check order status, and cancel an order. Use Order ID for indexing orders.”</p>
+	</li>
+	<li>
+	<p>Select the model you want to use for GenAI features. For example, choose Claude V2 under Anthropic if enabled in your account.</p>
+	</li>
+	<li>
+	<p>Select Done.</p>
+	</li>
+</ol>
+
+<p>By building this bot with GenAI, you start off with a basic set of intents and slot types. These are the building blocks that define what your bot can understand and ask users. But you’ll still need to review and fine-tune them to match your business goals. For example, if your bot needs to place orders or check order statuses, you’ll have to connect them to your backend services, like with AWS Lambda functions, to carry out those tasks. The benefit is speed. GenAI sets up the groundwork for you, so you can spend more time polishing the user experience and wiring up the workflows that make your bot<a contenteditable="false" data-primary="Lex" data-startref="jc13.8" data-type="indexterm" id="id1305"/><a contenteditable="false" data-primary="AI (artificial intelligence)" data-secondary="Lex" data-startref="jc13.7" data-type="indexterm" id="id1306"/> useful.</p>
+</div></section>
+
+<section data-pdf-bookmark="Amazon Kendra" data-type="sect2"><div class="sect2" id="ch13_amazon_kendra_1763395116091568">
+<h2>Amazon Kendra</h2>
+
+<p>Amazon<a contenteditable="false" data-primary="Kendra" data-type="indexterm" id="jc13.10"/><a contenteditable="false" data-primary="AI (artificial intelligence)" data-secondary="Kendra" data-type="indexterm" id="jc13.9"/> Kendra is an AI-powered enterprise search service that leverages natural language processing and deep learning. It enables users to ask questions in conversational language (like “What are my 2025 healthcare benefits?”) and returns the most relevant snippets, answers, or documents by understanding the context and intent behind the query.</p>
+
+<p>This is how it works:</p>
+
+<dl>
+	<dt>Indexing and ingestion</dt>
+	<dd>
+	<p>Kendra connects to your data sources like SharePoint, S3, Salesforce, ServiceNow, Google Drive, or custom repositories. It then crawls, parses, and indexes the documents to make them searchable.</p>
+	</dd>
+	<dt>Query processing</dt>
+	<dd>
+	<p>When a user enters a query, Kendra uses NLP to determine intent, expands with synonyms, and performs both semantic and keyword searches.</p>
+	</dd>
+	<dt>Ranking and retrieval</dt>
+	<dd>
+	<p>Kendra ranks the results using relevance models based on document metadata and user feedback. It can deliver short factoid answers, long-form descriptive passages, or FAQ-style matches extracted directly from indexed content.</p>
+	</dd>
+	<dt>GenAI integration</dt>
+	<dd>
+	<p>With its<a contenteditable="false" data-primary="GenAI Index, Kendra" data-type="indexterm" id="id1307"/> GenAI Index, Kendra supports retrieval‑augmented generation (RAG) workflows. This improves the results of LLMs by retrieving relevant information from the documents.</p>
+	</dd>
+</dl>
+
+<p>Kendra also helps to mitigate the issue of data silos, such as by consolidating content from diverse repositories. This centralized approach allows teams and customers to search FAQs, wikis, tables, and full documents quickly and accurately. Plus, its built-in ML continuously refines result relevance by learning from user<a contenteditable="false" data-primary="Kendra" data-startref="jc13.10" data-type="indexterm" id="id1308"/><a contenteditable="false" data-primary="AI (artificial intelligence)" data-secondary="Kendra" data-startref="jc13.9" data-type="indexterm" id="id1309"/><a contenteditable="false" data-primary="GenAI (generative AI)" data-startref="jc13.4" data-type="indexterm" id="id1310"/><a contenteditable="false" data-primary="Generative AI (GenAI)" data-startref="ibd1301" data-type="indexterm" id="id1311"/><a contenteditable="false" data-primary="DL (deep learning)" data-startref="jc13.3" data-type="indexterm" id="id1312"/><a contenteditable="false" data-primary="ML (machine learning)" data-startref="jc13.2" data-type="indexterm" id="id1313"/><a contenteditable="false" data-primary="machine learning (ML)" data-startref="kb9" data-type="indexterm" id="id1314"/> interactions.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Data Analytics" data-type="sect1"><div class="sect1" id="ch13_data_analytics_1763395116091615">
+<h1>Data Analytics</h1>
+
+<p>Data<a contenteditable="false" data-primary="data analytics" data-type="indexterm" id="jc13.11"/> analytics tools help companies make sense of their data. They collect, process, analyze, and visualize information so that teams can spot trends, find patterns, and make decisions backed by evidence. Whether you’re looking at customer buying habits, operational metrics, or website traffic, these tools turn raw data into useful insights. Most of them come with features for preparing data, running queries, and generating reports.</p>
+
+<p>We’ll look at the data analytics services AWS offers.</p>
+
+<section data-pdf-bookmark="Amazon Athena" data-type="sect2"><div class="sect2" id="ch13_amazon_athena_1763395116091660">
+<h2>Amazon Athena</h2>
+
+<p>Amazon<a contenteditable="false" data-primary="Athena" data-type="indexterm" id="id1315"/> Athena lets you run SQL queries directly against data stored in Amazon S3. You only pay for the data you scan, so it’s an affordable way to explore massive datasets, run ad hoc analyses, or build dashboards and reports on the fly.</p>
+
+<p>Athena integrates with file formats like <a contenteditable="false" data-primary="comma separated values (CSV) format" data-type="indexterm" id="id1316"/><a contenteditable="false" data-primary="CSV (comma separated values) format" data-type="indexterm" id="id1317"/>CSV,<a contenteditable="false" data-primary="JSON (JavaScript Object Notation)" data-type="indexterm" id="id1318"/> JSON, Optimized Row Columnar (ORC)<a contenteditable="false" data-primary="ORC (Optimized Row Columnar)" data-type="indexterm" id="id1319"/>, Avro,<a contenteditable="false" data-primary="Avro" data-type="indexterm" id="id1320"/> and Parquet<a contenteditable="false" data-primary="Parquet" data-type="indexterm" id="id1321"/>. Under the hood, it uses Presto, <a contenteditable="false" data-primary="Presto" data-type="indexterm" id="id1322"/>a powerful open source SQL engine designed for fast, distributed queries. This means you can run complex joins and window functions and handle arrays.</p>
+
+<p>Athena is useful for quick log analysis, exploring data lakes, or feeding results into BI tools.</p>
+</div></section>
+
+<section data-pdf-bookmark="Amazon Kinesis" data-type="sect2"><div class="sect2" id="ch13_amazon_kinesis_1763395116091704">
+<h2>Amazon Kinesis</h2>
+
+<p>Amazon<a contenteditable="false" data-primary="Kinesis" data-type="indexterm" id="id1323"/> Kinesis is a set of services built to handle real-time streaming data at massive scale. You can bring in data from sources like website clicks, financial transactions, social media feeds, server logs, or IoT devices, and make that data instantly available for analysis. Use cases include detecting fraud in transactions as it happens, personalizing content in real time, or monitoring the performance of your applications.</p>
+
+<p>Kinesis comes with several key components. There’s <a contenteditable="false" data-primary="Kinesis Data Streams" data-type="indexterm" id="id1324"/>Kinesis Data Streams for ingesting data in real time; Amazon Data Firehose <a contenteditable="false" data-primary="Data Firehose" data-type="indexterm" id="id1325"/>for delivering streaming data into destinations like Amazon S3, Redshift, or Elasticsearch;<a contenteditable="false" data-primary="Elasticsearch" data-type="indexterm" id="id1326"/> and Kinesis Data Analytics, <a contenteditable="false" data-primary="Kinesis Data Analytics" data-type="indexterm" id="id1327"/>which lets you run SQL queries on streaming data for immediate insights. It also includes Kinesis Video Streams <a contenteditable="false" data-primary="Kinesis Video Streams" data-type="indexterm" id="id1328"/>for securely streaming and processing video.</p>
+</div></section>
+
+<section data-pdf-bookmark="Amazon Glue" data-type="sect2"><div class="sect2" id="ch13_amazon_glue_1763395116091748">
+<h2>Amazon Glue</h2>
+
+<p>Amazon<a contenteditable="false" data-primary="Glue" data-type="indexterm" id="id1329"/> Glue is a data integration service that helps you discover, prepare, and combine data for analytics, ML, or application development. It scales automatically to handle anything from a few gigabytes to petabytes of data, and you only pay for the compute time your jobs use.</p>
+
+<p>With Glue, connecting to different data sources is straightforward. You can pull in data from Amazon S3, RDS, DynamoDB, and streaming sources like Kinesis or Kafka. Glue uses crawlers to scan these sources, determines their schemas, and organizes everything in the <a contenteditable="false" data-primary="Glue Data Catalog" data-type="indexterm" id="id1330"/>Glue Data Catalog.</p>
+
+<p>Glue also helps to simplify ETL processes. You can build data transformation jobs using a visual interface in AWS Glue Studio <a contenteditable="false" data-primary="Glue Studio" data-type="indexterm" id="id1331"/>or write scripts in Python or Scala. It supports both batch processing for large datasets and streaming processing for real-time data.</p>
+</div></section>
+
+<section data-pdf-bookmark="Amazon QuickSight" data-type="sect2"><div class="sect2" id="ch13_amazon_quicksight_1763395116091792">
+<h2>Amazon QuickSight</h2>
+
+<p>Amazon<a contenteditable="false" data-primary="QuickSight" data-type="indexterm" id="id1332"/> QuickSight is a BI service that helps you share insights across your organization. You can connect it to different data sources, run fast and scalable analyses, and build interactive dashboards that anyone can access from their laptop, tablet, or smartphone.</p>
+
+<p>One of QuickSight’s most useful features is embedded analytics. This lets you integrate interactive dashboards and visualizations directly into your apps or internal portals, giving users the data they need right where they need it. QuickSight also uses ML to deliver features like anomaly detection and forecasting. Even if you’re not a data scientist, you can easily spot trends, outliers, or future projections with just a few<a contenteditable="false" data-primary="data analytics" data-startref="jc13.11" data-type="indexterm" id="id1333"/> clicks.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Conclusion" data-type="sect1"><div class="sect1" id="ch13_conclusion_1763395116091843">
+<h1>Conclusion</h1>
+
+<p>In this chapter, we looked at the foundations of AI, including ML, DL, and GenAI, and learned how these technologies allow systems to perform tasks that mimic human intelligence. We examined AWS services like Amazon SageMaker for building and deploying AI solutions, Amazon Lex for creating conversational interfaces, and Amazon Kendra for enterprise search with NLU. We also covered data analytics services such as Athena, Kinesis, Glue, and QuickSight, which help organizations transform raw data into actionable insights.</p>
+
+<p>In the next chapter, we’ll take a look at AWS developer tools and other essential <span class="keep-together">services</span>.</p>
+</div></section>
+
+<section data-pdf-bookmark="Chapter Quiz" data-type="sect1"><div class="sect1" id="ch13_quiz_1763395116091888">
+<h1>Chapter Quiz</h1>
+
+<p>To check your answers, please refer to the <a data-type="xref" href="app02.html#appb_chapter_13_answer_key_1763395113746558">“Chapter 13 Answer Key”</a>.</p>
+
+<ol>
+	<li>
+	<p>What does machine learning (ML) enable systems to do?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>Perform only pre-programmed tasks</p>
+		</li>
+		<li>
+		<p>Store relational data in databases</p>
+		</li>
+		<li>
+		<p>Learn from data without explicit programming of rules</p>
+		</li>
+		<li>
+		<p>Encrypt data automatically</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>Deep learning (DL) is a subset of which technology?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>Generative AI</p>
+		</li>
+		<li>
+		<p>Natural language processing</p>
+		</li>
+		<li>
+		<p>Data analytics</p>
+		</li>
+		<li>
+		<p>Machine learning</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>What AWS service is used for building and deploying ML models?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>Amazon Kinesis</p>
+		</li>
+		<li>
+		<p>AWS Lex</p>
+		</li>
+		<li>
+		<p>Amazon SageMaker</p>
+		</li>
+		<li>
+		<p>Amazon Athena</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>What is retrieval-augmented generation (RAG) used for in Amazon Kendra?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>Running extract, transform, load (ETL) jobs faster</p>
+		</li>
+		<li>
+		<p>Improving large language model (LLM) results with retrieved document context</p>
+		</li>
+		<li>
+		<p>Generating SQL queries automatically</p>
+		</li>
+		<li>
+		<p>Creating business dashboards</p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<p>What is the primary function of Amazon Bedrock?</p>
+
+	<ol class="upper_alpha_list">
+		<li>
+		<p>Building ML models from scratch</p>
+		</li>
+		<li>
+		<p>Providing managed access to foundation models</p>
+		</li>
+		<li>
+		<p>Running SQL queries on Simple Storage Service (S3)</p>
+		</li>
+		<li>
+		<p>Managing Internet of Things (IoT) devices</p>
+		</li>
+	</ol>
+	</li>
+</ol>
+</div></section>
+</div></section></body></html>

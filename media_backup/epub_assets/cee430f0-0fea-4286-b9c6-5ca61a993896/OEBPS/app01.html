@@ -1,0 +1,133 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Terraform Cloud in Five Minutes</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:e0000000-0000-0000-0000-000006723159" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Appendix A. Terraform Cloud in Five Minutes" data-type="appendix" epub:type="appendix"><div class="appendix" id="terraform_cloud_in_five_minu">
+<h1><span class="label">Appendix A. </span>Terraform Cloud in Five Minutes</h1>
+<p><a contenteditable="false" data-primary="Hashicorp" data-type="indexterm" id="idm46523886206072"/><a contenteditable="false" data-primary="infrastructure as code tool" data-type="indexterm" id="idm46523886204520"/><a contenteditable="false" data-primary="Terraform" data-secondary="about" data-type="indexterm" id="idm46523886203416"/><a contenteditable="false" data-primary="AWS CDK" data-type="indexterm" id="idm46523886201608"/><a contenteditable="false" data-primary="Cloud Formation" data-type="indexterm" id="idm46523886200504"/><a contenteditable="false" data-primary="AWS Console" data-type="indexterm" id="idm46523886199400"/><a contenteditable="false" data-primary="Terraform" data-type="indexterm" id="tf_ch"/>A cloud infrastructure requires a provisioning and maintenance regime in the same way as your application code. Clicking through AWS Console screens is an easy way to get started, but it won’t scale in larger organizations. This is where tools like Cloud Formation, AWS CDK, and Terraform come in handy. Terraform is an open source “infrastructure as code” tool written in Go by HashiCorp that relies on a simple descriptive language to define all your cloud resources. Terraform specializes in creating entire server instances on AWS for you while making a detailed map of all the infrastructure that you have running on AWS. Thus, it’s a highly effective tool for managing your AWS inventory at scale.</p>
+<p>Terraform is also extremely modular and lets you reuse your infrastructure-provisioning code efficiently. So if you need to re-create your infrastructure for <span class="keep-together">an additional</span> team or environment, Terraform’s modular design protects you from <span class="keep-together">code repetition.</span> This is especially useful when dealing with microservices since it is common to have independently running replicable architecture for each end user <span class="keep-together">use case.</span></p>
+<p><a contenteditable="false" data-primary="Brikman, Yevgeniy, Terraform: Up and Running" data-type="indexterm" id="idm46523886192120"/><a contenteditable="false" data-primary="Terraform: Up and Running (Brikman)" data-type="indexterm" id="idm46523886195336"/>Many books on Terraform do a great job explaining it in depth. I personally enjoyed reading <a class="orm:hideurl" href="https://oreil.ly/5fAo0"><em>Terraform: Up and Running</em> by Yevgeniy Brikman (O’Reilly)</a>. HashiCorp also provides great documentation on <a href="https://oreil.ly/oMZOe">its website</a> if you want to learn more. Here, I go over the basics to teach you what you need to get started and use the source code that is provided with the rest of the book.</p>
+<p>For the purposes of this appendix, I have created a <a href="https://oreil.ly/VAzWS">sample GitHub repository</a> that you can fork and use to test your own code.</p>
+<section data-pdf-bookmark="Setup" data-type="sect1"><div class="sect1" id="setup">
+<h1>Setup</h1>
+<p><a contenteditable="false" data-primary="Terraform" data-secondary="setup" data-type="indexterm" id="idm46523886185368"/>The easiest and probably quickest way to use Terraform is to <a href="https://www.terraform.io">sign up for Terraform Cloud</a>, a fully managed cloud offering. You can sign up for a free account, as shown in <a data-type="xref" href="#signing_up_for_terraform_cloud">Figure A-1</a>.</p>
+<figure><div class="figure" id="signing_up_for_terraform_cloud">
+<img alt="" src="assets/smaa_aa01.png"/>
+<h6><span class="label">Figure A-1. </span>Signing up for Terraform Cloud</h6>
+</div></figure>
+<section data-pdf-bookmark="Creating Your Workspace" data-type="sect2"><div class="sect2" id="creating_your_workspace">
+<h2>Creating Your Workspace</h2>
+<p><a contenteditable="false" data-primary="Terraform" data-secondary="creating workspace" data-type="indexterm" id="idm46523886177800"/><a contenteditable="false" data-primary="workspace, creating" data-type="indexterm" id="idm46523886176072"/>Within each cloud account, you can create workspaces that mirror an infrastructure setup you would like to deploy to the cloud environment. Each workspace corresponds to a Git repository where you can stage and save your Terraform scripts. You can choose the version control workflow while creating your workspace, as shown in <a data-type="xref" href="#version_control_workflow_allows_you_to">Figure A-2</a>.</p>
+<figure><div class="figure" id="version_control_workflow_allows_you_to">
+<img alt="" src="assets/smaa_aa02.png"/>
+<h6><span class="label">Figure A-2. </span>Version control workflow allows you to connect your version control system of choice with Terraform Cloud by following the instructions in this setup wizard</h6>
+</div></figure>
+<p>Version control workflow is the easiest way of connecting your GitHub repository to Terraform Cloud. This way, you can have a Git-versioned infrastructure setup in your GitHub repository that you automatically deploy to the cloud provider whenever you make any changes. <a data-type="xref" href="#adding_a_new_vcs_integration_and_provid">Figure A-3</a> highlights how you can enable these triggers.</p>
+<figure><div class="figure" id="adding_a_new_vcs_integration_and_provid">
+<img alt="" src="assets/smaa_aa03.png"/>
+<h6><span class="label">Figure A-3. </span>Adding a new VCS integration and providing a trigger to apply plans whenever you make changes in your infrastructure code</h6>
+</div></figure>
+<p>As you can see, Terraform Cloud can deploy your infrastructure changes as soon as you push them to your repository based on the triggers you provide, making your infrastructure setup and deployment seamless.</p>
+</div></section>
+<section data-pdf-bookmark="Adding AWS Access and Secret Key" data-type="sect2"><div class="sect2" id="adding_aws_access_and_secret_key">
+<h2>Adding AWS Access and Secret Key</h2>
+<p><a contenteditable="false" data-primary="Terraform" data-secondary="adding AWS access and secret key" data-type="indexterm" id="idm46523886165064"/><a contenteditable="false" data-primary="AWS access key ID" data-type="indexterm" id="idm46523886163400"/><a contenteditable="false" data-primary="AWS secret access key" data-type="indexterm" id="idm46523886162200"/><a contenteditable="false" data-primary="secret key" data-type="indexterm" id="idm46523886161144"/>Within your new workspace, visit the Variables page. Terraform Cloud supports both Terraform variables and environment variables. We’ll use both types in this tutorial. Scroll down to the Environment Variables section and create two variables:</p>
+<ul>
+<li><p><code>AWS_ACCESS_KEY_ID </code></p></li>
+<li><p><code>AWS_SECRET_ACCESS_KEY</code></p></li>
+</ul>
+<p>Check the Sensitive checkbox for both variables and click the “Save variable” button to save each one. Once you are done, the environment variables section should look as shown in <a data-type="xref" href="#these_predetermined_environment_variabl">Figure A-4</a>.</p>
+<figure><div class="figure" id="these_predetermined_environment_variabl">
+<img alt="" src="assets/smaa_aa04.png"/>
+<h6><span class="label">Figure A-4. </span>These predetermined environment variables are what Terraform will use to authenticate with your AWS account</h6>
+</div></figure>
+</div></section>
+</div></section>
+<section data-pdf-bookmark="Terraform Process" data-type="sect1"><div class="sect1" id="terraform_process">
+<h1>Terraform Process</h1>
+<p><a contenteditable="false" data-primary="Terraform" data-secondary="process" data-type="indexterm" id="idm46523886153560"/>In this section, I will walk you through some of the building blocks of the Terraform process that allow you to convert your Terraform-managed code into cloud resources on AWS.</p>
+<section data-pdf-bookmark="Providers" data-type="sect2"><div class="sect2" id="providers">
+<h2>Providers</h2>
+<p><a contenteditable="false" data-primary="providers (Terraform)" data-type="indexterm" id="idm46523886149048"/><a contenteditable="false" data-primary="Terraform" data-secondary="providers" data-type="indexterm" id="idm46523886147512"/>Terraform uses the <em>provider</em> to integrate with various cloud systems. A provider takes Terraform syntax and translates it into API calls for the cloud system you are using (in this case, AWS). Once this is done, the provider can provision various resources for you.</p>
+<p>Terraform has built-in provider support for major cloud providers. You can use AWS in our case:</p>
+<pre>provider "aws" {
+  version = "2.33.0"
+  region = “us-east-1”
+}</pre>
+<p>This code asks Terraform to create a provider that can connect to the AWS provider in the <code>us</code><code>-east-1</code> region.</p>
+</div></section>
+<section data-pdf-bookmark="State" data-type="sect2"><div class="sect2" id="state">
+<h2>State</h2>
+<p><a contenteditable="false" data-primary="state (Terraform)" data-type="indexterm" id="idm46523886144312"/><a contenteditable="false" data-primary="Terraform" data-secondary="state" data-type="indexterm" id="idm46523886140200"/>Terraform state maintains an up-to-date map of the resources that were created in your AWS account as a result of Terraform usage and updates it based on any change to the code. This allows you to make code changes in the config to add or delete resources on the cloud.</p>
+</div></section>
+<section data-pdf-bookmark="Plans" data-type="sect2"><div class="sect2" id="plans">
+<h2 class="pagebreak-before less_space">Plans</h2>
+<p><a contenteditable="false" data-primary="plans (Terraform)" data-type="indexterm" id="idm46523886137128"/><a contenteditable="false" data-primary="Terraform" data-secondary="plans" data-type="indexterm" id="idm46523886135528"/>The Terraform plan phase builds an execution plan that compares the desired state of your AWS account with its current state. If Terraform does not detect any changes to resources or root module output values, the Terraform plan will evaluate that no change is required. A list of resources that require creation or destruction on the cloud is then created, and finally, basic validation on your code syntax is performed.</p>
+</div></section>
+<section data-pdf-bookmark="Apply" data-type="sect2"><div class="sect2" id="apply">
+<h2>Apply</h2>
+<p><a contenteditable="false" data-primary="apply phase (Terraform)" data-type="indexterm" id="idm46523886132296"/><a contenteditable="false" data-primary="Terraform" data-secondary="apply" data-type="indexterm" id="idm46523886130888"/>Terraform’s apply phase takes the changes generated by a Terraform plan and applies them to your provider (in this case, the AWS account) to reach the desired state based on your configuration.</p>
+</div></section>
+</div></section>
+<section data-pdf-bookmark="Writing Your Terraform Infrastructure as Code" data-type="sect1"><div class="sect1" id="writing_your_terraform_infrastructure_a">
+<h1>Writing Your Terraform Infrastructure as Code</h1>
+<p><a contenteditable="false" data-primary="infrastructure" data-secondary="writing Terraform as code" data-type="indexterm" id="inf_wt"/><a contenteditable="false" data-primary="Terraform" data-secondary="writing infrastructure as code" data-type="indexterm" id="ter_inf"/>As we have reviewed the basic building blocks of Terraform, let us now look at how your Terraform modules are implemented.</p>
+<section data-pdf-bookmark="Root Module and Folder Structure" data-type="sect2"><div class="sect2" id="root_module_and_folder_structure">
+<h2>Root Module and Folder Structure</h2>
+<p><a contenteditable="false" data-primary="folder structure (Terraform)" data-type="indexterm" id="idm46523886122360"/><a contenteditable="false" data-primary="Terraform" data-secondary="folder structure" data-type="indexterm" id="idm46523886120472"/><a contenteditable="false" data-primary="root module (Terraform)" data-type="indexterm" id="idm46523886119080"/><a contenteditable="false" data-primary="Terraform" data-secondary="root module" data-type="indexterm" id="idm46523886117928"/>When running Terraform plan or Terraform apply in your working directory, the <em>.tf</em> files together form the root module. Any resources that you declare in these files will be added to your desired state during the plan phase and created on your cloud when you apply this plan.</p>
+<p>The root module can also call other modules, thus enabling code reuse.</p>
+</div></section>
+<section data-pdf-bookmark="Input Variables" data-type="sect2"><div class="sect2" id="input_variables">
+<h2>Input Variables</h2>
+<p><a contenteditable="false" data-primary="input variables (Terraform)" data-type="indexterm" id="idm46523886113704"/><a contenteditable="false" data-primary="Terraform" data-secondary="input variables" data-type="indexterm" id="idm46523886112072"/>You can declare input variables in your <em>.tf</em> files using the following syntax:</p>
+<pre>variable "table_name" {
+  type = string
+}</pre>
+<p>These variables can be passed to the main module through the same interface where you passed environment variables, as shown in <a data-type="xref" href="#passing_variables_to_the_main_module">Figure A-5</a>. Secrets and other sensitive variables are good candidates to be passed as Terraform variables.</p>
+<figure><div class="figure" id="passing_variables_to_the_main_module">
+<img alt="" src="assets/smaa_aa05.png"/>
+<h6><span class="label">Figure A-5. </span>Passing variables to the main module</h6>
+</div></figure>
+<p>Reference these variables using this syntax:</p>
+<pre>var.&lt;variable_name&gt;
+  table_name = var.table_name</pre>
+<p>You can also declare local variables (called <em>local values</em>) in order to promote code reuse. They can be included in any of your <em>.tf</em> files by adding the following code:</p>
+<pre>locals {
+  table_name = "test_table"
+}</pre>
+<p>Reference these values using the following syntax:</p>
+<pre>local.&lt;value_name&gt;
+table_name = local.table_name</pre>
+</div></section>
+<section data-pdf-bookmark="Resources" data-type="sect2"><div class="sect2" id="resources">
+<h2>Resources</h2>
+<p><a contenteditable="false" data-primary="resources" data-type="indexterm" id="idm46523886100872"/><a contenteditable="false" data-primary="Terraform" data-secondary="resources" data-type="indexterm" id="idm46523886099352"/>Each resource in your module defines one or more infrastructural items, such as AWS Elastic Cloud Compute (EC2) instances, DynamoDB tables, or any other storage services on AWS. The goal of your module will be to create these resources on the AWS cloud and track their state through your Terraform configuration files:</p>
+<pre>resource "aws_dynamodb_table" "test_table" {
+  name = "test_table"
+  read_capacity  = 1
+  write_capacity = 1
+  hash_key       = "UUID"
+  attribute {
+    name = "UUID"
+    type = "S"
+  }
+}</pre>
+</div></section>
+<section data-pdf-bookmark="Running and Applying Your Plan" data-type="sect2"><div class="sect2" id="running_and_applying_your_plan">
+<h2>Running and Applying Your Plan</h2>
+<p><a contenteditable="false" data-primary="plans (Terraform)" data-type="indexterm" id="idm46523886095704"/><a contenteditable="false" data-primary="Terraform" data-secondary="running and applying your plan" data-type="indexterm" id="idm46523886094280"/>The final step is to run and apply your plan so your resources can be created. Click the “Queue plan” button, as shown in <a data-type="xref" href="#you_can_queue_your_plan_with_any_descri">Figure A-6</a>.</p>
+<figure><div class="figure" id="you_can_queue_your_plan_with_any_descri">
+<img alt="" src="assets/smaa_aa06.png"/>
+<h6><span class="label">Figure A-6. </span>You can queue your plan with any description of your run</h6>
+</div></figure>
+<p>Depending on your configuration, Terraform Cloud may ask for your confirmation before applying a plan, as shown in <a data-type="xref" href="#click_confirm_ampersand_apply_once_you">Figure A-7</a>. In this phase, it is important for administrators to look at the output of the plan phase to make sure no surprises are in store when Terraform moves from its current state to the desired state.</p>
+<figure><div class="figure" id="click_confirm_ampersand_apply_once_you">
+<img alt="" src="assets/smaa_aa07.png"/>
+<h6><span class="label">Figure A-7. </span>Click Confirm &amp; Apply once you have validated the plan output from the plan phase</h6>
+</div></figure>
+<p>If all goes well, you should see your plan being applied successfully on your AWS Cloud account, and you’ll see a successful application, as shown in <a data-type="xref" href="#plan_was_successfully_applied_to_your_a">Figure A-8</a>.</p>
+<figure><div class="figure" id="plan_was_successfully_applied_to_your_a">
+<img alt="" src="assets/smaa_aa08.png"/>
+<h6><span class="label">Figure A-8. </span>Plan was successfully applied to your AWS account</h6>
+</div></figure>
+<p><a contenteditable="false" data-primary="" data-startref="inf_wt" data-type="indexterm" id="idm46523886081544"/><a contenteditable="false" data-primary="" data-startref="ter_inf" data-type="indexterm" id="idm46523886079688"/><a contenteditable="false" data-primary="" data-startref="tf_ch" data-type="indexterm" id="idm46523886078184"/>Once applied, you should be able to see your resources being created on your AWS account.</p>
+</div></section>
+</div></section>
+</div></section></body></html>

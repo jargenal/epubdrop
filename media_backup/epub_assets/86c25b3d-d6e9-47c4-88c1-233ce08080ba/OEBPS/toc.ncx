@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+   <head>
+      <meta name="dtb:uid" content="bookid"/>
+      <meta name="dtb:depth" content="0"/>
+      <meta name="dtb:totalPageCount" content="0"/>
+      <meta name="dtb:maxPageNumber" content="0"/>
+   </head>
+   <docTitle>
+      <text>UnKnown</text>
+   </docTitle>
+   <navMap>
+     <navPoint id="navPoint-1" playOrder="1">
+       <navLabel>
+         <text>About This E-Book</text>
+       </navLabel>
+       <content src="text00000.html#pref00"/>
+     </navPoint>
+     <navPoint id="navPoint-2" playOrder="2">
+       <navLabel>
+         <text>Title Page</text>
+       </navLabel>
+       <content src="text00001.html#title"/>
+     </navPoint>
+     <navPoint id="navPoint-3" playOrder="3">
+       <navLabel>
+         <text>Copyright Page</text>
+       </navLabel>
+       <content src="text00002.html#copy"/>
+     </navPoint>
+     <navPoint id="navPoint-4" playOrder="4">
+       <navLabel>
+         <text>Dedication Page</text>
+       </navLabel>
+       <content src="text00003.html#ded01"/>
+     </navPoint>
+     <navPoint id="navPoint-5" playOrder="5">
+       <navLabel>
+         <text>Contents</text>
+       </navLabel>
+       <content src="text00004.html#toc"/>
+     </navPoint>
+     <navPoint id="navPoint-6" playOrder="6">
+       <navLabel>
+         <text>Preface</text>
+       </navLabel>
+       <content src="text00005.html#pref01"/>
+     <navPoint id="navPoint-7" playOrder="7">
+       <navLabel>
+         <text>Who Is This Book For?</text>
+       </navLabel>
+       <content src="text00005.html#pref01lev1sec1"/>
+     </navPoint>
+     <navPoint id="navPoint-8" playOrder="8">
+       <navLabel>
+         <text>What This Book Covers</text>
+       </navLabel>
+       <content src="text00005.html#pref01lev1sec2"/>
+     </navPoint>
+     <navPoint id="navPoint-9" playOrder="9">
+       <navLabel>
+         <text>Conventions</text>
+       </navLabel>
+       <content src="text00005.html#pref01lev1sec3"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-10" playOrder="10">
+       <navLabel>
+         <text>Acknowledgments</text>
+       </navLabel>
+       <content src="text00006.html#pref02"/>
+     </navPoint>
+     <navPoint id="navPoint-11" playOrder="11">
+       <navLabel>
+         <text>About the Author</text>
+       </navLabel>
+       <content src="text00007.html#pref03"/>
+     </navPoint>
+     <navPoint id="navPoint-12" playOrder="12">
+       <navLabel>
+         <text>Chapter 1. DDD for Me</text>
+       </navLabel>
+       <content src="text00008.html#ch01"/>
+     <navPoint id="navPoint-13" playOrder="13">
+       <navLabel>
+         <text>Will DDD Hurt?</text>
+       </navLabel>
+       <content src="text00008.html#ch01lev1sec1"/>
+     </navPoint>
+     <navPoint id="navPoint-14" playOrder="14">
+       <navLabel>
+         <text>Good, Bad, and Effective Design</text>
+       </navLabel>
+       <content src="text00008.html#ch01lev1sec2"/>
+     </navPoint>
+     <navPoint id="navPoint-15" playOrder="15">
+       <navLabel>
+         <text>Strategic Design</text>
+       </navLabel>
+       <content src="text00008.html#ch01lev1sec3"/>
+     </navPoint>
+     <navPoint id="navPoint-16" playOrder="16">
+       <navLabel>
+         <text>Tactical Design</text>
+       </navLabel>
+       <content src="text00008.html#ch01lev1sec4"/>
+     </navPoint>
+     <navPoint id="navPoint-17" playOrder="17">
+       <navLabel>
+         <text>The Learning Process and Refining Knowledge</text>
+       </navLabel>
+       <content src="text00008.html#ch01lev1sec5"/>
+     </navPoint>
+     <navPoint id="navPoint-18" playOrder="18">
+       <navLabel>
+         <text>Let&amp;#8217;s Get Started!</text>
+       </navLabel>
+       <content src="text00008.html#ch01lev1sec6"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-19" playOrder="19">
+       <navLabel>
+         <text>Chapter 2. Strategic Design with Bounded Contexts and the Ubiquitous Language</text>
+       </navLabel>
+       <content src="text00009.html#ch02"/>
+     <navPoint id="navPoint-20" playOrder="20">
+       <navLabel>
+         <text>Domain Experts and Business Drivers</text>
+       </navLabel>
+       <content src="text00009.html#ch02lev1sec1"/>
+     </navPoint>
+     <navPoint id="navPoint-21" playOrder="21">
+       <navLabel>
+         <text>Case Study</text>
+       </navLabel>
+       <content src="text00009.html#ch02lev1sec2"/>
+     </navPoint>
+     <navPoint id="navPoint-22" playOrder="22">
+       <navLabel>
+         <text>Fundamental Strategic Design Needed</text>
+       </navLabel>
+       <content src="text00009.html#ch02lev1sec3"/>
+     </navPoint>
+     <navPoint id="navPoint-23" playOrder="23">
+       <navLabel>
+         <text>Challenge and Unify</text>
+       </navLabel>
+       <content src="text00009.html#ch02lev1sec4"/>
+     </navPoint>
+     <navPoint id="navPoint-24" playOrder="24">
+       <navLabel>
+         <text>Developing a Ubiquitous Language</text>
+       </navLabel>
+       <content src="text00009.html#ch02lev1sec5"/>
+     <navPoint id="navPoint-25" playOrder="25">
+       <navLabel>
+         <text>Putting Scenarios to Work</text>
+       </navLabel>
+       <content src="text00009.html#ch02lev2sec1"/>
+     </navPoint>
+     <navPoint id="navPoint-26" playOrder="26">
+       <navLabel>
+         <text>What about the Long Haul?</text>
+       </navLabel>
+       <content src="text00009.html#ch02lev2sec2"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-27" playOrder="27">
+       <navLabel>
+         <text>Architecture</text>
+       </navLabel>
+       <content src="text00009.html#ch02lev1sec6"/>
+     </navPoint>
+     <navPoint id="navPoint-28" playOrder="28">
+       <navLabel>
+         <text>Summary</text>
+       </navLabel>
+       <content src="text00009.html#ch02lev1sec7"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-29" playOrder="29">
+       <navLabel>
+         <text>Chapter 3. Strategic Design with Subdomains</text>
+       </navLabel>
+       <content src="text00010.html#ch03"/>
+     <navPoint id="navPoint-30" playOrder="30">
+       <navLabel>
+         <text>What Is a Subdomain?</text>
+       </navLabel>
+       <content src="text00010.html#ch03lev1sec1"/>
+     </navPoint>
+     <navPoint id="navPoint-31" playOrder="31">
+       <navLabel>
+         <text>Types of Subdomains</text>
+       </navLabel>
+       <content src="text00010.html#ch03lev1sec2"/>
+     </navPoint>
+     <navPoint id="navPoint-32" playOrder="32">
+       <navLabel>
+         <text>Dealing with Complexity</text>
+       </navLabel>
+       <content src="text00010.html#ch03lev1sec3"/>
+     </navPoint>
+     <navPoint id="navPoint-33" playOrder="33">
+       <navLabel>
+         <text>Summary</text>
+       </navLabel>
+       <content src="text00010.html#ch03lev1sec4"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-34" playOrder="34">
+       <navLabel>
+         <text>Chapter 4. Strategic Design with Context Mapping</text>
+       </navLabel>
+       <content src="text00011.html#ch04"/>
+     <navPoint id="navPoint-35" playOrder="35">
+       <navLabel>
+         <text>Kinds of Mappings</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev1sec1"/>
+     <navPoint id="navPoint-36" playOrder="36">
+       <navLabel>
+         <text>Partnership</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec1"/>
+     </navPoint>
+     <navPoint id="navPoint-37" playOrder="37">
+       <navLabel>
+         <text>Shared Kernel</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec2"/>
+     </navPoint>
+     <navPoint id="navPoint-38" playOrder="38">
+       <navLabel>
+         <text>Customer-Supplier</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec3"/>
+     </navPoint>
+     <navPoint id="navPoint-39" playOrder="39">
+       <navLabel>
+         <text>Conformist</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec4"/>
+     </navPoint>
+     <navPoint id="navPoint-40" playOrder="40">
+       <navLabel>
+         <text>Anticorruption Layer</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec5"/>
+     </navPoint>
+     <navPoint id="navPoint-41" playOrder="41">
+       <navLabel>
+         <text>Open Host Service</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec6"/>
+     </navPoint>
+     <navPoint id="navPoint-42" playOrder="42">
+       <navLabel>
+         <text>Published Language</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec7"/>
+     </navPoint>
+     <navPoint id="navPoint-43" playOrder="43">
+       <navLabel>
+         <text>Separate Ways</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec8"/>
+     </navPoint>
+     <navPoint id="navPoint-44" playOrder="44">
+       <navLabel>
+         <text>Big Ball of Mud</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec9"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-45" playOrder="45">
+       <navLabel>
+         <text>Making Good Use of Context Mapping</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev1sec2"/>
+     <navPoint id="navPoint-46" playOrder="46">
+       <navLabel>
+         <text>RPC with SOAP</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec10"/>
+     </navPoint>
+     <navPoint id="navPoint-47" playOrder="47">
+       <navLabel>
+         <text>RESTful HTTP</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec11"/>
+     </navPoint>
+     <navPoint id="navPoint-48" playOrder="48">
+       <navLabel>
+         <text>Messaging</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev2sec12"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-49" playOrder="49">
+       <navLabel>
+         <text>An Example in Context Mapping</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev1sec3"/>
+     </navPoint>
+     <navPoint id="navPoint-50" playOrder="50">
+       <navLabel>
+         <text>Summary</text>
+       </navLabel>
+       <content src="text00011.html#ch04lev1sec4"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-51" playOrder="51">
+       <navLabel>
+         <text>Chapter 5. Tactical Design with Aggregates</text>
+       </navLabel>
+       <content src="text00012.html#ch05"/>
+     <navPoint id="navPoint-52" playOrder="52">
+       <navLabel>
+         <text>Why Used</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev1sec1"/>
+     </navPoint>
+     <navPoint id="navPoint-53" playOrder="53">
+       <navLabel>
+         <text>Aggregate Rules of Thumb</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev1sec2"/>
+     <navPoint id="navPoint-54" playOrder="54">
+       <navLabel>
+         <text>Rule 1: Protect Business Invariants inside Aggregate Boundaries</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev2sec1"/>
+     </navPoint>
+     <navPoint id="navPoint-55" playOrder="55">
+       <navLabel>
+         <text>Rule 2: Design Small Aggregates</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev2sec2"/>
+     </navPoint>
+     <navPoint id="navPoint-56" playOrder="56">
+       <navLabel>
+         <text>Rule 3: Reference Other Aggregates by Identity Only</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev2sec3"/>
+     </navPoint>
+     <navPoint id="navPoint-57" playOrder="57">
+       <navLabel>
+         <text>Rule 4: Update Other Aggregates Using Eventual Consistency</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev2sec4"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-58" playOrder="58">
+       <navLabel>
+         <text>Modeling Aggregates</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev1sec3"/>
+     <navPoint id="navPoint-59" playOrder="59">
+       <navLabel>
+         <text>Choose Your Abstractions Carefully</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev2sec5"/>
+     </navPoint>
+     <navPoint id="navPoint-60" playOrder="60">
+       <navLabel>
+         <text>Right-Sizing Aggregates</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev2sec6"/>
+     </navPoint>
+     <navPoint id="navPoint-61" playOrder="61">
+       <navLabel>
+         <text>Testable Units</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev2sec7"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-62" playOrder="62">
+       <navLabel>
+         <text>Summary</text>
+       </navLabel>
+       <content src="text00012.html#ch05lev1sec4"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-63" playOrder="63">
+       <navLabel>
+         <text>Chapter 6. Tactical Design with Domain Events</text>
+       </navLabel>
+       <content src="text00013.html#ch06"/>
+     <navPoint id="navPoint-64" playOrder="64">
+       <navLabel>
+         <text>Designing, Implementing, and Using Domain Events</text>
+       </navLabel>
+       <content src="text00013.html#ch06lev1sec1"/>
+     </navPoint>
+     <navPoint id="navPoint-65" playOrder="65">
+       <navLabel>
+         <text>Event Sourcing</text>
+       </navLabel>
+       <content src="text00013.html#ch06lev1sec2"/>
+     </navPoint>
+     <navPoint id="navPoint-66" playOrder="66">
+       <navLabel>
+         <text>Summary</text>
+       </navLabel>
+       <content src="text00013.html#ch06lev1sec3"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-67" playOrder="67">
+       <navLabel>
+         <text>Chapter 7. Acceleration and Management Tools</text>
+       </navLabel>
+       <content src="text00014.html#ch07"/>
+     <navPoint id="navPoint-68" playOrder="68">
+       <navLabel>
+         <text>Event Storming</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev1sec1"/>
+     <navPoint id="navPoint-69" playOrder="69">
+       <navLabel>
+         <text>Other Tools</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev2sec1"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-70" playOrder="70">
+       <navLabel>
+         <text>Managing DDD on an Agile Project</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev1sec2"/>
+     <navPoint id="navPoint-71" playOrder="71">
+       <navLabel>
+         <text>First Things First</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev2sec2"/>
+     </navPoint>
+     <navPoint id="navPoint-72" playOrder="72">
+       <navLabel>
+         <text>Use SWOT Analysis</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev2sec3"/>
+     </navPoint>
+     <navPoint id="navPoint-73" playOrder="73">
+       <navLabel>
+         <text>Modeling Spikes and Modeling Debt</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev2sec4"/>
+     </navPoint>
+     <navPoint id="navPoint-74" playOrder="74">
+       <navLabel>
+         <text>Identifying Tasks and Estimating Effort</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev2sec5"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-75" playOrder="75">
+       <navLabel>
+         <text>Timeboxed Modeling</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev1sec3"/>
+     <navPoint id="navPoint-76" playOrder="76">
+       <navLabel>
+         <text>How to Implement</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev2sec6"/>
+     </navPoint>
+     <navPoint id="navPoint-77" playOrder="77">
+       <navLabel>
+         <text>Interacting with Domain Experts</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev2sec7"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-78" playOrder="78">
+       <navLabel>
+         <text>Summary</text>
+       </navLabel>
+       <content src="text00014.html#ch07lev1sec4"/>
+     </navPoint>
+     </navPoint>
+     <navPoint id="navPoint-79" playOrder="79">
+       <navLabel>
+         <text>References</text>
+       </navLabel>
+       <content src="text00015.html#app01"/>
+     </navPoint>
+     <navPoint id="navPoint-80" playOrder="80">
+       <navLabel>
+         <text>Index</text>
+       </navLabel>
+       <content src="text00016.html#index"/>
+     </navPoint>
+     <navPoint id="navPoint-81" playOrder="81">
+       <navLabel>
+         <text>Code Snippets</text>
+       </navLabel>
+       <content src="text00018.html#ch02_images"/>
+     </navPoint>
+   </navMap>
+</ncx>
