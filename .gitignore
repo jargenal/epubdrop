@@ -17,6 +17,7 @@ venv/
 db.sqlite3
 staticfiles/
 media/
+media_backup/
 local_settings.py
 
 # OS / IDE
