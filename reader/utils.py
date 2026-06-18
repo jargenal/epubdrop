@@ -923,6 +923,7 @@ TRANSLATION_FAILURE_MARKERS = [
 ]
 
 STRUCTURAL_TAGS = [
+    "p",
     "h1", "h2", "h3", "h4", "h5", "h6",
     "blockquote", "pre", "code",
     "ul", "ol", "li",
@@ -930,10 +931,17 @@ STRUCTURAL_TAGS = [
     "figure", "figcaption", "img",
 ]
 
+PRESERVED_INLINE_TAGS = [
+    "a", "em", "strong", "i", "b", "sub", "sup",
+]
+
 TEXTUAL_SEGMENT_TAGS = [
     "p", "h1", "h2", "h3", "h4", "h5", "h6",
     "li", "blockquote", "figcaption", "th", "td",
 ]
+
+TEXT_COVERAGE_MIN_ORIGINAL_WORDS = 12
+TEXT_COVERAGE_MIN_RATIO = 0.45
 
 ENGLISH_HINT_WORDS = {
     "a", "an", "and", "are", "as", "at", "be", "but", "by", "each", "for", "from",
@@ -1080,6 +1088,38 @@ def _tag_counts(html_fragment: str, tags: List[str]) -> Dict[str, int]:
     return out
 
 
+def _text_coverage_reason(
+    original_segments: List[Tuple[str, str, str]],
+    translated_segments: List[Tuple[str, str, str]],
+) -> str:
+    if len(translated_segments) < len(original_segments):
+        return "missing_text_segment"
+
+    total_original_words = 0
+    total_translated_words = 0
+    for idx, (original_segment, translated_segment) in enumerate(zip(original_segments, translated_segments)):
+        _orig_tag, _orig_normalized, original_text = original_segment
+        _translated_tag, _translated_normalized, translated_text = translated_segment
+        original_words = len(_word_tokens(original_text))
+        translated_words = len(_word_tokens(translated_text))
+        total_original_words += original_words
+        total_translated_words += translated_words
+
+        if original_words < TEXT_COVERAGE_MIN_ORIGINAL_WORDS:
+            continue
+
+        min_words = max(4, int(original_words * TEXT_COVERAGE_MIN_RATIO))
+        if translated_words < min_words:
+            return f"truncated_text_segment:{idx}"
+
+    if total_original_words >= TEXT_COVERAGE_MIN_ORIGINAL_WORDS:
+        min_total_words = max(4, int(total_original_words * TEXT_COVERAGE_MIN_RATIO))
+        if total_translated_words < min_total_words:
+            return "truncated_text_total"
+
+    return ""
+
+
 def _attr_values(html_fragment: str, tag: str, attr: str) -> set[str]:
     try:
         fragment = lxml_html.fragment_fromstring(html_fragment, create_parent=True)
@@ -1138,6 +1178,12 @@ def _translation_is_valid(original_html: str, translated_html: str) -> Tuple[boo
         if original_counts[tag] > 0 and translated_counts[tag] < original_counts[tag]:
             return False, f"missing_structural_tag:{tag}"
 
+    original_inline_counts = _tag_counts(original_html, PRESERVED_INLINE_TAGS)
+    translated_inline_counts = _tag_counts(translated, PRESERVED_INLINE_TAGS)
+    for tag in PRESERVED_INLINE_TAGS:
+        if original_inline_counts[tag] > 0 and translated_inline_counts[tag] < original_inline_counts[tag]:
+            return False, f"missing_inline_tag:{tag}"
+
     original_img_srcs = _attr_values(original_html, "img", "src")
     translated_img_srcs = _attr_values(translated, "img", "src")
     if original_img_srcs and not original_img_srcs.issubset(translated_img_srcs):
@@ -1150,6 +1196,10 @@ def _translation_is_valid(original_html: str, translated_html: str) -> Tuple[boo
 
     original_segments = _extract_text_segments(original_html)
     translated_segments = _extract_text_segments(translated)
+    coverage_reason = _text_coverage_reason(original_segments, translated_segments)
+    if coverage_reason:
+        return False, coverage_reason
+
     for idx, (original_segment, translated_segment) in enumerate(zip(original_segments, translated_segments)):
         _orig_tag, orig_normalized, orig_text = original_segment
         _translated_tag, translated_normalized, _translated_text = translated_segment
@@ -1261,7 +1311,16 @@ def translate_html_with_ollama(html: str, *, force_refresh: bool = False) -> str
     return original_html
 
 
-def sanitize_book_translations(book_id: str, *, force_refresh: bool = True) -> Dict[str, int]:
+def sanitize_book_translations(
+    book_id: str,
+    *,
+    force_refresh: bool = True,
+    dry_run: bool = False,
+    fallback_to_original: bool = True,
+    section_index: Optional[int] = None,
+    block_index: Optional[int] = None,
+    limit: Optional[int] = None,
+) -> Dict[str, Any]:
     """
     Revisa traducciones de un libro y corrige bloques inválidos sin borrar trabajo válido.
     """
@@ -1270,8 +1329,13 @@ def sanitize_book_translations(book_id: str, *, force_refresh: bool = True) -> D
     stats = {
         "scanned": 0,
         "valid": 0,
+        "invalid": 0,
         "repaired": 0,
         "fallback_original": 0,
+        "skipped_unrepaired": 0,
+        "dry_run": 1 if dry_run else 0,
+        "invalid_reasons": {},
+        "blocks": [],
     }
 
     blocks = (
@@ -1280,29 +1344,67 @@ def sanitize_book_translations(book_id: str, *, force_refresh: bool = True) -> D
         .select_related("section")
         .order_by("section__index", "index")
     )
+    if section_index is not None:
+        blocks = blocks.filter(section__index=section_index)
+    if block_index is not None:
+        blocks = blocks.filter(index=block_index)
+
+    repaired_or_skipped = 0
     for block in blocks:
         stats["scanned"] += 1
         original_html = (block.original_html or "").strip()
         translated_html = (block.translated_html or "").strip()
 
-        is_valid, _ = _translation_is_valid(original_html, translated_html)
+        is_valid, invalid_reason = _translation_is_valid(original_html, translated_html)
         if is_valid:
             stats["valid"] += 1
             continue
 
+        stats["invalid"] += 1
+        reason_counts = stats["invalid_reasons"]
+        reason_counts[invalid_reason] = reason_counts.get(invalid_reason, 0) + 1
+
+        if limit is not None and repaired_or_skipped >= limit:
+            stats["skipped_unrepaired"] += 1
+            continue
+
+        block_info = {
+            "section_index": block.section.index,
+            "block_index": block.index,
+            "reason": invalid_reason,
+        }
+        stats["blocks"].append(block_info)
+
+        if dry_run:
+            stats["skipped_unrepaired"] += 1
+            block_info["action"] = "dry_run"
+            repaired_or_skipped += 1
+            continue
+
         repaired = translate_html_with_ollama(original_html, force_refresh=force_refresh).strip()
-        repaired_ok, _ = _translation_is_valid(original_html, repaired)
+        repaired_ok, repaired_invalid_reason = _translation_is_valid(original_html, repaired)
         if repaired_ok:
             if repaired != translated_html:
                 block.translated_html = repaired
                 block.save(update_fields=["translated_html"])
             stats["repaired"] += 1
+            block_info["action"] = "repaired"
+            repaired_or_skipped += 1
+            continue
+
+        block_info["repair_failed_reason"] = repaired_invalid_reason
+        if not fallback_to_original:
+            stats["skipped_unrepaired"] += 1
+            block_info["action"] = "skipped_unrepaired"
+            repaired_or_skipped += 1
             continue
 
         if translated_html != original_html:
             block.translated_html = original_html
             block.save(update_fields=["translated_html"])
         stats["fallback_original"] += 1
+        block_info["action"] = "fallback_original"
+        repaired_or_skipped += 1
 
     return stats
 

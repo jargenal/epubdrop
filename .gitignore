@@ -14,7 +14,6 @@ venv/
 
 # Django
 *.log
-db.sqlite3
 staticfiles/
 media/
 media_backup/
@@ -31,5 +30,4 @@ local_settings.py
 !.env.example
 
 #Temporales
-backup_sqlite.json
 regenerate_cover.py

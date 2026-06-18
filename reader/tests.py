@@ -1,6 +1,7 @@
 import shutil
 import tempfile
 import threading
+from io import StringIO
 from pathlib import Path
 from unittest.mock import Mock, patch
 
@@ -634,6 +635,43 @@ class TranslationQualityTests(TestCase):
 
         self.assertFalse(is_valid_translation_html(original, translated))
 
+    def test_invalid_translation_html_detects_truncated_paragraph_with_inline_markup(self):
+        original = (
+            "<p>Like my previous O’Reilly book, <em>Designing Machine Learning Systems</em> "
+            "(DMLS), this book focuses on the fundamentals of AI engineering instead of any "
+            "specific tool or API. Tools become outdated quickly, but fundamentals should last "
+            "longer.<sup><a href='/note3'>3</a></sup></p>"
+        )
+        translated = "<p>Como mi libro anterior de O’Reilly, <a href='/note3'>3</a></p>"
+
+        self.assertFalse(is_valid_translation_html(original, translated))
+
+    def test_translate_retries_when_model_truncates_long_paragraph(self):
+        original = (
+            "<p>Like my previous O’Reilly book, <em>Designing Machine Learning Systems</em> "
+            "(DMLS), this book focuses on the fundamentals of AI engineering instead of any "
+            "specific tool or API. Tools become outdated quickly, but fundamentals should last "
+            "longer.<sup><a href='/note3'>3</a></sup></p>"
+        )
+        truncated = self._mock_translation_response(
+            "<p>Como mi libro anterior de O’Reilly, <a href='/note3'>3</a></p>"
+        )
+        fixed = self._mock_translation_response(
+            "<p>Como mi libro anterior de O’Reilly, <em>Designing Machine Learning Systems</em> "
+            "(DMLS), este libro se centra en los fundamentos de la ingeniería de IA en lugar de "
+            "cualquier herramienta o API específica. Las herramientas quedan obsoletas rápidamente, "
+            "pero los fundamentos deberían durar más.<sup><a href='/note3'>3</a></sup></p>"
+        )
+
+        with patch("reader.utils.requests.post", side_effect=[truncated, fixed]) as post_mock, patch(
+            "reader.utils.time.sleep", return_value=None
+        ):
+            translated = translate_html_with_ollama(original, force_refresh=True)
+
+        self.assertIn("fundamentos de la ingeniería de IA", translated)
+        self.assertIn("<em>Designing Machine Learning Systems</em>", translated)
+        self.assertEqual(post_mock.call_count, 2)
+
     def test_translate_applies_configured_request_cooldown(self):
         original = "<p>Hello paragraph</p>"
 
@@ -719,6 +757,112 @@ class TranslationQualityTests(TestCase):
         block.refresh_from_db()
         self.assertEqual(stats["repaired"], 1)
         self.assertEqual(block.translated_html, "<h2>Construido alrededor de capacidades de negocio</h2>")
+
+    def test_sanitize_book_translations_dry_run_reports_without_changes(self):
+        user = CustomUser.objects.create_user(email="sanitize-dry@example.com", password="pass1234")
+        book = Book.objects.create(
+            owner=user,
+            title="Book dry run",
+            status=Book.Status.READY,
+            total_blocks=1,
+            translated_blocks=1,
+        )
+        section = Section.objects.create(book=book, index=3)
+        block = Block.objects.create(
+            section=section,
+            index=7,
+            original_html=(
+                "<p>Like my previous O’Reilly book, <em>Designing Machine Learning Systems</em> "
+                "(DMLS), this book focuses on the fundamentals of AI engineering instead of any "
+                "specific tool or API. Tools become outdated quickly, but fundamentals should last "
+                "longer.<sup><a href='/note3'>3</a></sup></p>"
+            ),
+            translated_html="<p>Como mi libro anterior de O’Reilly, <a href='/note3'>3</a></p>",
+        )
+
+        with patch("reader.utils.translate_html_with_ollama") as translate_mock:
+            stats = sanitize_book_translations(str(book.id), dry_run=True)
+
+        block.refresh_from_db()
+        self.assertEqual(stats["invalid"], 1)
+        self.assertEqual(stats["skipped_unrepaired"], 1)
+        self.assertEqual(stats["blocks"][0]["section_index"], 3)
+        self.assertEqual(stats["blocks"][0]["block_index"], 7)
+        self.assertEqual(stats["blocks"][0]["action"], "dry_run")
+        self.assertEqual(block.translated_html, "<p>Como mi libro anterior de O’Reilly, <a href='/note3'>3</a></p>")
+        translate_mock.assert_not_called()
+
+    def test_sanitize_book_translations_can_skip_failed_repairs_without_fallback(self):
+        user = CustomUser.objects.create_user(email="sanitize-skip@example.com", password="pass1234")
+        book = Book.objects.create(
+            owner=user,
+            title="Book no fallback",
+            status=Book.Status.READY,
+            total_blocks=1,
+            translated_blocks=1,
+        )
+        section = Section.objects.create(book=book, index=0)
+        block = Block.objects.create(
+            section=section,
+            index=0,
+            original_html="<p>The quick brown fox jumps over the lazy dog near the river bank</p>",
+            translated_html="<p>The quick brown fox jumps over the lazy dog near the river bank</p>",
+        )
+
+        with patch(
+            "reader.utils.translate_html_with_ollama",
+            return_value="<p>The quick brown fox jumps over the lazy dog near the river bank</p>",
+        ):
+            stats = sanitize_book_translations(str(book.id), fallback_to_original=False)
+
+        block.refresh_from_db()
+        self.assertEqual(stats["invalid"], 1)
+        self.assertEqual(stats["repaired"], 0)
+        self.assertEqual(stats["fallback_original"], 0)
+        self.assertEqual(stats["skipped_unrepaired"], 1)
+        self.assertEqual(stats["blocks"][0]["action"], "skipped_unrepaired")
+        self.assertEqual(block.translated_html, "<p>The quick brown fox jumps over the lazy dog near the river bank</p>")
+
+
+class AuditTranslationsCommandTests(TestCase):
+    def test_audit_translations_dry_run_reports_details_without_changes(self):
+        user = CustomUser.objects.create_user(email="audit-dry@example.com", password="pass1234")
+        book = Book.objects.create(
+            owner=user,
+            title="Audit dry run",
+            status=Book.Status.READY,
+            total_blocks=1,
+            translated_blocks=1,
+        )
+        section = Section.objects.create(book=book, index=4)
+        block = Block.objects.create(
+            section=section,
+            index=16,
+            original_html=(
+                "<p>Like my previous O’Reilly book, <em>Designing Machine Learning Systems</em> "
+                "(DMLS), this book focuses on the fundamentals of AI engineering instead of any "
+                "specific tool or API. Tools become outdated quickly, but fundamentals should last "
+                "longer.<sup><a href='/note3'>3</a></sup></p>"
+            ),
+            translated_html="<p>Como mi libro anterior de O’Reilly, <a href='/note3'>3</a></p>",
+        )
+        out = StringIO()
+
+        call_command(
+            "audit_translations",
+            book_id=str(book.id),
+            dry_run=True,
+            no_fallback_original=True,
+            details=True,
+            stdout=out,
+        )
+
+        block.refresh_from_db()
+        output = out.getvalue()
+        self.assertIn("invalid=1", output)
+        self.assertIn("section=4 block=16", output)
+        self.assertIn("action=dry_run", output)
+        self.assertEqual(block.translated_html, "<p>Como mi libro anterior de O’Reilly, <a href='/note3'>3</a></p>")
 
 
 class TranslationTaskTests(TestCase):

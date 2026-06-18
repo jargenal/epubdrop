@@ -81,7 +81,7 @@ EPUBDrop renderiza HTML con `|safe` en el lector, por eso todo contenido HTML pa
 
 - Python 3.9+
 - Django 4.2.x
-- SQLite (default)
+- PostgreSQL (`epubdrop_db` en Docker Compose)
 - ebooklib + lxml + bleach
 - Frontend con templates Django + Tailwind CDN + JS/CSS estáticos
 - Ollama local (`/api/generate`)
@@ -172,36 +172,61 @@ ollama pull translategemma:4b
 
 El uso normal es traducción completa en background con traducción lazy como respaldo al leer. Además existen comandos manuales para mantenimiento o reparación.
 
-### Auditoría de traducciones
+### Auditoría y reparación puntual de traducciones
 
-La auditoría repara bloques inválidos sin eliminar traducciones válidas.
+La auditoría repara bloques inválidos sin eliminar traducciones válidas ni reiniciar un libro completo.
 
-#### 1) Auditar un libro específico
+#### 1) Ver bloques inválidos sin modificar nada
 
 ```bash
-.venv/bin/python manage.py audit_translations --book-id <BOOK_UUID>
+.venv/bin/python manage.py audit_translations --book-id <BOOK_UUID> --dry-run --details
 ```
 
 Salida esperada (ejemplo):
 
 ```text
-[<BOOK_UUID>] scanned=5074 valid=5039 repaired=35 fallback_original=0
-TOTAL books=1 scanned=5074 valid=5039 repaired=35 fallback_original=0
+[<BOOK_UUID>] scanned=5074 valid=5039 invalid=35 repaired=0 fallback_original=0 skipped_unrepaired=35
+  reasons: missing_inline_tag:em=4, truncated_text_segment:0=31
+  section=4 block=16 reason=missing_inline_tag:em action=dry_run
+TOTAL books=1 scanned=5074 valid=5039 invalid=35 repaired=0 fallback_original=0 skipped_unrepaired=35
 ```
 
-#### 2) Auditar todos los libros listos
+#### 2) Reparar solo bloques inválidos de un libro
 
 ```bash
-.venv/bin/python manage.py audit_translations --all-ready
+.venv/bin/python manage.py audit_translations --book-id <BOOK_UUID> --no-fallback-original --details
 ```
 
-#### 3) Flujo recomendado de auditoría
+`--no-fallback-original` evita reemplazar una traducción dañada por el texto original si la retraducción falla. En ese caso el bloque queda pendiente para otro intento.
 
-1. Ejecuta auditoría por libro si detectas inconsistencias puntuales.
-2. Ejecuta auditoría global (`--all-ready`) después de cambios de prompt/modelo.
-3. Revisa campos `repaired` y `fallback_original` en la salida:
+#### 3) Reparar un bloque puntual
+
+```bash
+.venv/bin/python manage.py audit_translations --book-id <BOOK_UUID> --section-index 4 --block-index 16 --no-fallback-original --details
+```
+
+#### 4) Reparar por lotes controlados
+
+```bash
+.venv/bin/python manage.py audit_translations --book-id <BOOK_UUID> --limit 25 --no-fallback-original --details
+```
+
+#### 5) Auditar todos los libros listos
+
+```bash
+.venv/bin/python manage.py audit_translations --all-ready --dry-run
+```
+
+#### 6) Flujo recomendado de auditoría
+
+1. Ejecuta `--dry-run --details` por libro si detectas inconsistencias puntuales.
+2. Repara primero con `--no-fallback-original`.
+3. Usa `--section-index` y `--block-index` si quieres corregir un bloque específico.
+4. Ejecuta auditoría global (`--all-ready --dry-run`) después de cambios de prompt/modelo.
+5. Revisa campos `repaired`, `fallback_original` y `skipped_unrepaired` en la salida:
    - `repaired > 0`: se corrigieron bloques inválidos.
    - `fallback_original > 0`: hubo bloques que no se pudieron retraducir y se dejó original para evitar basura.
+   - `skipped_unrepaired > 0`: hubo bloques inválidos que no se tocaron por `--dry-run`, `--limit` o `--no-fallback-original`.
 
 ### Reiniciar traducción completa de un libro
 
